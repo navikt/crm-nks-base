@@ -2,11 +2,28 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true
+            "default": true,
+            "package": "crm-nks-base",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "dependencies": [
+                {
+                    "package": "crm-platform-base",
+                    "versionNumber": "0.20.0.2"
+                },
+                {
+                    "package": "crm-platform-access-control",
+                    "versionNumber": "0.22.0.1"
+                }
+            ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "47.0",
-    "packageAliases": {}
+    "packageAliases": {
+        "crm-nks-base": "0Ho2o000000fxWmCAI",
+        "crm-platform-base": "0Ho2o0000008ORmCAM",
+        "crm-platform-access-control": "0Ho2o0000008OR3CAM"
+    }
 }
