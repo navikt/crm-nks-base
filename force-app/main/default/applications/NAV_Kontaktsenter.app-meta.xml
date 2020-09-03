@@ -28,12 +28,20 @@
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
     <label>NAV Kontaktsenter</label>
     <navType>Console</navType>
+    <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
+    <tabs>standard-LiveChatTranscript</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>NAV_Kontaktsenter_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>standard-Account</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-LiveChatTranscript</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>
