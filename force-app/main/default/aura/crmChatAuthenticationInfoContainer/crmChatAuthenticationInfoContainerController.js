@@ -3,6 +3,7 @@
     requestAuthentication: function (component, event, helper) {
         const chatToolkit = component.find("chatToolkit");
         const recordId = component.get("v.recordId");
+        const authInfoCmp = component.find("chatAuthInfo");
 
         chatToolkit.sendMessage({
             recordId: recordId,
@@ -11,11 +12,8 @@
             }
         })
             .then(function (result) {
-                if (result) {
-                    console.log("Successfully sent message");
-                } else {
-                    console.log("Failed to send message");
-                }
+                //Call child to handle message result
+                authInfoCmp.authRequestHandling(result);
             });
     },
 

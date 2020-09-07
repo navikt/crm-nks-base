@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>NKS chat</name>
+    <queueMembers>
+        <users>
+            <user>test-pb0x2nny8qwu@example.com</user>
+        </users>
+    </queueMembers>
+    <queueRoutingConfig>Puzzel_Chat_Routing</queueRoutingConfig>
+    <queueSobject>
+        <sobjectType>LiveChatTranscript</sobjectType>
+    </queueSobject>
+</Queue>
