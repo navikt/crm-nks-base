@@ -36,6 +36,13 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>force:detailPanel</componentName>
+        </componentInstances>
+        <name>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
             <componentName>runtime_service_liveagent:pastChats</componentName>
         </componentInstances>
         <name>Facet-1a9941e8-5d6c-4dbb-a356-e7cc4fc3b1f1</name>
@@ -46,6 +53,17 @@
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Standard.Tab.chat</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -107,9 +125,6 @@
                     <rightValue>Completed</rightValue>
                 </criteria>
             </visibilityRule>
-        </componentInstances>
-        <componentInstances>
-            <componentName>force:detailPanel</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
