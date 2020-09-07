@@ -21,6 +21,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
     currentAuthenticationStatus;
     //Determines if console logging is enabled for the component
+    sendingAuthRequest = false;
     @api loggingEnabled
     @api recordId;
 
@@ -83,6 +84,8 @@ export default class ChatAuthenticationOverview extends LightningElement {
 
     //Handles initiation of the authentication process for the chat visitor
     handleRequest() {
+        this.sendingAuthRequest = true;
+
         setStatusRequested({ chatTranscriptId: this.recordId })
             .then(result => {
                 this.log('Successfull update');
@@ -91,6 +94,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
             })
             .catch(error => {
                 this.log(error);
+            })
+            .finally(() => {
+                this.sendingAuthRequest = false;
             });
     }
 
