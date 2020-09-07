@@ -24,8 +24,8 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
-    activeConversation                 //Boolean to determine if the componenet is rendered in a context on an active chat conversation
-    @api loggingEnabled                //Determines if console logging is enabled for the component
+    activeConversation;                 //Boolean to determine if the componenet is rendered in a context on an active chat conversation
+    @api loggingEnabled;                //Determines if console logging is enabled for the component
     @api recordId;
 
     //#### GETTERS ####
