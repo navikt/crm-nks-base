@@ -1,0 +1,3 @@
+<design:component label="Chat Authentication Information">
+    <design:attribute label="Enable logging to console" name="loggingEnabled" default="false" />
+</design:component>

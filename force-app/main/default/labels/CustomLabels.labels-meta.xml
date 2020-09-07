@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>CRM_Chat_Authentication_Requested</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Authentication Requested</shortDescription>
+        <value>Autentiseringsforespørsel sendt</value>
+    </labels>
+    <labels>
+        <fullName>CRM_Chat_Authentication_Started</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Authentication Started</shortDescription>
+        <value>Autentisering påbegynt</value>
+    </labels>
+    <labels>
+        <fullName>CRM_Chat_Identity_Confirmed</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Identity Confirmed</shortDescription>
+        <value>Identitet bekreftet</value>
+    </labels>
+    <labels>
+        <fullName>CRM_Chat_Identity_Confirmed_Disclaimer</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Identity Confirmed Disclaimer</shortDescription>
+        <value>Brukeren har bekreftet sin identitet</value>
+    </labels>
+    <labels>
+        <fullName>CRM_Chat_Unconfirmed_Identity_Warning</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Unconfirmed Identity Warning</shortDescription>
+        <value>Vær oppmerksom - brukeren har ikke bekreftet sin identitet</value>
+    </labels>
+</CustomLabels>
