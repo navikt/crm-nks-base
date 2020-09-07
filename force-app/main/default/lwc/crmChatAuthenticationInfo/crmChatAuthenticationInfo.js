@@ -66,7 +66,8 @@ export default class ChatAuthenticationOverview extends LightningElement {
         // Callback invoked whenever a new event message is received
         const messageCallback = function (response) {
             console.log('AUTH STATUS UPDATED');
-            _this.currentAuthenticationStatus = response.data.sobject.CRM_Authentication_Status__c;
+            //Only overwrite status if the event received belongs to this record
+            _this.currentAuthenticationStatus = response.data.sobject.Id === _this.recordId ? response.data.sobject.CRM_Authentication_Status__c : _this.currentAuthenticationStatus;
 
             //If authentication now is complete we as the aura container to refresh the view
             if (_this.authenticationComplete) {
@@ -76,7 +77,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
         };
 
         // Invoke subscribe method of empApi. Pass reference to messageCallback
-        subscribe("/topic/Chat_Auth_Status_Changed?Id=" + this.recordId, -1, messageCallback).then(response => {
+        //Removed subscription to record specific channel as there are issues when loading multiple components and subscribing
+        //to record specific channels on initialization. New solution verifies Id in messageCallback
+        subscribe("/topic/Chat_Auth_Status_Changed" /*?Id=" + this.recordId*/, -1, messageCallback).then(response => {
             // Response contains the subscription information on successful subscribe call
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
