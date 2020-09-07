@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>CRM_Chat_Authentication_Init_Failed</fullName>
+        <categories>UI, Chat, Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chat Authentication Init Failed</shortDescription>
+        <value>Kunne ikke igangsette autentisering. Hvis problemet vedvarer, kontakt din administrator.</value>
+    </labels>
+    <labels>
         <fullName>CRM_Chat_Authentication_Requested</fullName>
         <categories>UI, Chat, Authentication</categories>
         <language>en_US</language>
