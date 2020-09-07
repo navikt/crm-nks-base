@@ -52,8 +52,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
     wiredStatus({ error, data }) {
         if (data) {
             this.log(data);
-            this.currentAuthenticationStatus = data ? data : 'Not Started';
+            this.currentAuthenticationStatus = data;
         } else {
+            this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
         }
     }
