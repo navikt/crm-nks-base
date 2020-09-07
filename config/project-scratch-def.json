@@ -11,6 +11,9 @@
         "CustomerCommunityPlus",
         "PersonAccounts",
         "LiveAgent",
+        "LightningServiceConsole",
+        "ServiceCloud",
+        "ServiceUser",
         "ProcessBuilder",
         "API",
         "ContactsToMultipleAccounts"

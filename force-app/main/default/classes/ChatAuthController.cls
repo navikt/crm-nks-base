@@ -14,7 +14,6 @@ public class ChatAuthController {
         }
 
     }
-
     /**
     * @description: Returns the CRM_Authentication_Status__c of the chat transcript
     * @author Stian Ruud Schikora | 09-04-2020 

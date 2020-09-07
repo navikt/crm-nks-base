@@ -1,5 +1,5 @@
 import { LightningElement } from 'lwc';
-import setStatusCompleted from '@salesforce/apex/ChatAuthenticationController.setStatusCompleted';
+import setStatusCompleted from '@salesforce/apex/ChatAuthController.setStatusCompleted';
 
 export default class AuthenticationCompletedHandler extends LightningElement {
 
