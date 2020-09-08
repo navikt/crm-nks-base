@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
+import { subscribe } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import getChatStatus from '@salesforce/apex/ChatAuthController.getChatStatus';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
@@ -106,7 +106,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
 
         setStatusRequested({ chatTranscriptId: this.recordId })
             .then(result => {
-                this.log('Successfull update');
+                this.log('Successful update');
             })
             .catch(error => {
                 this.log(error);
