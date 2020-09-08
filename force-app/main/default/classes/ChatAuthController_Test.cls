@@ -43,7 +43,7 @@ public class ChatAuthController_Test {
             ChatAuthController.setStatusRequested(visitor.Id);
         }
         catch(Exception ex) {
-            System.assertEquals(new StringException('Test').getTypeName(), ex.getTypeName());
+            System.assertEquals(new AuraHandledException('Test').getTypeName(), ex.getTypeName());
         }
         Test.stopTest();
 
