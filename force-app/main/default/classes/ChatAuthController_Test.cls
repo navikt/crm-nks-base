@@ -43,7 +43,7 @@ public class ChatAuthController_Test {
             ChatAuthController.setStatusRequested(visitor.Id);
         }
         catch(Exception ex) {
-            System.assertEquals(new AuraHandledException('Test').getTypeName(), ex.getTypeName());
+            System.assertEquals(new StringException('Test').getTypeName(), ex.getTypeName());
         }
         Test.stopTest();
 
@@ -52,4 +52,16 @@ public class ChatAuthController_Test {
         System.assertEquals('Authentication Requested', updatedTranscript.CRM_Authentication_Status__c);
     }
 
+
+    @isTest
+    static void testSetStatusCompleted(){
+        LiveChatTranscript chatTranscript = [SELECT Id FROM LiveChatTranscript LIMIT 1];
+        
+        Test.startTest(); 
+        ChatAuthController.setStatusCompleted(chatTranscript.Id);
+        Test.stopTest(); 
+
+        LiveChatTranscript updatedTranscript = [SELECT Id, CRM_Authentication_Status__c FROM LiveChatTranscript WHERE Id =: chatTranscript.Id];
+        System.assertEquals('Completed', updatedTranscript.CRM_Authentication_Status__c);
+    }
 }
