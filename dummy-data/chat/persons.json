@@ -1,0 +1,40 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Person__c",
+                "referenceId": "PersonRef1"
+            },
+            "Name": "12345678901",
+            "INT_MunicipalityNumber__c": "0301",
+            "INT_FirstName__c": "Harry",
+            "INT_LastName__c": "Potter",
+            "INT_IsDeceased__c": false,
+            "INT_RegionNumber__c": "03"
+        },
+        {
+            "attributes": {
+                "type": "Person__c",
+                "referenceId": "PersonRef2"
+            },
+            "Name": "12345678902",
+            "INT_MunicipalityNumber__c": "0301",
+            "INT_FirstName__c": "Hermine",
+            "INT_LastName__c": "Grang",
+            "INT_IsDeceased__c": false,
+            "INT_RegionNumber__c": "03"
+        },
+        {
+            "attributes": {
+                "type": "Person__c",
+                "referenceId": "PersonRef3"
+            },
+            "Name": "12345678903",
+            "INT_MunicipalityNumber__c": "0301",
+            "INT_FirstName__c": "Ronny",
+            "INT_LastName__c": "Wiltersen",
+            "INT_IsDeceased__c": false,
+            "INT_RegionNumber__c": "03"
+        }
+    ]
+}
