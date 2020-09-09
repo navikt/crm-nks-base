@@ -6,7 +6,7 @@ public class ChatAuthController {
             LiveChatTranscript lct = new LiveChatTranscript(Id = chatTranscriptId);
             lct.CRM_Authentication_Status__c = status;
             if (status == 'Completed') {
-                lct.ContactId = getPersonAccountId(chatTranscriptId);
+                lct.AccountId = getPersonAccountId(chatTranscriptId);
             }
             update lct;
         } catch (Exception ex) {
@@ -47,9 +47,9 @@ public class ChatAuthController {
     }
 
     private static Id getPersonAccountId(Id chatTranscriptId) {
-        List<User> users = [SELECT Id, Account.PersonContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE];
+        List<User> users = [SELECT Id, AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE];
         if (users.size() > 0) {
-            return users[0].Account.PersonContactId;
+            return users[0].AccountId;
         } else {
             return null;
         }
