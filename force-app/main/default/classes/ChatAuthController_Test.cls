@@ -11,23 +11,23 @@ public class ChatAuthController_Test {
     }
 
     @isTest
-    static void testGetAuthStatus() {
-        String authStatus;
+    static void testGetChatStatus() {
+        Map<String, String> chatStatuses;
 
         Test.startTest();
         LiveChatTranscript chatTranscript = [SELECT Id FROM LiveChatTranscript LIMIT 1];
-        authStatus = ChatAuthController.getAuthStatus(chatTranscript.Id);
+        chatStatuses = ChatAuthController.getChatStatus(chatTranscript.Id);
 
         //Testing exception
         try{
-            ChatAuthController.getAuthStatus('FAKEID');
+            ChatAuthController.getChatStatus('FAKEID');
         }
         catch(Exception ex) {
             System.assertEquals(new AuraHandledException('Test').getTypeName(), ex.getTypeName());
         }
         Test.stopTest();
 
-        System.assertEquals('Not Started', authStatus);
+        System.assertEquals('Not Started', chatStatuses.get('AUTH_STATUS'));
     }
 
     @isTest
@@ -35,14 +35,15 @@ public class ChatAuthController_Test {
 
         Test.startTest();
         LiveChatTranscript chatTranscript = [SELECT Id FROM LiveChatTranscript LIMIT 1];
+        LiveChatVisitor visitor = [SELECT Id FROM LiveChatVisitor LIMIT 1];
         ChatAuthController.setStatusRequested(chatTranscript.Id);
 
         //Testing exception
         try{
-            ChatAuthController.setStatusRequested('FAKEID');
+            ChatAuthController.setStatusRequested(visitor.Id);
         }
         catch(Exception ex) {
-            System.assertEquals(new StringException('Test').getTypeName(), ex.getTypeName());
+            System.assertEquals(new AuraHandledException('Test').getTypeName(), ex.getTypeName());
         }
         Test.stopTest();
 

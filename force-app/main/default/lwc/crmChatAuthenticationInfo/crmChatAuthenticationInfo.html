@@ -44,8 +44,8 @@
                             <lightning-spinner size="small" title="Sending authentication request">
                             </lightning-spinner>
                         </template>
-                        <lightning-button label="Send autentiseringsforespørsel" disabled={sendingAuthRequest}
-                            variant="neutral" onclick={handleRequest} style="display: grid; width: 100%">
+                        <lightning-button label="Send autentiseringsforespørsel" disabled={cannotInitAuth}
+                            variant="neutral" onclick={requestAuthentication} style="display: grid; width: 100%">
                         </lightning-button>
                     </div>
                 </template>

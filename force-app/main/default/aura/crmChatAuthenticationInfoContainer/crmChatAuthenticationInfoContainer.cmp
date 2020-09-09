@@ -4,6 +4,6 @@
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
     <c:crmChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
-        onrequestauthentication="{!c.requestAuthentication}" onrefreshview="{!c.triggerRefresh}">
+        onrequestauthentication="{!c.requestAuthentication}" onrefreshview="{!c.triggerRefresh}" aura:id="chatAuthInfo">
     </c:crmChatAuthenticationInfo>
 </aura:component>
