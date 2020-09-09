@@ -4,17 +4,35 @@
     "release": "Current",
     "adminEmail": "fakeemail@nav.no.scratchorg",
     "features": [
+        "Sites",
+        "ForceComPlatform",
+        "Communities",
+        "CustomerCommunity",
+        "CustomerCommunityPlus",
+        "PersonAccounts",
+        "LiveAgent",
+        "LightningServiceConsole",
+        "ServiceCloud",
+        "ServiceUser",
         "ProcessBuilder",
         "API",
-        "LiveAgent",
-        "PersonAccounts",
         "ContactsToMultipleAccounts"
     ],
     "country": "NO",
     "language": "en_US",
     "settings": {
+        "experienceBundleSettings": {
+            "enableExperienceBundleMetadata": true
+        },
+        "communitiesSettings": {
+            "enableNetworksEnabled": true,
+            "enableOotbProfExtUserOpsEnable": true
+        },
         "lightningExperienceSettings": {
             "enableS1DesktopEnabled": true
+        },
+        "omniChannelSettings": {
+            "enableOmniChannel": true
         },
         "languageSettings": {
             "enableTranslationWorkbench": true
@@ -22,14 +40,14 @@
         "accountSettings": {
             "enableAccountTeams": true
         },
-        "liveAgentSettings": {
-            "enableLiveAgent": true
-        },
         "emailAdministrationSettings": {
             "enableEnhancedEmailEnabled": true
         },
         "nameSettings": {
             "enableMiddleName": true
+        },
+        "liveAgentSettings": {
+            "enableLiveAgent": true
         }
     }
 }
