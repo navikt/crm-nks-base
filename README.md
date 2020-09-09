@@ -1,25 +1,7 @@
-Template repository for PO Arbeidsgiver Salesforce packages. Necessary steps after using template:
-
-1. Update `README.md` (this file)
-2. Add secrets (see [description](https://github.com/navikt/crm-workflows-base))
-    - PROD_SFDX_URL
-    - PREPROD_SFDX_URL
-    - INTEGRATION_SANDBOX_SFDX_URL
-    - PACKAGE_KEY
-    - DEPLOYMENT_PAT
-    - SLACK_WEBHOOK
-3. Create file `.sfdx/sfdx-config.json`
-    - Add `{"defaultdevhubusername": "[your_devhub_user]","defaultusername": "" }` to it and change the DevHub username
-4. Create a package in SFDX
-    - `sfdx force:package:create -n YourPackageName -t Unlocked -r force-app`
-5. Create an init release in GitHub
-6. Push changes made to `README.md` and `sfdx-project.json`
-7. Create a [Deployment issue](https://github.com/navikt/crm-arbeidsgiver-template/issues/1) (copy text and just create an issue)
-
 # crm-arbeidsgiver-template
 
-[![Build](https://github.com/navikt/XXXXXXXXXXXXX/workflows/master/badge.svg)](https://github.com/navikt/XXXXXXXXXXXXX/actions?query=workflow%3ABuild)
-[![GitHub version](https://badgen.net/github/release/navikt/XXXXXXXXXXXXX/stable)](https://github.com/navikt/XXXXXXXXXXXXX)
+[![Build](https://github.com/navikt/crm-nks-base/workflows/master/badge.svg)](https://github.com/navikt/crm-nks-base/actions?query=workflow%3ABuild)
+[![GitHub version](https://badgen.net/github/release/navikt/crm-nks-base/stable)](https://github.com/navikt/crm-nks-base)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
 
 [DESCRIPTION]
@@ -28,8 +10,9 @@ Template repository for PO Arbeidsgiver Salesforce packages. Necessary steps aft
 
 Pakken er avhengig av følgende pakker:
 
-* XXXXXXXXXXXXX(https://github.com/navikt/XXXXXXXXXXXXX)
-* XXXXXXXXXXXXX(https://github.com/navikt/XXXXXXXXXXXXX)
+* [crm-platform-base](https://github.com/navikt/crm-platform-base)
+* [crm-platform-access-control](https://github.com/navikt/XXXXXXXXXXXXX)
+* [crm-arbeidsgiver-base](https://github.com/navikt/crm-arbeidsgiver-base)
 
 
 ## Komme i gang
