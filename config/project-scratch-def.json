@@ -17,7 +17,8 @@
         "Knowledge",
         "ProcessBuilder",
         "API",
-        "ContactsToMultipleAccounts"
+        "ContactsToMultipleAccounts",
+        "FIELDSERVICE"
     ],
     "country": "NO",
     "language": "en_US",

@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
-import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled } from 'lightning/empApi';
-import getAuthStatus from '@salesforce/apex/ChatAuthController.getAuthStatus';
+import { subscribe } from 'lightning/empApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
+import getChatStatus from '@salesforce/apex/ChatAuthController.getChatStatus';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
 
 //#### LABEL IMPORTS ####
@@ -9,6 +10,7 @@ import AUTH_STARTED from '@salesforce/label/c.CRM_Chat_Authentication_Started';
 import IDENTITY_CONFIRMED from '@salesforce/label/c.CRM_Chat_Identity_Confirmed';
 import UNCONFIRMED_IDENTITY_WARNING from '@salesforce/label/c.CRM_Chat_Unconfirmed_Identity_Warning';
 import IDENTITY_CONFIRMED_DISCLAIMER from '@salesforce/label/c.CRM_Chat_Identity_Confirmed_Disclaimer';
+import AUTH_INIT_FAILED from '@salesforce/label/c.CRM_Chat_Authentication_Init_Failed';
 
 export default class ChatAuthenticationOverview extends LightningElement {
 
@@ -17,18 +19,23 @@ export default class ChatAuthenticationOverview extends LightningElement {
         AUTH_STARTED,
         IDENTITY_CONFIRMED,
         UNCONFIRMED_IDENTITY_WARNING,
-        IDENTITY_CONFIRMED_DISCLAIMER
+        IDENTITY_CONFIRMED_DISCLAIMER,
+        AUTH_INIT_FAILED
     }
-    currentAuthenticationStatus;
-    //Determines if console logging is enabled for the component
-    sendingAuthRequest = false;
-    @api loggingEnabled
+    currentAuthenticationStatus;       //Current auth status of the chat transcript
+    sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
+    activeConversation;                 //Boolean to determine if the componenet is rendered in a context on an active chat conversation
+    @api loggingEnabled;                //Determines if console logging is enabled for the component
     @api recordId;
 
     //#### GETTERS ####
 
     get isLoading() {
         return this.currentAuthenticationStatus ? false : true;
+    }
+
+    get cannotInitAuth() {
+        return !(this.activeConversation && !this.sendingAuthRequest);
     }
 
     get authenticationRequested() {
@@ -49,11 +56,12 @@ export default class ChatAuthenticationOverview extends LightningElement {
         this.handleSubscribe();
     }
 
-    @wire(getAuthStatus, { chatTranscriptId: '$recordId' })
+    @wire(getChatStatus, { chatTranscriptId: '$recordId' })
     wiredStatus({ error, data }) {
         if (data) {
             this.log(data);
-            this.currentAuthenticationStatus = data;
+            this.currentAuthenticationStatus = data.AUTH_STATUS;
+            this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
         } else {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
@@ -85,15 +93,20 @@ export default class ChatAuthenticationOverview extends LightningElement {
         });
     }
 
-    //Handles initiation of the authentication process for the chat visitor
-    handleRequest() {
+    //Sends event handled by parent to utilize conversation API to send message for init of auth process
+    requestAuthentication() {
         this.sendingAuthRequest = true;
+
+        const requestAuthenticationEvent = new CustomEvent('requestauthentication');
+        this.dispatchEvent(requestAuthenticationEvent);
+    }
+
+    //Call from aura parent after a successful message to init auth process
+    setAuthStatusRequested() {
 
         setStatusRequested({ chatTranscriptId: this.recordId })
             .then(result => {
-                this.log('Successfull update');
-                const requestAuthenticationEvent = new CustomEvent('requestauthentication');
-                this.dispatchEvent(requestAuthenticationEvent);
+                this.log('Successful update');
             })
             .catch(error => {
                 this.log(error);
@@ -101,6 +114,27 @@ export default class ChatAuthenticationOverview extends LightningElement {
             .finally(() => {
                 this.sendingAuthRequest = false;
             });
+    }
+
+    @api
+    authRequestHandling(success) {
+        if (success) {
+            this.setAuthStatusRequested();
+        }
+        else {
+            this.showAuthError();
+        }
+    }
+
+    //Displays an error toast message if there was any issue in initialiizing authentication
+    showAuthError() {
+        const event = new ShowToastEvent({
+            title: 'Authentication error',
+            message: AUTH_INIT_FAILED,
+            variant: 'error',
+            mode: 'sticky'
+        });
+        this.dispatchEvent(event);
     }
 
     //Logger function
