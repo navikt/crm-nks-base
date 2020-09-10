@@ -14,6 +14,7 @@
         "LightningServiceConsole",
         "ServiceCloud",
         "ServiceUser",
+        "Knowledge",
         "ProcessBuilder",
         "API",
         "ContactsToMultipleAccounts"
