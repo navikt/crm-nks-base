@@ -19,15 +19,17 @@ public class ChatAuthController {
     * @description: Returns the CRM_Authentication_Status__c, and status of the chat transcript
     * @author Stian Ruud Schikora | 09-04-2020 
     * @param chatTranscriptId [STRING]
-    * @return chatStatuses [MAP<STRING, STRING>]
+    * @return chatInfo [MAP<STRING, STRING>]
     **/
     @AuraEnabled(Cacheable = true)
-    public static Map<String, String> getChatStatus(String chatTranscriptId) {
-        Map<String, String> chatStatuses;
+    public static Map<String, String> getChatInfo(String chatTranscriptId) {
+        Map<String, String> chatInfo;
         try {
-            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
-            chatStatuses = new Map<String, String> {'AUTH_STATUS' => trans.CRM_Authentication_Status__c, 'CONVERSATION_STATUS' => trans.Status};
-            return chatStatuses;
+            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
+            chatInfo = new Map<String, String> {'AUTH_STATUS' => trans.CRM_Authentication_Status__c,
+                                                'CONVERSATION_STATUS' => trans.Status,
+                                                'ACCOUNTID' => trans.accountId};
+            return chatInfo;
         }
         catch(Exception ex) {
             throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Could not retrieve authentication status');

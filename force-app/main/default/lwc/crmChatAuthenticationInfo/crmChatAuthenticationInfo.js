@@ -1,7 +1,7 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { subscribe } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
-import getChatStatus from '@salesforce/apex/ChatAuthController.getChatStatus';
+import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
 
 //#### LABEL IMPORTS ####
@@ -22,10 +22,12 @@ export default class ChatAuthenticationOverview extends LightningElement {
         IDENTITY_CONFIRMED_DISCLAIMER,
         AUTH_INIT_FAILED
     }
+    accountId;                         //Transcript AccountId
+    @api accountFields                 //Comma separated string with field names to display from the related account
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
-    activeConversation;                 //Boolean to determine if the componenet is rendered in a context on an active chat conversation
-    @api loggingEnabled;                //Determines if console logging is enabled for the component
+    activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
+    @api loggingEnabled;               //Determines if console logging is enabled for the component
     @api recordId;
 
     //#### GETTERS ####
@@ -56,12 +58,13 @@ export default class ChatAuthenticationOverview extends LightningElement {
         this.handleSubscribe();
     }
 
-    @wire(getChatStatus, { chatTranscriptId: '$recordId' })
+    @wire(getChatInfo, { chatTranscriptId: '$recordId' })
     wiredStatus({ error, data }) {
         if (data) {
             this.log(data);
             this.currentAuthenticationStatus = data.AUTH_STATUS;
             this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
+            this.accountId = data.ACCOUNTID;
         } else {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
@@ -76,11 +79,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
             console.log('AUTH STATUS UPDATED');
             //Only overwrite status if the event received belongs to this record
             _this.currentAuthenticationStatus = response.data.sobject.Id === _this.recordId ? response.data.sobject.CRM_Authentication_Status__c : _this.currentAuthenticationStatus;
-
-            //If authentication now is complete we as the aura container to refresh the view
+            //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
-                const refreshViewEvent = new CustomEvent('refreshview');
-                _this.dispatchEvent(refreshViewEvent);
+                _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
             }
         };
 
