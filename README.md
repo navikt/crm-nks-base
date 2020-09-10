@@ -1,4 +1,4 @@
-# crm-arbeidsgiver-template
+# crm-nks-base
 
 [![Build](https://github.com/navikt/crm-nks-base/workflows/master/badge.svg)](https://github.com/navikt/crm-nks-base/actions?query=workflow%3ABuild)
 [![GitHub version](https://badgen.net/github/release/navikt/crm-nks-base/stable)](https://github.com/navikt/crm-nks-base)
