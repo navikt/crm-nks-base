@@ -16,11 +16,11 @@ public class ChatAuthController_Test {
 
         Test.startTest();
         LiveChatTranscript chatTranscript = [SELECT Id FROM LiveChatTranscript LIMIT 1];
-        chatStatuses = ChatAuthController.getChatStatus(chatTranscript.Id);
+        chatStatuses = ChatAuthController.getChatInfo(chatTranscript.Id);
 
         //Testing exception
         try{
-            ChatAuthController.getChatStatus('FAKEID');
+            ChatAuthController.getChatInfo('FAKEID');
         }
         catch(Exception ex) {
             System.assertEquals(new AuraHandledException('Test').getTypeName(), ex.getTypeName());
