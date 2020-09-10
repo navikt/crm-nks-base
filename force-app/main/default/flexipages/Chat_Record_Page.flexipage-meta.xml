@@ -99,32 +99,14 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
+                <name>accountFields</name>
+                <value>Name, Phone, PersonEmail</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>loggingEnabled</name>
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>crmChatAuthenticationInfoContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
-                <value>NewContact</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>LiveChatTranscript.ContactId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Contact._LightningRelatedContact</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
-            <visibilityRule>
-                <criteria>
-                    <leftValue>{!Record.CRM_Authentication_Status__c}</leftValue>
-                    <operator>EQUAL</operator>
-                    <rightValue>Completed</rightValue>
-                </criteria>
-            </visibilityRule>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
