@@ -16,9 +16,4 @@
                 authInfoCmp.authRequestHandling(result);
             });
     },
-
-    //Triggers a view refresh when receiving event from LWC
-    triggerRefresh: function () {
-        $A.get('e.force:refreshView').fire();
-    }
 })

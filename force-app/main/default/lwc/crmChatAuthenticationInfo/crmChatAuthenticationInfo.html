@@ -117,5 +117,11 @@
         </template>
     </lightning-card>
 
+    <template if:true={authenticationComplete}>
+        <div class="slds-var-p-top_small">
+            <c-crm-chat-account-info account-id={accountId} displayed-fields={accountFields}>
+            </c-crm-chat-account-info>
+        </div>
+    </template>
 
 </template>

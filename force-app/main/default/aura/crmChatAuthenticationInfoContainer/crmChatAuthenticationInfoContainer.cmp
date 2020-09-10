@@ -1,9 +1,10 @@
 <!-- Conatiner component as LWC not yet supports the conversation toolkit API and lacks the force:refreshView functionality-->
 <aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId">
     <aura:attribute name="loggingEnabled" type="boolean" default="true" />
+    <aura:attribute name="accountFields" type="String" />
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
     <c:crmChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
-        onrequestauthentication="{!c.requestAuthentication}" onrefreshview="{!c.triggerRefresh}" aura:id="chatAuthInfo">
+        accountFields="{!v.accountFields}" onrequestauthentication="{!c.requestAuthentication}" aura:id="chatAuthInfo">
     </c:crmChatAuthenticationInfo>
 </aura:component>
