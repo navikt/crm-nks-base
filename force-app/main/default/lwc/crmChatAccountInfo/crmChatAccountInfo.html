@@ -1,0 +1,18 @@
+<template>
+    <template if:true={recordIdSet}>
+        <lightning-record-view-form record-id={accountId} object-api-name="Account">
+            <lightning-card title="Brukerinfo" icon-name="standard:account">
+                <lightning-button-icon variant="bare" icon-name="action:preview" label="Preview" slot="actions"
+                    onclick={navigateToAccount}></lightning-button-icon>
+                <lightning-layout multiple-rows="true">
+                    <template for:each={fieldList} for:item="field">
+                        <lightning-layout-item key={field} size="6" padding="horizontal-small">
+                            <lightning-output-field class="fieldStyle" field-name={field}>
+                            </lightning-output-field>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </lightning-card>
+        </lightning-record-view-form>
+    </template>
+</template>
