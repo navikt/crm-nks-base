@@ -30,7 +30,6 @@
     <navType>Console</navType>
     <tabs>standard-Account</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>NAV_Kontaktsenter_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>standard-Account</tab>
