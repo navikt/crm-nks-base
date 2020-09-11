@@ -108,9 +108,6 @@
             </componentInstanceProperties>
             <componentName>crmChatAuthenticationInfoContainer</componentName>
         </componentInstances>
-        <componentInstances>
-            <componentName>forceKnowledge:articleSearchDesktop</componentName>
-        </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
