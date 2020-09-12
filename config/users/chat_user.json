@@ -1,0 +1,17 @@
+{
+    "LastName": "Chatster",
+    "FirstName": "Chatty",
+    "TimeZoneSidKey": "Europe/Paris",
+    "LocaleSidKey": "NO",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "NO",
+    "profileName": "Standard User",
+    "permsets": [
+        "NKS_base",
+        "NKS_Knowledge_Viewer",
+        "NKS_Chat_Permissions"
+    ],
+    "UserPermissionsLiveAgentUser": true,
+    "UserPermissionsKnowledgeUser": true,
+    "generatePassword": true
+}
