@@ -49,7 +49,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.viewedRecordId,
-                objectApiName: this.objectApiName,
+                objectApiName: this.viewedObjectApiName,
                 actionName: 'view'
             }
         });
