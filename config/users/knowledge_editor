@@ -1,0 +1,15 @@
+{
+    "LastName": "Einstein",
+    "FirstName": "Albert",
+    "TimeZoneSidKey": "Europe/Paris",
+    "LocaleSidKey": "NO",
+    "EmailEncodingKey": "UTF-8",
+    "LanguageLocaleKey": "NO",
+    "profileName": "Standard User",
+    "permsets": [
+        "NKS_base",
+        "NKA_Knowledge_Editor"
+    ],
+    "UserPermissionsKnowledgeUser": true,
+    "generatePassword": true
+}
