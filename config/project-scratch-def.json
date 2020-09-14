@@ -50,6 +50,12 @@
         },
         "liveAgentSettings": {
             "enableLiveAgent": true
+        },
+        "securitySettings": {
+            "sessionSettings": {
+                "forceRelogin": false
+            },
+            "enableAdminLoginAsAnyUser": true
         }
     }
 }
