@@ -100,13 +100,13 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>accountFields</name>
-                <value>Name, Phone, PersonEmail</value>
+                <value>Name,  Phone, PersonEmail</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>loggingEnabled</name>
                 <value>true</value>
             </componentInstanceProperties>
-            <componentName>crmChatAuthenticationInfoContainer</componentName>
+            <componentName>nksChatAuthenticationInfoContainer</componentName>
         </componentInstances>
         <componentInstances>
             <componentName>forceKnowledge:articleSearchDesktop</componentName>

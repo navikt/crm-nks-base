@@ -119,8 +119,9 @@
 
     <template if:true={authenticationComplete}>
         <div class="slds-var-p-top_small">
-            <c-crm-chat-account-info account-id={accountId} displayed-fields={accountFields}>
-            </c-crm-chat-account-info>
+            <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
+                displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account">
+            </c-nks-record-info>
         </div>
     </template>
 
