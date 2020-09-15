@@ -40,13 +40,13 @@
     <dynamicChoiceSets>
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
-        <displayField>Name_Short__c</displayField>
+        <displayField>NKS_Name_Short__c</displayField>
         <object>NavUnit__c</object>
         <outputAssignments>
             <assignToReference>navUnitID</assignToReference>
             <field>Id</field>
         </outputAssignments>
-        <valueField>Name_Short__c</valueField>
+        <valueField>NKS_Name_Short__c</valueField>
     </dynamicChoiceSets>
     <formulas>
         <name>dateFuture2Days</name>
@@ -84,36 +84,36 @@
         <name>Create_New_Call_Note</name>
         <label>Create New Call Note</label>
         <locationX>419</locationX>
-        <locationY>452</locationY>
+        <locationY>451</locationY>
         <connector>
             <targetReference>Du_har_opprettet_et_notat</targetReference>
         </connector>
         <inputAssignments>
-            <field>Account__c</field>
+            <field>NKS_Account__c</field>
             <value>
                 <elementReference>currAccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Conversation_Note__c</field>
+            <field>NKS_Conversation_Note__c</field>
             <value>
                 <elementReference>Beskrivelse</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Record_Type__c</field>
+            <field>NKS_Record_Type__c</field>
             <value>
                 <stringValue>Samtalenotat</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Theme__c</field>
+            <field>NKS_Theme__c</field>
             <value>
                 <elementReference>TemaValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Undertheme__c</field>
+            <field>NKS_Undertheme__c</field>
             <value>
                 <elementReference>UndertemaValue</elementReference>
             </value>
@@ -124,54 +124,54 @@
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
         <locationX>612</locationX>
-        <locationY>228</locationY>
+        <locationY>229</locationY>
         <connector>
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
         <inputAssignments>
-            <field>Account__c</field>
+            <field>NKS_Account__c</field>
             <value>
                 <elementReference>currAccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Additional_Information__c</field>
+            <field>NKS_Additional_Information__c</field>
             <value>
                 <elementReference>Tilleggsopplysninger_til_kontoret</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Conversation_Note__c</field>
+            <field>NKS_Conversation_Note__c</field>
             <value>
                 <elementReference>Beskrivelse</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Due_Date__c</field>
+            <field>NKS_Due_Date__c</field>
             <value>
                 <elementReference>Frist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NAV_Unit__c</field>
+            <field>NKS_NAV_Unit__c</field>
             <value>
                 <elementReference>navUnitID</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Record_Type__c</field>
+            <field>NKS_Record_Type__c</field>
             <value>
                 <stringValue>Oppgave</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Theme__c</field>
+            <field>NKS_Theme__c</field>
             <value>
                 <elementReference>TemaValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Undertheme__c</field>
+            <field>NKS_Undertheme__c</field>
             <value>
                 <elementReference>UndertemaValue</elementReference>
             </value>
@@ -214,7 +214,7 @@
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
         <locationX>200</locationX>
-        <locationY>208</locationY>
+        <locationY>207</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -264,13 +264,13 @@
             <inputParameters>
                 <name>topPicklistApiName</name>
                 <value>
-                    <stringValue>Theme__c</stringValue>
+                    <stringValue>NKS_Theme__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>middlePicklistApiName</name>
                 <value>
-                    <stringValue>Undertheme__c</stringValue>
+                    <stringValue>NKS_Undertheme__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
