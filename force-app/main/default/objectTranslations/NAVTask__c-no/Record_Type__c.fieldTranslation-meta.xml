@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Type</label>
+    <name>Record_Type__c</name>
+    <picklistValues>
+        <masterLabel>Oppgave</masterLabel>
+        <translation><!-- Oppgave --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Samtalenotat</masterLabel>
+        <translation><!-- Samtalenotat --></translation>
+    </picklistValues>
+</CustomFieldTranslation>
