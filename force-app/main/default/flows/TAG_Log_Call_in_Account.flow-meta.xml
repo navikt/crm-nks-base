@@ -68,12 +68,6 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
-        <name>CanvasMode</name>
-        <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -308,6 +302,20 @@
             </outputParameters>
         </fields>
         <fields>
+            <name>Ingen_personopplysninger</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Ingen personopplysninger</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(224, 9, 9);&quot;&gt;Du må bekrefte at notatet ikke inneholder personsensitive opplysninger&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!Ingen_personopplysninger} = TRUE</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
             <name>Beskrivelse</name>
             <fieldText>Samtalenotat</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -366,7 +374,7 @@
         </fields>
         <fields>
             <name>Tilleggsopplysninger_til_kontoret</name>
-            <fieldText>Tilleggsopplysninger til kontoret</fieldText>
+            <fieldText>Oppgave til NAV-Enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
@@ -384,7 +392,7 @@
             <name>NAV_Enhet</name>
             <choiceReferences>navEnhetRecords</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>NAV Enhet</fieldText>
+            <fieldText>NAV-Enhet</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
