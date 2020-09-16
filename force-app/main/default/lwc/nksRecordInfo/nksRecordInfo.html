@@ -1,12 +1,12 @@
 <template>
     <template if:true={recordIdSet}>
-        <lightning-record-view-form record-id={accountId} object-api-name="Account">
-            <lightning-card title="Brukerinfo" icon-name="standard:account">
+        <lightning-record-view-form record-id={viewedRecordId} object-api-name={viewedObjectApiName}>
+            <lightning-card title={cardLabel} icon-name={iconName}>
                 <lightning-button-icon variant="bare" icon-name="action:preview" label="Preview" slot="actions"
-                    onclick={navigateToAccount}></lightning-button-icon>
+                    onclick={navigateToRecord}></lightning-button-icon>
                 <lightning-layout multiple-rows="true">
                     <template for:each={fieldList} for:item="field">
-                        <lightning-layout-item key={field} size="6" padding="horizontal-small">
+                        <lightning-layout-item key={field} size={columnWidth} padding="horizontal-small">
                             <lightning-output-field class="fieldStyle" field-name={field}>
                             </lightning-output-field>
                         </lightning-layout-item>
