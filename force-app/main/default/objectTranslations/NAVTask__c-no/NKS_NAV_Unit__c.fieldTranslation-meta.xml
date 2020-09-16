@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Hovedtema</label>
-    <name>Theme__c</name>
+    <label>NAV Enhet</label>
+    <name>NKS_NAV_Unit__c</name>
+    <relationshipLabel><!-- NAVTasks --></relationshipLabel>
 </CustomFieldTranslation>
