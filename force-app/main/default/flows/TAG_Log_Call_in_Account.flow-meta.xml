@@ -40,9 +40,13 @@
     <dynamicChoiceSets>
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
-        <displayField>Name</displayField>
+        <displayField>NKS_Name_Short__c</displayField>
         <object>NavUnit__c</object>
-        <valueField>Name</valueField>
+        <outputAssignments>
+            <assignToReference>navUnitID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <valueField>NKS_Name_Short__c</valueField>
     </dynamicChoiceSets>
     <formulas>
         <name>dateFuture2Days</name>
@@ -64,6 +68,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -74,69 +84,99 @@
         <name>Create_New_Call_Note</name>
         <label>Create New Call Note</label>
         <locationX>419</locationX>
-        <locationY>454</locationY>
+        <locationY>451</locationY>
         <connector>
             <targetReference>Du_har_opprettet_et_notat</targetReference>
         </connector>
         <inputAssignments>
-            <field>Description</field>
+            <field>NKS_Account__c</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Conversation_Note__c</field>
             <value>
                 <elementReference>Beskrivelse</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>TAG_ActivityType__c</field>
+            <field>NKS_Record_Type__c</field>
             <value>
-                <elementReference>EmneValue</elementReference>
+                <stringValue>Samtalenotat</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>TAG_service__c</field>
+            <field>NKS_Theme__c</field>
             <value>
-                <elementReference>UnderemneValue</elementReference>
+                <elementReference>TemaValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>WhatId</field>
+            <field>NKS_Undertheme__c</field>
             <value>
-                <elementReference>currAccountId</elementReference>
+                <elementReference>UndertemaValue</elementReference>
             </value>
         </inputAssignments>
-        <object>Task</object>
+        <object>NAVTask__c</object>
     </recordCreates>
     <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>634</locationX>
-        <locationY>165</locationY>
+        <locationX>612</locationX>
+        <locationY>229</locationY>
         <connector>
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
         <inputAssignments>
-            <field>Description</field>
+            <field>NKS_Account__c</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Additional_Information__c</field>
+            <value>
+                <elementReference>Tilleggsopplysninger_til_kontoret</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Conversation_Note__c</field>
             <value>
                 <elementReference>Beskrivelse</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>TAG_ActivityType__c</field>
+            <field>NKS_Due_Date__c</field>
             <value>
-                <elementReference>EmneValue</elementReference>
+                <elementReference>Frist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>TAG_service__c</field>
+            <field>NKS_NAV_Unit__c</field>
             <value>
-                <elementReference>UnderemneValue</elementReference>
+                <elementReference>navUnitID</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>WhatId</field>
+            <field>NKS_Record_Type__c</field>
             <value>
-                <elementReference>currAccountId</elementReference>
+                <stringValue>Oppgave</stringValue>
             </value>
         </inputAssignments>
-        <object>Task</object>
+        <inputAssignments>
+            <field>NKS_Theme__c</field>
+            <value>
+                <elementReference>TemaValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Undertheme__c</field>
+            <value>
+                <elementReference>UndertemaValue</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NAVTask__c</object>
     </recordCreates>
     <screens>
         <name>Du_har_opprettet_en_oppgave</name>
@@ -174,7 +214,7 @@
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
         <locationX>200</locationX>
-        <locationY>214</locationY>
+        <locationY>207</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -218,19 +258,19 @@
             <inputParameters>
                 <name>dependencyWrapperApiName</name>
                 <value>
-                    <stringValue>Task</stringValue>
+                    <stringValue>NAVTask__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>topPicklistApiName</name>
                 <value>
-                    <stringValue>TAG_ActivityType__c</stringValue>
+                    <stringValue>NKS_Theme__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>middlePicklistApiName</name>
                 <value>
-                    <stringValue>TAG_service__c</stringValue>
+                    <stringValue>NKS_Undertheme__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -246,12 +286,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>topValue</name>
-                <value>
-                    <elementReference>EmneValue</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>middleLabel</name>
                 <value>
                     <stringValue>Undertema</stringValue>
@@ -263,14 +297,15 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>middleValue</name>
-                <value>
-                    <elementReference>UnderemneValue</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>TemaValue</assignToReference>
+                <name>topValue</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>UndertemaValue</assignToReference>
+                <name>middleValue</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>Beskrivelse</name>
@@ -389,6 +424,20 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>navUnitID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>navUnitName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>OppgaveToggleStore</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -399,7 +448,21 @@
         </value>
     </variables>
     <variables>
+        <name>TemaValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>UnderemneValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UndertemaValue</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
