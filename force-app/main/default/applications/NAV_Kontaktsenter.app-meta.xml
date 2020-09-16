@@ -29,10 +29,14 @@
     <label>NAV Kontaktsenter</label>
     <navType>Console</navType>
     <tabs>standard-Account</tabs>
+    <tabs>standard-LightningQuickText</tabs>
     <uiType>Lightning</uiType>
     <workspaceConfig>
         <mappings>
             <tab>standard-Account</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-LightningQuickText</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>
