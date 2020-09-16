@@ -302,7 +302,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>flowName</name>
-                <value>Logg_AG_Call_in_Account</value>
+                <value>TAG_Log_Call_in_Account</value>
             </componentInstanceProperties>
             <componentName>flowruntime:interview</componentName>
         </componentInstances>

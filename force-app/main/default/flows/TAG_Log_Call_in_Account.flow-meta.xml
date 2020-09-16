@@ -59,8 +59,8 @@
   TODAY() + 2
 )</expression>
     </formulas>
-    <interviewLabel>Logg AG Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Logg AG Call in Account</label>
+    <interviewLabel>TAG Log Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TAG Log Call in Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
