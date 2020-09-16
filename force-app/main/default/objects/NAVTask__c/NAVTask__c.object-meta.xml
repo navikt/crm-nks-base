@@ -155,7 +155,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>NAVTask</label>
     <nameField>
-        <label>NAVTask Name</label>
+        <label>Tema</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>NAVTasks</pluralLabel>

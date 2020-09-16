@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <choices>
+        <name>None</name>
+        <choiceText>(Ingen)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>null</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Note</name>
         <label>Note/Task</label>
-        <locationX>408</locationX>
-        <locationY>235</locationY>
+        <locationX>575</locationX>
+        <locationY>280</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>It_is_Note</name>
@@ -17,7 +25,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_New_Call_Note</targetReference>
+                <targetReference>Du_har_opprettet_et_notat</targetReference>
             </connector>
             <label>It is Note</label>
         </rules>
@@ -41,11 +49,20 @@
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
         <displayField>NKS_Name_Short__c</displayField>
+        <filters>
+            <field>CRM_QueueId__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NavUnit__c</object>
         <outputAssignments>
             <assignToReference>navUnitID</assignToReference>
             <field>Id</field>
         </outputAssignments>
+        <sortField>NKS_Name_Short__c</sortField>
+        <sortOrder>Asc</sortOrder>
         <valueField>NKS_Name_Short__c</valueField>
     </dynamicChoiceSets>
     <formulas>
@@ -75,50 +92,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_New_Call_Note</name>
-        <label>Create New Call Note</label>
-        <locationX>419</locationX>
-        <locationY>451</locationY>
-        <connector>
-            <targetReference>Du_har_opprettet_et_notat</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>NKS_Account__c</field>
-            <value>
-                <elementReference>currAccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NKS_Conversation_Note__c</field>
-            <value>
-                <elementReference>Beskrivelse</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NKS_Record_Type__c</field>
-            <value>
-                <stringValue>Samtalenotat</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NKS_Theme__c</field>
-            <value>
-                <elementReference>TemaValue</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>NKS_Undertheme__c</field>
-            <value>
-                <elementReference>UndertemaValue</elementReference>
-            </value>
-        </inputAssignments>
-        <object>NAVTask__c</object>
-    </recordCreates>
-    <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>612</locationX>
-        <locationY>229</locationY>
+        <locationX>764</locationX>
+        <locationY>237</locationY>
         <connector>
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
@@ -153,12 +130,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Record_Type__c</field>
-            <value>
-                <stringValue>Oppgave</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>NKS_Theme__c</field>
             <value>
                 <elementReference>TemaValue</elementReference>
@@ -170,7 +141,83 @@
                 <elementReference>UndertemaValue</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>TemaValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>QueueId</elementReference>
+            </value>
+        </inputAssignments>
         <object>NAVTask__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Standard_Task</name>
+        <label>Create standard task</label>
+        <locationX>382</locationX>
+        <locationY>269</locationY>
+        <connector>
+            <targetReference>Note</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Beskrivelse</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RelatedToAccount__c</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Telefonsamtale NKS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TAG_ActivityType__c</field>
+            <value>
+                <elementReference>TemaValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TAG_NoPersonInformation__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TAG_service__c</field>
+            <value>
+                <elementReference>UndertemaValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
     </recordCreates>
     <screens>
         <name>Du_har_opprettet_en_oppgave</name>
@@ -191,8 +238,8 @@
     <screens>
         <name>Du_har_opprettet_et_notat</name>
         <label>Du har opprettet et notat</label>
-        <locationX>423</locationX>
-        <locationY>639</locationY>
+        <locationX>594</locationX>
+        <locationY>482</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -207,13 +254,13 @@
     <screens>
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
-        <locationX>200</locationX>
-        <locationY>207</locationY>
+        <locationX>163</locationX>
+        <locationY>267</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Note</targetReference>
+            <targetReference>Create_Standard_Task</targetReference>
         </connector>
         <fields>
             <name>ShowIfNote</name>
@@ -302,20 +349,6 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>Ingen_personopplysninger</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <booleanValue>false</booleanValue>
-            </defaultValue>
-            <fieldText>Ingen personopplysninger</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(224, 9, 9);&quot;&gt;Du må bekrefte at notatet ikke inneholder personsensitive opplysninger&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!Ingen_personopplysninger} = TRUE</formulaExpression>
-            </validationRule>
-        </fields>
-        <fields>
             <name>Beskrivelse</name>
             <fieldText>Samtalenotat</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -374,7 +407,7 @@
         </fields>
         <fields>
             <name>Tilleggsopplysninger_til_kontoret</name>
-            <fieldText>Oppgave til NAV-Enhet</fieldText>
+            <fieldText>Tilleggsopplysninger til kontoret</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
@@ -390,9 +423,10 @@
         </fields>
         <fields>
             <name>NAV_Enhet</name>
+            <choiceReferences>None</choiceReferences>
             <choiceReferences>navEnhetRecords</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>NAV-Enhet</fieldText>
+            <fieldText>NAV-enhet</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -453,6 +487,16 @@
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>QueueId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>00G1x000003q2oF</stringValue>
         </value>
     </variables>
     <variables>
