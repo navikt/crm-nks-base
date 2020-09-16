@@ -4,7 +4,7 @@
     <aura:attribute name="accountFields" type="String" />
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
-    <c:crmChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
+    <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
         accountFields="{!v.accountFields}" onrequestauthentication="{!c.requestAuthentication}" aura:id="chatAuthInfo">
-    </c:crmChatAuthenticationInfo>
+    </c:nksChatAuthenticationInfo>
 </aura:component>
