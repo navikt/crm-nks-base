@@ -13,7 +13,7 @@
             </objects>
         </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="comments" type="String" label="Comments"/>
+            <property name="comments" type="String" label="Comments" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
