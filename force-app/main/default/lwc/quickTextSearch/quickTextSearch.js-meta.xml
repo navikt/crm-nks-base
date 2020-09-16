@@ -4,12 +4,16 @@
     <isExposed>true</isExposed>
     <targets>
         <target>lightning__RecordPage</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Account</object>
             </objects>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="comments" type="String" label="Comments"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
