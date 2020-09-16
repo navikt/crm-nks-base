@@ -1,16 +1,7 @@
 <template>
-    <div class="slds-grid">
-        <div class="slds-col slds-size_5-of-6">
-            <lightning-textarea name="comments" labe="Samtalenotat"></lightning-textarea>
-        </div>
-        <div class="slds-col slds-size_1-of-6">
-            <a href="#" class="quicktext-button" onclick={showModal}>
-                <lightning-icon icon-name="utility:quick_text" class="quicktext-button" size="xx-small"
-                    alternative-text="Legg til hurtigtekst" title="Hurtigtekst">
-                </lightning-icon>
-            </a>
-        </div>
-    </div>
+    <lightning-button-icon class="quicktext-button" icon-name="utility:quick_text" onclick={showModal}
+        alternative-text="Legg til hurtigtekst" title="Hurtigtekst"></lightning-button-icon>
+    <lightning-textarea name="comments" labe="Samtalenotat"></lightning-textarea>
 
     <template if:true={isModal}>
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-docked-composer-modal"
@@ -21,7 +12,8 @@
                         <header class="slds-docked-composer__header slds-grid slds-shrink-none" aria-live="assertive">
                             <div class="slds-media slds-media_center slds-no-space">
                                 <div class="slds-media__body">
-                                    <lightning-input name="search-input" type="search" class="search"></lightning-input>
+                                    <lightning-input name="search-input" type="search" class="searchBox">
+                                    </lightning-input>
                                 </div>
                             </div>
                             <div class="slds-col_bump-left slds-shrink-none">
