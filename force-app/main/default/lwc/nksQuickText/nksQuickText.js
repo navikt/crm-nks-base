@@ -1,4 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
+import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.searchRecords";
 
 export default class nksQuickText extends LightningElement {
@@ -6,12 +7,17 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @track isModal = false;
     @track data;
+    @track myVal;
+    @track comments = '';
+
+    get myVal() {
+        return;
+    }
 
     handleKeyUp(evt) {
         const isEnterKey = evt.keyCode === 13;
         const queryTerm = evt.target.value;
 
-        console.log(queryTerm);
         if (isEnterKey) {
             searchRecords({
                 search: queryTerm
@@ -21,7 +27,7 @@ export default class nksQuickText extends LightningElement {
                     this.data = result;
                 })
                 .catch(error => {
-                    //helper.senderror 
+                    //TODO: senderror 
                 })
         }
     }
@@ -35,11 +41,13 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        console.log(event.currentTarget.dataset.message);
-        //TODO: Insert message in text box 
+        this.myVal = this.comments + event.currentTarget.dataset.message;
+        this.isModal = false;
     }
-
-    get myVal() {
-        return;
+    handleChange(event) {
+        this[event.target.name] = event.target.value;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.comments);
+        this.dispatchEvent(attributeChangeEvent);
+        console.log('dispatched: ' + this.comments);
     }
 }

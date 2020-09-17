@@ -48,6 +48,6 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-    <lightning-textarea name="comments" label="Samtalenotat" value={myVal}></lightning-textarea>
-
+    <lightning-textarea name="comments" onchange={handleChange} label="Samtalenotat" value={myVal}>
+    </lightning-textarea>
 </template>
