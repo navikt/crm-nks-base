@@ -48,6 +48,5 @@ export default class nksQuickText extends LightningElement {
         this[event.target.name] = event.target.value;
         const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.comments);
         this.dispatchEvent(attributeChangeEvent);
-        console.log('dispatched: ' + this.comments);
     }
 }
