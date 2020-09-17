@@ -56,6 +56,11 @@
                 <default>false</default>
                 <label>Oppsigelser</label>
             </value>
+            <value>
+                <fullName>Tiltaksøkonomi</fullName>
+                <default>false</default>
+                <label>Tiltaksøkonomi</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Generelt markedsarbeid</controllingFieldValue>
@@ -75,6 +80,10 @@
         <valueSettings>
             <controllingFieldValue>Rekruttere og inkludere</controllingFieldValue>
             <valueName>Inkludering (med virkemidler, inkl. oppfølging)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rekruttere og inkludere</controllingFieldValue>
+            <valueName>Tiltaksøkonomi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Forebygge sykefravær og redusere frafall</controllingFieldValue>

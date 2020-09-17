@@ -38,4 +38,8 @@
         <masterLabel>Rekruttering (uten virkemidler, inkl. oppfølging)</masterLabel>
         <translation><!-- Rekruttering (uten virkemidler, inkl. oppfølging) --></translation>
     </picklistValues>
+    <picklistValues>
+        <masterLabel>Tiltaksøkonomi</masterLabel>
+        <translation><!-- Tiltaksøkonomi --></translation>
+    </picklistValues>
 </CustomFieldTranslation>
