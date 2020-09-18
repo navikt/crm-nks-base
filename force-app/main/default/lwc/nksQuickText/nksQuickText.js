@@ -7,7 +7,7 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @track isModal = false;
     @track data;
-    @track myVal;
+    myVal;
     @track comments = '';
 
     get myVal() {
@@ -36,6 +36,12 @@ export default class nksQuickText extends LightningElement {
         this.isModal = true;
     }
 
+    viewModal(event) {
+        this.modal = true;
+        return this.modal;
+    }
+
+
     hideModal(event) {
         this.isModal = false;
     }
@@ -43,6 +49,8 @@ export default class nksQuickText extends LightningElement {
     insertText(event) {
         this.myVal = this.comments + event.currentTarget.dataset.message;
         this.isModal = false;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.myVal);
+        this.dispatchEvent(attributeChangeEvent);
     }
     handleChange(event) {
         this[event.target.name] = event.target.value;

@@ -455,7 +455,7 @@
             <targetReference>Screen_to_Log_a_Call</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>currAccountId</name>
         <dataType>String</dataType>
@@ -501,7 +501,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue>00G1x000003q2oF</stringValue>
+            <stringValue>00G2o0000099xOD</stringValue>
         </value>
     </variables>
     <variables>

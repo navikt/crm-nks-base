@@ -1,4 +1,5 @@
 <template>
+
     <lightning-button-icon class="quicktext-button" icon-name="utility:quick_text" variant="border-filled"
         onclick={showModal} alternative-text="Legg til hurtigtekst" title="Hurtigtekst"></lightning-button-icon>
 
@@ -8,15 +9,13 @@
             <div class="slds-modal__container">
 
                 <header class="slds-modal__header">
-                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Lukk"
-                        onclick={hideModal}>
-                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="false">
-                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Lukk</span>
-                    </button>
+                    <lightning-button-icon class="slds-modal__close" title="Lukk" icon-name="utility:close"
+                        icon-class="slds-button_icon-inverse" onclick={hideModal} variant="bare">
+                    </lightning-button-icon>
+
                     <div onkeyup={handleKeyUp}>
-                        <lightning-input name="enter-search" label="Søk her" type="search" variant="label-hidden">
+                        <lightning-input name="enter-search" label="Søk her" placeholder="Søk i hurtigtekst..."
+                            type="search" variant="label-hidden">
                         </lightning-input>
                     </div>
                 </header>
