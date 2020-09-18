@@ -114,7 +114,7 @@
         <inputAssignments>
             <field>NKS_Conversation_Note__c</field>
             <value>
-                <elementReference>Beskrivelse</elementReference>
+                <elementReference>Samtalenotat</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -172,7 +172,7 @@
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Beskrivelse</elementReference>
+                <elementReference>Samtalenotat</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -349,10 +349,14 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>Beskrivelse</name>
-            <fieldText>Samtalenotat</fieldText>
-            <fieldType>LargeTextArea</fieldType>
+            <name>Samtalenotat_med_hurtigtekst</name>
+            <extensionName>c:nksQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>Samtalenotat</assignToReference>
+                <name>comments</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>pvkDisplay</name>
@@ -455,7 +459,7 @@
             <targetReference>Screen_to_Log_a_Call</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>currAccountId</name>
         <dataType>String</dataType>
@@ -503,6 +507,13 @@
         <value>
             <stringValue>00G2o0000099xOD</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>Samtalenotat</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>TemaValue</name>
