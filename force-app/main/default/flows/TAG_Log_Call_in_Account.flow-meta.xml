@@ -255,7 +255,7 @@
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
         <locationX>163</locationX>
-        <locationY>267</locationY>
+        <locationY>266</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -355,6 +355,11 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>pvkDisplay</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 10px;&quot;&gt;Husk å ikke notere personopplysninger&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>OppgaveJaNei</name>
             <extensionName>flowruntime:toggle</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -407,7 +412,7 @@
         </fields>
         <fields>
             <name>Tilleggsopplysninger_til_kontoret</name>
-            <fieldText>Tilleggsopplysninger til kontoret</fieldText>
+            <fieldText>Oppgave til NAV-Enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
