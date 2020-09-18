@@ -1,0 +1,53 @@
+<template>
+    <lightning-button-icon class="quicktext-button" icon-name="utility:quick_text" variant="border-filled"
+        onclick={showModal} alternative-text="Legg til hurtigtekst" title="Hurtigtekst"></lightning-button-icon>
+
+    <template if:true={isModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Lukk"
+                        onclick={hideModal}>
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="false">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Lukk</span>
+                    </button>
+                    <div onkeyup={handleKeyUp}>
+                        <lightning-input name="enter-search" label="Søk her" type="search" variant="label-hidden">
+                        </lightning-input>
+                    </div>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                        <template if:true={data} for:each={data} for:item="record" for:index="index">
+                            <lightning-layout-item key={record.Id} class="slds-var-p-around_xx-small slds-size_1-of-1"
+                                onclick={insertText} data-message={record.Message}>
+                                <div class="quicktext-item">
+                                    <div class="slds-var-p-horizontal_small">
+                                        <div class="slds-media">
+                                            <div class="slds-media__body">
+                                                <p class="slds-text-link">{record.Name}</p>
+                                                <p>{record.Message}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </lightning-layout-item>
+
+                        </template>
+                    </lightning-layout>
+                </div>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <lightning-textarea name="comments" onchange={handleChange} label="Samtalenotat" value={myVal}>
+    </lightning-textarea>
+</template>
