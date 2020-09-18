@@ -5,7 +5,6 @@ import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.search
 export default class nksQuickText extends LightningElement {
 
     @api comments;
-    @track isModal = false;
     @track data;
     myVal;
     @track comments = '';
@@ -33,28 +32,26 @@ export default class nksQuickText extends LightningElement {
     }
 
     showModal(event) {
-        this.isModal = true;
-    }
-
-    viewModal(event) {
-        this.modal = true;
-        return this.modal;
+        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
+        this.template.querySelector('lightning-input').focus();
     }
 
 
     hideModal(event) {
-        this.isModal = false;
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
 
     insertText(event) {
         this.myVal = this.comments + event.currentTarget.dataset.message;
-        this.isModal = false;
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+        this.template.querySelector('textarea ').value = this.myVal;
         const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.myVal);
         this.dispatchEvent(attributeChangeEvent);
     }
+
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.comments);
+        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.template.querySelector('textarea').value);
         this.dispatchEvent(attributeChangeEvent);
     }
 }
