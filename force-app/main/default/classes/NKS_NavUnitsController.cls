@@ -13,7 +13,7 @@ public with sharing class NKS_NavUnitsController {
 
     private static List<NavUnit__c> getUnitsFromDatabase(){
         return
-        [SELECT CRM_QueueId__c, NKS_Name_Short__c 
+        [SELECT Id, CRM_QueueId__c, NKS_Name_Short__c 
         FROM NavUnit__c 
         WHERE CRM_QueueId__c!=null 
         ORDER BY NKS_Name_Short__c];

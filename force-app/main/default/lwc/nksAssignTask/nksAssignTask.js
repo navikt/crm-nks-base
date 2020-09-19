@@ -5,7 +5,7 @@ import getUnits from "@salesforce/apex/NKS_NavUnitsController.getUnits";
 export default class NksAssignTask extends LightningElement {
     @api queueId;
     @track units;
-    @track queueId = '00G1X000003htJx';
+    @track queueId;
 
     @wire(getUnits)
     wiredValues({ data, error }) {

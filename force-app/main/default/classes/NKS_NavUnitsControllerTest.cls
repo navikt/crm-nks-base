@@ -13,7 +13,7 @@ private class NKS_NavUnitsControllerTest {
 
     @IsTest
     private static void testGetUnits(){
-        List<NavUnit__c> units=NKS_NavUnitsController.getUnits();
-        System.assertEquals(4, units.size());
+        String units=NKS_NavUnitsController.getUnits();
+        System.assertEquals(4, units.length());
     }
 }

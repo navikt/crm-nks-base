@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_account_nav_unit</name>
+        <label>Get account&apos;s nav unit</label>
+        <locationX>78</locationX>
+        <locationY>237</locationY>
+        <actionName>NKS_NavTaskRoutingHandler</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_to_Log_a_Call</targetReference>
+        </connector>
+        <inputParameters>
+            <name>accountIds</name>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>QueueId</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <choices>
         <name>None</name>
         <choiceText>(Ingen)</choiceText>
@@ -40,7 +61,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_New_Call_Task</targetReference>
+                <targetReference>Get_Selected_NAV_unit</targetReference>
             </connector>
             <label>It is Task</label>
         </rules>
@@ -94,8 +115,8 @@
     <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>764</locationX>
-        <locationY>237</locationY>
+        <locationX>1051</locationX>
+        <locationY>261</locationY>
         <connector>
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
@@ -219,11 +240,33 @@
         </inputAssignments>
         <object>Task</object>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Selected_NAV_unit</name>
+        <label>Get Selected NAV unit</label>
+        <locationX>834</locationX>
+        <locationY>288</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_New_Call_Task</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_QueueId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>QueueId</elementReference>
+            </value>
+        </filters>
+        <object>NavUnit__c</object>
+        <outputAssignments>
+            <assignToReference>navUnitID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>Du_har_opprettet_en_oppgave</name>
         <label>Du har opprettet en oppgave</label>
-        <locationX>859</locationX>
-        <locationY>173</locationY>
+        <locationX>1306</locationX>
+        <locationY>239</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -254,8 +297,8 @@
     <screens>
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
-        <locationX>163</locationX>
-        <locationY>266</locationY>
+        <locationX>236</locationX>
+        <locationY>257</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -431,13 +474,20 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>NAV_Enhet</name>
-            <choiceReferences>None</choiceReferences>
-            <choiceReferences>navEnhetRecords</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>NAV-enhet</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <name>AssignTask</name>
+            <extensionName>c:nksAssignTask</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>queueId</name>
+                <value>
+                    <elementReference>QueueId</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>QueueId</assignToReference>
+                <name>queueId</name>
+            </outputParameters>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -456,10 +506,10 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Screen_to_Log_a_Call</targetReference>
+            <targetReference>Get_account_nav_unit</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>currAccountId</name>
         <dataType>String</dataType>
@@ -504,9 +554,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <value>
-            <stringValue>00G2o0000099xOD</stringValue>
-        </value>
     </variables>
     <variables>
         <name>Samtalenotat</name>
