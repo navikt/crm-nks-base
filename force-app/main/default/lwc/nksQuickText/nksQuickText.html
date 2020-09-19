@@ -24,14 +24,15 @@
                     <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
                     <lightning-layout multiple-rows="true" pull-to-boundary="small">
                         <template if:true={data} for:each={data} for:item="record" for:index="index">
-                            <lightning-layout-item key={record.Id} class="slds-var-p-around_xx-small slds-size_1-of-1"
-                                onclick={insertText} data-message={record.Message}>
+                            <lightning-layout-item key={record.RecordId}
+                                class="slds-var-p-around_xx-small slds-size_1-of-1" onclick={insertText}
+                                data-message={record.Message}>
                                 <div class="quicktext-item">
                                     <div class="slds-var-p-horizontal_small">
                                         <div class="slds-media">
                                             <div class="slds-media__body">
                                                 <p class="slds-text-link">{record.Name}</p>
-                                                <p>{record.Message}</p>
+                                                <p>{record.Summary}</p>
                                             </div>
                                         </div>
                                     </div>

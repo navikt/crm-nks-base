@@ -15,7 +15,6 @@ export default class nksQuickText extends LightningElement {
 
     handleKeyUp(evt) {
 
-
         const isEnterKey = evt.keyCode === 13;
         const queryTerm = evt.target.value;
 
