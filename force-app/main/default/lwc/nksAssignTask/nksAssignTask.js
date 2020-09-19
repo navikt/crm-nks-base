@@ -18,8 +18,6 @@ export default class NksAssignTask extends LightningElement {
         if (data) {
             this.units = JSON.parse(data);
         } else if (error) {
-            window.console.log('Error in wiredValues');
-            window.console.log(error);
         }
     }
 

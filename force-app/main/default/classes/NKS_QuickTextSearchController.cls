@@ -10,13 +10,4 @@ public with sharing class NKS_QuickTextSearchController {
         }
 		return quickTexts;
     }
-     
-    @AuraEnabled(cacheable = true)
-    public static List<QuickText> getRecentlyViewedRecords() {
-        return [
-            SELECT Id, Name, Message, LastViewedDate 
-            FROM QuickText
-            WHERE LastViewedDate !=null
-            ORDER BY LastViewedDate DESC LIMIT 5 ];
-    }
 }
