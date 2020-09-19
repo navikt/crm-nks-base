@@ -1,4 +1,4 @@
-public class ChatAuthController {
+public without sharing class ChatAuthController {
     
     @AuraEnabled
     public static void setStatus(Id chatTranscriptId, String status) {
