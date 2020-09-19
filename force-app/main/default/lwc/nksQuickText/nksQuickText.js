@@ -1,5 +1,4 @@
 import { LightningElement, track, api } from 'lwc';
-import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.searchRecords";
 
 export default class nksQuickText extends LightningElement {
@@ -45,13 +44,17 @@ export default class nksQuickText extends LightningElement {
         this.myVal = this.comments + event.currentTarget.dataset.message;
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         this.template.querySelector('textarea ').value = this.myVal;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.myVal);
+        const attributeChangeEvent = new CustomEvent("commentschange", {
+            detail: this.template.querySelector('textarea').value
+        });
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', this.template.querySelector('textarea').value);
+        const attributeChangeEvent = new CustomEvent("commentschange", {
+            detail: this.template.querySelector('textarea').value
+        });
         this.dispatchEvent(attributeChangeEvent);
     }
 }

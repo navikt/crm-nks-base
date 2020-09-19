@@ -30,9 +30,24 @@ export default class NksThemesPicklists extends LightningElement {
         let key = this.subFieldData.controllerValues[event.target.value];
         this.subthemes = this.subFieldData.values.filter(opt => opt.validFor.includes(key));
         this.selectedTheme = event.detail.value;
+
+        const selectedThemeEvent = new CustomEvent('themechange', {
+
+            detail: this.selectedTheme
+        });
+
+        this.dispatchEvent(selectedThemeEvent);
     }
 
     handleSubThemeChange(event) {
         this.selectedSubTheme = event.detail.value;
+        const selectedSubThemeEvent = new CustomEvent('subthemechange', {
+
+            detail: this.selectedSubTheme
+        });
+
+        this.dispatchEvent(selectedSubThemeEvent);
     }
+
+
 }
