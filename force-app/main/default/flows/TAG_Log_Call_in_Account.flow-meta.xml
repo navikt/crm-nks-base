@@ -499,7 +499,7 @@
             <targetReference>Get_account_nav_unit</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>additionalComments</name>
         <dataType>String</dataType>
@@ -562,6 +562,9 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>subThemeValue</name>

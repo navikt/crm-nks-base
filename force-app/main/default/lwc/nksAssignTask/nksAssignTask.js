@@ -11,7 +11,9 @@ export default class NksAssignTask extends LightningElement {
     @api additionalComments;
     @api conversationNote;
     @track units;
-    @track queueId;
+    @track defaultQueueId = this.queueId;
+    @track createTask;
+
 
 
     @wire(getUnits)
@@ -51,10 +53,13 @@ export default class NksAssignTask extends LightningElement {
         this.createTask = event.target.checked;
         if (this.createTask == true) {
             this.template.querySelector('[data-id="task"]').className = 'show';
+            //this.template.querySelector('[data-id="checkbox-toggle-16"]').className = 'slds-checkbox_on';
+
         } else {
             this.template.querySelector('[data-id="task"]').className = 'hide';
         }
         const attributeChangeEvent = new FlowAttributeChangeEvent('create-task', this.createTask);
+
         this.dispatchEvent(attributeChangeEvent);
     }
 
