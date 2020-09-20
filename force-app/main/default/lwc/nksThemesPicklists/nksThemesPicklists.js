@@ -4,8 +4,8 @@ import NAV_TASK_OBJECT from '@salesforce/schema/NAVTask__c';
 
 
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
-import SUB_THEME_FIELD from '@salesforce/schema/NavTask__c.NKS_Undertheme__c';
-import THEME_FIELD from '@salesforce/schema/NavTask__c.NKS_Theme__c';
+import SUB_THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_SubTheme__c';
+import THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_Theme__c';
 
 export default class NksThemesPicklists extends LightningElement {
 

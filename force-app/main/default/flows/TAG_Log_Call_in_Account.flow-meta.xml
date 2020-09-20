@@ -69,7 +69,7 @@
     <dynamicChoiceSets>
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
-        <displayField>NKS_Name_Short__c</displayField>
+        <displayField>Name</displayField>
         <filters>
             <field>CRM_QueueId__c</field>
             <operator>IsNull</operator>
@@ -82,7 +82,7 @@
             <assignToReference>navUnitID</assignToReference>
             <field>Id</field>
         </outputAssignments>
-        <sortField>NKS_Name_Short__c</sortField>
+        <sortField>Name</sortField>
         <sortOrder>Asc</sortOrder>
         <valueField>NKS_Name_Short__c</valueField>
     </dynamicChoiceSets>
@@ -121,43 +121,43 @@
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
         <inputAssignments>
-            <field>NKS_Account__c</field>
+            <field>CRM_Account__c</field>
             <value>
                 <elementReference>currAccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Additional_Information__c</field>
+            <field>CRM_AdditionalInformation__c</field>
             <value>
                 <elementReference>Tilleggsopplysninger_til_kontoret</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Conversation_Note__c</field>
+            <field>CRM_ConversationNote__c</field>
             <value>
                 <elementReference>Samtalenotat</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Due_Date__c</field>
+            <field>CRM_DueDate__c</field>
             <value>
                 <elementReference>Frist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_NAV_Unit__c</field>
+            <field>CRM_NavUnit__c</field>
             <value>
                 <elementReference>navUnitID</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Theme__c</field>
+            <field>CRM_Theme__c</field>
             <value>
                 <elementReference>TemaValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>NKS_Undertheme__c</field>
+            <field>CRM_SubTheme__c</field>
             <value>
                 <elementReference>UndertemaValue</elementReference>
             </value>
