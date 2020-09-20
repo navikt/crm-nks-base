@@ -1,0 +1,40 @@
+<template>
+    <div class="slds-form-element slds-form-element_stacked">
+        <c-nks-themes-picklists onsubthemechange={handleSubThemeChange} onthemechange={handleThemeChange}>
+        </c-nks-themes-picklists>
+        <c-nks-quick-text oncommentschange={handleConversationNoteChange}></c-nks-quick-text>
+        <b>Husk å ikke notere personopplysninger</b>
+        <br /><br />
+
+
+        <div data-id="toggle" class="show">
+            <div class="slds-form-element slds-form-element_stacked">
+                <label class="slds-checkbox_toggle slds-grid">
+                    <span class="slds-form-element__label slds-m-bottom_none">Skal oppgave opprettes?</span>
+                    <input type="checkbox" name="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked=""
+                        onchange={handleToggleChange} />
+                    <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-checkbox_on">Ja</span>
+                        <span class="slds-checkbox_off">Nei</span>
+                    </span>
+                </label>
+            </div>
+
+            <div data-id="task" class="hide">
+
+                <lightning-input type="date" required="" value={dueDate} label="Frist" onchange={handleDueDateChange}>
+                </lightning-input>
+
+                <lightning-textarea value={additionalComments} label="Oppgave til NAV-enhet"
+                    onchange={handleAdditionalChange}>
+                </lightning-textarea>
+
+                <lightning-combobox name="units" label="NAV-enhet" options={units} placeholder="(Ikke valgt)"
+                    onchange={handleUnitChange} required="">
+                </lightning-combobox>
+
+            </div>
+        </div>
+    </div>
+</template>

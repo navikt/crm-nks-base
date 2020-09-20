@@ -11,7 +11,7 @@ public class NKS_QuickTextSearchController_Test {
     static void testsearchRecords() {
         string text = 'Test'; 
         Test.startTest();
-            List<QuickText> qt = NKS_QuickTextSearchController.searchRecords(text); 
+            List<NKS_QuickTextSearchController.QuickTextMessage> qt = NKS_QuickTextSearchController.searchRecords(text); 
         Test.stopTest();
 
         System.assertEquals(1, qt.size());
