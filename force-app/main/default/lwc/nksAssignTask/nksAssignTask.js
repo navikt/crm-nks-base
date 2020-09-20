@@ -9,6 +9,7 @@ export default class NksAssignTask extends LightningElement {
     @api createTask;
     @api dueDate;
     @api additionalComments;
+    @api conversationNote;
     @track units;
     @track queueId;
 
@@ -70,7 +71,8 @@ export default class NksAssignTask extends LightningElement {
     }
 
     handleConversationNoteChange(event) {
-        const attributeChangeEvent = new FlowAttributeChangeEvent('comments', event.detail);
+        this.conversationNote = event.detail;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('conversation-note', this.conversationNote);
         this.dispatchEvent(attributeChangeEvent);
     }
 }

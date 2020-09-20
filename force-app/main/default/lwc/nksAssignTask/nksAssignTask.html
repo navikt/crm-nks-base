@@ -23,19 +23,16 @@
 
             <div data-id="task" class="hide">
 
-                <lightning-combobox name="units" label="NAV-enhet" options={units} placeholder="(Ikke valgt)"
-                    onchange={handleUnitChange} required="">
-                </lightning-combobox>
-
-
                 <lightning-input type="date" required="" value={dueDate} label="Frist" onchange={handleDueDateChange}>
                 </lightning-input>
-
-
 
                 <lightning-textarea value={additionalComments} label="Oppgave til NAV-enhet"
                     onchange={handleAdditionalChange}>
                 </lightning-textarea>
+
+                <lightning-combobox name="units" label="NAV-enhet" options={units} placeholder="(Ikke valgt)"
+                    onchange={handleUnitChange} required="">
+                </lightning-combobox>
 
             </div>
         </div>
