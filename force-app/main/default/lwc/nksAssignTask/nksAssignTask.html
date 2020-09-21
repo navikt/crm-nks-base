@@ -1,0 +1,31 @@
+<template>
+    <div class="slds-form-element slds-form-element_stacked">
+        <c-nks-themes-picklists onsubthemechange={handleSubThemeChange} onthemechange={handleThemeChange}>
+        </c-nks-themes-picklists>
+        <c-nks-quick-text oncommentschange={handleConversationNoteChange}></c-nks-quick-text>
+        <b>Husk å ikke notere personopplysninger</b>
+        <br /><br />
+
+
+        <div data-id="toggle" class="show">
+            <lightning-input type="toggle" label="Skal oppgave opprettes?" name="createTasl"
+                onchange={handleToggleChange} value={createTask}>
+            </lightning-input>
+
+            <div data-id="task" class="hide">
+
+                <lightning-input type="date" required="" value={dueDate} label="Frist" onchange={handleDueDateChange}>
+                </lightning-input>
+
+                <lightning-textarea value={additionalComments} label="Oppgave til NAV-enhet"
+                    onchange={handleAdditionalChange}>
+                </lightning-textarea>
+
+                <lightning-combobox name="units" label="NAV-enhet" options={units} placeholder="(Ikke valgt)"
+                    onchange={handleUnitChange} required="" value={queueId}>
+                </lightning-combobox>
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,24 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "QuickText",
+                "referenceId": "QuickTextRef1"
+            },
+            "Name": "Dette er en test",
+            "Channel": "Email;Portal;Phone;Internal;Event;Task;Knowledge;Live Agent",
+            "Message": "Hei. Hva kan jeg hjelpe deg med?",
+            "Category": "Greetings"
+        },
+        {
+            "attributes": {
+                "type": "QuickText",
+                "referenceId": "QuickTextRef2"
+            },
+            "Name": "Dette er en test 2",
+            "Channel": "Email;Portal;Phone;Internal;Event;Task;Knowledge;Live Agent",
+            "Message": "Bruker ønsker å få informasjon om sine rettigheter angående permittering.. blabla",
+            "Category": "Greetings"
+        }
+    ]
+}
