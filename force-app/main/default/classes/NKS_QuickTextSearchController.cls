@@ -11,6 +11,15 @@ public with sharing class NKS_QuickTextSearchController {
 		return quickTexts;
     }
 
+    @AuraEnabled
+    public static List<NKS_QuickTextSearchController.QuickTextMessage> getRecentlyViewedRecords() {
+        List<NKS_QuickTextSearchController.QuickTextMessage> quickTexts = new List<NKS_QuickTextSearchController.QuickTextMessage>(); 
+        for(QuickText qt : [SELECT Id, Name, Message, LastViewedDate FROM QuickText WHERE LastViewedDate !=null ORDER BY LastViewedDate DESC LIMIT 5]){
+                quickTexts.add(new QuickTextMessage(qt.Id, qt.Name,qt.Message));
+        }
+        return quickTexts;
+    }
+
     public class QuickTextMessage{
         @AuraEnabled
         public Id RecordId {get;set;}

@@ -1,5 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.searchRecords";
+import getRecentlyViewedRecords from "@salesforce/apex/NKS_QuickTextSearchController.getRecentlyViewedRecords";
 
 export default class nksQuickText extends LightningElement {
 
@@ -8,6 +9,7 @@ export default class nksQuickText extends LightningElement {
     myVal;
     @track comments = '';
     @track loadingData = false;
+    @track errors = '';
 
     get myVal() {
         return;
@@ -30,13 +32,19 @@ export default class nksQuickText extends LightningElement {
                     this.loadingData = false;
                 })
                 .catch(error => {
-                    console.log(error);
-                    //TODO: senderror 
+                    this.errors = error;
                 })
         }
     }
 
     showModal(event) {
+        getRecentlyViewedRecords()
+            .then(result => {
+                this.data = result;
+            })
+            .catch(error => {
+                this.errors = error;
+            })
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
     }

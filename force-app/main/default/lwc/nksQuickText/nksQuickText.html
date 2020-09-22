@@ -41,6 +41,9 @@
                             </lightning-layout-item>
 
                         </template>
+                        <template if:true={errors}>
+                            {errors}
+                        </template>
                     </lightning-layout>
                 </div>
 
