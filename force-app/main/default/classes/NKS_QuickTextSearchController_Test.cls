@@ -3,13 +3,12 @@ public class NKS_QuickTextSearchController_Test {
     
     @TestSetup
     static void makeData(){
-        QuickText qt = new QuickText(Name = 'Test', Message = 'Dette er en melding');
-        insert qt;
+        NKS_TestDataFactory.createQuickTexts(3);
     }
 
     @isTest
     static void testsearchRecords() {
-        string text = 'Test'; 
+        string text = '1'; 
         Test.startTest();
             List<NKS_QuickTextSearchController.QuickTextMessage> qt = NKS_QuickTextSearchController.searchRecords(text); 
         Test.stopTest();
