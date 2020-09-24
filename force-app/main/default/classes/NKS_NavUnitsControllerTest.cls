@@ -10,6 +10,5 @@ private class NKS_NavUnitsControllerTest {
     private static void testGetUnits(){
         String units=NKS_NavUnitsController.getUnits();
         System.assertEquals(4, units.length());
-        //TODO: fix test. Feiler fordi units.length er lengde av string, ikke antall records
     }
 }

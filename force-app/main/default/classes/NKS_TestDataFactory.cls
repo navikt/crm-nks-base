@@ -48,15 +48,18 @@ public without sharing class NKS_TestDataFactory {
     }
 
     public static List<NavUnit__c> createNavUnits(Integer amount){
-        //TODO: failing when using getQueue and setting CRM_QueueId__c to queue.Id
-        //Group queue = TestDataFactory.getQueue( 'NAV Arendal', 'queue_906', 'NavTask__c');
+        Group queue = new Group(); 
+        System.runAs(new User(Id=UserInfo.getUserId()))   
+        {
+            queue = TestDataFactory.getQueue( 'NAV Arendal', 'queue_906', 'NavTask__c');
+        }
         List<NavUnit__c> units=new List<NavUnit__c>();
         for(Integer i=0;i<amount;i++){
-            //TODO: fix CRM_QueueId__c
-            units.add(new NavUnit__c(Name='Unit ' + i, CRM_QueueId__c='123456'));
+            units.add(new NavUnit__c(Name='Unit ' + i, CRM_QueueId__c= queue.Id));
         }
         units[0].CRM_QueueId__c=null;
         insert units;
         return units; 
     }
+
 }
