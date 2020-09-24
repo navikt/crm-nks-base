@@ -13,7 +13,7 @@
         {
             "attributes": {
                 "type": "Relation__c",
-                "referenceId": "RelationRef1"
+                "referenceId": "RelationRef2"
             },
             "Person__c": "@PersonRef1",
             "External_Reference__c": "1_1",
@@ -23,7 +23,7 @@
         {
             "attributes": {
                 "type": "Relation__c",
-                "referenceId": "RelationRef1"
+                "referenceId": "RelationRef3"
             },
             "Person__c": "@PersonRef5",
             "External_Reference__c": "1_1",
@@ -33,7 +33,7 @@
         {
             "attributes": {
                 "type": "Relation__c",
-                "referenceId": "RelationRef1"
+                "referenceId": "RelationRef4"
             },
             "Person__c": "@PersonRef4",
             "External_Reference__c": "1_1",
@@ -43,7 +43,7 @@
         {
             "attributes": {
                 "type": "Relation__c",
-                "referenceId": "RelationRef1"
+                "referenceId": "RelationRef5"
             },
             "Person__c": "@PersonRef4",
             "External_Reference__c": "1_1",
@@ -53,7 +53,7 @@
         {
             "attributes": {
                 "type": "Relation__c",
-                "referenceId": "RelationRef1"
+                "referenceId": "RelationRef6"
             },
             "Person__c": "@PersonRef5",
             "External_Reference__c": "1_1",
