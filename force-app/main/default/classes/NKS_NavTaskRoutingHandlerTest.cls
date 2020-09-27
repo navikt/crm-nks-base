@@ -15,15 +15,12 @@ private class NKS_NavTaskRoutingHandlerTest {
 		Account account = TAG_TestDataFactory.createAccounts( 1 )[0];
 		account.INT_MunicipalityNumber__c = '4203'; //Arendal
 		update account;
-
-		Test.startTest();
-        NavTask__c task=new NavTask__c(CRM_Account__c=account.Id);
-        insert task;
+        List<Id> accountIds=new List<Id>{account.Id};
+        Test.startTest();
+        List<String> queueIds=NKS_NavTaskRoutingHandler.getQueueIds(accountIds);
 		Test.stopTest();
 
 		Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'queue_906'];
-		NavTask__c insertedTask = [SELECT OwnerId, CRM_NavUnit__c FROM NavTask__c LIMIT 1];
-		System.assertEquals( queue.Id, insertedTask.OwnerId );
-		System.assertEquals( navUnit.Id, insertedTask.CRM_NavUnit__c );
+		System.assertEquals( queue.Id, queueIds[0] );
 	}
 }
