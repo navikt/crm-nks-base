@@ -2,8 +2,11 @@
     <template if:true={recordIdSet}>
         <lightning-record-view-form record-id={viewedRecordId} object-api-name={viewedObjectApiName}>
             <lightning-card title={cardLabel} icon-name={iconName}>
-                <lightning-button-icon variant="bare" icon-name="action:preview" label="Preview" slot="actions"
-                    onclick={navigateToRecord}></lightning-button-icon>
+                <template if:true={showActions}>
+                    <lightning-button-icon variant="bare" icon-name="action:preview" label="Preview" slot="actions"
+                        onclick={navigateToRecord}>
+                    </lightning-button-icon>
+                </template>
                 <lightning-layout multiple-rows="true">
                     <template for:each={fieldList} for:item="field">
                         <lightning-layout-item key={field} size={columnWidth} padding="horizontal-small">
