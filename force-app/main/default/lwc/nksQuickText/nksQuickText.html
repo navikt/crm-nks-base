@@ -1,8 +1,6 @@
 <template>
-
     <lightning-button-icon class="quicktext-button" icon-name="utility:quick_text" variant="border-filled"
         onclick={showModal} alternative-text="Legg til hurtigtekst" title="Hurtigtekst"></lightning-button-icon>
-
     <div data-id="modal" class="modalHide">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
@@ -51,7 +49,8 @@
     <div class="slds-form-element">
         <label class="slds-form-element__label" for="textarea-id-01">Samtalenotat</label>
         <div class="slds-form-element__control">
-            <textarea id="comments" class="slds-textarea" required="" rows=10 onchange={handleChange}></textarea>
+            <textarea id="comments" class="slds-textarea" required="" rows=10
+                onchange={handleChange}>{conversationNote}</textarea>
         </div>
     </div>
 </template>
