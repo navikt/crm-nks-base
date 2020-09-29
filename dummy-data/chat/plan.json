@@ -38,5 +38,13 @@
         "files": [
             "pushtopics.json"
         ]
+    },
+    {
+        "sobject": "Relation__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "relations.json"
+        ]
     }
 ]
