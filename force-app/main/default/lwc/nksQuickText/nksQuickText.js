@@ -4,6 +4,7 @@ import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.search
 export default class nksQuickText extends LightningElement {
 
     @api comments;
+    @api conversationNote;
     @track data;
     myVal;
     @track comments = '';
