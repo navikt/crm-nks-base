@@ -1,0 +1,42 @@
+<template>
+
+    <article class="slds-card">
+        <lightning-layout multiple-rows="true">
+            <!--HEADER-->
+            <lightning-layout-item size="12" class="slds-var-p-around_small" style={headerBackground}>
+                <lightning-layout vertical-align="center">
+                    <lightning-icon icon-name={iconName}></lightning-icon>
+                    <h1 class="slds-var-p-left_x-small slds-text-heading_medium">{cardTitle}</h1>
+                </lightning-layout>
+            </lightning-layout-item>
+            <template if:true={relatedRecords}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <template for:each={fieldLabels} for:item="label">
+                                <th key={label} scope="col">
+                                    <div class="slds-truncate" title={label}>{label}</div>
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={listRecords} for:item="record" for:index="rowIndex">
+                            <tr key={record} data-value={rowIndex} class="slds-hint-parent" onclick={handleRowClick}
+                                style="cursor: pointer;">
+                                <template for:each={record.recordFields} for:item="field">
+                                    <th key={field.value} scope="row">
+                                        <div class="slds-truncate">
+                                            {field.value}
+                                        </div>
+                                    </th>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </lightning-layout>
+    </article>
+
+</template>
