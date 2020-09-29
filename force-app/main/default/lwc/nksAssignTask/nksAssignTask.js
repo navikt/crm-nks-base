@@ -7,15 +7,14 @@ export default class NksAssignTask extends LightningElement {
     @api selectedTheme;
     @api selectedSubTheme;
     @api createTask;
+    @api shouldCreateTask;
     @api dueDate;
     @api additionalComments;
     @api conversationNote;
     @track units;
     @track defaultQueueId = this.queueId;
     @track createTask;
-
-
-
+    @track themeValue;
     @wire(getUnits)
     wiredValues({ data, error }) {
         if (data) {
@@ -44,20 +43,21 @@ export default class NksAssignTask extends LightningElement {
 
     handleThemeChange(event) {
         this.selectedTheme = event.detail;
-        this.selectedSubTheme = null;
+        //this.selectedSubTheme = null;
         const attributeChangeEvent = new FlowAttributeChangeEvent('theme', this.selectedTheme);
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleToggleChange(event) {
         this.createTask = event.target.checked;
-        if (this.createTask == true) {
+
+        /*if (this.createTask == true) {
             this.template.querySelector('[data-id="task"]').className = 'show';
             //this.template.querySelector('[data-id="checkbox-toggle-16"]').className = 'slds-checkbox_on';
 
         } else {
             this.template.querySelector('[data-id="task"]').className = 'hide';
-        }
+        }*/
         const attributeChangeEvent = new FlowAttributeChangeEvent('create-task', this.createTask);
 
         this.dispatchEvent(attributeChangeEvent);
