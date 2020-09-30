@@ -8,7 +8,8 @@ private class NKS_NavUnitsControllerTest {
 
     @IsTest
     private static void testGetUnits(){
-        String units=NKS_NavUnitsController.getUnits();
-        System.assertEquals(4, units.length());
+        String unitsJson=NKS_NavUnitsController.getUnits();
+        List<NKS_NavUnitsController.PicklistValue> pickListValues =(List<NKS_NavUnitsController.PicklistValue>) JSON.deserialize(unitsJson, List<NKS_NavUnitsController.PicklistValue>.class);
+        System.assertEquals(4, pickListValues.size());
     }
 }
