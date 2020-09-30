@@ -11,8 +11,15 @@ export default class NksThemesPicklists extends LightningElement {
 
     @api selectedTheme;
     @api selectedSubTheme;
+    @api themeValue;
+    @api conversationNote;
+    @api theme;
+    @api subTheme;
+    @track theme;
     @track themes;
+    @track subTheme;
     @track subthemes;
+    @track themeValue;
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
     navTaskInfo;
 

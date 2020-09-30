@@ -52,20 +52,9 @@
 
                 <!-- START PROGRESS INDICATOR -->
                 <template if:true={authenticationRequested}>
-                    <div class="slds-progress slds-progress_vertical">
-                        <ol class="slds-progress__list">
-                            <li class="slds-progress__item slds-is-completed">
-                                <span
-                                    class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
-                                    title="Complete">
-                                    <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
-                                </span>
-                                <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
-                                    {labels.AUTH_REQUESTED}
-                                </div>
-                            </li>
-
-                            <template if:true={authenticationStarted}>
+                    <template if:false={authenticationComplete}>
+                        <div class="slds-progress slds-progress_vertical">
+                            <ol class="slds-progress__list">
                                 <li class="slds-progress__item slds-is-completed">
                                     <span
                                         class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
@@ -73,56 +62,70 @@
                                         <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
                                     </span>
                                     <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
-                                        {labels.AUTH_STARTED}
+                                        {labels.AUTH_REQUESTED}
                                     </div>
                                 </li>
-                            </template>
 
-                            <template if:false={authenticationStarted}>
-                                <li class="slds-progress__item slds-is-active">
-                                    <div class="slds-progress__marker"></div>
-                                    <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
-                                        {labels.AUTH_STARTED}
-                                    </div>
-                                </li>
-                            </template>
+                                <template if:true={authenticationStarted}>
+                                    <li class="slds-progress__item slds-is-completed">
+                                        <span
+                                            class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
+                                            title="Complete">
+                                            <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
+                                        </span>
+                                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                                            {labels.AUTH_STARTED}
+                                        </div>
+                                    </li>
+                                </template>
 
-                            <template if:true={authenticationComplete}>
-                                <li class="slds-progress__item slds-is-completed">
-                                    <span
-                                        class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
-                                        title="Complete">
-                                        <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
-                                    </span>
-                                    <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
-                                        {labels.IDENTITY_CONFIRMED}
-                                    </div>
-                                </li>
-                            </template>
+                                <template if:false={authenticationStarted}>
+                                    <li class="slds-progress__item slds-is-active">
+                                        <div class="slds-progress__marker"></div>
+                                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                                            {labels.AUTH_STARTED}
+                                        </div>
+                                    </li>
+                                </template>
 
-                            <template if:false={authenticationComplete}>
-                                <li class="slds-progress__item">
-                                    <div class="slds-progress__marker"></div>
-                                    <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
-                                        {labels.IDENTITY_CONFIRMED}
-                                    </div>
-                                </li>
-                            </template>
+                                <template if:true={authenticationComplete}>
+                                    <li class="slds-progress__item slds-is-completed">
+                                        <span
+                                            class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
+                                            title="Complete">
+                                            <lightning-icon icon-name="utility:success" size="x-small"></lightning-icon>
+                                        </span>
+                                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                                            {labels.IDENTITY_CONFIRMED}
+                                        </div>
+                                    </li>
+                                </template>
 
-                        </ol>
-                    </div>
+                                <template if:false={authenticationComplete}>
+                                    <li class="slds-progress__item">
+                                        <div class="slds-progress__marker"></div>
+                                        <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
+                                            {labels.IDENTITY_CONFIRMED}
+                                        </div>
+                                    </li>
+                                </template>
+
+                            </ol>
+                        </div>
+                    </template>
+                    <template if:true={authenticationComplete}>
+                        <div class="slds-var-p-top_small">
+                            <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
+                                displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account"
+                                show-actions="true">
+                            </c-nks-record-info>
+                        </div>
+                    </template>
                 </template>
                 <!-- END PROGRESS INDICATOR -->
             </div>
         </template>
     </lightning-card>
 
-    <template if:true={authenticationComplete}>
-        <div class="slds-var-p-top_small">
-            <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
-                displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account">
-            </c-nks-record-info>
-        </div>
-    </template>
 
 </template>
