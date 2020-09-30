@@ -5,12 +5,15 @@
             <!--HEADER-->
             <lightning-layout-item size="12" class="slds-var-p-around_small" style={headerBackground}>
                 <lightning-layout vertical-align="center">
-                    <lightning-icon icon-name={iconName}></lightning-icon>
+                    <template if:true={icon}>
+                        <lightning-icon icon-name={icon}></lightning-icon>
+                    </template>
                     <h1 class="slds-var-p-left_x-small slds-text-heading_medium">{cardTitle}</h1>
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <table
+                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-max-medium-table_stacked-horizontal">
                     <thead>
                         <tr class="slds-line-height_reset">
                             <template for:each={fieldLabels} for:item="label">

@@ -100,4 +100,11 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         return fieldList;
     }
 
+    get icon() {
+        let nameString = null;
+        if (this.iconName && this.iconName != '') nameString = this.iconName;
+
+        return nameString;
+    }
+
 }
