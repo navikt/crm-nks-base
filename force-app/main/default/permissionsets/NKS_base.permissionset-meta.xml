@@ -101,6 +101,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NavUnit__c.CRM_QueueId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavUnit__c.INT_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>

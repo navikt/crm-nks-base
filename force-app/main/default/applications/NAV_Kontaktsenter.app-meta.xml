@@ -3,6 +3,24 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Chat_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Chat_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>TAG_NKS_EmployerDefaultRecordPage</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -29,10 +47,15 @@
     <label>NAV Kontaktsenter</label>
     <navType>Console</navType>
     <tabs>standard-Account</tabs>
+    <tabs>standard-LightningQuickText</tabs>
     <uiType>Lightning</uiType>
+    <utilityBar>NAV_Kontaktsenter_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>standard-Account</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-LightningQuickText</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

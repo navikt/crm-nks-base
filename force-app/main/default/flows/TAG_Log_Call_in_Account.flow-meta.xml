@@ -1,23 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Get_account_nav_unit</name>
+        <label>Get account&apos;s nav unit</label>
+        <locationX>78</locationX>
+        <locationY>237</locationY>
+        <actionName>NKS_NavTaskRoutingHandler</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_to_Log_a_Call</targetReference>
+        </connector>
+        <inputParameters>
+            <name>accountIds</name>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>queueId</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <assignments>
+        <name>Set_unit_error_message</name>
+        <label>Set unit error message</label>
+        <locationX>357</locationX>
+        <locationY>667</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NAV-enhet må være utfylt</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_to_Log_a_Call</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Setconversationnoteerrormessage</name>
+        <label>Set conversation note error message</label>
+        <locationX>56</locationX>
+        <locationY>505</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Alle felt må være utfylt</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_to_Log_a_Call</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>None</name>
+        <choiceText>(Ingen)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>null</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Note</name>
         <label>Note/Task</label>
-        <locationX>408</locationX>
-        <locationY>235</locationY>
+        <locationX>741</locationX>
+        <locationY>258</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>It_is_Note</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>OppgaveJaNei.value</leftValueReference>
+                <leftValueReference>shouldCreateTask</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_New_Call_Note</targetReference>
+                <targetReference>Du_har_opprettet_et_notat</targetReference>
             </connector>
             <label>It is Note</label>
         </rules>
@@ -25,24 +86,90 @@
             <name>It_is_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>OppgaveJaNei.value</leftValueReference>
+                <leftValueReference>shouldCreateTask</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_New_Call_Task</targetReference>
+                <targetReference>Get_Selected_NAV_unit</targetReference>
             </connector>
             <label>It is Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Validate_input</name>
+        <label>Validate input</label>
+        <locationX>407</locationX>
+        <locationY>371</locationY>
+        <defaultConnector>
+            <targetReference>Create_Standard_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is vailidated</defaultConnectorLabel>
+        <rules>
+            <name>Has_conversation_note_errors</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>themeValue</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <conditions>
+                <leftValueReference>subThemeValue</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Setconversationnoteerrormessage</targetReference>
+            </connector>
+            <label>Has conversation note errors</label>
+        </rules>
+        <rules>
+            <name>Unit_error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>shouldCreateTask</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>queueId</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Set_unit_error_message</targetReference>
+            </connector>
+            <label>Unit error</label>
         </rules>
     </decisions>
     <dynamicChoiceSets>
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
+        <filters>
+            <field>CRM_QueueId__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NavUnit__c</object>
-        <valueField>Name</valueField>
+        <outputAssignments>
+            <assignToReference>navUnitID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+        <valueField>NKS_Name_Short__c</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>themePicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CRM_Theme__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <formulas>
         <name>dateFuture2Days</name>
@@ -71,63 +198,123 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_New_Call_Note</name>
-        <label>Create New Call Note</label>
-        <locationX>419</locationX>
-        <locationY>454</locationY>
-        <connector>
-            <targetReference>Du_har_opprettet_et_notat</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Description</field>
-            <value>
-                <elementReference>Beskrivelse</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>TAG_ActivityType__c</field>
-            <value>
-                <elementReference>EmneValue</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>TAG_service__c</field>
-            <value>
-                <elementReference>UnderemneValue</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WhatId</field>
-            <value>
-                <elementReference>currAccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordCreates>
-    <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>634</locationX>
-        <locationY>165</locationY>
+        <locationX>1051</locationX>
+        <locationY>261</locationY>
         <connector>
             <targetReference>Du_har_opprettet_en_oppgave</targetReference>
         </connector>
         <inputAssignments>
+            <field>CRM_Account__c</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_AdditionalInformation__c</field>
+            <value>
+                <elementReference>additionalComments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_ConversationNote__c</field>
+            <value>
+                <elementReference>conversationNote</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_DueDate__c</field>
+            <value>
+                <elementReference>dueDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_NavUnit__c</field>
+            <value>
+                <elementReference>navUnitID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_SubTheme__c</field>
+            <value>
+                <elementReference>subThemeValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Theme__c</field>
+            <value>
+                <elementReference>themeValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>themeValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>queueId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NavTask__c</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Standard_Task</name>
+        <label>Create standard task</label>
+        <locationX>607</locationX>
+        <locationY>253</locationY>
+        <connector>
+            <targetReference>Note</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Beskrivelse</elementReference>
+                <elementReference>conversationNote</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RelatedToAccount__c</field>
+            <value>
+                <elementReference>currAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Telefonsamtale NKS</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>TAG_ActivityType__c</field>
             <value>
-                <elementReference>EmneValue</elementReference>
+                <elementReference>themeValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TAG_NoPersonInformation__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>TAG_service__c</field>
             <value>
-                <elementReference>UnderemneValue</elementReference>
+                <elementReference>subThemeValue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -138,11 +325,33 @@
         </inputAssignments>
         <object>Task</object>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Selected_NAV_unit</name>
+        <label>Get Selected NAV unit</label>
+        <locationX>898</locationX>
+        <locationY>269</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_New_Call_Task</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_QueueId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueId</elementReference>
+            </value>
+        </filters>
+        <object>NavUnit__c</object>
+        <outputAssignments>
+            <assignToReference>navUnitID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <screens>
         <name>Du_har_opprettet_en_oppgave</name>
         <label>Du har opprettet en oppgave</label>
-        <locationX>859</locationX>
-        <locationY>173</locationY>
+        <locationX>1306</locationX>
+        <locationY>239</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -157,8 +366,8 @@
     <screens>
         <name>Du_har_opprettet_et_notat</name>
         <label>Du har opprettet et notat</label>
-        <locationX>423</locationX>
-        <locationY>639</locationY>
+        <locationX>698</locationX>
+        <locationY>563</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -173,192 +382,111 @@
     <screens>
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
-        <locationX>200</locationX>
-        <locationY>214</locationY>
+        <locationX>263</locationX>
+        <locationY>235</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Note</targetReference>
+            <targetReference>Validate_input</targetReference>
         </connector>
         <fields>
             <name>ShowIfNote</name>
             <fieldText>&lt;p&gt;&lt;b&gt;Opprett et samtalenotat&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OppgaveJaNei.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
-            <name>ShowIfTask</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Opprett en oppgave&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <name>error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>assignTask</name>
+            <extensionName>c:nksAssignTask</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>dueDate</name>
+                <value>
+                    <elementReference>dateFuture2Days</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>queueId</name>
+                <value>
+                    <elementReference>queueId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>additionalComments</name>
+                <value>
+                    <elementReference>additionalComments</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>conversationNote</name>
+                <value>
+                    <elementReference>conversationNote</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>createTask</name>
+                <value>
+                    <elementReference>shouldCreateTask</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedSubTheme</name>
+                <value>
+                    <elementReference>subThemeValue</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedTheme</name>
+                <value>
+                    <elementReference>themeValue</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>conversationNote</assignToReference>
+                <name>conversationNote</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>additionalComments</assignToReference>
+                <name>additionalComments</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>shouldCreateTask</assignToReference>
+                <name>createTask</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>dueDate</assignToReference>
+                <name>dueDate</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>queueId</assignToReference>
+                <name>queueId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>subThemeValue</assignToReference>
+                <name>selectedSubTheme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>themeValue</assignToReference>
+                <name>selectedTheme</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>UnitInfo</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Virksomhetens lokale NAV-enhet kan ikke ta imot oppgaver i Salesforce ennå.&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OppgaveJaNei.value</leftValueReference>
+                    <leftValueReference>queueId</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>EmneUnderemnePicklist</name>
-            <extensionName>flowruntime:dependentPicklists</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>dependencyWrapperApiName</name>
-                <value>
-                    <stringValue>Task</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>topPicklistApiName</name>
-                <value>
-                    <stringValue>TAG_ActivityType__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>middlePicklistApiName</name>
-                <value>
-                    <stringValue>TAG_service__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>topLabel</name>
-                <value>
-                    <stringValue>Hovedtema</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>topRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>topValue</name>
-                <value>
-                    <elementReference>EmneValue</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>middleLabel</name>
-                <value>
-                    <stringValue>Undertema</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>middleRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>middleValue</name>
-                <value>
-                    <elementReference>UnderemneValue</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Beskrivelse</name>
-            <fieldText>Samtalenotat</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>OppgaveJaNei</name>
-            <extensionName>flowruntime:toggle</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Skal oppgave opprettes? </stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleActive</name>
-                <value>
-                    <stringValue>Ja</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleInactive</name>
-                <value>
-                    <stringValue>Nei</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Frist</name>
-            <dataType>Date</dataType>
-            <defaultValue>
-                <elementReference>dateFuture2Days</elementReference>
-            </defaultValue>
-            <fieldText>Forfallsdato</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OppgaveJaNei.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Tilleggsopplysninger_til_kontoret</name>
-            <fieldText>Tilleggsopplysninger til kontoret</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OppgaveJaNei.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>NAV_Enhet</name>
-            <choiceReferences>navEnhetRecords</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>NAV Enhet</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OppgaveJaNei.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
+                        <stringValue/>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -370,10 +498,24 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Screen_to_Log_a_Call</targetReference>
+            <targetReference>Get_account_nav_unit</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <variables>
+        <name>additionalComments</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>conversationNote</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>currAccountId</name>
         <dataType>String</dataType>
@@ -382,14 +524,42 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>EmneValue</name>
+        <name>dueDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>OppgaveToggleStore</name>
+        <name>navUnitID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>navUnitName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>queueId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>shouldCreateTask</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -399,7 +569,14 @@
         </value>
     </variables>
     <variables>
-        <name>UnderemneValue</name>
+        <name>subThemeValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>themeValue</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
