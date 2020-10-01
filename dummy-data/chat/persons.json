@@ -6,6 +6,7 @@
                 "referenceId": "PersonRef1"
             },
             "Name": "12345678901",
+            //"INT_Confidential": "UGRADERT",
             "INT_MunicipalityNumber__c": "0301",
             "INT_FirstName__c": "Harry",
             "INT_LastName__c": "Potter",
@@ -21,6 +22,7 @@
                 "referenceId": "PersonRef2"
             },
             "Name": "12345678902",
+            //"INT_Confidential": "UGRADERT",
             "INT_MunicipalityNumber__c": "0301",
             "INT_FirstName__c": "Hermine",
             "INT_LastName__c": "Grang",
@@ -34,6 +36,7 @@
                 "referenceId": "PersonRef3"
             },
             "Name": "12345678903",
+            //"INT_Confidential": "UGRADERT",
             "INT_MunicipalityNumber__c": "0301",
             "INT_FirstName__c": "Ronny",
             "INT_LastName__c": "Wiltersen",
@@ -47,6 +50,7 @@
                 "referenceId": "PersonRef4"
             },
             "Name": "27036012345",
+            //"INT_Confidential": "UGRADERT",
             "INT_MunicipalityNumber__c": "0301",
             "INT_FirstName__c": "Jakob",
             "INT_LastName__c": "Potter",
@@ -62,6 +66,7 @@
                 "referenceId": "PersonRef5"
             },
             "Name": "30016012345",
+            //"INT_Confidential": "UGRADERT",
             "INT_MunicipalityNumber__c": "0301",
             "INT_FirstName__c": "Lily",
             "INT_LastName__c": "Potter",
