@@ -7,6 +7,7 @@ public without sharing class ChatAuthController {
             lct.CRM_Authentication_Status__c = status;
             if (status == 'Completed') {
                 lct.AccountId = getPersonAccountId(chatTranscriptId);
+                lct.ContactId = getPersonAccountId(chatTranscriptId); 
             }
             update lct;
         } catch (Exception ex) {
