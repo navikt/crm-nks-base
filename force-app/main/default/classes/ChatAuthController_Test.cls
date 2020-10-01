@@ -64,4 +64,15 @@ public class ChatAuthController_Test {
         LiveChatTranscript updatedTranscript = [SELECT Id, CRM_Authentication_Status__c FROM LiveChatTranscript WHERE Id =: chatTranscript.Id];
         System.assertEquals('Completed', updatedTranscript.CRM_Authentication_Status__c);
     }
+
+    @isTest
+    static void testGetCommunityAuthUrl() {
+        String communityUrl;
+
+        Test.startTest();
+        communityUrl = ChatAuthController.getCommunityAuthUrl();
+        Test.stopTest();
+
+        System.assert(String.isNotBlank(communityUrl));
+    }
 }
