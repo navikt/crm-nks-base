@@ -1,6 +1,6 @@
 ## LWC: Dynamic Related List
 
-LWC for displaying a related list with filter options based on inputs definbed in js-meta.xml.
+LWC for displaying a related list with filter options based on inputs defined in js-meta.xml.
 
 ## Attributes
 
