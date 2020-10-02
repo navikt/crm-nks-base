@@ -2,7 +2,7 @@
 
 LWC for displaying a related list with filter options based on inputs definbed in js-meta.xml.
 
-# Attributes
+## Attributes
 
 | Name      | Type   | Access | Required | Description                                             |
 | :-------- | :----- | :----- | :------- | :------------------------------------------------------ |
