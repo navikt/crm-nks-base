@@ -44,7 +44,7 @@
                 <value>CRM_Person__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
@@ -121,7 +121,7 @@
                 <value>2</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
@@ -148,7 +148,7 @@
                 <value>2</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
@@ -175,7 +175,7 @@
                 <value>2</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
@@ -295,7 +295,7 @@
                 <value>CRM_Person__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>true</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
@@ -326,7 +326,7 @@
                 <value>CRM_Person__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
@@ -357,7 +357,7 @@
                 <value>CRM_Person__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>showActions</name>
+                <name>showLink</name>
                 <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
