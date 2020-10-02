@@ -13,4 +13,6 @@ LWC for displaying a related list with filter options based on inputs definbed i
 | relationField | String | global | true    | API name of field relating the records to the parent where the component is displayed |
 | parentRelationField | String | global | true    | API name of field relation the records to the parent where the component is displayed |
 | relationField | String | global | true    | Object API name for records in the related list |
+| displayedFields | String | global | true    | Comma separated string with field API names to retrieve |
+| columnLabels | String | global | true    | Comma separated string with column headers to display in table |
 | filterConditions | String | global | false    | Optional filter conditions written as standard query conditions (i.e. Name != 'TEST') |
