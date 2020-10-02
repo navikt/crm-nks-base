@@ -3,11 +3,7 @@ public class NksRecordInfoController_Test {
 
     @TestSetup
     static void makeData(){
-        LiveChatVisitor vis = new LiveChatVisitor();
-        insert vis;
-
-        LiveChatTranscript trans = new LiveChatTranscript(LiveChatVisitorId = vis.Id);
-        insert trans;
+        NKS_TestDataFactory.createLiveChatTranscripts(1);
     }
 
 
