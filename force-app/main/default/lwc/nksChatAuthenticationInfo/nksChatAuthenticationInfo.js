@@ -3,6 +3,7 @@ import { subscribe } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
+import getCommunityAuthUrl from '@salesforce/apex/ChatAuthController.getCommunityAuthUrl';
 
 //#### LABEL IMPORTS ####
 import AUTH_REQUESTED from '@salesforce/label/c.CRM_Chat_Authentication_Requested';
@@ -22,13 +23,14 @@ export default class ChatAuthenticationOverview extends LightningElement {
         IDENTITY_CONFIRMED_DISCLAIMER,
         AUTH_INIT_FAILED
     }
-    accountId;                         //Transcript AccountId
+    @api loggingEnabled;               //Determines if console logging is enabled for the component
+    @api recordId;
     @api accountFields                 //Comma separated string with field names to display from the related account
+    accountId;                         //Transcript AccountId
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
     activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
-    @api loggingEnabled;               //Determines if console logging is enabled for the component
-    @api recordId;
+    chatAuthUrl;
 
     //#### GETTERS ####
 
@@ -56,6 +58,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
 
     connectedCallback() {
         this.handleSubscribe();
+        this.getAuthUrl();
     }
 
     @wire(getChatInfo, { chatTranscriptId: '$recordId' })
@@ -69,6 +72,17 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
         }
+    }
+
+    //Calls apex to get the correct community url for the given sandbox
+    getAuthUrl() {
+        getCommunityAuthUrl({})
+            .then(url => {
+                this.chatAuthUrl = url;
+            })
+            .catch(error => {
+                console.log('Failed to retrieve auth url: ' + JSON.stringify(error, null, 2));
+            });
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -97,8 +111,12 @@ export default class ChatAuthenticationOverview extends LightningElement {
     //Sends event handled by parent to utilize conversation API to send message for init of auth process
     requestAuthentication() {
         this.sendingAuthRequest = true;
+        const authUrl = this.chatAuthUrl;
 
-        const requestAuthenticationEvent = new CustomEvent('requestauthentication');
+        //Pass the chat auth url
+        const requestAuthenticationEvent = new CustomEvent('requestauthentication', {
+            detail: { authUrl }
+        });
         this.dispatchEvent(requestAuthenticationEvent);
     }
 
