@@ -6,7 +6,8 @@ public without sharing class ChatAuthController {
             LiveChatTranscript lct = new LiveChatTranscript(Id = chatTranscriptId);
             lct.CRM_Authentication_Status__c = status;
             if (status == 'Completed') {
-                lct.AccountId = getPersonAccountId(chatTranscriptId);
+                lct.AccountId = getPersonAccountId();
+                lct.ContactId = getPersonContactId(); 
             }
             update lct;
         } catch (Exception ex) {
@@ -66,15 +67,24 @@ public without sharing class ChatAuthController {
         setStatus(chatTranscriptId, 'Completed');
     }
 
-    private static Id getPersonAccountId(Id chatTranscriptId) {
+    private static Id getPersonAccountId() {
         List<User> users = [SELECT Id, AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE];
         if (users.size() > 0) {
             return users[0].AccountId;
         } else {
             return null;
         }
+        //TODO change when winter 21: return [SELECT AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE]?.AccountId;
     }
-
+    private static Id getPersonContactId() {
+        List<User> users = [SELECT Id, ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE];
+        if (users.size() > 0) {
+            return users[0].ContactId;
+        } else {
+            return null;
+        }
+        //TODO change when winter 21: return [SELECT ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE]?.ContactId;
+    }
 
 }
 

@@ -3,11 +3,7 @@ public class ChatAuthController_Test {
     
     @TestSetup
     static void makeData(){
-        LiveChatVisitor visitor = new LiveChatVisitor();
-        insert visitor;
-
-        LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id);
-        insert transcript;
+        NKS_TestDataFactory.createLiveChatTranscripts(1);
     }
 
     @isTest
