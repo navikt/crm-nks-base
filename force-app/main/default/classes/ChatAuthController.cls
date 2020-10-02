@@ -17,6 +17,21 @@ public without sharing class ChatAuthController {
     }
 
     /**
+    * @description: Returns the community url used for chat authentication
+    * @author Stian Ruud Schikora | 10-01-2020 
+    * @return string 
+    **/
+    @AuraEnabled
+    public static string getCommunityAuthUrl(){
+        List<Network> community = [SELECT Id, Name, UrlPathPrefix FROM Network WHERE Name = 'nks'];
+        String communityUrl = community.isEmpty() ? '' : Network.getLoginUrl(community[0].Id);
+        communityUrl = communityUrl.removeEnd(communityUrl.substringAfterLast('/'));
+        communityUrl += 's/identity-verified?ctid=';
+
+        return communityUrl;
+    }
+
+    /**
     * @description: Returns the CRM_Authentication_Status__c, and status of the chat transcript
     * @author Stian Ruud Schikora | 09-04-2020 
     * @param chatTranscriptId [STRING]
