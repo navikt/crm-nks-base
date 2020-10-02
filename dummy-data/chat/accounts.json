@@ -7,8 +7,7 @@
             },
             "FirstName": "Harry",
             "LastName": "Potter",
-            "INT_PersonIdent__c": "12345678901",
-            "CRM_Person__c": "@PersonRef1"
+            "INT_PersonIdent__c": "12345678901"
         },
         {
             "attributes": {
@@ -17,8 +16,7 @@
             },
             "FirstName": "Hermine",
             "LastName": "Grang",
-            "INT_PersonIdent__c": "12345678902",
-            "CRM_Person__c": "@PersonRef2"
+            "INT_PersonIdent__c": "12345678902"
         },
         {
             "attributes": {
@@ -27,8 +25,7 @@
             },
             "FirstName": "Ronny",
             "LastName": "Wiltersen",
-            "INT_PersonIdent__c": "12345678902",
-            "CRM_Person__c": "@PersonRef3"
+            "INT_PersonIdent__c": "12345678902"
         },
         {
             "attributes": {
@@ -37,8 +34,7 @@
             },
             "FirstName": "Jakob",
             "LastName": "Potter",
-            "INT_PersonIdent__c": "27036012345",
-            "CRM_Person__c": "@PersonRef4"
+            "INT_PersonIdent__c": "27036012345"
         },
         {
             "attributes": {
@@ -47,8 +43,7 @@
             },
             "FirstName": "Lily",
             "LastName": "Potter",
-            "INT_PersonIdent__c": "30016012345",
-            "CRM_Person__c": "@PersonRef5"
+            "INT_PersonIdent__c": "30016012345"
         }
     ]
 }

@@ -3,11 +3,7 @@ public class ChatAuthController_Test {
     
     @TestSetup
     static void makeData(){
-        LiveChatVisitor visitor = new LiveChatVisitor();
-        insert visitor;
-
-        LiveChatTranscript transcript = new LiveChatTranscript(LiveChatVisitorId = visitor.Id);
-        insert transcript;
+        NKS_TestDataFactory.createLiveChatTranscripts(1);
     }
 
     @isTest
@@ -63,5 +59,16 @@ public class ChatAuthController_Test {
 
         LiveChatTranscript updatedTranscript = [SELECT Id, CRM_Authentication_Status__c FROM LiveChatTranscript WHERE Id =: chatTranscript.Id];
         System.assertEquals('Completed', updatedTranscript.CRM_Authentication_Status__c);
+    }
+
+    @isTest
+    static void testGetCommunityAuthUrl() {
+        String communityUrl;
+
+        Test.startTest();
+        communityUrl = ChatAuthController.getCommunityAuthUrl();
+        Test.stopTest();
+
+        System.assert(String.isNotBlank(communityUrl));
     }
 }
