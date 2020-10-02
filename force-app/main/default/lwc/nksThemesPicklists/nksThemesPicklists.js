@@ -1,6 +1,6 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import NAV_TASK_OBJECT from '@salesforce/schema/NAVTask__c';
+import NAV_TASK_OBJECT from '@salesforce/schema/NavTask__c';
 
 
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
@@ -11,31 +11,39 @@ export default class NksThemesPicklists extends LightningElement {
 
     @api selectedTheme;
     @api selectedSubTheme;
-    @api themeValue;
-    @api conversationNote;
     @api theme;
     @api subTheme;
-    @track theme;
+    @track theme = this.theme;
     @track themes;
-    @track subTheme;
+    @track subTheme = this.subTheme;
     @track subthemes;
-    @track themeValue;
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
     navTaskInfo;
-
-    @wire(getPicklistValues, { recordTypeId: '$navTaskInfo.data.defaultRecordTypeId', fieldApiName: SUB_THEME_FIELD })
-    subThemeFieldInfo({ data, error }) {
-        if (data) this.subFieldData = data;
-    }
 
     @wire(getPicklistValues, { recordTypeId: '$navTaskInfo.data.defaultRecordTypeId', fieldApiName: THEME_FIELD })
     themeFieldInfo({ data, error }) {
         if (data) this.themes = data.values;
     }
 
+    @wire(getPicklistValues, { recordTypeId: '$navTaskInfo.data.defaultRecordTypeId', fieldApiName: SUB_THEME_FIELD })
+    subThemeFieldInfo({ data, error }) {
+        if (data && this.themes) {
+            this.subFieldData = data;
+            //get array key for selected theme
+            var selectedThemeKey = 0;
+            for (var i = 0; i < this.themes.length; i++) {
+                if (this.themes[i].value == this.theme) {
+                    selectedThemeKey = i;
+                }
+            }
+            this.subthemes = this.subFieldData.values.filter(opt => opt.validFor.includes(selectedThemeKey));
+        }
+    }
+
     handleThemeChange(event) {
         let key = this.subFieldData.controllerValues[event.target.value];
         this.subthemes = this.subFieldData.values.filter(opt => opt.validFor.includes(key));
+
         this.selectedTheme = event.detail.value;
 
         const selectedThemeEvent = new CustomEvent('themechange', {
