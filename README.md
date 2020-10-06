@@ -4,7 +4,11 @@
 [![GitHub version](https://badgen.net/github/release/navikt/crm-nks-base/stable)](https://github.com/navikt/crm-nks-base)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
 
-[DESCRIPTION]
+## Arbeidsflyt
+
+All utvikling av ny funksjonalitet gjøres i separate feature branches. Ved merge til master i dette repositoriet vil det automatisk genereres en pakkeversjon som installeres i følgende sandboxer:
+* NKS
+* SIT
 
 ## Dependencies
 
