@@ -72,7 +72,7 @@ jobs:
         id: test-classes-in-repo
         run: |
           classes=""
-          for p in $( grep -r -l -i --include="*.cls" "@istest" . | sed 's@.*/@@' ); do
+          for p in $( grep -r -l -i --exclude-dir=unpackageble --include="*.cls" "@istest" . | sed 's@.*/@@' ); do
             classes+=$(echo $p | cut -f 1 -d '.')","
           done
 
