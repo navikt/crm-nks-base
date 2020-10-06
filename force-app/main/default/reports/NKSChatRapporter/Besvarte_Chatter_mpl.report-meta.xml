@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>LiveChatTranscript$NKS_Request_Quarter__c</field>
+    </columns>
+    <columns>
+        <field>CDF1</field>
+    </columns>
+    <columns>
+        <field>LiveChatTranscript$WaitTime</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>LiveChatTranscript$NKS_Active_Time__c</field>
+    </columns>
+    <customDetailFormulas>
+        <calculatedFormula>IF(ISPICKVAL(LiveChatTranscript.CRM_Authentication_Status__c, &apos;Completed&apos;), 1, 0)</calculatedFormula>
+        <dataType>Double</dataType>
+        <developerName>CDF1</developerName>
+        <label>Authenticated</label>
+        <scale>0</scale>
+    </customDetailFormulas>
+    <description>Statistikk for besvarte chatter.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>LiveChatTranscript$LiveChatButton.Queue.Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>LiveChatTranscript$RequestTime</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>LiveChatTranscript$NKS_Request_Hour__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Besvarte Chatter</name>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
+    <reportType>Chat_Transcript__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <sortColumn>LiveChatTranscript$NKS_Request_Quarter__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>LiveChatTranscript$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
