@@ -7,8 +7,8 @@
 ## Arbeidsflyt
 
 All utvikling av ny funksjonalitet gjøres i separate feature branches. Ved merge til master i dette repositoriet vil det automatisk genereres en pakkeversjon som installeres i følgende sandboxer:
-* NKS
-* SIT
+* [NKS](https://navdialog--nks.my.salesforce.com)
+* [SIT](https://navdialog--sit.my.salesforce.com)
 
 ## Dependencies
 
