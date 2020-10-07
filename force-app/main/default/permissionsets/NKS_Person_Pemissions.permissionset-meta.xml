@@ -158,12 +158,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Relation__c.Related_Person_Name__c</field>
+        <field>Relation__c.INT_Related_Person_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Relation__c.Related_Person__c</field>
+        <field>Relation__c.INT_Related_Person__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
