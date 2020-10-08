@@ -1,0 +1,24 @@
+<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId">
+    <!-- INPUT ATTRIBUTES -->
+    <aura:attribute name="flowName" type="String" default="" access="public" />
+    <aura:attribute name="buttonLabel" type="String" default="Label" access="public" />
+    <aura:attribute name="buttonIcon" type="String" default="" access="public" />
+    <aura:attribute name="fullButtonWidth" type="Boolean" default="true" />
+
+    <aura:attribute name="showFlow" type="Boolean" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-clearfix">
+        <lightning:button label="{!v.buttonLabel}" variant="brand" onclick="{!c.toggleFlow}" iconName="{!v.buttonIcon}"
+            class="{!v.fullButtonWidth ? 'slds-button_stretch' : 'slds-float_right'}" />
+    </div>
+
+    <aura:renderIf isTrue="{!v.showFlow}">
+        <div class="slds-p-top_small">
+            <lightning:card>
+                <lightning:flow aura:id="flowData" onstatuschange="{!c.flowStatusChange}" />
+            </lightning:card>
+        </div>
+    </aura:renderIf>
+</aura:component>

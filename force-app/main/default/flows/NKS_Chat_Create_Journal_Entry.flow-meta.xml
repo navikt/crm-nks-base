@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <decisions>
+        <description>Checks if a journal entry has already been created.</description>
+        <name>Check_Journal_Entry_Created</name>
+        <label>Check Journal Entry Created</label>
+        <locationX>168</locationX>
+        <locationY>354</locationY>
+        <defaultConnector>
+            <targetReference>Input_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Journal_Entry_Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Journal_Completed_Screen</targetReference>
+            </connector>
+            <label>Journal Entry Created</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decide if a task should be created or not.</description>
+        <name>Should_Create_Task</name>
+        <label>Should Create Task?</label>
+        <locationX>556</locationX>
+        <locationY>353</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Do_Create_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_task</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Do Create Task</label>
+        </rules>
+    </decisions>
+    <description>Flow to initiate the creation of a journal entry.</description>
+    <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Chat Create Journal Entry</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Query the chat transcript triggering the flow.</description>
+        <name>Get_Chat_Transcript</name>
+        <label>Get Chat Transcript</label>
+        <locationX>176</locationX>
+        <locationY>199</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Journal_Entry_Created</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LiveChatTranscript</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NKS_Journal_Entry_Created__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
+        <name>Input_Screen</name>
+        <label>Input Screen</label>
+        <locationX>403</locationX>
+        <locationY>351</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Should_Create_Task</targetReference>
+        </connector>
+        <fields>
+            <name>Related_to_case</name>
+            <dataType>String</dataType>
+            <fieldText>Related to case:</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Create_task</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Create task?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Journal_Completed_Screen</name>
+        <label>Journal Completed Screen</label>
+        <locationX>175</locationX>
+        <locationY>543</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Entry_Completed_Text</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;A journal entry has already been submitted for this chat.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Chat_Transcript</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
