@@ -1,6 +1,6 @@
 ## AURA: Flow Starter
 
-Simple aura component allowing to start a flow on screen on button click
+Simple aura component allowing to start a flow on screen on button click.
 
 ## Attributes
 
@@ -15,3 +15,7 @@ Simple aura component allowing to start a flow on screen on button click
 ## Usage
 
 The component is supported for all lightning record pages and can initiate all screen flows who solely requires the record id as input.
+![App builder setup](App_Builder_Setup.png)
+
+On button click the flow is rendered in a separate lightning card below the button.
+![Exampled](Example.png)
