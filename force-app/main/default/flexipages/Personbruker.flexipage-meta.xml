@@ -375,7 +375,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>columnLabels</name>
-                <value>Navn, Type</value>
+                <value>RELNR, Person, Relasjon</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>displayedFields</name>
@@ -383,7 +383,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>filterConditions</name>
-                <value>RELNR, Person, Relasjon</value>
+                <value></value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>headerColor</name>
