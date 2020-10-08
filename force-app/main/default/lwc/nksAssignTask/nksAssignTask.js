@@ -37,6 +37,9 @@ export default class NksAssignTask extends LightningElement {
         else if (this.selectedSubTheme == "Lønnskompensasjon") {
             this.template.querySelector('[data-id="toggle"]').className = 'hide';
         }
+        else if (this.selectedSubTheme == "Generell sykefraværsoppfølging") {
+            this.template.querySelector('[data-id="toggle"]').className = 'hide';
+        }
         else {
             this.template.querySelector('[data-id="toggle"]').className = 'show';
         }
