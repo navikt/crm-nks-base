@@ -12,6 +12,7 @@ import IDENTITY_CONFIRMED from '@salesforce/label/c.CRM_Chat_Identity_Confirmed'
 import UNCONFIRMED_IDENTITY_WARNING from '@salesforce/label/c.CRM_Chat_Unconfirmed_Identity_Warning';
 import IDENTITY_CONFIRMED_DISCLAIMER from '@salesforce/label/c.CRM_Chat_Identity_Confirmed_Disclaimer';
 import AUTH_INIT_FAILED from '@salesforce/label/c.CRM_Chat_Authentication_Init_Failed';
+import CHAT_LOGIN_MSG_NO from '@salesforce/label/c.NKS_Chat_Login_Message_NO';
 
 export default class ChatAuthenticationOverview extends LightningElement {
 
@@ -96,6 +97,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
                 _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
+                _this.sendLoginEvent();
             }
         };
 
@@ -106,6 +108,16 @@ export default class ChatAuthenticationOverview extends LightningElement {
             // Response contains the subscription information on successful subscribe call
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
+    }
+
+    sendLoginEvent() {
+        const loginMessage = CHAT_LOGIN_MSG_NO;
+
+        //Sending event handled by parent to to trigger default chat login message
+        const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
+            detail: { loginMessage }
+        });
+        this.dispatchEvent(authenticationCompleteEvt);
     }
 
     //Sends event handled by parent to utilize conversation API to send message for init of auth process
