@@ -2,14 +2,27 @@
     <template if:true={recordIdSet}>
         <lightning-record-view-form record-id={viewedRecordId} object-api-name={viewedObjectApiName}>
             <lightning-card title={cardLabel} icon-name={iconName}>
-                <lightning-button-icon variant="bare" icon-name="action:preview" label="Preview" slot="actions"
-                    onclick={navigateToRecord}></lightning-button-icon>
                 <lightning-layout multiple-rows="true">
-                    <template for:each={fieldList} for:item="field">
-                        <lightning-layout-item key={field} size={columnWidth} padding="horizontal-small">
-                            <lightning-output-field class="fieldStyle" field-name={field}>
-                            </lightning-output-field>
-                        </lightning-layout-item>
+                    <template iterator:it={fieldList}>
+                        <template if:true={it.first}>
+                            <lightning-layout-item key={it.value} size={columnWidth} padding="horizontal-small">
+                                <template if:true={showLink}>
+                                    <lightning-output-field class="fieldStyle" style="cursor: pointer;"
+                                        field-class="slds-text-link" field-name={it.value} onclick={navigateToRecord}>
+                                    </lightning-output-field>
+                                </template>
+                                <template if:false={showLink}>
+                                    <lightning-output-field class="fieldStyle" field-name={it.value}>
+                                    </lightning-output-field>
+                                </template>
+                            </lightning-layout-item>
+                        </template>
+                        <template if:false={it.first}>
+                            <lightning-layout-item key={it.value} size={columnWidth} padding="horizontal-small">
+                                <lightning-output-field class="fieldStyle" field-name={it.value}>
+                                </lightning-output-field>
+                            </lightning-layout-item>
+                        </template>
                     </template>
                 </lightning-layout>
             </lightning-card>

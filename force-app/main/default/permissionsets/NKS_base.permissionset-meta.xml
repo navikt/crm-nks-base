@@ -4,6 +4,14 @@
         <application>NAV_Kontaktsenter</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>NKS_RelatedListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NksRecordInfoController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
@@ -97,6 +105,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LiveChatTranscript.CRM_Authentication_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavUnit__c.CRM_QueueId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -10,7 +10,10 @@
             "INT_FirstName__c": "Harry",
             "INT_LastName__c": "Potter",
             "INT_IsDeceased__c": false,
-            "INT_RegionNumber__c": "03"
+            "INT_RegionNumber__c": "03",
+            "INT_ResidentialAddress__c": "Galtvortveien 101",
+            "INT_ResidentialZipCode__c": "1001",
+            "INT_Sex__c": "Male"
         },
         {
             "attributes": {
@@ -22,7 +25,8 @@
             "INT_FirstName__c": "Hermine",
             "INT_LastName__c": "Grang",
             "INT_IsDeceased__c": false,
-            "INT_RegionNumber__c": "03"
+            "INT_RegionNumber__c": "03",
+            "INT_Sex__c": "Female"
         },
         {
             "attributes": {
@@ -34,7 +38,37 @@
             "INT_FirstName__c": "Ronny",
             "INT_LastName__c": "Wiltersen",
             "INT_IsDeceased__c": false,
-            "INT_RegionNumber__c": "03"
+            "INT_RegionNumber__c": "03",
+            "INT_Sex__c": "Male"
+        },
+        {
+            "attributes": {
+                "type": "Person__c",
+                "referenceId": "PersonRef4"
+            },
+            "Name": "27036012345",
+            "INT_MunicipalityNumber__c": "0301",
+            "INT_FirstName__c": "Jakob",
+            "INT_LastName__c": "Potter",
+            "INT_IsDeceased__c": true,
+            "INT_RegionNumber__c": "03",
+            "INT_ResidentialAddress__c": "Galtvortveien 1",
+            "INT_ResidentialZipCode__c": "1001",
+            "INT_Sex__c": "Male"
+        },
+        {
+            "attributes": {
+                "type": "Person__c",
+                "referenceId": "PersonRef5"
+            },
+            "Name": "30016012345",
+            "INT_FirstName__c": "Lily",
+            "INT_LastName__c": "Potter",
+            "INT_IsDeceased__c": true,
+            "INT_RegionNumber__c": "03",
+            "INT_ResidentialAddress__c": "Galtvortveien 1",
+            "INT_ResidentialZipCode__c": "1001",
+            "INT_Sex__c": "Female"
         }
     ]
 }

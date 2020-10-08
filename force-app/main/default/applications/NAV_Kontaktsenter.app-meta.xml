@@ -3,6 +3,24 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Chat_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Chat_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>TAG_NKS_EmployerDefaultRecordPage</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -18,6 +36,14 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Account</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>Hjem</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
@@ -28,15 +54,24 @@
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
     <label>NAV Kontaktsenter</label>
     <navType>Console</navType>
+    <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-LightningQuickText</tabs>
+    <tabs>Knowledge__kav</tabs>
     <uiType>Lightning</uiType>
+    <utilityBar>NAV_Kontaktsenter_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>Knowledge__kav</tab>
+        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>
         <mappings>
             <tab>standard-LightningQuickText</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

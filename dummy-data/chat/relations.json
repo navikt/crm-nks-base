@@ -1,0 +1,64 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef1"
+            },
+            "Person__c": "@PersonRef1",
+            "External_Reference__c": "1_1",
+            "Related_Person__c": "@PersonRef4",
+            "Relation_Type__c": "FAR"
+        },
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef2"
+            },
+            "Person__c": "@PersonRef1",
+            "External_Reference__c": "1_2",
+            "Related_Person__c": "@PersonRef5",
+            "Relation_Type__c": "MOR"
+        },
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef3"
+            },
+            "Person__c": "@PersonRef5",
+            "External_Reference__c": "1_3",
+            "Related_Person__c": "@PersonRef1",
+            "Relation_Type__c": "BARN"
+        },
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef4"
+            },
+            "Person__c": "@PersonRef4",
+            "External_Reference__c": "1_4",
+            "Related_Person__c": "@PersonRef1",
+            "Relation_Type__c": "BARN"
+        },
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef5"
+            },
+            "Person__c": "@PersonRef4",
+            "External_Reference__c": "1_5",
+            "Related_Person__c": "@PersonRef5",
+            "Relation_Type__c": "EKTEFELLE"
+        },
+        {
+            "attributes": {
+                "type": "Relation__c",
+                "referenceId": "RelationRef6"
+            },
+            "Person__c": "@PersonRef5",
+            "External_Reference__c": "1_6",
+            "Related_Person__c": "@PersonRef4",
+            "Relation_Type__c": "EKTEFELLE"
+        }
+    ]
+}

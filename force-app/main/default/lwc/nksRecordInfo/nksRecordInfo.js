@@ -12,18 +12,20 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;                  // Name of the icon to display on the format required from the icon-name attribute in lighning:card
     @api numCols = 2;               // Number of columns for the displayed fields
+    @api showLink = false;        // Boolean to determine if action slot is to be displayed
 
     connectedCallback() {
         this.viewedObjectApiName = this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
-        if (this.relationshipField != null) {
+        if (this.relationshipField != null && this.relationshipField != '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
+        this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({ parentId: this.recordId, relationshipField: relationshipField, objectApiName: objectApiName })
             .then(record => {
-                this.viewedRecordId = record[relationshipField];
+                this.viewedRecordId = this.resolve(relationshipField, record);
             })
             .catch(error => {
                 console.log(error);
@@ -53,5 +55,20 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
                 actionName: 'view'
             }
         });
+    }
+
+    /*
+     * HELPER FUNCTIONS
+    */
+
+    /**
+     * Retrieves the value from the given object's data path
+     * @param {data path} path 
+     * @param {JS object} obj 
+     */
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null
+        }, obj || self)
     }
 }
