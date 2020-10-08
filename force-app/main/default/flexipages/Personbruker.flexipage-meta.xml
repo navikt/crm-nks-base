@@ -375,15 +375,15 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>columnLabels</name>
-                <value>Navn, Type</value>
+                <value>RELNR, Person, Relasjon</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>displayedFields</name>
-                <value>Name, Related_Person_Name__c, Relation_Type__c,Relation_Type__c</value>
+                <value>Name, INT_Related_Person_Name__c, INT_Relation_Type__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>filterConditions</name>
-                <value>RELNR, Person, Relasjon</value>
+                <value></value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>headerColor</name>
@@ -407,7 +407,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>relationField</name>
-                <value>Person__c</value>
+                <value>INT_Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRelatedList</componentName>
         </componentInstances>
