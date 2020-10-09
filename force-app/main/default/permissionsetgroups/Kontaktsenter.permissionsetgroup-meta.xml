@@ -8,6 +8,6 @@
     <permissionSets>Arbeidsgiver_temporaryLayoffs</permissionSets>
     <permissionSets>NKS_NAV_Task</permissionSets>
     <permissionSets>NKS_Quick_Text_Reader</permissionSets>
-    <permissionSets>NKS_Base</permissionSets>
+    <permissionSets>NKS_base</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
