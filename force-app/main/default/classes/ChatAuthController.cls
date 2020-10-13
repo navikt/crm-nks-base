@@ -41,10 +41,11 @@ public without sharing class ChatAuthController {
     public static Map<String, String> getChatInfo(String chatTranscriptId) {
         Map<String, String> chatInfo;
         try {
-            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
+            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, LiveChatButton.WindowLanguage, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
             chatInfo = new Map<String, String> {'AUTH_STATUS' => trans.CRM_Authentication_Status__c,
                                                 'CONVERSATION_STATUS' => trans.Status,
-                                                'ACCOUNTID' => trans.accountId};
+                                                'ACCOUNTID' => trans.accountId,
+                                                'CHAT_LANGUAGE' => String.isNotBlank(trans.LiveChatButton.WindowLanguage) ? trans.LiveChatButton.WindowLanguage : 'no'};
             return chatInfo;
         }
         catch(Exception ex) {
