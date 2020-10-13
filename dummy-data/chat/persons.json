@@ -13,7 +13,8 @@
             "INT_RegionNumber__c": "03",
             "INT_ResidentialAddress__c": "Galtvortveien 101",
             "INT_ResidentialZipCode__c": "1001",
-            "INT_Sex__c": "Male"
+            "INT_Sex__c": "Male",
+            "INT_Confidential__c": "UGRADERT"
         },
         {
             "attributes": {
@@ -26,7 +27,8 @@
             "INT_LastName__c": "Grang",
             "INT_IsDeceased__c": false,
             "INT_RegionNumber__c": "03",
-            "INT_Sex__c": "Female"
+            "INT_Sex__c": "Female",
+            "INT_Confidential__c": "UGRADERT"
         },
         {
             "attributes": {
@@ -39,7 +41,8 @@
             "INT_LastName__c": "Wiltersen",
             "INT_IsDeceased__c": false,
             "INT_RegionNumber__c": "03",
-            "INT_Sex__c": "Male"
+            "INT_Sex__c": "Male",
+            "INT_Confidential__c": "UGRADERT"
         },
         {
             "attributes": {
@@ -54,7 +57,8 @@
             "INT_RegionNumber__c": "03",
             "INT_ResidentialAddress__c": "Galtvortveien 1",
             "INT_ResidentialZipCode__c": "1001",
-            "INT_Sex__c": "Male"
+            "INT_Sex__c": "Male",
+            "INT_Confidential__c": "UGRADERT"
         },
         {
             "attributes": {
@@ -68,7 +72,8 @@
             "INT_RegionNumber__c": "03",
             "INT_ResidentialAddress__c": "Galtvortveien 1",
             "INT_ResidentialZipCode__c": "1001",
-            "INT_Sex__c": "Female"
+            "INT_Sex__c": "Female",
+            "INT_Confidential__c": "UGRADERT"
         }
     ]
 }
