@@ -24,7 +24,7 @@ System.debug('TOKEN TEST SETUP: ' +  (String) Cache.Session.getPartition('local.
 
         System.assertNotEquals(stringToEncode, encodedString);
         //System.assertEquals(TEST_AD_TOKEN, token);
-        System.assertEquals(stringToEncode, String.valueOf(EncodingUtil.base64Decode(encodedString)));
+        System.assertEquals(stringToEncode, EncodingUtil.base64Decode(encodedString).toString());
     }
 
 }
