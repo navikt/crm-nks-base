@@ -12,6 +12,7 @@
         "NKS_Knowledge_Editor",
         "NKS_Chat_Permissions",
         "NKS_Quick_Text_Editor",
-        "NKS_Quick_Text_Reader"
+        "NKS_Quick_Text_Reader",
+        "NKS_Person_Access"
     ]
 }

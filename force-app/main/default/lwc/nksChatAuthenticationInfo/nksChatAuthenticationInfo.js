@@ -12,6 +12,8 @@ import IDENTITY_CONFIRMED from '@salesforce/label/c.CRM_Chat_Identity_Confirmed'
 import UNCONFIRMED_IDENTITY_WARNING from '@salesforce/label/c.CRM_Chat_Unconfirmed_Identity_Warning';
 import IDENTITY_CONFIRMED_DISCLAIMER from '@salesforce/label/c.CRM_Chat_Identity_Confirmed_Disclaimer';
 import AUTH_INIT_FAILED from '@salesforce/label/c.CRM_Chat_Authentication_Init_Failed';
+import CHAT_LOGIN_MSG_NO from '@salesforce/label/c.NKS_Chat_Login_Message_NO';
+import CHAT_LOGIN_MSG_EN from '@salesforce/label/c.NKS_Chat_Login_Message_EN';
 
 export default class ChatAuthenticationOverview extends LightningElement {
 
@@ -30,6 +32,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
     activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
+    chatLanguage;
     chatAuthUrl;
 
     //#### GETTERS ####
@@ -68,6 +71,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.currentAuthenticationStatus = data.AUTH_STATUS;
             this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
             this.accountId = data.ACCOUNTID;
+            this.chatLanguage = data.CHAT_LANGUAGE;
         } else {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
@@ -96,6 +100,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
                 _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
+                _this.sendLoginEvent();
             }
         };
 
@@ -106,6 +111,17 @@ export default class ChatAuthenticationOverview extends LightningElement {
             // Response contains the subscription information on successful subscribe call
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
+    }
+
+    sendLoginEvent() {
+        //Message defaults to norwegian
+        const loginMessage = this.chatLanguage === 'en' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
+
+        //Sending event handled by parent to to trigger default chat login message
+        const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
+            detail: { loginMessage }
+        });
+        this.dispatchEvent(authenticationCompleteEvt);
     }
 
     //Sends event handled by parent to utilize conversation API to send message for init of auth process

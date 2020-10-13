@@ -5,6 +5,7 @@
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
     <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
-        accountFields="{!v.accountFields}" onrequestauthentication="{!c.requestAuthentication}" aura:id="chatAuthInfo">
+        accountFields="{!v.accountFields}" onrequestauthentication="{!c.requestAuthentication}"
+        onauthenticationcomplete="{!c.showLoginMsg}" aura:id="chatAuthInfo">
     </c:nksChatAuthenticationInfo>
 </aura:component>

@@ -6,7 +6,6 @@
                 "referenceId": "ChatTranscriptRef1"
             },
             "LiveChatVisitorId": "@VisitorRef1",
-            "AccountId": "@AccountRef1",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>"
         },
@@ -16,7 +15,6 @@
                 "referenceId": "ChatTranscriptRef2"
             },
             "LiveChatVisitorId": "@VisitorRef1",
-            "AccountId": "@AccountRef1",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>"
         },
@@ -26,7 +24,6 @@
                 "referenceId": "ChatTranscriptRef3"
             },
             "LiveChatVisitorId": "@VisitorRef1",
-            "AccountId": "@AccountRef2",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>"
         }

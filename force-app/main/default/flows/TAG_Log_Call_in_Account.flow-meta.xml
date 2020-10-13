@@ -243,6 +243,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CRM_Status__c</field>
+            <value>
+                <stringValue>Ny</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CRM_SubTheme__c</field>
             <value>
                 <elementReference>subThemeValue</elementReference>
