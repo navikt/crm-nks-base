@@ -1,5 +1,5 @@
 //Utility class used to allow flow to retrieve the AD token from the session cache
-public class NksJournalUtilities {
+public class NKS_JournalUtilities {
 
     @InvocableMethod(label = 'Journal Utility Request' description = 'Retrieves the users AD token from the session cache' category = 'Journal')
     public static List<String> handleRequest(List<utilityRequest> request) {
@@ -27,7 +27,6 @@ public class NksJournalUtilities {
 //String accessToken = Auth.AuthToken.getAccessToken('PROVIDERID',  'Open Id Connect')
         Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.tokens');
         ADtoken = (String) sessionPart.get('ADTOKEN');
-System.debug('TOKEN: ' + ADtoken);
 
         return ADtoken;
     }

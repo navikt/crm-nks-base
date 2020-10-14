@@ -1,5 +1,6 @@
 global class NKS_ChatJournalHandler extends MyTriggers {
 
+    @testVisible
     private static final String CHAT_JOURNAL_TYPE = 'Chat Journal';
     
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
