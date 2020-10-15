@@ -115,7 +115,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
 
     sendLoginEvent() {
         //Message defaults to norwegian
-        const loginMessage = this.chatLanguage === 'en' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
+        const loginMessage = this.chatLanguage === 'en_US' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
 
         //Sending event handled by parent to to trigger default chat login message
         const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
