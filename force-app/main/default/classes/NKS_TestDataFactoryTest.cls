@@ -39,19 +39,6 @@ public class NKS_TestDataFactoryTest {
 
 		System.assertEquals( 1, after - before, 'New LiveChatVisitor should have been created' );
     }
-    
-    @isTest
-    static void testCreateLiveChatTranscript() {
-        Integer before = [SELECT Id FROM LiveChatTranscript].size();
-
-		Test.StartTest();
-		NKS_TestDataFactory.createLiveChatTranscripts(1);
-		Test.StopTest();
-
-		Integer after = [SELECT Id FROM LiveChatTranscript].size();
-
-		System.assertEquals( 1, after - before, 'New LiveChatTranscript should have been created' );
-    }
 
     @isTest
     static void testCreateNavUnits() {
