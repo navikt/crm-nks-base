@@ -1,105 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>collapsed</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>enableActionsConfiguration</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>hideChatterActions</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numVisibleActions</name>
-                <value>3</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
-                <name>cardLabel</name>
+                <name>decorate</name>
+                <value>true</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>displayedFields</name>
-                <value>INT_FirstName__c,Name,INT_MiddleName__c, INT_Sex__c, INT_LastName__c</value>
+                <name>richTextValue</name>
+                <value>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Her vil det komme en liste over brukerens siste saker.&lt;/span&gt;&lt;/p&gt;</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:richText</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>decorate</name>
+                <value>true</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>iconName</name>
+                <name>richTextValue</name>
+                <value>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Her vil det komme en oversikt over dialog med bruker.&lt;/span&gt;&lt;/p&gt;</value>
             </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numCols</name>
-                <value>2</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relationshipField</name>
-                <value>CRM_Person__c</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>showLink</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>viewedObjectApiName</name>
-                <value>Person__c</value>
-            </componentInstanceProperties>
-            <componentName>nksRecordInfo</componentName>
+            <componentName>flexipage:richText</componentName>
         </componentInstances>
         <name>Facet-51eee843-0e1e-4717-9346-27f87a4dba3a</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>amountOfMonths</name>
-                <value>4</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>amountOfMonthsToLoad</name>
-                <value>4</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>amountOfRecords</name>
-                <value>3</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>amountOfRecordsToLoad</name>
-                <value>3</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>headerIcon</name>
-                <value>custom:custom18</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>headerTitleEnglish</name>
-                <value>Activities</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>headerTitleNorwegian</name>
-                <value>Aktiviteter</value>
-            </componentInstanceProperties>
-            <componentName>tagActivityTimeline</componentName>
-        </componentInstances>
-        <name>Facet-64e7b5d8-fdd8-4210-8b30-11ad982aeccf</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>context</name>
-                <value>RECORD</value>
-            </componentInstanceProperties>
-            <componentName>forceChatter:exposedFeed</componentName>
-        </componentInstances>
-        <name>Facet-56e96b7e-ba4a-4ab2-8009-dce02177d1f8</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -128,149 +56,6 @@
         </componentInstances>
         <name>Facet-94y2422x2er</name>
         <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>cardLabel</name>
-                <value>Title</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>displayedFields</name>
-                <value>Name</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>iconName</name>
-                <value>Title</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numCols</name>
-                <value>2</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>showLink</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <name>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>cardLabel</name>
-                <value>Title</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>displayedFields</name>
-                <value>Name</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>iconName</name>
-                <value>Title</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numCols</name>
-                <value>2</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>showLink</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <name>Facet-123dba61-2acf-4dfa-b6e5-ec592f87b1a8</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-51eee843-0e1e-4717-9346-27f87a4dba3a</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Oversikt</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-64e7b5d8-fdd8-4210-8b30-11ad982aeccf</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Oppfølging</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-56e96b7e-ba4a-4ab2-8009-dce02177d1f8</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Meldinger</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-94y2422x2er</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Saker</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Tab 5</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-123dba61-2acf-4dfa-b6e5-ec592f87b1a8</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Tab 6</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <name>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>tabs</name>
-                <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
-        </componentInstances>
-        <name>main</name>
-        <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
@@ -383,7 +168,6 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>filterConditions</name>
-                <value></value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>headerColor</name>
@@ -410,6 +194,112 @@
                 <value>INT_Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRelatedList</componentName>
+        </componentInstances>
+        <name>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>active</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-51eee843-0e1e-4717-9346-27f87a4dba3a</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Oversikt</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-94y2422x2er</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Saker</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Standard.Tab.detail</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <name>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>collapsed</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>enableActionsConfiguration</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>hideChatterActions</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>numVisibleActions</name>
+                <value>0</value>
+            </componentInstanceProperties>
+            <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>tabs</name>
+                <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tabset</componentName>
+        </componentInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>amountOfMonths</name>
+                <value>4</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>amountOfMonthsToLoad</name>
+                <value>4</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>amountOfRecords</name>
+                <value>3</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>amountOfRecordsToLoad</name>
+                <value>3</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>headerIcon</name>
+                <value>custom:custom18</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>headerTitleEnglish</name>
+                <value>Activities</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>headerTitleNorwegian</name>
+                <value>Aktiviteter</value>
+            </componentInstanceProperties>
+            <componentName>tagActivityTimeline</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
