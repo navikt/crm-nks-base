@@ -10,7 +10,12 @@
                 <lightning-layout-item key={record.RecordId} class="slds-var-p-around_xx-small slds-size_1-of-1">
                     <div class="slds-var-p-horizontal_small">
                         <p class="slds-text-color_destructive">{record.SecurityMeasure}</p>
-                        <p>Gyldig: {record.FromDate} - {record.ToDate}</p>
+                        <p>Gyldig: <lightning-formatted-date-time value={record.FromDate} year="numeric" month="numeric"
+                                day="numeric">
+                            </lightning-formatted-date-time> - <lightning-formatted-date-time value={record.ToDate}
+                                year="numeric" month="numeric" day="numeric">
+                            </lightning-formatted-date-time>
+                        </p>
                     </div>
                 </lightning-layout-item>
             </template>
