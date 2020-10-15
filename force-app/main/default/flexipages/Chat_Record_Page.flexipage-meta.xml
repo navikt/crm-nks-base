@@ -99,6 +99,25 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
+                <name>buttonIcon</name>
+                <value>action:record</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>buttonLabel</name>
+                <value>Journal</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>flowName</name>
+                <value>NKS_Chat_Create_Journal_Entry</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>fullButtonWidth</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentName>nksFlowStarter</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
                 <name>accountFields</name>
                 <value>Name,  Phone, PersonEmail</value>
             </componentInstanceProperties>
