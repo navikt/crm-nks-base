@@ -24,6 +24,83 @@ public virtual class ApiController {
         this.resp = new Http().send(req);
     }
 
+    public void initRequest(String apiConfigName, String httpMethod) {
+        initRequest(apiConfigName, httpMethod, null);
+    }
+
+    /**
+    * @description: Initializes a HTTP request with method and endpoint from either named credential of basic endpoint
+    * @author Stian Ruud Schikora | 10-15-2020 
+    * @param apiConfigName 
+    * @param httpMethod 
+    * @param paramMap 
+    **/
+    public void initRequest(String apiConfigName, String httpMethod, Map<String, String> paramMap) {
+        API_Base_Configuration__mdt baseConfig = Test.isRunningTest() ? getApiConfiguration('TEST_CONFIG', 'GET') : getApiConfiguration(apiConfigName, httpMethod);
+        API_Service_Configuration__mdt serviceConfig = baseConfig.API_Service_Configurations__r[0];
+        String servicePath = serviceConfig.Has_Path_Parameters__c ? replacePathParameters(serviceConfig.Service_Path__c, paramMap) : serviceConfig.Service_Path__c;
+        setMethod(httpMethod);
+
+        if(String.isNotBlank(baseConfig.Named_Credential__c)) {
+            setNamedCredential(baseConfig.Named_Credential__c, servicePath);
+        }
+        else{
+            setEndpoint(baseConfig.Base_Endpoint__c + servicePath);
+        }
+
+    }
+
+    /**
+    * @description: Retrieves the correct API configuration from custom metadata
+    * @author Stian Ruud Schikora | 10-15-2020 
+    * @param apiConfigName 
+    * @param httpMethod 
+    * @return API_Base_Configuration__mdt 
+    **/
+    private API_Base_Configuration__mdt getApiConfiguration(String apiConfigName, String httpMethod) {
+        API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, 
+                                                        (SELECT Service_Path__c, Has_Path_Parameters__c FROM API_Service_Configurations__r WHERE HTTP_Method__c =: httpMethod)
+                                                         FROM API_Base_Configuration__mdt WHERE DeveloperName =: apiConfigName LIMIT 1];
+
+        if(baseConfig.API_Service_Configurations__r.isEmpty()) throw new NoServiceConfigurationException('No service configuration found for HTTP Method: ' + httpMethod);
+
+        return baseConfig;
+    }
+
+    /**
+    * @description: Replaces the path parameters with the parameters from the paramMap
+    * @author Stian Ruud Schikora | 10-15-2020 
+    * @param inputPath [STRING]
+    * @param paramMap [[Map<String, String>]]
+    * @return String [STRING: Updates path]
+    **/
+    public String replacePathParameters(String inputPath, Map<String, String> paramMap) {
+        validatePathInput(inputPath, paramMap); //Throws an exception if any parameters are missing
+
+        String outputPath = inputPath;
+        for (String param : paramMap.keySet()) {
+            outputPath = outputPath.replace('{' + param + '}', paramMap.get(param));
+        }
+
+        return outputPath;
+    }
+
+    /**
+    * @description: Validates if the the paramMap includes all necessary params for the input Path
+    * @author Stian Ruud Schikora | 10-15-2020 
+    * @param inputPath 
+    * @param paramMap 
+    **/
+    private void validatePathInput(String inputPath, Map<String, String> paramMap) {
+        Pattern p = Pattern.compile('\\{.+?\\}');
+
+        Matcher m = p.matcher(inputPath);
+        while(m.find()) {
+            String matcherParam = m.group(0).remove('{').remove('}');
+            if(!paramMap.containsKey(matcherParam)) throw new InvalidPathParamException('Missing parameter in paramMap: ' + matcherParam);
+        }
+    }
+
     /**
     * @description: Getter for the response variable
     * @author Stian Ruud Schikora | 08-27-2020 
@@ -185,4 +262,6 @@ public virtual class ApiController {
     }
     
     public class InvalidOperationException extends Exception {}
+    public class NoServiceConfigurationException extends Exception {}
+    public class InvalidPathParamException extends Exception {}
 }

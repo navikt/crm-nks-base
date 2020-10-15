@@ -89,9 +89,8 @@ public class NKS_ChatTranscriptService extends ApiController {
     }
 
     private void initPatchRequest(String servicePath) {
-        setMethod('PATCH')
-        .setNamedCredential(JOURNAL_API_CREDENTIAL_NAME, servicePath)
-        .addHeader('Content-Type', 'application/json');
+        initRequest('Journal_API', 'PATCH');
+        addHeader('Content-Type', 'application/json');
     }
 
 }

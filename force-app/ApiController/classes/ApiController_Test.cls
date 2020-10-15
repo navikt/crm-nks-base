@@ -1,5 +1,6 @@
 @isTest
 public  class ApiController_Test {
+    private static testExtender ctrl = new testExtender();
 
     public class testExtender extends ApiController {}
 
@@ -33,5 +34,29 @@ public  class ApiController_Test {
         ctrl.getEndpoint();
 
         System.assertEquals(200, ctrl.getResponse().getStatusCode());
+    }
+
+    @isTest
+    static void testReplacePathParameters() {
+        String testPath = '/testservice/{testparam}/{testparam2}';
+        Map<String, String> paramMap = new Map<String, String>{ 'testparam' => 'success', 'testparam2' => 'success2'};
+        testExtender ctrl = new testExtender();
+
+        Test.startTest();
+        String outputPath = ctrl.replacePathParameters(testPath, paramMap);
+        Test.stopTest();
+
+        System.assertEquals('/testservice/success/success2', outputPath);
+    }
+
+    @isTest
+    static void testInitRequest() {
+
+        Test.startTest();
+        ctrl.initRequest('Testing', 'POST');
+        Test.stopTest();
+
+        //When in test context the standard test configuration is returned
+        System.assertNotEquals(ctrl.getEndpoint(), null);
     }
 }
