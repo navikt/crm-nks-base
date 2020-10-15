@@ -12,32 +12,45 @@
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <table
-                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-max-medium-table_stacked-horizontal">
-                    <thead>
-                        <tr class="slds-line-height_reset">
-                            <template for:each={fieldLabels} for:item="label">
-                                <th key={label} scope="col">
-                                    <div class="slds-truncate" title={label}>{label}</div>
-                                </th>
-                            </template>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template for:each={listRecords} for:item="record" for:index="rowIndex">
-                            <tr key={record} data-value={rowIndex} class="slds-hint-parent" onclick={handleRowClick}
-                                style="cursor: pointer;">
-                                <template for:each={record.recordFields} for:item="field">
-                                    <th key={field.value} scope="row">
-                                        <div class="slds-truncate">
-                                            {field.value}
-                                        </div>
-                                    </th>
+                <div class="slds-table--header-fixed_container" style="width:100%;max-height:20em;">
+                    <div class="slds-scrollable_y" style="max-height:20em;">
+                        <table
+                            class="slds-table slds-table_cell-buffer slds-table--header-fixed slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <template iterator:it={fieldLabels}>
+                                        <template if:true={it.first}>
+                                            <th key={it.value} scope="col">
+                                                <div class="slds-truncate slds-cell-fixed slds-align_absolute-center"
+                                                    title={it.value}>{it.value}</div>
+                                            </th>
+                                        </template>
+                                        <template if:false={it.first}>
+                                            <th key={it.value} scope="col">
+                                                <div class="slds-truncate slds-cell-fixed slds-align_absolute-center slds-p-left_x-small"
+                                                    title={it.value}>{it.value}</div>
+                                            </th>
+                                        </template>
+                                    </template>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={listRecords} for:item="record" for:index="rowIndex">
+                                    <tr key={record} data-value={rowIndex} class="slds-hint-parent"
+                                        onclick={handleRowClick} style="cursor: pointer;">
+                                        <template for:each={record.recordFields} for:item="field">
+                                            <th key={field.value} scope="row">
+                                                <div class="slds-truncate">
+                                                    {field.value}
+                                                </div>
+                                            </th>
+                                        </template>
+                                    </tr>
                                 </template>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </template>
         </lightning-layout>
     </article>
