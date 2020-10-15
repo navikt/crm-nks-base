@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <assignments>
+        <name>Set_Journal_Entry_Created</name>
+        <label>Set Journal Entry Created</label>
+        <locationX>756</locationX>
+        <locationY>355</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Transcript</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
@@ -32,6 +55,9 @@
         <label>Should Create Task?</label>
         <locationX>556</locationX>
         <locationY>353</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Entry_Created</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Do_Create_Task</name>
@@ -43,10 +69,36 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Set_Journal_Entry_Created</targetReference>
+            </connector>
             <label>Do Create Task</label>
         </rules>
     </decisions>
     <description>Flow to initiate the creation of a journal entry.</description>
+    <dynamicChoiceSets>
+        <name>NAV_UNIT_CHOICE</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>NavUnit__c</object>
+        <valueField>INT_UnitNumber__c</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Subtype</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CRM_SubTheme__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Type</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CRM_Theme__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Chat Create Journal Entry</label>
     <processMetadataValues>
@@ -83,13 +135,21 @@
         <object>LiveChatTranscript</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>NKS_Journal_Entry_Created__c</queriedFields>
+        <queriedFields>NKS_Journal_Entry_Status__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Transcript</name>
+        <label>Update Transcript</label>
+        <locationX>907</locationX>
+        <locationY>355</locationY>
+        <inputReference>Get_Chat_Transcript</inputReference>
+    </recordUpdates>
     <screens>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>403</locationX>
+        <locationX>404</locationX>
         <locationY>351</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -97,6 +157,11 @@
         <connector>
             <targetReference>Should_Create_Task</targetReference>
         </connector>
+        <fields>
+            <name>Journal_Header</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Related_to_case</name>
             <dataType>String</dataType>
@@ -112,19 +177,19 @@
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>175</locationX>
-        <locationY>543</locationY>
+        <locationX>178</locationX>
+        <locationY>558</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Entry_Completed_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;A journal entry has already been submitted for this chat.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;A journal entry has been submitted for this chat.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>

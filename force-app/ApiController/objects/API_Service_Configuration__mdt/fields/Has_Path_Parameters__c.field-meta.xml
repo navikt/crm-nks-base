@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Has_Path_Parameters__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Does the service path include path parameters on the format .../{parameter}/..?</inlineHelpText>
+    <label>Has Path Parameters</label>
+    <type>Checkbox</type>
+</CustomField>
