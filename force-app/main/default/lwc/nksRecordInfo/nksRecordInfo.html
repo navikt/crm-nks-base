@@ -5,7 +5,7 @@
                 <lightning-layout multiple-rows="true">
                     <template iterator:it={fieldList}>
                         <template if:true={it.first}>
-                            <lightning-layout-item key={it.value} size={columnWidth} padding="horizontal-small">
+                            <lightning-layout-item key={it.value} size={columnWidth}>
                                 <template if:true={showLink}>
                                     <lightning-output-field class="fieldStyle" style="cursor: pointer;"
                                         field-class="slds-text-link" field-name={it.value} onclick={navigateToRecord}>
@@ -18,7 +18,7 @@
                             </lightning-layout-item>
                         </template>
                         <template if:false={it.first}>
-                            <lightning-layout-item key={it.value} size={columnWidth} padding="horizontal-small">
+                            <lightning-layout-item key={it.value} size={columnWidth} class="slds-p-left_medium">
                                 <lightning-output-field class="fieldStyle" field-name={it.value}>
                                 </lightning-output-field>
                             </lightning-layout-item>
