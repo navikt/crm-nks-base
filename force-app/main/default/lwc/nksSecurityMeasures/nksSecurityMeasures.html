@@ -1,0 +1,19 @@
+<template>
+    <div if:true={relatedRecords} class="slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert"
+        onclick={handleClick}>
+        <lightning-icon icon-name="utility:warning" size="small" title="Warning"></lightning-icon>
+        <h2>{title}</h2>
+    </div>
+    <div data-id="modal" class="slds-has-top-magnet slds-theme_default" style="display: none;">
+        <lightning-layout multiple-rows="true" pull-to-boundary="small">
+            <template if:true={relatedRecords} for:each={relatedRecords} for:item="record" for:index="index">
+                <lightning-layout-item key={record.RecordId} class="slds-var-p-around_xx-small slds-size_1-of-1">
+                    <div class="slds-var-p-horizontal_small">
+                        <p class="slds-text-color_destructive">{record.SecurityMeasure}</p>
+                        <p>Gyldig: {record.FromDate} - {record.ToDate}</p>
+                    </div>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </div>
+</template>
