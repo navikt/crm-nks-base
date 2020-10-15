@@ -1,0 +1,24 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "SecurityMeasure__c",
+                "referenceId": "SecurityMeasureRef1"
+            },
+            "INT_Person__c": "@PersonRef1",
+            "INT_SecurityMeasure__c": "Telefonisk utestengelse",
+            "INT_ValidToDate__c": "2010-01-12",
+            "INT_ValidFromDate__c": "2020-10-12"
+        },
+        {
+            "attributes": {
+                "type": "SecurityMeasure__c",
+                "referenceId": "SecurityMeasureRef2"
+            },
+            "INT_Person__c": "@PersonRef2",
+            "INT_SecurityMeasure__c": "To ansatte i samtale",
+            "INT_ValidToDate__c": "2018-01-12",
+            "INT_ValidFromDate__c": "2020-10-12"
+        }
+    ]
+}
