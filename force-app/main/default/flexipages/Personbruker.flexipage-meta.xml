@@ -307,6 +307,13 @@
                 <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
             </componentInstanceProperties>
             <componentName>nksSecurityMeasures</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>0</rightValue>
+                </criteria>
+            </visibilityRule>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>

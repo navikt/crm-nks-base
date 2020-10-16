@@ -168,6 +168,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.NKS_NumberOfSecurityMeasures__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Relation__c.INT_Related_Person_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
