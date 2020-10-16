@@ -80,8 +80,11 @@ public class NKS_ChatTranscriptService extends ApiController {
     **/
     private String generatePatchBody(LiveChatTranscript chatTranscript) {
         String baseDoc = EncodingUtil.base64Encode(Blob.valueOf(chatTranscript.body));
-        JournalEntryWrapper.DokumentVarianter docvar = new JournalEntryWrapper.Dokumentvarianter('pdf', baseDoc, 'ARKIV');
-        JournalEntryWrapper.Dokumenter doc = new JournalEntryWrapper.Dokumenter('STANDARD TITLE', null, new List<JournalEntryWrapper.Dokumentvarianter> {docvar});
+        String pdfDoc = EncodingUtil.base64Encode(Blob.toPdf(chatTranscript.body));
+        //NKS-66 - Create xml document as ORIGINAL and pdf as ARKIV
+        JournalEntryWrapper.DokumentVarianter pdfdocvar = new JournalEntryWrapper.Dokumentvarianter('pdf', pdfDoc, 'ARKIV');
+        JournalEntryWrapper.DokumentVarianter xmldocvar = new JournalEntryWrapper.Dokumentvarianter('xml', baseDoc, 'ORIGINAL');
+        JournalEntryWrapper.Dokumenter doc = new JournalEntryWrapper.Dokumenter('STANDARD TITLE', null, new List<JournalEntryWrapper.Dokumentvarianter> {pdfdocvar, xmldocvar});
         JournalEntryWrapper journalPatch = new JournalEntryWrapper();
         journalPatch.dokumenter = new List<JournalEntryWrapper.Dokumenter>{doc};
 
