@@ -2,7 +2,7 @@
 <ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>External service for the Journal API accessing JOARK.</description>
     <label>JournalAPI</label>
-    <namedCredential>JOARK_TEST</namedCredential>
+    <namedCredential>JOARK</namedCredential>
     <schema>{
     &quot;swagger&quot;: &quot;2.0&quot;,
     &quot;info&quot;: {
