@@ -23,11 +23,7 @@ public class NKS_JournalUtilities {
     * @return String [AD token]
     **/
     public static String getADToken() {
-        String ADtoken;
-//String accessToken = Auth.AuthToken.getAccessToken('PROVIDERID',  'Open Id Connect')
-        Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.tokens');
-        ADtoken = (String) sessionPart.get('ADTOKEN');
-
+        String ADtoken = CachedTokensHandler.getAccessToken();
         return ADtoken;
     }
 
