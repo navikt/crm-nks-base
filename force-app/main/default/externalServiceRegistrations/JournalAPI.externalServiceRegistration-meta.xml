@@ -50,6 +50,12 @@
                 ],
                 &quot;parameters&quot;: [
                     {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
                         &quot;name&quot;: &quot;forsoekFerdigstill&quot;,
                         &quot;in&quot;: &quot;query&quot;,
                         &quot;description&quot;: &quot;Angir hvorvidt tjenesten skal forsøke å ferdigstille eller ikke. Dette vil å sette journalposten i en status som indikerer at journalføring er komplett, \n og låser journalposten for senere endringer. Journalposten blir uansett opprettet, men kun ferdigstilt dersom den oppfyller krav til struktur og metadata som beskrevet under ferdigstillJournalpost.\n Sjekk \&quot;journalpostferdigstilt\&quot; på responsen for å være sikker på at journalposten faktisk ble ferdigstilt.&quot;,
@@ -126,6 +132,12 @@
                 ],
                 &quot;parameters&quot;: [
                     {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
                         &quot;name&quot;: &quot;journalpostId&quot;,
                         &quot;in&quot;: &quot;path&quot;,
                         &quot;description&quot;: &quot;Angir JournalpostId som skal oppdatere f.eks. 467011764&quot;,
@@ -189,6 +201,12 @@
                 ],
                 &quot;parameters&quot;: [
                     {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
                         &quot;name&quot;: &quot;journalpostId&quot;,
                         &quot;in&quot;: &quot;path&quot;,
                         &quot;description&quot;: &quot;IDen til journalposten som skal feilregistreres&quot;,
@@ -242,6 +260,12 @@
                     &quot;*/*&quot;
                 ],
                 &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
                     {
                         &quot;name&quot;: &quot;journalpostId&quot;,
                         &quot;in&quot;: &quot;path&quot;,
@@ -308,6 +332,12 @@
                     &quot;*/*&quot;
                 ],
                 &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
                     {
                         &quot;name&quot;: &quot;journalpostId&quot;,
                         &quot;in&quot;: &quot;path&quot;,
