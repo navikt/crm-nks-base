@@ -1,135 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>collapsed</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>enableActionsConfiguration</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>hideChatterActions</name>
-                <value>false</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>numVisibleActions</name>
-                <value>3</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>collapsed</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsConfiguration</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideChatterActions</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>chatHeight</name>
-                <value>500</value>
-            </componentInstanceProperties>
-            <componentName>runtime_service_liveagent:chatBody</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>chatHeight</name>
+                    <value>500</value>
+                </componentInstanceProperties>
+                <componentName>runtime_service_liveagent:chatBody</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>force:detailPanel</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:detailPanel</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>runtime_service_liveagent:pastChats</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_service_liveagent:pastChats</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-1a9941e8-5d6c-4dbb-a356-e7cc4fc3b1f1</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.chat</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.detail</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-1a9941e8-5d6c-4dbb-a356-e7cc4fc3b1f1</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.pastChats</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.chat</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1a9941e8-5d6c-4dbb-a356-e7cc4fc3b1f1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.pastChats</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-1fdd009c-cbdc-49a7-b544-d0c8501af993</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>tabs</name>
-                <value>Facet-1fdd009c-cbdc-49a7-b544-d0c8501af993</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tabset</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-1fdd009c-cbdc-49a7-b544-d0c8501af993</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>buttonIcon</name>
-                <value>action:record</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>buttonLabel</name>
-                <value>Journal</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>flowName</name>
-                <value>NKS_Chat_Create_Journal_Entry</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>fullButtonWidth</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentName>nksFlowStarter</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>accountFields</name>
-                <value>Name,  Phone, PersonEmail</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>loggingEnabled</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentName>nksChatAuthenticationInfoContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>forceKnowledge:articleSearchDesktop</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>buttonIcon</name>
+                    <value>action:record</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>buttonLabel</name>
+                    <value>Journal</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowName</name>
+                    <value>NKS_Chat_Create_Journal_Entry</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fullButtonWidth</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>nksFlowStarter</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>accountFields</name>
+                    <value>Name,  Phone, PersonEmail</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>loggingEnabled</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>nksChatAuthenticationInfoContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>

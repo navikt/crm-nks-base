@@ -65,7 +65,7 @@ public class NKS_ChatTranscriptService extends ApiController {
             success = resStatusCode == 200 || resStatusCode == 201;
         }
         catch(Exception ex){
-            //TBD: Pokemon catch
+            //Catch all exceptions and success will be false. Enters retry loop.
         }
 
         return success;
@@ -79,12 +79,10 @@ public class NKS_ChatTranscriptService extends ApiController {
     * @return String 
     **/
     private String generatePatchBody(LiveChatTranscript chatTranscript) {
-        String baseDoc = EncodingUtil.base64Encode(Blob.valueOf(chatTranscript.body));
         String pdfDoc = EncodingUtil.base64Encode(Blob.toPdf(chatTranscript.body));
-        //NKS-66 - Create xml document as ORIGINAL and pdf as ARKIV
+        //NKS-66 Need to convert to valid PDF/A 1-b format
         JournalEntryWrapper.DokumentVarianter pdfdocvar = new JournalEntryWrapper.Dokumentvarianter('pdf', pdfDoc, 'ARKIV');
-        JournalEntryWrapper.DokumentVarianter xmldocvar = new JournalEntryWrapper.Dokumentvarianter('xml', baseDoc, 'ORIGINAL');
-        JournalEntryWrapper.Dokumenter doc = new JournalEntryWrapper.Dokumenter('STANDARD TITLE', null, new List<JournalEntryWrapper.Dokumentvarianter> {pdfdocvar, xmldocvar});
+        JournalEntryWrapper.Dokumenter doc = new JournalEntryWrapper.Dokumenter('STANDARD TITLE', null, new List<JournalEntryWrapper.Dokumentvarianter> {pdfdocvar});
         JournalEntryWrapper journalPatch = new JournalEntryWrapper();
         journalPatch.dokumenter = new List<JournalEntryWrapper.Dokumenter>{doc};
 
@@ -92,8 +90,13 @@ public class NKS_ChatTranscriptService extends ApiController {
     }
 
     private void initPatchRequest(String servicePath) {
+        Map<String, String> httpHeaders = new Map<String, String>{
+                                            'Content-Type' => 'application/json',
+                                            'Authorization' => 'Bearer ' + CachedTokensHandler.getAccessToken()
+                                        };
+
         initRequest('Journal_API', 'PATCH');
-        addHeader('Content-Type', 'application/json');
+        setHeaders(httpHeaders);
     }
 
 }

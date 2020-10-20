@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <description>Calls apex to get a valid AD token.</description>
+        <name>Get_AD_Token</name>
+        <label>Get AD Token</label>
+        <locationX>176</locationX>
+        <locationY>191</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Post_Journal</targetReference>
+        </connector>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>AD_TOKEN</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <description>Posts the journal entry to JOARK.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>176</locationX>
+        <locationX>177</locationX>
         <locationY>325</locationY>
         <actionName>JournalAPI.Create Journal Post</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
+        <inputParameters>
+            <name>Authorization</name>
+            <value>
+                <elementReference>Token_Header</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>forsoekFerdigstill</name>
             <value>
@@ -23,6 +48,7 @@
                 <elementReference>Journal_Post_Request</elementReference>
             </value>
         </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
         <name>Set_200_Response</name>
@@ -147,12 +173,23 @@
         </rules>
     </decisions>
     <description>Flow receiving an journal post request as input, performs the callout and returns success or error message.</description>
+    <formulas>
+        <name>Token_Header</name>
+        <dataType>String</dataType>
+        <expression>&apos;Bearer &apos; &amp; {!Get_AD_Token}</expression>
+    </formulas>
     <interviewLabel>Post Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Post Journal Entry</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -166,7 +203,7 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Post_Journal</targetReference>
+            <targetReference>Get_AD_Token</targetReference>
         </connector>
     </start>
     <status>Draft</status>
