@@ -61,11 +61,42 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>cardLabel</name>
+                <value>Generell informasjon</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>displayedFields</name>
+                <value>Name, INT_Sex__c, INT_MaritalStatus__c, INT_LegalStatus__c, INT_MaritalStatusDate__c</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>iconName</name>
+                <value>action:info</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>numCols</name>
+                <value>2</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>relationshipField</name>
+                <value>CRM_Person__c</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>showLink</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>viewedObjectApiName</name>
+                <value>Person__c</value>
+            </componentInstanceProperties>
+            <componentName>nksRecordInfo</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>cardLabel</name>
                 <value>Kontaktinformasjon</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>displayedFields</name>
-                <value>INT_Phone1__c, INT_Phone2__c</value>
+                <value>INT_KrrEmail__c, INT_KrrMobilePhone__c , INT_Phone1__c, INT_Phone2__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>iconName</name>
@@ -81,7 +112,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>showLink</name>
-                <value>true</value>
+                <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>viewedObjectApiName</name>
@@ -270,6 +301,20 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>componentTitle</name>
+                <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
+            </componentInstanceProperties>
+            <componentName>nksSecurityMeasures</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!Record.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
+                    <operator>NE</operator>
+                    <rightValue>0</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>amountOfMonths</name>
