@@ -100,7 +100,7 @@
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Chat Create Journal Entry</label>
+    <label>Chat Create Journal Entry</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -150,7 +150,7 @@
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>404</locationX>
-        <locationY>351</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
