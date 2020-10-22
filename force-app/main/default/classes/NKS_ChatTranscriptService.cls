@@ -95,7 +95,7 @@ public class NKS_ChatTranscriptService extends ApiController {
                                             'Authorization' => 'Bearer ' + CachedTokensHandler.getAccessToken()
                                         };
 
-        initRequest('Journal_API', 'PATCH');
+        initRequest('Journal_API', 'PATCH_UPDATE_JOURNAL');
         setHeaders(httpHeaders);
     }
 

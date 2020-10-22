@@ -24,22 +24,22 @@ public virtual class ApiController {
         this.resp = new Http().send(req);
     }
 
-    public void initRequest(String apiConfigName, String httpMethod) {
-        initRequest(apiConfigName, httpMethod, null);
+    public void initRequest(String apiConfigName, String serviceName) {
+        initRequest(apiConfigName, serviceName, null);
     }
 
     /**
     * @description: Initializes a HTTP request with method and endpoint from either named credential of basic endpoint
     * @author Stian Ruud Schikora | 10-15-2020 
     * @param apiConfigName 
-    * @param httpMethod 
+    * @param serviceName 
     * @param paramMap 
     **/
-    public void initRequest(String apiConfigName, String httpMethod, Map<String, String> paramMap) {
-        API_Base_Configuration__mdt baseConfig = Test.isRunningTest() ? getApiConfiguration('TEST_CONFIG', 'GET') : getApiConfiguration(apiConfigName, httpMethod);
+    public void initRequest(String apiConfigName, String serviceName, Map<String, String> paramMap) {
+        API_Base_Configuration__mdt baseConfig = Test.isRunningTest() ? getApiConfiguration('TEST_CONFIG', 'TEST_SERVICE_CONFIG') : getApiConfiguration(apiConfigName, serviceName);
         API_Service_Configuration__mdt serviceConfig = baseConfig.API_Service_Configurations__r[0];
         String servicePath = serviceConfig.Has_Path_Parameters__c ? replacePathParameters(serviceConfig.Service_Path__c, paramMap) : serviceConfig.Service_Path__c;
-        setMethod(httpMethod);
+        setMethod(serviceConfig.HTTP_Method__c);
 
         if(String.isNotBlank(baseConfig.Named_Credential__c)) {
             setNamedCredential(baseConfig.Named_Credential__c, servicePath);
@@ -54,15 +54,15 @@ public virtual class ApiController {
     * @description: Retrieves the correct API configuration from custom metadata
     * @author Stian Ruud Schikora | 10-15-2020 
     * @param apiConfigName 
-    * @param httpMethod 
+    * @param serviceName 
     * @return API_Base_Configuration__mdt 
     **/
-    private API_Base_Configuration__mdt getApiConfiguration(String apiConfigName, String httpMethod) {
+    private API_Base_Configuration__mdt getApiConfiguration(String apiConfigName, String serviceName) {
         API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, 
-                                                        (SELECT Service_Path__c, Has_Path_Parameters__c FROM API_Service_Configurations__r WHERE HTTP_Method__c =: httpMethod)
+                                                        (SELECT Service_Path__c, Has_Path_Parameters__c, HTTP_Method__c FROM API_Service_Configurations__r WHERE DeveloperName =: serviceName)
                                                          FROM API_Base_Configuration__mdt WHERE DeveloperName =: apiConfigName LIMIT 1];
 
-        if(baseConfig.API_Service_Configurations__r.isEmpty()) throw new NoServiceConfigurationException('No service configuration found for HTTP Method: ' + httpMethod);
+        if(baseConfig.API_Service_Configurations__r.isEmpty()) throw new NoServiceConfigurationException('No service configuration found for name: ' + serviceName);
 
         return baseConfig;
     }
