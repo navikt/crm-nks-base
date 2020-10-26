@@ -9,6 +9,9 @@
             <layoutItems>
                 <field>Summary</field>
             </layoutItems>
+            <layoutItems>
+                <field>NKS_UserInformation__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
