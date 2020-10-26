@@ -349,7 +349,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Personbruker</masterLabel>
+    <masterLabel>NKS_PersonAccountRecordPage</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
