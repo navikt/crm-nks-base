@@ -69,7 +69,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>iconName</name>
-                <value>action:info</value>
+                <value>standard:avatar</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>numCols</name>
