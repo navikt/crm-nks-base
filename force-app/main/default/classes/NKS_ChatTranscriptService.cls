@@ -97,6 +97,13 @@ public class NKS_ChatTranscriptService extends ApiController {
         setHeaders(httpHeaders);
     }
 
+    /**
+    * @description: Handles storing the chat conversation directly to solve issue
+    * with omni channel delayed transcript boyd generation
+    * @author Stian Ruud Schikora | 10-27-2020 
+    * @param chatId 
+    * @param jsonConversation 
+    **/
     @AuraEnabled
     public static void storeConversation(String chatId, String jsonConversation) {
         String conversation = ''; //Potentially add generic header including date, queue origin and agent?

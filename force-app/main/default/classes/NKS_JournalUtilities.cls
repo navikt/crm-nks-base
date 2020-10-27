@@ -49,7 +49,7 @@ public class NKS_JournalUtilities {
             this.documentString = documentString;
         }
 
-        @invocableVariable(label = 'Type of Apex action to perform' description = 'Valid actions are: AD_TOKEN and GENERATE_DOCUMENT' required = true)
+        @invocableVariable(label = 'Type of Apex action to perform (Valid actions are: AD_TOKEN and GENERATE_DOCUMENT)' description = 'Valid actions are: AD_TOKEN and GENERATE_DOCUMENT' required = true)
         public String requestType;
 
         @invocableVariable
