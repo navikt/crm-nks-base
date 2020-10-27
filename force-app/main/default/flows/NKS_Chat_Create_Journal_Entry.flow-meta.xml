@@ -4,10 +4,13 @@
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
-        <locationX>671</locationX>
-        <locationY>156</locationY>
+        <locationX>736</locationX>
+        <locationY>352</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Set_Journal_Entry_Created</targetReference>
+        </connector>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -25,8 +28,8 @@
     <assignments>
         <name>Set_Journal_Entry_Created</name>
         <label>Set Journal Entry Created</label>
-        <locationX>756</locationX>
-        <locationY>355</locationY>
+        <locationX>892</locationX>
+        <locationY>351</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -78,7 +81,7 @@
         <locationX>556</locationX>
         <locationY>353</locationY>
         <defaultConnector>
-            <targetReference>Set_Journal_Entry_Created</targetReference>
+            <targetReference>Generate_PDF</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -92,7 +95,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Journal_Entry_Created</targetReference>
+                <targetReference>Generate_PDF</targetReference>
             </connector>
             <label>Do Create Task</label>
         </rules>
@@ -171,8 +174,8 @@
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>907</locationX>
-        <locationY>355</locationY>
+        <locationX>1043</locationX>
+        <locationY>351</locationY>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -233,7 +236,7 @@
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
