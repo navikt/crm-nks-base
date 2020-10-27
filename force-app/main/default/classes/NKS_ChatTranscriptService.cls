@@ -1,8 +1,5 @@
 public class NKS_ChatTranscriptService extends ApiController {
 
-    private static final String JOURNAL_API_CREDENTIAL_NAME = 'TBD';
-    private static final String JOURNAL_API_PATCH_SERVICE = '/rest/journalpostapi/v1/journalpost/{journalPostId}/ferdigstill';
-
     private Id AsyncReqId;
     private List<LiveChatTranscript> chatTranscripts;
 
@@ -54,8 +51,7 @@ public class NKS_ChatTranscriptService extends ApiController {
     * @return boolean [Callout success]
     **/
     private boolean updateJournalEntry(LiveChatTranscript chatTranscript) {
-        String servicePath = JOURNAL_API_PATCH_SERVICE.replace('{journalPostId}', chatTranscript.NKS_Journal_Entry_ID__c);
-        initPatchRequest(servicePath);
+        initPatchRequest(chatTranscript);
         setBody(generatePatchBody(chatTranscript));
         boolean success = false;
 
@@ -89,14 +85,50 @@ public class NKS_ChatTranscriptService extends ApiController {
         return JSON.serialize(journalPatch, true);
     }
 
-    private void initPatchRequest(String servicePath) {
+    private void initPatchRequest(LiveChatTranscript chatTranscript) {
         Map<String, String> httpHeaders = new Map<String, String>{
                                             'Content-Type' => 'application/json',
                                             'Authorization' => 'Bearer ' + CachedTokensHandler.getAccessToken()
                                         };
 
-        initRequest('Journal_API', 'PATCH_UPDATE_JOURNAL');
+        Map<String, String> pathParams = new Map<String, String>{ 'journalPostId' => chatTranscript.NKS_Journal_Entry_ID__c};
+
+        initRequest('Journal_API', 'PATCH_UPDATE_JOURNAL', pathParams);
         setHeaders(httpHeaders);
+    }
+
+    @AuraEnabled
+    public static void storeConversation(String chatId, String jsonConversation) {
+        String conversation = ''; //Potentially add generic header including date, queue origin and agent?
+        List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
+
+        for (Message msg : messageList) {
+            conversation += msg.getFormattedMsg();
+        }
+
+        update new LiveChatTranscript(Id = chatId, 	NKS_Conversation__c = conversation);
+    }
+
+    private class Message{
+        private String content;
+        private String name;
+        private String recordId;
+        private String timestamp;
+        private String type;
+
+        private boolean isAgentMessage() {
+            return type.equalsIgnoreCase('agent');
+        }
+    
+        public String getFormattedMsg() {
+            String formattedMessage = isAgentMessage() ? '<div style="text-align: left">' : '<div style="text-align: right"';
+            DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
+            formattedMessage += '<p>' + '<b>' + type + ': ' +  '</b> - ' + convertedTimestamp.hour() + ':' +  convertedTimestamp.minute() + ':' +  convertedTimestamp.second() + '</p>';
+            formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
+            formattedMessage += '</div><br>';
+
+            return formattedMessage;
+        }
     }
 
 }

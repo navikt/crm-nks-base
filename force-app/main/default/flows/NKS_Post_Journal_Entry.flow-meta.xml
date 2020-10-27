@@ -9,7 +9,7 @@
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Post_Journal</targetReference>
+            <targetReference>Send_Journal_Request</targetReference>
         </connector>
         <inputParameters>
             <name>requestType</name>
@@ -20,12 +20,12 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <description>Posts the journal entry to JOARK.</description>
-        <name>Post_Journal</name>
-        <label>Post Journal</label>
-        <locationX>177</locationX>
-        <locationY>325</locationY>
-        <actionName>JournalAPI.Create Journal Post</actionName>
+        <description>Performs HTTP post to dokarkiv</description>
+        <name>Send_Journal_Request</name>
+        <label>Send Journal Request</label>
+        <locationX>179</locationX>
+        <locationY>324</locationY>
+        <actionName>dokarkivAPI.Create Journal Post</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Success</targetReference>
@@ -59,14 +59,14 @@
             <assignToReference>Journal_Post_Response.journalpostferdigstilt</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.200.journalpostferdigstilt</elementReference>
+                <elementReference>Send_Journal_Request.200.journalpostferdigstilt</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Post_Response.journalpostId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.200.journalpostId</elementReference>
+                <elementReference>Send_Journal_Request.200.journalpostId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -76,17 +76,17 @@
         <locationX>602</locationX>
         <locationY>413</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Post_Response.journalpostferdigstilt</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal.201.journalpostferdigstilt</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Journal_Post_Response.journalpostId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.201.journalpostId</elementReference>
+                <elementReference>Send_Journal_Request.201.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Response.journalpostferdigstilt</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Send_Journal_Request.201.journalpostferdigstilt</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -99,35 +99,35 @@
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Post_Journal.400Exc</elementReference>
+                <elementReference>Send_Journal_Request.400Exc</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Post_Journal.401Exc</elementReference>
+                <elementReference>Send_Journal_Request.401Exc</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Post_Journal.403Exc</elementReference>
+                <elementReference>Send_Journal_Request.403Exc</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Post_Journal.409Exc</elementReference>
+                <elementReference>Send_Journal_Request.409Exc</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Post_Journal.500Exc</elementReference>
+                <elementReference>Send_Journal_Request.500Exc</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -145,7 +145,7 @@
             <name>Success_200</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Post_Journal.200</leftValueReference>
+                <leftValueReference>Send_Journal_Request.200.journalpostId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -160,7 +160,7 @@
             <name>Success_201</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Post_Journal.201</leftValueReference>
+                <leftValueReference>Send_Journal_Request.201.journalpostId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -230,18 +230,17 @@
         </value>
     </variables>
     <variables>
-        <description>The journal post request.</description>
+        <description>Input request</description>
         <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__JournalAPI_JournalPostReq</apexClass>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>The response object from the journal post action.</description>
         <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__JournalAPI_JournalPostResp</apexClass>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

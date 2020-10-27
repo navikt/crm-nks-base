@@ -1,15 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Generate_Document</name>
+        <label>Generate Document</label>
+        <locationX>304</locationX>
+        <locationY>355</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Journal_Entry_Wrapper</targetReference>
+        </connector>
+        <inputParameters>
+            <name>documentString</name>
+            <value>
+                <stringValue>REFERENCE_TO_DOCUMENT_BODY</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>GENERATE_DOCUMENT</stringValue>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>PDF_DOCUMENT</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <assignments>
         <name>Create_Journal_Entry_Wrapper</name>
         <label>Create Journal Entry Wrapper</label>
-        <locationX>370</locationX>
-        <locationY>322</locationY>
+        <locationX>430</locationX>
+        <locationY>355</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.tittel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TEMPLATE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.kanal</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TEMPLATE</stringValue>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Post_Request.sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TEMPLATE</stringValue>
+                <stringValue>TEAMPLTE_ID</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.journalpostType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INNGAAENDE/UTGAAENDE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Document</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document.tittel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TEMPLATE_TITLE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document.dokumentvarianter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Document_Variant</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Variant.filtype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PDFA</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Variant.variantformat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ARKIV</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Variant.fysiskDokument</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>BASE_64_ENCODED</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -20,13 +110,13 @@
         <description>TEMPLATE: Perform necessary updates to store the journal post external reference</description>
         <name>Update_Record</name>
         <label>Update Record</label>
-        <locationX>942</locationX>
-        <locationY>321</locationY>
+        <locationX>977</locationX>
+        <locationY>353</locationY>
         <assignmentItems>
             <assignToReference>Get_Record_Info.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Post_Response.journalpostId</elementReference>
+                <elementReference>Post_Journal.Journal_Post_Response.journalpostId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -34,8 +124,8 @@
         <description>Determine if the journal post was a success</description>
         <name>Check_success</name>
         <label>Check success</label>
-        <locationX>743</locationX>
-        <locationY>324</locationY>
+        <locationX>778</locationX>
+        <locationY>356</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -44,7 +134,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Journal_Post_Error</leftValueReference>
+                <leftValueReference>Post_Journal.Error_Message</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue/>
@@ -67,6 +157,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -74,14 +170,35 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <description>Get the related account</description>
+        <name>Get_Account_Info</name>
+        <label>Get Account Info</label>
+        <locationX>177</locationX>
+        <locationY>355</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Generate_Document</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Record_Info.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>TEMPLATE: Get relevant information from record needed for journal entry creation</description>
         <name>Get_Record_Info</name>
         <label>Get Record Info</label>
         <locationX>176</locationX>
-        <locationY>322</locationY>
+        <locationY>210</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Journal_Entry_Wrapper</targetReference>
+            <targetReference>Get_Account_Info</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -98,14 +215,14 @@
         <description>TEMPLATE: If an error was received upon post, show an error message to the user.</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>755</locationX>
-        <locationY>507</locationY>
+        <locationX>790</locationX>
+        <locationY>539</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Error_Message</name>
-            <fieldText>&lt;p&gt;Something went wrong&lt;/p&gt;&lt;p&gt;{!Journal_Post_Error}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Something went wrong&lt;/p&gt;&lt;p&gt;{!Post_Journal.Error_Message}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -123,8 +240,8 @@
         <description>Calls subflow for posting the journal entry</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>570</locationX>
-        <locationY>322</locationY>
+        <locationX>603</locationX>
+        <locationY>355</locationY>
         <connector>
             <targetReference>Check_success</targetReference>
         </connector>
@@ -141,40 +258,48 @@
                 <elementReference>Journal_Post_Request</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>Journal_Post_Error</assignToReference>
-            <name>Error_Message</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Journal_Post_Response</assignToReference>
-            <name>Journal_Post_Response</name>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
-        <description>Error received from API</description>
-        <name>Journal_Post_Error</name>
-        <dataType>String</dataType>
+        <description>Wrapper for the document to be sent.</description>
+        <name>Document</name>
+        <apexClass>ExternalService__dokarkivAPI_Dokument</apexClass>
+        <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <value>
-            <stringValue/>
-        </value>
     </variables>
     <variables>
-        <description>Journal post request to be sent to the API.</description>
-        <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__JournalAPI_JournalPostReq</apexClass>
+        <description>Wrapper for the document variant</description>
+        <name>Document_Variant</name>
+        <apexClass>ExternalService__dokarkivAPI_DokumentVariant</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>API response from journal post</description>
-        <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__JournalAPI_JournalPostResp</apexClass>
+        <description>Wrapper for the journal post request</description>
+        <name>Journal_Post_Request</name>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Wrapper for Journal post response</description>
+        <name>Journal_Post_Response</name>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The base 64 encoded document string to be sent.</description>
+        <name>PDF_DOCUMENT</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

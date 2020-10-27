@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <description>Generates a base 64 encoded pdf string</description>
+        <name>Generate_PDF</name>
+        <label>Generate PDF</label>
+        <locationX>671</locationX>
+        <locationY>156</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>documentString</name>
+            <value>
+                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>GENERATE_DOCUMENT</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <assignments>
         <name>Set_Journal_Entry_Created</name>
         <label>Set Journal Entry Created</label>
@@ -16,7 +38,7 @@
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Progress</stringValue>
+                <stringValue>Completed</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -108,6 +130,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -136,6 +164,8 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>NKS_Journal_Entry_Created__c</queriedFields>
         <queriedFields>NKS_Journal_Entry_Status__c</queriedFields>
+        <queriedFields>NKS_Journal_Entry_ID__c</queriedFields>
+        <queriedFields>NKS_Conversation__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -145,6 +175,7 @@
         <locationY>355</locationY>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
@@ -202,7 +233,36 @@
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <description>Calls subflow to send the journal entry to JOARK</description>
+        <name>Send_Journal_Entry</name>
+        <label>Send Journal Entry</label>
+        <locationX>842</locationX>
+        <locationY>156</locationY>
+        <flowName>NKS_Post_Journal_Entry</flowName>
+        <inputAssignments>
+            <name>Complete</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Post_Request</name>
+            <value>
+                <elementReference>Journal_Post_Request</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>Journal_Post_Request</name>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

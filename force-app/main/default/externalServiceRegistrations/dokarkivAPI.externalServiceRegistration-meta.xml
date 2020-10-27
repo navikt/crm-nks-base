@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>External service for the Journal API accessing JOARK.</description>
-    <label>JournalAPI</label>
+    <description>External service for the dokarkiv API accessing JOARK.</description>
+    <label>dokarkivAPI</label>
     <namedCredential>JOARK</namedCredential>
     <schema>{
     &quot;swagger&quot;: &quot;2.0&quot;,
@@ -532,7 +532,6 @@
                 },
                 &quot;fysiskDokument&quot;: {
                     &quot;type&quot;: &quot;string&quot;,
-                    &quot;format&quot;: &quot;byte&quot;,
                     &quot;example&quot;: &quot;U8O4a25hZCBvbSBkYWdwZW5nZXIgdmVkIHBlcm1pdHRlcmluZw==&quot;,
                     &quot;description&quot;: &quot;Selve dokumentet.  Hvis filtype er PDF/XML, ved fysisk dokument brukes bytearray.&quot;
                 },
