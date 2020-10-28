@@ -88,7 +88,7 @@
             <name>Do_Create_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Create_task</leftValueReference>
+                <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -107,6 +107,12 @@
         <displayField>Name</displayField>
         <object>NavUnit__c</object>
         <valueField>INT_UnitNumber__c</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>NAV_UNITS</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>NavUnit__c</object>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Subtype</name>
@@ -183,7 +189,7 @@
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>404</locationX>
+        <locationX>403</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -204,11 +210,115 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Create_task</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Create task?</fieldText>
+            <name>Create_Task_Toggle</name>
+            <extensionName>flowruntime:toggle</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>disabled</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>messageToggleActive</name>
+                <value>
+                    <stringValue>Yes</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Create Task</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>messageToggleInactive</name>
+                <value>
+                    <stringValue>No</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Task_due_date</name>
+            <dataType>Date</dataType>
+            <fieldText>Task Due Date:</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Task_Description</name>
+            <fieldText>Task Description:</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Task_NAV_Unit</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>NAV Unit</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>CRM_NavUnit__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <elementReference>Create_Task_Toggle.value</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Selected_Task_NAV_Unit</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -236,7 +346,7 @@
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
@@ -259,6 +369,16 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>Create_Task_Bool</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>Journal_Post_Request</name>
         <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
@@ -271,6 +391,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The selected NAV Unit to send the task to.</description>
+        <name>Selected_Task_NAV_Unit</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
