@@ -69,22 +69,10 @@ public without sharing class ChatAuthController {
     }
 
     private static Id getPersonAccountId() {
-        List<User> users = [SELECT Id, AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE];
-        if (users.size() > 0) {
-            return users[0].AccountId;
-        } else {
-            return null;
-        }
-        //TODO change when winter 21: return [SELECT AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE]?.AccountId;
+        return [SELECT AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE]?.AccountId;
     }
     private static Id getPersonContactId() {
-        List<User> users = [SELECT Id, ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE];
-        if (users.size() > 0) {
-            return users[0].ContactId;
-        } else {
-            return null;
-        }
-        //TODO change when winter 21: return [SELECT ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE]?.ContactId;
+        return [SELECT ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE]?.ContactId;
     }
 
 }
