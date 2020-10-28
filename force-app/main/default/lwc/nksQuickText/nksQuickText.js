@@ -25,14 +25,12 @@ export default class nksQuickText extends LightningElement {
                 search: queryTerm
             })
                 .then(result => {
-
                     this.numberOfRows = result.length;
                     this.data = result;
                     this.loadingData = false;
                 })
                 .catch(error => {
                     console.log(error);
-                    //TODO: senderror 
                 })
         }
     }
