@@ -37,31 +37,11 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>NONE</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>rowsToDisplay</name>
-                <value>10</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>showActionBar</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-        <mode>Replace</mode>
-        <name>relatedTabContent</name>
+        <name>Facet-bf752008-6750-45f3-a4ae-9b38090a1ebf</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>forceKnowledge:articleVersionHistory</componentName>
-        </componentInstances>
-        <mode>Replace</mode>
-        <name>versionsTabContent</name>
+        <name>Facet-vrrwm4p4c9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -76,29 +56,29 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Standard.Tab.detail</value>
+                <value>Bokmål</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>relatedTabContent</value>
+                <value>Facet-bf752008-6750-45f3-a4ae-9b38090a1ebf</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Standard.Tab.relatedLists</value>
+                <value>Nynorsk</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>versionsTabContent</value>
+                <value>Facet-vrrwm4p4c9</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Standard.Tab.versionHistory</value>
+                <value>Engelsk</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
@@ -121,6 +101,46 @@
     <flexiPageRegions>
         <componentInstances>
             <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>parentFieldApiName</name>
+                <value>Knowledge__kav.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>relatedListApiName</name>
+                <value>SearchPromotionRules</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>relatedListComponentOverride</name>
+                <value>NONE</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>rowsToDisplay</name>
+                <value>10</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>showActionBar</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentName>force:relatedListSingleContainer</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>true</rightValue>
+                </criteria>
+            </visibilityRule>
+        </componentInstances>
+        <componentInstances>
+            <componentName>forceKnowledge:articleVersionHistory</componentName>
+            <visibilityRule>
+                <criteria>
+                    <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>true</rightValue>
+                </criteria>
+            </visibilityRule>
         </componentInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
