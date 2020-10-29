@@ -37,11 +37,41 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>Facet-bf752008-6750-45f3-a4ae-9b38090a1ebf</name>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Knowledge__kav.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Oversettelse</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>Knowledge__kav.NKS_Nynorsk</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+        </componentInstances>
+        <name>Facet-b3074ef3-8901-42db-9d2a-00bf0b8ec3dc</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>Facet-vrrwm4p4c9</name>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>lookupFieldName</name>
+                <value>Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>titleFieldName</name>
+                <value>Oversettelse</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>updateQuickActionName</name>
+                <value>Knowledge__kav.NKS_English</value>
+            </componentInstanceProperties>
+            <componentName>console:relatedRecord</componentName>
+        </componentInstances>
+        <name>Facet-bqmw5t7387</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -63,7 +93,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-bf752008-6750-45f3-a4ae-9b38090a1ebf</value>
+                <value>Facet-b3074ef3-8901-42db-9d2a-00bf0b8ec3dc</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -74,7 +104,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-vrrwm4p4c9</value>
+                <value>Facet-bqmw5t7387</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
