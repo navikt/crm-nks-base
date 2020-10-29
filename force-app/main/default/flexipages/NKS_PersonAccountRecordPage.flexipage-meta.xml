@@ -95,8 +95,10 @@
                 <value>Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+        </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Kontaktinformasjon</value>
@@ -339,8 +341,10 @@
                     <rightValue>0</rightValue>
                 </criteria>
             </visibilityRule>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+        </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>amountOfMonths</name>
                 <value>4</value>
