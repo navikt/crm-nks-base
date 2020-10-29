@@ -1,3 +1,4 @@
+@isTest
 public without sharing class NKS_TestDataFactory {
     public static List<Person__c> createPersons( Integer amount ) {
         List<Person__c> persons = new List<Person__c>(); 
@@ -18,6 +19,16 @@ public without sharing class NKS_TestDataFactory {
         String personAccountRecordType = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
 		Account acc = new Account(FirstName = 'Harry', LastName = 'Potter', INT_PersonIdent__c = '1234567890' + i, RecordTypeId = personAccountRecordType, CRM_Person__c = p.Id);
         insert acc;
+    }
+
+    public static List<SecurityMeasure__c> createSecurityMeasures(Integer amount, Person__c person){
+        List<SecurityMeasure__c> securityMeasures = new List<SecurityMeasure__c>(); 
+        for(Integer i = 0; i < amount; i++){
+            SecurityMeasure__c sm = new SecurityMeasure__c(INT_Person__c = person.Id,INT_SecurityMeasure__c = 'Telefonisk utestengelse', INT_ValidToDate__c = Date.today(), INT_ValidFromDate__c = Date.today());
+            securityMeasures.add(sm); 
+        }
+        insert securityMeasures; 
+        return securityMeasures;
     }
 
     public static List<QuickText> createQuickTexts(Integer amount){
