@@ -116,7 +116,7 @@
             <assignToReference>Get_Record_Info.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.Journal_Post_Response.journalpostId</elementReference>
+                <elementReference>Journal_Post_Response.journalpostId</elementReference>
             </value>
         </assignmentItems>
     </assignments>

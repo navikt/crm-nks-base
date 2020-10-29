@@ -180,6 +180,18 @@ public virtual class ApiController {
         this.setEndpoint('callout:' + credentialName + servicePath);
         return this;
     }
+
+    /**
+    * @description: Adds the appropriate on-behalf-of token to the authorization header
+    * of the request 
+    * @author Stian Ruud Schikora | 10-29-2020 
+    * @param serviceName [Name of service (Must match field name on custom setting: AccessTokenScope__c)]
+    * @return ApiController 
+    **/
+    public ApiController addServiceAuthHeader(String serviceName) {
+        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken('dokarkiv');
+        return addHeader('Authorization', 'Bearer ' + serviceToken);
+    }
 	
     /**
     * @description: Adds url parameters to the request

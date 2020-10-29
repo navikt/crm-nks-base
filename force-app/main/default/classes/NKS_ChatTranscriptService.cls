@@ -31,7 +31,9 @@ public class NKS_ChatTranscriptService {
         }
     
         public String getFormattedMsg() {
-            String formattedMessage = isAgentMessage() ? '<div style="text-align: left">' : '<div style="text-align: right"';
+            String formattedMessage = '<div>';
+            //Possible text aligning
+            //String formattedMessage = isAgentMessage() ? '<div style="text-align: left">' : '<div style="text-align: right"';
             DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
             formattedMessage += '<p>' + '<b>' + type + ': ' +  '</b> - ' + convertedTimestamp.hour() + ':' +  convertedTimestamp.minute() + ':' +  convertedTimestamp.second() + '</p>';
             formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
