@@ -32,5 +32,23 @@
             .then(function (result) {
                 //Message success
             });
+    },
+
+    handleChatEnded: function (component, event, helper) {
+        const chatToolkit = component.find("chatToolkit");
+        const recordId = component.get("v.recordId");
+
+        chatToolkit.getChatLog({
+            recordId: recordId
+        })
+            .then(result => {
+                let conversation = result.messages;
+                console.log("CONVERSATION: " + JSON.stringify(conversation));
+
+                helper.callStoreConversation(component, conversation);
+            })
+            .catch(error => {
+                //How should an error be handled?
+            });
     }
 })

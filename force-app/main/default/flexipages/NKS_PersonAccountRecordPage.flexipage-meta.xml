@@ -5,7 +5,8 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>decorate</name>
                 <value>true</value>
@@ -15,8 +16,10 @@
                 <value>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Her vil det komme en liste over brukerens siste saker.&lt;/span&gt;&lt;/p&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>decorate</name>
                 <value>true</value>
@@ -26,12 +29,14 @@
                 <value>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Her vil det komme en oversikt over dialog med bruker.&lt;/span&gt;&lt;/p&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-51eee843-0e1e-4717-9346-27f87a4dba3a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Her vil det komme saker</value>
@@ -53,12 +58,14 @@
                 <value>false</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-94y2422x2er</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Generell informasjon</value>
@@ -88,8 +95,10 @@
                 <value>Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+        </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Kontaktinformasjon</value>
@@ -119,8 +128,10 @@
                 <value>Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Adresse</value>
@@ -150,8 +161,10 @@
                 <value>Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRecordInfo</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cardLabel</name>
                 <value>Midlertidig Adresse</value>
@@ -187,8 +200,10 @@
                     <operator>NE</operator>
                 </criteria>
             </visibilityRule>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>columnLabels</name>
                 <value>RELNR, Person, Relasjon</value>
@@ -225,12 +240,14 @@
                 <value>INT_Person__c</value>
             </componentInstanceProperties>
             <componentName>nksRelatedList</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>active</name>
                 <value>true</value>
@@ -244,8 +261,10 @@
                 <value>Oversikt</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-94y2422x2er</value>
@@ -255,8 +274,10 @@
                 <value>Saker</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
@@ -266,12 +287,14 @@
                 <value>Standard.Tab.detail</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>collapsed</name>
                 <value>true</value>
@@ -289,19 +312,23 @@
                 <value>0</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>tabs</name>
                 <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>componentTitle</name>
                 <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
@@ -314,8 +341,10 @@
                     <rightValue>0</rightValue>
                 </criteria>
             </visibilityRule>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+        </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>amountOfMonths</name>
                 <value>4</value>
@@ -345,7 +374,8 @@
                 <value>Aktiviteter</value>
             </componentInstanceProperties>
             <componentName>tagActivityTimeline</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
