@@ -53,7 +53,7 @@ public  class ApiController_Test {
     static void testInitRequest() {
 
         Test.startTest();
-        ctrl.initRequest('Testing', 'POST');
+        ctrl.initRequest('Testing', 'TEST_SERVICE');
         Test.stopTest();
 
         //When in test context the standard test configuration is returned

@@ -11,35 +11,19 @@ public class NKS_ChatTranscriptService_Test {
     }
 
     @isTest
-    static void testUpdateJournalEntriesSuccess() {
-        Map<String,LiveChatTranscript> transMap = new Map<String, LiveChatTranscript>([SELECT Id, Body, NKS_Journal_Entry_Created__c, NKS_Journal_Entry_Status__c, NKS_Journal_Entry_ID__c FROM LiveChatTranscript]);
-        String chatIds = String.join(new List<String>(transMap.keySet()), ';');
-        AsyncRequest__c asyncReq = (AsyncRequest__c) UTIL_TestDataFactory.createRecord(new AsyncRequest__c(CRM_Params__c = chatIds));
+    static void testStoreConversation() {
+        LiveChatTranscript transcript = [SELECT Id, NKS_Conversation__c FROM LiveChatTranscript LIMIT 1];
 
-        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', '', null));
+        StaticResource testConversation = [SELECT Id, Body FROM StaticResource WHERE Name = 'NKS_Chat_Conversation_Mock'];
+        String conversation = testConversation.Body.toString();
+
         Test.startTest();
-            NKS_ChatTranscriptService service = new NKS_ChatTranscriptService(transMap.values(), asyncReq.Id);
-            service.updateJournalEntries();
+        NKS_ChatTranscriptService.storeConversation(transcript.Id, conversation);
         Test.stopTest();
 
-        System.assertEquals(10, [SELECT count() FROM LiveChatTranscript WHERE NKS_Journal_Entry_Status__c = 'Completed']);
+        transcript = [SELECT Id, NKS_Conversation__C FROM LiveChatTranscript WHERE Id =: transcript.Id];
+
+        System.assert(String.isNotBlank(transcript.NKS_Conversation__c));
     }
 
-    @isTest
-    static void testUpdateJournalEntriesFailure() {
-        Map<String,LiveChatTranscript> transMap = new Map<String, LiveChatTranscript>([SELECT Id, Body, NKS_Journal_Entry_Created__c, NKS_Journal_Entry_Status__c, NKS_Journal_Entry_ID__c FROM LiveChatTranscript]);
-        String chatIds = String.join(new List<String>(transMap.keySet()), ';');
-        AsyncRequest__c asyncReq = (AsyncRequest__c) UTIL_TestDataFactory.createRecord(new AsyncRequest__c(CRM_Params__c = chatIds));
-
-        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(500, 'Internal Server Error', '', null));
-        Test.startTest();
-            NKS_ChatTranscriptService service = new NKS_ChatTranscriptService(transMap.values(), asyncReq.Id);
-            service.updateJournalEntries();
-        Test.stopTest();
-
-        AsyncRequest__c updatedRequest = [SELECT Id, CRM_Status__c, CRM_ErrorMessage__c FROM AsyncRequest__c LIMIt 1];
-
-        System.assertEquals(AsyncRequestService.STATUS_ERROR, updatedRequest.CRM_Status__c);
-        System.assert(String.isNotBlank(updatedRequest.CRM_ErrorMessage__c));
-    }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>enableInlineEdit</name>
                 <value>true</value>
@@ -27,8 +28,10 @@
                 <value>20</value>
             </componentInstanceProperties>
             <componentName>flexipage:filterListCard</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>enableInlineEdit</name>
                 <value>false</value>
@@ -54,8 +57,10 @@
                 <value>10</value>
             </componentInstanceProperties>
             <componentName>flexipage:filterListCard</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>enableInlineEdit</name>
                 <value>false</value>
@@ -81,7 +86,8 @@
                 <value>10</value>
             </componentInstanceProperties>
             <componentName>flexipage:filterListCard</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <mode>Replace</mode>
         <name>top</name>
         <type>Region</type>
@@ -97,13 +103,18 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentName>home:eventContainer</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentName>runtime_sales_activities:todayTaskContainer</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cacheAge</name>
                 <value>1440</value>
@@ -117,7 +128,8 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>flexipage:reportChart</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <mode>Replace</mode>
         <name>sidebar</name>
         <type>Region</type>

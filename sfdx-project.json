@@ -13,7 +13,7 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.29.0.LATEST"
+                    "versionNumber": "0.30.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
@@ -24,7 +24,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "47.0",
+    "sourceApiVersion": "49.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>cacheAge</name>
                 <value>1440</value>
@@ -15,7 +16,8 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>flexipage:reportChart</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>top</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -28,7 +30,8 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>enableInlineEdit</name>
                 <value>false</value>
@@ -54,7 +57,8 @@
                 <value>5</value>
             </componentInstanceProperties>
             <componentName>flexipage:filterListCard</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
