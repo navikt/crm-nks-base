@@ -1,11 +1,20 @@
 {
-  "forgotPasswordRouteId" : "e6570114-10b3-4bca-bfae-322272a5aec4",
-  "isAvailableToGuests" : false,
-  "isFilteredComponentsView" : false,
-  "isProgressiveRenderingEnabled" : false,
-  "loginAppPageId" : "b58f9249-20b4-4fee-b974-d4c8ddee5090",
-  "mainAppPageId" : "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
-  "preferredDomainId" : "none",
-  "selfRegistrationRouteId" : "edb8292f-fef8-4fef-b823-53675d18d906",
-  "type" : "site"
+    "forgotPasswordRouteId": "e6570114-10b3-4bca-bfae-322272a5aec4",
+    "isAvailableToGuests": false,
+    "isFilteredComponentsView": false,
+    "isProgressiveRenderingEnabled": false,
+    "loginAppPageId": "b58f9249-20b4-4fee-b974-d4c8ddee5090",
+    "mainAppPageId": "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
+    "preferredDomain": "none",
+    "selfRegistrationRouteId": "edb8292f-fef8-4fef-b823-53675d18d906",
+    "trustedSitesForScript": [
+        {
+            "id": "0ac946ef-7229-4647-b6f8-72b8f2ec53fc",
+            "isActive": true,
+            "trustedSiteName": "live agent",
+            "trustedSiteUrl": "https://d.la2-c1cs-cdg.salesforceliveagent.com",
+            "type": "trustedSitesForScripts"
+        }
+    ],
+    "type": "site"
 }
