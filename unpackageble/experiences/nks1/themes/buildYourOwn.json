@@ -1,33 +1,33 @@
 {
-    "activeBrandingSetId": "360d2500-6775-41b9-82ba-f2d399a44186",
+    "activeBrandingSetId": "781d152f-a58d-47e9-b205-b42b136a7d2a",
     "customCSS": "",
     "developerName": "starter",
-    "id": "74588630-b420-4d99-9695-75417ec33380",
+    "id": "6f0c4172-59d0-410e-8c6d-b9f51484e6c5",
     "label": "Build Your Own",
     "layouts": {
-        "Inner": "362602f3-2326-4400-b902-446a74c9273b",
-        "Login": "899ac048-6b8b-4d60-86f2-27ab37f9997f"
+        "Inner": "80abc152-c80b-44bb-8664-d7ea74f446a2",
+        "Login": "b8d3aeeb-8d84-4389-b278-eb6034e783a0"
     },
     "type": "theme",
     "views": [
         {
             "componentAttributes": {},
             "componentName": "salesforceIdentity:loginBody2",
-            "id": "899ac048-6b8b-4d60-86f2-27ab37f9997f",
+            "id": "b8d3aeeb-8d84-4389-b278-eb6034e783a0",
             "label": "Login",
             "regions": [
                 {
-                    "id": "8b7ace8d-74b4-49fa-8830-04877d160323",
+                    "id": "db8bb4a6-e28e-45d6-b1ed-f18c2155ed5d",
                     "regionName": "header",
                     "type": "region"
                 },
                 {
-                    "id": "c7c3388b-d477-4142-af76-e217a2dc20a8",
+                    "id": "3f1956e1-bf6d-4ca8-b731-0dff20c494a2",
                     "regionName": "content",
                     "type": "region"
                 },
                 {
-                    "id": "bc7ed662-4af5-4c11-aad2-575e2ff89e7b",
+                    "id": "deff0e27-caa5-41db-a730-30c11d2b05c2",
                     "regionName": "footer",
                     "type": "region"
                 }
@@ -35,12 +35,9 @@
             "type": "view"
         },
         {
-            "componentAttributes": {
-                "fixedPageWidth": 1440,
-                "isPageWidthFixed": true
-            },
+            "componentAttributes": {},
             "componentName": "siteforce:starterBody",
-            "id": "362602f3-2326-4400-b902-446a74c9273b",
+            "id": "80abc152-c80b-44bb-8664-d7ea74f446a2",
             "label": "Default",
             "regions": [
                 {
@@ -57,12 +54,12 @@
                                 ]
                             },
                             "componentName": "forceCommunity:globalSearchInput",
-                            "id": "d6d45525-273f-431e-908b-a065c1a316ff",
+                            "id": "ee961d9b-47b9-44ec-804e-9de6d79a94d9",
                             "renditionMap": {},
                             "type": "component"
                         }
                     ],
-                    "id": "43a0c481-1204-4a23-a701-6551ec0a3696",
+                    "id": "8b38fe93-82f8-4bc9-8211-3781de01059a",
                     "regionName": "search",
                     "type": "region"
                 },
@@ -87,12 +84,12 @@
                                 "viewProfileLabel": "My Profile"
                             },
                             "componentName": "selfService:userProfileMenu",
-                            "id": "942659d2-1787-4213-ab30-63ef9a5af053",
+                            "id": "a00b5aba-a746-46e4-83d5-f0303c081e9a",
                             "renditionMap": {},
                             "type": "component"
                         }
                     ],
-                    "id": "1730cc94-e40e-41a1-aa93-fcfd4147c7a3",
+                    "id": "269668a2-5e68-451a-a9f9-98069608d5ed",
                     "regionName": "profileMenu",
                     "type": "region"
                 },
@@ -105,12 +102,12 @@
                                 "hideHomeText": true
                             },
                             "componentName": "forceCommunity:globalNavigation",
-                            "id": "66400a5d-24f1-4fbb-80be-491b648b36b4",
+                            "id": "f53c34c5-a256-45fc-98ad-9a4d2abe35f0",
                             "renditionMap": {},
                             "type": "component"
                         }
                     ],
-                    "id": "12e80c72-2972-42a2-9bb5-5e89349ee004",
+                    "id": "7fe25aa4-fa9f-494c-972a-0a4363b24e89",
                     "regionName": "navBar",
                     "type": "region"
                 }

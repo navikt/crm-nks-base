@@ -1,6 +1,6 @@
 {
-  "defaultCode" : "en_US",
-  "defaultLabel" : "English (US)",
-  "id" : "5fe1aab7-162e-4cd3-ac6c-ffa3c9abd94a",
-  "type" : "languageContainer"
+    "defaultCode": "en_US",
+    "defaultLabel": "English (US)",
+    "id": "5fe1aab7-162e-4cd3-ac6c-ffa3c9abd94a",
+    "type": "languageContainer"
 }
