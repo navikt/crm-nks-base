@@ -281,10 +281,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>JournalEntryWrapper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>MarkdownViewerController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -302,18 +298,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>MyTriggersTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatJournalHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatJournalHandler_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatTranscriptAsyncJob</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
