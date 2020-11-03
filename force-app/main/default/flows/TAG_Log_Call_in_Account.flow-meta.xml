@@ -31,7 +31,7 @@
         <inputParameters>
             <name>message</name>
             <value>
-                <stringValue/>
+                <elementReference>themeValue</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -57,7 +57,7 @@
         <inputParameters>
             <name>message</name>
             <value>
-                <stringValue/>
+                <elementReference>themeValue</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
