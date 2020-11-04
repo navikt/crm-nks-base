@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <description>Generates a base 64 encoded pdf string</description>
-        <name>Generate_PDF</name>
-        <label>Generate PDF</label>
-        <locationX>509</locationX>
-        <locationY>710</locationY>
-        <actionName>NKS_JournalUtilities</actionName>
+        <description>Passes the NAV task to Apex for delegation.</description>
+        <name>Delegate_NAV_Task</name>
+        <label>Delegate NAV Task</label>
+        <locationX>617</locationX>
+        <locationY>899</locationY>
+        <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Set_Journal_Entry_Created</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>tasks</name>
+            <value>
+                <elementReference>NAV_Task</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Generates a base 64 encoded pdf string</description>
+        <name>Generate_PDF</name>
+        <label>Generate PDF</label>
+        <locationX>178</locationX>
+        <locationY>647</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Should_Create_Task</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -32,8 +53,8 @@
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>763</locationX>
-        <locationY>108</locationY>
+        <locationX>50</locationX>
+        <locationY>626</locationY>
         <assignmentItems>
             <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
             <operator>Add</operator>
@@ -80,15 +101,94 @@
             <assignToReference>Journal_Post_Request.kanal</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>CHAT?</stringValue>
+                <stringValue>NAV_NO_CHAT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.journalpostType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INNGAAENDE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Post_Request.sak.sakstype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>GENERELL_SAK</stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>NAV_Task_Assignment</name>
+        <label>NAV Task Assignment</label>
+        <locationX>397</locationX>
+        <locationY>899</locationY>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_due_date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_NAV_Unit.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_NoPersonInformation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subtheme.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_NAV_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Journal_Entry_Created</name>
         <label>Set Journal Entry Created</label>
-        <locationX>680</locationX>
-        <locationY>712</locationY>
+        <locationX>998</locationX>
+        <locationY>840</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -103,6 +203,20 @@
                 <stringValue>Completed</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subtheme.recordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Transcript</targetReference>
         </connector>
@@ -111,8 +225,8 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>169</locationX>
-        <locationY>384</locationY>
+        <locationX>486</locationX>
+        <locationY>387</locationY>
         <defaultConnector>
             <targetReference>Input_Screen</targetReference>
         </defaultConnector>
@@ -152,10 +266,10 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>172</locationX>
-        <locationY>719</locationY>
+        <locationX>170</locationX>
+        <locationY>845</locationY>
         <defaultConnector>
-            <targetReference>Generate_PDF</targetReference>
+            <targetReference>Set_Journal_Entry_Created</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -169,7 +283,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Generate_PDF</targetReference>
+                <targetReference>NAV_Task_Assignment</targetReference>
             </connector>
             <label>Do Create Task</label>
         </rules>
@@ -195,6 +309,14 @@
         <object xsi:nil="true"/>
         <picklistField>CRM_SubTheme__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Theme_Group</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NKS_Theme_Group__c</picklistField>
+        <picklistObject>LiveChatTranscript</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Type</name>
@@ -238,11 +360,21 @@ TODAY())</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_NAV_Task</name>
+        <label>Create NAV Task</label>
+        <locationX>492</locationX>
+        <locationY>1008</locationY>
+        <connector>
+            <targetReference>Delegate_NAV_Task</targetReference>
+        </connector>
+        <inputReference>NAV_Task</inputReference>
+    </recordCreates>
     <recordLookups>
         <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
-        <locationX>177</locationX>
+        <locationX>494</locationX>
         <locationY>230</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -265,16 +397,14 @@ TODAY())</expression>
         <queriedFields>NKS_Journal_Entry_Status__c</queriedFields>
         <queriedFields>NKS_Journal_Entry_ID__c</queriedFields>
         <queriedFields>NKS_Conversation__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>678</locationX>
-        <locationY>425</locationY>
-        <connector>
-            <targetReference>Journal_Completed_Screen</targetReference>
-        </connector>
+        <locationX>997</locationX>
+        <locationY>543</locationY>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
@@ -285,8 +415,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>580</locationX>
-        <locationY>235</locationY>
+        <locationX>828</locationX>
+        <locationY>541</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -322,13 +452,13 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>179</locationX>
-        <locationY>575</locationY>
+        <locationX>178</locationX>
+        <locationY>451</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Should_Create_Task</targetReference>
+            <targetReference>Generate_PDF</targetReference>
         </connector>
         <fields>
             <name>Journal_Header</name>
@@ -336,11 +466,66 @@ TODAY())</expression>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Related_to_case</name>
-            <dataType>String</dataType>
-            <fieldText>Related to case:</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>Theme</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>NKS_Theme__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Theme:</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Subtheme</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>NKS_Subtheme__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Subtheme:</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Create_Task_Toggle</name>
@@ -462,8 +647,8 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>393</locationX>
-        <locationY>426</locationY>
+        <locationX>496</locationX>
+        <locationY>658</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -476,7 +661,7 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>367</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Get_Chat_Transcript</targetReference>
@@ -487,8 +672,8 @@ TODAY())</expression>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
         <label>Send Journal Entry</label>
-        <locationX>924</locationX>
-        <locationY>104</locationY>
+        <locationX>51</locationX>
+        <locationY>755</locationY>
         <flowName>NKS_Post_Journal_Entry</flowName>
         <inputAssignments>
             <name>Complete</name>
@@ -502,7 +687,14 @@ TODAY())</expression>
                 <elementReference>Journal_Post_Request</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>Journal_Post_Error</assignToReference>
+            <name>Error_Message</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Journal_Post_Response</assignToReference>
+            <name>Journal_Post_Response</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>Create_Task_Bool</name>
@@ -533,12 +725,36 @@ TODAY())</expression>
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>Journal_Post_Error</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Journal_Post_Request</name>
         <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Journal_Post_Response</name>
+        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>NAV Task to be created and delegated.</description>
+        <name>NAV_Task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>NavTask__c</objectType>
     </variables>
     <variables>
         <name>recordId</name>
