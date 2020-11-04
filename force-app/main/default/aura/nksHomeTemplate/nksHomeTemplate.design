@@ -5,7 +5,9 @@
         <flexipage:region name="left" label="Left Region" defaultWidth="MEDIUM">
             <flexipage:formfactor type="MEDIUM" width="SMALL" />
         </flexipage:region>
-        <flexipage:region name="right" label="Right Region" defaultWidth="SMALL" />
+        <flexipage:region name="right" label="Right Region" defaultWidth="MEDIUM">
+            <flexipage:formfactor type="MEDIUM" width="SMALL" />
+        </flexipage:region>
         <flexipage:region name="center" label="Center Region" defaultWidth="MEDIUM" />
     </flexipage:template>
 </design:component>
