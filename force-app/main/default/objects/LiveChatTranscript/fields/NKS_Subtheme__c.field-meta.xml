@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Subtheme__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Subtheme categorization</description>
+    <externalId>false</externalId>
+    <label>Subtheme</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.NKS_Theme__c</field>
+            <operation>equals</operation>
+            <valueField>Subtheme__c.CRM_Theme__c</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Subtheme__c</referenceTo>
+    <relationshipLabel>Chat Transcripts</relationshipLabel>
+    <relationshipName>Chat_Transcripts</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

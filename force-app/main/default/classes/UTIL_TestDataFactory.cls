@@ -120,7 +120,8 @@ public class UTIL_TestDataFactory {
     public static final Map<String,String> uniqueField = new Map<String,String>{
         'Contact' => 'LastName',
         'User' => 'Username',
-        'QuickText' => 'Name'
+        'QuickText' => 'Name',
+        'NavUnit__c' => 'Name'
     };
     
      /* This method is used for retrieving the type that corresponds to the class we want to use. The class
@@ -444,6 +445,36 @@ public class UTIL_TestDataFactory {
                 'CRM_Params__c' => generateRandomString(18),
                 'CRM_Status__c' => AsyncRequestService.STATUS_PENDING,
                 'CRM_AsyncType__c' => 'TEST_TYPE'
+            };
+        }
+        public Map<String,String> getDmlFields(){
+            return new Map<String,String>{
+                //No dml fields
+            };
+        }   
+    }
+
+    public class NavTaskDefaults implements FieldDefaults{
+        public Map<String, Object> getFieldDefaults() {return getFieldDefaults(false);}
+        public Map<String,Object> getFieldDefaults(Boolean bulkify){
+            return new Map<String,Object>{
+                'CRM_DueDate__c' => Date.today(),
+                'CRM_NoPersonInformation__c' => true,
+                'CRM_Account__c' => bulkify ? 'Account' : createRecord('Account', null)
+            };
+        }
+        public Map<String,String> getDmlFields(){
+            return new Map<String,String>{
+                'CRM_Account__c' => 'Account'
+            };
+        }   
+    }
+
+    public class NavUnitDefaults implements FieldDefaults{
+        public Map<String, Object> getFieldDefaults() {return getFieldDefaults(false);}
+        public Map<String,Object> getFieldDefaults(Boolean bulkify){
+            return new Map<String,Object>{
+                'Name' => 'NAV test unit'
             };
         }
         public Map<String,String> getDmlFields(){
