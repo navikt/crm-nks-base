@@ -1,0 +1,25 @@
+<template>
+    <div class="slds-p-horizontal_small">
+
+        {jornalpostDate}/{fromToType}
+
+        <div class="slds-text-heading_small">
+            <c-nks-saf-document-link journalpost-id={journalpost.journalpostId} dokument-info={mainDocument}>
+            </c-nks-saf-document-link>
+        </div>
+        <template if:true={hasAttachments}>
+            <h2>Dokumentet har {nmbOfAttachments} vedlegg:</h2>
+            <ul class="slds-list_dotted">
+
+                <template for:each={attachments} for:item='dokument'>
+                    <li key={dokument.dokumentInfoId}>
+                        <c-nks-saf-document-link dokument-info={dokument} journalpost-id={journalpost.journalpostId}>
+                        </c-nks-saf-document-link>
+                    </li>
+                </template>
+
+            </ul>
+        </template>
+        SaksId:&nbsp;{journalpost.sak.fagsakId}
+    </div>
+</template>

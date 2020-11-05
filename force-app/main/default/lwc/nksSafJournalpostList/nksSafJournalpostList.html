@@ -1,0 +1,37 @@
+<template>
+    <lightning-card title="Dokumenter" icon-name="standard:file">
+        <!-- <div class="slds-box slds-theme_default"> -->
+        <template if:false={isLoaded}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:true={isLoaded}>
+            <template if:true={error}>
+                <div class="slds-text-color_error">
+                    <p>
+                        En feil har oppstått og dokumentene kan ikke hentes
+                        Detaljert feilmelding:
+                        {errorMesage}
+                    </p>
+                </div>
+            </template>
+            <template if:false={journalposts}>
+                <p>Kunne ikke finne noen journalposter.</p>
+            </template>
+            <template if:true={journalposts}>
+                <ul class="slds-has-dividers_bottom-space">
+
+                    <template for:each={journalposts} for:item='journalpost'>
+                        <li class="slds-item" key={journalpost.journalpostId}>
+                            <c-nks-saf-journalpost journalpost={journalpost}></c-nks-saf-journalpost>
+                        </li>
+                    </template>
+
+                </ul>
+            </template>
+        </template>
+        <!-- </div> -->
+        <p slot="footer">
+            Last flere
+        </p>
+    </lightning-card>
+</template>
