@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Dokumenter" icon-name="standard:file">
+    <lightning-card title="Journalposter" icon-name="standard:file">
         <!-- <div class="slds-box slds-theme_default"> -->
         <template if:false={isLoaded}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -18,7 +18,7 @@
                 <p>Kunne ikke finne noen journalposter.</p>
             </template>
             <template if:true={journalposts}>
-                <ul class="slds-has-dividers_bottom-space">
+                <ul class="slds-has-dividers_top">
 
                     <template for:each={journalposts} for:item='journalpost'>
                         <li class="slds-item" key={journalpost.journalpostId}>

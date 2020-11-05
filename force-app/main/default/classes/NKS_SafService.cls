@@ -135,7 +135,7 @@ public with sharing class NKS_SafService extends ApiController {
                                             'Authorization' => 'Bearer ' + CachedTokensHandler.getAccessToken()
                                         };
 
-        initRequest('SAF_API', 'POST');
+        initRequest('SAF_API', 'POST_SAF_QUERY');
         setHeaders(httpHeaders);
     }
 
@@ -148,7 +148,7 @@ public with sharing class NKS_SafService extends ApiController {
                                             'Authorization' => 'Bearer ' + CachedTokensHandler.getAccessToken()
                                         };
 
-        initRequest('SAF_API', 'GET',params);
+        initRequest('SAF_API', 'GET_SAF_DOKUMENT',params);
         setHeaders(httpHeaders);
     }
 	
