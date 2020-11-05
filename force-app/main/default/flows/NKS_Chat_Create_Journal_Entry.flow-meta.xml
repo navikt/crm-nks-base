@@ -163,14 +163,14 @@
             <assignToReference>NAV_Task.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme.recordId</elementReference>
+                <elementReference>Theme_Categroization.theme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Subtheme.recordId</elementReference>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -207,14 +207,21 @@
             <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme.recordId</elementReference>
+                <elementReference>Theme_Categroization.theme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Subtheme.recordId</elementReference>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -228,7 +235,7 @@
         <locationX>486</locationX>
         <locationY>387</locationY>
         <defaultConnector>
-            <targetReference>Input_Screen</targetReference>
+            <targetReference>Get_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -260,6 +267,21 @@
                 <targetReference>Error_Screen</targetReference>
             </connector>
             <label>No Transcript</label>
+        </rules>
+        <rules>
+            <name>No_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen</targetReference>
+            </connector>
+            <label>No Account</label>
         </rules>
     </decisions>
     <decisions>
@@ -371,11 +393,34 @@ TODAY())</expression>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
     <recordLookups>
+        <description>Queries the account related from the transcript.</description>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>328</locationX>
+        <locationY>382</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Input_Screen</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>TAG_NavUnit__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
-        <locationX>494</locationX>
-        <locationY>230</locationY>
+        <locationX>493</locationX>
+        <locationY>200</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
@@ -398,6 +443,7 @@ TODAY())</expression>
         <queriedFields>NKS_Journal_Entry_ID__c</queriedFields>
         <queriedFields>NKS_Conversation__c</queriedFields>
         <queriedFields>AccountId</queriedFields>
+        <queriedFields>NKS_Theme_Group__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -426,9 +472,34 @@ TODAY())</expression>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Body_Error</name>
-            <fieldText>&lt;p&gt;No messages stored in the chat.&lt;/p&gt;</fieldText>
+            <name>Missing_Account_Error</name>
+            <fieldText>&lt;p&gt;Chat is not related to an account&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conversation_Error</name>
+            <fieldText>&lt;p&gt;No messages in the chat conversation.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Flow_Error</name>
@@ -466,62 +537,13 @@ TODAY())</expression>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Theme</name>
-            <extensionName>flowruntime:lookup</extensionName>
+            <name>Theme_Categroization</name>
+            <extensionName>c:nksThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>fieldApiName</name>
+                <name>themeGroup</name>
                 <value>
-                    <stringValue>NKS_Theme__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Theme:</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>NavTask__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Subtheme</name>
-            <extensionName>flowruntime:lookup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>NKS_Subtheme__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Subtheme:</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>NavTask__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -667,7 +689,7 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
@@ -770,5 +792,8 @@ TODAY())</expression>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <elementReference>Get_Account.TAG_NavUnit__c</elementReference>
+        </value>
     </variables>
 </Flow>
