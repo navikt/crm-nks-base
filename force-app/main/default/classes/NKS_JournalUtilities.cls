@@ -23,7 +23,7 @@ public class NKS_JournalUtilities {
     * @return String [AD token]
     **/
     public static String getADToken() {
-        String ADtoken = Test.isRunningTest() ? null : CachedTokensHandler.getServiceToken('dokarkiv');
+        String ADtoken = Test.isRunningTest() ? null : CachedTokensHandler.getServiceToken('Dokarkiv');
         return ADtoken;
     }
 
