@@ -2,13 +2,8 @@
 <DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
     <folderShares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>celine.tomren@nav.no</sharedTo>
-        <sharedToType>User</sharedToType>
-    </folderShares>
-    <folderShares>
-        <accessLevel>Manage</accessLevel>
-        <sharedTo>stian.schikora@nav.no</sharedTo>
-        <sharedToType>User</sharedToType>
+        <sharedTo>AllInternalUsers</sharedTo>
+        <sharedToType>Organization</sharedToType>
     </folderShares>
     <name>NKS Dashboards</name>
 </DashboardFolder>
