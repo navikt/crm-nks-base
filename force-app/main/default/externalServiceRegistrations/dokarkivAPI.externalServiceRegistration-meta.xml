@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>External service for the dokarkiv API accessing JOARK.</description>
+    <label>dokarkivAPI</label>
+    <namedCredential>JOARK</namedCredential>
+    <schema>{
+    &quot;swagger&quot;: &quot;2.0&quot;,
+    &quot;info&quot;: {
+        &quot;description&quot;: &quot;Her dokumenteres REST-grensesnittene til dokarkiv (Joark). Til autentisering brukes to OIDC-token (JWT via OAuth2.0) i hver sin header\nmed `Nav-Consumer-Token` (applikasjonsbrukeren sitt token) og `Authorization` (saksbehandleren sitt token). Eksempel på kall med to tokens:\n\ncurl -X PUT \&quot;https://dokarkiv-q1.nais.preprod.local/rest/journalpostapi/v1/journalpost/111\&quot; -H \&quot;accept: */*\&quot; -H \&quot;Authorization: Bearer eyAidH...\&quot;, -H \&quot;Nav-Consumer-Token: Bearer eyJraWQi...\&quot; -H \&quot;Content-Type: application/json\&quot; -d \&quot;{ \\\&quot;avsenderMottaker\\\&quot;: { \\\&quot;id\\\&quot;: \\\&quot;string\\\&quot;, \\\&quot;land\\\&quot;: \\\&quot;string\\\&quot;,...}\&quot;\n\nHvis disse tjenestene blir kalt direkte fra en annen applikasjon hvor saksbehandlertoken ikke er tilgjengjelig er det mulig å autentisere seg med èn OIDC token. Da skal`Authorization` header inneholde applikasjonsbrukeren sitt token og `Nav-Consumer-Token` header ikke settes&quot;,
+        &quot;version&quot;: &quot;0.0.0&quot;,
+        &quot;title&quot;: &quot;Dokarkiv APIer&quot;,
+        &quot;contact&quot;: {
+            &quot;name&quot;: &quot;Team Dokument&quot;
+        },
+        &quot;license&quot;: {}
+    },
+    &quot;host&quot;: &quot;dokarkiv-q2.nais.preprod.local&quot;,
+    &quot;basePath&quot;: &quot;/&quot;,
+    &quot;tags&quot;: [
+        {
+            &quot;name&quot;: &quot;arkiver-og-journalfoer-rest-controller&quot;,
+            &quot;description&quot;: &quot;Tjenester for å arkivere og journalføre i fagarkiv&quot;
+        },
+        {
+            &quot;name&quot;: &quot;feilregistrer-journalpost-rest-controller&quot;,
+            &quot;description&quot;: &quot;Tjenester for å feilregistrere journalpost&quot;
+        },
+        {
+            &quot;name&quot;: &quot;journalfoer-skannet-dokument-rest-controller&quot;,
+            &quot;description&quot;: &quot;Tjenester for å slette, endre og legge til logiske vedlegg&quot;
+        },
+        {
+            &quot;name&quot;: &quot;journalpost-intern-rest-controller&quot;,
+            &quot;description&quot;: &quot;Interne tjenester mot journalpost&quot;
+        }
+    ],
+    &quot;paths&quot;: {
+        &quot;/rest/journalpostapi/v1/journalpost&quot;: {
+            &quot;post&quot;: {
+                &quot;tags&quot;: [
+                    &quot;arkiver-og-journalfoer-rest-controller&quot;
+                ],
+                &quot;summary&quot;: &quot;Oppretter en journalpost i fagarkivet, med eller uten dokumenter&quot;,
+                &quot;operationId&quot;: &quot;Create Journal Post&quot;,
+                &quot;consumes&quot;: [
+                    &quot;application/json&quot;
+                ],
+                &quot;produces&quot;: [
+                    &quot;*/*&quot;
+                ],
+                &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
+                        &quot;name&quot;: &quot;forsoekFerdigstill&quot;,
+                        &quot;in&quot;: &quot;query&quot;,
+                        &quot;description&quot;: &quot;Angir hvorvidt tjenesten skal forsøke å ferdigstille eller ikke. Dette vil å sette journalposten i en status som indikerer at journalføring er komplett, \n og låser journalposten for senere endringer. Journalposten blir uansett opprettet, men kun ferdigstilt dersom den oppfyller krav til struktur og metadata som beskrevet under ferdigstillJournalpost.\n Sjekk \&quot;journalpostferdigstilt\&quot; på responsen for å være sikker på at journalposten faktisk ble ferdigstilt.&quot;,
+                        &quot;required&quot;: false,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;allowEmptyValue&quot;: false,
+                        &quot;enum&quot;: [
+                            &quot;true&quot;,
+                            &quot;false&quot;
+                        ]
+                    },
+                    {
+                        &quot;in&quot;: &quot;body&quot;,
+                        &quot;name&quot;: &quot;request&quot;,
+                        &quot;description&quot;: &quot;request&quot;,
+                        &quot;required&quot;: true,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/JournalPostReq&quot;
+                        }
+                    }
+                ],
+                &quot;responses&quot;: {
+                    &quot;200&quot;: {
+                        &quot;description&quot;: &quot;OK&quot;,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/JournalPostResp&quot;
+                        }
+                    },
+                    &quot;201&quot;: {
+                        &quot;description&quot;: &quot;Created&quot;,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/JournalPostResp&quot;
+                        }
+                    },
+                    &quot;400&quot;: {
+                        &quot;description&quot;: &quot;* Kan ikke opprette journalpost&quot;
+                    },
+                    &quot;401&quot;: {
+                        &quot;description&quot;: &quot;* Mangler tilgang til å opprette ny journalpost.\n* Ugyldig OIDC token. Denne feilen gis dersom tokenet ikke har riktig format eller er utgått.&quot;
+                    },
+                    &quot;403&quot;: {
+                        &quot;description&quot;: &quot;Bruker mangler tilgang til å opprette journalpost på tema&quot;
+                    },
+                    &quot;409&quot;: {
+                        &quot;description&quot;: &quot;Journalpost med angitt eksternReferanseId finnes allerede for angitt kanal.\nGjelder bare kanal SKAN_IM og HELSENETTET&quot;
+                    },
+                    &quot;500&quot;: {
+                        &quot;description&quot;: &quot;Internal server error&quot;
+                    }
+                },
+                &quot;security&quot;: [
+                    {
+                        &quot;Authorization&quot;: []
+                    },
+                    {
+                        &quot;NavConsumerToken&quot;: []
+                    }
+                ],
+                &quot;deprecated&quot;: false
+            }
+        },
+        &quot;/rest/journalpostapi/v1/journalpost/{journalpostId}&quot;: {
+            &quot;put&quot;: {
+                &quot;tags&quot;: [
+                    &quot;arkiver-og-journalfoer-rest-controller&quot;
+                ],
+                &quot;summary&quot;: &quot;Oppdaterer metadata på en journalpost og/eller tilhørende dokumenter&quot;,
+                &quot;operationId&quot;: &quot;Oppdater Journal&quot;,
+                &quot;consumes&quot;: [
+                    &quot;application/json&quot;
+                ],
+                &quot;produces&quot;: [
+                    &quot;*/*&quot;
+                ],
+                &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
+                        &quot;name&quot;: &quot;journalpostId&quot;,
+                        &quot;in&quot;: &quot;path&quot;,
+                        &quot;description&quot;: &quot;Angir JournalpostId som skal oppdatere f.eks. 467011764&quot;,
+                        &quot;required&quot;: true,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;467011764&quot;
+                    },
+                    {
+                        &quot;in&quot;: &quot;body&quot;,
+                        &quot;name&quot;: &quot;request&quot;,
+                        &quot;description&quot;: &quot;request&quot;,
+                        &quot;required&quot;: true,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/OppdaterJournalpostRequest&quot;
+                        }
+                    }
+                ],
+                &quot;responses&quot;: {
+                    &quot;200&quot;: {
+                        &quot;description&quot;: &quot;* OK&quot;,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/OppdaterJournalpostResponse&quot;
+                        }
+                    },
+                    &quot;400&quot;: {
+                        &quot;description&quot;: &quot;* Kan ikke oppdatere\n* Feil i aksjonslogg \n* Data kan ikke endres for statusen journalposten er på&quot;
+                    },
+                    &quot;401&quot;: {
+                        &quot;description&quot;: &quot;* Ugyldig OIDC token. Denne feilen gis dersom tokenet ikke har riktig format eller er utgått.&quot;
+                    },
+                    &quot;404&quot;: {
+                        &quot;description&quot;: &quot;Journalpost ikke funnet&quot;
+                    },
+                    &quot;500&quot;: {
+                        &quot;description&quot;: &quot;* Internal server error&quot;
+                    }
+                },
+                &quot;security&quot;: [
+                    {
+                        &quot;Authorization&quot;: []
+                    },
+                    {
+                        &quot;NavConsumerToken&quot;: []
+                    }
+                ],
+                &quot;deprecated&quot;: false
+            }
+        },
+        &quot;/rest/journalpostapi/v1/journalpost/{journalpostId}/feilregistrer/avbryt&quot;: {
+            &quot;patch&quot;: {
+                &quot;tags&quot;: [
+                    &quot;feilregistrer-journalpost-rest-controller&quot;
+                ],
+                &quot;summary&quot;: &quot;Tar en opprettet journalpost ut av ordinær saksbehandling&quot;,
+                &quot;operationId&quot;: &quot;avbrytUsingPATCH&quot;,
+                &quot;consumes&quot;: [
+                    &quot;application/json&quot;
+                ],
+                &quot;produces&quot;: [
+                    &quot;*/*&quot;
+                ],
+                &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
+                        &quot;name&quot;: &quot;journalpostId&quot;,
+                        &quot;in&quot;: &quot;path&quot;,
+                        &quot;description&quot;: &quot;IDen til journalposten som skal feilregistreres&quot;,
+                        &quot;required&quot;: true,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;x-example&quot;: &quot;77778888&quot;
+                    }
+                ],
+                &quot;responses&quot;: {
+                    &quot;200&quot;: {
+                        &quot;description&quot;: &quot;* OK&quot;,
+                        &quot;schema&quot;: {
+                            &quot;type&quot;: &quot;string&quot;
+                        }
+                    },
+                    &quot;400&quot;: {
+                        &quot;description&quot;: &quot;* Feil i aksjonslogg&quot;
+                    },
+                    &quot;401&quot;: {
+                        &quot;description&quot;: &quot;* Ugyldig OIDC token. Denne feilen gis dersom tokenet ikke har riktig format eller er utgått.&quot;
+                    },
+                    &quot;404&quot;: {
+                        &quot;description&quot;: &quot;* Journalpost ikke funnet&quot;
+                    },
+                    &quot;500&quot;: {
+                        &quot;description&quot;: &quot;* Internal server error&quot;
+                    }
+                },
+                &quot;security&quot;: [
+                    {
+                        &quot;Authorization&quot;: []
+                    },
+                    {
+                        &quot;NavConsumerToken&quot;: []
+                    }
+                ],
+                &quot;deprecated&quot;: false
+            }
+        },
+        &quot;/rest/journalpostapi/v1/journalpost/{journalpostId}/ferdigstill&quot;: {
+            &quot;patch&quot;: {
+                &quot;tags&quot;: [
+                    &quot;arkiver-og-journalfoer-rest-controller&quot;
+                ],
+                &quot;summary&quot;: &quot;Fullfører journalføringen og låser journalposten for senere endringer&quot;,
+                &quot;operationId&quot;: &quot;Ferdigstill journal (PATCH)&quot;,
+                &quot;consumes&quot;: [
+                    &quot;application/json&quot;
+                ],
+                &quot;produces&quot;: [
+                    &quot;*/*&quot;
+                ],
+                &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
+                        &quot;name&quot;: &quot;journalpostId&quot;,
+                        &quot;in&quot;: &quot;path&quot;,
+                        &quot;description&quot;: &quot;IDen til journalposten som skal ferdigstilles&quot;,
+                        &quot;required&quot;: true,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;x-example&quot;: &quot;77778888&quot;
+                    },
+                    {
+                        &quot;in&quot;: &quot;body&quot;,
+                        &quot;name&quot;: &quot;request&quot;,
+                        &quot;description&quot;: &quot;request&quot;,
+                        &quot;required&quot;: true,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/FerdigstillJournalpostRequest&quot;
+                        }
+                    }
+                ],
+                &quot;responses&quot;: {
+                    &quot;200&quot;: {
+                        &quot;description&quot;: &quot;OK&quot;,
+                        &quot;schema&quot;: {
+                            &quot;type&quot;: &quot;string&quot;
+                        }
+                    },
+                    &quot;400&quot;: {
+                        &quot;description&quot;: &quot;* Kan ikke ferdigstille&quot;
+                    },
+                    &quot;401&quot;: {
+                        &quot;description&quot;: &quot;* Ugyldig OIDC token. Denne feilen gis dersom tokenet ikke har riktig format eller er utgått.&quot;
+                    },
+                    &quot;403&quot;: {
+                        &quot;description&quot;: &quot;Bruker mangler tilgang til å ferdigstille journalpost&quot;
+                    },
+                    &quot;404&quot;: {
+                        &quot;description&quot;: &quot;Journalpost ikke funnet&quot;
+                    },
+                    &quot;500&quot;: {
+                        &quot;description&quot;: &quot;Internal server error&quot;
+                    }
+                },
+                &quot;security&quot;: [
+                    {
+                        &quot;Authorization&quot;: []
+                    },
+                    {
+                        &quot;NavConsumerToken&quot;: []
+                    }
+                ],
+                &quot;deprecated&quot;: false
+            }
+        },
+        &quot;/rest/journalpostapi/v1/journalpost/{journalpostId}/fjernVedlegg&quot;: {
+            &quot;patch&quot;: {
+                &quot;tags&quot;: [
+                    &quot;arkiver-og-journalfoer-rest-controller&quot;
+                ],
+                &quot;summary&quot;: &quot;Fjernet vedlegg tilknyttet til journalpost som har journalpost og dokumentinfo relasjon&quot;,
+                &quot;operationId&quot;: &quot;Fjern vedlegg&quot;,
+                &quot;consumes&quot;: [
+                    &quot;application/json&quot;
+                ],
+                &quot;produces&quot;: [
+                    &quot;*/*&quot;
+                ],
+                &quot;parameters&quot;: [
+                    {
+                        &quot;name&quot;: &quot;Authorization&quot;,
+                        &quot;in&quot;: &quot;header&quot;,
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;default&quot;: &quot;&quot;
+                    },
+                    {
+                        &quot;name&quot;: &quot;journalpostId&quot;,
+                        &quot;in&quot;: &quot;path&quot;,
+                        &quot;description&quot;: &quot;journalpostId&quot;,
+                        &quot;required&quot;: true,
+                        &quot;type&quot;: &quot;string&quot;
+                    },
+                    {
+                        &quot;in&quot;: &quot;body&quot;,
+                        &quot;name&quot;: &quot;request&quot;,
+                        &quot;description&quot;: &quot;request&quot;,
+                        &quot;required&quot;: true,
+                        &quot;schema&quot;: {
+                            &quot;$ref&quot;: &quot;#/definitions/FjernVedleggTilknyttetJournalpostRequest&quot;
+                        }
+                    }
+                ],
+                &quot;responses&quot;: {
+                    &quot;200&quot;: {
+                        &quot;description&quot;: &quot;* OK&quot;,
+                        &quot;schema&quot;: {
+                            &quot;type&quot;: &quot;string&quot;
+                        }
+                    },
+                    &quot;400&quot;: {
+                        &quot;description&quot;: &quot;* Kan ikke fjerne vedlegg som knyttet til journalpost&quot;
+                    },
+                    &quot;401&quot;: {
+                        &quot;description&quot;: &quot;* Ugyldig OIDC token. Denne feilen gis dersom tokenet ikke har riktig format eller er utgått.&quot;
+                    },
+                    &quot;404&quot;: {
+                        &quot;description&quot;: &quot;* Journalpost funnet ikke&quot;
+                    },
+                    &quot;500&quot;: {
+                        &quot;description&quot;: &quot;* Internal server error&quot;
+                    }
+                },
+                &quot;security&quot;: [
+                    {
+                        &quot;Authorization&quot;: []
+                    },
+                    {
+                        &quot;NavConsumerToken&quot;: []
+                    }
+                ],
+                &quot;deprecated&quot;: false
+            }
+        }
+    },
+    &quot;securityDefinitions&quot;: {
+        &quot;Authorization&quot;: {
+            &quot;type&quot;: &quot;apiKey&quot;,
+            &quot;name&quot;: &quot;Authorization&quot;,
+            &quot;in&quot;: &quot;header&quot;
+        },
+        &quot;Basic&quot;: {
+            &quot;type&quot;: &quot;basic&quot;
+        },
+        &quot;NavConsumerToken&quot;: {
+            &quot;type&quot;: &quot;apiKey&quot;,
+            &quot;name&quot;: &quot;Nav-Consumer-Token&quot;,
+            &quot;in&quot;: &quot;header&quot;
+        },
+        &quot;Saml&quot;: {
+            &quot;type&quot;: &quot;apiKey&quot;,
+            &quot;name&quot;: &quot;Authorization&quot;,
+            &quot;in&quot;: &quot;header&quot;
+        }
+    },
+    &quot;definitions&quot;: {
+        &quot;AvsenderMottaker&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;09071844797&quot;,
+                    &quot;description&quot;: &quot;Identifikatoren til avsender/mottaker. Dette er normalt et fødselsnummer eller organisasjonsnummer, men valideres ikke. Dersom det ønskes å nullstille denne verdien, kan den settes til en tom string.&quot;
+                },
+                &quot;idType&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;FNR&quot;,
+                    &quot;description&quot;: &quot;Angir hvilken type identifikator som er benyttet i AvsenderMottaker.id.\nPåkrevd dersom `id` er satt. * FNR\n* ORGNR\n* HPRNR\n* UTL_ORG&quot;,
+                    &quot;enum&quot;: [
+                        &quot;FNR&quot;,
+                        &quot;ORGNR&quot;,
+                        &quot;HPRNR&quot;,
+                        &quot;UTL_ORG&quot;
+                    ]
+                },
+                &quot;navn&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Hansen, Per&quot;,
+                    &quot;description&quot;: &quot;Navnet til avsender/mottaker.\nNavn på personbrukere skal lagres på formatet etternavn, fornavn mellomnavn&quot;
+                }
+            },
+            &quot;title&quot;: &quot;AvsenderMottaker&quot;
+        },
+        &quot;Bruker&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;id&quot;,
+                &quot;idType&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;09071844797&quot;,
+                    &quot;description&quot;: &quot;Brukerens fødselsnummer (11 siffer) eller organisasjonsnummer (9 siffer)&quot;
+                },
+                &quot;idType&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;FNR&quot;,
+                    &quot;description&quot;: &quot;Angir hvilken type identifikator som er benyttet i bruker.id&quot;,
+                    &quot;enum&quot;: [
+                        &quot;FNR&quot;,
+                        &quot;ORGNR&quot;,
+                        &quot;AKTOERID&quot;
+                    ]
+                }
+            },
+            &quot;title&quot;: &quot;Bruker&quot;
+        },
+        &quot;Dokument&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Søknad om dagpenger ved permittering&quot;,
+                    &quot;description&quot;: &quot;Dokumentets tittel, f.eks. \&quot;Søknad om dagpenger ved permittering\&quot;.\nDokumentets tittel blir synlig i brukers journal på nav.no, samt i Gosys.&quot;
+                },
+                &quot;brevkode&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;NAV 04-01.04&quot;,
+                    &quot;description&quot;: &quot;Typen dokument. Brevkoden sier noe om dokumentets innhold og oppbygning.\nFor inngående dokumenter kan brevkoden være en NAV-skjemaID f.eks. \&quot;NAV 04-01.04\&quot; eller en SED-id.\nBrevkode skal ikke settes for ustrukturert, uklassifisert dokumentasjon, f.eks. brukeropplastede vedlegg.&quot;
+                },
+                &quot;dokumentvarianter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/DokumentVariant&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;Dokument&quot;
+        },
+        &quot;DokumentInfo&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;dokumentInfoId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;dokumentInfoId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;485227498&quot;,
+                    &quot;description&quot;: &quot;ID til dokumentinfo-objektet i Joark&quot;
+                },
+                &quot;brevkode&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;NAV 04-01.04&quot;,
+                    &quot;description&quot;: &quot;Kode som sier noe om dokumentets innhold og oppbygning.\nFor inngående dokumenter kan brevkoden være en NAV-skjemaID f.eks. \&quot;NAV 04-01.04\&quot; eller en SED-id.\nBrevkode skal ikke settes for ustrukturert, uklassifisert dokumentasjon, f.eks. brukeropplastede vedlegg.\n&quot;
+                },
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Søknad om dagpenger ved permittering&quot;,
+                    &quot;description&quot;: &quot;Tittel som beskriver dokumentet, for eksempel \&quot;Søknad om dagpenger ved permittering\&quot;.\nDokumentets tittel blir synlig i brukers journal på nav.no, samt i NAVs fagsystemer.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;DokumentInfo&quot;
+        },
+        &quot;DokumentInfoId&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;dokumentInfoId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 123,
+                    &quot;description&quot;: &quot;Id til et dokumentInfo-objekt som peker på det arkiverte dokumentet.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;DokumentInfoId&quot;
+        },
+        &quot;DokumentVariant&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;filtype&quot;,
+                &quot;fysiskDokument&quot;,
+                &quot;variantformat&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;filtype&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;PDFA&quot;,
+                    &quot;description&quot;: &quot;Filtypen til filen som følger, feks PDFA, JSON eller XML.&quot;
+                },
+                &quot;fysiskDokument&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;U8O4a25hZCBvbSBkYWdwZW5nZXIgdmVkIHBlcm1pdHRlcmluZw==&quot;,
+                    &quot;description&quot;: &quot;Selve dokumentet.  Hvis filtype er PDF/XML, ved fysisk dokument brukes bytearray.&quot;
+                },
+                &quot;variantformat&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;ARKIV&quot;,
+                    &quot;description&quot;: &quot;ARKIV brukes for dokumentvarianter i menneskelesbart format (for eksempel PDFA).  Gosys og nav.no henter arkivvariant og viser denne til bruker.\nORIGINAL skal brukes for dokumentvariant i maskinlesbart format (for eksempel XML og JSON) som brukes for automatisk saksbehandling\nAlle dokumenter må ha én variant med variantFormat ARKIV.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;DokumentVariant&quot;
+        },
+        &quot;DokumentVedlegg&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;dokumentInfoId&quot;,
+                &quot;kildeJournalpostId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;dokumentInfoId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 12345678,
+                    &quot;description&quot;: &quot;ID til dokumentet som skal legges til som vedlegg&quot;
+                },
+                &quot;kildeJournalpostId&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;,
+                    &quot;format&quot;: &quot;int64&quot;,
+                    &quot;example&quot;: 22345678,
+                    &quot;description&quot;: &quot;ID til journalpost kilden i Joark&quot;
+                }
+            },
+            &quot;title&quot;: &quot;DokumentVedlegg&quot;
+        },
+        &quot;EndreLogiskVedleggRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;tittel&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Kontoutskrift&quot;,
+                    &quot;description&quot;: &quot;Den nye tittelen til det logiske vedlegget, for eksempel \&quot;Kontoutskrift\&quot;.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;EndreLogiskVedleggRequest&quot;
+        },
+        &quot;FeiledeDokumenter&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;arsakKode&quot;,
+                &quot;dokumentInfoId&quot;,
+                &quot;kildeJournalpostId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;arsakKode&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;UGYLDIG_STATUS&quot;,
+                    &quot;description&quot;: &quot;Årsak til at dokumentet ikke lot seg knytte til journalpostId&quot;,
+                    &quot;enum&quot;: [
+                        &quot;UGYLDIG_STATUS&quot;,
+                        &quot;IKKE_FUNNET&quot;,
+                        &quot;DOKUMENT_TILLATES_IKKE_GJENBRUKT&quot;,
+                        &quot;SIKKERHETSBEGRENSNING&quot;,
+                        &quot;TILKNYTNING_FEILET&quot;
+                    ]
+                },
+                &quot;dokumentInfoId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 12345678,
+                    &quot;description&quot;: &quot;ID til dokumentet som skal legges til som vedlegg&quot;
+                },
+                &quot;kildeJournalpostId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 22345678,
+                    &quot;description&quot;: &quot;ID til journalpost kilden i Joark&quot;
+                }
+            },
+            &quot;title&quot;: &quot;FeiledeDokumenter&quot;
+        },
+        &quot;FerdigstillJournalpostRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;journalfoerendeEnhet&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;journalfoerendeEnhet&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 9999,
+                    &quot;description&quot;: &quot;NAV-enheten som personen som utfører journalføring jobber for. Ved automatisk journalføring uten mennesker involvert, skal enhet settes til \&quot;9999\&quot;.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;FerdigstillJournalpostRequest&quot;
+        },
+        &quot;FinnMottatteJournalposterResponse&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;journalposter&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;journalposter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;journalposter&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/UbehandletJournalpost&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;FinnMottatteJournalposterResponse&quot;
+        },
+        &quot;FjernVedleggTilknyttetJournalpostRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;dokumentId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;dokumentId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 12345678,
+                    &quot;description&quot;: &quot;DokumentinfoId som har vedlegg knyttet journalpost.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;FjernVedleggTilknyttetJournalpostRequest&quot;
+        },
+        &quot;LeggTilLogiskVedleggRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;tittel&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Kontoutskrift&quot;,
+                    &quot;description&quot;: &quot;Tittelen som det nye logiske vedlegget skal ha, for eksempel \&quot;Kontoutskrift\&quot;\n.&quot;
+                }
+            },
+            &quot;title&quot;: &quot;LeggTilLogiskVedleggRequest&quot;
+        },
+        &quot;LeggTilLogiskVedleggResponse&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;logiskVedleggId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;logiskVedleggId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 1234578,
+                    &quot;description&quot;: &quot;IDen til det logiske vedlegget som har blitt lagt til&quot;
+                }
+            },
+            &quot;title&quot;: &quot;LeggTilLogiskVedleggResponse&quot;
+        },
+        &quot;MottaDokumentUtgaaendeSkanningRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;batchnavn&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;navn på batch&quot;
+                },
+                &quot;datoMottatt&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;date-time&quot;,
+                    &quot;example&quot;: &quot;2019-11-29&quot;
+                },
+                &quot;dokumentvarianter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;liste av skannede dokumenter&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/DokumentVariant&quot;
+                    }
+                },
+                &quot;mottakskanal&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;Mottakskanal for dokument&quot;
+                },
+                &quot;tilleggsopplysninger&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;Liste med Tilleggsopplysninger&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/Tilleggsopplysning&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;MottaDokumentUtgaaendeSkanningRequest&quot;
+        },
+        &quot;OppdaterDistribusjonsinfoRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;settStatusEkspedert&quot;: {
+                    &quot;type&quot;: &quot;boolean&quot;,
+                    &quot;description&quot;: &quot;Setter status &apos;ekspedert&apos; på journalposten. Dvs. at journalposten har blitt distribuert til bruker&quot;
+                },
+                &quot;utsendingsKanal&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;Kanalen som dokumentene på journalpost ble sendt via. Se https://confluence.adeo.no/display/BOA/Utsendingskanal for lovlige verdier&quot;
+                }
+            },
+            &quot;title&quot;: &quot;OppdaterDistribusjonsinfoRequest&quot;
+        },
+        &quot;OppdaterJournalpostRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Søknad om dagpenger ved permittering&quot;,
+                    &quot;description&quot;: &quot;Tittel som beskriver forsendelsen samlet, for eksempel \&quot;Søknad om dagpenger ved permittering\&quot;&quot;
+                },
+                &quot;tema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;DAG&quot;,
+                    &quot;description&quot;: &quot;Fagområdet som forsendelsen tilhører, for eksempel \&quot;DAG\&quot; for dagpenger&quot;
+                },
+                &quot;behandlingstema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;ab0001&quot;,
+                    &quot;description&quot;: &quot;Behandlingstema for forsendelsen, for eksempel ab0001 (Ordinære dagpenger).&quot;
+                },
+                &quot;avsenderMottaker&quot;: {
+                    &quot;description&quot;: &quot;Avsender eller mottaker av forsendelsen.\n\nSkal ikke settes for notater.&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/AvsenderMottaker&quot;
+                },
+                &quot;bruker&quot;: {
+                    &quot;description&quot;: &quot;Brukeren som forsendelsen gjelder.&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/Bruker&quot;
+                },
+                &quot;sak&quot;: {
+                    &quot;description&quot;: &quot;Saken i PSAK eller GSAK som dokumentene skal journalføres mot.\nNB: Dersom journalposten tilhører en fagsak i et fagsystem, må konsument selv sørge for å opprette en GSAK-sak med mapping til fagsaken. Alternativt kan fagsystemet benytte tjenesten knyttTilSak, som knytter journalposten til en fagsak eller generell sak.&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/Sak&quot;
+                },
+                &quot;dokumenter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;Liste over dokumentene på journalposten der metadata skal endres&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/DokumentInfo&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;OppdaterJournalpostRequest&quot;
+        },
+        &quot;OppdaterJournalpostResponse&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;journalpostId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;journalpostId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;467011764&quot;,
+                    &quot;description&quot;: &quot;JournalpostId som har blitt oppdatert (og forsøkt endelig journalført)&quot;
+                }
+            },
+            &quot;title&quot;: &quot;OppdaterJournalpostResponse&quot;
+        },
+        &quot;JournalPostReq&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;dokumenter&quot;,
+                &quot;journalpostType&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;tittel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Søknad om dagpenger ved permittering&quot;,
+                    &quot;description&quot;: &quot;Tittel som beskriver forsendelsen samlet, feks \&quot;Søknad om dagpenger ved permittering\&quot;.&quot;
+                },
+                &quot;journalpostType&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;INNGAAENDE&quot;,
+                    &quot;enum&quot;: [
+                        &quot;INNGAAENDE&quot;,
+                        &quot;UTGAAENDE&quot;,
+                        &quot;NOTAT&quot;
+                    ]
+                },
+                &quot;tema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;DAG&quot;,
+                    &quot;description&quot;: &quot;Temaet som forsendelsen tilhører, for eksempel \&quot;DAG\&quot; (Dagpenger).&quot;
+                },
+                &quot;behandlingstema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;ab0001&quot;,
+                    &quot;description&quot;: &quot;Behandlingstema for forsendelsen, for eksempel ab0001 (Ordinære dagpenger).&quot;
+                },
+                &quot;kanal&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;NAV_NO&quot;,
+                    &quot;description&quot;: &quot;Kanalen som ble brukt ved innsending eller distribusjon. F.eks. NAV_NO, ALTINN eller EESSI.&quot;
+                },
+                &quot;journalfoerendeEnhet&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;0701&quot;,
+                    &quot;description&quot;: &quot;NAV-enheten som har journalført, eventuelt skal journalføre, forsendelsen. Ved automatisk journalføring uten mennesker involvert skal enhet settes til \&quot;9999\&quot;.\nKonsument må sette journalfoerendeEnhet dersom tjenesten skal ferdigstille journalføringen.&quot;
+                },
+                &quot;avsenderMottaker&quot;: {
+                    &quot;description&quot;: &quot;Avsender av forsendelsen&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/AvsenderMottaker&quot;
+                },
+                &quot;bruker&quot;: {
+                    &quot;$ref&quot;: &quot;#/definitions/Bruker&quot;
+                },
+                &quot;sak&quot;: {
+                    &quot;description&quot;: &quot;Saken som journalposten hører til&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/Sak&quot;
+                },
+                &quot;dokumenter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;Første dokument blir tilknyttet som hoveddokument på journalposten. Øvrige dokumenter tilknyttes som vedlegg. Rekkefølgen på vedlegg beholdes ikke ved uthenting av journalpost.&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/Dokument&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;JournalPostReq&quot;
+        },
+        &quot;JournalPostResp&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;journalpostId&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;journalpostId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;467010363&quot;,
+                    &quot;description&quot;: &quot;JournalpostId som har blitt opprettet&quot;
+                },
+                &quot;journalpostferdigstilt&quot;: {
+                    &quot;type&quot;: &quot;boolean&quot;,
+                    &quot;example&quot;: true,
+                    &quot;description&quot;: &quot;True eller False for om journalpost ble ferdigstilt&quot;
+                },
+                &quot;dokumenter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;Dokumentene på journalposten.&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/DokumentInfoId&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;JournalPostResp&quot;
+        },
+        &quot;Sak&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;fagsakId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;10695768&quot;,
+                    &quot;description&quot;: &quot;Iden til fagsaken i fagsystemet (altså ikke applikasjonen SAK).\nSkal kun settes dersom sakstype = FAGSAK&quot;
+                },
+                &quot;fagsaksystem&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;AO01&quot;,
+                    &quot;description&quot;: &quot;Fagsystemet som saken behandles i. Lovlige verdier er \n* FS38 (Melosys)\n* FS36 (Foreldrepengeløsningen)\n* UFM (Unntak fra medlemskap)\n* AO01 (Arena)\n* AO11 (Grisen)\n* IT01 (Infotrygd)\n* OEBS\n* PP01\n* PP01\n* K9\n* BISYS\n* BA (Barnetrygd)\n* EF (Enslig forsørger)\n* KONT (Kontantstøtte)\n* SUPSTONAD (Supplerende Stønad)\n* OMSORGSPENGER\nSkal kun settes dersom sakstype = FAGSAK&quot;,
+                    &quot;enum&quot;: [
+                        &quot;FS38&quot;,
+                        &quot;FS36&quot;,
+                        &quot;UFM&quot;,
+                        &quot;OEBS&quot;,
+                        &quot;OB36&quot;,
+                        &quot;AO01&quot;,
+                        &quot;AO11&quot;,
+                        &quot;IT01&quot;,
+                        &quot;PP01&quot;,
+                        &quot;K9&quot;,
+                        &quot;BISYS&quot;,
+                        &quot;BA&quot;,
+                        &quot;EF&quot;,
+                        &quot;KONT&quot;,
+                        &quot;SUPSTONAD&quot;,
+                        &quot;OMSORGSPENGER&quot;
+                    ]
+                },
+                &quot;sakstype&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;FAGSAK&quot;,
+                    &quot;description&quot;: &quot;* FAGSAK vil si at dokumentene tilhører en sak i et fagsystem. Dersom FAGSAK velges, må fagsakid og fagsaksystem oppgis.\n* GENERELL_SAK kan brukes for dokumenter som skal journalføres, men som ikke tilhører en konkret fagsak. Generell sak kan ses på som brukerens \&quot;mappe\&quot; på et gitt tema.\n* ARKIVSAK skal kun brukes etter avtale.&quot;,
+                    &quot;enum&quot;: [
+                        &quot;FAGSAK&quot;,
+                        &quot;GENERELL_SAK&quot;,
+                        &quot;ARKIVSAK&quot;
+                    ]
+                }
+            },
+            &quot;title&quot;: &quot;Sak&quot;
+        },
+        &quot;TilknyttVedleggRequest&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;dokument&quot;,
+                &quot;tilknyttetAvNavn&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;dokument&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;liste med et eller flere dokumenter som skal knyttes til journalpostId som vedlegg&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/DokumentVedlegg&quot;
+                    }
+                },
+                &quot;tilknyttetAvNavn&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Mikkel Pettersen&quot;,
+                    &quot;description&quot;: &quot;navn på saksbehandler som tilknytter vedleggene&quot;
+                }
+            },
+            &quot;title&quot;: &quot;TilknyttVedleggRequest&quot;
+        },
+        &quot;TilknyttVedleggResponse&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;feiledeDokumenter&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;description&quot;: &quot;Liste med dokumenter som ikke kunne knyttes til journalpostId&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/FeiledeDokumenter&quot;
+                    }
+                }
+            },
+            &quot;title&quot;: &quot;TilknyttVedleggResponse&quot;
+        },
+        &quot;Tilleggsopplysning&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;nokkel&quot;,
+                &quot;verdi&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;nokkel&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;bucid&quot;
+                },
+                &quot;verdi&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;eksempel_verdi_123&quot;
+                }
+            },
+            &quot;title&quot;: &quot;Tilleggsopplysning&quot;
+        },
+        &quot;UbehandletBruker&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 22345678,
+                    &quot;description&quot;: &quot;ID til bruker i Joark&quot;
+                },
+                &quot;type&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;PERSON&quot;,
+                    &quot;description&quot;: &quot;Brukertype i Joark&quot;
+                }
+            },
+            &quot;title&quot;: &quot;UbehandletBruker&quot;
+        },
+        &quot;UbehandletJournalpost&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;behandlingstema&quot;,
+                &quot;datoOpprettet&quot;,
+                &quot;journalStatus&quot;,
+                &quot;journalforendeEnhet&quot;,
+                &quot;journalpostId&quot;,
+                &quot;mottaksKanal&quot;,
+                &quot;tema&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;behandlingstema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;ab0001&quot;,
+                    &quot;description&quot;: &quot;Behandlingstema journalpost i Joark&quot;
+                },
+                &quot;bruker&quot;: {
+                    &quot;description&quot;: &quot;Bruker til journalpost i Joark&quot;,
+                    &quot;$ref&quot;: &quot;#/definitions/UbehandletBruker&quot;
+                },
+                &quot;datoOpprettet&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;2019-12-04T11:07:25.596+0000&quot;,
+                    &quot;description&quot;: &quot;Dato journalposten ble opprettet i Joark&quot;
+                },
+                &quot;journalStatus&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;M&quot;,
+                    &quot;description&quot;: &quot;journalStatus i Joark&quot;
+                },
+                &quot;journalforendeEnhet&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;0001&quot;,
+                    &quot;description&quot;: &quot;journalførende enhet for journalpost i Joark&quot;
+                },
+                &quot;journalpostId&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;,
+                    &quot;format&quot;: &quot;int64&quot;,
+                    &quot;example&quot;: 22345678,
+                    &quot;description&quot;: &quot;ID til journalpost i Joark&quot;
+                },
+                &quot;mottaksKanal&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;NAV_NO&quot;,
+                    &quot;description&quot;: &quot;Mottakskanal til journalpost i Joark&quot;
+                },
+                &quot;tema&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;PEN&quot;,
+                    &quot;description&quot;: &quot;Temakode til journalpost i Joark&quot;
+                }
+            },
+            &quot;title&quot;: &quot;UbehandletJournalpost&quot;
+        }
+    }
+}</schema>
+    <schemaType>OpenApi</schemaType>
+    <status>Complete</status>
+</ExternalServiceRegistration>

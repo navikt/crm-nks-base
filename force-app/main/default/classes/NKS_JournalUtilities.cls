@@ -1,7 +1,7 @@
 //Utility class used to allow flow to retrieve the AD token from the session cache
 public class NKS_JournalUtilities {
 
-    @InvocableMethod(label = 'Journal Utility Request' description = 'Retrieves the users AD token from the session cache' category = 'Journal')
+    @InvocableMethod(label = 'Journal Utility Request' description = 'Retrieve AD token or generate compliant document' category = 'Journal')
     public static List<String> handleRequest(List<utilityRequest> request) {
         List<String> returnList = new List<String>();
         
@@ -9,8 +9,8 @@ public class NKS_JournalUtilities {
             when 'AD_TOKEN' {
                 returnList.add(getADToken());
             }
-            when 'ENCODE_BASE_64' {
-                returnList.add(base64Encode(request[0].stringToEncode));
+            when 'GENERATE_DOCUMENT' {
+                returnList.add(generateDocument(request[0].documentString));
             }
         }
 
@@ -23,11 +23,7 @@ public class NKS_JournalUtilities {
     * @return String [AD token]
     **/
     public static String getADToken() {
-        String ADtoken;
-//String accessToken = Auth.AuthToken.getAccessToken('PROVIDERID',  'Open Id Connect')
-        Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.tokens');
-        ADtoken = (String) sessionPart.get('ADTOKEN');
-
+        String ADtoken = Test.isRunningTest() ? null : CachedTokensHandler.getServiceToken('Dokarkiv');
         return ADtoken;
     }
 
@@ -37,22 +33,27 @@ public class NKS_JournalUtilities {
     * @param stringToEncode [STRING]
     * @return String 
     **/
-    public static String base64Encode(String stringToEncode) {
-        return EncodingUtil.base64Encode(blob.valueOf(stringToEncode));
+    public static String generateDocument(String documentString) {
+        return EncodingUtil.base64Encode(blob.toPdf(documentString));
     }
 
     public class utilityRequest{
 
-        public utilityRequest(String requestType, String stringToEncode){
-            this.requestType = requestType;
-            this.stringToEncode = stringToEncode;
+        public utilityRequest(){
+            this.requestType = null;
+            this.documentString = null;
         }
 
-        @invocableVariable(label = 'Type og Apex action to perform' description = 'Valid actions are: AD_TOKEN and ENCODE_BASE_64' required = true)
+        public utilityRequest(String requestType, String documentString){
+            this.requestType = requestType;
+            this.documentString = documentString;
+        }
+
+        @invocableVariable(label = 'Type of Apex action to perform (Valid actions are: AD_TOKEN and GENERATE_DOCUMENT)' description = 'Valid actions are: AD_TOKEN and GENERATE_DOCUMENT' required = true)
         public String requestType;
 
         @invocableVariable
-        public String stringToEncode;
+        public String documentString;
     }
     
 }
