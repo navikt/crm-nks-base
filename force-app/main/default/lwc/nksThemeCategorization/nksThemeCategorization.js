@@ -4,12 +4,14 @@ import getSubthemes from '@salesforce/apex/NKS_ThemeUtils.getSubthemes';
 
 export default class NksThemeCategorization extends LightningElement {
 
-    @api themeGroup;
-    @api theme;
-    @api subtheme;
     @track themeGroups = [];
     @track subThemeMap;
     themeGroupObj;
+    chosenThemeGroup;
+    chosenTheme;
+    chosenSubtheme;
+    subthemes;
+    themes;
 
 
     @wire(getThemes, {})
@@ -37,33 +39,54 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     handleThemeGroupChange(event) {
-        this.themeGroup = event.detail.value;
+        this.chosenThemeGroup = event.detail.value;
+        this.chosenTheme = null;
+        this.chosenSubtheme = null;
+
+        this.filterThemes();
     }
 
     handleThemeChange(event) {
-        this.theme = event.detail.value;
+        this.chosenTheme = event.detail.value;
+        this.chosenSubtheme = null;
+        this.filterSubthemes();
     }
 
     handleSubthemeChange(event) {
-        this.subtheme = event.detail.value;
+        this.chosenSubtheme = event.detail.value;
     }
 
-    get themes() {
+    @api
+    get themeGroup() {
+        return this.chosenThemeGroup;
+    }
+
+    @api
+    get theme() {
+        return this.chosenTheme;
+    }
+
+    @api
+    get subtheme() {
+        return this.chosenSubtheme;
+    }
+
+    filterThemes() {
         let listThemes = (this.themeGroup && this.themeGroupObj) ? this.themeGroupObj[this.themeGroup] : [];
         let returnThemes = [];
         listThemes.forEach(theme => {
             returnThemes.push({ label: theme.Name, value: theme.Id });
         });
-        return returnThemes;
+        this.themes = returnThemes;
     }
 
-    get subthemes() {
-        let listSubthemes = this.theme ? this.subThemeMap[this.theme] : [];
+    filterSubthemes() {
+        let listSubthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 ? this.subThemeMap[this.chosenTheme] : [];
         let returnThemes = [];
         listSubthemes.forEach(subtheme => {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
         });
-        return returnThemes;
+        this.subthemes = returnThemes;
     }
 
 
