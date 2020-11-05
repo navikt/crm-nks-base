@@ -766,7 +766,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Announcement__c.NKS_ImageURL__c</field>
-        <readable>false</readable>
+        <readable>true  </readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
