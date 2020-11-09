@@ -343,6 +343,7 @@
             <componentName>activityTimeline</componentName>
         </componentInstance>
     </itemInstances>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>componentTitle</name>
