@@ -373,7 +373,7 @@
                 <name>headerTitleNorwegian</name>
                 <value>Aktiviteter</value>
             </componentInstanceProperties>
-            <componentName>tagActivityTimeline</componentName>
+            <componentName>activityTimeline</componentName>
         </componentInstance>
     </itemInstances>
         <name>sidebar</name>
