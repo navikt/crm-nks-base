@@ -189,8 +189,17 @@ public virtual class ApiController {
     * @return ApiController 
     **/
     public ApiController addServiceAuthHeader(String serviceName) {
-        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken('dokarkiv');
+        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
         return addHeader('Authorization', 'Bearer ' + serviceToken);
+    }
+
+    /**
+    * @description: Adds the subscription key to the header of the request from the named credential
+    * @author Tor Håkon Sigurdsen | 11-09-2020
+    * @return ApiController 
+    **/
+    public ApiController addSubscriptionKey() {
+        return addHeader('Ocp-Apim-Subscription-Key','{!$Credential.Password}');
     }
 	
     /**
