@@ -7,22 +7,22 @@ public with sharing class NKS_SafApexTypes {
      * SF Defined Apex Types
      */
     public class safQuery {
-		public String query;
-		public SafQueryVariables variables;
+		@AuraEnabled public String query;
+		@AuraEnabled public SafQueryVariables variables;
 	}
     
     public class SafQueryVariables {
-		public BrukerIdInput brukerId;
-		public FagsakInput fagsakId;
-		public String dokumentInfoId;
-		public Tilknytning tilknytning;
-		public String fraDato;
-		public String tilDato;
-		public List<Tema> tema;
-		public List<Journalposttype> journalposttyper;
-		public List<Journalstatus> journalstatuser;
-		public Integer foerste;
-		public String etter;
+		@AuraEnabled public BrukerIdInput brukerId;
+		@AuraEnabled public FagsakInput fagsakId;
+		@AuraEnabled public String dokumentInfoId;
+		@AuraEnabled public Tilknytning tilknytning;
+		@AuraEnabled public String fraDato;
+		@AuraEnabled public String tilDato;
+		@AuraEnabled public List<Tema> tema;
+		@AuraEnabled public List<Journalposttype> journalposttyper;
+		@AuraEnabled public List<Journalstatus> journalstatuser;
+		@AuraEnabled public Integer foerste;
+		@AuraEnabled public String etter;
 	}
 	
 	public class SafQueryResponse {
@@ -32,46 +32,66 @@ public with sharing class NKS_SafApexTypes {
 	}
 	
 	public class SafGetDocumentResponse {
-		public boolean isSuccess;
-		public SafError error;
-        public string documentString;
-        public string contentType;
-        public string contentDisposition;
+		@AuraEnabled public boolean isSuccess;
+		@AuraEnabled public SafError error;
+        @AuraEnabled public string documentString;
+        @AuraEnabled public string contentType;
+        @AuraEnabled public string contentDisposition;
 	}
 	
 	public class SafError {
-		public DateTime timestamp;
-		public Integer status;
-		public String error;
-		public String message;
-		public String path;
-	}
+		@AuraEnabled public DateTime timestamp;
+		@AuraEnabled public Integer status;
+		@AuraEnabled public String error;
+		@AuraEnabled public String message;
+		@AuraEnabled public String path;
+    }
+    
+    public class SafQueryField {
+        public string name;
+        public List<SafQueryField> queryFields;
+
+        public override String toString() {
+            String stringToReturn = name;
+
+            if(null != queryFields && false == queryFields.isEmpty()) {
+                stringToReturn += ' { ';
+
+                for(SafQueryField qf : queryFields) {
+                    stringToReturn += qf.toString() + ' ';
+                }
+                stringToReturn += '}';
+            }
+
+            return stringToReturn;
+        }
+    }
 
     /**
      * SAF Apex types
      */
 
     public class BrukerIdInput {
-		public String id;
-		public BrukerIdType type; //-> Enum
+		@AuraEnabled public String id;
+		@AuraEnabled public BrukerIdType type; //-> Enum
 	}
 	
 	public class FagsakInput {
-		public String fagsakId;
-		public String fagsaksystem;
+		@AuraEnabled public String fagsakId;
+		@AuraEnabled public String fagsaksystem;
 	}
 	
 	public class AvsenderMottaker {
-		public String id;
-		public AvsenderMottakerIdType type; //-> ENUM
-		public String navn;
-		public String land;
-		public String erLikBruker;
+		@AuraEnabled public String id;
+		@AuraEnabled public AvsenderMottakerIdType type; //-> ENUM
+		@AuraEnabled public String navn;
+		@AuraEnabled public String land;
+		@AuraEnabled public String erLikBruker;
 	}
 	
 	public class Bruker {
-		public String id;
-		public AvsenderMottakerIdType type; //-> Enum
+		@AuraEnabled public String id;
+		@AuraEnabled public AvsenderMottakerIdType type; //-> Enum
 	}
 	
 	public class DokumentInfo {
