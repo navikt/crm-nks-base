@@ -12,6 +12,12 @@ public class NKS_JournalUtilities {
             when 'GENERATE_DOCUMENT' {
                 returnList.add(generateDocument(request[0].documentString));
             }
+            when 'BASE_64_ENCODE' {
+                returnList.add(EncodingUtil.base64Encode(Blob.valueOf(request[0].documentString)));
+            }
+            when 'GW_API_KEY' {
+                returnList.add(getApiKey());
+            }
         }
 
         return returnList;
@@ -25,6 +31,11 @@ public class NKS_JournalUtilities {
     public static String getADToken() {
         String ADtoken = Test.isRunningTest() ? null : CachedTokensHandler.getServiceToken('Dokarkiv');
         return ADtoken;
+    }
+
+    //TODO: Implement method to retrieve stored API key for the service
+    public static string getApiKey() {
+        return '';
     }
 
     /**
@@ -49,7 +60,7 @@ public class NKS_JournalUtilities {
             this.documentString = documentString;
         }
 
-        @invocableVariable(label = 'Type of Apex action to perform (Valid actions are: AD_TOKEN and GENERATE_DOCUMENT)' description = 'Valid actions are: AD_TOKEN and GENERATE_DOCUMENT' required = true)
+        @invocableVariable(label = 'Type of Apex action to perform (Valid actions are: AD_TOKEN, GENERATE_DOCUMENT, BASE_64_ENCODE and GW_API_KEY)' description = 'Valid actions are: AD_TOKEN and GENERATE_DOCUMENT' required = true)
         public String requestType;
 
         @invocableVariable
