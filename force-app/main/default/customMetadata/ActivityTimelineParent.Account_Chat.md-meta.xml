@@ -30,4 +30,12 @@
         <field>SObjectRelationshipField__c</field>
         <value xsi:type="xsd:string">AccountId</value>
     </values>
+    <values>
+        <field>AppAPIName__c</field>
+        <value xsi:type="xsd:string">NAV_Kontaktsenter</value>
+    </values>
+    <values>
+        <field>CreateableObject_NoOverride__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
 </CustomMetadata>

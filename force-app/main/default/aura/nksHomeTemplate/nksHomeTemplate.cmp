@@ -1,0 +1,17 @@
+<aura:component implements="lightning:homeTemplate" access="global" description="test">
+    <aura:attribute name="left" type="Aura.Component[]" />
+    <aura:attribute name="right" type="Aura.Component[]" />
+    <aura:attribute name="center" type="Aura.Component[]" />
+
+    <div class="slds-grid slds-wrap slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <span>{!v.left}</span>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <span>{!v.right}</span>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-var-m-top_x-small">
+            <span>{!v.center}</span>
+        </div>
+    </div>
+</aura:component>

@@ -20,7 +20,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
-        <content>Hjem</content>
+        <content>NKS_Home</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>

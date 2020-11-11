@@ -765,6 +765,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_ImageURL__c</field>
+        <readable>true  </readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_Image__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavUnit__c.CRM_QueueId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -798,6 +818,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Contact</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>NKS_Announcement__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
