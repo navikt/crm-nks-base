@@ -23,6 +23,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
         System.assertEquals('10px', ctrl.height, 'Expected height to be set with the correct value in constructor');
         System.assertEquals('myTestFile.pdf', ctrl.title, 'Expected title to be set with the correct value in constructor');
         System.assertEquals('myTestFile.pdf', ApexPages.currentPage().getHeaders().get('filename'), 'Expected the header filename to be set correct');
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
         System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
         System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
         System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false in constructor');
@@ -47,6 +48,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
         System.assertEquals('900px', ctrl.height, 'Expected height to be set with the correct value in constructor');
         System.assertEquals('dokument', ctrl.title, 'Expected title to be set with the correct in constructor');
         System.assertEquals('dokument', ApexPages.currentPage().getHeaders().get('filename'), 'Expected the header filename to be set correct');
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
         System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
         System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
         System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false in constructor');
@@ -61,6 +63,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ctrl = new NKS_SafViewDocumentController();
         Test.stopTest();
 
+        System.assertEquals(true, String.isNotBlank(ctrl.errorTitle), 'Expected to have an error title');
         System.assertEquals(true, String.isNotBlank(ctrl.errorMessage), 'Expected to have an error message');
         System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
         System.assertEquals(true, ctrl.isError, 'Expected isError to be set to false in constructor');
@@ -94,6 +97,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
 
         System.assertEquals(true, ctrl.documentData.startsWith('data:application/pdf;base64,TEST_STRING'), 'Did not manage to set the correct start string');
         System.assertEquals('inline', ApexPages.currentPage().getHeaders().get('content-disposition'), 'Expected the header content-disposition to be set correct');
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
         System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
         System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
         System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false');
@@ -116,6 +120,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
         Test.stopTest();
 
         System.assertEquals(true, String.isBlank(ctrl.documentData), 'Did not expect this to be set');
+        System.assertEquals(true, String.isNotBlank(ctrl.errorTitle), 'Expected to have an error title');
         System.assertEquals(true, String.isNotBlank(ctrl.errorMessage), 'Expected to have an error message');
         System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
         System.assertEquals(true, ctrl.isError, 'Expected isError to be set to true');

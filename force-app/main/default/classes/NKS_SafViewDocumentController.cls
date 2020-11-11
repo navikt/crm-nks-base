@@ -19,6 +19,7 @@ public with sharing class NKS_SafViewDocumentController {
     public string documentData { public get; public set; }
     public string title {get; set;}
     public string contentType {get; set;}
+    public string errorTitle {get; set;}
     public string errorMessage {get; set;}
     
     //With default values
@@ -79,8 +80,7 @@ public with sharing class NKS_SafViewDocumentController {
      */
     private void validateParameters() {
         if(String.isBlank(journalId) || String.isBlank(documentInfoId)) {
-            isError = true;
-            errorMessage = 'Kan ikke hente dokument. Mangler journalpost id og dokument id.';
+            setError('Kan ikke hente dokument.', 'Mangler journalpost id og dokument id.');
         }
     }
 
@@ -98,13 +98,22 @@ public with sharing class NKS_SafViewDocumentController {
         try {
             NKS_SafApexTypes.SafGetDocumentResponse response = service.getSafDocument(journalId,documentInfoId,variantFormat);
         
-            Apexpages.currentPage().getHeaders().put('content-disposition', response.contentDisposition);
-            documentData='data:'+response.contentType+';base64,'+response.documentString+'#statusbar=0&messages=0&view=Fit&toolbar=0';
+            if(true == response.isSuccess) {
+                Apexpages.currentPage().getHeaders().put('content-disposition', response.contentDisposition);
+                documentData='data:'+response.contentType+';base64,'+response.documentString+'#statusbar=0&messages=0&view=Fit&toolbar=0';
+            } else {
+                setError('Kunne ikke laste dokumentet [' + response.error.error + '].', response.error.message);
+            }
         } catch (Exception ex) {
-            errorMessage = ex.getMessage();
-            isError = true;
+            setError('Kunne ikke laste dokumentet.', ex.getMessage());
         }
         
         initialised = true;
+    }
+
+    private void setError(String title, String message) {
+        errorTitle = title;
+        errorMessage = message;
+        isError = true;
     }
 }
