@@ -1,35 +1,24 @@
 /**
  * Get journal posts from SAF
- * !Currently hardcoded query, should be made dynamic
+ * !Method receives strings not apex types
  */
 public with sharing class NKS_SafJournalPostListController {
     @TestVisible private static NKS_SafService safService;
 
-    @AuraEnabled(cacheable=true)
-    public static NKS_SafApexTypes.SafQueryResponse getJournalposts(String userId, String userType) {
+    @AuraEnabled
+    public static NKS_SafApexTypes.SafQueryResponse getJournalpostsUser(String queryVariablesString, String queryFieldString) {
         NKS_SafApexTypes.SafQueryResponse queryResults;
-        
-        try {
 
+        try {
             //Added to make safService mockable
             if(safService == null) { 
                 safService = new NKS_SafService();
             }
 
-            //Predefined query
-            String query = '"query": "query dokumentoversiktBruker($brukerId: BrukerIdInput!, $foerste: Int!)'
-            + '{dokumentoversiktBruker(brukerId: $brukerId, foerste:$foerste) '
-            + '{journalposter {journalpostId tittel journalposttype journalstatus tema dokumenter {dokumentInfoId tittel}}}}';
-
-            //Define query variables
-            NKS_SafApexTypes.SafQueryVariables queryVariables = new NKS_SafApexTypes.SafQueryVariables();
-            queryVariables.brukerId = new NKS_SafApexTypes.BrukerIdInput();
-            queryVariables.brukerId.id = userId;
-            queryVariables.brukerId.type = (NKS_SafApexTypes.BrukerIdType) NKS_SafApexTypes.parseEnum(userType, NKS_SafApexTypes.BrukerIdType.class);
-            queryVariables.foerste = 20;
-
-            //Get the query response
-            queryResults = safService.doSafQuery(query, queryVariables);
+            NKS_SafApexTypes.SafQueryVariables queryVariables = (NKS_SafApexTypes.SafQueryVariables) JSON.deserialize(queryVariablesString, NKS_SafApexTypes.SafQueryVariables.class);
+            NKS_SafApexTypes.SafQueryField queryField = (NKS_SafApexTypes.SafQueryField) JSON.deserialize(queryFieldString, NKS_SafApexTypes.SafQueryField.class);
+            
+            queryResults = safService.doSafQuery(NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktBruker', queryField, queryVariables));
         } catch (Exception ex) {
             queryResults = new NKS_SafApexTypes.SafQueryResponse();
             queryResults.isSuccess = false;
@@ -40,4 +29,5 @@ public with sharing class NKS_SafJournalPostListController {
 
         return queryResults;
     }
+
 }

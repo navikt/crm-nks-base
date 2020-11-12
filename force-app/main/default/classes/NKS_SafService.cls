@@ -27,10 +27,9 @@ public with sharing class NKS_SafService extends ApiController {
             initPostQueryRequest();
             
             // SETTING MOCK DATA
-            resp = NKS_SafServiceMock.mockPostQueryStringSuccess(200);
+            //resp = NKS_SafServiceMock.mockPostQueryStringSuccess(200);
             
-            //Do the callout
-            // doCallout();
+            doCallout();
 
             //Prepare the response
             Integer resStatusCode = getResponse().getStatusCode();
@@ -92,9 +91,9 @@ public with sharing class NKS_SafService extends ApiController {
             //Prepare the returned data.
             
             // SETTING MOCK DATA
-            resp = NKS_SafServiceMock.mockGetDocumentString(200);
-
-            // doCallout();
+            //resp = NKS_SafServiceMock.mockGetDocumentString(200);
+            
+            doCallout();
 
             Integer resStatusCode = getResponse().getStatusCode();
             String body = getResponse().getBody();

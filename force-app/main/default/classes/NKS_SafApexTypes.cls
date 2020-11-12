@@ -18,9 +18,9 @@ public with sharing class NKS_SafApexTypes {
 		@AuraEnabled public Tilknytning tilknytning;
 		@AuraEnabled public String fraDato;
 		@AuraEnabled public String tilDato;
-		@AuraEnabled public List<Tema> tema;
-		@AuraEnabled public List<Journalposttype> journalposttyper;
-		@AuraEnabled public List<Journalstatus> journalstatuser;
+		@AuraEnabled public List<String> tema; // -> Enum
+		@AuraEnabled public List<String> journalposttyper; // -> Enum
+		@AuraEnabled public List<String> journalstatuser; // -> Enum
 		@AuraEnabled public Integer foerste;
 		@AuraEnabled public String etter;
 	}
@@ -48,8 +48,17 @@ public with sharing class NKS_SafApexTypes {
     }
     
     public class SafQueryField {
-        public string name;
+        public String name;
         public List<SafQueryField> queryFields;
+
+        public SafQueryField() {
+            queryFields = new List<SafQueryField>();
+        }
+
+        public SafQueryField(String name) {
+            this();
+            this.name = name;
+        }
 
         public override String toString() {
             String stringToReturn = name;
@@ -73,7 +82,7 @@ public with sharing class NKS_SafApexTypes {
 
     public class BrukerIdInput {
 		@AuraEnabled public String id;
-		@AuraEnabled public BrukerIdType type; //-> Enum
+		@AuraEnabled public String type; //-> Enum
 	}
 	
 	public class FagsakInput {
@@ -83,7 +92,7 @@ public with sharing class NKS_SafApexTypes {
 	
 	public class AvsenderMottaker {
 		@AuraEnabled public String id;
-		@AuraEnabled public AvsenderMottakerIdType type; //-> ENUM
+		@AuraEnabled public String type; //-> ENUM
 		@AuraEnabled public String navn;
 		@AuraEnabled public String land;
 		@AuraEnabled public String erLikBruker;
@@ -91,17 +100,17 @@ public with sharing class NKS_SafApexTypes {
 	
 	public class Bruker {
 		@AuraEnabled public String id;
-		@AuraEnabled public AvsenderMottakerIdType type; //-> Enum
+		@AuraEnabled public String type; //-> Enum
 	}
 	
 	public class DokumentInfo {
 		@AuraEnabled public String dokumentInfoId;
 		@AuraEnabled public String tittel;
 		@AuraEnabled public String brevkode;
-		@AuraEnabled public Dokumentstatus dokumentstatus; //-> Enum
+		@AuraEnabled public String dokumentstatus; //-> Enum
 		@AuraEnabled public DateTime datoFerdigstilt;
 		@AuraEnabled public String orginalJournalpostId;
-		@AuraEnabled public SkjermingsType skjerming; //-> Enum
+		@AuraEnabled public String skjerming; //-> Enum
 		@AuraEnabled public List<LogiskVedlegg> logiskeVedlegg;
 		@AuraEnabled public List<Dokumentvariant> dokumentVarianter;
 	}
@@ -122,8 +131,8 @@ public with sharing class NKS_SafApexTypes {
 		@AuraEnabled public String journalpostId;
         @AuraEnabled public String tittel;
         @AuraEnabled public String journalposttype; //-> Enum Journalposttype
-        @AuraEnabled public Journalstatus journalstatus; //-> Enum
-        @AuraEnabled public Tema tema; //-> Enum
+        @AuraEnabled public String journalstatus; //-> Enum
+        @AuraEnabled public String tema; //-> Enum
 		@AuraEnabled public String temaNavn;
 		@AuraEnabled public String behandlingstema;
 		@AuraEnabled public String behandlingstemanavn;
@@ -133,9 +142,9 @@ public with sharing class NKS_SafApexTypes {
 		@AuraEnabled public String journalforendeEnhet;
 		@AuraEnabled public String journalfortAvNavn;
 		@AuraEnabled public String opprettetAvNavn;
-		@AuraEnabled public Kanal kanal; //-> Enum
+		@AuraEnabled public String kanal; //-> Enum
 		@AuraEnabled public String kanalnavn;
-		@AuraEnabled public SkjermingsType skjerming; //-> Enum
+		@AuraEnabled public String skjerming; //-> Enum
 		@AuraEnabled public String datoOpprettet; //->Datetime
 		@AuraEnabled public List<RelevantDato> relevanteDatoer;
 		@AuraEnabled public String antallRetur;
@@ -151,7 +160,7 @@ public with sharing class NKS_SafApexTypes {
 	
 	public class RelevantDato {
 		@AuraEnabled public DateTime dato;
-		@AuraEnabled public Datotype datoType; //-> Enum
+		@AuraEnabled public String datoType; //-> Enum
 	}
 	
 	public class Sak {
@@ -183,12 +192,12 @@ public with sharing class NKS_SafApexTypes {
 	public enum Tema { AAP, AAR, AGR, BAR, BID, BIL, DAG, ENF, ERS, FAR, FEI, xFOR, FOS, FUL, FRI, GEN, GRA, GRU, HEL, HJE, IAR, IND, KON, KTR, MED, MOB, OMS, OPA, OPP, PEN, PER, REH, REK, RPO, RVE, SAA, SAK, SAP, SER, SIK, STO, SUP, SYK, SYM, TIL, TRK, xTRY, TSO, TSR, UFM, UFO, UKJ, VEN, YRA, YRK }
     public enum VariantFormat { ARKIV, FULLVERSJON, PRODUKSJON, PRODUKSJON_DLF, SLADDET, ORIGINAL }
     
-    /**
-     * Helper method for parsin the enums
-     * ! Might be moved/removed based on enum decision
-     */
-    public static Object parseEnum(String enumString, Type enumType) {
-        Type cType = Type.forName(String.format('List<{0}>', new List<String>{ enumType.getName() }));
-        return ((List<Object>) JSON.deserialize(String.format('["{0}"]', new List<String>{ enumString }), cType))[0];
-    }
+    // /**
+    //  * Helper method for parsin the enums
+    //  * ! Might be moved/removed based on enum decision
+    //  */
+    // public static Object parseEnum(String enumString, Type enumType) {
+    //     Type cType = Type.forName(String.format('List<{0}>', new List<String>{ enumType.getName() }));
+    //     return ((List<Object>) JSON.deserialize(String.format('["{0}"]', new List<String>{ enumString }), cType))[0];
+    // }
 }

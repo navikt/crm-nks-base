@@ -1,7 +1,7 @@
 <template>
     <!-- {isSladdet} - {isReadable} - {hasAccessToArkiv} - {fileName} -->
     <template if:true={isReadable}>
-        <lightning-button variant="base" class="slds-m-left_x-small" label={title} onclick={navigateToDocument}>
+        <lightning-button variant="base" label={title} onclick={navigateToDocument}>
         </lightning-button>
         <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
             <template iterator:it={dokumentInfo.logiskeVedlegg}>

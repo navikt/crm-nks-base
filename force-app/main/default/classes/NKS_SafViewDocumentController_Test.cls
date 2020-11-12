@@ -103,6 +103,42 @@ private with sharing class NKS_SafViewDocumentController_Test {
         System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false');
     }
 
+    @IsTest static void getDocumentMethod_WithError() {
+        Pagereference viewDocument = Page.NKS_SafViewDocument;
+        Test.setCurrentPage(viewDocument);
+        ApexPages.currentPage().getParameters().put('journalId','12345');
+        ApexPages.currentPage().getParameters().put('documentInfoId','54321');
+        ApexPages.currentPage().getParameters().put('variantFormat','ARKIV');
+        ApexPages.currentPage().getParameters().put('fileName','myTestFile.pdf');
+        ApexPages.currentPage().getParameters().put('width','10%');
+        ApexPages.currentPage().getParameters().put('height','10px');
+        
+        NKS_SafViewDocumentController ctrl = new NKS_SafViewDocumentController();
+
+        NKS_SafServiceMock mock = new NKS_SafServiceMock();
+        NKS_SafApexTypes.SafGetDocumentResponse documentResponse = new NKS_SafApexTypes.SafGetDocumentResponse();
+        documentResponse.isSuccess = false;
+        documentResponse.error = new NKS_SafApexTypes.SafError();
+        documentResponse.error.error = 'Unauthorized';
+        documentResponse.error.status = 401;
+        documentResponse.error.message = 'Vi kan ikke autorisere bruker gjennom token eller system som har gitt token er ukjent for saf.';
+        documentResponse.error.path = '/rest/hentdokument';
+        documentResponse.error.timestamp = Datetime.now();
+
+        mock.addSafGetDocumentResponse(documentResponse);
+        NKS_SafService service = (NKS_SafService) Test.createStub(NKS_SafService.class, mock);
+
+        Test.startTest();
+        ctrl.getDocument(service);
+        Test.stopTest();
+
+        System.assertEquals(true, String.isBlank(ctrl.documentData), 'Did not expect this to be set');
+        System.assertEquals(true, ctrl.errorTitle.containsIgnoreCase(documentResponse.error.error), 'Expected to have an error title containing the error type from the response');
+        System.assertEquals(documentResponse.error.message, ctrl.errorMessage, 'Expected to have the error message from the response.');
+        System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
+        System.assertEquals(true, ctrl.isError, 'Expected isError to be set to true');
+    }
+
     @IsTest static void getDocument_WithException() {
         Pagereference viewDocument = Page.NKS_SafViewDocument;
         Test.setCurrentPage(viewDocument);
