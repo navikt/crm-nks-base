@@ -4,18 +4,18 @@
     <protected>false</protected>
     <values>
         <field>Base_Endpoint_Test__c</field>
-        <value xsi:type="xsd:string">https://apim-saas-to-nav-preprod.azure-api.net</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Base_Endpoint__c</field>
-        <value xsi:type="xsd:string">https://apim-saas-to-nav-preprod.azure-api.net</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Named_Credential_Test__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">SAF_PREPROD</value>
     </values>
     <values>
         <field>Named_Credential__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">SAF_PREPROD</value>
     </values>
 </CustomMetadata>
