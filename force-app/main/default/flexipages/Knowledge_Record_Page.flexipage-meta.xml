@@ -108,7 +108,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>lookupFieldName</name>
-                    <value>Id</value>
+                    <value>Knowledge__kav.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>titleFieldName</name>
@@ -116,12 +116,33 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>Knowledge__kav.NKS_Legislation</value>
+                    <value>Knowledge__kav.NKS_Nynorsk</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-5qmzeynctg9</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Knowledge__kav.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
+                    <value>Tilgjengelige ressurser</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>updateQuickActionName</name>
+                    <value>Knowledge__kav.NKS_Resources</value>
+                </componentInstanceProperties>
+                <componentName>console:relatedRecord</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-0bbede22-814c-4114-b3bb-c48c91c49f75</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -190,6 +211,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Lovverk</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0bbede22-814c-4114-b3bb-c48c91c49f75</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Ressurser</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
