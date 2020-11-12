@@ -15,22 +15,50 @@
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>tasks</name>
+            <name>taskIds</name>
             <value>
-                <elementReference>NAV_Task</elementReference>
+                <elementReference>NAV_Task.Id</elementReference>
             </value>
         </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Base 64 encodes the original document for archiving</description>
+        <name>Encode_Original</name>
+        <label>Encode Original</label>
+        <locationX>178</locationX>
+        <locationY>709</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Should_Create_Task</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>documentString</name>
+            <value>
+                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>BASE_64_ENCODE</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
         <locationX>178</locationX>
-        <locationY>647</locationY>
+        <locationY>584</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Should_Create_Task</targetReference>
+            <targetReference>Encode_Original</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -116,6 +144,34 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>GENERELL_SAK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Original.filtype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>html</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Original.fysiskDokument</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Encode_Original</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Original.variantformat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ORIGINAL</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Document.dokumentvarianter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Document_Original</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -325,6 +381,15 @@
         <object>NavUnit__c</object>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <description>Task priority picklist values.</description>
+        <name>Priority_Picklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CRM_Priority__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Subtype</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -488,7 +553,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Conversation_Error</name>
-            <fieldText>&lt;p&gt;No messages in the chat conversation.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;No messages in the chat conversation. If the chat conversation is still in progress, please end the chat to allow for the transcript to be stored.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -579,6 +644,14 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Task_Priority</name>
+            <choiceReferences>Priority_Picklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Task Priority:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Task_due_date</name>
@@ -689,7 +762,7 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
@@ -729,9 +802,18 @@ TODAY())</expression>
         </value>
     </variables>
     <variables>
+        <description>The original document variant to be stored.</description>
+        <name>Document_Original</name>
+        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Document wrapper for the journal entry</description>
         <name>Journal_Document</name>
-        <apexClass>ExternalService__dokarkivAPI_Dokument</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_Dokument</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -740,7 +822,7 @@ TODAY())</expression>
     <variables>
         <description>Wrapper for the document variant</description>
         <name>Journal_Document_Variant</name>
-        <apexClass>ExternalService__dokarkivAPI_DokumentVariant</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -755,7 +837,7 @@ TODAY())</expression>
     </variables>
     <variables>
         <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -763,7 +845,7 @@ TODAY())</expression>
     </variables>
     <variables>
         <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostResp</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

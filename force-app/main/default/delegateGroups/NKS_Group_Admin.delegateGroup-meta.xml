@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DelegateGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <groups>NKS Arbeid</groups>
+    <groups>NKS Arbeidsgiver</groups>
+    <groups>NKS Pensjon</groups>
+    <groups>NKS Gjeldsrådgivning</groups>
+    <groups>NKS Helse</groups>
+    <groups>NKS Sosiale tjenester</groups>
+    <groups>NKS Uføre</groups>
+    <label>NKS Group Admin</label>
+    <loginAccess>false</loginAccess>
+</DelegateGroup>

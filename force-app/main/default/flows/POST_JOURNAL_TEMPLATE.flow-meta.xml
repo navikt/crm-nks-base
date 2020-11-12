@@ -99,7 +99,7 @@
             <assignToReference>Document_Variant.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>BASE_64_ENCODED</stringValue>
+                <elementReference>PDF_DOCUMENT</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -263,7 +263,7 @@
     <variables>
         <description>Wrapper for the document to be sent.</description>
         <name>Document</name>
-        <apexClass>ExternalService__dokarkivAPI_Dokument</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_Dokument</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -272,7 +272,7 @@
     <variables>
         <description>Wrapper for the document variant</description>
         <name>Document_Variant</name>
-        <apexClass>ExternalService__dokarkivAPI_DokumentVariant</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -281,7 +281,7 @@
     <variables>
         <description>Wrapper for the journal post request</description>
         <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -290,7 +290,7 @@
     <variables>
         <description>Wrapper for Journal post response</description>
         <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostResp</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

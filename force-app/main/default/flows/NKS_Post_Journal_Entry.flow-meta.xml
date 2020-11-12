@@ -9,7 +9,7 @@
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Send_Journal_Request</targetReference>
+            <targetReference>Get_API_Key</targetReference>
         </connector>
         <inputParameters>
             <name>requestType</name>
@@ -20,12 +20,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <description>Calls apex to get the correct API for the service</description>
+        <name>Get_API_Key</name>
+        <label>Get API Key</label>
+        <locationX>175</locationX>
+        <locationY>311</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Send_Journal_Request</targetReference>
+        </connector>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>GW_API_KEY</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <description>Performs HTTP post to dokarkiv</description>
         <name>Send_Journal_Request</name>
         <label>Send Journal Request</label>
-        <locationX>179</locationX>
-        <locationY>324</locationY>
-        <actionName>dokarkivAPI.Create Journal Post</actionName>
+        <locationX>175</locationX>
+        <locationY>450</locationY>
+        <actionName>dokarkivAPIGW.Create Journal Post</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Success</targetReference>
@@ -43,6 +62,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>Ocp-Apim-Subscription-Key</name>
+            <value>
+                <elementReference>Get_API_Key</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>request</name>
             <value>
                 <elementReference>Journal_Post_Request</elementReference>
@@ -53,8 +78,8 @@
     <assignments>
         <name>Set_200_Response</name>
         <label>Set 200 Response</label>
-        <locationX>602</locationX>
-        <locationY>232</locationY>
+        <locationX>599</locationX>
+        <locationY>320</locationY>
         <assignmentItems>
             <assignToReference>Journal_Post_Response.journalpostferdigstilt</assignToReference>
             <operator>Assign</operator>
@@ -73,8 +98,8 @@
     <assignments>
         <name>Set_201_Response</name>
         <label>Set 201 Response</label>
-        <locationX>602</locationX>
-        <locationY>413</locationY>
+        <locationX>599</locationX>
+        <locationY>501</locationY>
         <assignmentItems>
             <assignToReference>Journal_Post_Response.journalpostId</assignToReference>
             <operator>Assign</operator>
@@ -93,8 +118,8 @@
     <assignments>
         <name>Set_Error</name>
         <label>Set Error</label>
-        <locationX>390</locationX>
-        <locationY>547</locationY>
+        <locationX>387</locationX>
+        <locationY>635</locationY>
         <assignmentItems>
             <assignToReference>Error_Message</assignToReference>
             <operator>Add</operator>
@@ -135,8 +160,8 @@
         <description>Checks if the journal entry creation was successful</description>
         <name>Success</name>
         <label>Success?</label>
-        <locationX>382</locationX>
-        <locationY>327</locationY>
+        <locationX>379</locationX>
+        <locationY>415</locationY>
         <defaultConnector>
             <targetReference>Set_Error</targetReference>
         </defaultConnector>
@@ -232,7 +257,7 @@
     <variables>
         <description>Input request</description>
         <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostReq</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostReq</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -240,7 +265,7 @@
     </variables>
     <variables>
         <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__dokarkivAPI_JournalPostResp</apexClass>
+        <apexClass>ExternalService__dokarkivAPIGW_JournalPostResp</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>Chat Gjeldsrådgivning</name>
-    <queueRoutingConfig>NKS_Chat_Routing</queueRoutingConfig>
+    <name>Chat Familie</name>
+    <queueRoutingConfig>NKS_Chat_Familie_RConfig</queueRoutingConfig>
     <queueSobject>
         <sobjectType>LiveChatTranscript</sobjectType>
     </queueSobject>

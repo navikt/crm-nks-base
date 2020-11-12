@@ -63,4 +63,8 @@
         <label>Nynorsk</label>
         <name>NKS_Nynorsk</name>
     </quickActions>
+    <quickActions>
+        <label>Ressurser</label>
+        <name>NKS_Resources</name>
+    </quickActions>
 </CustomObjectTranslation>
