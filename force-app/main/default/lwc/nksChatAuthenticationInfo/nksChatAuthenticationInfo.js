@@ -3,6 +3,7 @@ import { subscribe } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
+import getCommunityAuthUrl from '@salesforce/apex/ChatAuthController.getCommunityAuthUrl';
 
 //#### LABEL IMPORTS ####
 import AUTH_REQUESTED from '@salesforce/label/c.CRM_Chat_Authentication_Requested';
@@ -11,6 +12,8 @@ import IDENTITY_CONFIRMED from '@salesforce/label/c.CRM_Chat_Identity_Confirmed'
 import UNCONFIRMED_IDENTITY_WARNING from '@salesforce/label/c.CRM_Chat_Unconfirmed_Identity_Warning';
 import IDENTITY_CONFIRMED_DISCLAIMER from '@salesforce/label/c.CRM_Chat_Identity_Confirmed_Disclaimer';
 import AUTH_INIT_FAILED from '@salesforce/label/c.CRM_Chat_Authentication_Init_Failed';
+import CHAT_LOGIN_MSG_NO from '@salesforce/label/c.NKS_Chat_Login_Message_NO';
+import CHAT_LOGIN_MSG_EN from '@salesforce/label/c.NKS_Chat_Login_Message_EN';
 
 export default class ChatAuthenticationOverview extends LightningElement {
 
@@ -22,13 +25,15 @@ export default class ChatAuthenticationOverview extends LightningElement {
         IDENTITY_CONFIRMED_DISCLAIMER,
         AUTH_INIT_FAILED
     }
-    accountId;                         //Transcript AccountId
+    @api loggingEnabled;               //Determines if console logging is enabled for the component
+    @api recordId;
     @api accountFields                 //Comma separated string with field names to display from the related account
+    accountId;                         //Transcript AccountId
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
     activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
-    @api loggingEnabled;               //Determines if console logging is enabled for the component
-    @api recordId;
+    chatLanguage;
+    chatAuthUrl;
 
     //#### GETTERS ####
 
@@ -56,6 +61,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
 
     connectedCallback() {
         this.handleSubscribe();
+        this.getAuthUrl();
     }
 
     @wire(getChatInfo, { chatTranscriptId: '$recordId' })
@@ -65,10 +71,22 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.currentAuthenticationStatus = data.AUTH_STATUS;
             this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
             this.accountId = data.ACCOUNTID;
+            this.chatLanguage = data.CHAT_LANGUAGE;
         } else {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
         }
+    }
+
+    //Calls apex to get the correct community url for the given sandbox
+    getAuthUrl() {
+        getCommunityAuthUrl({})
+            .then(url => {
+                this.chatAuthUrl = url;
+            })
+            .catch(error => {
+                console.log('Failed to retrieve auth url: ' + JSON.stringify(error, null, 2));
+            });
     }
 
     //Handles subscription to streaming API for listening to changes to auth status
@@ -82,6 +100,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
                 _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
+                _this.sendLoginEvent();
             }
         };
 
@@ -94,11 +113,26 @@ export default class ChatAuthenticationOverview extends LightningElement {
         });
     }
 
+    sendLoginEvent() {
+        //Message defaults to norwegian
+        const loginMessage = this.chatLanguage === 'en_US' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
+
+        //Sending event handled by parent to to trigger default chat login message
+        const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
+            detail: { loginMessage }
+        });
+        this.dispatchEvent(authenticationCompleteEvt);
+    }
+
     //Sends event handled by parent to utilize conversation API to send message for init of auth process
     requestAuthentication() {
         this.sendingAuthRequest = true;
+        const authUrl = this.chatAuthUrl;
 
-        const requestAuthenticationEvent = new CustomEvent('requestauthentication');
+        //Pass the chat auth url
+        const requestAuthenticationEvent = new CustomEvent('requestauthentication', {
+            detail: { authUrl }
+        });
         this.dispatchEvent(requestAuthenticationEvent);
     }
 

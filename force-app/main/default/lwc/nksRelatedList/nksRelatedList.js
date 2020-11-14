@@ -66,10 +66,10 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         if (this.relatedRecords) {
             this.relatedRecords.forEach(dataRecord => {
                 let recordFields = [];
-                Object.keys(dataRecord).forEach(key => {
+                this.fieldList.forEach(key => {
                     if (key !== 'Id') {
                         let recordField =
-                            { label: key, value: dataRecord[key] };
+                            { label: key, value: this.resolve(key, dataRecord) };
                         recordFields.push(recordField);
                     }
                 });
@@ -105,6 +105,17 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         if (this.iconName && this.iconName != '') nameString = this.iconName;
 
         return nameString;
+    }
+
+    /**
+     * Retrieves the value from the given object's data path
+     * @param {data path} path 
+     * @param {JS object} obj 
+     */
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null
+        }, obj || self)
     }
 
 }

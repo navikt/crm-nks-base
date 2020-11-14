@@ -8,14 +8,6 @@
         ]
     },
     {
-        "sobject": "Account",
-        "saveRefs": true,
-        "resolveRefs": true,
-        "files": [
-            "accounts.json"
-        ]
-    },
-    {
         "sobject": "LiveChatVisitor",
         "saveRefs": true,
         "resolveRefs": true,
@@ -45,6 +37,14 @@
         "resolveRefs": true,
         "files": [
             "relations.json"
+        ]
+    },
+    {
+        "sobject": "SecurityMeasure__c",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": [
+            "securitymeasures.json"
         ]
     }
 ]

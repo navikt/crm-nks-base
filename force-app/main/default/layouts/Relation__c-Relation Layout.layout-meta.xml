@@ -13,14 +13,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Person__c</field>
+                <field>INT_Person__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>External_Reference__c</field>
+                <field>INT_External_Reference__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -32,15 +32,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Related_Person__c</field>
+                <field>INT_Related_Person__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Related_Person_Name__c</field>
+                <field>INT_Related_Person_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Relation_Type__c</field>
+                <field>INT_Relation_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

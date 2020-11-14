@@ -4,7 +4,11 @@
 [![GitHub version](https://badgen.net/github/release/navikt/crm-nks-base/stable)](https://github.com/navikt/crm-nks-base)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
 
-[DESCRIPTION]
+## Arbeidsflyt
+
+All utvikling av ny funksjonalitet gjøres i separate feature branches. Ved merge til master i dette repositoriet vil det automatisk genereres en pakkeversjon som installeres i følgende sandboxer:
+* [NKS](https://navdialog--nks.my.salesforce.com)
+* [SIT](https://navdialog--sit.my.salesforce.com)
 
 ## Dependencies
 
@@ -45,4 +49,4 @@ Ved å bruke VS Code som IDE, er det lagt inn konfigurasjon som automatisk pushe
 
 ## Annet
 
-For spørsmål om denne applikasjonen, bruk #arbeidsgiver-crm på Slack.
+For spørsmål om denne applikasjonen, bruk #crm-nks på Slack.

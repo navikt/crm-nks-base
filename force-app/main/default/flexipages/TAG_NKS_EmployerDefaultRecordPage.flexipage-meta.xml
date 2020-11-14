@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>collapsed</name>
                 <value>false</value>
@@ -19,15 +20,19 @@
                 <value>3</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentName>accountMessages</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>decorate</name>
                 <value>true</value>
@@ -37,8 +42,10 @@
                 <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -60,8 +67,10 @@
                 <value>false</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -83,15 +92,17 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>relatedListApiName</name>
-                <value>NavTasks__r</value>
+                <value>NAV_Tasks__r</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
@@ -106,12 +117,14 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -133,12 +146,14 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-3317f026-e02e-49dd-a720-18da91adde7f</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -160,12 +175,14 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-bve4zv3cljr</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -187,19 +204,23 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-3587bc4c-2713-4188-83db-2379a0ec93d7</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentName>force:detailPanel</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-30ba79a4-429f-4ca9-b271-f750c3fe0663</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>parentFieldApiName</name>
                 <value>Account.Id</value>
@@ -221,15 +242,19 @@
                 <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentName>accountTeamMember</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-8a12c5ef-b1b3-4d1c-a97b-a71ab4438a53</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</value>
@@ -239,8 +264,10 @@
                 <value>Aktivitet</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-3317f026-e02e-49dd-a720-18da91adde7f</value>
@@ -250,8 +277,10 @@
                 <value>Varsler</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-bve4zv3cljr</value>
@@ -261,8 +290,10 @@
                 <value>Bedriftsavtaler</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-3587bc4c-2713-4188-83db-2379a0ec93d7</value>
@@ -272,8 +303,10 @@
                 <value>Muligheter</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-30ba79a4-429f-4ca9-b271-f750c3fe0663</value>
@@ -283,8 +316,10 @@
                 <value>Standard.Tab.detail</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
+        </componentInstance>
+    </itemInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>active</name>
                 <value>false</value>
@@ -298,23 +333,27 @@
                 <value>Kontaktpersoner</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>Facet-265064ea-d7fe-4e81-be5f-cdb8371f2658</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>tabs</name>
                 <value>Facet-265064ea-d7fe-4e81-be5f-cdb8371f2658</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
+        <itemInstances>
+        <componentInstance>
             <componentInstanceProperties>
                 <name>flowArguments</name>
                 <value>[{&quot;label&quot;:&quot;currAccountId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
@@ -328,7 +367,8 @@
                 <value>TAG_Log_Call_in_Account</value>
             </componentInstanceProperties>
             <componentName>flowruntime:interview</componentName>
-        </componentInstances>
+        </componentInstance>
+    </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>

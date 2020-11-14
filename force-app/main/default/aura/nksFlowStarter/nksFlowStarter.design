@@ -1,0 +1,9 @@
+<design:component label="Flow button">
+    <design:attribute name="flowName" label="Flow API name:" default="API_NAME" required="true" />
+    <design:attribute name="buttonLabel" label="Button label:"
+        description="For usage of custom labels input the label API name" default="Label" />
+    <design:attribute name="buttonIcon"
+        label="Button icon name: (See available icons: https://lightningdesignsystem.com/icons/)" default="" />
+    <design:attribute name="fullButtonWidth" label="Use full width:" default="true" />
+
+</design:component>

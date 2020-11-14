@@ -21,6 +21,58 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <actionCalls>
+        <name>ShowToastNote</name>
+        <label>ShowToastNote</label>
+        <locationX>744</locationX>
+        <locationY>587</locationY>
+        <actionName>c:ShowToast_Flow</actionName>
+        <actionType>component</actionType>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>themeValue</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Du har opprettet et samtalenotat</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>ShowToastTask</name>
+        <label>ShowToastTask</label>
+        <locationX>1169</locationX>
+        <locationY>481</locationY>
+        <actionName>c:ShowToast_Flow</actionName>
+        <actionType>component</actionType>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>themeValue</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Du har opprettet en oppgave</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <assignments>
         <name>Set_unit_error_message</name>
         <label>Set unit error message</label>
@@ -64,12 +116,12 @@
     <decisions>
         <name>Note</name>
         <label>Note/Task</label>
-        <locationX>741</locationX>
-        <locationY>258</locationY>
+        <locationX>731</locationX>
+        <locationY>390</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>It_is_Note</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>shouldCreateTask</leftValueReference>
                 <operator>EqualTo</operator>
@@ -77,8 +129,15 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>queueId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Du_har_opprettet_et_notat</targetReference>
+                <targetReference>ShowToastNote</targetReference>
             </connector>
             <label>It is Note</label>
         </rules>
@@ -191,6 +250,12 @@
         </value>
     </processMetadataValues>
     <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
         <name>OriginBuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
@@ -203,7 +268,7 @@
         <locationX>1051</locationX>
         <locationY>261</locationY>
         <connector>
-            <targetReference>Du_har_opprettet_en_oppgave</targetReference>
+            <targetReference>ShowToastTask</targetReference>
         </connector>
         <inputAssignments>
             <field>CRM_Account__c</field>
@@ -233,6 +298,12 @@
             <field>CRM_NavUnit__c</field>
             <value>
                 <elementReference>navUnitID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CRM_Status__c</field>
+            <value>
+                <stringValue>Ny</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -328,8 +399,8 @@
     <recordLookups>
         <name>Get_Selected_NAV_unit</name>
         <label>Get Selected NAV unit</label>
-        <locationX>898</locationX>
-        <locationY>269</locationY>
+        <locationX>871</locationX>
+        <locationY>232</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_New_Call_Task</targetReference>
@@ -347,38 +418,6 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
-    <screens>
-        <name>Du_har_opprettet_en_oppgave</name>
-        <label>Du har opprettet en oppgave</label>
-        <locationX>1306</locationX>
-        <locationY>239</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Notat_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Du har opprettet en oppgave&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Du_har_opprettet_et_notat</name>
-        <label>Du har opprettet et notat</label>
-        <locationX>698</locationX>
-        <locationY>563</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Notat</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Du har opprettet et notat&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
@@ -501,7 +540,7 @@
             <targetReference>Get_account_nav_unit</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>additionalComments</name>
         <dataType>String</dataType>

@@ -6,13 +6,29 @@ public without sharing class ChatAuthController {
             LiveChatTranscript lct = new LiveChatTranscript(Id = chatTranscriptId);
             lct.CRM_Authentication_Status__c = status;
             if (status == 'Completed') {
-                lct.AccountId = getPersonAccountId(chatTranscriptId);
+                lct.AccountId = getPersonAccountId();
+                lct.ContactId = getPersonContactId(); 
             }
             update lct;
         } catch (Exception ex) {
             throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Failed to update authentication status');
         }
 
+    }
+
+    /**
+    * @description: Returns the community url used for chat authentication
+    * @author Stian Ruud Schikora | 10-01-2020 
+    * @return string 
+    **/
+    @AuraEnabled
+    public static string getCommunityAuthUrl(){
+        List<Network> community = [SELECT Id, Name, UrlPathPrefix FROM Network WHERE Name = 'nks'];
+        String communityUrl = community.isEmpty() ? '' : Network.getLoginUrl(community[0].Id);
+        communityUrl = communityUrl.removeEnd(communityUrl.substringAfterLast('/'));
+        communityUrl += 's/identity-verified?ctid=';
+
+        return communityUrl;
     }
 
     /**
@@ -25,10 +41,11 @@ public without sharing class ChatAuthController {
     public static Map<String, String> getChatInfo(String chatTranscriptId) {
         Map<String, String> chatInfo;
         try {
-            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
+            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, LiveChatButton.WindowLanguage, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
             chatInfo = new Map<String, String> {'AUTH_STATUS' => trans.CRM_Authentication_Status__c,
                                                 'CONVERSATION_STATUS' => trans.Status,
-                                                'ACCOUNTID' => trans.accountId};
+                                                'ACCOUNTID' => trans.accountId,
+                                                'CHAT_LANGUAGE' => String.isNotBlank(trans.LiveChatButton.WindowLanguage) ? trans.LiveChatButton.WindowLanguage : 'no'};
             return chatInfo;
         }
         catch(Exception ex) {
@@ -51,15 +68,12 @@ public without sharing class ChatAuthController {
         setStatus(chatTranscriptId, 'Completed');
     }
 
-    private static Id getPersonAccountId(Id chatTranscriptId) {
-        List<User> users = [SELECT Id, AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE];
-        if (users.size() > 0) {
-            return users[0].AccountId;
-        } else {
-            return null;
-        }
+    private static Id getPersonAccountId() {
+        return [SELECT AccountId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND AccountId != null AND Account.IsPersonAccount = TRUE]?.AccountId;
     }
-
+    private static Id getPersonContactId() {
+        return [SELECT ContactId FROM User WHERE IsPortalEnabled = TRUE AND Id = :UserInfo.getUserId() AND ContactId != null AND Account.IsPersonAccount = TRUE]?.ContactId;
+    }
 
 }
 

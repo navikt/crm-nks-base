@@ -1,0 +1,10 @@
+[
+    {
+        "sobject": "NKS_Announcement__c",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": [
+            "announcements.json"
+        ]
+    }
+]
