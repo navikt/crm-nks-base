@@ -15,9 +15,15 @@
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>taskIds</name>
+            <name>requestType</name>
             <value>
-                <elementReference>NAV_Task.Id</elementReference>
+                <stringValue>POST</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>task</name>
+            <value>
+                <elementReference>NAV_Task</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
