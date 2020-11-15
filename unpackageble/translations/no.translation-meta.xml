@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- NAV Kontaktsenter --></label>
+        <name>NAV_Kontaktsenter</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Permitteringsvarsler --></label>
+        <name>Permitteringsvarsler</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- NAV --></label>
+        <name>TAG_NAV_default</name>
+    </customApplications>
+    <customLabels>
+        <label>Aktiviteter</label>
+        <name>ActTime_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label>Skjul</label>
+        <name>ActTime_Collapse</name>
+    </customLabels>
+    <customLabels>
+        <label>Her er det ingenting!</label>
+        <name>ActTime_EmptyGroup</name>
+    </customLabels>
+    <customLabels>
+        <label>Det ser ikke ut til å være noen relaterte objekter her.</label>
+        <name>ActTime_EmptySubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Tomt!</label>
+        <name>ActTime_EmptyTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Feil!</label>
+        <name>ActTime_ErrorTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Utvid</label>
+        <name>ActTime_Expand</name>
+    </customLabels>
+    <customLabels>
+        <label>forrige</label>
+        <name>ActTime_Last</name>
+    </customLabels>
+    <customLabels>
+        <label>Last flere</label>
+        <name>ActTime_LoadMore</name>
+    </customLabels>
+    <customLabels>
+        <label>nb-no</label>
+        <name>ActTime_MomentJsLanguage</name>
+    </customLabels>
+    <customLabels>
+        <label>Ny</label>
+        <name>ActTime_New</name>
+    </customLabels>
+    <customLabels>
+        <label>En Administrator har enten ikke konfigurert denne komponent eller så har du ikke tilgang til denne type data. Kontakt din Administrator.</label>
+        <name>ActTime_NotConfugred</name>
+    </customLabels>
+    <customLabels>
+        <label>Eldre</label>
+        <name>ActTime_Older</name>
+    </customLabels>
+    <customLabels>
+        <label>Forfalt</label>
+        <name>ActTime_Overdue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Previous Month --></label>
+        <name>ActTime_PreviousMonth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] This Month --></label>
+        <name>ActTime_ThisMonth</name>
+    </customLabels>
+    <customLabels>
+        <label>i dag</label>
+        <name>ActTime_Today</name>
+    </customLabels>
+    <customLabels>
+        <label>i morgen</label>
+        <name>ActTime_Tomorrow</name>
+    </customLabels>
+    <customLabels>
+        <label>Noen</label>
+        <name>ActTime_Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label>I dag og kommende</label>
+        <name>ActTime_Upcoming</name>
+    </customLabels>
+    <customLabels>
+        <label>Se alle</label>
+        <name>ActTime_ViewAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Se flere</label>
+        <name>ActTime_ViewMore</name>
+    </customLabels>
+    <customLabels>
+        <label>i går</label>
+        <name>ActTime_Yesterday</name>
+    </customLabels>
+    <customLabels>
+        <label>Du</label>
+        <name>ActTime_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Activities --></label>
+        <name>ActivityTimeline_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Collapse --></label>
+        <name>ActivityTimeline_Collapse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Empty Group --></label>
+        <name>ActivityTimeline_EmptyGroup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Empty Subtitle --></label>
+        <name>ActivityTimeline_EmptySubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Empty Title --></label>
+        <name>ActivityTimeline_EmptyTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Error Title --></label>
+        <name>ActivityTimeline_ErrorTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Expand --></label>
+        <name>ActivityTimeline_Expand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Last --></label>
+        <name>ActivityTimeline_Last</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Load More --></label>
+        <name>ActivityTimeline_LoadMore</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Moment.js Language --></label>
+        <name>ActivityTimeline_MomentJsLanguage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] New --></label>
+        <name>ActivityTimeline_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Not Configured --></label>
+        <name>ActivityTimeline_NotConfugred</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Older --></label>
+        <name>ActivityTimeline_Older</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Overdue --></label>
+        <name>ActivityTimeline_Overdue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Previous Month --></label>
+        <name>ActivityTimeline_PreviousMonth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] This Month --></label>
+        <name>ActivityTimeline_ThisMonth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Today --></label>
+        <name>ActivityTimeline_Today</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Tomorrow --></label>
+        <name>ActivityTimeline_Tomorrow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Unknown --></label>
+        <name>ActivityTimeline_Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Upcoming --></label>
+        <name>ActivityTimeline_Upcoming</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] View All --></label>
+        <name>ActivityTimeline_ViewAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] View More --></label>
+        <name>ActivityTimeline_ViewMore</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Yesterday --></label>
+        <name>ActivityTimeline_Yesterday</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] You --></label>
+        <name>ActivityTimeline_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Authentication Init Failed --></label>
+        <name>CRM_Chat_Authentication_Init_Failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Authentication Requested --></label>
+        <name>CRM_Chat_Authentication_Requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Authentication Started --></label>
+        <name>CRM_Chat_Authentication_Started</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Identity Confirmed --></label>
+        <name>CRM_Chat_Identity_Confirmed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Identity Confirmed Disclaimer --></label>
+        <name>CRM_Chat_Identity_Confirmed_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Unconfirmed Identity Warning --></label>
+        <name>CRM_Chat_Unconfirmed_Identity_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_CannotFindTriggerHandlerClass --></label>
+        <name>Errors_CannotFindTriggerHandlerClass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_DuplicateTriggerHandlerClass --></label>
+        <name>Errors_DuplicateTriggerHandlerClass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_InvalidSettingConfiguration --></label>
+        <name>Errors_InvalidSettingConfiguration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Login Message EN --></label>
+        <name>NKS_Chat_Login_Message_EN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Chat Login Message NO --></label>
+        <name>NKS_Chat_Login_Message_NO</name>
+    </customLabels>
+    <customLabels>
+        <label>Vennligst fullfør kategorisering.</label>
+        <name>NKS_Theme_Categorization_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
+        <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a field set for a different sobject type. --></label>
+        <name>fflib_QueryFactory_fieldset_wrong_sobject_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to nest subqueries. --></label>
+        <name>fflib_QueryFactory_recursive_subquery_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to create a subquery from an invalid relationship. --></label>
+        <name>fflib_QueryFactory_subquery_invalid_relationship</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_insertable --></label>
+        <name>fflib_security_error_field_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_readable --></label>
+        <name>fflib_security_error_field_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_updateable --></label>
+        <name>fflib_security_error_field_not_updateable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_deletable --></label>
+        <name>fflib_security_error_object_not_deletable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_insertable --></label>
+        <name>fflib_security_error_object_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_readable --></label>
+        <name>fflib_security_error_object_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_updateable --></label>
+        <name>fflib_security_error_object_not_updateable</name>
+    </customLabels>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Account_Team_Update</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Contract</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CourseRegistration</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NAVTask_Owner_Change</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <fieldText>&lt;p&gt;Samtaleloggen er ikke lagret. Vennligst avslutt samtalen for å lagre loggen og fullføre journalføring&lt;/p&gt;</fieldText>
+                    <name>Conversation_Error</name>
+                </fields>
+                <fields>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218,13,13);&quot;&gt;Det oppsto en feil&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>Error_Header</name>
+                </fields>
+                <fields>
+                    <name>Flow_Error</name>
+                </fields>
+                <fields>
+                    <fieldText>&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
+                    <name>Missing_Account_Error</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Create_Task_Toggle</name>
+                </fields>
+                <fields>
+                    <name>Journal_Header</name>
+                </fields>
+                <fields>
+                    <fieldText>Oppgave til NAV-enhet:</fieldText>
+                    <name>Task_Description</name>
+                </fields>
+                <fields>
+                    <name>Task_NAV_Unit</name>
+                </fields>
+                <fields>
+                    <fieldText>Prioritet:</fieldText>
+                    <name>Task_Priority</name>
+                </fields>
+                <fields>
+                    <fieldText>Frist:</fieldText>
+                    <name>Task_due_date</name>
+                </fields>
+                <fields>
+                    <name>Theme_Categroization</name>
+                </fields>
+                <name>Input_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0,0,0); font-size: 16px;&quot;&gt;Chatsamtalen er journalført&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <name>Entry_Completed_Text</name>
+                </fields>
+                <name>Journal_Completed_Screen</name>
+            </screens>
+        </flows>
+        <fullName>NKS_Chat_Create_Journal_Entry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Post_Journal_Entry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Set_Chat_Theme_Group</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Opportunity</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+        </flows>
+        <fullName>POST_JOURNAL_TEMPLATE</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <choices>
+                <name>None</name>
+            </choices>
+            <screens>
+                <fields>
+                    <name>ShowIfNote</name>
+                </fields>
+                <fields>
+                    <name>UnitInfo</name>
+                </fields>
+                <fields>
+                    <name>assignTask</name>
+                </fields>
+                <fields>
+                    <name>error</name>
+                </fields>
+                <name>Screen_to_Log_a_Call</name>
+            </screens>
+        </flows>
+        <fullName>TAG_Log_Call_in_Account</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Task</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Temporary_Layoff_Update</fullName>
+    </flowDefinitions>
+    <prompts>
+        <name>Lenketilproffnoerforbedret</name>
+        <promptVersions>
+            <name>Lenke til proff.no er forbedret</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>OmProfflink</name>
+        <promptVersions>
+            <name>Om ny Proff link</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <promptVersions>
+            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAG</name>
+        <promptVersions>
+            <name>Velkomst melding til NAV Kontor brukere (TAG)</name>
+        </promptVersions>
+    </prompts>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+    <reportTypes>
+        <description><!-- Chat Transcript --></description>
+        <label><!-- Chat Transcript --></label>
+        <name>Chat_Transcript</name>
+        <sections>
+            <label><!-- Chat Transcripts --></label>
+            <name>Chat Transcripts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Kontoer med NAV Kontaktperson --></description>
+        <label><!-- Kontoer med NAV Kontaktperson --></label>
+        <name>Kontoer_med_NAV_Kontaktperson</name>
+        <sections>
+            <label><!-- Account Team --></label>
+            <name>Account Team</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Kontoer med eller uten kontakter --></description>
+        <label><!-- Kontoer med eller uten kontakter --></label>
+        <name>Kontoer_med_eller_uten_kontakter</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Muligheter med konto og NAV Kontor --></description>
+        <label><!-- Muligheter med konto og NAV Kontor --></label>
+        <name>Muligheter_med_konto_og_NAV_Kontor</name>
+        <sections>
+            <label><!-- Custom Opportunities --></label>
+            <name>Custom Opportunities</name>
+        </sections>
+        <sections>
+            <label><!-- NAV Kontor --></label>
+            <name>NAV Kontor</name>
+        </sections>
+        <sections>
+            <label><!-- Virksomhet --></label>
+            <name>Virksomhet</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agent Work --></description>
+        <label><!-- Agent Work --></label>
+        <name>NKS_Agent_Work</name>
+        <sections>
+            <label><!-- Agent Work --></label>
+            <name>Agent Work</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Permitteringsvarsler med konto og NAV kontor --></description>
+        <label><!-- Permitteringsvarsler med konto og NAV kontor --></label>
+        <name>TAG_Permitteringsvarsler_med_konto_og_NAV_kontor</name>
+        <sections>
+            <label><!-- Konto --></label>
+            <name>Konto</name>
+        </sections>
+        <sections>
+            <label><!-- NAV Kontor --></label>
+            <name>NAV Kontor</name>
+        </sections>
+        <sections>
+            <label><!-- Temporary Layoffs --></label>
+            <name>Temporary Layoffs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
+        <name>screen_flows_prebuilt_crt</name>
+        <sections>
+            <label><!-- Flow Interview Log Entries --></label>
+            <name>Flow Interview Log Entries</name>
+        </sections>
+        <sections>
+            <label><!-- Flow Interview Logs --></label>
+            <name>Flow Interview Logs</name>
+        </sections>
+    </reportTypes>
+</Translations>
