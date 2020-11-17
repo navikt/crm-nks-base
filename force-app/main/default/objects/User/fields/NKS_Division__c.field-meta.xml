@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Division__c</fullName>
+    <externalId>false</externalId>
+    <label>Division</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>K01A01 Sarpsborg Avdeling 1</fullName>
+                <default>false</default>
+                <label>K01A01 Sarpsborg Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K01A02 Sarpsborg Avdeling 2</fullName>
+                <default>false</default>
+                <label>K01A02 Sarpsborg Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K01A03 Sarpsborg Avdeling 3</fullName>
+                <default>false</default>
+                <label>K01A03 Sarpsborg Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K01A04 Sarpsborg Avdeling 4</fullName>
+                <default>false</default>
+                <label>K01A04 Sarpsborg Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K05A01 Lillehammer Avdeling 1</fullName>
+                <default>false</default>
+                <label>K05A01 Lillehammer Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K05A02 Lillehammer Avdeling 2</fullName>
+                <default>false</default>
+                <label>K05A02 Lillehammer Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K05A03 Lillehammer Avdeling 3</fullName>
+                <default>false</default>
+                <label>K05A03 Lillehammer Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K05A04 Hamar Avdeling 4</fullName>
+                <default>false</default>
+                <label>K05A04 Hamar Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K05A05 Hamar Avdeling 5</fullName>
+                <default>false</default>
+                <label>K05A05 Hamar Avdeling 5</label>
+            </value>
+            <value>
+                <fullName>K05A06 Hamar Avdeling 6</fullName>
+                <default>false</default>
+                <label>K05A06 Hamar Avdeling 6</label>
+            </value>
+            <value>
+                <fullName>K06A01 Drammen Ypsilon</fullName>
+                <default>false</default>
+                <label>K06A01 Drammen Ypsilon</label>
+            </value>
+            <value>
+                <fullName>K06A02 Drammen Ælva</fullName>
+                <default>false</default>
+                <label>K06A02 Drammen Ælva</label>
+            </value>
+            <value>
+                <fullName>K06A03 Drammen Holmen</fullName>
+                <default>false</default>
+                <label>K06A03 Drammen Holmen</label>
+            </value>
+            <value>
+                <fullName>K06A04 Oslo Mølla</fullName>
+                <default>false</default>
+                <label>K06A04 Oslo Mølla</label>
+            </value>
+            <value>
+                <fullName>K06A05 Oslo Kuba</fullName>
+                <default>false</default>
+                <label>K06A05 Oslo Kuba</label>
+            </value>
+            <value>
+                <fullName>K06A06 Oslo Eika</fullName>
+                <default>false</default>
+                <label>K06A06 Oslo Eika</label>
+            </value>
+            <value>
+                <fullName>K06A07 Oslo Myren</fullName>
+                <default>false</default>
+                <label>K06A07 Oslo Myren</label>
+            </value>
+            <value>
+                <fullName>K06A08 Oslo Vulkan</fullName>
+                <default>false</default>
+                <label>K06A08 Oslo Vulkan</label>
+            </value>
+            <value>
+                <fullName>K06A09 Økern Risløkka</fullName>
+                <default>false</default>
+                <label>K06A09 Økern Risløkka</label>
+            </value>
+            <value>
+                <fullName>K06A10 Økern Ulven</fullName>
+                <default>false</default>
+                <label>K06A10 Økern Ulven</label>
+            </value>
+            <value>
+                <fullName>K06A11 Økern Utsikten</fullName>
+                <default>false</default>
+                <label>K06A11 Økern Utsikten</label>
+            </value>
+            <value>
+                <fullName>K06A12 Økern Vippa</fullName>
+                <default>false</default>
+                <label>K06A12 Økern Vippa</label>
+            </value>
+            <value>
+                <fullName>K07A01 Tønsberg Bjørkøya</fullName>
+                <default>false</default>
+                <label>K07A01 Tønsberg Bjørkøya</label>
+            </value>
+            <value>
+                <fullName>K07A02 Tønsberg Torgersøya</fullName>
+                <default>false</default>
+                <label>K07A02 Tønsberg Torgersøya</label>
+            </value>
+            <value>
+                <fullName>K07A03 Tønsberg Håøya</fullName>
+                <default>false</default>
+                <label>K07A03 Tønsberg Håøya</label>
+            </value>
+            <value>
+                <fullName>K07A04 Tønsberg Skåtøy</fullName>
+                <default>false</default>
+                <label>K07A04 Tønsberg Skåtøy</label>
+            </value>
+            <value>
+                <fullName>K07A05 Tønsberg Arøy</fullName>
+                <default>false</default>
+                <label>K07A05 Tønsberg Arøy</label>
+            </value>
+            <value>
+                <fullName>K08A01 Skien Blå</fullName>
+                <default>false</default>
+                <label>K08A01 Skien Blå</label>
+            </value>
+            <value>
+                <fullName>K08A02 Skien Rosa</fullName>
+                <default>false</default>
+                <label>K08A02 Skien Rosa</label>
+            </value>
+            <value>
+                <fullName>K10A01 Mandal Oksøy</fullName>
+                <default>false</default>
+                <label>K10A01 Mandal Oksøy</label>
+            </value>
+            <value>
+                <fullName>K10A02 Mandal Ryvingen</fullName>
+                <default>false</default>
+                <label>K10A02 Mandal Ryvingen</label>
+            </value>
+            <value>
+                <fullName>K10A03 Mandal Lindesnes</fullName>
+                <default>false</default>
+                <label>K10A03 Mandal Lindesnes</label>
+            </value>
+            <value>
+                <fullName>K10A04 Arendal Saltholmen</fullName>
+                <default>false</default>
+                <label>K10A04 Arendal Saltholmen</label>
+            </value>
+            <value>
+                <fullName>K10A05 Arendal Lyngør</fullName>
+                <default>false</default>
+                <label>K10A05 Arendal Lyngør</label>
+            </value>
+            <value>
+                <fullName>K11A01 Sandnes Grønt</fullName>
+                <default>false</default>
+                <label>K11A01 Sandnes Grønt</label>
+            </value>
+            <value>
+                <fullName>K11A02 Sandnes Blått</fullName>
+                <default>false</default>
+                <label>K11A02 Sandnes Blått</label>
+            </value>
+            <value>
+                <fullName>K11A03 Sandnes Rødt</fullName>
+                <default>false</default>
+                <label>K11A03 Sandnes Rødt</label>
+            </value>
+            <value>
+                <fullName>K11A04 Egersund Gult</fullName>
+                <default>false</default>
+                <label>K11A04 Egersund Gult</label>
+            </value>
+            <value>
+                <fullName>K11A05 Sandnes Lilla</fullName>
+                <default>false</default>
+                <label>K11A05 Sandnes Lilla</label>
+            </value>
+            <value>
+                <fullName>K11A06 Sandnes Turkis</fullName>
+                <default>false</default>
+                <label>K11A06 Sandnes Turkis</label>
+            </value>
+            <value>
+                <fullName>K11A07 Sandnes Indigo</fullName>
+                <default>false</default>
+                <label>K11A07 Sandnes Indigo</label>
+            </value>
+            <value>
+                <fullName>K12A01 Bergen Beffen</fullName>
+                <default>false</default>
+                <label>K12A01 Bergen Beffen</label>
+            </value>
+            <value>
+                <fullName>K12A02 Bergen Stoltzen</fullName>
+                <default>false</default>
+                <label>K12A02 Bergen Stoltzen</label>
+            </value>
+            <value>
+                <fullName>K12A03 Bergen Fløyen</fullName>
+                <default>false</default>
+                <label>K12A03 Bergen Fløyen</label>
+            </value>
+            <value>
+                <fullName>K12A04 Bergen Ulriken</fullName>
+                <default>false</default>
+                <label>K12A04 Bergen Ulriken</label>
+            </value>
+            <value>
+                <fullName>K12A05 Bergen Vågen</fullName>
+                <default>false</default>
+                <label>K12A05 Bergen Vågen</label>
+            </value>
+            <value>
+                <fullName>K12A06 Bergen Team Nakstad</fullName>
+                <default>false</default>
+                <label>K12A06 Bergen Team Nakstad</label>
+            </value>
+            <value>
+                <fullName>K14A01 Leikanger Avdeling 1</fullName>
+                <default>false</default>
+                <label>K14A01 Leikanger Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K14A02 Leikanger Avdeling 2</fullName>
+                <default>false</default>
+                <label>K14A02 Leikanger Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K14A03 Molde Avdeling 3</fullName>
+                <default>false</default>
+                <label>K14A03 Molde Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K14A04 Molde Avdeling 4</fullName>
+                <default>false</default>
+                <label>K14A04 Molde Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K14A05 Molde Avdeling 5</fullName>
+                <default>false</default>
+                <label>K14A05 Molde Avdeling 5</label>
+            </value>
+            <value>
+                <fullName>K14A06 Leikanger Avdeling 6</fullName>
+                <default>false</default>
+                <label>K14A06 Leikanger Avdeling 6</label>
+            </value>
+            <value>
+                <fullName>K16A01 Trondheim Avdeling 1</fullName>
+                <default>false</default>
+                <label>K16A01 Trondheim Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K16A02 Trondheim Avdeling 2</fullName>
+                <default>false</default>
+                <label>K16A02 Trondheim Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K16A03 Trondheim Avdeling 3</fullName>
+                <default>false</default>
+                <label>K16A03 Trondheim Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K16A04 Trondheim Avdeling 4</fullName>
+                <default>false</default>
+                <label>K16A04 Trondheim Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K17A01 Namsos Avdeling 1</fullName>
+                <default>false</default>
+                <label>K17A01 Namsos Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K17A02 Namsos Avdeling 2</fullName>
+                <default>false</default>
+                <label>K17A02 Namsos Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K18A01 Bodø Avdeling 1</fullName>
+                <default>false</default>
+                <label>K18A01 Bodø Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K18A02 Bodø Avdeling 2</fullName>
+                <default>false</default>
+                <label>K18A02 Bodø Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K18A03 Bodø Avdeling 3</fullName>
+                <default>false</default>
+                <label>K18A03 Bodø Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K18A04 Bodø Avdeling 4</fullName>
+                <default>false</default>
+                <label>K18A04 Bodø Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K19A01 Tromsø Avdeling 1</fullName>
+                <default>false</default>
+                <label>K19A01 Tromsø Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K19A02 Tromsø Avdeling 2</fullName>
+                <default>false</default>
+                <label>K19A02 Tromsø Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K19A03 Alta Avdeling 3</fullName>
+                <default>false</default>
+                <label>K19A03 Alta Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K21A01 Mo Avdeling 1</fullName>
+                <default>false</default>
+                <label>K21A01 Mo Avdeling 1</label>
+            </value>
+            <value>
+                <fullName>K21A02 Mo Avdeling 2</fullName>
+                <default>false</default>
+                <label>K21A02 Mo Avdeling 2</label>
+            </value>
+            <value>
+                <fullName>K21A03 Mo Avdeling 3</fullName>
+                <default>false</default>
+                <label>K21A03 Mo Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K21A04 Mo Avdeling 4</fullName>
+                <default>false</default>
+                <label>K21A04 Mo Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K21A05 Mo Avdeling 5</fullName>
+                <default>false</default>
+                <label>K21A05 Mo Avdeling 5</label>
+            </value>
+            <value>
+                <fullName>K21A06 Mo Avdeling 6</fullName>
+                <default>false</default>
+                <label>K21A06 Mo Avdeling 6</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
