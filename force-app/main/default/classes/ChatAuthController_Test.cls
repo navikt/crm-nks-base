@@ -3,7 +3,8 @@ public class ChatAuthController_Test {
     
     @TestSetup
     static void makeData(){
-        NKS_TestDataFactory.createLiveChatTranscripts(1);
+        Case casy = (Case) UTIL_TestDataFactory.createRecord(new Case());
+        UTIL_TestDataFactory.createRecord(new LiveChatTranscript(CaseId = casy.Id));
     }
 
     @isTest
