@@ -84,11 +84,12 @@ public with sharing class NKS_NavTaskManager {
 
         //Constructor for converting a NavTask__c to a valid API oppgave request
         public OppgaveRequest(NavTask__c task) {
-            fristFerdigstillelse = JSON.serialize(task.CRM_DueDate__c);
+            DateTime dueDate = task.CRM_DueDate__c;
+            fristFerdigstillelse = dueDate.format('yyyy-mm-dd');
             prioritet = task.CRM_Priority__c;
             aktoerId = task.CRM_Account__r.CRM_Person__r.INT_ActorId__c;
             oppgavetype = 'DEFAULT'; //NED PICKLIST FIELD? Values are defined in kodeverk
-            aktivDato = JSON.serialize(Date.today()); //WHAT SHOULD WE USE HERE?
+            aktivDato = Datetime.now().format('yyyy-mm-dd'); //WHAT SHOULD WE USE HERE?
             beskrivelse = task.CRM_Comments__c;
             temagruppe = task.NKS_Theme_Group__c;
             tema = task.NKS_Theme__r.CRM_Code__c;
