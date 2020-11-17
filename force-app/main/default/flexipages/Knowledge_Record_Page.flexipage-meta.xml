@@ -116,7 +116,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>Knowledge__kav.NKS_Nynorsk</value>
+                    <value>Knowledge__kav.NKS_Legislation</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
             </componentInstance>
