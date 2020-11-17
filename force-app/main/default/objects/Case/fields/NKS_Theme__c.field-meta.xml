@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Theme__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Categorization for the chat</description>
+    <externalId>false</externalId>
+    <label>Theme</label>
+    <lookupFilter>
+        <active>false</active>
+        <filterItems>
+            <field>$Source.NKS_Theme_Group__c</field>
+            <operation>equals</operation>
+            <valueField>Theme__c.CRM_Theme_Group__c</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>Theme__c</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>
