@@ -244,7 +244,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
+                    <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -409,6 +409,19 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>componentTitle</name>
+                    <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>AccountId</value>
+                </componentInstanceProperties>
+                <componentName>nksSecurityMeasures</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
