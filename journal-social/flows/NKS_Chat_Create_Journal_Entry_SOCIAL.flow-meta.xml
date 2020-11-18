@@ -4,8 +4,8 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>607</locationX>
-        <locationY>898</locationY>
+        <locationX>604</locationX>
+        <locationY>1127</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -31,8 +31,8 @@
         <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
-        <locationX>168</locationX>
-        <locationY>708</locationY>
+        <locationX>165</locationX>
+        <locationY>937</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -56,8 +56,8 @@
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
-        <locationX>168</locationX>
-        <locationY>583</locationY>
+        <locationX>165</locationX>
+        <locationY>812</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -81,8 +81,8 @@
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>40</locationX>
-        <locationY>625</locationY>
+        <locationX>37</locationX>
+        <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
             <operator>Add</operator>
@@ -178,8 +178,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>387</locationX>
-        <locationY>898</locationY>
+        <locationX>384</locationX>
+        <locationY>1127</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -236,6 +236,20 @@
                 <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Social_Service_Information__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NAV_Task</targetReference>
         </connector>
@@ -243,8 +257,8 @@
     <assignments>
         <name>Set_Journal_Entry_Created</name>
         <label>Set Journal Entry Created</label>
-        <locationX>988</locationX>
-        <locationY>839</locationY>
+        <locationX>985</locationX>
+        <locationY>1068</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -284,12 +298,29 @@
             <targetReference>Update_Transcript</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Sets the new owner for the chat transcript.</description>
+        <name>Update_Chat_Owner</name>
+        <label>Update Chat Owner</label>
+        <locationX>369</locationX>
+        <locationY>473</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Integration_User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Journal_Entry_Created</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>485</locationX>
-        <locationY>386</locationY>
+        <locationX>482</locationX>
+        <locationY>615</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
         </defaultConnector>
@@ -344,8 +375,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>160</locationX>
-        <locationY>844</locationY>
+        <locationX>157</locationX>
+        <locationY>1073</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Entry_Created</targetReference>
         </defaultConnector>
@@ -364,6 +395,32 @@
                 <targetReference>NAV_Task_Assignment</targetReference>
             </connector>
             <label>Do Create Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the chat is tagged by agent saying it contains revealing information about the end user receiving social services from NAV.</description>
+        <name>Social_Information</name>
+        <label>Social Information</label>
+        <locationX>481</locationX>
+        <locationY>338</locationY>
+        <defaultConnector>
+            <targetReference>Check_Journal_Entry_Created</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Social_Information</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Integration_User</targetReference>
+            </connector>
+            <label>Contains Social Information</label>
         </rules>
     </decisions>
     <description>Flow to initiate the creation of a journal entry.</description>
@@ -427,7 +484,7 @@
 TODAY())</expression>
     </formulas>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Chat Create Journal Entry</label>
+    <label>Chat Create Journal Entry SOCIAL</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -450,8 +507,8 @@ TODAY())</expression>
     <recordCreates>
         <name>Create_NAV_Task</name>
         <label>Create NAV Task</label>
-        <locationX>482</locationX>
-        <locationY>1007</locationY>
+        <locationX>479</locationX>
+        <locationY>1236</locationY>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
@@ -461,8 +518,8 @@ TODAY())</expression>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>304</locationX>
-        <locationY>450</locationY>
+        <locationX>301</locationX>
+        <locationY>679</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Input_Screen</targetReference>
@@ -488,7 +545,7 @@ TODAY())</expression>
         <locationY>199</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Journal_Entry_Created</targetReference>
+            <targetReference>Social_Information</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -506,15 +563,62 @@ TODAY())</expression>
         <queriedFields>NKS_Conversation__c</queriedFields>
         <queriedFields>AccountId</queriedFields>
         <queriedFields>NKS_Theme_Group__c</queriedFields>
+        <queriedFields>NKS_Social_Service_Information__c</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>CaseId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Queries the integration user as this user will be set as the owner of the records upon successful journal and task submission</description>
+        <name>Get_Integration_User</name>
+        <label>Get Integration User</label>
+        <locationX>254</locationX>
+        <locationY>331</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Chat_Owner</targetReference>
+        </connector>
+        <filters>
+            <field>Username</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>integrasjon.plattform2@nav.no</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the related case</description>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>985</locationX>
+        <locationY>618</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.CaseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>Get_Chat_Transcript.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>988</locationX>
-        <locationY>543</locationY>
+        <locationX>985</locationX>
+        <locationY>772</locationY>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -522,8 +626,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>818</locationX>
-        <locationY>540</locationY>
+        <locationX>815</locationX>
+        <locationY>769</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -584,8 +688,8 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>168</locationX>
-        <locationY>450</locationY>
+        <locationX>165</locationX>
+        <locationY>679</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -609,6 +713,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Create_Task_Toggle</name>
@@ -748,8 +862,8 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>486</locationX>
-        <locationY>657</locationY>
+        <locationX>483</locationX>
+        <locationY>886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -773,8 +887,8 @@ TODAY())</expression>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
         <label>Send Journal Entry</label>
-        <locationX>41</locationX>
-        <locationY>754</locationY>
+        <locationX>38</locationX>
+        <locationY>983</locationY>
         <flowName>NKS_Post_Journal_Entry</flowName>
         <inputAssignments>
             <name>Complete</name>
@@ -797,6 +911,16 @@ TODAY())</expression>
             <name>Journal_Post_Response</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>Create_Task_Bool</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <description>The original document variant to be stored.</description>
         <name>Document_Original</name>

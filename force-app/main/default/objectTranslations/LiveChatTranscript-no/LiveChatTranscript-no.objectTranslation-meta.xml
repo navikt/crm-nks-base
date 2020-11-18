@@ -10,9 +10,5 @@
             <label><!-- Journal --></label>
             <section>Journal</section>
         </sections>
-        <sections>
-            <label>Sosiale Tjenester</label>
-            <section>Social Services</section>
-        </sections>
     </layouts>
 </CustomObjectTranslation>

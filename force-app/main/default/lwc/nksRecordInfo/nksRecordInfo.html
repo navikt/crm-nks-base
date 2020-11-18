@@ -1,31 +1,34 @@
 <template>
     <template if:true={recordIdSet}>
-        <lightning-record-view-form record-id={viewedRecordId} object-api-name={viewedObjectApiName}>
-            <lightning-card title={cardLabel} icon-name={iconName}>
-                <lightning-layout multiple-rows="true">
-                    <template iterator:it={fieldList}>
-                        <template if:true={it.first}>
-                            <lightning-layout-item key={it.value} size={columnWidth} class="slds-p-right_medium">
-                                <template if:true={showLink}>
-                                    <lightning-output-field class="fieldStyle" style="cursor: pointer;"
-                                        field-class="slds-text-link" field-name={it.value} onclick={navigateToRecord}>
-                                    </lightning-output-field>
-                                </template>
-                                <template if:false={showLink}>
+        <div class="slds-p-top_xx-small slds-p-bottom_xx-small">
+            <lightning-record-view-form record-id={viewedRecordId} object-api-name={viewedObjectApiName}>
+                <lightning-card title={cardLabel} icon-name={iconName}>
+                    <lightning-layout multiple-rows="true">
+                        <template iterator:it={fieldList}>
+                            <template if:true={it.first}>
+                                <lightning-layout-item key={it.value} size={columnWidth} class="slds-p-right_medium">
+                                    <template if:true={showLink}>
+                                        <lightning-output-field class="fieldStyle" style="cursor: pointer;"
+                                            field-class="slds-text-link" field-name={it.value}
+                                            onclick={navigateToRecord}>
+                                        </lightning-output-field>
+                                    </template>
+                                    <template if:false={showLink}>
+                                        <lightning-output-field class="fieldStyle" field-name={it.value}>
+                                        </lightning-output-field>
+                                    </template>
+                                </lightning-layout-item>
+                            </template>
+                            <template if:false={it.first}>
+                                <lightning-layout-item key={it.value} size={columnWidth} class="slds-p-right_medium">
                                     <lightning-output-field class="fieldStyle" field-name={it.value}>
                                     </lightning-output-field>
-                                </template>
-                            </lightning-layout-item>
+                                </lightning-layout-item>
+                            </template>
                         </template>
-                        <template if:false={it.first}>
-                            <lightning-layout-item key={it.value} size={columnWidth} class="slds-p-right_medium">
-                                <lightning-output-field class="fieldStyle" field-name={it.value}>
-                                </lightning-output-field>
-                            </lightning-layout-item>
-                        </template>
-                    </template>
-                </lightning-layout>
-            </lightning-card>
-        </lightning-record-view-form>
+                    </lightning-layout>
+                </lightning-card>
+            </lightning-record-view-form>
+        </div>
     </template>
 </template>
