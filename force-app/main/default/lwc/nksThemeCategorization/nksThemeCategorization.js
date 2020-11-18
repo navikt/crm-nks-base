@@ -2,6 +2,9 @@ import { LightningElement, track, api, wire } from 'lwc';
 import getThemes from '@salesforce/apex/NKS_ThemeUtils.getThemes';
 import getSubthemes from '@salesforce/apex/NKS_ThemeUtils.getSubthemes';
 
+//#### LABEL IMPORTS ####
+import VALIDATION_ERROR from '@salesforce/label/c.NKS_Theme_Categorization_Validation_Error';
+
 export default class NksThemeCategorization extends LightningElement {
 
     @track themeGroups = [];
@@ -87,6 +90,21 @@ export default class NksThemeCategorization extends LightningElement {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
         });
         this.subthemes = returnThemes;
+    }
+
+    //Validation preventing user moving to next screen in flow if state is not valid
+    @api
+    validate() {
+        //All values has to be set in the component
+        if (this.themeGroup && this.theme && this.subtheme) {
+            return { isValid: true };
+        }
+        else {
+            return {
+                isValid: false,
+                errorMessage: VALIDATION_ERROR
+            };
+        }
     }
 
 

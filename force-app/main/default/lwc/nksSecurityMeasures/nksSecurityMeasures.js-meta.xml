@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <property name="componentTitle" label="List title" type="String" default=" sikkerhetstiltak er knyttet til denne brukeren." />
+            <property name="relationshipField" label="Account lookup field" type="String" description="If not placed on an Account RecordPage, add the API name of the account lookup, ex. AccountId" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
