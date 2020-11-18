@@ -31,7 +31,7 @@
         <value xsi:type="xsd:string">AccountId</value>
     </values>
     <values>
-        <field>AppAPIName__c</field>
+        <field>ConfigId__c</field>
         <value xsi:type="xsd:string">NAV_Kontaktsenter</value>
     </values>
     <values>
