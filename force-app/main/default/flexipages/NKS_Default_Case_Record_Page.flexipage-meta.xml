@@ -341,6 +341,46 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columnLabels</name>
+                    <value>Person, Relasjon</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>INT_Related_Person_Name__c, INT_Relation_Type__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterConditions</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerColor</name>
+                    <value>white</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:household</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listTitle</name>
+                    <value>Relasjoner</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedObjectApiName</name>
+                    <value>Relation__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationField</name>
+                    <value>INT_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRelatedList</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</name>
         <type>Facet</type>
     </flexiPageRegions>
