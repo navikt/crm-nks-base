@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardLabel</name>
-                    <value>Henvendelse</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>Name</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:case</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>2</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>AccountId</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>viewedObjectApiName</name>
-                    <value>Account</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-            </componentInstance>
-        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -240,39 +207,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
-                    <value>Generell informasjon</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:avatar</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>2</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>viewedObjectApiName</name>
-                    <value>Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardLabel</name>
                     <value>Kontaktinformasjon</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -285,7 +219,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>2</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
@@ -300,6 +234,12 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -318,7 +258,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>2</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
@@ -335,7 +275,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -379,6 +319,12 @@
                     <value>INT_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRelatedList</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</name>
@@ -460,11 +406,57 @@
                     <value>AccountId</value>
                 </componentInstanceProperties>
                 <componentName>nksSecurityMeasures</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Generell informasjon</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:avatar</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -475,9 +467,14 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Nyttige linker&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;Side 1&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(107, 109, 112); font-size: 14px;&quot;&gt;Side 2&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(107, 109, 112); font-size: 14px;&quot;&gt;Side 3&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(107, 109, 112); font-size: 14px;&quot;&gt;Side 4&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(107, 109, 112); font-size: 14px;&quot;&gt;Side 5&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(107, 109, 112); font-size: 14px;&quot;&gt;Side 6&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</value>
+                    <value>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Nyttige linker&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;Side 1&lt;/a&gt;    &lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 3    Side 4&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 5    Side 6&lt;/a&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
