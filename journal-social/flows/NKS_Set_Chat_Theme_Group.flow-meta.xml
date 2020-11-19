@@ -13,8 +13,20 @@
                 <elementReference>Queue_Theme_Mapping</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NKS_Social_Service_Information__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>isSocialServices</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <description>Automatically populates the theme group value for the chat based on which queue it originates from.</description>
+    <formulas>
+        <name>isSocialServices</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Record.LiveChatButton.Queue.DeveloperName} == &apos;NKS_Chat_Sosiale_Tjenester&apos;</expression>
+    </formulas>
     <formulas>
         <description>Maps the incoming queue names to a theme group.</description>
         <name>Queue_Theme_Mapping</name>

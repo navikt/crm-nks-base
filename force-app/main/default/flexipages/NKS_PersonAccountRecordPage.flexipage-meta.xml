@@ -329,6 +329,10 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>configId</name>
+                    <value>NAV_Kontaktsenter</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>headerIcon</name>
                     <value>custom:custom18</value>
                 </componentInstanceProperties>
