@@ -7,7 +7,7 @@
         <label>Bruker</label>
         <layoutColumns>
             <layoutItems>
-                <field>Summary</field>
+                <field>NKS_Summary__c</field>
             </layoutItems>
             <layoutItems>
                 <field>NKS_UserInformation__c</field>
