@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Get_Current_Memberships</name>
+        <label>Get Current Memberships</label>
+        <locationX>2018</locationX>
+        <locationY>839</locationY>
+        <actionName>FlowFindCollection</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Is_there_any_to_delete</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>U__outputCollection</typeName>
+            <typeValue>GroupMember</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>FieldApiINames</name>
+            <value>
+                <stringValue>Id</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectName</name>
+            <value>
+                <stringValue>GroupMember</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhereClause</name>
+            <value>
+                <elementReference>WhereClauseForMembers</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>groupMembershipsToDelete</assignToReference>
+            <name>outputCollection</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Get_User_Queues</name>
         <label>Get User Queues</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>1848</locationX>
+        <locationY>207</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -40,8 +77,8 @@
     <actionCalls>
         <name>GetPicklistValues</name>
         <label>GetPicklistValues</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>1988</locationX>
+        <locationY>206</locationY>
         <actionName>GetPicklistValues</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -67,8 +104,8 @@
     <assignments>
         <name>Add_queue_name</name>
         <label>Add queue name</label>
-        <locationX>270</locationX>
-        <locationY>1190</locationY>
+        <locationX>2364</locationX>
+        <locationY>509</locationY>
         <assignmentItems>
             <assignToReference>UsersQueueNames</assignToReference>
             <operator>Add</operator>
@@ -81,10 +118,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_to_collection_variable</name>
+        <label>Add to collection variable</label>
+        <locationX>2166</locationX>
+        <locationY>722</locationY>
+        <assignmentItems>
+            <assignToReference>singleGroupString</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>singleGroup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SelectedGroupList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>singleGroupString</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_the_Selected_Account_String</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_to_selectable_divisions</name>
         <label>Add to selectable divisions</label>
-        <locationX>270</locationX>
-        <locationY>758</locationY>
+        <locationX>2360</locationX>
+        <locationY>347</locationY>
         <assignmentItems>
             <assignToReference>SelectableDivisions</assignToReference>
             <operator>Add</operator>
@@ -96,17 +156,86 @@
             <targetReference>Loop_Picklist_Values</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_Selected_Value_To_String</name>
+        <label>Assign Selected Value To String</label>
+        <locationX>1898</locationX>
+        <locationY>690</locationY>
+        <assignmentItems>
+            <assignToReference>selectedGroupIds</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectQueues</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>selectedGroupIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>;</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>emptyStringCollection</assignToReference>
+            <operator>Add</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>emptyRecordCollection</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_selected_string</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_the_Selected_Account_String</name>
+        <label>Update the Selected Account String</label>
+        <locationX>2166</locationX>
+        <locationY>581</locationY>
+        <assignmentItems>
+            <assignToReference>selectedGroupIds</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UpdatedSelectedGroupString</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_selected_string</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Update_division</name>
-        <label>Update division?</label>
-        <locationX>182</locationX>
-        <locationY>1526</locationY>
+        <name>Check_selected_string</name>
+        <label>Check selected string</label>
+        <locationX>2015</locationX>
+        <locationY>692</locationY>
         <defaultConnector>
-            <targetReference>Update_queues</targetReference>
+            <targetReference>Add_to_collection_variable</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>UpdateDivisionTrue</name>
+            <name>is_null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>selectedGroupIds</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>Get_Current_Memberships</targetReference>
+            </connector>
+            <label>is null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Edit_Division</name>
+        <label>Edit Division?</label>
+        <locationX>1730</locationX>
+        <locationY>560</locationY>
+        <defaultConnector>
+            <targetReference>Edit_Queues</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>EditDivisionTrue</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>EditDivision.value</leftValueReference>
@@ -122,13 +251,13 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Update_queues</name>
-        <label>Update queues?</label>
-        <locationX>182</locationX>
-        <locationY>1862</locationY>
+        <name>Edit_Queues</name>
+        <label>Edit Queues?</label>
+        <locationX>1736</locationX>
+        <locationY>692</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>UpdateQueuesTrue</name>
+            <name>EditQueuesTrue</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>EditQueues.value</leftValueReference>
@@ -138,7 +267,54 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Group_Member</targetReference>
+                <targetReference>Assign_Selected_Value_To_String</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Empty_list</name>
+        <label>Empty list?</label>
+        <locationX>2001</locationX>
+        <locationY>1178</locationY>
+        <defaultConnector>
+            <targetReference>Create_group_memberships</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Empty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectedGroupList</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>emptyStringCollection</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_there_any_to_delete</name>
+        <label>Is there any to delete?</label>
+        <locationX>1814</locationX>
+        <locationY>839</locationY>
+        <defaultConnector>
+            <targetReference>Loop_String_Collection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DeleteCurrentMemberships</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>groupMembershipsToDelete</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>emptyRecordCollection</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_current_memberships</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -146,8 +322,8 @@
     <decisions>
         <name>Users_divisions</name>
         <label>Users divisions</label>
-        <locationX>402</locationX>
-        <locationY>638</locationY>
+        <locationX>2352</locationX>
+        <locationY>206</locationY>
         <defaultConnector>
             <targetReference>Loop_Picklist_Values</targetReference>
         </defaultConnector>
@@ -159,7 +335,7 @@
                 <leftValueReference>Loop_Picklist_Values</leftValueReference>
                 <operator>StartsWith</operator>
                 <rightValue>
-                    <stringValue>K01</stringValue>
+                    <elementReference>DepartmentNumber</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -190,17 +366,42 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <formulas>
+        <name>DepartmentNumber</name>
+        <dataType>String</dataType>
+        <expression>&apos;K&apos;+MID({!Get_User.Department},3,2)</expression>
+    </formulas>
+    <formulas>
+        <name>singleGroup</name>
+        <dataType>String</dataType>
+        <expression>TRIM(SUBSTITUTE(LEFT({!selectedGroupIds},FIND(&quot;;&quot;,{!selectedGroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>test</name>
+        <dataType>String</dataType>
+        <expression>&quot;[]&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>UpdatedSelectedGroupString</name>
+        <dataType>String</dataType>
+        <expression>TRIM(SUBSTITUTE({!selectedGroupIds},{!singleGroupString}+&quot;;&quot;,&quot;&quot;))</expression>
+    </formulas>
+    <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
         <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos;&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>WhereClauseForMembers</name>
+        <dataType>String</dataType>
+        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update User</label>
     <loops>
         <name>Loop_Picklist_Values</name>
         <label>Loop Picklist Values</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>2117</locationX>
+        <locationY>206</locationY>
         <collectionReference>allPicklistValues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -213,8 +414,8 @@
     <loops>
         <name>Loop_queues</name>
         <label>Loop queues</label>
-        <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationX>2117</locationX>
+        <locationY>395</locationY>
         <collectionReference>UserGroups</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -223,6 +424,17 @@
         <noMoreValuesConnector>
             <targetReference>UpdateUser</targetReference>
         </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_String_Collection</name>
+        <label>Loop String Collection</label>
+        <locationX>1949</locationX>
+        <locationY>1010</locationY>
+        <collectionReference>SelectedGroupList</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Empty_list</targetReference>
+        </nextValueConnector>
     </loops>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -233,7 +445,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -244,17 +456,43 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Group_Member</name>
-        <label>Create Group Member</label>
-        <locationX>50</locationX>
-        <locationY>1982</locationY>
-        <inputReference>GroupMembersToCreate</inputReference>
+        <name>Create_group_memberships</name>
+        <label>Create group memberships</label>
+        <locationX>2118</locationX>
+        <locationY>1011</locationY>
+        <connector>
+            <targetReference>Loop_String_Collection</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GroupId</field>
+            <value>
+                <elementReference>Loop_String_Collection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserOrGroupId</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>GroupMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordDeletes>
+        <name>Delete_current_memberships</name>
+        <label>Delete current memberships</label>
+        <locationX>1820</locationX>
+        <locationY>1010</locationY>
+        <connector>
+            <targetReference>Loop_String_Collection</targetReference>
+        </connector>
+        <inputReference>groupMembershipsToDelete</inputReference>
+    </recordDeletes>
     <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
-        <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationX>1736</locationX>
+        <locationY>206</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
@@ -273,10 +511,10 @@
     <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
-        <locationX>50</locationX>
-        <locationY>1646</locationY>
+        <locationX>1592</locationX>
+        <locationY>690</locationY>
         <connector>
-            <targetReference>Update_queues</targetReference>
+            <targetReference>Edit_Queues</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -297,17 +535,17 @@
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationX>1739</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Update_division</targetReference>
+            <targetReference>Edit_Division</targetReference>
         </connector>
         <fields>
             <name>display</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_Division__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Veilederens har i dag disse køene:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!UsersQueueNames}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.NKS_Division__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;Veilederens har i dag disse køene:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -420,10 +658,10 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Skills</name>
+            <name>SelectQueues</name>
             <choiceReferences>Queues</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Skills</fieldText>
+            <fieldText>Velg køer</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
@@ -441,13 +679,13 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
-        <locationY>0</locationY>
+        <locationX>1610</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>allPicklistValues</name>
         <dataType>String</dataType>
@@ -456,7 +694,15 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>GroupMembersToCreate</name>
+        <name>currentGroupMember</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>emptyRecordCollection</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -464,7 +710,22 @@
         <objectType>GroupMember</objectType>
     </variables>
     <variables>
-        <name>GroupMembersToDelete</name>
+        <name>emptyStringCollection</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>groupMembershipsToDelete</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>groupsMembershipsToCreate</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -486,9 +747,23 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>texttest</name>
+        <name>selectedGroupIds</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedGroupList</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>singleGroupString</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
@@ -499,13 +774,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Group</objectType>
-    </variables>
-    <variables>
-        <name>UserQueueIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>UsersQueueNames</name>
