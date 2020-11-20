@@ -3,13 +3,15 @@
     controller="NKS_ChatTranscriptService">
     <aura:attribute name="loggingEnabled" type="boolean" default="true" />
     <aura:attribute name="accountFields" type="String" />
+    <aura:attribute name="personFields" type="String" />
     <aura:attribute name="conversation" type="object[]" />
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
     <aura:handler event="lightning:conversationChatEnded" action="{!c.handleChatEnded}" />
 
     <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
-        accountFields="{!v.accountFields}" onrequestauthentication="{!c.requestAuthentication}"
-        onauthenticationcomplete="{!c.showLoginMsg}" aura:id="chatAuthInfo">
+        accountFields="{!v.accountFields}" personFields="{!v.personFields}"
+        onrequestauthentication="{!c.requestAuthentication}" onauthenticationcomplete="{!c.showLoginMsg}"
+        aura:id="chatAuthInfo">
     </c:nksChatAuthenticationInfo>
 </aura:component>
