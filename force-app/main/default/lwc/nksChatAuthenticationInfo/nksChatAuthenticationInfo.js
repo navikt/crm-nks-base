@@ -28,7 +28,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
     @api loggingEnabled;               //Determines if console logging is enabled for the component
     @api recordId;
     @api accountFields                 //Comma separated string with field names to display from the related account
+    @api personFields                  //Comma separated string with field names to display from the related accounts person
     accountId;                         //Transcript AccountId
+    personId;                          //Transcript Account PersonId
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
     activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
@@ -71,6 +73,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.currentAuthenticationStatus = data.AUTH_STATUS;
             this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
             this.accountId = data.ACCOUNTID;
+            this.personId = data.PERSONID;
             this.chatLanguage = data.CHAT_LANGUAGE;
         } else {
             this.currentAuthenticationStatus = 'Not Started'

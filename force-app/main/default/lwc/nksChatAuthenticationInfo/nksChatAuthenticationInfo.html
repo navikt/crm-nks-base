@@ -115,9 +115,15 @@
                     </template>
                     <template if:true={authenticationComplete}>
                         <div class="slds-var-p-top_small">
+                            <c-nks-security-measures record-id={accountId}
+                                component-title=" sikkerhetstiltak er knyttet til denne brukeren.">
+                            </c-nks-security-measures>
                             <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
                                 displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account"
-                                show-link="true">
+                                num-cols="3" show-link="true">
+                            </c-nks-record-info>
+                            <c-nks-record-info viewed-record-id={personId} viewed-object-api-name="Person__c"
+                                displayed-fields={personFields} num-cols="3" show-link="true">
                             </c-nks-record-info>
                         </div>
                     </template>
