@@ -138,11 +138,15 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>accountFields</name>
-                    <value>Name,  Phone, PersonEmail</value>
+                    <value>Name,  TAG_NavUnit__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>loggingEnabled</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>personFields</name>
+                    <value>Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentName>nksChatAuthenticationInfoContainer</componentName>
             </componentInstance>
