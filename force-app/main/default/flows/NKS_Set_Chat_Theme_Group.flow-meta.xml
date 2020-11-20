@@ -5,12 +5,12 @@
         <name>Set_Theme_Group</name>
         <label>Set Theme Group</label>
         <locationX>176</locationX>
-        <locationY>253</locationY>
+        <locationY>373</locationY>
         <assignmentItems>
             <assignToReference>$Record.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Queue_Theme_Mapping</elementReference>
+                <elementReference>Get_theme_groups.Id</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -52,11 +52,49 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Query the active theme groups available.</description>
+        <name>Get_theme_groups</name>
+        <label>Get theme groups</label>
+        <locationX>176</locationX>
+        <locationY>253</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Theme_Group</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Temagrupper</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Queue_Theme_Mapping</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Code__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_Theme_Group</targetReference>
+            <targetReference>Get_theme_groups</targetReference>
         </connector>
         <filters>
             <field>NKS_Theme_Group__c</field>
@@ -69,5 +107,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>
