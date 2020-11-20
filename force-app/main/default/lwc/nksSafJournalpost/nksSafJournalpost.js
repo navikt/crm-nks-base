@@ -1,10 +1,24 @@
-import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
+import { LightningElement, api, track } from 'lwc';
 
 export default class NksSafJournalpost extends LightningElement {
     @api journalpost;
+    numberOfAttachments = 0;
+    hasAttachments = false;
+    jornalpostDate = null;
+    fromToType = null;
+    @track mainDocument = null;
+    @track attachments = null;
 
-    get fromToType() {
+    connectedCallback() {
+        this.numberOfAttachments = this.getNumberOfAttachments();
+        this.setFromToType();
+        this.setMainDocument();
+        this.setAttachments();
+        this.setJornalpostDate();
+        this.hasAttachments = (0 < this.numberOfAttachments) ? true : false;
+    }
+
+    setFromToType() {
         let fromToType;
         switch (this.journalpost.journalposttype) {
             case "I":
@@ -21,45 +35,47 @@ export default class NksSafJournalpost extends LightningElement {
                 break;
         }
 
-        return fromToType;
+        this.fromToType = fromToType;
     }
 
-    get jornalpostDate() {
+    setJornalpostDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         let dateString = this.journalpost.datoOpprettet;
 
-        return new Date(dateString).toLocaleDateString('no-NO', options);
+        this.jornalpostDate = new Date(dateString).toLocaleDateString('no-NO', options);
     }
 
-    get mainDocument() {
+    setMainDocument() {
+        this.mainDocument = null;
+
         if (this.journalpost.dokumenter && 0 < this.journalpost.dokumenter.length) {
-            return this.journalpost.dokumenter[0];
+            this.mainDocument = this.journalpost.dokumenter[0];
         }
-
-        return null;
     }
 
-    get attachments() {
+    setAttachments() {
+        let attachments = [];
         if (this.journalpost.dokumenter) {
-            return this.journalpost.dokumenter.filter((dokument, i) => {
+            attachments = this.journalpost.dokumenter.filter((dokument, i) => {
                 if (i > 0) { return dokument }
             });
         }
 
-        return [];
+        this.attachments = attachments;
     }
 
-    get nmbOfAttachments() {
-        return this.getNumberOfAttachments();
-    }
+    // get nmbOfAttachments() {
+    //     return this.getNumberOfAttachments();
+    // }
 
-    get hasAttachments() {
-        return 0 < this.getNumberOfAttachments() ? true : false;
-    }
+    // get hasAttachments() {
+    //     return 0 < this.getNumberOfAttachments() ? true : false;
+    // }
 
     getNumberOfAttachments() {
         let numberOfAttachments = 0;
-        if (this.journalpost.dokumenter) {
+
+        if (this.journalpost.dokumenter && this.journalpost.dokumenter.length > 1) {
             numberOfAttachments = this.journalpost.dokumenter.length - 1;
         }
 

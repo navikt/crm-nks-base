@@ -1,16 +1,21 @@
 <template>
-    <!-- {isSladdet} - {isReadable} - {hasAccessToArkiv} - {fileName} -->
+    <!-- Link to document if readable -->
     <template if:true={isReadable}>
         <lightning-button variant="base" label={title} onclick={navigateToDocument}>
         </lightning-button>
-        <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
-            <template iterator:it={dokumentInfo.logiskeVedlegg}>
-                <li class="slds-item" key={index}>{it.value.tittel}</li>
-            </template>
-        </ul>
+        <template if:true={hasLogicalAttachments}>
+            <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
+                <template iterator:it={dokumentInfo.logiskeVedlegg}>
+                    <li class="slds-item" key={it.value.logiskVedleggId}>{it.value.tittel}</li>
+                </template>
+            </ul>
+        </template>
     </template>
+
+    <!-- Text only if not readable -->
     <template if:false={isReadable}>
-        <lightning-icon icon-name="utility:ban" alternative-text="Ikke leslig" title="Ikke leslig" size="xx-small">
+        <lightning-icon icon-name="utility:ban" alternative-text="Ikke tilgang til dokument"
+            title="Ikke tilgang til dokument" size="xx-small">
         </lightning-icon>
         &nbsp;
         {title}

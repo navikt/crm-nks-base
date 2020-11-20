@@ -1,0 +1,15 @@
+<template>
+    <lightning-combobox name="ThemeGroup" label="Temagruppe" options={themeGroups} placeholder="(Ikke valgt)"
+        onchange={handleThemeGroupChange} value={chosenThemeGroup}>
+    </lightning-combobox>
+    <lightning-vertical-navigation selected-item={selectedItem} onselect={handleSelect}>
+        <lightning-vertical-navigation-section label="Tema">
+            <lightning-vertical-navigation-item label="Alle" name="all">
+            </lightning-vertical-navigation-item>
+            <template for:each={saker} for:item="sak">
+                <lightning-vertical-navigation-item key={sak.id} label={sak.name} name={sak.id}>
+                </lightning-vertical-navigation-item>
+            </template>
+        </lightning-vertical-navigation-section>
+    </lightning-vertical-navigation>
+</template>

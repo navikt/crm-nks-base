@@ -8,11 +8,15 @@
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
+
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <objects>
-                <object>Account</object>
-            </objects>
+            <property name="field" label="Field API Name" description="Field API name for id to use" type="String" required="true" default="name" />
+            <property name="relationField" label="Relation field" description="API name of field relating the record to the parent" type="String" required="true" default="Account.CRM_Person__c" />
+            <property name="parentRelationField" label="Parent Relation Field" description="API name of field relating the parent to the record" type="String" required="true" default="Id" />
+            <property name="parentObjectApiName" label="Parent Relation Object" description="API name of parent object to the record" type="String" required="true" default="CRM_Person__c" />
+            <property name="brukerIdType" label="User Id Type" description="The user id type. Valid values: AKTOERID, ORGNR or FNR" type="String" required="true" default="FNR" />
+            <property name="nmbOfJournalposts" label="Number of Journalposts" description="The maximum number of Journalposts to get per load" type="Integer" required="true" default="10" />
         </targetConfig>
     </targetConfigs>
 

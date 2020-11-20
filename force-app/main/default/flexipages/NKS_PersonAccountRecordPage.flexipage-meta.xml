@@ -31,6 +31,35 @@
                 <componentName>flexipage:richText</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>brukerIdType</name>
+                    <value>FNR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>field</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nmbOfJournalposts</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRelationField</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksSafJournalpostList</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-51eee843-0e1e-4717-9346-27f87a4dba3a</name>
         <type>Facet</type>
     </flexiPageRegions>

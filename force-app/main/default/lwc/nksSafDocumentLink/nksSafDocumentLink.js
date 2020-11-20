@@ -8,22 +8,19 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     isReadable;
     hasAccessToArkiv;
     fileName;
+    title;
 
     connectedCallback() {
-        this.setValues();
+        this.setDocumentVariantValues();
+        this.setTitle();
     }
 
-    get title() {
-        let title = this.dokumentInfo.tittel;
-
-        if (true === this.isSladdet && false === this.hasAccessToArkiv) {
-            title += " (Sladdet)";
-        }
-
-        return title;
+    get hasLogicalAttachments() {
+        let isTrue = (this.dokumentInfo.logiskeVedlegg) ? true : false;
+        return isTrue;
     }
 
-    setValues() {
+    setDocumentVariantValues() {
         this.isSladded = false;
         this.isReadable = false;
         this.hasAccessToArkiv = false;
@@ -50,6 +47,16 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
                 }
             });
         }
+    }
+
+    setTitle() {
+        let title = this.dokumentInfo.tittel;
+
+        if (true === this.isSladdet && false === this.hasAccessToArkiv) {
+            title += " (Sladdet)";
+        }
+
+        this.title = title;
     }
 
     navigateToDocument() {

@@ -1,37 +1,47 @@
 <template>
     <lightning-card title="Journalposter" icon-name="standard:file">
-        <template if:false={isLoaded}>
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-        </template>
-        <template if:true={isLoaded}>
-            <template if:true={error}>
-                <div class="slds-text-color_error slds-p-left_x-small">
-                    <p>
-                        <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
-                            variant="error">
-                        </lightning-icon>
-                        &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
-                    </p>
-                    <p class="slds-p-left_medium">
-                        {error}
-                    </p>
-                </div>
-            </template>
-            <template if:false={journalposts}>
-                <p>Kunne ikke finne noen journalposter.</p>
-            </template>
-            <template if:true={journalposts}>
-                <ul class="slds-has-dividers_top">
-
-                    <template for:each={journalposts} for:item='journalpost'>
-                        <li class="slds-item" key={journalpost.journalpostId}>
-                            <c-nks-saf-journalpost journalpost={journalpost}></c-nks-saf-journalpost>
-                        </li>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="2">
+                <c-nks-sak-vertical-navigation onthemeselection={setSelectedTheme} available-themes={availableThemes}
+                    record-id={recordId} object-api-name={objectApiName} selected-theme-api-name="NKS_Theme__c"
+                    selected-theme-group-api-name="NKS_Theme_Group__c">
+                </c-nks-sak-vertical-navigation>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="10">
+                <template if:false={isLoaded}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template if:true={isLoaded}>
+                    <template if:true={error}>
+                        <div class="slds-text-color_error slds-p-left_x-small">
+                            <p>
+                                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
+                                    variant="error">
+                                </lightning-icon>
+                                &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
+                            </p>
+                            <p class="slds-p-left_medium">
+                                {error}
+                            </p>
+                        </div>
                     </template>
+                    <template if:false={journalposts}>
+                        <p>Kunne ikke finne noen journalposter.</p>
+                    </template>
+                    <template if:true={filteredJournalPosts}>
+                        <ul class="slds-has-dividers_top">
 
-                </ul>
-            </template>
-        </template>
+                            <template for:each={filteredJournalPosts} for:item='journalpost'>
+                                <li class="slds-item" key={journalpost.journalpostId}>
+                                    <c-nks-saf-journalpost journalpost={journalpost}></c-nks-saf-journalpost>
+                                </li>
+                            </template>
+
+                        </ul>
+                    </template>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
         <p slot="footer">
             <template if:true={isLoadingMore}>
                 <div class="slds-is-relative">

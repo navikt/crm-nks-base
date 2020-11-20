@@ -1,14 +1,15 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import { getRecord } from 'lightning/uiRecordApi';
-import ACCOUNT_INT_PERSONIDENT from '@salesforce/schema/Account.INT_PersonIdent__c';
-import ACCOUNT_INT_ORGANIZATION_NUMBER from '@salesforce/schema/Account.INT_OrganizationNumber__c';
-import ACCOUNT_IS_PERSON_ACCOUNT from '@salesforce/schema/Account.IsPersonAccount';
+// import { getRecord } from 'lightning/uiRecordApi';
+// import ACCOUNT_INT_PERSONIDENT from '@salesforce/schema/Account.INT_PersonIdent__c';
+// import ACCOUNT_INT_ORGANIZATION_NUMBER from '@salesforce/schema/Account.INT_OrganizationNumber__c';
+// import ACCOUNT_IS_PERSON_ACCOUNT from '@salesforce/schema/Account.IsPersonAccount';
 import getJournalpostsUser from "@salesforce/apex/NKS_SafJournalpostListController.getJournalpostsUser";
+import getAccountQueryVariables from "@salesforce/apex/NKS_SafJournalpostListController.getAccountQueryVariables";
 
-const ACCOUNT_FIELDS = [ACCOUNT_INT_PERSONIDENT, ACCOUNT_INT_ORGANIZATION_NUMBER, ACCOUNT_IS_PERSON_ACCOUNT];
+//const ACCOUNT_FIELDS = [ACCOUNT_INT_PERSONIDENT, ACCOUNT_INT_ORGANIZATION_NUMBER, ACCOUNT_IS_PERSON_ACCOUNT];
 const DEFAULT_NMB_JOURNALPOSTS = 10;
 const DEFAULT_SELECTED_JOURNALPOST_TYPES = ["I", "U", "N"];
-const DEFAULT_SELECTED_TEMAS = [];
+const DEFAULT_SELECTED_TEMA = 'all';
 const QUERY_FIELDS = {
     name: "journalposter",
     queryFields: [
@@ -52,13 +53,23 @@ const QUERY_FIELDS = {
 export default class NksSafJournalpostList extends LightningElement {
     @api recordId;
     @api selectedJornalpostTypes;
-    @api selectedTemas;
+    @api selectedTema;
     @api nmbOfJournalposts;
+
+    @api field;
+    //@api parentId;
+    @api objectApiName;
+    @api relationField;
+    @api parentRelationField;
+    @api parentObjectApiName;
+    @api brukerIdType;
 
     // tracked resources
     @track journalposts;
     @track filteredJournalPosts;
     @track error;
+
+    availableThemes;
 
     // @track queryFields;
     isLoaded;
@@ -81,50 +92,71 @@ export default class NksSafJournalpostList extends LightningElement {
         //Set default variables
         this.isLoadingMore = false;
         this.isLoaded = false;
-        this.nmbOfJournalposts = (this.nmbOfJournalposts) ? nmbOfJournalposts : DEFAULT_NMB_JOURNALPOSTS;
-        // this.queryFields = (this.queryFields) ? this.queryFields : DEFAULT_QUERY_FIELDS;
-        this.selectedTemas = (this.selectedTemas) ? this.selectedTemas : DEFAULT_SELECTED_TEMAS;
+        this.nmbOfJournalposts = (this.nmbOfJournalposts) ? this.nmbOfJournalposts : DEFAULT_NMB_JOURNALPOSTS;
+        // // this.queryFields = (this.queryFields) ? this.queryFields : DEFAULT_QUERY_FIELDS;
+        this.selectedTema = (this.selectedTema) ? this.selectedTema : DEFAULT_SELECTED_TEMA;
         this.selectedJornalpostTypes = (this.selectedJornalpostTypes) ? this.selectedJornalpostTypes : DEFAULT_SELECTED_JOURNALPOST_TYPES;
         this.journalposts = [];
         this.filteredJournalPosts = [];
 
         this.queryVariables.foerste = this.nmbOfJournalposts;
+
+        this.getAccountQueryVariables();
+        this.callGetJournalpostsUser();
+    }
+
+    async getAccountQueryVariables() {
+        const inputParams = {
+            field: this.field,
+            parentId: this.recordId,
+            objectApiName: this.objectApiName,
+            relationField: this.relationField,
+            parentRelationField: this.parentRelationField,
+            parentObjectApiName: this.parentObjectApiName,
+            brukerIdType: this.brukerIdType
+        };
+        try {
+            const brukerInput = await getAccountQueryVariables(inputParams);
+            this.queryVariables.brukerId = brukerInput;
+        } catch (err) {
+            this.setErrorMessage(err, 'caughtError');
+        }
     }
 
     /**
      * Get the data we need from the account
      * @param {*} value 
      */
-    @wire(getRecord, { recordId: "$recordId", fields: ACCOUNT_FIELDS })
-    getWiredAccount(value) {
-        this.wiredAccount = value;
-        const { data, error } = value;
+    // @wire(getRecord, { recordId: "$recordId", fields: ACCOUNT_FIELDS })
+    // getWiredAccount(value) {
+    //     this.wiredAccount = value;
+    //     const { data, error } = value;
 
-        if (data) {
-            this.journalposts = [];
-            this.filteredJournalPosts = [];
-            this.account = data;
-            this.setQueryVariablesFromAccount();
-            this.callGetJournalpostsUser();
-        }
-        else if (error) {
-            this.setErrorMessage(error, 'fetchResponseError');
-            this.isLoaded = true;
-        }
-    }
+    //     if (data) {
+    //         this.journalposts = [];
+    //         this.filteredJournalPosts = [];
+    //         this.account = data;
+    //         this.setQueryVariablesFromAccount();
+    //         this.callGetJournalpostsUser();
+    //     }
+    //     else if (error) {
+    //         this.setErrorMessage(error, 'fetchResponseError');
+    //         this.isLoaded = true;
+    //     }
+    // }
 
     /**
      * Set the queryVariables on the BrukerId based on the account
      */
-    setQueryVariablesFromAccount() {
-        if (this.account.fields.IsPersonAccount.value) {
-            this.queryVariables.brukerId.id = this.account.fields.INT_PersonIdent__c.value;
-            this.queryVariables.brukerId.type = 'AKTOERID';
-        } else {
-            this.queryVariables.brukerId.id = this.account.fields.INT_OrganizationNumber__c.value;
-            this.queryVariables.brukerId.type = 'ORGNR';
-        }
-    }
+    // setQueryVariablesFromAccount() {
+    //     if (this.account.fields.IsPersonAccount.value) {
+    //         this.queryVariables.brukerId.id = this.account.fields.INT_PersonIdent__c.value;
+    //         this.queryVariables.brukerId.type = 'AKTOERID';
+    //     } else {
+    //         this.queryVariables.brukerId.id = this.account.fields.INT_OrganizationNumber__c.value;
+    //         this.queryVariables.brukerId.type = 'ORGNR';
+    //     }
+    // }
 
     /**
      * Get the last journalpostId in the journalpost list and add this to the query variables
@@ -140,7 +172,7 @@ export default class NksSafJournalpostList extends LightningElement {
      * Call getJournalpostsUser apex method and add the new journalposts to the journalpost list
      */
     async callGetJournalpostsUser() {
-
+        console.debug('START callGetJournalpostsUser');
         // Apex can't handle inner classes.
         // We need to stringify and parse on the other side.
         const inputParams = {
@@ -155,6 +187,16 @@ export default class NksSafJournalpostList extends LightningElement {
 
             if (true === journalpostData.isSuccess) {
                 this.journalposts = this.journalposts.concat(journalpostData.documentOverview.journalposter);
+
+                let journalpostThemes = [];
+                this.journalposts.forEach(journalpost => {
+                    if (false == journalpostThemes.includes(journalpost.tema)) {
+                        journalpostThemes.push(journalpost.tema);
+                    }
+                });
+
+                this.availableThemes = journalpostThemes;
+
                 this.filterAllJournalposts();
             } else {
                 this.setErrorMessage(journalpostData.error, 'journalpostError');
@@ -166,6 +208,12 @@ export default class NksSafJournalpostList extends LightningElement {
 
         this.isLoaded = true;
         this.isLoadingMore = false;
+        console.debug('END callGetJournalpostsUser');
+    }
+
+    setSelectedTheme(event) {
+        this.selectedTema = event.detail;
+        this.filterAllJournalposts();
     }
 
     /**
@@ -173,10 +221,11 @@ export default class NksSafJournalpostList extends LightningElement {
      */
     filterAllJournalposts() {
         this.filteredJournalPosts = this.journalposts.filter(journalpost => (
-            this.selectedTemas.length > 1 || this.selectedTemas.includes(journalpost.tema))
+            this.selectedTema === 'all' || this.selectedTema === journalpost.tema)
             &&
-            (this.selectedJornalpostTypes.includes(journalpost.selectedJornalpostTypes)
+            (this.selectedJornalpostTypes.includes(journalpost.journalposttype)
             ));
+        console.log(this.filteredJournalPosts);
     }
 
     setErrorMessage(error, type) {

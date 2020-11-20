@@ -1,16 +1,26 @@
 <template>
     <div class="slds-p-horizontal_small">
 
+        <!-- Date and type -->
         {jornalpostDate}/{fromToType}
 
+        <!-- Journalpost header -->
         <div class="slds-text-heading_small">
-            <c-nks-saf-document-link journalpost-id={journalpost.journalpostId} dokument-info={mainDocument}>
-            </c-nks-saf-document-link>
+            <template if:true={mainDocument}>
+                <c-nks-saf-document-link journalpost-id={journalpost.journalpostId} dokument-info={mainDocument}>
+                </c-nks-saf-document-link>
+            </template>
+            <!-- If no document fount -->
+            <template if:false={mainDocument}>
+                Ingen dokument funnet på denne journalposten.
+            </template>
         </div>
-        <template if:true={hasAttachments}>
-            <h2>Dokumentet har {nmbOfAttachments} vedlegg:</h2>
-            <ul class="slds-list_dotted">
 
+        <!-- Journalpost attachments -->
+        <template if:true={hasAttachments}>
+            <h2>Dokumentet har {numberOfAttachments} vedlegg:</h2>
+
+            <ul class="slds-list_dotted">
                 <template for:each={attachments} for:item='dokument'>
                     <li key={dokument.dokumentInfoId}>
                         <c-nks-saf-document-link dokument-info={dokument} journalpost-id={journalpost.journalpostId}>
@@ -20,6 +30,8 @@
 
             </ul>
         </template>
+
+        <!-- NAV Case ID -->
         SaksId:&nbsp;{journalpost.sak.fagsakId}
     </div>
 </template>
