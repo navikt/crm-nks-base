@@ -77,7 +77,7 @@
             </value>
         </filters>
         <filters>
-            <field>Code__c</field>
+            <field>CRM_Code__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Queue_Theme_Mapping</elementReference>
@@ -87,7 +87,7 @@
         <object>Common_Code__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <queriedFields>Code__c</queriedFields>
+        <queriedFields>CRM_Code__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
