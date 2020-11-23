@@ -1,39 +1,58 @@
 public class NKS_ThemeUtils {
 
+    /**
+    * @description: Retrieves all active theme groups, themes and subthemes and returns
+    * and returns in a hierarchical mapped wrapper class
+    * @author Stian Ruud Schikora | 11-20-2020 
+    * @return Categories 
+    **/
     @AuraEnabled(Cacheable=true)
-    public static Map<String, List<Theme__c>> getThemes(){
-        Map<String, List<Theme__c>> groupThemeMap = new Map<String, List<Theme__c>>();
+    public static Categories getCategorization() {
+        List<Common_Code__c> themeGroups = [SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c FROM Common_Code__c WHERE CRM_Code_set__c = 'Temagrupper' AND CRM_Active__c = true ORDER BY Name];
+        List<Common_Code__c> themesAndSubthemes = [SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c, CRM_Parent_Code__r.CRM_Code__c, 
+                                                        (SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c, CRM_Parent_Code__r.CRM_Code__c FROM Child_Codes__r WHERE CRM_Code_Set__c = 'Behandlingstema' AND CRM_Active__c = true ORDER BY Name)
+                                                    FROM Common_Code__c WHERE CRM_Code_set__c = 'Tema' AND CRM_Active__c = true ORDER BY Name];
+        
+        Map<String, List<Common_Code__c>> themeMap = new  Map<String, List<Common_Code__c>>();
+        Map<String, List<Common_Code__c>> subthemeMap = new  Map<String, List<Common_Code__c>>();
 
-        for (Theme__c theme : [SELECT Id, Name, CRM_Theme_Group__c, toLabel(CRM_Theme_Group__c) themeGroupLabel FROM Theme__c WHERE CRM_Active__c = true]) {
-            if(groupThemeMap.containsKey(theme.CRM_Theme_Group__c)){
-                List<Theme__c> mapThemes = groupThemeMap.get(theme.CRM_Theme_Group__c);
+
+        for (Common_Code__c theme : themesAndSubthemes) {
+            if(themeMap.containsKey(theme.CRM_Parent_Code__r.CRM_Code__c)) {
+                List<Common_Code__c> mapThemes = themeMap.get(theme.CRM_Parent_Code__r.CRM_Code__c);
                 mapThemes.add(theme);
-                groupThemeMap.put(theme.CRM_Theme_Group__c, mapThemes);
+                themeMap.put(theme.CRM_Parent_Code__r.CRM_Code__c, mapThemes);
             }
             else{
-                groupThemeMap.put(theme.CRM_Theme_Group__c, new List<Theme__c>{theme});
+                themeMap.put(theme.CRM_Parent_Code__r.CRM_Code__c, new List<Common_Code__c>{theme});
+            }
+
+            for(Common_Code__c subtheme : theme.Child_Codes__r) {
+                if(subthemeMap.containsKey(subtheme.CRM_Parent_Code__r.CRM_Code__c)) {
+                    List<Common_Code__c> mapSubthemes = subthemeMap.get(subtheme.CRM_Parent_Code__r.CRM_Code__c);
+                    mapSubthemes.add(theme);
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.CRM_Code__c, mapSubthemes);
+                }
+                else{
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.CRM_Code__c, new List<Common_Code__c>{subtheme});
+                }
             }
         }
 
-        return groupThemeMap;
+        return new Categories(themeGroups, themeMap, subthemeMap);
     }
 
-    @AuraEnabled(Cacheable=true)
-    public static Map<String, List<Subtheme__c>> getSubthemes(){
-       Map<String, List<Subtheme__c>> subthemeMap = new Map<String, List<Subtheme__c>>();
+    @testVisible
+    private class Categories{
+        @AuraEnabled public List<Common_Code__c> themeGroups;
+        @AuraEnabled public Map<String, List<Common_Code__c>> themeMap; //Mapping a theme group code to list of themes
+        @AuraEnabled public Map<String, List<Common_Code__c>> subthemeMap; //Mapping a theme code to a list of subthemes
 
-       for (Subtheme__c subtheme : [SELECT Id, CRM_Theme__c, Name FROM Subtheme__c WHERE CRM_Active__c = true]) {
-           if(subthemeMap.containsKey(subtheme.CRM_Theme__c)){
-               List<Subtheme__c> mapSubthemes = subthemeMap.get(subtheme.CRM_Theme__c);
-               mapSubthemes.add(subtheme);
-               subthemeMap.put(subtheme.CRM_Theme__c, mapSubthemes);
-           }
-           else{
-                subthemeMap.put(subtheme.CRM_Theme__c, new List<Subtheme__c>{subtheme});
-           }
-       }
-
-       return subthemeMap;
+        public Categories(List<Common_Code__c> themeGroups, Map<String, List<Common_Code__c>> themeMap, Map<String, List<Common_Code__c>> subthemeMap){
+            this.themeGroups = themeGroups;
+            this.themeMap = themeMap;
+            this.subthemeMap = subthemeMap;
+        }
     }
 
 }

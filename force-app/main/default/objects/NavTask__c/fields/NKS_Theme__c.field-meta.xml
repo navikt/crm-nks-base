@@ -6,17 +6,17 @@
     <externalId>false</externalId>
     <label>Theme</label>
     <lookupFilter>
-        <active>false</active>
+        <active>true</active>
         <filterItems>
             <field>$Source.NKS_Theme_Group__c</field>
             <operation>equals</operation>
-            <valueField>Theme__c.CRM_Theme_Group__c</valueField>
+            <valueField>Common_Code__c.CRM_Parent_Code__c</valueField>
         </filterItems>
-        <isOptional>true</isOptional>
+        <isOptional>false</isOptional>
     </lookupFilter>
-    <referenceTo>Theme__c</referenceTo>
-    <relationshipLabel>NAV Tasks</relationshipLabel>
-    <relationshipName>NAV_Tasks</relationshipName>
+    <referenceTo>Common_Code__c</referenceTo>
+    <relationshipLabel>NAV Tasks (Theme)</relationshipLabel>
+    <relationshipName>Theme_NavTasks</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
