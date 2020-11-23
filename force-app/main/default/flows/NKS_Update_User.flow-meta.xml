@@ -532,7 +532,7 @@
         </inputAssignments>
         <object>User</object>
     </recordUpdates>
-    <runInMode>SystemModeWithSharing</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
