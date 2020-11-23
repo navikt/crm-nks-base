@@ -5,6 +5,10 @@
         <field>User.NKS_Division__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NKS_Update_User</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Edit User</label>
 </PermissionSet>
