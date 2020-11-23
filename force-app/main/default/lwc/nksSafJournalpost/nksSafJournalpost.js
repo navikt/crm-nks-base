@@ -2,15 +2,17 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class NksSafJournalpost extends LightningElement {
     @api journalpost;
+
+    @track mainDocument = null;
+    @track attachments = null;
+
     numberOfAttachments = 0;
     hasAttachments = false;
     jornalpostDate = null;
     fromToType = null;
-    @track mainDocument = null;
-    @track attachments = null;
 
     connectedCallback() {
-        this.numberOfAttachments = this.getNumberOfAttachments();
+        this.getNumberOfAttachments();
         this.setFromToType();
         this.setMainDocument();
         this.setAttachments();
@@ -64,14 +66,6 @@ export default class NksSafJournalpost extends LightningElement {
         this.attachments = attachments;
     }
 
-    // get nmbOfAttachments() {
-    //     return this.getNumberOfAttachments();
-    // }
-
-    // get hasAttachments() {
-    //     return 0 < this.getNumberOfAttachments() ? true : false;
-    // }
-
     getNumberOfAttachments() {
         let numberOfAttachments = 0;
 
@@ -79,6 +73,6 @@ export default class NksSafJournalpost extends LightningElement {
             numberOfAttachments = this.journalpost.dokumenter.length - 1;
         }
 
-        return numberOfAttachments;
+        this.numberOfAttachments = numberOfAttachments;
     }
 }

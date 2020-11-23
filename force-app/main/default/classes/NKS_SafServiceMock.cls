@@ -3,7 +3,7 @@
  * Mock class for NKS_SafService
  * Let a user mock the response without having to create callout mocks with JSON strings
  */
-
+@IsTest
 public with sharing class NKS_SafServiceMock implements StubProvider {
     private List<NKS_SafApexTypes.SafGetDocumentResponse> safGetDocumentResponseList;
     private List<NKS_SafApexTypes.SafQueryResponse> safQueryResponseList;

@@ -3,13 +3,16 @@
  * The output is Apex Types defined in the class NKS_SafApexTypes
  * * You should check the SAF documentation before using this class.
  * TODO: Go through and check that everything is in sync with the ApiController class
- * ? Move mock checks to ApiController???
+ * ? Move mock callount/mock checks to ApiController?
  */
 public with sharing class NKS_SafService extends ApiController {
 
     private final Boolean isIntegrationActive = false;
     private Boolean isSandbox = false;
 
+    /**
+     * Constructor sets the isSandbox parameter
+     */
     public NKS_SafService() {
         isSandbox();
     }
@@ -137,11 +140,22 @@ public with sharing class NKS_SafService extends ApiController {
         setAuthHeaders();
     }
 
+    /**
+     * Set the auth headers, subscription key and on-behalf-of token
+     */
     private void setAuthHeaders() {
         addServiceAuthHeader('saf');
         addSubscriptionKey();
     }
 
+    /**
+     * Check the different set parameters to see if we should use a live connection or mocks.
+     * 
+     * Criterias for using the "live" connection (either must be true):
+     * * isSanbox is false
+     * * isIntegrationActive is true
+     * * Running in test context
+     */
     private Boolean isIntegrationLive() {
         if(!isSandbox || isIntegrationActive || Test.isRunningTest()) {
             return true;
@@ -150,6 +164,9 @@ public with sharing class NKS_SafService extends ApiController {
         return false;
     }
 
+    /**
+     * Set the parameter isSandbox
+     */
     private void isSandbox() {
         isSandbox = [SELECT Id, isSandbox FROM Organization].isSandbox;
     }

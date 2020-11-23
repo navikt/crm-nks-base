@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
+    <description>Check if the user can view the document, if true display the link to the visualforce page NKS_SafViewDocument. Display only the dokument name if not allowed to open the dokument.</description>
     <isExposed>false</isExposed>
+    <masterLabel>SAF Document Link</masterLabel>
 </LightningComponentBundle>
