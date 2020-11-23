@@ -1,16 +1,21 @@
 /**
  * Service class for making callouts to the SAF API
  * The output is Apex Types defined in the class NKS_SafApexTypes
- * * Check the SAF documentation before using this class.
- * ! Including mocks, they should be removed before pulled into master
+ * * You should check the SAF documentation before using this class.
  * TODO: Go through and check that everything is in sync with the ApiController class
+ * ? Move mock checks to ApiController???
  */
 public with sharing class NKS_SafService extends ApiController {
 
+    private final Boolean isIntegrationActive = false;
+    private Boolean isSandbox = false;
+
+    public NKS_SafService() {
+        isSandbox();
+    }
+
     /**
      * Do a query for documents by calling the SAF api
-     * TODO: Better exception handling
-     * ! Not yet available in APIM
      * @param query String of the query towards SAF, check the SAF documentation for details.
      * @param queryVariables apex type holding all the possible query varaibles for a SAF query.
      */
@@ -25,11 +30,12 @@ public with sharing class NKS_SafService extends ApiController {
             
             //Prepare the request
             initPostQueryRequest();
-            
-            // SETTING MOCK DATA
-            //resp = NKS_SafServiceMock.mockPostQueryStringSuccess(200);
-            
-            doCallout();
+
+            if(isIntegrationLive()) {
+                doCallout();
+            } else {
+                resp = NKS_SafServiceIntegrationMock.mockPostQueryStringResponse(200);
+            }
 
             //Prepare the response
             Integer resStatusCode = getResponse().getStatusCode();
@@ -73,7 +79,6 @@ public with sharing class NKS_SafService extends ApiController {
 
 	/**
     * Call saf hentdokument and returns the Apex Type SafGetDocumentResponse. Containg the document information.
-    * ? Should we throw an exception if the reponse does not have one of the expected status codes
 	*/
 	public NKS_SafApexTypes.SafGetDocumentResponse getSafDocument(String journalId, String documentInfoId, String variantFormat) {
         NKS_SafApexTypes.SafGetDocumentResponse getDocumentResponse = new NKS_SafApexTypes.SafGetDocumentResponse();
@@ -90,10 +95,11 @@ public with sharing class NKS_SafService extends ApiController {
             
             //Prepare the returned data.
             
-            // SETTING MOCK DATA
-            //resp = NKS_SafServiceMock.mockGetDocumentString(200);
-            
-            doCallout();
+            if(isIntegrationLive()) {
+                doCallout();
+            } else {
+                resp = NKS_SafServiceIntegrationMock.mockGetDocumentResponse(200);
+            }
 
             Integer resStatusCode = getResponse().getStatusCode();
             String body = getResponse().getBody();
@@ -134,6 +140,18 @@ public with sharing class NKS_SafService extends ApiController {
     private void setAuthHeaders() {
         addServiceAuthHeader('saf');
         addSubscriptionKey();
+    }
+
+    private Boolean isIntegrationLive() {
+        if(!isSandbox || isIntegrationActive || Test.isRunningTest()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void isSandbox() {
+        isSandbox = [SELECT Id, isSandbox FROM Organization].isSandbox;
     }
 	
     public class NKS_SafException extends Exception {}
