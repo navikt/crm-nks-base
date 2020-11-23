@@ -1,12 +1,7 @@
-import { LightningElement, api, track, wire } from 'lwc';
-// import { getRecord } from 'lightning/uiRecordApi';
-// import ACCOUNT_INT_PERSONIDENT from '@salesforce/schema/Account.INT_PersonIdent__c';
-// import ACCOUNT_INT_ORGANIZATION_NUMBER from '@salesforce/schema/Account.INT_OrganizationNumber__c';
-// import ACCOUNT_IS_PERSON_ACCOUNT from '@salesforce/schema/Account.IsPersonAccount';
+import { LightningElement, api, track } from 'lwc';
 import getJournalpostsUser from "@salesforce/apex/NKS_SafJournalpostListController.getJournalpostsUser";
 import getAccountQueryVariables from "@salesforce/apex/NKS_SafJournalpostListController.getAccountQueryVariables";
 
-//const ACCOUNT_FIELDS = [ACCOUNT_INT_PERSONIDENT, ACCOUNT_INT_ORGANIZATION_NUMBER, ACCOUNT_IS_PERSON_ACCOUNT];
 const DEFAULT_NMB_JOURNALPOSTS = 10;
 const DEFAULT_SELECTED_JOURNALPOST_TYPES = ["I", "U", "N"];
 const DEFAULT_SELECTED_TEMA = 'all';
@@ -18,6 +13,9 @@ const QUERY_FIELDS = {
         { name: "journalposttype" },
         { name: "journalstatus" },
         { name: "tema" },
+        { name: "temanavn" },
+        { name: "behandlingstema" },
+        { name: "behandlingstemanavn" },
         { name: "datoOpprettet" },
         {
             name: "sak",
@@ -57,7 +55,6 @@ export default class NksSafJournalpostList extends LightningElement {
     @api nmbOfJournalposts;
 
     @api field;
-    //@api parentId;
     @api objectApiName;
     @api relationField;
     @api parentRelationField;
@@ -69,9 +66,9 @@ export default class NksSafJournalpostList extends LightningElement {
     @track filteredJournalPosts;
     @track error;
 
-    availableThemes;
+    @track availableThemes = [];
+    @track availableProcessThemes = [];
 
-    // @track queryFields;
     isLoaded;
     isLoadingMore;
 
@@ -81,10 +78,7 @@ export default class NksSafJournalpostList extends LightningElement {
 
     //Query variables
     queryVariables = {
-        brukerId: {
-            id: "",
-            type: "",
-        },
+        brukerId: {},
         foerste: 10
     }
 
@@ -93,7 +87,6 @@ export default class NksSafJournalpostList extends LightningElement {
         this.isLoadingMore = false;
         this.isLoaded = false;
         this.nmbOfJournalposts = (this.nmbOfJournalposts) ? this.nmbOfJournalposts : DEFAULT_NMB_JOURNALPOSTS;
-        // // this.queryFields = (this.queryFields) ? this.queryFields : DEFAULT_QUERY_FIELDS;
         this.selectedTema = (this.selectedTema) ? this.selectedTema : DEFAULT_SELECTED_TEMA;
         this.selectedJornalpostTypes = (this.selectedJornalpostTypes) ? this.selectedJornalpostTypes : DEFAULT_SELECTED_JOURNALPOST_TYPES;
         this.journalposts = [];
@@ -116,55 +109,21 @@ export default class NksSafJournalpostList extends LightningElement {
             brukerIdType: this.brukerIdType
         };
         try {
-            const brukerInput = await getAccountQueryVariables(inputParams);
-            this.queryVariables.brukerId = brukerInput;
+            this.queryVariables.brukerId = await getAccountQueryVariables(inputParams);
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
         }
     }
 
     /**
-     * Get the data we need from the account
-     * @param {*} value 
-     */
-    // @wire(getRecord, { recordId: "$recordId", fields: ACCOUNT_FIELDS })
-    // getWiredAccount(value) {
-    //     this.wiredAccount = value;
-    //     const { data, error } = value;
-
-    //     if (data) {
-    //         this.journalposts = [];
-    //         this.filteredJournalPosts = [];
-    //         this.account = data;
-    //         this.setQueryVariablesFromAccount();
-    //         this.callGetJournalpostsUser();
-    //     }
-    //     else if (error) {
-    //         this.setErrorMessage(error, 'fetchResponseError');
-    //         this.isLoaded = true;
-    //     }
-    // }
-
-    /**
-     * Set the queryVariables on the BrukerId based on the account
-     */
-    // setQueryVariablesFromAccount() {
-    //     if (this.account.fields.IsPersonAccount.value) {
-    //         this.queryVariables.brukerId.id = this.account.fields.INT_PersonIdent__c.value;
-    //         this.queryVariables.brukerId.type = 'AKTOERID';
-    //     } else {
-    //         this.queryVariables.brukerId.id = this.account.fields.INT_OrganizationNumber__c.value;
-    //         this.queryVariables.brukerId.type = 'ORGNR';
-    //     }
-    // }
-
-    /**
      * Get the last journalpostId in the journalpost list and add this to the query variables
      */
     queryMoreJournalPosts() {
-        this.isLoadingMore = true;
         let lastJournalpostId = this.journalposts[this.journalposts.length - 1].journalpostId;
+
         this.queryVariables.etter = lastJournalpostId;
+        this.isLoadingMore = true;
+
         this.callGetJournalpostsUser();
     }
 
@@ -172,7 +131,6 @@ export default class NksSafJournalpostList extends LightningElement {
      * Call getJournalpostsUser apex method and add the new journalposts to the journalpost list
      */
     async callGetJournalpostsUser() {
-        console.debug('START callGetJournalpostsUser');
         // Apex can't handle inner classes.
         // We need to stringify and parse on the other side.
         const inputParams = {
@@ -181,22 +139,13 @@ export default class NksSafJournalpostList extends LightningElement {
         };
 
         this.error = null;
+
         try {
             const journalpostData = await getJournalpostsUser(inputParams);
 
-
             if (true === journalpostData.isSuccess) {
                 this.journalposts = this.journalposts.concat(journalpostData.documentOverview.journalposter);
-
-                let journalpostThemes = [];
-                this.journalposts.forEach(journalpost => {
-                    if (false == journalpostThemes.includes(journalpost.tema)) {
-                        journalpostThemes.push(journalpost.tema);
-                    }
-                });
-
-                this.availableThemes = journalpostThemes;
-
+                this.collectThemes();
                 this.filterAllJournalposts();
             } else {
                 this.setErrorMessage(journalpostData.error, 'journalpostError');
@@ -208,12 +157,40 @@ export default class NksSafJournalpostList extends LightningElement {
 
         this.isLoaded = true;
         this.isLoadingMore = false;
-        console.debug('END callGetJournalpostsUser');
     }
 
     setSelectedTheme(event) {
         this.selectedTema = event.detail;
         this.filterAllJournalposts();
+    }
+
+    collectThemes() {
+        let processThemes = [];
+        let themes = [];
+
+        this.journalposts.forEach(journalpost => {
+
+            if (false == themes.some(t => journalpost.tema === t.value)) {
+                let theme = this.setTheme(journalpost.tema, journalpost.temaNavn);
+                if (theme) { themes.push(theme); }
+            }
+
+            if (false == processThemes.some(t => journalpost.behandlingstema === t.value)) {
+                let processTheme = this.setTheme(journalpost.behandlingstema, journalpost.behandlingstemanavn);
+                if (processTheme) { processThemes.push(processTheme); }
+            }
+        });
+
+        this.availableThemes = themes;
+        this.availableProcessThemes = processThemes;
+    }
+
+    setTheme(code, name) {
+        if (code && name) {
+            return { value: code, label: name };
+        }
+
+        return null;
     }
 
     /**
