@@ -1,17 +1,25 @@
 <template>
     <lightning-card title="Journalposter" icon-name="standard:file">
+        <!-- CARD BODY -->
         <lightning-layout>
+
+            <!-- SAF Available theme vertical navigation list -->
             <lightning-layout-item padding="around-small" size="2">
-                <c-nks-sak-vertical-navigation onthemeselection={setSelectedTheme} available-themes={availableThemes}
-                    record-id={recordId} object-api-name={objectApiName} selected-theme-api-name="NKS_Theme__c"
-                    selected-theme-group-api-name="NKS_Theme_Group__c">
-                </c-nks-sak-vertical-navigation>
+                <c-nks-saf-vertical-navigation onthemeselection={setSelectedTheme} available-themes={availableThemes}
+                    available-process-themes={availableProcessThemes}>
+                </c-nks-saf-vertical-navigation>
             </lightning-layout-item>
+
+            <!-- CONTENT -->
             <lightning-layout-item padding="around-small" size="10">
+
+                <!-- SPINNER -->
                 <template if:false={isLoaded}>
                     <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                 </template>
+
                 <template if:true={isLoaded}>
+                    <!-- ERROR MESSAGE -->
                     <template if:true={error}>
                         <div class="slds-text-color_error slds-p-left_x-small">
                             <p>
@@ -25,9 +33,13 @@
                             </p>
                         </div>
                     </template>
+
+                    <!-- EMPTY RESULT -->
                     <template if:false={journalposts}>
                         <p>Kunne ikke finne noen journalposter.</p>
                     </template>
+
+                    <!-- LIST OF JOURNALPOSTS -->
                     <template if:true={filteredJournalPosts}>
                         <ul class="slds-has-dividers_top">
 
@@ -40,8 +52,11 @@
                         </ul>
                     </template>
                 </template>
+
             </lightning-layout-item>
         </lightning-layout>
+
+        <!-- CARD FOOTER -->
         <p slot="footer">
             <template if:true={isLoadingMore}>
                 <div class="slds-is-relative">
