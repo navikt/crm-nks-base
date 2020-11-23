@@ -44,6 +44,37 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Oversettelse</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Nynorsk__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>lookupFieldName</name>
                     <value>Knowledge__kav.Id</value>
                 </componentInstanceProperties>
@@ -56,12 +87,50 @@
                     <value>Knowledge__kav.NKS_Nynorsk</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-b3074ef3-8901-42db-9d2a-00bf0b8ec3dc</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Oversettelse</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_English__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -77,12 +146,50 @@
                     <value>Knowledge__kav.NKS_English</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-bqmw5t7387</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Hvor finner jeg relatert informasjon på NAV.no?</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Nav_no__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -98,12 +205,50 @@
                     <value>Knowledge__kav.NKS_Nav_no</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-d1434f65-49d2-4aff-9b7a-a8cd11885b9c</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Lovverk relatert til denne artikkelen</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Legislation__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -116,15 +261,53 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>updateQuickActionName</name>
-                    <value>Knowledge__kav.NKS_Nynorsk</value>
+                    <value>Knowledge__kav.NKS_Legislation</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-5qmzeynctg9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Tilgjengelige ressurser</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Resources__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -140,6 +323,13 @@
                     <value>Knowledge__kav.NKS_Resources</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-0bbede22-814c-4114-b3bb-c48c91c49f75</name>
@@ -249,7 +439,26 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Online</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

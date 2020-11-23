@@ -2,18 +2,32 @@ public without sharing class ChatAuthController {
     
     @AuraEnabled
     public static void setStatus(Id chatTranscriptId, String status) {
+        List<SObject> recordsToUpdate = new List<SObject>();
+
         try {
-            LiveChatTranscript lct = new LiveChatTranscript(Id = chatTranscriptId);
+            LiveChatTranscript lct = getChatTranscript(chatTranscriptId);
             lct.CRM_Authentication_Status__c = status;
+            recordsToUpdate.add(lct);
+            
             if (status == 'Completed') {
-                lct.AccountId = getPersonAccountId();
-                lct.ContactId = getPersonContactId(); 
+                Id accountId = getPersonAccountId();
+                Id contactId = getPersonContactId();
+                lct.AccountId = accountId;
+                lct.ContactId = contactId;
+
+                if(String.isNotBlank(lct.CaseId)) {
+                    Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
+                    recordsToUpdate.add(casy);
+                }
             }
-            update lct;
+            update recordsToUpdate;
         } catch (Exception ex) {
             throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Failed to update authentication status');
         }
+    }
 
+    private static LiveChatTranscript getChatTranscript(Id chatTranscriptId) {
+        return [SELECT Id, CaseId FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
     }
 
     /**
@@ -41,10 +55,11 @@ public without sharing class ChatAuthController {
     public static Map<String, String> getChatInfo(String chatTranscriptId) {
         Map<String, String> chatInfo;
         try {
-            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, LiveChatButton.WindowLanguage, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
+            LiveChatTranscript trans = [SELECT Id, CRM_Authentication_Status__c, AccountId, Account.CRM_Person__c, LiveChatButton.WindowLanguage, Status FROM LiveChatTranscript WHERE Id =: chatTranscriptId];
             chatInfo = new Map<String, String> {'AUTH_STATUS' => trans.CRM_Authentication_Status__c,
                                                 'CONVERSATION_STATUS' => trans.Status,
                                                 'ACCOUNTID' => trans.accountId,
+                                                'PERSONID' => trans.Account.CRM_Person__c,
                                                 'CHAT_LANGUAGE' => String.isNotBlank(trans.LiveChatButton.WindowLanguage) ? trans.LiveChatButton.WindowLanguage : 'no'};
             return chatInfo;
         }

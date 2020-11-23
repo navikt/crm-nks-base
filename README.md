@@ -18,6 +18,14 @@ Pakken er avhengig av følgende pakker:
 * [crm-platform-access-control](https://github.com/navikt/XXXXXXXXXXXXX)
 * [crm-arbeidsgiver-base](https://github.com/navikt/crm-arbeidsgiver-base)
 
+## Funksjonelt oppsett
+
+Det er noen viktige elementer som må sette opp korrekt for at funksjonalitet for NKS skal fungere som den skal.
+* Opprettelse av nødvendige delingsregler for Case, NavTask__c og LiveChatTranscript for håndtering av henvendelser som inneholder informasjon om sosiale tjenester (Regler ligger i unpackagable)
+* Assignment til public group **NKS Veiledere**. 
+	- Dette er viktig da de nevnte delingsreglene deler all data med medlemmer av denne gruppen såfremt dataen ikke inneholder sensitiv informasjon om sosiale tjenester
+* Oppdatering av custom setting **Access Token Scope** med riktige scopes for APIene man ønsker å sette opp (f.eks Oppgave, og Dokarkiv)
+	- Har man tilgang kan f.eks disse finnes  for preprod ved å navigere til riktig klient i [Azure](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
 
 ## Komme i gang
 

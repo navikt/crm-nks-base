@@ -5,17 +5,17 @@
     <masterLabel>Record Detail</masterLabel>
     <description>Component to display selected fields from a record</description>
     <targets>
-      <target>lightning__RecordPage</target>
-  </targets>
-  <targetConfigs>
-      <targetConfig targets="lightning__RecordPage">
-        <property name="cardLabel" label="Card title" type="String" default="Title" />
-        <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="Title" />
-        <property name="viewedObjectApiName" label="Object API Name (Keep blank if displaying information from current record)" description="Required if displaying information from a related record" type="String" />
-        <property name="relationshipField" label="Relationship field (API)" description="Required if displaying information from a related record" type="String" />
-        <property name="displayedFields" label="Fields to display (API names, comma separated)" type="String" required="true" default="Name" />
-        <property name="showLink" label="Click to preview" type="Boolean" description="If true, the first displayed field shows a link to the record" default="false" />
-        <property name="numCols" label="Number of columns" type="Integer" required="true" min="2" max="4" default="2" />
-      </targetConfig>
-  </targetConfigs>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="cardLabel" label="Card title" type="String" default="Title" />
+            <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="Title" />
+            <property name="viewedObjectApiName" label="Object API Name (Keep blank if displaying information from current record)" description="Required if displaying information from a related record" type="String" />
+            <property name="relationshipField" label="Relationship field (API)" description="Required if displaying information from a related record" type="String" />
+            <property name="displayedFields" label="Fields to display (API names, comma separated)" type="String" required="true" default="Name" />
+            <property name="showLink" label="Click to preview" type="Boolean" description="If true, the first displayed field shows a link to the record" default="false" />
+            <property name="numCols" label="Number of columns" type="Integer" required="true" min="1" max="4" default="2" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

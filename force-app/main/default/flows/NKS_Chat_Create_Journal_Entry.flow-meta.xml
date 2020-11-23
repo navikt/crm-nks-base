@@ -4,8 +4,8 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>617</locationX>
-        <locationY>899</locationY>
+        <locationX>607</locationX>
+        <locationY>898</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -15,9 +15,15 @@
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>taskIds</name>
+            <name>requestType</name>
             <value>
-                <elementReference>NAV_Task.Id</elementReference>
+                <stringValue>POST</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>task</name>
+            <value>
+                <elementReference>NAV_Task</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -25,16 +31,13 @@
         <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
-        <locationX>178</locationX>
-        <locationY>709</locationY>
+        <locationX>168</locationX>
+        <locationY>708</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Should_Create_Task</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Error_Screen</targetReference>
-        </faultConnector>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -53,16 +56,13 @@
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
-        <locationX>178</locationX>
-        <locationY>584</locationY>
+        <locationX>168</locationX>
+        <locationY>583</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Encode_Original</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Error_Screen</targetReference>
-        </faultConnector>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -81,8 +81,8 @@
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>50</locationX>
-        <locationY>626</locationY>
+        <locationX>40</locationX>
+        <locationY>625</locationY>
         <assignmentItems>
             <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
             <operator>Add</operator>
@@ -178,8 +178,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>397</locationX>
-        <locationY>899</locationY>
+        <locationX>387</locationX>
+        <locationY>898</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -243,8 +243,8 @@
     <assignments>
         <name>Set_Journal_Entry_Created</name>
         <label>Set Journal Entry Created</label>
-        <locationX>998</locationX>
-        <locationY>840</locationY>
+        <locationX>988</locationX>
+        <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -288,8 +288,8 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>486</locationX>
-        <locationY>387</locationY>
+        <locationX>485</locationX>
+        <locationY>386</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
         </defaultConnector>
@@ -344,8 +344,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>170</locationX>
-        <locationY>845</locationY>
+        <locationX>160</locationX>
+        <locationY>844</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Entry_Created</targetReference>
         </defaultConnector>
@@ -450,8 +450,8 @@ TODAY())</expression>
     <recordCreates>
         <name>Create_NAV_Task</name>
         <label>Create NAV Task</label>
-        <locationX>492</locationX>
-        <locationY>1008</locationY>
+        <locationX>482</locationX>
+        <locationY>1007</locationY>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
@@ -461,8 +461,8 @@ TODAY())</expression>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>328</locationX>
-        <locationY>382</locationY>
+        <locationX>304</locationX>
+        <locationY>450</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Input_Screen</targetReference>
@@ -485,14 +485,11 @@ TODAY())</expression>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
         <locationX>493</locationX>
-        <locationY>200</locationY>
+        <locationY>199</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Error_Screen</targetReference>
-        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -509,16 +506,15 @@ TODAY())</expression>
         <queriedFields>NKS_Conversation__c</queriedFields>
         <queriedFields>AccountId</queriedFields>
         <queriedFields>NKS_Theme_Group__c</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>CaseId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>997</locationX>
+        <locationX>988</locationX>
         <locationY>543</locationY>
-        <faultConnector>
-            <targetReference>Error_Screen</targetReference>
-        </faultConnector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -526,8 +522,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>828</locationX>
-        <locationY>541</locationY>
+        <locationX>818</locationX>
+        <locationY>540</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -588,8 +584,8 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>178</locationX>
-        <locationY>451</locationY>
+        <locationX>168</locationX>
+        <locationY>450</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -652,6 +648,16 @@ TODAY())</expression>
             <fieldText>Task Priority:</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Task_due_date</name>
@@ -742,8 +748,8 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>496</locationX>
-        <locationY>658</locationY>
+        <locationX>486</locationX>
+        <locationY>657</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -762,13 +768,13 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
         <label>Send Journal Entry</label>
-        <locationX>51</locationX>
-        <locationY>755</locationY>
+        <locationX>41</locationX>
+        <locationY>754</locationY>
         <flowName>NKS_Post_Journal_Entry</flowName>
         <inputAssignments>
             <name>Complete</name>
@@ -791,16 +797,6 @@ TODAY())</expression>
             <name>Journal_Post_Response</name>
         </outputAssignments>
     </subflows>
-    <variables>
-        <name>Create_Task_Bool</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
     <variables>
         <description>The original document variant to be stored.</description>
         <name>Document_Original</name>

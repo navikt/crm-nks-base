@@ -1,15 +1,21 @@
 import { LightningElement, api, track } from 'lwc';
 import getSecurityMeasures from '@salesforce/apex/NKS_SecurityMeasuresController.getSecurityMeasures';
+//import getSecurityMeasuresRelated from '@salesforce/apex/NKS_SecurityMeasuresController.getSecurityMeasuresRelated';
 
 export default class nksSecurityMeasures extends LightningElement {
     @api recordId;
     @api componentTitle;
     @track relatedRecords;
     @api objectApiName;
+    @api relationshipField
 
     get title() {
         const numRecords = this.relatedRecords ? this.relatedRecords.length : 0;
         return ' ' + numRecords + ' ' + this.componentTitle;
+    }
+
+    get hasRelatedRecords() {
+        return this.relatedRecords != null && this.relatedRecords.length > 0;
     }
 
     handleClick() {
@@ -28,6 +34,7 @@ export default class nksSecurityMeasures extends LightningElement {
     getList() {
         getSecurityMeasures({
             parentId: this.recordId,
+            relationshipField: this.relationshipField,
             parentObjectApiName: this.objectApiName
         })
             .then(data => {
