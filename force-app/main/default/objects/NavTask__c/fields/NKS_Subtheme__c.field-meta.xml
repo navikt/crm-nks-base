@@ -10,13 +10,13 @@
         <filterItems>
             <field>$Source.NKS_Theme__c</field>
             <operation>equals</operation>
-            <valueField>Subtheme__c.CRM_Theme__c</valueField>
+            <valueField>Common_Code__c.CRM_Parent_Code__c</valueField>
         </filterItems>
-        <isOptional>true</isOptional>
+        <isOptional>false</isOptional>
     </lookupFilter>
-    <referenceTo>Subtheme__c</referenceTo>
-    <relationshipLabel>NAV Tasks</relationshipLabel>
-    <relationshipName>NAV_Tasks</relationshipName>
+    <referenceTo>Common_Code__c</referenceTo>
+    <relationshipLabel>NAV Tasks (Subtheme)</relationshipLabel>
+    <relationshipName>Subtheme_NavTasks</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

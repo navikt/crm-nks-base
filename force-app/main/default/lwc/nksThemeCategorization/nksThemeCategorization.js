@@ -1,6 +1,5 @@
 import { LightningElement, track, api, wire } from 'lwc';
-import getThemes from '@salesforce/apex/NKS_ThemeUtils.getThemes';
-import getSubthemes from '@salesforce/apex/NKS_ThemeUtils.getSubthemes';
+import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Theme_Categorization_Validation_Error';
@@ -9,35 +8,27 @@ export default class NksThemeCategorization extends LightningElement {
 
     @track themeGroups = [];
     @track subThemeMap;
-    themeGroupObj;
+    @track themeMap;
+    categories;
     chosenThemeGroup;
     chosenTheme;
     chosenSubtheme;
     subthemes;
     themes;
 
-
-    @wire(getThemes, {})
-    themeResults({ data, error }) {
+    @wire(getCategorization, {})
+    categoryResults({ data, error }) {
+        console.log('CATEGORIES: ' + JSON.stringify(data, null, 2));
         if (data) {
-            this.themeGroupObj = data;
+            this.categories = data;
             let groups = [];
-            for (const [key, value] of Object.entries(data)) {
-                if (groups.some(group => group['value'] === key)) {
-                    //Theme group already added
-                }
-                else {
-                    groups.push({ label: value[0].themeGroupLabel, value: key });
-                }
-            }
-            this.themeGroups = groups;
-        }
-    }
+            this.categories.themeGroups.forEach(themeGroup => {
+                groups.push({ label: themeGroup.Name, value: themeGroup.CRM_Code__c });
+            });
 
-    @wire(getSubthemes, {})
-    subthemeResults({ data, error }) {
-        if (data) {
-            this.subThemeMap = data;
+            this.themeGroups = groups;
+            this.subThemeMap = data.subthemeMap;
+            this.themeMap = data.themeMap;
         }
     }
 
@@ -75,10 +66,10 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     filterThemes() {
-        let listThemes = (this.themeGroup && this.themeGroupObj) ? this.themeGroupObj[this.themeGroup] : [];
+        let listThemes = (this.themeGroup && this.themeMap) ? this.themeMap[this.themeGroup] : [];
         let returnThemes = [];
         listThemes.forEach(theme => {
-            returnThemes.push({ label: theme.Name, value: theme.Id });
+            returnThemes.push({ label: theme.Name, value: theme.CRM_Code__c });
         });
         this.themes = returnThemes;
     }

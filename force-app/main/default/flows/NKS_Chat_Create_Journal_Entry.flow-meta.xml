@@ -389,30 +389,6 @@
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>Subtype</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>CRM_SubTheme__c</picklistField>
-        <picklistObject>NavTask__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>Theme_Group</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>NKS_Theme_Group__c</picklistField>
-        <picklistObject>LiveChatTranscript</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>Type</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>CRM_Theme__c</picklistField>
-        <picklistObject>NavTask__c</picklistObject>
-    </dynamicChoiceSets>
     <formulas>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
