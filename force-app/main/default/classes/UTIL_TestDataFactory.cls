@@ -483,4 +483,19 @@ public class UTIL_TestDataFactory {
             };
         }   
     }
+
+    public class CommonCodeDefaults implements FieldDefaults{
+        public Map<String, Object> getFieldDefaults() {return getFieldDefaults(false);}
+        public Map<String,Object> getFieldDefaults(Boolean bulkify){
+            return new Map<String,Object>{
+                'Name' => 'Test Name',
+                'CRM_Active__c' => true
+            };
+        }
+        public Map<String,String> getDmlFields(){
+            return new Map<String,String>{
+                //No dml fields
+            };
+        }   
+    }
 }
