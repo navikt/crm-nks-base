@@ -59,6 +59,12 @@
                     <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksSafJournalpostList</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-26e22062-a06d-42e1-9d00-2763d8b606b7</name>
