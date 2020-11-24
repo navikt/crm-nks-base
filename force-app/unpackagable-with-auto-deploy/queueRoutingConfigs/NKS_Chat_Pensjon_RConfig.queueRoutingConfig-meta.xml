@@ -4,7 +4,7 @@
     <isAttributeBased>false</isAttributeBased>
     <label>Chat Pensjon RConfig</label>
     <pushTimeout>60</pushTimeout>
-    <queueOverflowAssignee>NKS_Chat_Overflow</queueOverflowAssignee>
+    <queueOverflowAssignee></queueOverflowAssignee>
     <routingModel>MOST_AVAILABLE</routingModel>
     <routingPriority>5</routingPriority>
 </QueueRoutingConfig>
