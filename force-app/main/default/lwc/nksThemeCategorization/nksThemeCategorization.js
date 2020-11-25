@@ -18,12 +18,11 @@ export default class NksThemeCategorization extends LightningElement {
 
     @wire(getCategorization, {})
     categoryResults({ data, error }) {
-        console.log('CATEGORIES: ' + JSON.stringify(data, null, 2));
         if (data) {
             this.categories = data;
             let groups = [];
             this.categories.themeGroups.forEach(themeGroup => {
-                groups.push({ label: themeGroup.Name, value: themeGroup.CRM_Code__c });
+                groups.push({ label: themeGroup.Name, value: themeGroup.Id });
             });
 
             this.themeGroups = groups;
@@ -65,11 +64,55 @@ export default class NksThemeCategorization extends LightningElement {
         return this.chosenSubtheme;
     }
 
+    @api
+    get themeCode() {
+        let themeCode = '';
+
+        let themes = (this.themeGroup && this.themeMap) ? this.themeMap[this.themeGroup] : [];
+        for (let theme of themes) {
+            if (theme.Id === this.theme) {
+                themeCode = theme.CRM_Code__c;
+                break;
+            }
+        }
+        return themeCode;
+    }
+
+    @api
+    get themeGroupCode() {
+        let themeGroupCode = '';
+
+        if (this.categories) {
+            for (let themeGroup of this.categories.themeGroups) {
+                if (themeGroup.Id === this.themeGroup) {
+                    themeGroupCode = themeGroup.CRM_Code__c;
+                    break;
+                }
+            }
+        }
+        return themeGroupCode;
+    }
+
+    @api
+    get subthemeCode() {
+        let subthemeCode;
+
+        let subthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 ? this.subThemeMap[this.theme] : [];
+        for (let subtheme of subthemes) {
+            if (subtheme.Id === this.subtheme) {
+                subthemeCode = subtheme.CRM_Code__c;
+                break;
+            }
+        }
+
+        return subthemeCode;
+    }
+
     filterThemes() {
         let listThemes = (this.themeGroup && this.themeMap) ? this.themeMap[this.themeGroup] : [];
         let returnThemes = [];
         listThemes.forEach(theme => {
-            returnThemes.push({ label: theme.Name, value: theme.CRM_Code__c });
+            returnThemes.push({ label: theme.Name, value: theme.Id });
         });
         this.themes = returnThemes;
     }
