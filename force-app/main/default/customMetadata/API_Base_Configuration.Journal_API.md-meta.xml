@@ -4,18 +4,18 @@
     <protected>false</protected>
     <values>
         <field>Base_Endpoint_Test__c</field>
-        <value xsi:type="xsd:string">https://dokarkiv-q1.nais.preprod.local</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Base_Endpoint__c</field>
-        <value xsi:type="xsd:string">https://dokarkiv-q1.nais.preprod.local</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Named_Credential_Test__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">API_GW</value>
     </values>
     <values>
         <field>Named_Credential__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">API_GW</value>
     </values>
 </CustomMetadata>
