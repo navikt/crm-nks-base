@@ -4,12 +4,12 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>607</locationX>
-        <locationY>898</locationY>
+        <locationX>817</locationX>
+        <locationY>1331</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Set_Journal_Entry_Created</targetReference>
+            <targetReference>Set_Chat_Journal_Data</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -31,12 +31,12 @@
         <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
-        <locationX>168</locationX>
-        <locationY>708</locationY>
+        <locationX>366</locationX>
+        <locationY>651</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Should_Create_Task</targetReference>
+            <targetReference>Create_PDF_Document_Variant</targetReference>
         </connector>
         <inputParameters>
             <name>documentString</name>
@@ -56,8 +56,8 @@
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
-        <locationX>168</locationX>
-        <locationY>583</locationY>
+        <locationX>366</locationX>
+        <locationY>526</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -77,109 +77,230 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <description>Sends the journal request via Apex.</description>
+        <name>Post_Journal</name>
+        <label>Post Journal</label>
+        <locationX>366</locationX>
+        <locationY>934</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Validate_Callout</targetReference>
+        </connector>
+        <inputParameters>
+            <name>journalRequest</name>
+            <value>
+                <elementReference>Journal_Request</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>POST_JOURNAL</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <assignments>
+        <description>Assigns values to the document wrapper class.</description>
+        <name>Create_Document_Wrapper</name>
+        <label>Create Document Wrapper</label>
+        <locationX>72</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.tittel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Innlogget skriftlig samtale med NAV</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Journal_Variant_Original</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Journal_Variant_PDF</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Journal_Post_Request</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>40</locationX>
-        <locationY>625</locationY>
+        <locationX>369</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
+            <assignToReference>Journal_Request.dokumenter</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Journal_Document</elementReference>
+                <elementReference>Journal_Documents</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Document.tittel</assignToReference>
+            <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>CHAT?</stringValue>
+                <stringValue>Innlogget skriftlig samtale med NAV</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Document.dokumentvarianter</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Journal_Document_Variant</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Document_Variant.filtype</assignToReference>
+            <assignToReference>Journal_Request.kanal</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>pdf</stringValue>
+                <stringValue>NAV_NO</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Document_Variant.fysiskDokument</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Generate_PDF</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Document_Variant.variantformat</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ARKIV</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Post_Request.kanal</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>NAV_NO_CHAT</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Post_Request.journalpostType</assignToReference>
+            <assignToReference>Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INNGAAENDE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.sak.sakstype</assignToReference>
+            <assignToReference>Journal_Request.sak.sakstype</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>GENERELL_SAK</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Original.filtype</assignToReference>
+            <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>html</stringValue>
+                <elementReference>Theme_Categroization.themeCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Original.fysiskDokument</assignToReference>
+            <assignToReference>Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Encode_Original</elementReference>
+                <elementReference>Theme_Categroization.subthemeCode</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Original.variantformat</assignToReference>
+            <assignToReference>Journal_Request.bruker.id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.bruker.idType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FNR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FNR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_Full_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Post_Journal</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns values to the original document variant.</description>
+        <name>Create_Original_Document_Variant</name>
+        <label>Create Original Document Variant</label>
+        <locationX>77</locationX>
+        <locationY>651</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Variant_Original.filtype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>XML</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Variant_Original.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ORIGINAL</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Document.dokumentvarianter</assignToReference>
-            <operator>Add</operator>
+            <assignToReference>Journal_Variant_Original.fysiskDokument</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>Document_Original</elementReference>
+                <elementReference>Encode_Original.documentString</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Create_Document_Wrapper</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns values to the PDF document variant.</description>
+        <name>Create_PDF_Document_Variant</name>
+        <label>Create PDF Document Variant</label>
+        <locationX>233</locationX>
+        <locationY>651</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Variant_PDF.filtype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PDF</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Variant_PDF.variantformat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ARKIV</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Variant_PDF.fysiskDokument</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Generate_PDF.documentString</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Original_Document_Variant</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>387</locationX>
-        <locationY>898</locationY>
+        <locationX>597</locationX>
+        <locationY>1331</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -236,15 +357,22 @@
                 <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.INT_Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NAV_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Journal_Entry_Created</name>
-        <label>Set Journal Entry Created</label>
-        <locationX>988</locationX>
-        <locationY>839</locationY>
+        <name>Set_Chat_Journal_Data</name>
+        <label>Set Chat Journal Data</label>
+        <locationX>1198</locationX>
+        <locationY>1272</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -256,7 +384,7 @@
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <elementReference>Post_Journal.journalPostStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -280,6 +408,13 @@
                 <elementReference>Theme_Categroization.themeGroup</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Transcript</targetReference>
         </connector>
@@ -288,7 +423,7 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>485</locationX>
+        <locationX>699</locationX>
         <locationY>386</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
@@ -344,10 +479,10 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>160</locationX>
-        <locationY>844</locationY>
+        <locationX>355</locationX>
+        <locationY>1268</locationY>
         <defaultConnector>
-            <targetReference>Set_Journal_Entry_Created</targetReference>
+            <targetReference>Set_Chat_Journal_Data</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -366,20 +501,32 @@
             <label>Do Create Task</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Validate_Callout</name>
+        <label>Validate Callout</label>
+        <locationX>358</locationX>
+        <locationY>1096</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Successful_Post</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Post_Journal.success</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Should_Create_Task</targetReference>
+            </connector>
+            <label>Successful Post</label>
+        </rules>
+    </decisions>
     <description>Flow to initiate the creation of a journal entry.</description>
-    <dynamicChoiceSets>
-        <name>NAV_UNIT_CHOICE</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <object>NavUnit__c</object>
-        <valueField>INT_UnitNumber__c</valueField>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>NAV_UNITS</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <object>NavUnit__c</object>
-    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <description>Task priority picklist values.</description>
         <name>Priority_Picklist</name>
@@ -401,6 +548,11 @@
 5, {!$Flow.CurrentDate} + 2,
 6, {!$Flow.CurrentDate}+ 1,
 TODAY())</expression>
+    </formulas>
+    <formulas>
+        <name>Person_Full_Name</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Person.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Person.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Person.INT_MiddleName__c}</expression>
     </formulas>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Chat Create Journal Entry</label>
@@ -426,8 +578,8 @@ TODAY())</expression>
     <recordCreates>
         <name>Create_NAV_Task</name>
         <label>Create NAV Task</label>
-        <locationX>482</locationX>
-        <locationY>1007</locationY>
+        <locationX>692</locationX>
+        <locationY>1440</locationY>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
@@ -437,11 +589,11 @@ TODAY())</expression>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>304</locationX>
-        <locationY>450</locationY>
+        <locationX>591</locationX>
+        <locationY>384</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Input_Screen</targetReference>
+            <targetReference>Get_Person</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -453,14 +605,15 @@ TODAY())</expression>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>TAG_NavUnit__c</queriedFields>
+        <queriedFields>INT_PersonIdent__c</queriedFields>
+        <queriedFields>CRM_Person__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
-        <locationX>493</locationX>
+        <locationX>707</locationX>
         <locationY>199</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -486,11 +639,36 @@ TODAY())</expression>
         <queriedFields>CaseId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Query the related person record</description>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>482</locationX>
+        <locationY>384</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Input_Screen</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account.CRM_Person__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>INT_FirstName__c</queriedFields>
+        <queriedFields>INT_MiddleName__c</queriedFields>
+        <queriedFields>INT_LastName__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>988</locationX>
-        <locationY>543</locationY>
+        <locationX>1198</locationX>
+        <locationY>1023</locationY>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -498,8 +676,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>818</locationX>
-        <locationY>540</locationY>
+        <locationX>1054</locationX>
+        <locationY>869</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -510,7 +688,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Missing_Account_Error</name>
-            <fieldText>&lt;p&gt;Chat is not related to an account&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -525,7 +703,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Conversation_Error</name>
-            <fieldText>&lt;p&gt;No messages in the chat conversation. If the chat conversation is still in progress, please end the chat to allow for the transcript to be stored.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -537,6 +715,11 @@ TODAY())</expression>
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>Journal_Post_Error_Msg</name>
+            <fieldText>&lt;p&gt;En uventet feil oppsto ved arkivering av chatsamtalen. Kontakt administrator med følgende referanse: {!Post_Journal.errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Flow_Error</name>
@@ -560,8 +743,8 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>168</locationX>
-        <locationY>450</locationY>
+        <locationX>367</locationX>
+        <locationY>384</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -621,7 +804,7 @@ TODAY())</expression>
             <name>Task_Priority</name>
             <choiceReferences>Priority_Picklist</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Task Priority:</fieldText>
+            <fieldText>Oppgaveprioritet:</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -641,7 +824,7 @@ TODAY())</expression>
             <defaultValue>
                 <elementReference>Default_Due_Date</elementReference>
             </defaultValue>
-            <fieldText>Task Due Date:</fieldText>
+            <fieldText>Frist:</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -657,7 +840,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Description</name>
-            <fieldText>Task Description:</fieldText>
+            <fieldText>Oppgave til NAV-enhet:</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -724,100 +907,58 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>486</locationX>
+        <locationX>700</locationX>
         <locationY>657</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Entry_Completed_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;A journal entry has been submitted for this chat.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px; color: rgb(0, 0, 0);&quot;&gt;Chatsamtalen er journalført&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>367</locationX>
+        <locationX>581</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <description>Calls subflow to send the journal entry to JOARK</description>
-        <name>Send_Journal_Entry</name>
-        <label>Send Journal Entry</label>
-        <locationX>41</locationX>
-        <locationY>754</locationY>
-        <flowName>NKS_Post_Journal_Entry</flowName>
-        <inputAssignments>
-            <name>Complete</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Journal_Post_Request</name>
-            <value>
-                <elementReference>Journal_Post_Request</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>Journal_Post_Error</assignToReference>
-            <name>Error_Message</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Journal_Post_Response</assignToReference>
-            <name>Journal_Post_Response</name>
-        </outputAssignments>
-    </subflows>
     <variables>
-        <description>The original document variant to be stored.</description>
-        <name>Document_Original</name>
-        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
+        <description>Journal documents to be added.</description>
+        <name>Journal_Documents</name>
+        <apexClass>NKS_Dokumenter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Document wrapper for the journal entry</description>
-        <name>Journal_Document</name>
-        <apexClass>ExternalService__dokarkivAPIGW_Dokument</apexClass>
+        <description>Request wrapper for dokarkiv callout.</description>
+        <name>Journal_Request</name>
+        <apexClass>NKS_JournalEntryWrapper</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Wrapper for the document variant</description>
-        <name>Journal_Document_Variant</name>
-        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
+        <description>Original document variant for the journal.</description>
+        <name>Journal_Variant_Original</name>
+        <apexClass>NKS_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>Journal_Post_Error</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__dokarkivAPIGW_JournalPostReq</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__dokarkivAPIGW_JournalPostResp</apexClass>
+        <description>PDF document variant.</description>
+        <name>Journal_Variant_PDF</name>
+        <apexClass>NKS_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -846,8 +987,5 @@ TODAY())</expression>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <value>
-            <elementReference>Get_Account.TAG_NavUnit__c</elementReference>
-        </value>
     </variables>
 </Flow>
