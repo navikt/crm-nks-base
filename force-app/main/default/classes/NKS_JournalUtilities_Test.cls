@@ -21,7 +21,7 @@ public class NKS_JournalUtilities_Test {
     static void testPostJournal(){
         NKS_JournalEntryWrapper journalRequest = new NKS_JournalEntryWrapper();
 
-        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', '{"journalpostId": "3456787"}', null));
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', '{"journalpostId": "3456787", "journalpostferdigstilt": true}', null));
 
         NKS_JournalUtilities.utilityRequest utilRequest = new NKS_JournalUtilities.utilityRequest('POST_JOURNAL', null, journalRequest);
 
