@@ -24,5 +24,6 @@
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
     <siteType>ChatterNetwork</siteType>
-    <subdomain>energy-force-72402-17469a7cde1</subdomain>
+    <subdomain>navdialog</subdomain>
+    <urlPathPrefix>nks</urlPathPrefix>
 </CustomSite>
