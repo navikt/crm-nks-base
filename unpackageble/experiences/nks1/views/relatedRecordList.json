@@ -1,38 +1,38 @@
 {
-  "appPageId" : "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
-  "componentName" : "siteforce:sldsOneColLayout",
-  "id" : "6ddec7c8-7fd5-49f4-b82f-5bc676aace3c",
-  "label" : "Related Record List",
-  "regions" : [ {
-    "id" : "d9e5fe5c-3c10-4bad-84d5-a0b279ef8700",
-    "regionName" : "header",
-    "type" : "region"
-  }, {
-    "components" : [ {
-      "componentAttributes" : {
-        "customTitle" : "",
-        "parentRecordId" : "{!recordId}",
-        "relatedListName" : "{!relationshipApiName}",
-        "showBreadCrumbs" : true,
-        "showCustomTitle" : false,
-        "showManualRefreshButton" : true,
-        "showRowNumbers" : true
-      },
-      "componentName" : "forceCommunity:relatedList",
-      "id" : "1ce8eccb-2399-4d0a-9913-367c217338d8",
-      "renderPriority" : "NEUTRAL",
-      "renditionMap" : { },
-      "type" : "component"
-    } ],
-    "id" : "c22c4000-fc6a-4566-bc4f-8fbb0a9d55a9",
-    "regionName" : "content",
-    "type" : "region"
-  }, {
-    "id" : "75294e6d-e2c3-40e3-b768-ca47c13584a6",
-    "regionName" : "footer",
-    "type" : "region"
-  } ],
-  "themeLayoutType" : "Inner",
-  "type" : "view",
-  "viewType" : "relatedlist"
+    "appPageId": "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
+    "componentName": "siteforce:sldsOneColLayout",
+    "id": "6ddec7c8-7fd5-49f4-b82f-5bc676aace3c",
+    "label": "Related Record List",
+    "regions": [
+        {
+            "components": [
+                {
+                    "componentAttributes": {
+                        "richTextValue": "<h1>Finner ikke siden</h1><p><br></p><p>Vi kan ikke finne siden eller tjenesten du etterspør.</p><p><br></p><p><a href=\"https://www.nav.no/\" target=\"null\">Gå til forsiden av nav.no</a>&nbsp;-&nbsp;<a href=\"https://www.nav.no/person/kontakt-oss/tilbakemeldinger/feil-og-mangler\" target=\"null\">Melde feil og mangler</a></p><p><br></p><p>Feilkode 404</p>"
+                    },
+                    "componentName": "forceCommunity:richTextInline",
+                    "id": "baefa992-ae9e-4973-8d0a-efd7fbc0e874",
+                    "renderPriority": "NEUTRAL",
+                    "renditionMap": {},
+                    "type": "component"
+                }
+            ],
+            "id": "436093eb-2560-424c-a34a-344de93b554d",
+            "regionName": "header",
+            "type": "region"
+        },
+        {
+            "id": "3196cdbc-63d0-4729-b7f9-935885fbf25d",
+            "regionName": "content",
+            "type": "region"
+        },
+        {
+            "id": "95bc1a91-d96c-4523-a289-f104bd083633",
+            "regionName": "footer",
+            "type": "region"
+        }
+    ],
+    "themeLayoutType": "Inner",
+    "type": "view",
+    "viewType": "relatedlist"
 }
