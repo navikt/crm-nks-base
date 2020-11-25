@@ -189,7 +189,7 @@ public virtual class ApiController {
     * @return ApiController 
     **/
     public ApiController addServiceAuthHeader(String serviceName) {
-        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken('dokarkiv');
+        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
         return addHeader('Authorization', 'Bearer ' + serviceToken);
     }
 
