@@ -23,7 +23,6 @@
     <requireHttps>true</requireHttps>
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
-    <siteAdmin>test-pb0x2nny8qwu@example.com</siteAdmin>
     <siteType>ChatterNetwork</siteType>
     <subdomain>energy-force-72402-17469a7cde1</subdomain>
 </CustomSite>
