@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Huk av denne hvis chatsamtalen inneholder meldinger med informasjon om hvorvidt bruker mottar sosiale tjenester fra NAV.</help>
+    <label>Informasjon sosiale tjenester</label>
+    <name>NKS_Social_Service_Information__c</name>
+</CustomFieldTranslation>
