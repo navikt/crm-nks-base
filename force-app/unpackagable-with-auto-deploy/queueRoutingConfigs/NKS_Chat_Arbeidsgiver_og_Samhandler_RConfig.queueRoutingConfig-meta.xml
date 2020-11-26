@@ -2,9 +2,9 @@
 <QueueRoutingConfig xmlns="http://soap.sforce.com/2006/04/metadata">
     <capacityWeight>1.0</capacityWeight>
     <isAttributeBased>false</isAttributeBased>
-    <label>Chat Familie RConfig</label>
+    <label>Chat Arbeidsgiver og Samhandler RConfig</label>
     <pushTimeout>60</pushTimeout>
-    <queueOverflowAssignee>NKS_Chat_Overflow</queueOverflowAssignee>
+    <queueOverflowAssignee></queueOverflowAssignee>
     <routingModel>MOST_AVAILABLE</routingModel>
     <routingPriority>5</routingPriority>
 </QueueRoutingConfig>
