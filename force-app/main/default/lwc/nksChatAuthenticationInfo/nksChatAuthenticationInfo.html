@@ -115,9 +115,9 @@
                     </template>
                     <template if:true={authenticationComplete}>
                         <div class="slds-var-p-top_small">
-                            <c-nks-security-measures record-id={accountId}
-                                component-title=" sikkerhetstiltak er knyttet til denne brukeren.">
-                            </c-nks-security-measures>
+                            <c-nks-person-badges record-id={accountId} object-api-name="Account"
+                                person-relation-field="CRM_Person__c"
+                                assistive-header="Sikkerhetstiltak og andre etiketter"></c-nks-person-badges>
                             <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
                                 displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account"
                                 num-cols="3" show-link="true">
