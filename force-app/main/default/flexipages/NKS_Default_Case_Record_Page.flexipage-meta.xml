@@ -398,21 +398,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>componentTitle</name>
-                    <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
+                    <name>addBoxLayout</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>AccountId</value>
+                    <name>assistiveHeader</name>
+                    <value>Sikkerhetstiltak og andre etiketter</value>
                 </componentInstanceProperties>
-                <componentName>nksSecurityMeasures</componentName>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonBadges</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>0</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>

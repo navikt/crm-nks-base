@@ -27,6 +27,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
     @api loggingEnabled;               //Determines if console logging is enabled for the component
     @api recordId;
+    @api objectApiName;
     @api accountFields                 //Comma separated string with field names to display from the related account
     @api personFields                  //Comma separated string with field names to display from the related accounts person
     accountId;                         //Transcript AccountId
