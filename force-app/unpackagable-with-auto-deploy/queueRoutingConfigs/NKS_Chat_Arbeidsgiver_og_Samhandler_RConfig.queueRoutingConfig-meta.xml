@@ -3,8 +3,7 @@
     <capacityWeight>1.0</capacityWeight>
     <isAttributeBased>false</isAttributeBased>
     <label>Chat Arbeidsgiver og Samhandler RConfig</label>
-    <pushTimeout>60</pushTimeout>
-    <queueOverflowAssignee></queueOverflowAssignee>
+    <pushTimeout>30</pushTimeout>
     <routingModel>MOST_AVAILABLE</routingModel>
     <routingPriority>5</routingPriority>
 </QueueRoutingConfig>
