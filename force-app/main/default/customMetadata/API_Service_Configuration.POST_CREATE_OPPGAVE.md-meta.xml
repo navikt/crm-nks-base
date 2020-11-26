@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Service_Path__c</field>
-        <value xsi:type="xsd:string">/api/v1/oppgaver</value>
+        <value xsi:type="xsd:string">/oppgave/api/v1/oppgaver</value>
     </values>
 </CustomMetadata>
