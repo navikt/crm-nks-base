@@ -7,6 +7,14 @@
         <picklist>NKS_Type__c</picklist>
         <values>
             <fullName>News</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Glamelding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tips</fullName>
             <default>false</default>
         </values>
     </picklistValues>

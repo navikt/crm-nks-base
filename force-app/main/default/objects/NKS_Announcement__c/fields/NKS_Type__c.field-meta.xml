@@ -16,9 +16,9 @@
                 <label>Nyhet</label>
             </value>
             <value>
-                <fullName>Gladmelding</fullName>
+                <fullName>Glamelding</fullName>
                 <default>false</default>
-                <label>Gladmelding</label>
+                <label>Glamelding</label>
             </value>
             <value>
                 <fullName>Tips</fullName>
