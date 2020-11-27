@@ -9,9 +9,13 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                <property name="themeGroup" type="String" label="Theme Group:"/>
-                <property name="theme" type="String" label="Theme:"/>
-                <property name="subtheme" type="String" label="Subtheme:"/>
+                <property name="themeGroup" type="String" label="Theme Group: (Salesforce ID)"/>
+                <property name="theme" type="String" label="Theme: (Salesforce ID)"/>
+                <property name="subtheme" type="String" label="Subtheme: (Salesforce ID)"/>
+
+                <property name="themeGroupCode" type="String" label="Output theme group code from kodeverk"/>
+                <property name="themeCode" type="String" label="Output theme code from kodeverk"/>
+                <property name="subthemeCode" type="String" label="Output subtheme code from kodeverk"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

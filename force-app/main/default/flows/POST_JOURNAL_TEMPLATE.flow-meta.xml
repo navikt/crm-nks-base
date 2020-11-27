@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>304</locationX>
+        <locationX>428</locationX>
         <locationY>355</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Create_Journal_Entry_Wrapper</targetReference>
+            <targetReference>PDF_Variant_Assignment</targetReference>
         </connector>
         <inputParameters>
             <name>documentString</name>
@@ -24,99 +24,200 @@
         </inputParameters>
         <outputParameters>
             <assignToReference>PDF_DOCUMENT</assignToReference>
-            <name>output</name>
+            <name>documentString</name>
         </outputParameters>
     </actionCalls>
+    <actionCalls>
+        <description>Call Apex to post the journal entry</description>
+        <name>Post_Journal_Request</name>
+        <label>Post Journal Request</label>
+        <locationX>742</locationX>
+        <locationY>355</locationY>
+        <actionName>NKS_JournalUtilities</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_success</targetReference>
+        </connector>
+        <inputParameters>
+            <name>journalRequest</name>
+            <value>
+                <elementReference>Journal_Request</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>POST_JOURNAL</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <assignments>
+        <description>Assign values to the journal document</description>
+        <name>Assign_Journal_Documents</name>
+        <label>Assign Journal Documents</label>
+        <locationX>575</locationX>
+        <locationY>517</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Document_Variant_PDF</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Documents.tittel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TEMPLATE_TITLE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Journal_Entry_Wrapper</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Create_Journal_Entry_Wrapper</name>
         <label>Create Journal Entry Wrapper</label>
-        <locationX>430</locationX>
+        <locationX>579</locationX>
         <locationY>355</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.tittel</assignToReference>
+            <assignToReference>Journal_Request.tittel</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>TEMPLATE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.kanal</assignToReference>
+            <assignToReference>Journal_Request.kanal</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>TEMPLATE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.sak.fagsakId</assignToReference>
+            <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>TEAMPLTE_ID</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.journalpostType</assignToReference>
+            <assignToReference>Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INNGAAENDE/UTGAAENDE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
+            <assignToReference>Journal_Request.dokumenter</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Document</elementReference>
+                <elementReference>Journal_Documents</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document.tittel</assignToReference>
+            <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TEMPLATE_TITLE</stringValue>
+                <elementReference>$User.Department</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document.dokumentvarianter</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Document_Variant</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Document_Variant.filtype</assignToReference>
+            <assignToReference>Journal_Request.bruker.idType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>PDFA</stringValue>
+                <stringValue>FNR/ORGNR</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Variant.variantformat</assignToReference>
+            <assignToReference>Journal_Request.bruker.id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ARKIV</stringValue>
+                <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Variant.fysiskDokument</assignToReference>
+            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FNR/ORGNR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>TEMPLATE_IDENTIFIER</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>LASTNAME, FIRSTNAME MIDDLENAME</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.tema</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.behandlingstema</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Post_Journal_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign values to the PDF document variant</description>
+        <name>PDF_Variant_Assignment</name>
+        <label>PDF Variant Assignment</label>
+        <locationX>428</locationX>
+        <locationY>517</locationY>
+        <assignmentItems>
+            <assignToReference>Document_Variant_PDF.filtype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PDF</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Variant_PDF.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>PDF_DOCUMENT</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Document_Variant_PDF.variantformat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ARKIV</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Post_Journal</targetReference>
+            <targetReference>Assign_Journal_Documents</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>TEMPLATE: Perform necessary updates to store the journal post external reference</description>
         <name>Update_Record</name>
         <label>Update Record</label>
-        <locationX>977</locationX>
+        <locationX>1101</locationX>
         <locationY>353</locationY>
         <assignmentItems>
             <assignToReference>Get_Record_Info.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Post_Response.journalpostId</elementReference>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -124,8 +225,8 @@
         <description>Determine if the journal post was a success</description>
         <name>Check_success</name>
         <label>Check success</label>
-        <locationX>778</locationX>
-        <locationY>356</locationY>
+        <locationX>901</locationX>
+        <locationY>357</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -134,10 +235,10 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Post_Journal.Error_Message</leftValueReference>
+                <leftValueReference>Post_Journal_Request.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -177,7 +278,7 @@
         <locationY>355</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Generate_Document</targetReference>
+            <targetReference>Theme_Input_Screen</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -215,18 +316,40 @@
         <description>TEMPLATE: If an error was received upon post, show an error message to the user.</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>790</locationX>
+        <locationX>914</locationX>
         <locationY>539</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Error_Message</name>
-            <fieldText>&lt;p&gt;Something went wrong&lt;/p&gt;&lt;p&gt;{!Post_Journal.Error_Message}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Noe gikk galt. Kontakt din administrator med følgende referanse: {!Post_Journal_Request.errorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Input screen for theme and subtheme categorization.</description>
+        <name>Theme_Input_Screen</name>
+        <label>Theme Input Screen</label>
+        <locationX>303</locationX>
+        <locationY>355</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Generate_Document</targetReference>
+        </connector>
+        <fields>
+            <name>Theme_Categorization</name>
+            <extensionName>c:nksThemeCategorization</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -236,61 +359,27 @@
         </connector>
     </start>
     <status>Draft</status>
-    <subflows>
-        <description>Calls subflow for posting the journal entry</description>
-        <name>Post_Journal</name>
-        <label>Post Journal</label>
-        <locationX>603</locationX>
-        <locationY>355</locationY>
-        <connector>
-            <targetReference>Check_success</targetReference>
-        </connector>
-        <flowName>NKS_Post_Journal_Entry</flowName>
-        <inputAssignments>
-            <name>Complete</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Journal_Post_Request</name>
-            <value>
-                <elementReference>Journal_Post_Request</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <variables>
-        <description>Wrapper for the document to be sent.</description>
-        <name>Document</name>
-        <apexClass>ExternalService__dokarkivAPIGW_Dokument</apexClass>
+        <name>Document_Variant_PDF</name>
+        <apexClass>NKS_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Wrapper for the document variant</description>
-        <name>Document_Variant</name>
-        <apexClass>ExternalService__dokarkivAPIGW_DokumentVariant</apexClass>
+        <description>Wrapper for the documents</description>
+        <name>Journal_Documents</name>
+        <apexClass>NKS_Dokumenter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Wrapper for the journal post request</description>
-        <name>Journal_Post_Request</name>
-        <apexClass>ExternalService__dokarkivAPIGW_JournalPostReq</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Wrapper for Journal post response</description>
-        <name>Journal_Post_Response</name>
-        <apexClass>ExternalService__dokarkivAPIGW_JournalPostResp</apexClass>
+        <description>Journal request wrapper.</description>
+        <name>Journal_Request</name>
+        <apexClass>NKS_JournalEntryWrapper</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

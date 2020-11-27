@@ -189,8 +189,19 @@ public virtual class ApiController {
     * @return ApiController 
     **/
     public ApiController addServiceAuthHeader(String serviceName) {
-        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken('dokarkiv');
+        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
         return addHeader('Authorization', 'Bearer ' + serviceToken);
+    }
+
+
+    /**
+    * @description: Dynamically adds the ApiGWKey to the request headers
+    * Only usable if endpoint is set using named credential
+    * @author Stian Ruud Schikora | 11-24-2020 
+    * @return ApiController 
+    **/
+    public ApiController addApiGwHeader() {
+        return addHeader('Ocp-Apim-Subscription-Key', '{!$Credential.Password}');
     }
 	
     /**

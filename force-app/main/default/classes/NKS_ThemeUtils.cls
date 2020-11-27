@@ -18,23 +18,23 @@ public class NKS_ThemeUtils {
 
 
         for (Common_Code__c theme : themesAndSubthemes) {
-            if(themeMap.containsKey(theme.CRM_Parent_Code__r.CRM_Code__c)) {
-                List<Common_Code__c> mapThemes = themeMap.get(theme.CRM_Parent_Code__r.CRM_Code__c);
+            if(themeMap.containsKey(theme.CRM_Parent_Code__r.Id)) {
+                List<Common_Code__c> mapThemes = themeMap.get(theme.CRM_Parent_Code__r.Id);
                 mapThemes.add(theme);
-                themeMap.put(theme.CRM_Parent_Code__r.CRM_Code__c, mapThemes);
+                themeMap.put(theme.CRM_Parent_Code__r.Id, mapThemes);
             }
             else{
-                themeMap.put(theme.CRM_Parent_Code__r.CRM_Code__c, new List<Common_Code__c>{theme});
+                themeMap.put(theme.CRM_Parent_Code__r.Id, new List<Common_Code__c>{theme});
             }
 
             for(Common_Code__c subtheme : theme.Child_Codes__r) {
-                if(subthemeMap.containsKey(subtheme.CRM_Parent_Code__r.CRM_Code__c)) {
-                    List<Common_Code__c> mapSubthemes = subthemeMap.get(subtheme.CRM_Parent_Code__r.CRM_Code__c);
-                    mapSubthemes.add(theme);
-                    subthemeMap.put(subtheme.CRM_Parent_Code__r.CRM_Code__c, mapSubthemes);
+                if(subthemeMap.containsKey(subtheme.CRM_Parent_Code__r.Id)) {
+                    List<Common_Code__c> mapSubthemes = subthemeMap.get(subtheme.CRM_Parent_Code__r.Id);
+                    mapSubthemes.add(subtheme);
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.Id, mapSubthemes);
                 }
                 else{
-                    subthemeMap.put(subtheme.CRM_Parent_Code__r.CRM_Code__c, new List<Common_Code__c>{subtheme});
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.Id, new List<Common_Code__c>{subtheme});
                 }
             }
         }
@@ -45,8 +45,8 @@ public class NKS_ThemeUtils {
     @testVisible
     private class Categories{
         @AuraEnabled public List<Common_Code__c> themeGroups;
-        @AuraEnabled public Map<String, List<Common_Code__c>> themeMap; //Mapping a theme group code to list of themes
-        @AuraEnabled public Map<String, List<Common_Code__c>> subthemeMap; //Mapping a theme code to a list of subthemes
+        @AuraEnabled public Map<String, List<Common_Code__c>> themeMap; //Mapping a theme group Id to list of themes
+        @AuraEnabled public Map<String, List<Common_Code__c>> subthemeMap; //Mapping a theme Id to a list of subthemes
 
         public Categories(List<Common_Code__c> themeGroups, Map<String, List<Common_Code__c>> themeMap, Map<String, List<Common_Code__c>> subthemeMap){
             this.themeGroups = themeGroups;

@@ -1,0 +1,15 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "AAPRef"
+            },
+            "Name": "AAP",
+            "CRM_Code__c": "AAP",
+            "CRM_Active__c": true,
+            "CRM_Code_Set__c": "Tema",
+            "CRM_Parent_Code__c": "@ArbeidRef"
+        }
+    ]
+}
