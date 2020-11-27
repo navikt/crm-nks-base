@@ -9,5 +9,10 @@
         <operation>equals</operation>
         <value>News</value>
     </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>NKS_Announcement__c.News</value>
+    </filters>
     <label>Nyheter</label>
 </ListView>

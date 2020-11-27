@@ -4,9 +4,9 @@
     <columns>NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>NKS_Type__c</field>
+        <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Operational Messages</value>
+        <value>NKS_Announcement__c.Operational</value>
     </filters>
     <label>Teknisk og drift</label>
 </ListView>
