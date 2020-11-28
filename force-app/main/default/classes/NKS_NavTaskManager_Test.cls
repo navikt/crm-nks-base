@@ -100,6 +100,6 @@ public class NKS_NavTaskManager_Test {
     }
 
     private static NavTask__c getTask() {
-        return [SELECT Id, CRM_DueDate__c, INT_Journal_Entry_Id__c, CRM_Priority__c, CRM_Comments__c FROM NavTask__c LIMIT 1];
+        return [SELECT Id, NKS_Task_Type__c, CRM_DueDate__c, INT_Journal_Entry_Id__c, CRM_Priority__c, CRM_Comments__c FROM NavTask__c LIMIT 1];
     }
 }
