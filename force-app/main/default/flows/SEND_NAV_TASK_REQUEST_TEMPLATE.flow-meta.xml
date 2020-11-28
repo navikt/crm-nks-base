@@ -495,15 +495,6 @@ TODAY())</expression>
         <objectType>NavTask__c</objectType>
     </variables>
     <variables>
-        <description>Oppgave request wrapper.</description>
-        <name>Oppgave_API_Request</name>
-        <apexClass>NKS_OppgaveRequest</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
