@@ -388,15 +388,14 @@
     <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos;&quot;</expression>
+        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos; AND DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>WhereClauseForMembers</name>
         <dataType>String</dataType>
-        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos;&quot;</expression>
+        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos; AND Group.DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Update User</label>
     <loops>
         <name>Loop_Picklist_Values</name>
@@ -686,7 +685,7 @@
             <targetReference>Get_User</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>allPicklistValues</name>
         <dataType>String</dataType>
