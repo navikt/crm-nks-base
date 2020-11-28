@@ -73,4 +73,14 @@ public without sharing class NKS_TestDataFactory {
         return units; 
     }
 
+    public static List<NKS_Announcement__c> createAnnouncements(Integer amount){
+        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>(); 
+        for(Integer i = 0; i < amount; i++){
+            NKS_Announcement__c a = new NKS_Announcement__c(Name = 'Test ' + i, NKS_Information__c = '12345', NKS_Type__c = 'Tips');
+            announcements.add(a); 
+        }
+        insert announcements; 
+        return announcements;
+    }
+
 }
