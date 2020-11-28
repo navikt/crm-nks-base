@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Task_Type__c</fullName>
+    <description>Task type with API values from kodeverk.</description>
+    <externalId>false</externalId>
+    <label>Task Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>VURD_HENV</fullName>
+                <default>true</default>
+                <label>Vurder henvendelse</label>
+            </value>
+            <value>
+                <fullName>KONT_BRUK</fullName>
+                <default>false</default>
+                <label>Kontakt bruker</label>
+            </value>
+            <value>
+                <fullName>VUR_KONS_YTE</fullName>
+                <default>false</default>
+                <label>Vurder konsekvens av ytelse</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

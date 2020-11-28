@@ -4,20 +4,32 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>817</locationX>
+        <locationX>756</locationX>
         <locationY>1331</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Set_Chat_Journal_Data</targetReference>
+            <targetReference>Validate_NAV_Task_Callout</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
         <inputParameters>
+            <name>actorId</name>
+            <value>
+                <elementReference>Get_Person.INT_ActorId__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>requestType</name>
             <value>
                 <stringValue>POST</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subthemeCode</name>
+            <value>
+                <elementReference>Theme_Categroization.subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -26,6 +38,19 @@
                 <elementReference>NAV_Task</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>themeCode</name>
+            <value>
+                <elementReference>Theme_Categroization.themeCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeGroupCode</name>
+            <value>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Base 64 encodes the original document for archiving</description>
@@ -157,7 +182,7 @@
             <assignToReference>Journal_Request.kanal</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>NAV_NO</stringValue>
+                <stringValue>NAV_NO_CHAT</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -364,8 +389,15 @@
                 <elementReference>Post_Journal.journalpostId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Type</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Create_NAV_Task</targetReference>
+            <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -526,6 +558,32 @@
             <label>Successful Post</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Validates the API callout</description>
+        <name>Validate_NAV_Task_Callout</name>
+        <label>Validate NAV Task Callout</label>
+        <locationX>899</locationX>
+        <locationY>1333</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Success</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Delegate_NAV_Task.success</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Salesforce_NAV_Task</targetReference>
+            </connector>
+            <label>Success</label>
+        </rules>
+    </decisions>
     <description>Flow to initiate the creation of a journal entry.</description>
     <dynamicChoiceSets>
         <description>Task priority picklist values.</description>
@@ -534,6 +592,14 @@
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Task_Type_Picklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <formulas>
@@ -576,14 +642,15 @@ TODAY())</expression>
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_NAV_Task</name>
-        <label>Create NAV Task</label>
-        <locationX>692</locationX>
-        <locationY>1440</locationY>
+        <description>Inserts the Salesforce NAV task after a successful callout.</description>
+        <name>Create_Salesforce_NAV_Task</name>
+        <label>Create Salesforce NAV Task</label>
+        <locationX>1066</locationX>
+        <locationY>1334</locationY>
         <connector>
-            <targetReference>Delegate_NAV_Task</targetReference>
+            <targetReference>Set_Chat_Journal_Data</targetReference>
         </connector>
-        <inputReference>NAV_Task</inputReference>
+        <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
     <recordLookups>
         <description>Queries the account related from the transcript.</description>
@@ -662,6 +729,7 @@ TODAY())</expression>
         <queriedFields>INT_FirstName__c</queriedFields>
         <queriedFields>INT_MiddleName__c</queriedFields>
         <queriedFields>INT_LastName__c</queriedFields>
+        <queriedFields>INT_ActorId__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -676,14 +744,14 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>1054</locationX>
+        <locationX>1055</locationX>
         <locationY>869</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218, 13, 13);&quot;&gt;An error occurred&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -720,6 +788,31 @@ TODAY())</expression>
             <name>Journal_Post_Error_Msg</name>
             <fieldText>&lt;p&gt;En uventet feil oppsto ved arkivering av chatsamtalen. Kontakt administrator med følgende referanse: {!Post_Journal.errorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Post_Journal.success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Task_Error</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Det oppsto en feil ved utsendelse av oppgaven. Kontakt administrator med følgende referanse: {!Delegate_NAV_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Delegate_NAV_Task.success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Flow_Error</name>
@@ -801,6 +894,24 @@ TODAY())</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
+            <name>Task_Type</name>
+            <choiceReferences>Task_Type_Picklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Oppgavetype:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Task_Priority</name>
             <choiceReferences>Priority_Picklist</choiceReferences>
             <dataType>String</dataType>
@@ -861,7 +972,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>NAV Unit</stringValue>
+                    <stringValue>NAV-enhet</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
