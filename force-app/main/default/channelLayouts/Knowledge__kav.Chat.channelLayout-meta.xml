@@ -5,7 +5,7 @@
     <enabledChannels>Chat</enabledChannels>
     <label>Chat</label>
     <layoutItems>
-        <field>NKS_Summary__c</field>
+        <field>Summary</field>
     </layoutItems>
     <recordType>Servicerutine</recordType>
 </ChannelLayout>
