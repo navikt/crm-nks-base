@@ -48,6 +48,8 @@ public virtual class ApiController {
             setEndpoint(baseConfig.Base_Endpoint__c + servicePath);
         }
 
+        if(baseConfig.Use_Gateway__c) addApiGwHeader();
+
     }
 
     /**
@@ -58,7 +60,7 @@ public virtual class ApiController {
     * @return API_Base_Configuration__mdt 
     **/
     private API_Base_Configuration__mdt getApiConfiguration(String apiConfigName, String serviceName) {
-        API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, 
+        API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, Use_Gateway__c,
                                                         (SELECT Service_Path__c, Has_Path_Parameters__c, HTTP_Method__c FROM API_Service_Configurations__r WHERE DeveloperName =: serviceName)
                                                          FROM API_Base_Configuration__mdt WHERE DeveloperName =: apiConfigName LIMIT 1];
 
