@@ -3,7 +3,7 @@ global class NKS_NavTaskRoutingHandler {
     @InvocableMethod
     public static List<String> getQueueIds(List<Id> accountIds){
         List<String> queueIds=new List<String>();
-        Map<Integer, ApexSharingRuleWrapper> ruleByByNavTask = RecordOwnerService.getQueuesAndNavUnits( getSobjectWrappers(accountIds), 'NavTask__c' );
+        Map<Integer, ApexSharingRuleWrapper> ruleByByNavTask = RecordOwnerService.getQueuesAndNavUnits( getSobjectWrappers(accountIds), 'TemporaryLayoff__c' );
         for(ApexSharingRuleWrapper sharingRule:ruleByByNavTask.values()){
             queueIds.add(sharingRule.queueId);
         }
