@@ -128,6 +128,55 @@ private with sharing class NKS_NorgNavUnitService_Test {
         System.assertEquals(null, result.contactInformation, 'Expected to get NULL');
         System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
     }
+    
+    @IsTest static void getNavUnitFilteredList_TestResponse() {
+        NKS_NavUnit unit1 = new NKS_NavUnit();
+        unit1.enhetNr = '12345';
+        unit1.navn = 'Test Enhet1';
+        unit1.underEtableringDato= Date.newInstance(1970, 1, 1);
+
+        NKS_NavUnit unit2 = new NKS_NavUnit();
+        unit2.enhetNr = '12346';
+        unit2.navn = 'Test Enhet2';
+        unit2.underEtableringDato= Date.newInstance(1970, 1, 1);
+
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', JSON.serialize(new List<NKS_NavUnit>{ unit1, unit2 }),
+        null);
+
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        NKS_NorgNavUnitService.NavUnitsResponse result;
+        
+        NKS_NorgNavUnitService service = new NKS_NorgNavUnitService();
+
+        Test.startTest();
+        result = service.getNavUnitFilteredList(new List<String>{'1234'}, new List<String>{'1234'}, 'Test');
+        Test.stopTest();
+
+        System.assertEquals(true, result.success, 'Expected to get a success');
+        System.assertEquals(2, result.units.size(), 'Expected to get two units back');
+        System.assertEquals(null, result.errorMessage, 'Did not expected an error message');
+
+    }
+
+    @IsTest static void getNavUnitFilteredList_TestFailure() {
+        SingleRequestMock httpMock = new SingleRequestMock(400, 'Bad Request', '',
+        null);
+
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        NKS_NorgNavUnitService.NavUnitsResponse result;
+
+        NKS_NorgNavUnitService service = new NKS_NorgNavUnitService();
+
+        Test.startTest();
+        result = service.getNavUnitFilteredList(null, null, '');
+        Test.stopTest();
+
+        System.assertEquals(false, result.success, 'Expected to get a failure');
+        System.assertEquals(null, result.units, 'Expected to get NULL');
+        System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
+    }
 
     @IsTest static void getNavUnitWorkAllocation_TestResponse() {
         NKS_NavUnitWorkAllocation unit1 = new NKS_NavUnitWorkAllocation();

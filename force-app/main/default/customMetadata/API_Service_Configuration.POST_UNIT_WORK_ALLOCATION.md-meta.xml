@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>GET UNIT WORK ALLOCATION</label>
+    <label>POST UNIT WORK ALLOCATION</label>
     <protected>false</protected>
     <values>
         <field>API_Base_Configuration__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>HTTP_Method__c</field>
-        <value xsi:type="xsd:string">GET</value>
+        <value xsi:type="xsd:string">POST</value>
     </values>
     <values>
         <field>Has_Path_Parameters__c</field>

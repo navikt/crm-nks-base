@@ -53,6 +53,12 @@ public with sharing class NKS_NorgNavUnitService {
         return resp;
     }
 
+    /**
+     * @Description Get a filtered list of all units
+     * @author Tor Håkon Sigurdsen | 30-11-2020
+     * @param unitNumber
+     * @return NavUnitsResponse [Wrapper holding success (true|false), response from Norg2 (List of units) and error message with reference to application log]
+     */
     public NavUnitContactInformationResponse getNavUnitContactInformation(String unitNumber) {
         NavUnitContactInformationResponse resp = new NavUnitContactInformationResponse();
 
@@ -79,6 +85,42 @@ public with sharing class NKS_NorgNavUnitService {
     }
 
     /**
+     * @Description Get a filtered list of all units
+     * @author Tor Håkon Sigurdsen | 30-11-2020
+     * @param unitStatuses
+     * @param unitNumbers
+     * @param taskProcessing
+     * @return NavUnitContactInformationResponse [Wrapper holding success (true|false), response from Norg2 and error message with reference to application log]
+     */
+    public NavUnitsResponse getNavUnitFilteredList(List<String> unitStatuses, List<String> unitNumbers, String taskProcessingFilter) {
+        NavUnitsResponse resp = new NavUnitsResponse();
+
+        ApiController apiCtrl = new ApiController();
+        apiCtrl.initRequest(API_CONFIG_NAME, 'GET_UNITS_FILTERED_LIST');
+        apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
+
+        //Optional parameters
+        if(null != unitStatuses && 0 < unitStatuses.size()) { apiCtrl.addUrlParam('enhetStatusListe', String.join(unitStatuses, ',')); }
+        if(null != unitNumbers && 0 < unitNumbers.size()) { apiCtrl.addUrlParam('enhetsnummerListe', String.join(unitNumbers,',')); }
+        if(String.isNotBlank(taskProcessingFilter)) { apiCtrl.addUrlParam('oppgavebehandlerFilter', taskProcessingFilter); }
+
+        apiCtrl.doCallout();
+
+        Integer statusCode = apiCtrl.getResponse().getStatusCode();
+
+        if(statusCode == 200) {
+            resp.success = true;
+            resp.units = (List<NKS_NavUnit>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NKS_NavUnit>.class); 
+        } else{
+            String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
+            resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
+            resp.success = false;
+        }
+
+        return resp;
+    }
+
+    /**
      * @description Get possible work allocation.
      * @author Tor Håkon Sigurdsen | 26-11-2020
      * @param allocationInput
@@ -88,7 +130,7 @@ public with sharing class NKS_NorgNavUnitService {
         WorkAllocationResponse resp = new WorkAllocationResponse();
         
         ApiController apiCtrl = new ApiController();
-        apiCtrl.initRequest(API_CONFIG_NAME, 'GET_UNIT_WORK_ALLOCATION');
+        apiCtrl.initRequest(API_CONFIG_NAME, 'POST_UNIT_WORK_ALLOCATION');
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
         apiCtrl.addHeader('Content-Type','application/json');
         apiCtrl.setBody(JSON.serialize(allocationInput, true));
@@ -146,6 +188,18 @@ public with sharing class NKS_NorgNavUnitService {
         public NavUnitResponse() {
             this.success = false;
             this.unit = null;
+            this.errorMessage = null;
+        }
+    }
+
+    public class NavUnitsResponse {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public List<NKS_NavUnit> units;
+        @AuraEnabled public String errorMessage;
+
+        public NavUnitsResponse() {
+            this.success = false;
+            this.units = null;
             this.errorMessage = null;
         }
     }
