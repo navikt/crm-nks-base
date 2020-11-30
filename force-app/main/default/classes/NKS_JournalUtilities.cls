@@ -36,7 +36,6 @@ public class NKS_JournalUtilities {
 
         apiCtrl.initRequest('Journal_API', 'POST_CREATE_JOURNAL');
         apiCtrl.addServiceAuthHeader('Dokarkiv');
-        apiCtrl.addApiGwHeader();
         apiCtrl.addUrlParam('forsoekFerdigstill', 'true');
         apiCtrl.setBody(JSON.serialize(journalRequest, true));
         apiCtrl.setHeaders(httpHeaders);
