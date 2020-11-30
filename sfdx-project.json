@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.15.0.NEXT",
+            "versionNumber": "0.16.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -13,7 +13,7 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.30.0.LATEST"
+                    "versionNumber": "0.43.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",

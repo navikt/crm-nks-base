@@ -1,0 +1,73 @@
+<template>
+    <div class={backgroundTheme}>
+        <!-- ERROR MESSAGES -->
+        <template if:true={errorMessage}>
+            <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
+                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
+                    variant="error">
+                </lightning-icon>
+                &nbsp;En feil har oppstått: {errorMessage}
+            </div>
+        </template>
+
+        <!-- BADGES -->
+        <template if:true={badges}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <template for:each={badges} for:item="badge" for:index="index">
+                        <template if:true={badge.clickable}>
+                            <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}
+                                icon-name={badge.iconName} icon-alternative-text={badge.iconAltText}
+                                icon-position="start" class={badge.styling} tabindex={badge.tabindex}
+                                onkeypress={onKeyPressHandler} onclick={onClickHandler} role="button">
+                            </lightning-badge>
+                        </template>
+                        <template if:false={badge.clickable}>
+                            <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}
+                                icon-name={badge.iconName} icon-alternative-text={badge.iconAltText}
+                                icon-position="start" class={badge.styling}>
+                            </lightning-badge>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+
+                <!-- SECURITY MEASURES -->
+                <template if:true={showSecurityMeasures}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                                <template for:each={securityMeasures} for:item="sm" for:index="index">
+                                    <lightning-layout-item key={sm.RecordId}
+                                        class="slds-var-p-around_xx-small slds-size_1-of-1">
+                                        <div class="slds-var-p-horizontal_small">
+                                            <p class="slds-text-color_destructive">{sm.SecurityMeasure}</p>
+                                            <p>Gyldig: <lightning-formatted-date-time value={sm.FromDate} year="numeric"
+                                                    month="numeric" day="numeric">
+                                                </lightning-formatted-date-time> - <lightning-formatted-date-time
+                                                    value={sm.ToDate} year="numeric" month="numeric" day="numeric">
+                                                </lightning-formatted-date-time>
+                                            </p>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+
+                <!-- INTERPRETER SPOKEN LANGUAGES -->
+                <template if:true={showIntepreterSpokenLanguage}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <ul class="slds-list_dotted">
+                                <template for:each={interpreterSpokenLanguages} for:item="language" for:index="index">
+                                    <li key={language}>{language}</li>
+                                </template>
+                            </ul>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </template>
+    </div>
+</template>

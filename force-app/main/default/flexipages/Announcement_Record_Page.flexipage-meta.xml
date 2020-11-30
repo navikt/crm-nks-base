@@ -166,6 +166,12 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NKS_ImageURL__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
