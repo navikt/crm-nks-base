@@ -27,11 +27,12 @@ public with sharing class NKS_NavTaskManager {
     public static NavTaskResponse postTask(NavTaskRequest taskRequest) {
         NavTaskResponse resp = new NavTaskResponse();
         NavTask__c task = taskRequest.task;
-
+        Map<String, String> httpHeaders = new Map<String, String>{'Content-Type' => 'application/json', 'accept' => 'application/json'};
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
+        apiCtrl.setHeaders(httpHeaders);
         apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
 
         //Creates a log entry used as the unique request X-Correlation-ID
@@ -74,6 +75,7 @@ public with sharing class NKS_NavTaskManager {
     public static NavTaskResponse patchEditTask(NavTaskRequest taskRequest) {
         NavTaskResponse resp = new NavTaskResponse();
         NavTask__c task = taskRequest.task;
+        Map<String, String> httpHeaders = new Map<String, String>{'Content-Type' => 'application/json', 'accept' => 'application/json'};
         
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
@@ -81,6 +83,7 @@ public with sharing class NKS_NavTaskManager {
         Map<String, String> paramMap = new Map<String, String> {'id' => String.valueOf(task.INT_External_Reference__c)};
         apiCtrl.initRequest('Oppgave_API', 'PATCH_EDIT_OPPGAVE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');
+        apiCtrl.setHeaders(httpHeaders);
         apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
         
         //Creates a log entry used as the unique request X-Correlation-ID
@@ -128,7 +131,7 @@ public with sharing class NKS_NavTaskManager {
     * @param logger 
     **/
     private static void logError(ApiController apiCtrl, LoggerUtility logger) {
-        logger.error('Error posting NAV task to oppgave: \n ' + 'Status: ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
+        logger.error('Error posting NAV task to oppgave: \n ' + 'Status: ' + String.valueOf(apiCtrl.getResponse().getStatusCode()) + '- ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
         logger.peek().Payload__c = JSON.serializePretty(JSON.deserializeUntyped(apiCtrl.getRequest().getBody()));
     }
     
