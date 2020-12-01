@@ -178,11 +178,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SecurityMeasure__c.INT_NavUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SecurityMeasure__c.INT_SecurityMeasure__c</field>
         <readable>true</readable>
     </fieldPermissions>
