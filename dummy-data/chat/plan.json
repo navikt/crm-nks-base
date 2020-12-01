@@ -32,14 +32,6 @@
         ]
     },
     {
-        "sobject": "Relation__c",
-        "saveRefs": true,
-        "resolveRefs": true,
-        "files": [
-            "relations.json"
-        ]
-    },
-    {
         "sobject": "SecurityMeasure__c",
         "saveRefs": true,
         "resolveRefs": true,
