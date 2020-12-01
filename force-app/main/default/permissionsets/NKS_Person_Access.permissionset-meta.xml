@@ -18,17 +18,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.INT_Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Person__c.INT_DateOfDeath__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.INT_District__c</field>
+        <field>Person__c.INT_DistrictNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
