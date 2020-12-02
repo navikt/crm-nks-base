@@ -226,6 +226,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Edit_Alias</name>
+        <label>Edit Alias?</label>
+        <locationX>1840</locationX>
+        <locationY>399</locationY>
+        <defaultConnector>
+            <targetReference>Edit_Division</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GiveAlias.value</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_User_Alias</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Edit_Division</name>
         <label>Edit Division?</label>
         <locationX>1730</locationX>
@@ -531,21 +556,44 @@
         </inputAssignments>
         <object>User</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_User_Alias</name>
+        <label>Update User Alias</label>
+        <locationX>1727</locationX>
+        <locationY>390</locationY>
+        <connector>
+            <targetReference>Edit_Division</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NKS_Alias__c</field>
+            <value>
+                <elementReference>Alias</elementReference>
+            </value>
+        </inputAssignments>
+        <object>User</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>1739</locationX>
-        <locationY>398</locationY>
+        <locationX>1960</locationX>
+        <locationY>397</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Edit_Division</targetReference>
+            <targetReference>Edit_Alias</targetReference>
         </connector>
         <fields>
             <name>display</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.NKS_Division__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;Veilederens har i dag disse køene:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;font-size: 18px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;i style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;Veilederens har i dag disse køene:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 18px; color: rgb(0, 0, 0);&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -593,6 +641,31 @@
                 <name>label</name>
                 <value>
                     <stringValue>Rediger køer/skills</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>GiveAlias</name>
+            <extensionName>flowruntime:toggle</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>messageToggleActive</name>
+                <value>
+                    <stringValue>Ja</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>messageToggleInactive</name>
+                <value>
+                    <stringValue>Nei</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Sett chat alias</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -675,6 +748,23 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Alias</name>
+            <dataType>String</dataType>
+            <fieldText>Alias</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GiveAlias.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -685,7 +775,7 @@
             <targetReference>Get_User</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>allPicklistValues</name>
         <dataType>String</dataType>
