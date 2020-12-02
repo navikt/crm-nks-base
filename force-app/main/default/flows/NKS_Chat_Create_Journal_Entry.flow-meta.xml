@@ -791,7 +791,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Post_Journal.success</leftValueReference>
+                    <leftValueReference>Successful_Post</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
