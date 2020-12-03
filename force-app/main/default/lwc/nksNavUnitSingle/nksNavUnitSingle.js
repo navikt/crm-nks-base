@@ -10,6 +10,7 @@ export default class NksNavUnitSingle extends LightningElement {
     @api allSectionsOpenOnLoad = false; // If all sections should be open when the component loads
     @api numCols = 2;                   // Number of columns for the displayed fields
     @api cardLayout = false;            // If true, use the card layout, if not use box layout
+    @api boxLayout = false;
 
     @track navUnit;                     // The nav unit
     @track contactInformation;          // The nav unit contact information
@@ -18,6 +19,7 @@ export default class NksNavUnitSingle extends LightningElement {
     isError = false;                    // If error has occured
     isLoaded = false;                   // If the nav unit and contact information has loaded
     firstRun = false;
+    noLayout = false;
 
 
     connectedCallback() {
@@ -26,6 +28,10 @@ export default class NksNavUnitSingle extends LightningElement {
         if (false === this.firstRun) {
             this.firstRun = true;
             this.findNavUnit();
+        }
+
+        if (!this.cardLayout && !this.boxLayout) {
+            this.noLayout = true;
         }
     }
 
