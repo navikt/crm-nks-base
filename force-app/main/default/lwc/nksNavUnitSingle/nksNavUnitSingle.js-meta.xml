@@ -17,7 +17,7 @@
             <property name="allSectionsOpenOnLoad" type="Boolean" label="All sections open by default" />
             <property name="numCols" type="Integer" default="2" label="Number of field columns" />
             <property name="cardLayout" type="Boolean" default="true" label="Use card layout" description="Check to use card layout" />
-            <property name="boxLayout" type="Boolean" label="Use card layout" description="Check to use box layout" />
+            <property name="boxLayout" type="Boolean" label="Use box layout" description="Check to use box layout" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
