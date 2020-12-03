@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <masterLabel>Nav Unit Single</masterLabel>
+    <description>Component that display a single nav unit based on location or unit number.</description>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="relationField" type="String" label="Lookup field" description="Points to either the Person__c.Id or a field containging a unit number" />
+            <property name="type" type="String" datasource="PERSON_LOCATION,UNIT_NUMBER" default="PERSON_LOCATION" label="Type" />
+            <property name="allSectionsOpenOnLoad" type="Boolean" label="All sections open by default" />
+            <property name="numCols" type="Integer" default="2" label="Number of field columns" />
+            <property name="cardLayout" type="Boolean" default="true" label="Use card layout" description="In not set, box layout will be used" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
