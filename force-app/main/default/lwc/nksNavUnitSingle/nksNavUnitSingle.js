@@ -48,16 +48,15 @@ export default class NksNavUnitSingle extends LightningElement {
             this.navUnit = unitData.unit;
             errorString += unitData.errorMessage ? ' ' + unitData.errorMessage : '';
 
-        } catch (error) {
-            errorString += error.body.message;
-            this.isError = true;
-        }
-
-        try {
-            const contactInfoData = await getContactInformation({ unitNumber: this.navUnit.enhetNr });
-            this.isError = !contactInfoData.success;
-            this.contactInformation = contactInfoData.contactInformation;
-            errorString += contactInfoData.errorMessage ? ' ' + contactInfoData.errorMessage : '';
+            try {
+                const contactInfoData = await getContactInformation({ unitNumber: this.navUnit.enhetNr });
+                this.isError = !contactInfoData.success;
+                this.contactInformation = contactInfoData.contactInformation;
+                errorString += contactInfoData.errorMessage ? ' ' + contactInfoData.errorMessage : '';
+            } catch (error) {
+                errorString += error.body.message;
+                this.isError = true;
+            }
         } catch (error) {
             errorString += error.body.message;
             this.isError = true;
