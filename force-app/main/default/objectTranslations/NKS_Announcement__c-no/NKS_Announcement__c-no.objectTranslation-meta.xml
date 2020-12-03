@@ -40,11 +40,11 @@
     </layouts>
     <nameFieldLabel><!-- Title --></nameFieldLabel>
     <recordTypes>
-        <label><!-- News --></label>
+        <label>Nyheter</label>
         <name>News</name>
     </recordTypes>
     <recordTypes>
-        <label><!-- Operational --></label>
+        <label>Teknisk og drift</label>
         <name>Operational</name>
     </recordTypes>
 </CustomObjectTranslation>
