@@ -8,11 +8,12 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static List<SObject> getList(String type) {
         List<SObject> listtoreturn = new List<SObject>(); 
-        //todo: fix
+    
         return listtoreturn; 
     }
 
-    List<NKS_HomePageController.homePageItem> items = new List<NKS_HomePageController.homePageItem>(); 
+    /*List<NKS_HomePageController.homePageItem> items = new List<NKS_HomePageController.homePageItem>(recordId, Name); 
+
     for(NKS_Announcement__c a : [SELECT Id, Name FROM NKS_Announcement__c]){
             items.add(new homePageItem(a.Id, a.Name));
     }
@@ -28,5 +29,5 @@ public with sharing class NKS_HomePageController {
             this.RecordId=recordId;
             this.Name=name;
         }
-    }
+    }*/
 }
