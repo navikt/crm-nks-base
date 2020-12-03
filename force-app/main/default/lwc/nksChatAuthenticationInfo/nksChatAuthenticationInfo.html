@@ -13,7 +13,7 @@
             <div class="slds-var-p-left_medium slds-var-p-right_medium">
                 <template if:true={authenticationComplete}>
                     <div class="slds-notify_alert slds-theme_success" role="alert">
-                        <span class="slds-assistive-text">warning</span>
+                        <span class="slds-assistive-text">{labels.IDENTITY_CONFIRMED_DISCLAIMER}</span>
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
                                 <lightning-icon icon-name="utility:success" size="x-small" variant="inverse">
@@ -45,7 +45,8 @@
                             </lightning-spinner>
                         </template>
                         <lightning-button label="Send autentiseringsforespørsel" disabled={cannotInitAuth}
-                            variant="neutral" onclick={requestAuthentication} style="display: grid; width: 100%">
+                            variant="neutral" onclick={requestAuthentication} role="button"
+                            style="display: grid; width: 100%">
                         </lightning-button>
                     </div>
                 </template>
@@ -54,8 +55,8 @@
                 <template if:true={authenticationRequested}>
                     <template if:false={authenticationComplete}>
                         <div class="slds-progress slds-progress_vertical">
-                            <ol class="slds-progress__list">
-                                <li class="slds-progress__item slds-is-completed">
+                            <ol class="slds-progress__list" role="list">
+                                <li class="slds-progress__item slds-is-completed" role="listitem">
                                     <span
                                         class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
                                         title="Complete">
@@ -67,7 +68,7 @@
                                 </li>
 
                                 <template if:true={authenticationStarted}>
-                                    <li class="slds-progress__item slds-is-completed">
+                                    <li class="slds-progress__item slds-is-completed" role="listitem">
                                         <span
                                             class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
                                             title="Complete">
@@ -80,7 +81,7 @@
                                 </template>
 
                                 <template if:false={authenticationStarted}>
-                                    <li class="slds-progress__item slds-is-active">
+                                    <li class="slds-progress__item slds-is-active" role="listitem">
                                         <div class="slds-progress__marker"></div>
                                         <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
                                             {labels.AUTH_STARTED}
@@ -89,7 +90,7 @@
                                 </template>
 
                                 <template if:true={authenticationComplete}>
-                                    <li class="slds-progress__item slds-is-completed">
+                                    <li class="slds-progress__item slds-is-completed" role="listitem">
                                         <span
                                             class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
                                             title="Complete">
@@ -102,7 +103,7 @@
                                 </template>
 
                                 <template if:false={authenticationComplete}>
-                                    <li class="slds-progress__item">
+                                    <li class="slds-progress__item" role="listitem">
                                         <div class="slds-progress__marker"></div>
                                         <div class="slds-progress__item_content slds-grid slds-grid_align-spread">
                                             {labels.IDENTITY_CONFIRMED}
