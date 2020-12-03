@@ -6,6 +6,7 @@ public with sharing class NKS_NAvUnitContactInformation {
     @AuraEnabled public String telefonnummer;
     @AuraEnabled public String telefonnummerKommentar;
     @AuraEnabled public Epost epost;
+    @AuraEnabled public Adresse besoeksadresse;
     @AuraEnabled public Adresse postadresse;
     @AuraEnabled public List<publikumsmottak> publikumsmottak;
 
@@ -76,17 +77,15 @@ public with sharing class NKS_NAvUnitContactInformation {
 
             address += addString(address,adresseTilleggsnavn);
 
-            if(true == type.equalsIgnoreCase('postboksadresse')) {
+            if(true == String.isNotBlank(type) && type.equalsIgnoreCase('postboksadresse')) {
                 address += addString(address,'Postboks');
-                address += addString(address,postboksnummer);
-                address += addString(address,postboksanlegg);
-            } else {
-                address += addString(address,gatenavn);
-                address += addString(address,husnummer);
-                address += addString(address,husbokstav);
-                address += addString(address,husbokstav);
-                address += addString(address,husbokstav);
             }
+            
+            address += addString(address,postboksnummer);
+            address += addString(address,postboksanlegg);
+            address += addString(address,gatenavn);
+            address += addString(address,husnummer);
+            address += addString(address,husbokstav);
             
             postalCity += addString(postalCity,postnummer);
             postalCity += addString(postalCity,poststed);
@@ -98,7 +97,7 @@ public with sharing class NKS_NAvUnitContactInformation {
         }
 
         private String addString(String originalString, String stringToAdd) {
-            if(String.isBlank(stringToAdd)) { return originalString; }
+            if(String.isBlank(stringToAdd)) { return ''; }
 
             return String.isNotBlank(originalString) ? ' ' + stringToAdd : stringToAdd;
         }
