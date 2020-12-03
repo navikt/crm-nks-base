@@ -14,10 +14,9 @@ public with sharing class NKS_NavUnitPersonUtility {
     public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Id personId) {
         Person__c person = [SELECT Id,
                                 INT_Confidential__c,
-                                INT_IsNavEmployee__c,
-                                INT_MunicipalityNumber__c,
-                                INT_RegionNumber__c,
-                                INT_TemporaryMunicipalityNumber__c
+                                INT_GTDistrictNumber__c,
+                                INT_GTMunicipalityNumber__c,
+                                INT_IsNavEmployee__c
                             FROM Person__c
                             WHERE Id = :personId];
         return getNavUnitFromPerson(person);
@@ -85,8 +84,8 @@ public with sharing class NKS_NavUnitPersonUtility {
     @TestVisible private String getLocation(Person__c person) {
         String location = '';
 
-        location += String.isNotBlank(person.INT_TemporaryMunicipalityNumber__c) ? person.INT_TemporaryMunicipalityNumber__c : String.isNotBlank(person.INT_MunicipalityNumber__c) ? person.INT_MunicipalityNumber__c : '';
-        location += String.isNotBlank(person.INT_RegionNumber__c) ? person.INT_RegionNumber__c : '';
+        location += String.isNotBlank(person.INT_GTMunicipalityNumber__c) ? person.INT_GTMunicipalityNumber__c :  '';
+        location += String.isNotBlank(person.INT_GTDistrictNumber__c) ? person.INT_GTDistrictNumber__c : '';
 
         return location;
     }

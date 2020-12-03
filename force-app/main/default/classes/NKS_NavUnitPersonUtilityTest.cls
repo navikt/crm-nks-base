@@ -27,7 +27,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_MunicipalityNumber__c = '1234'), true);
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_GTMunicipalityNumber__c = '1234'), true);
 
         Test.startTest();
         result = util.getNavUnitFromPerson(p.id);
@@ -129,7 +129,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest static void testGetLocation_OnlyMunicipality() {
         String result;
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234',  INT_TemporaryMunicipalityNumber__c = null, INT_RegionNumber__c = null);
+        Person__c p = new Person__c(INT_GTMunicipalityNumber__c = '1234', INT_GTDistrictNumber__c = null);
         Test.startTest();
             result = util.getLocation(p);
         Test.stopTest();
@@ -140,7 +140,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest static void testGetLocation_WithRegion() {
         String result;
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234',  INT_TemporaryMunicipalityNumber__c = null, INT_RegionNumber__c = '99');
+        Person__c p = new Person__c(INT_GTMunicipalityNumber__c = '1234',  INT_GTDistrictNumber__c = '99');
         Test.startTest();
             result = util.getLocation(p);
         Test.stopTest();
@@ -148,21 +148,10 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         System.assertEquals('123499', result, 'Expected empty string');
     }
 
-    @IsTest static void testGetLocation_TempMunicipality() {
-        String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234',  INT_TemporaryMunicipalityNumber__c = '5678', INT_RegionNumber__c = null);
-        Test.startTest();
-            result = util.getLocation(p);
-        Test.stopTest();
-
-        System.assertEquals('5678', result, 'Expected 1234');
-    }
-
     @IsTest static void testGetLocation_NoLocationFields() {
         String result;
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = null, INT_TemporaryMunicipalityNumber__c = null, INT_RegionNumber__c = null);
+        Person__c p = new Person__c(INT_GTMunicipalityNumber__c = null, INT_GTDistrictNumber__c = null);
         Test.startTest();
             result = util.getLocation(p);
         Test.stopTest();
