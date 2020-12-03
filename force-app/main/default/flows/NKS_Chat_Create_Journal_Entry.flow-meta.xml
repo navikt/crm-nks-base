@@ -120,6 +120,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>referenceId</name>
+            <value>
+                <elementReference>Get_Chat_Transcript.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>requestType</name>
             <value>
                 <stringValue>POST_JOURNAL</stringValue>
