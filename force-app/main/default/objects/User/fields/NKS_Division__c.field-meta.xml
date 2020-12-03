@@ -256,19 +256,19 @@
                 <label>K14A02 Leikanger Avdeling 2</label>
             </value>
             <value>
-                <fullName>K14A03 Molde Avdeling 3</fullName>
+                <fullName>K15A03 Molde Avdeling 3</fullName>
                 <default>false</default>
-                <label>K14A03 Molde Avdeling 3</label>
+                <label>K15A03 Molde Avdeling 3</label>
             </value>
             <value>
-                <fullName>K14A04 Molde Avdeling 4</fullName>
+                <fullName>K15A04 Molde Avdeling 4</fullName>
                 <default>false</default>
-                <label>K14A04 Molde Avdeling 4</label>
+                <label>K15A04 Molde Avdeling 4</label>
             </value>
             <value>
-                <fullName>K14A05 Molde Avdeling 5</fullName>
+                <fullName>K15A05 Molde Avdeling 5</fullName>
                 <default>false</default>
-                <label>K14A05 Molde Avdeling 5</label>
+                <label>K15A05 Molde Avdeling 5</label>
             </value>
             <value>
                 <fullName>K14A06 Leikanger Avdeling 6</fullName>
