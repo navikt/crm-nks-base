@@ -42,7 +42,7 @@ private with sharing class NKS_NorgNavUnitService_Test {
         NKS_NorgNavUnitService service = new NKS_NorgNavUnitService();
 
         Test.startTest();
-        result = service.getNavUnitFromGeographicLocation('0573', null, null);
+        result = service.getNavUnitFromGeographicLocation('0573', 'ANY', true);
         Test.stopTest();
 
         System.assertEquals(true, result.success, 'Expected to get a success');
@@ -50,8 +50,27 @@ private with sharing class NKS_NorgNavUnitService_Test {
         System.assertEquals(null, result.errorMessage, 'Did not expected an error message');
     }
 
-    @IsTest static void getNavUnitFromGeographicLocation_TestFailure() {
-        SingleRequestMock httpMock = new SingleRequestMock(400, 'Bad Request', '',
+    @IsTest static void getNavUnitFromGeographicLocation_NotFound() {
+        SingleRequestMock httpMock = new SingleRequestMock(404, 'Not Found', '{"field": null, "message": "Enheten med nummeret \'\'{0}\'\' eksisterer ikke"}',
+        null);
+
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        NKS_NorgNavUnitService.NavUnitResponse result;
+        
+        NKS_NorgNavUnitService service = new NKS_NorgNavUnitService();
+
+        Test.startTest();
+        result = service.getNavUnitFromGeographicLocation('0573', null, null);
+        Test.stopTest();
+
+        System.assertEquals(false, result.success, 'Expected to get a failure');
+        System.assertEquals(null, result.unit, 'Expected to get NULL');
+        System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
+    }
+
+    @IsTest static void getNavUnitFromGeographicLocation_InternalServerError() {
+        SingleRequestMock httpMock = new SingleRequestMock(50, 'Internal Server Error', '',
         null);
 
         Test.setMock(HttpCalloutMock.class, httpMock);
@@ -129,6 +148,31 @@ private with sharing class NKS_NorgNavUnitService_Test {
         System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
     }
     
+    @IsTest static void getNavUnitFromUnitNumber_TestResponse() {
+        NKS_NavUnit unit = new NKS_NavUnit();
+        unit.enhetNr = '1234';
+        unit.navn = 'Test Enhet1';
+        unit.underEtableringDato= Date.newInstance(1970, 1, 1);
+
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', JSON.serialize(new List<NKS_NavUnit>{ unit }),
+        null);
+
+        Test.setMock(HttpCalloutMock.class, httpMock);
+
+        NKS_NorgNavUnitService.NavUnitResponse result;
+        
+        NKS_NorgNavUnitService service = new NKS_NorgNavUnitService();
+
+        Test.startTest();
+        result = service.getNavUnitFromUnitNumber('1234');
+        Test.stopTest();
+
+        System.assertEquals(true, result.success, 'Expected to get a success');
+        System.assertEquals('1234', result.unit.enhetNr, 'Expected to get the same enhetNr as in the mock');
+        System.assertEquals(null, result.errorMessage, 'Did not expected an error message');
+
+    }
+
     @IsTest static void getNavUnitFilteredList_TestResponse() {
         NKS_NavUnit unit1 = new NKS_NavUnit();
         unit1.enhetNr = '12345';
