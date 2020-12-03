@@ -6,6 +6,7 @@ public with sharing class NKS_NavUnitPersonUtility {
     }
 
     /**
+     * ! Some lines commented out, waiting for new fields
      * @description Use the person id to find the location, shielded and discretionaryCode
      * @author Tor Håkon Sigurdsen | 30-11-2020
      * @param person
@@ -13,10 +14,15 @@ public with sharing class NKS_NavUnitPersonUtility {
      */
     public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Id personId) {
         Person__c person = [SELECT Id,
+                                //INT_AddressDistrictNumber_c, ADD WHEN FIELD IN PLACE
+                                //INT_AddressMunicipalityNumber__c, ADD WHEN FIELD IN PLACE
                                 INT_Confidential__c,
-                                INT_GTDistrictNumber__c,
-                                INT_GTMunicipalityNumber__c,
-                                INT_IsNavEmployee__c
+                                INT_MunicipalityNumber__c,
+                                //INT_GTDistrictNumber__c, ADD WHEN FIELD IN PLACE
+                                //INT_GTMunicipalityNumber__c, ADD WHEN FIELD IN PLACE
+                                INT_IsNavEmployee__c,
+                                INT_RegionNumber__c,
+                                INT_TemporaryMunicipalityNumber__c
                             FROM Person__c
                             WHERE Id = :personId];
         return getNavUnitFromPerson(person);
@@ -72,21 +78,46 @@ public with sharing class NKS_NavUnitPersonUtility {
     }
 
     /**
+     * ! Some lines commented out, waiting for new fields
      * @description Find the location to use when getting a persons NAV Unit from NORG2.
-     * * IF INT_TemporaryMunicipalityNumber__c has a value use that instead of INT_MunicipalityNumber__c
-     * * IF INT_RegionNumber__c has a value we must add that as NORG2 needs this when finding units based on city districts
+     * * Location is returned in the following order if the field(s) have a value:
+     * * INT_GTDistrictNumber__c
+     * * INT_GTMunicipalityNumber__c
+     * * INT_AddressDistrictNumber_c
+     * * INT_AddressMunicipalityNumber__c
+     * * INT_MunicipalityNumber__c + INT_RegionNumber__c
+     * * INT_MunicipalityNumber__c
+     * * INT_TemporaryMunicipalityNumber__c
+     * * NULL if none above
      * @author Tor Håkon Sigurdsen | 30-11-2020
      * @param person [Must have the fields INT_TemporaryMunicipalityNumber__c, INT_MunicipalityNumber__c and INT_RegionNumber__c]
      * @return String [The location string to use. A string of four or six numbers]
-     * ? Hva hvis tomt
-     * ? TEMP REGIONNUMBER?
      */
     @TestVisible private String getLocation(Person__c person) {
-        String location = '';
+        // if(String.isNotBlank(person.INT_GTDistrictNumber__c)) {
+        //     return person.INT_GTDistrictNumber__c;
+        // }
 
-        location += String.isNotBlank(person.INT_GTMunicipalityNumber__c) ? person.INT_GTMunicipalityNumber__c :  '';
-        location += String.isNotBlank(person.INT_GTDistrictNumber__c) ? person.INT_GTDistrictNumber__c : '';
+        // if(String.isNotBlank(person.INT_GTMunicipalityNumber__c)) {
+        //     return person.INT_GTMunicipalityNumber__c;
+        // }
 
-        return location;
+        // if(String.isNotBlank(person.INT_AddressDistrictNumber_c)) {
+        //     return INT_AddressDistrictNumber_c;
+        // }
+
+        // if(String.isNotBlank(person.INT_AddressMunicipalityNumber__c)) {
+        //     return INT_AddressMunicipalityNumber__c;
+        // }
+
+        if(String.isNotBlank(person.INT_MunicipalityNumber__c)) {
+            return String.isNotBlank(person.INT_RegionNumber__c) ? person.INT_MunicipalityNumber__c + person.INT_RegionNumber__c : person.INT_MunicipalityNumber__c;
+        }
+
+        if(String.isNotBlank(person.INT_TemporaryMunicipalityNumber__c)) {
+            return person.INT_TemporaryMunicipalityNumber__c;
+        }
+
+        return null;
     }
 }
