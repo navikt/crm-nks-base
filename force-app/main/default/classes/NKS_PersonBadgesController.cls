@@ -63,7 +63,7 @@ public with sharing class NKS_PersonBadgesController {
             data.badges.add(new Badge('securityMeasures', person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak', 'slds-theme_warning pointer', 'utility:warning', 'Vær oppmerksom', true));
         }
 
-        if('UGRADERT' != person.INT_Confidential__c) {
+        if(String.isNotBlank(person.INT_Confidential__c) && 'UGRADERT' != person.INT_Confidential__c) {
             data.badges.add(new Badge('confidential', person.INT_Confidential__c));
         }
 
