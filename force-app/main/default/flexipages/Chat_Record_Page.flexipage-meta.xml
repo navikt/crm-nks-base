@@ -132,6 +132,13 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksFlowStarter</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -149,6 +156,13 @@
                     <value>Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentName>nksChatAuthenticationInfoContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
