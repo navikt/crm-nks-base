@@ -39,6 +39,7 @@ public with sharing class NKS_PersonBadgesController {
     private static Person__c getPerson(Id personId) {
         Person__c person = [SELECT Id,
                                 INT_Confidential__c,
+                                INT_GuardianshipOrFuturePowerOfAttorney__c,
                                 INT_IsDeceased__c,
                                 INT_IsNavEmployee__c,
                                 INT_SpokenLanguageIntepreter__c,
@@ -56,6 +57,7 @@ public with sharing class NKS_PersonBadgesController {
         return person;
     }
 
+    @TestVisible
     private static PersonBadgeData setBadgeData(Person__c person) {
         PersonBadgeData data = new PersonBadgeData();
 
@@ -68,11 +70,11 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         if(true == person.INT_IsNavEmployee__c) {
-            data.badges.add(new Badge('isNavEmployee','NAV Ansatt'));
+            data.badges.add(new Badge('isNavEmployee',getFieldLabel('INT_IsNavEmployee__c')));
         }
 
         if(true == String.isNotBlank(person.INT_SpokenLanguageIntepreter__c)){
-            data.badges.add(new Badge('spokenLanguageIntepreter','Talespråktolk','pointer','','',true));
+            data.badges.add(new Badge('spokenLanguageIntepreter',getFieldLabel('INT_SpokenLanguageIntepreter__c'),'pointer','','',true));
 
             for(String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
                 data.spokenLanguagesIntepreter.add(language);
@@ -80,16 +82,32 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         if(true == person.INT_IsDeceased__c) {
-            data.badges.add(new Badge('isDeceased','Dødsbo'));
+            data.badges.add(new Badge('isDeceased',getFieldLabel('INT_IsDeceased__c')));
         }
 
         for(SecurityMeasure__c sm : person.SecurityMeasures__r) {
             data.securityMeasures.add(new SecurityMeasure(sm.Id, sm.INT_ValidToDate__c, sm.INT_ValidFromDate__c, sm.INT_SecurityMeasure__c)); 
         }
 
+        if(String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
+            data.badges.add(new Badge('guardianshipOrFuturePowerOfAttorney',getFieldLabel('INT_GuardianshipOrFuturePowerOfAttorney__c'),'pointer','','',true));
+
+            List<GuardianshipOrFuturePowerOfAttorney> guardienships = (List<GuardianshipOrFuturePowerOfAttorney>) JSON.deserialize(person.INT_GuardianshipOrFuturePowerOfAttorney__c, List<GuardianshipOrFuturePowerOfAttorney>.class);
+            for(Integer i = 0; i<guardienships.size();i++) {
+                guardienships[0].id = ''+i;
+            }
+            if(false == guardienships.isEmpty()) {
+                data.guardianships.addAll(guardienships);
+            }
+        }
         return data;
     }
 
+    private static String getFieldLabel(String fieldApiName) {
+        SObjectType type = Schema.getGlobalDescribe().get('Person__c');
+        Map<String,Schema.SObjectField> mfields = type.getDescribe().fields.getMap();
+        return mfields.get(fieldApiName).getDescribe().getLabel();
+    }
 
     public class Badge {
         @AuraEnabled
@@ -129,12 +147,32 @@ public with sharing class NKS_PersonBadgesController {
         public List<SecurityMeasure> securityMeasures {get;set;}
         @AuraEnabled
         public List<String> spokenLanguagesIntepreter {get;set;}
+        @AuraEnabled
+        public List<GuardianshipOrFuturePowerOfAttorney> guardianships {get;set;}
 
         public PersonBadgeData() {
             badges = new List<Badge>();
             securityMeasures = new List<SecurityMeasure>();
             spokenLanguagesIntepreter = new List<String>();
+            guardianships = new List<GuardianshipOrFuturePowerOfAttorney>();
         }
+    }
+
+    public class GuardianshipOrFuturePowerOfAttorney {
+        @AuraEnabled
+        public String type {get;set;}
+        @AuraEnabled
+        public String embete {get;set;}
+        @AuraEnabled
+        public String navn {get;set;}
+        @AuraEnabled
+        public String motpartsPersonident {get;set;}
+        @AuraEnabled
+        public String omfang {get;set;}
+        @AuraEnabled
+        public Boolean omfangetErInnenPersonligOmraade {get;set;}
+        @AuraEnabled
+        public String id {get;set;}
     }
 
     public class SecurityMeasure{

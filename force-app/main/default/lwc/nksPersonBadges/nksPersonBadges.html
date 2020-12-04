@@ -67,6 +67,29 @@
                         </div>
                     </lightning-layout-item>
                 </template>
+
+                <!-- INTERPRETER SPOKEN LANGUAGES -->
+                <template if:true={showPowerOfAttorney}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                                <template for:each={guardianships} for:item="guardianship">
+                                    <lightning-layout-item key={guardianship.id}
+                                        class="slds-var-p-around_xx-small slds-size_1-of-1">
+                                        <div class="slds-var-p-horizontal_small">
+                                            <p>Type: {guardianship.type}</p>
+                                            <p>Embete: {guardianship.embete}</p>
+                                            <p>Omfang: {guardianship.omfang}</p>
+                                            <p>Innen personlig område:
+                                                {guardianship.omfangetErInnenPersonligOmraade}
+                                            </p>
+                                        </div>
+                                    </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </div>
+                    </lightning-layout-item>
+                </template>
             </lightning-layout>
         </template>
     </div>

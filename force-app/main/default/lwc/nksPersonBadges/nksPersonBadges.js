@@ -12,6 +12,7 @@ export default class NksPersonBadges extends LightningElement {
     @track badges = [];
     @track securityMeasures = [];
     @track interpreterSpokenLanguages = [];
+    @track guardianships = [];
 
     errorMessage;
     infoPanelToShow = '';
@@ -27,6 +28,10 @@ export default class NksPersonBadges extends LightningElement {
 
     get showSecurityMeasures() {
         return 'securityMeasures' === this.infoPanelToShow;
+    }
+
+    get showPowerOfAttorney() {
+        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow;
     }
 
     get backgroundTheme() {
@@ -48,6 +53,7 @@ export default class NksPersonBadges extends LightningElement {
             this.badges = data.badges;
             this.securityMeasures = data.securityMeasures;
             this.interpreterSpokenLanguages = data.spokenLanguagesIntepreter;
+            this.guardianships = data.guardianships;
         }
 
         if (error) {

@@ -35,4 +35,18 @@ private with sharing class NKS_PersonBadgesController_Test {
         System.assertEquals(5, pbd.badges.size(), 'Expected five');
         System.assertEquals(2, pbd.spokenLanguagesIntepreter.size(), 'Expected two');
     }
+
+    @IsTest static void setBadgeData_PowerOfAttorney() {
+        String powerOfAttorneyJsonString = '[{"type":"midlertidigForVoksen","omfangetErInnenPersonligOmraade":true,"omfang":"personligeOgOekonomiskeInteresser","navn":null,"motpartsPersonident":"01098130094","embete":"fylkesmannenITromsOgFinnmark"}]';
+
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(INT_GuardianshipOrFuturePowerOfAttorney__c = powerOfAttorneyJsonString));
+
+        NKS_PersonBadgesController.PersonBadgeData result;
+        Test.startTest();
+        result = NKS_PersonBadgesController.setBadgeData(p);
+        Test.stopTest();
+
+        System.assertEquals(1, result.guardianships.size(), 'Expected one guardianship');
+        System.assertEquals(1, result.badges.size(), 'Expected one guardianship');
+    }
 }
