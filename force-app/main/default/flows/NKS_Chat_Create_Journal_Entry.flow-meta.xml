@@ -4,15 +4,15 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>756</locationX>
-        <locationY>1331</locationY>
+        <locationX>757</locationX>
+        <locationY>1432</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validate_NAV_Task_Callout</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
         </faultConnector>
         <inputParameters>
             <name>actorId</name>
@@ -330,8 +330,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>597</locationX>
-        <locationY>1331</locationY>
+        <locationX>600</locationX>
+        <locationY>1433</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -385,7 +385,7 @@
             <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -402,15 +402,115 @@
                 <elementReference>Task_Type</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Priority</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <name>NAV_Task_Assignment_0</name>
+        <label>NAV Task Assignment</label>
+        <locationX>718</locationX>
+        <locationY>1033</locationY>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_due_date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_NAV_Unit.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_NoPersonInformation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.theme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Priority</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Placeholder_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Chat_Journal_Data</name>
         <label>Set Chat Journal Data</label>
-        <locationX>1198</locationX>
-        <locationY>1272</locationY>
+        <locationX>1200</locationX>
+        <locationY>1373</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -514,11 +614,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Task</name>
+        <label>Check Task</label>
+        <locationX>725</locationX>
+        <locationY>860</locationY>
+        <defaultConnector>
+            <targetReference>NAV_Task_Assignment_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Task_Existis</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Existing_Task</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen</targetReference>
+            </connector>
+            <label>Task Existis</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>355</locationX>
-        <locationY>1268</locationY>
+        <locationX>359</locationX>
+        <locationY>1381</locationY>
         <defaultConnector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </defaultConnector>
@@ -540,12 +665,38 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Decide if a task should be created or not.</description>
+        <name>Should_Create_Task_0</name>
+        <label>Should Create Task?</label>
+        <locationX>558</locationX>
+        <locationY>1176</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Do_Create_Task_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_For_Existing_Task</targetReference>
+            </connector>
+            <label>Do Create Task</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
         <locationX>358</locationX>
         <locationY>1096</locationY>
         <defaultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Should_Create_Task_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -568,10 +719,10 @@
         <description>Validates the API callout</description>
         <name>Validate_NAV_Task_Callout</name>
         <label>Validate NAV Task Callout</label>
-        <locationX>899</locationX>
-        <locationY>1333</locationY>
+        <locationX>902</locationX>
+        <locationY>1434</locationY>
         <defaultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -648,16 +799,58 @@ TODAY())</expression>
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <description>Creates task even though process fails.</description>
+        <name>Create_Placeholder_Task</name>
+        <label>Create Placeholder Task</label>
+        <locationX>854</locationX>
+        <locationY>1033</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <inputReference>NAV_Task</inputReference>
+    </recordCreates>
+    <recordCreates>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>1066</locationX>
-        <locationY>1334</locationY>
+        <locationX>1068</locationX>
+        <locationY>1435</locationY>
         <connector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </connector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
+    <recordCreates>
+        <description>Inserts the Salesforce NAV task after a successful callout.</description>
+        <name>Create_Salesforce_NAV_Task_0</name>
+        <label>Create Salesforce NAV Task</label>
+        <locationX>983</locationX>
+        <locationY>1222</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <inputReference>Delegate_NAV_Task.task</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <name>Check_For_Existing_Task</name>
+        <label>Check For Existing Task</label>
+        <locationX>571</locationX>
+        <locationY>972</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Task</targetReference>
+        </connector>
+        <filters>
+            <field>NKS_Internal_Reference__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>NavTask__c</object>
+        <outputReference>Existing_Task</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
     <recordLookups>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
@@ -741,8 +934,8 @@ TODAY())</expression>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>1198</locationX>
-        <locationY>1023</locationY>
+        <locationX>1368</locationX>
+        <locationY>1373</locationY>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -750,8 +943,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>1055</locationX>
-        <locationY>869</locationY>
+        <locationX>1342</locationX>
+        <locationY>1038</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -792,7 +985,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg</name>
-            <fieldText>&lt;p&gt;En uventet feil oppsto ved arkivering av chatsamtalen. Kontakt administrator med følgende referanse: {!Post_Journal.errorMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -807,7 +1000,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Error</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Det oppsto en feil ved utsendelse av oppgaven. Kontakt administrator med følgende referanse: {!Delegate_NAV_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1024,8 +1217,8 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>700</locationX>
-        <locationY>657</locationY>
+        <locationX>708</locationX>
+        <locationY>608</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1045,6 +1238,14 @@ TODAY())</expression>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Existing_Task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NavTask__c</objectType>
+    </variables>
     <variables>
         <description>Journal documents to be added.</description>
         <name>Journal_Documents</name>
