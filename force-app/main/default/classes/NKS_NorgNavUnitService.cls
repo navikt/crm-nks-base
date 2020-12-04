@@ -5,6 +5,7 @@ public with sharing class NKS_NorgNavUnitService {
     private final string API_CONFIG_NAME = 'NORG2_UNIT_API'; //API Config name to set when using the ApiController
     private final string SERVICE_AUTH_HEADER = 'SaasToNavApiGw';
 
+    
     /**
      * @description Get the unit related to the geographical location submitted
      * @author Tor Håkon Sigurdsen | 26-11-2020
@@ -28,29 +29,52 @@ public with sharing class NKS_NorgNavUnitService {
         
         Map<String,String> paramMap = new Map<String,String>();
         paramMap.put('geografiskOmraade',location);
+
+        Map<String,String> urlParamMap = new Map<String,String>();
+        //Optional parameters
+        if(String.isNotBlank(discretionCode)) { urlParamMap.put('disk', discretionCode); }
+        if(null != screened) { urlParamMap.put('skjermet', String.valueOf(screened)); }
+
         
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest(API_CONFIG_NAME, 'GET_UNIT_BY_LOCATION', paramMap);
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
+        apiCtrl.setUrlParams(urlParamMap);
 
-        //Optional parameters
-        if(String.isNotBlank(discretionCode)) { apiCtrl.addUrlParam('disk', discretionCode); }
-        if(null != screened) { apiCtrl.addUrlParam('skjermet', String.valueOf(screened)); }
-        
         apiCtrl.doCallout();
         
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
+        String bodyString = apiCtrl.getResponse().getBody();
+
+        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.unit = (NKS_NavUnit) JSON.deserialize(apiCtrl.getResponse().getBody(), NKS_NavUnit.class); 
-        } else{
-            String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
+            resp.unit = (NKS_NavUnit) JSON.deserialize(bodyString, NKS_NavUnit.class);
+        } else {
+            String params = '[geografiskOmraade: ' + location + '| disk: ' + discretionCode + ' | skjermet: ' + screened +']';
+            String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation. Parameters: ' + params);
             resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
-            resp.success = false;
+            
+            if(statusCode == 404) {
+                resp.errorMessage = 'Kunne ikke finne brukerens enhet i NORG2. Referanse til feil: ' + errorRef;
+            } else if(statusCode == 500) {
+                resp.errorMessage = 'Noe gikk galt ved henting av enhet fra NORG2. Referanse til feil: ' + errorRef;
+            }
         }
 
         return resp;
+    }
+
+    public NavUnitResponse getNavUnitFromUnitNumber(String unitNumber) {
+        NavUnitResponse response = new NavUnitResponse();
+        NavUnitsResponse resp = getNavUnitFilteredList(null, new List<String>{unitNumber}, null);
+
+        response.errorMessage = resp.errorMessage;
+        response.success = resp.success;
+        response.unit = (null != resp.units && false == resp.units.isEmpty()) ? resp.units[0] : null;
+
+        return response;
     }
 
     /**
@@ -70,14 +94,16 @@ public with sharing class NKS_NorgNavUnitService {
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
         apiCtrl.doCallout();
 
+        String bodyString = apiCtrl.getResponse().getBody();
+        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.contactInformation = (NKS_NAvUnitContactInformation) JSON.deserialize(apiCtrl.getResponse().getBody(), NKS_NAvUnitContactInformation.class); 
+            resp.contactInformation = (NKS_NAvUnitContactInformation) JSON.deserialize(bodyString, NKS_NAvUnitContactInformation.class); 
         } else{
             String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
-            resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
+            resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' + errorRef;
             resp.success = false;
         }
 
@@ -95,22 +121,27 @@ public with sharing class NKS_NorgNavUnitService {
     public NavUnitsResponse getNavUnitFilteredList(List<String> unitStatuses, List<String> unitNumbers, String taskProcessingFilter) {
         NavUnitsResponse resp = new NavUnitsResponse();
 
+        Map<String,String> urlParamMap = new Map<String,String>();
+        //Optional parameters
+        if(null != unitStatuses && 0 < unitStatuses.size()) { urlParamMap.put('enhetStatusListe', String.join(unitStatuses, ',')); }
+        if(null != unitNumbers && 0 < unitNumbers.size()) { urlParamMap.put('enhetsnummerListe', String.join(unitNumbers,',')); }
+        if(String.isNotBlank(taskProcessingFilter)) { urlParamMap.put('oppgavebehandlerFilter', taskProcessingFilter); }
+
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest(API_CONFIG_NAME, 'GET_UNITS_FILTERED_LIST');
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
-
-        //Optional parameters
-        if(null != unitStatuses && 0 < unitStatuses.size()) { apiCtrl.addUrlParam('enhetStatusListe', String.join(unitStatuses, ',')); }
-        if(null != unitNumbers && 0 < unitNumbers.size()) { apiCtrl.addUrlParam('enhetsnummerListe', String.join(unitNumbers,',')); }
-        if(String.isNotBlank(taskProcessingFilter)) { apiCtrl.addUrlParam('oppgavebehandlerFilter', taskProcessingFilter); }
+        apiCtrl.setUrlParams(urlParamMap);
 
         apiCtrl.doCallout();
+
+        String bodyString = apiCtrl.getResponse().getBody();
+        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
 
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.units = (List<NKS_NavUnit>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NKS_NavUnit>.class); 
+            resp.units = (List<NKS_NavUnit>) JSON.deserialize(bodyString, List<NKS_NavUnit>.class); 
         } else{
             String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
             resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
@@ -167,6 +198,8 @@ public with sharing class NKS_NorgNavUnitService {
 
         return errorRef;
     }
+
+    // RESPONSE WRAPPERS
 
     public class WorkAllocationResponse {
         @AuraEnabled public Boolean success;
