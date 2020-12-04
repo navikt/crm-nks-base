@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import getField from '@salesforce/apex/NKS_RecordFieldController.getField';
+import getField from '@salesforce/apex/NKS_HomePageController.getField';
 
 export default class NksHomePageText extends LightningElement {
     @api cardTitle;

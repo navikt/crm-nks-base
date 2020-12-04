@@ -27,7 +27,6 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        //Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_GTMunicipalityNumber__c = '1234'), true); ADD WHEN FIELD IN PLACE
         Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_MunicipalityNumber__c = '1234'), true); // REMOVE WHEN FIELD IN PLACE
 
         Test.startTest();
@@ -127,54 +126,10 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         System.assertEquals(null, result, 'Expected empty string');
     }
 
-    // @IsTest static void testGetLocation_GTDistrictNumber() {
-    //     String result;
-    //     NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-    //     Person__c p = new Person__c(INT_GTMunicipalityNumber__c = '1234', INT_GTDistrictNumber__c = '123456');
-    //     Test.startTest();
-    //         result = util.getLocation(p);
-    //     Test.stopTest();
-
-    //     System.assertEquals('123456', result, 'Expected 1234');
-    // }
-
-    // @IsTest static void testGetLocation_GTMunicipalityNumber() {
-    //     String result;
-    //     NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-    //     Person__c p = new Person__c(INT_GTMunicipalityNumber__c = '1234', INT_AddressDistrictNumber_c = '123456');
-    //     Test.startTest();
-    //         result = util.getLocation(p);
-    //     Test.stopTest();
-
-    //     System.assertEquals('1234', result, 'Expected 1234');
-    // }
-
-    // @IsTest static void testGetLocation_AddressDistrictNumber() {
-    //     String result;
-    //     NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-    //     Person__c p = new Person__c(INT_AddressDistrictNumber_c = '123456',  INT_AddressMunicipalityNumber__c = '1234');
-    //     Test.startTest();
-    //         result = util.getLocation(p);
-    //     Test.stopTest();
-
-    //     System.assertEquals('123456', result, 'Expected 123456');
-    // }
-
-    // @IsTest static void testGetLocation_AddressMunicipalityNumber() {
-    //     String result;
-    //     NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-    //     Person__c p = new Person__c(INT_AddressMunicipalityNumber__c = '1234', INT_MunicipalityNumber__c = '4321');
-    //     Test.startTest();
-    //         result = util.getLocation(p);
-    //     Test.stopTest();
-
-    //     System.assertEquals('1234', result, 'Expected 1234');
-    // }
-
-    @IsTest static void testGetLocation_MunicipalityNumber() {
+    @IsTest static void testGetLocation_MunicipalityNumberWithoutDistrictNumber() {
         String result;
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_RegionNumber__c = null);
+        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_DistrictNumber__c = '');
         Test.startTest();
             result = util.getLocation(p);
         Test.stopTest();
@@ -182,26 +137,15 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         System.assertEquals('1234', result, 'Expected 1234');
     }
 
-    @IsTest static void testGetLocation_MunicipalityNumberWithRegionNumber() {
+    @IsTest static void testGetLocation_MunicipalityNumberWithDistrictNumber() {
         String result;
         NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_RegionNumber__c = '56');
+        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_DistrictNumber__c = '123456');
         Test.startTest();
             result = util.getLocation(p);
         Test.stopTest();
 
-        System.assertEquals('123456', result, 'Expected 123445');
-    }
-
-    @IsTest static void testGetLocation_TemporaryMunicipalityNumber() {
-        String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
-        Person__c p = new Person__c(INT_TemporaryMunicipalityNumber__c = '1234', INT_RegionNumber__c = '56');
-        Test.startTest();
-            result = util.getLocation(p);
-        Test.stopTest();
-
-        System.assertEquals('1234', result, 'Expected 1234');
+        System.assertEquals('123456', result, 'Expected 123456');
     }
 
     @IsTest static void testGetLocation_Null() {
