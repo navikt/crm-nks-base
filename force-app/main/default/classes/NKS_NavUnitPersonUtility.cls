@@ -16,9 +16,7 @@ public with sharing class NKS_NavUnitPersonUtility {
                                 INT_Confidential__c,
                                 INT_DistrictNumber__c,
                                 INT_MunicipalityNumber__c,
-                                INT_IsNavEmployee__c,
-                                INT_RegionNumber__c,
-                                INT_TemporaryMunicipalityNumber__c
+                                INT_IsNavEmployee__c
                             FROM Person__c
                             WHERE Id = :personId];
         return getNavUnitFromPerson(person);
@@ -85,7 +83,7 @@ public with sharing class NKS_NavUnitPersonUtility {
      * * INT_TemporaryMunicipalityNumber__c
      * * NULL if none above
      * @author Tor Håkon Sigurdsen | 30-11-2020
-     * @param person [Must have the fields INT_TemporaryMunicipalityNumber__c, INT_MunicipalityNumber__c and INT_RegionNumber__c]
+     * @param person [Must have the fields INT_MunicipalityNumber__c and INT_DistrictNumber__c]
      * @return String [The location string to use. A string of four or six numbers]
      */
     @TestVisible private String getLocation(Person__c person) {
