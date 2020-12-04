@@ -23,8 +23,7 @@ private with sharing class NKS_NavUnitSingleControllerTest {
         
         Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
-        //Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_GTMunicipalityNumber__c = '1234'), true); ADD WHEN FIELD IN PLACE
-        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_MunicipalityNumber__c = '1234'), true); // REMOVE WHEN FIELD IN PLACE
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(Name = '1234567890', INT_LastName__c = 'Potter', INT_IsNavEmployee__c = false, INT_Confidential__c = 'UGRADERT', INT_MunicipalityNumber__c = '1234'), true);
         Account pAccount = [SELECT Id FROM Account WHERE CRM_Person__c = :p.Id];
         Case c = (Case) UTIL_TestDataFactory.createRecord(new Case(AccountId = pAccount.Id),true);
         
