@@ -42,6 +42,7 @@ public with sharing class NKS_PersonBadgesController {
                                 INT_GuardianshipOrFuturePowerOfAttorney__c,
                                 INT_IsDeceased__c,
                                 INT_IsNavEmployee__c,
+                                INT_PowerOfAttorney__c,
                                 INT_SpokenLanguageIntepreter__c,
                                 NKS_NumberOfSecurityMeasures__c,
                                 (
@@ -63,6 +64,10 @@ public with sharing class NKS_PersonBadgesController {
 
         if(0 < person.NKS_NumberOfSecurityMeasures__c) {
             data.badges.add(new Badge('securityMeasures', person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak', 'slds-theme_warning pointer', 'utility:warning', 'Vær oppmerksom', true));
+
+            for(SecurityMeasure__c sm : person.SecurityMeasures__r) {
+                data.securityMeasures.add(new SecurityMeasure(sm.Id, sm.INT_ValidToDate__c, sm.INT_ValidFromDate__c, sm.INT_SecurityMeasure__c)); 
+            }
         }
 
         if(String.isNotBlank(person.INT_Confidential__c) && 'UGRADERT' != person.INT_Confidential__c) {
@@ -85,8 +90,10 @@ public with sharing class NKS_PersonBadgesController {
             data.badges.add(new Badge('isDeceased',getFieldLabel('INT_IsDeceased__c')));
         }
 
-        for(SecurityMeasure__c sm : person.SecurityMeasures__r) {
-            data.securityMeasures.add(new SecurityMeasure(sm.Id, sm.INT_ValidToDate__c, sm.INT_ValidFromDate__c, sm.INT_SecurityMeasure__c)); 
+        if(String.isNotBlank(person.INT_PowerOfAttorney__c)) {
+            data.badges.add(new Badge('powerOfAttorney',getFieldLabel('INT_PowerOfAttorney__c'),'pointer','','',true));
+
+            data.powerOfAttorney = (PowerOfAttorney) JSON.deserialize(person.INT_PowerOfAttorney__c, PowerOfAttorney.class);
         }
 
         if(String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
@@ -149,6 +156,8 @@ public with sharing class NKS_PersonBadgesController {
         public List<String> spokenLanguagesIntepreter {get;set;}
         @AuraEnabled
         public List<GuardianshipOrFuturePowerOfAttorney> guardianships {get;set;}
+        @AuraEnabled
+        public PowerOfAttorney powerOfAttorney {get;set;}
 
         public PersonBadgeData() {
             badges = new List<Badge>();
@@ -158,32 +167,42 @@ public with sharing class NKS_PersonBadgesController {
         }
     }
 
+    public class PowerOfAttorney {
+        @AuraEnabled public String motpartsRolle { get { return motpartsRolle.toLowerCase().capitalize(); } set; }
+        @AuraEnabled public String motpartsPersonident;
+        @AuraEnabled public List<String> omraader;
+        @AuraEnabled public String omraade { get{ return omraadeString(); } set;}
+        @AuraEnabled public Date gyldigFraOgMed;
+        @AuraEnabled public Date gyldigTilOgMed;
+
+        private String omraadeString() {
+            if(1 == omraader.size() && '*'.equalsIgnoreCase(omraader[0])) {
+                return 'Gjelder alle ytelser';
+            }
+
+            if(1 < omraader.size()) {
+                return String.join(omraader, ',');
+            }
+
+            return '';
+        }
+    }
+
     public class GuardianshipOrFuturePowerOfAttorney {
-        @AuraEnabled
-        public String type {get;set;}
-        @AuraEnabled
-        public String embete {get;set;}
-        @AuraEnabled
-        public String navn {get;set;}
-        @AuraEnabled
-        public String motpartsPersonident {get;set;}
-        @AuraEnabled
-        public String omfang {get;set;}
-        @AuraEnabled
-        public Boolean omfangetErInnenPersonligOmraade {get;set;}
-        @AuraEnabled
-        public String id {get;set;}
+        @AuraEnabled public String type;
+        @AuraEnabled public String embete;
+        @AuraEnabled public String navn;
+        @AuraEnabled public String motpartsPersonident;
+        @AuraEnabled public String omfang;
+        @AuraEnabled public Boolean omfangetErInnenPersonligOmraade;
+        @AuraEnabled public String id;
     }
 
     public class SecurityMeasure{
-        @AuraEnabled
-        public Id RecordId {get;set;}
-        @AuraEnabled
-        public Date ToDate {get;set;}
-        @AuraEnabled
-        public Date FromDate {get;set;}
-        @AuraEnabled
-        public string SecurityMeasure {get;set;}
+        @AuraEnabled public Id RecordId;
+        @AuraEnabled public Date ToDate;
+        @AuraEnabled public Date FromDate;
+        @AuraEnabled public string SecurityMeasure;
 
         public SecurityMeasure(Id recordId, Date toDate, Date fromDate, String securityMeasure){
             this.RecordId=recordId;

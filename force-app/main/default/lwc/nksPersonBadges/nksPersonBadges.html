@@ -1,5 +1,6 @@
 <template>
     <div class={backgroundTheme}>
+
         <!-- ERROR MESSAGES -->
         <template if:true={errorMessage}>
             <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
@@ -68,25 +69,42 @@
                     </lightning-layout-item>
                 </template>
 
-                <!-- INTERPRETER SPOKEN LANGUAGES -->
+                <!-- POWER OF ATTORNEY -->
                 <template if:true={showPowerOfAttorney}>
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                            <div class="slds-var-p-horizontal_small">
+                                <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle}
+                                    ({powerOfAttorney.motpartsPersonident})</div>
+                                <p>Gyldig:
+                                    <lightning-formatted-date-time value={powerOfAttorney.gyldigFraOgMed} year="numeric"
+                                        month="numeric" day="numeric">
+                                    </lightning-formatted-date-time> - <lightning-formatted-date-time
+                                        value={powerOfAttorney.gyldigTilOgMed} year="numeric" month="numeric"
+                                        day="numeric"></lightning-formatted-date-time>
+                                </p>
+                                <p>{powerOfAttorney.omraade}</p>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+
+                <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
+                <template if:true={showGuardianship}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <ul class="slds-has-dividers_bottom-space">
                                 <template for:each={guardianships} for:item="guardianship">
-                                    <lightning-layout-item key={guardianship.id}
-                                        class="slds-var-p-around_xx-small slds-size_1-of-1">
-                                        <div class="slds-var-p-horizontal_small">
-                                            <p>Type: {guardianship.type}</p>
-                                            <p>Embete: {guardianship.embete}</p>
-                                            <p>Omfang: {guardianship.omfang}</p>
-                                            <p>Innen personlig område:
-                                                {guardianship.omfangetErInnenPersonligOmraade}
-                                            </p>
-                                        </div>
-                                    </lightning-layout-item>
+                                    <li class="slds-item" key={guardianship.id}>
+                                        <p>{guardianship.type}</p>
+                                        <div class="slds-text-heading_small">Verge</div>
+                                        <p>{guardianship.motpartsPersonident}</p>
+                                        <div class="slds-text-heading_small">Mandat</div>
+                                        <p>{guardianship.omfang}</p>
+                                        <p>{guardianship.embete}</p>
+                                    </li>
                                 </template>
-                            </lightning-layout>
+                            </ul>
                         </div>
                     </lightning-layout-item>
                 </template>

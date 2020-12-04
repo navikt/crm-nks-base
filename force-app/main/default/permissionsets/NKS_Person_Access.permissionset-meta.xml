@@ -33,6 +33,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.INT_GuardianshipOrFuturePowerOfAttorney__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.INT_IsDeceased__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -109,6 +114,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.INT_Phone2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_PowerOfAttorney__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
