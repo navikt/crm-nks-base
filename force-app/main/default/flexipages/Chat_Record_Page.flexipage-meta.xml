@@ -30,7 +30,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>chatHeight</name>
-                    <value>500</value>
+                    <value>700</value>
                 </componentInstanceProperties>
                 <componentName>runtime_service_liveagent:chatBody</componentName>
             </componentInstance>

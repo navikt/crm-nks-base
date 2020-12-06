@@ -33,13 +33,13 @@ public with sharing class NKS_NavTaskManager {
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
         apiCtrl.setHeaders(httpHeaders);
-        apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
-
+        
         //Creates a log entry used as the unique request X-Correlation-ID
         LoggerUtility logger = new LoggerUtility();
         addXCorrelation(apiCtrl, logger, task);
-
+        
         try{
+            apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if(statusCode == 200 || statusCode == 201) {
@@ -50,12 +50,12 @@ public with sharing class NKS_NavTaskManager {
                 resp.setResponse(true, null, task);
             }
             else{
-                logError(apiCtrl, logger);
+                logError(apiCtrl, logger, task);
                 resp.setResponse(false, logger.peek().UUID__c, task);
             }
         }
         catch(Exception ex) {
-            logger.exception(ex);
+            logger.exception(ex, task);
             resp.setResponse(false, logger.peek().UUID__c, task);
         }
         finally{
@@ -84,25 +84,25 @@ public with sharing class NKS_NavTaskManager {
         apiCtrl.initRequest('Oppgave_API', 'PATCH_EDIT_OPPGAVE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');
         apiCtrl.setHeaders(httpHeaders);
-        apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
         
         //Creates a log entry used as the unique request X-Correlation-ID
         LoggerUtility logger = new LoggerUtility();
         addXCorrelation(apiCtrl, logger, task);
         
         try{
+            apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if(statusCode == 200 || statusCode == 201) {
                 resp.setResponse(true, null, task);
             }
             else{
-                logError(apiCtrl, logger);
+                logError(apiCtrl, logger, task);
                 resp.setResponse(false, logger.peek().UUID__c, task);
             }
         }
         catch(Exception ex){
-            logger.exception(ex);
+            logger.exception(ex, task);
             resp.setResponse(false, logger.peek().UUID__c, task);
         }
         finally{
@@ -130,8 +130,8 @@ public with sharing class NKS_NavTaskManager {
     * @param apiCtrl 
     * @param logger 
     **/
-    private static void logError(ApiController apiCtrl, LoggerUtility logger) {
-        logger.error('Error posting NAV task to oppgave: \n ' + 'Status: ' + String.valueOf(apiCtrl.getResponse().getStatusCode()) + '- ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
+    private static void logError(ApiController apiCtrl, LoggerUtility logger, NavTask__c task) {
+        logger.error('Error posting NAV task to oppgave: \n ' + 'Status: ' + String.valueOf(apiCtrl.getResponse().getStatusCode()) + '- ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), task);
         logger.peek().Payload__c = JSON.serializePretty(JSON.deserializeUntyped(apiCtrl.getRequest().getBody()));
     }
     
