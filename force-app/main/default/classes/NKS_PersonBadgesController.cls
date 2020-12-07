@@ -180,7 +180,7 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setPowerOfAttorney() {
             if(String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-                badges.add(new Badge('powerOfAttorney', getFieldLabel('INT_PowerOfAttorney__c'), 'pointer', '', '', true));
+                badges.add(new Badge('powerOfAttorney', 'Fullmakt', 'pointer', '', '', true));
     
                 powerOfAttorney = (PowerOfAttorney) JSON.deserialize(person.INT_PowerOfAttorney__c, PowerOfAttorney.class);
             }
@@ -188,7 +188,7 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setGuardianshipOrFuturePowerOfAttorney() {
             if(String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
-                badges.add(new Badge('guardianshipOrFuturePowerOfAttorney',getFieldLabel('INT_GuardianshipOrFuturePowerOfAttorney__c'),'pointer','','',true));
+                badges.add(new Badge('guardianshipOrFuturePowerOfAttorney','Vergemål','pointer','','',true));
     
                 List<GuardianshipOrFuturePowerOfAttorney> guardienships = (List<GuardianshipOrFuturePowerOfAttorney>) JSON.deserialize(person.INT_GuardianshipOrFuturePowerOfAttorney__c, List<GuardianshipOrFuturePowerOfAttorney>.class);
                 for(Integer i = 0; i<guardienships.size();i++) {
@@ -291,6 +291,7 @@ public with sharing class NKS_PersonBadgesController {
         @AuraEnabled public String motpartsPersonident;
         @AuraEnabled public String omfang;
         @AuraEnabled public Boolean omfangetErInnenPersonligOmraade;
+        @AuraEnabled public String omfangetErInnenPersonligOmraadeTxt { get { return true == omfangetErInnenPersonligOmraade ? 'Ja': 'Nei';} set; }
         @AuraEnabled public String id;
     }
 
