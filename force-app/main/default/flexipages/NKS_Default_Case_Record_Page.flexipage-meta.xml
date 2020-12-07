@@ -214,6 +214,10 @@
                     <value>INT_KrrEmail__c, INT_ResidentialAddress__c,INT_KrrMobilePhone__c , INT_ResidentialZipCode__c,INT_Phone1__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:call_coaching</value>
                 </componentInstanceProperties>
@@ -251,6 +255,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -485,6 +493,10 @@
                     <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:avatar</value>
                 </componentInstanceProperties>
@@ -511,6 +523,43 @@
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Nyttige linker</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:link</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>AccountId.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
