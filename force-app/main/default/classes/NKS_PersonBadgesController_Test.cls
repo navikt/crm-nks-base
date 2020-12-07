@@ -7,7 +7,7 @@ private with sharing class NKS_PersonBadgesController_Test {
         acc.CRM_Person__c = p.Id;
         update acc;
 
-        SecurityMeasure__c sm = (SecurityMeasure__c) UTIL_TestDataFactory.createRecord(new SecurityMeasure__c(INT_Person__c = p.Id), true);
+        SecurityMeasure__c sm = (SecurityMeasure__c) UTIL_TestDataFactory.createRecord(new SecurityMeasure__c(INT_Person__c = p.Id, INT_SecurityMeasure__c = 'FTUS'), true);
 
         NKS_PersonBadgesController.PersonBadgeData pbd = NKS_PersonBadgesController.getPersonBadgesAndInfo('CRM_Person__c','Account',acc.Id);
 
@@ -43,7 +43,7 @@ private with sharing class NKS_PersonBadgesController_Test {
 
         NKS_PersonBadgesController.PersonBadgeData result;
         Test.startTest();
-        result = NKS_PersonBadgesController.setBadgeData(p);
+        result = new NKS_PersonBadgesController.PersonBadgeData(p);
         Test.stopTest();
 
         System.assertEquals(1, result.guardianships.size(), 'Expected one guardianship');
@@ -57,7 +57,7 @@ private with sharing class NKS_PersonBadgesController_Test {
 
         NKS_PersonBadgesController.PersonBadgeData result;
         Test.startTest();
-        result = NKS_PersonBadgesController.setBadgeData(p);
+        result = new NKS_PersonBadgesController.PersonBadgeData(p);
         Test.stopTest();
 
         System.assertNotEquals(null, result.powerOfAttorney, 'Expected one guardianship');

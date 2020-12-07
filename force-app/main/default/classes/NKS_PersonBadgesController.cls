@@ -1,10 +1,25 @@
 public with sharing class NKS_PersonBadgesController {
     
+    public static final Set<String> HOT_ENTITLEMENT_FIELDS = new Set<String>{
+        'HOT_DailyLifeInterpreter__c',
+        'HOT_EducationInterpreter__c',
+        'HOT_Escort__c',
+        'HOT_HapticCommunication__c',
+        'HOT_InterpreterAtWork__c',
+        'HOT_RemoteInterpreter__c',
+        'HOT_SignLanguage__c',
+        'HOT_SignLanguageWithLimitedFieldOfView__c',
+        'HOT_SignToSupportMouthReading__c',
+        'HOT_SpeechInterpreting__c',
+        'HOT_TactileSignLanguage__c',
+        'HOT_WritenInterpreting__c'
+    };
+
     @AuraEnabled(cacheable=true)
     public static PersonBadgeData getPersonBadgesAndInfo(String field, String parentObject, String parentRecordId) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
         Person__c person = getPerson(personId);
-        return setBadgeData(person);
+        return new PersonBadgeData(person);
     }
 
     /**
@@ -26,6 +41,9 @@ public with sharing class NKS_PersonBadgesController {
         return personId;
     }
 
+    /**
+     * @description recursive method for collecting the value of a field on a sObject
+     */
     private static Object getFieldValue(SObject obj, String fieldName) {
         List<String> fieldNameList = fieldName.split('\\.');
 
@@ -36,84 +54,182 @@ public with sharing class NKS_PersonBadgesController {
         return obj.get(fieldNameList[0]);
     }
 
+    /**
+     * @description The get Person query is made dynamic in order to use some HOT fields without having a package dependancy.
+     */
     private static Person__c getPerson(Id personId) {
-        Person__c person = [SELECT Id,
-                                INT_Confidential__c,
-                                INT_GuardianshipOrFuturePowerOfAttorney__c,
-                                INT_IsDeceased__c,
-                                INT_IsNavEmployee__c,
-                                INT_PowerOfAttorney__c,
-                                INT_SpokenLanguageIntepreter__c,
-                                NKS_NumberOfSecurityMeasures__c,
-                                (
-                                    SELECT Id,
-                                        INT_Person__c,
-                                        INT_SecurityMeasure__c,
-                                        INT_ValidFromDate__c,
-                                        INT_ValidToDate__c
-                                    FROM SecurityMeasures__r
-                                )
-                            FROM Person__c
-                            WHERE Id = :personId];
+        Person__c person;
+        Set<String> objectFields = Schema.SObjectType.Person__c.fields.getMap().keySet();
+        Set<String> fields = new Set<String>();
+        Set<String> fieldsToLabel = new Set<String>();
+        String queryString = 'SELECT ';
+        
+        
+        fields.add('Id');
+        fieldsToLabel.add('INT_Confidential__c');
+        fields.add('INT_GuardianshipOrFuturePowerOfAttorney__c');
+        fields.add('INT_IsDeceased__c');
+        fields.add('INT_IsNavEmployee__c');
+        fields.add('INT_PowerOfAttorney__c');
+        fields.add('INT_SpokenLanguageIntepreter__c');
+        fields.add('NKS_NumberOfSecurityMeasures__c');
+
+        //HOT Fields
+        fields.add('HOT_HasEntitlement__c');
+        fields.addAll(HOT_ENTITLEMENT_FIELDS);
+        fieldsToLabel.add('HOT_DegreeOfHearingAndVisualImpairment__c');
+        
+        for(String str : fields) {
+            if(objectFields.contains(str.toLowerCase())) {
+                queryString += str += ', ';
+            }
+        }
+
+        for(String str : fieldsToLabel) {
+            if(objectFields.contains(str.toLowerCase())) {
+                queryString += 'toLabel(' + str + '), ';
+            }
+        }
+
+        queryString += '('
+        +'	SELECT Id,'
+        +'		INT_Person__c,'
+        +'		toLabel(INT_SecurityMeasure__c),'
+        +'		INT_ValidFromDate__c,'
+        +'		INT_ValidToDate__c'
+        +'	FROM SecurityMeasures__r'
+        +')';
+        
+        queryString += ' FROM Person__c WHERE Id = :personId';
+        
+        person = (Person__c) Database.query(queryString)[0];
+
         return person;
     }
 
-    @TestVisible
-    private static PersonBadgeData setBadgeData(Person__c person) {
-        PersonBadgeData data = new PersonBadgeData();
+    public class PersonBadgeData {
+        @AuraEnabled public List<Badge> badges;
+        @AuraEnabled public List<SecurityMeasure> securityMeasures;
+        @AuraEnabled public List<String> spokenLanguagesIntepreter;
+        @AuraEnabled public List<GuardianshipOrFuturePowerOfAttorney> guardianships;
+        @AuraEnabled public PowerOfAttorney powerOfAttorney;
+        @AuraEnabled public List<String> entitlements;
+        private Person__c person;
+        private Set<String> fieldSet;
 
-        if(0 < person.NKS_NumberOfSecurityMeasures__c) {
-            data.badges.add(new Badge('securityMeasures', person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak', 'slds-theme_warning pointer', 'utility:warning', 'Vær oppmerksom', true));
+        public PersonBadgeData(Person__c person) {
+            badges = new List<Badge>();
+            securityMeasures = new List<SecurityMeasure>();
+            spokenLanguagesIntepreter = new List<String>();
+            guardianships = new List<GuardianshipOrFuturePowerOfAttorney>();
+            entitlements = new List<String>();
+            this.person = person;
+            fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
+            setBadgeData();
+        }
 
-            for(SecurityMeasure__c sm : person.SecurityMeasures__r) {
-                data.securityMeasures.add(new SecurityMeasure(sm.Id, sm.INT_ValidToDate__c, sm.INT_ValidFromDate__c, sm.INT_SecurityMeasure__c)); 
+        private void setBadgeData() {
+            setSecurityMeasures();
+            setIsConfidential();
+            setIsNavEmployee();
+            setIsDeceased();
+            setPowerOfAttorney();
+            setGuardianshipOrFuturePowerOfAttorney();
+            setSpokenLanguagesIntepreter();
+            setDegreeOfHearingAndVisualImpairment();
+            setEntitlements();
+        }
+
+        private void setSecurityMeasures() {
+            if(0 < person.NKS_NumberOfSecurityMeasures__c) {
+                badges.add(new Badge('securityMeasures', person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak', 'slds-theme_warning pointer', 'utility:warning', 'Vær oppmerksom', true));
+    
+                for(SecurityMeasure__c sm : person.SecurityMeasures__r) {
+                    securityMeasures.add(new SecurityMeasure(sm.Id, sm.INT_ValidToDate__c, sm.INT_ValidFromDate__c, sm.INT_SecurityMeasure__c)); 
+                }
             }
         }
 
-        if(String.isNotBlank(person.INT_Confidential__c) && 'UGRADERT' != person.INT_Confidential__c) {
-            data.badges.add(new Badge('confidential', person.INT_Confidential__c));
-        }
-
-        if(true == person.INT_IsNavEmployee__c) {
-            data.badges.add(new Badge('isNavEmployee',getFieldLabel('INT_IsNavEmployee__c')));
-        }
-
-        if(true == String.isNotBlank(person.INT_SpokenLanguageIntepreter__c)){
-            data.badges.add(new Badge('spokenLanguageIntepreter',getFieldLabel('INT_SpokenLanguageIntepreter__c'),'pointer','','',true));
-
-            for(String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
-                data.spokenLanguagesIntepreter.add(language);
+        private void setIsConfidential() {
+            if(String.isNotBlank(person.INT_Confidential__c) && 'UGRADERT' != person.INT_Confidential__c) {
+                badges.add(new Badge('confidential', person.INT_Confidential__c));
             }
         }
 
-        if(true == person.INT_IsDeceased__c) {
-            data.badges.add(new Badge('isDeceased',getFieldLabel('INT_IsDeceased__c')));
-        }
-
-        if(String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-            data.badges.add(new Badge('powerOfAttorney',getFieldLabel('INT_PowerOfAttorney__c'),'pointer','','',true));
-
-            data.powerOfAttorney = (PowerOfAttorney) JSON.deserialize(person.INT_PowerOfAttorney__c, PowerOfAttorney.class);
-        }
-
-        if(String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
-            data.badges.add(new Badge('guardianshipOrFuturePowerOfAttorney',getFieldLabel('INT_GuardianshipOrFuturePowerOfAttorney__c'),'pointer','','',true));
-
-            List<GuardianshipOrFuturePowerOfAttorney> guardienships = (List<GuardianshipOrFuturePowerOfAttorney>) JSON.deserialize(person.INT_GuardianshipOrFuturePowerOfAttorney__c, List<GuardianshipOrFuturePowerOfAttorney>.class);
-            for(Integer i = 0; i<guardienships.size();i++) {
-                guardienships[0].id = ''+i;
-            }
-            if(false == guardienships.isEmpty()) {
-                data.guardianships.addAll(guardienships);
+        private void setIsNavEmployee() {
+            if(true == person.INT_IsNavEmployee__c) {
+                badges.add(new Badge('isNavEmployee', getFieldLabel('INT_IsNavEmployee__c')));
             }
         }
-        return data;
-    }
 
-    private static String getFieldLabel(String fieldApiName) {
-        SObjectType type = Schema.getGlobalDescribe().get('Person__c');
-        Map<String,Schema.SObjectField> mfields = type.getDescribe().fields.getMap();
-        return mfields.get(fieldApiName).getDescribe().getLabel();
+        private void setSpokenLanguagesIntepreter() {
+            if(true == String.isNotBlank(person.INT_SpokenLanguageIntepreter__c)){
+                badges.add(new Badge('spokenLanguageIntepreter', getFieldLabel('INT_SpokenLanguageIntepreter__c'), 'pointer', '', '', true));
+    
+                for(String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
+                    spokenLanguagesIntepreter.add(language);
+                }
+            }
+        }
+
+        private void setIsDeceased() {
+            if(true == person.INT_IsDeceased__c) {
+                badges.add(new Badge('isDeceased', getFieldLabel('INT_IsDeceased__c')));
+            }
+        }
+
+        private void setPowerOfAttorney() {
+            if(String.isNotBlank(person.INT_PowerOfAttorney__c)) {
+                badges.add(new Badge('powerOfAttorney', getFieldLabel('INT_PowerOfAttorney__c'), 'pointer', '', '', true));
+    
+                powerOfAttorney = (PowerOfAttorney) JSON.deserialize(person.INT_PowerOfAttorney__c, PowerOfAttorney.class);
+            }
+        }
+
+        private void setGuardianshipOrFuturePowerOfAttorney() {
+            if(String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
+                badges.add(new Badge('guardianshipOrFuturePowerOfAttorney',getFieldLabel('INT_GuardianshipOrFuturePowerOfAttorney__c'),'pointer','','',true));
+    
+                List<GuardianshipOrFuturePowerOfAttorney> guardienships = (List<GuardianshipOrFuturePowerOfAttorney>) JSON.deserialize(person.INT_GuardianshipOrFuturePowerOfAttorney__c, List<GuardianshipOrFuturePowerOfAttorney>.class);
+                for(Integer i = 0; i<guardienships.size();i++) {
+                    guardienships[0].id = ''+i;
+                }
+                if(false == guardienships.isEmpty()) {
+                    guardianships.addAll(guardienships);
+                }
+            }
+        }
+
+        private void setDegreeOfHearingAndVisualImpairment() {
+            if(fieldSet.contains('hot_degreeofhearingandvisualimpairment__c')) {
+                
+                String degreeOfHearingAndVisualImpairment = (String) person.get('HOT_DegreeOfHearingAndVisualImpairment__c');
+
+                if(String.isNotBlank(degreeOfHearingAndVisualImpairment)) {
+                    badges.add(new Badge('degreeOfHearingAndVisualImpairment', degreeOfHearingAndVisualImpairment));
+                }
+            }
+        }
+
+        private void setEntitlements() {
+            if(fieldSet.contains('hot_hasentitlement__c')) {
+                if(true == (Boolean) person.get('HOT_HasEntitlement__c')) {
+                    badges.add(new Badge('entitlements',getFieldLabel('HOT_HasEntitlement__c'),'pointer','','',true));
+        
+                    for(String entitlementField : NKS_PersonBadgesController.HOT_ENTITLEMENT_FIELDS) {
+                        if(true == (Boolean) person.get(entitlementField)) {
+                            entitlements.add(getFieldLabel(entitlementField));
+                        }    
+                    }
+                }
+            }
+        }
+
+        private String getFieldLabel(String fieldApiName) {
+            SObjectType type = Schema.getGlobalDescribe().get('Person__c');
+            Map<String,Schema.SObjectField> mfields = type.getDescribe().fields.getMap();
+            return mfields.get(fieldApiName).getDescribe().getLabel();
+        }
     }
 
     public class Badge {
@@ -144,26 +260,6 @@ public with sharing class NKS_PersonBadgesController {
             this.iconAltText = iconAltText;
             this.clickable = clickable;
             this.tabindex = this.clickable ? '0' : '-1';
-        }
-    }
-
-    public class PersonBadgeData {
-        @AuraEnabled
-        public List<Badge> badges {get;set;}
-        @AuraEnabled
-        public List<SecurityMeasure> securityMeasures {get;set;}
-        @AuraEnabled
-        public List<String> spokenLanguagesIntepreter {get;set;}
-        @AuraEnabled
-        public List<GuardianshipOrFuturePowerOfAttorney> guardianships {get;set;}
-        @AuraEnabled
-        public PowerOfAttorney powerOfAttorney {get;set;}
-
-        public PersonBadgeData() {
-            badges = new List<Badge>();
-            securityMeasures = new List<SecurityMeasure>();
-            spokenLanguagesIntepreter = new List<String>();
-            guardianships = new List<GuardianshipOrFuturePowerOfAttorney>();
         }
     }
 
