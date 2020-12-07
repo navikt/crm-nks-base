@@ -46,6 +46,10 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:case</value>
                 </componentInstanceProperties>
@@ -73,6 +77,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -108,6 +116,10 @@
                     <value>INT_KrrEmail__c, INT_ResidentialAddress__c,INT_KrrMobilePhone__c , INT_ResidentialZipCode__c,INT_Phone1__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:call_coaching</value>
                 </componentInstanceProperties>
@@ -141,6 +153,10 @@
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:location</value>
                 </componentInstanceProperties>
@@ -172,47 +188,11 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>columnLabels</name>
-                    <value>Person, Relasjon</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>INT_Related_Person_Name__c, INT_Relation_Type__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterConditions</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerColor</name>
-                    <value>white</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:household</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>listTitle</name>
-                    <value>Relasjoner</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentRelationField</name>
-                    <value>CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedObjectApiName</name>
-                    <value>Relation__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationField</name>
-                    <value>INT_Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksRelatedList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>allSectionsOpenOnLoad</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>boxLayout</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -367,76 +347,6 @@
                         <rightValue>0</rightValue>
                     </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>amountOfMonths</name>
-                    <value>4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfMonthsToLoad</name>
-                    <value>4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfRecords</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfRecordsToLoad</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>configId</name>
-                    <value>NAV_Kontaktsenter</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerIcon</name>
-                    <value>custom:custom18</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerTitleEnglish</name>
-                    <value>Activities</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerTitleNorwegian</name>
-                    <value>Aktiviteter</value>
-                </componentInstanceProperties>
-                <componentName>activityTimeline</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>amountOfMonths</name>
-                    <value>4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfMonthsToLoad</name>
-                    <value>4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfRecords</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>amountOfRecordsToLoad</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerIcon</name>
-                    <value>custom:custom18</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerTitleEnglish</name>
-                    <value>Activities</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerTitleNorwegian</name>
-                    <value>Aktiviteter</value>
-                </componentInstanceProperties>
-                <componentName>tagActivityTimeline</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
