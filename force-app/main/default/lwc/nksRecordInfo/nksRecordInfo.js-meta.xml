@@ -15,6 +15,7 @@
             <property name="relationshipField" label="Relationship field (API)" description="Required if displaying information from a related record" type="String" />
             <property name="displayedFields" label="Fields to display (API names, comma separated)" type="String" required="true" default="Name" />
             <property name="showLink" label="Click to preview" type="Boolean" description="If true, the first displayed field shows a link to the record" default="false" />
+            <property name="hideLabels" label="Hide labels" type="Boolean" description="If true, labels are hidden" default="false" />
             <property name="numCols" label="Number of columns" type="Integer" required="true" min="1" max="4" default="2" />
         </targetConfig>
     </targetConfigs>
