@@ -245,7 +245,7 @@ public with sharing class NKS_NavTaskManager {
             oppgavetype = String.valueOf(task.NKS_Task_Type__c);
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.CRM_Comments__c;
-            temagruppe = taskRequest.themeGroupCode;
+            //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
         }
