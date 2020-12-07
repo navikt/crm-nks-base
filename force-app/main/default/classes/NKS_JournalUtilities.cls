@@ -14,7 +14,7 @@ public class NKS_JournalUtilities {
                 returnList.add(new UtilityResponse(true, document, null, null, null));
             }
             when 'POST_JOURNAL' {
-                returnList.add(postJournal(request[0].journalRequest));
+                returnList.add(postJournal(request[0].journalRequest, request[0].referenceId));
             }
         }
 
@@ -28,7 +28,7 @@ public class NKS_JournalUtilities {
     * @param journalRequest 
     * @return UtilityResponse 
     **/
-    public static UtilityResponse postJournal(NKS_JournalEntryWrapper journalRequest) {
+    public static UtilityResponse postJournal(NKS_JournalEntryWrapper journalRequest, Id referenceId) {
         ApiController apiCtrl = new ApiController();
         UtilityResponse resp = new UtilityResponse();
 
@@ -53,7 +53,8 @@ public class NKS_JournalUtilities {
             resp.success = false;
             //Creates a log entry for troubleshooting
             LoggerUtility logger = new LoggerUtility();
-            logger.error('Error posting journal entry \n ' + 'Status: ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
+            SObject objectRef = String.isNotBlank(referenceId) ? referenceId.getSobjectType().newSObject(referenceId) : null;
+            logger.error('Error posting journal entry \n ' + 'Status: ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), objectRef);
             String errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
             logger.publish();
             resp.errorMessage = errorRef;
@@ -93,6 +94,9 @@ public class NKS_JournalUtilities {
 
         @invocableVariable
         public String documentString;
+
+        @invocableVariable(label= 'Reference to salesforce record stored in log if any errors occur')
+        public Id referenceId;
 
         @invocableVariable
         public NKS_JournalEntryWrapper journalRequest;

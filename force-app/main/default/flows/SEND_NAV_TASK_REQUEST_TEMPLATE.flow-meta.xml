@@ -5,7 +5,7 @@
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
         <locationX>180</locationX>
-        <locationY>700</locationY>
+        <locationY>699</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -60,13 +60,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_NAV_Task</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ACTION</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>EDIT</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -240,6 +233,11 @@
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>ACTION</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!NavTask.INT_External_Reference__c}), &apos;POST&apos;, &apos;EDIT&apos;)</expression>
+    </formulas>
     <formulas>
         <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
@@ -473,18 +471,7 @@ TODAY())</expression>
             <targetReference>POST_OR_PATCH_DECISION</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
-    <variables>
-        <description>Text variable to define if the chosen action if to post a new task or update an existing one.</description>
-        <name>ACTION</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>POST</stringValue>
-        </value>
-    </variables>
+    <status>Draft</status>
     <variables>
         <description>The NAV task record to perform the action on.</description>
         <name>NavTask</name>
