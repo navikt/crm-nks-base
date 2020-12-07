@@ -12,6 +12,9 @@ export default class NksPersonBadges extends LightningElement {
     @track badges = [];
     @track securityMeasures = [];
     @track interpreterSpokenLanguages = [];
+    @track guardianships = [];
+    @track powerOfAttorney;
+    @track entitlements = [];
 
     errorMessage;
     infoPanelToShow = '';
@@ -27,6 +30,18 @@ export default class NksPersonBadges extends LightningElement {
 
     get showSecurityMeasures() {
         return 'securityMeasures' === this.infoPanelToShow;
+    }
+
+    get showGuardianship() {
+        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow;
+    }
+
+    get showPowerOfAttorney() {
+        return 'powerOfAttorney' === this.infoPanelToShow;
+    }
+
+    get showEntitlements() {
+        return 'entitlements' === this.infoPanelToShow;
     }
 
     get backgroundTheme() {
@@ -48,6 +63,9 @@ export default class NksPersonBadges extends LightningElement {
             this.badges = data.badges;
             this.securityMeasures = data.securityMeasures;
             this.interpreterSpokenLanguages = data.spokenLanguagesIntepreter;
+            this.guardianships = data.guardianships;
+            this.powerOfAttorney = data.powerOfAttorney;
+            this.entitlements = data.entitlements;
         }
 
         if (error) {

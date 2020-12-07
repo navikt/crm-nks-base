@@ -1,5 +1,6 @@
 <template>
     <div class={backgroundTheme}>
+
         <!-- ERROR MESSAGES -->
         <template if:true={errorMessage}>
             <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
@@ -14,7 +15,7 @@
         <template if:true={badges}>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
-                    <template for:each={badges} for:item="badge" for:index="index">
+                    <template for:each={badges} for:item="badge">
                         <template if:true={badge.clickable}>
                             <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}
                                 icon-name={badge.iconName} icon-alternative-text={badge.iconAltText}
@@ -36,7 +37,7 @@
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <lightning-layout multiple-rows="true" pull-to-boundary="small">
-                                <template for:each={securityMeasures} for:item="sm" for:index="index">
+                                <template for:each={securityMeasures} for:item="sm">
                                     <lightning-layout-item key={sm.RecordId}
                                         class="slds-var-p-around_xx-small slds-size_1-of-1">
                                         <div class="slds-var-p-horizontal_small">
@@ -60,13 +61,66 @@
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted">
-                                <template for:each={interpreterSpokenLanguages} for:item="language" for:index="index">
+                                <template for:each={interpreterSpokenLanguages} for:item="language">
                                     <li key={language}>{language}</li>
                                 </template>
                             </ul>
                         </div>
                     </lightning-layout-item>
                 </template>
+
+                <!-- POWER OF ATTORNEY -->
+                <template if:true={showPowerOfAttorney}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <div class="slds-var-p-horizontal_small">
+                                <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle}
+                                    ({powerOfAttorney.motpartsPersonident})</div>
+                                <p>Gyldig:
+                                    <lightning-formatted-date-time value={powerOfAttorney.gyldigFraOgMed} year="numeric"
+                                        month="numeric" day="numeric">
+                                    </lightning-formatted-date-time> - <lightning-formatted-date-time
+                                        value={powerOfAttorney.gyldigTilOgMed} year="numeric" month="numeric"
+                                        day="numeric"></lightning-formatted-date-time>
+                                </p>
+                                <p>{powerOfAttorney.omraade}</p>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+
+                <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
+                <template if:true={showGuardianship}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <ul class="slds-has-dividers_bottom-space">
+                                <template for:each={guardianships} for:item="guardianship">
+                                    <li class="slds-item" key={guardianship.id}>
+                                        <p>Type: {guardianship.type}</p>
+                                        <p>Motpart ident: {guardianship.motpartsPersonident}</p>
+                                        <p>Omfang: {guardianship.omfang}</p>
+                                        <p>Innen personlig område: {omfangetErInnenPersonligOmraadeTxt}</p>
+                                        <p>Embete: {guardianship.embete}</p>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+
+                <!-- HOT ENTITLEMENT -->
+                <template if:true={showEntitlements}>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <ul class="slds-list_dotted">
+                                <template for:each={entitlements} for:item="entitlement">
+                                    <li key={entitlement}>{entitlement}</li>
+                                </template>
+                            </ul>
+                        </div>
+                    </lightning-layout-item>
+                </template>
+
             </lightning-layout>
         </template>
     </div>
