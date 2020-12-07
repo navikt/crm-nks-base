@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_AktivitetsplanURL__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://app-q0.adeo.no/veilarbpersonflatefs/&quot; , &quot;Aktivitetsplan&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://app.adeo.no/veilarbpersonflatefs/&quot;, &quot;GoSys&quot;, &quot;_self&quot;)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Aktivitetsplan</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
