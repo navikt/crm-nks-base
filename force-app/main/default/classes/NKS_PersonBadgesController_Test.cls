@@ -62,6 +62,8 @@ private with sharing class NKS_PersonBadgesController_Test {
 
         System.assertNotEquals(null, result.powerOfAttorney, 'Expected one guardianship');
         System.assertEquals('40000000000', result.powerOfAttorney.motpartsPersonident, 'Expected 40000000000');
+        System.assertEquals('Fullmektig', result.powerOfAttorney.motpartsRolle, 'Expected Fullmektig');
+        System.assertEquals('Gjelder alle ytelser', result.powerOfAttorney.omraade, 'Expected Gjelder alle ytelser');
         System.assertEquals(1, result.badges.size(), 'Expected one guardianship');
     }
 }

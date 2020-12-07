@@ -96,12 +96,11 @@
                             <ul class="slds-has-dividers_bottom-space">
                                 <template for:each={guardianships} for:item="guardianship">
                                     <li class="slds-item" key={guardianship.id}>
-                                        <p>{guardianship.type}</p>
-                                        <div class="slds-text-heading_small">Verge</div>
-                                        <p>{guardianship.motpartsPersonident}</p>
-                                        <div class="slds-text-heading_small">Mandat</div>
-                                        <p>{guardianship.omfang}</p>
-                                        <p>{guardianship.embete}</p>
+                                        <p>Type: {guardianship.type}</p>
+                                        <p>Motpart ident: {guardianship.motpartsPersonident}</p>
+                                        <p>Omfang: {guardianship.omfang}</p>
+                                        <p>Innen personlig område: {omfangetErInnenPersonligOmraade}</p>
+                                        <p>Embete: {guardianship.embete}</p>
                                     </li>
                                 </template>
                             </ul>
