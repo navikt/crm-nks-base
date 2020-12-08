@@ -1,18 +1,17 @@
 <template>
-    <div class={backgroundTheme}>
 
-        <!-- ERROR MESSAGES -->
-        <template if:true={errorMessage}>
-            <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
-                    variant="error">
-                </lightning-icon>
-                &nbsp;En feil har oppstått: {errorMessage}
-            </div>
-        </template>
+    <!-- ERROR MESSAGES -->
+    <template if:true={errorMessage}>
+        <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
+            <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small" variant="error">
+            </lightning-icon>
+            &nbsp;En feil har oppstått: {errorMessage}
+        </div>
+    </template>
 
-        <!-- BADGES -->
-        <template if:true={badges}>
+    <!-- BADGES -->
+    <template if:true={hasBadges}>
+        <div class={backgroundTheme}>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <template for:each={badges} for:item="badge">
@@ -122,6 +121,6 @@
                 </template>
 
             </lightning-layout>
-        </template>
-    </div>
+        </div>
+    </template>
 </template>

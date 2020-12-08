@@ -15,6 +15,10 @@
                     <value>Description</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -454,29 +458,8 @@
                 </componentInstanceProperties>
                 <componentName>nksPersonBadges</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_Confidential__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>UGRADERT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_IsDeceased__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_IsNavEmployee__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
-                        <operator>GT</operator>
-                        <rightValue>0</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_SpokenLanguageIntepreter__c}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
