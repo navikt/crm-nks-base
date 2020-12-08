@@ -6,6 +6,7 @@ public with sharing class NKS_NAvUnitContactInformation {
     @AuraEnabled public String telefonnummer;
     @AuraEnabled public String telefonnummerKommentar;
     @AuraEnabled public Epost epost;
+    @AuraEnabled public Adresse besoeksadresse;
     @AuraEnabled public Adresse postadresse;
     @AuraEnabled public List<publikumsmottak> publikumsmottak;
 
@@ -28,6 +29,9 @@ public with sharing class NKS_NAvUnitContactInformation {
         @AuraEnabled public String gatenavn;
         @AuraEnabled public String husbokstav;
         @AuraEnabled public String husnummer;
+        @AuraEnabled public String postboksnummer;
+        @AuraEnabled public String type;
+        @AuraEnabled public String postboksanlegg;
         @AuraEnabled public String concatenatedAddress { public get { return concatAddress(); } private set; }
 
         public Adresse() {
@@ -37,21 +41,48 @@ public with sharing class NKS_NAvUnitContactInformation {
             this.gatenavn = null;
             this.husbokstav = null;
             this.husnummer = null;
+            this.postboksnummer = null;
+            this.type = null;
+            this.postboksanlegg = null;
         }
 
         public Adresse(String gatenavn, String husnummer, String husbokstav, String poststed, String postnummer) {
+            this.type='stedsadresse';
             this.postnummer = postnummer;
             this.poststed = poststed;
             this.adresseTilleggsnavn = null;
             this.gatenavn = gatenavn;
             this.husbokstav = husbokstav;
             this.husnummer = husnummer;
+            this.postboksnummer = null;
+            this.type = null;
+            this.postboksanlegg = null;
+        }
+
+        public Adresse(String postboksanlegg, String postboksnummer, String poststed, String postnummer) {
+            this.type='postboksadresse';
+            this.postnummer = postnummer;
+            this.poststed = poststed;
+            this.adresseTilleggsnavn = null;
+            this.gatenavn = null;
+            this.husbokstav = null;
+            this.husnummer = null;
+            this.postboksnummer = postboksnummer;
+            this.postboksanlegg = postboksanlegg;
         }
 
         public String concatAddress() {
             String address = '';
             String postalCity = '';
 
+            address += addString(address,adresseTilleggsnavn);
+
+            if(true == String.isNotBlank(type) && type.equalsIgnoreCase('postboksadresse')) {
+                address += addString(address,'Postboks');
+            }
+            
+            address += addString(address,postboksnummer);
+            address += addString(address,postboksanlegg);
             address += addString(address,gatenavn);
             address += addString(address,husnummer);
             address += addString(address,husbokstav);
@@ -66,7 +97,7 @@ public with sharing class NKS_NAvUnitContactInformation {
         }
 
         private String addString(String originalString, String stringToAdd) {
-            if(String.isBlank(stringToAdd)) { return originalString; }
+            if(String.isBlank(stringToAdd)) { return ''; }
 
             return String.isNotBlank(originalString) ? ' ' + stringToAdd : stringToAdd;
         }

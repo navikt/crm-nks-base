@@ -13,5 +13,6 @@
     <permissionSets>NKS_Quick_Text_Reader</permissionSets>
     <permissionSets>NKS_base</permissionSets>
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
+    <permissionSets>NKS_Chat_Permissions</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
