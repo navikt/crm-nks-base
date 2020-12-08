@@ -24,6 +24,10 @@ export default class NksPersonBadges extends LightningElement {
         this.template.ariaLabel = this.assistiveHeader;
     }
 
+    get hasBadges() {
+        return this.badges && 0 < this.badges.length ? true : false;
+    }
+
     get showIntepreterSpokenLanguage() {
         return 'spokenLanguageIntepreter' === this.infoPanelToShow;
     }
