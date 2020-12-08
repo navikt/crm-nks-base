@@ -119,12 +119,12 @@
                             <c-nks-person-badges record-id={accountId} object-api-name="Account"
                                 person-relation-field="CRM_Person__c"
                                 assistive-header="Sikkerhetstiltak og andre etiketter"></c-nks-person-badges>
-                            <c-nks-record-info viewed-record-id={accountId} viewed-object-api-name="Account"
-                                displayed-fields={accountFields} card-label="Brukerinfo" icon-name="standard:account"
+                            <c-nks-record-info viewed-record-id={caseId} viewed-object-api-name="Case"
+                                displayed-fields={caseFields} card-label="Brukerinfo" icon-name="standard:account"
                                 num-cols="3" show-link="true">
                             </c-nks-record-info>
                             <c-nks-record-info viewed-record-id={personId} viewed-object-api-name="Person__c"
-                                displayed-fields={personFields} num-cols="3" show-link="true">
+                                displayed-fields={personFields} num-cols="3" show-link="false">
                             </c-nks-record-info>
                             <c-nks-nav-unit-single record-id={personId} relation-field="Id" object-api-name="Person__c"
                                 type="PERSON_LOCATION"></c-nks-nav-unit-single>
