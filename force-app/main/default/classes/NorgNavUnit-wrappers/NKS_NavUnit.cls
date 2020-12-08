@@ -15,7 +15,6 @@ public with sharing class NKS_NavUnit {
     @AuraEnabled public Integer versjon;
     @AuraEnabled public String sosialeTjenester;
     @AuraEnabled public String kanalstrategi;
-    @AuraEnabled public String kontorTjenesterTEMP { public get {return kontorTjenester();} set; }
     @AuraEnabled public String orgNrTilKommunaltNavKontor;
 
     public NKS_NavUnit() {
@@ -36,15 +35,5 @@ public with sharing class NKS_NavUnit {
         this.sosialeTjenester = null;
         this.kanalstrategi = null;
         this.orgNrTilKommunaltNavKontor = null;
-    }
-
-    private String kontorTjenester() {
-        String kontorTjenester = '';
-
-        kontorTjenester += String.isNotBlank(kanalstrategi) ?  + kanalstrategi : '';
-        kontorTjenester += String.isNotBlank(kontorTjenester) ? '\n\n\n' : '';
-        kontorTjenester += String.isNotBlank(sosialeTjenester) ? sosialeTjenester : '';
-
-        return kontorTjenester;
     }
 }
