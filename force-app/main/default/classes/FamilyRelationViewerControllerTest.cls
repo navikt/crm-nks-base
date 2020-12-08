@@ -3,11 +3,10 @@ public with sharing class FamilyRelationViewerControllerTest {
     @TestSetup
     static void makeData(){
         List<Person__c> people = NKS_TestDataFactory.createPersons(3); 
-        people[0].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678900","minRolleForPerson":"MOR"},{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678901","minRolleForPerson":"MOR"}]'; //mom of two children
-        people[1].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678902","minRolleForPerson":"BARN"}]'; //child 1 
-        people[2].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678902","minRolleForPerson":"BARN"}]'; //child 2
+        people[0].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678901","minRolleForPerson":"MOR"},{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678902","minRolleForPerson":"MOR"}]'; //mom of two children
+        people[1].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678900","minRolleForPerson":"BARN"}]'; //child 1 
+        people[2].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678900","minRolleForPerson":"BARN"}]'; //child 2
         update people; 
-        
     }
 
     @isTest
@@ -44,17 +43,9 @@ public with sharing class FamilyRelationViewerControllerTest {
         System.assertEquals(2, relations.size(), 'Number of relations ');
     }
 
-    //TODO: Add test for gradert 
+    //TODO: Add test for kode 6 og 7  
    
-    
     //TODO: Add test for under 21 
-    /*@isTest
-    public getRelatedPersonsUnder21Test() {
-        List<FamilyRelationViewerController.Relation> relations = new List<FamilyRelationViewerController.Relation>();
-        Test.startTest(); 
-            relations = (FamilyRelationViewerController.Relation) FamilyRelationViewerController.getRelatedPersons(RECORDID, 'Account'); 
-        Test.stopTest(); 
-    }*/
 
 }
 
