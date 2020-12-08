@@ -148,6 +148,10 @@
                     <value>Name,  TAG_NavUnit__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>caseFields</name>
+                    <value>NKS_AccountName__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>loggingEnabled</name>
                     <value>true</value>
                 </componentInstanceProperties>

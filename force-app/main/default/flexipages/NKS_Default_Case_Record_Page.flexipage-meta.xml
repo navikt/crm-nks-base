@@ -15,11 +15,15 @@
                     <value>Description</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>2</value>
+                    <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>

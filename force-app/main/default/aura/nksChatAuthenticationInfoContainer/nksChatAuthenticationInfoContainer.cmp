@@ -3,6 +3,7 @@
     controller="NKS_ChatTranscriptService">
     <aura:attribute name="loggingEnabled" type="boolean" default="true" />
     <aura:attribute name="accountFields" type="String" />
+    <aura:attribute name="caseFields" type="String" />
     <aura:attribute name="personFields" type="String" />
     <aura:attribute name="conversation" type="object[]" />
 
@@ -10,7 +11,7 @@
     <aura:handler event="lightning:conversationChatEnded" action="{!c.handleChatEnded}" />
 
     <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
-        accountFields="{!v.accountFields}" personFields="{!v.personFields}"
+        caseFields="{!v.caseFields}" accountFields="{!v.accountFields}" personFields="{!v.personFields}"
         onrequestauthentication="{!c.requestAuthentication}" onauthenticationcomplete="{!c.showLoginMsg}"
         aura:id="chatAuthInfo">
     </c:nksChatAuthenticationInfo>

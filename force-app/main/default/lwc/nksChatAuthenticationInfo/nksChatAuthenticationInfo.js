@@ -29,8 +29,10 @@ export default class ChatAuthenticationOverview extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api accountFields                 //Comma separated string with field names to display from the related account
+    @api caseFields                    //Comma separated string with field names to display from the related case
     @api personFields                  //Comma separated string with field names to display from the related accounts person
     accountId;                         //Transcript AccountId
+    caseId;                            //Transcript CaseId
     personId;                          //Transcript Account PersonId
     currentAuthenticationStatus;       //Current auth status of the chat transcript
     sendingAuthRequest = false;        //Switch used to show spinner when initiatiing auth process
@@ -74,6 +76,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.currentAuthenticationStatus = data.AUTH_STATUS;
             this.activeConversation = data.CONVERSATION_STATUS === 'InProgress';
             this.accountId = data.ACCOUNTID;
+            this.caseId = data.CASEID;
             this.personId = data.PERSONID;
             this.chatLanguage = data.CHAT_LANGUAGE;
         } else {
