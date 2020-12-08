@@ -1,7 +1,11 @@
 public with sharing class FamilyRelationViewerController {
 
     @AuraEnabled(cacheable=true)
-    public static List<Relation> getRelatedPersons(Id personId) {
+    public static List<Relation> getRelatedPersons(Id recordId , String objectApiName) {
+        Id personId; 
+        if(objectApiName == 'Case') personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id =: recordId].Account.CRM_Person__c; 
+        else if(objectApiName == 'Account') personId = [SELECT CRM_Person__c FROM Account WHERE Id =: recordId].CRM_Person__c; 
+
         List<PersonJSONFieldObjects.Familierelasjoner> familyRelations = (List<PersonJSONFieldObjects.Familierelasjoner>) System.JSON.deserialize(
                 getFamilyRelationJSONString(personId),
                 List<PersonJSONFieldObjects.Familierelasjoner>.class
@@ -20,6 +24,7 @@ public with sharing class FamilyRelationViewerController {
         for (Person__c person : relatedPersons) {
             Relation r = new Relation();
             r.personId = person.Id;
+            r.accountId = person.CRM_Account__c; 
             r.personIdent = person.Name;
             r.personName = person.INT_FirstName__c + ' ' + person.INT_LastName__c;
             r.role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
@@ -31,6 +36,7 @@ public with sharing class FamilyRelationViewerController {
     public class Relation {
         @AuraEnabled public String personIdent;
         @AuraEnabled public String personId;
+        @AuraEnabled public String accountId;
         @AuraEnabled public String personName;
         @AuraEnabled public String role;
     }
@@ -46,7 +52,8 @@ public with sharing class FamilyRelationViewerController {
                         Name,
                         INT_FirstName__c,
                         INT_MiddleName__c,
-                        INT_LastName__c
+                        INT_LastName__c, 
+                        CRM_Account__c
                 FROM Person__c
                 WHERE Name IN :relatedPersonIds
         ];

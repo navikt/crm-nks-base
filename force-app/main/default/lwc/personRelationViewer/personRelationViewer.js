@@ -1,13 +1,12 @@
-import {LightningElement, api, wire} from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getRelatedPersons from '@salesforce/apex/FamilyRelationViewerController.getRelatedPersons';
 
 export default class PersonRelationViewer extends LightningElement {
-x
-    @api personIdField;
+
+    @api objectApiName;
     @api recordId;
 
-    // Todo dynamically get Id from field referenced in personIdField
-    @wire(getRelatedPersons, {personId: '$recordId' })
+    @wire(getRelatedPersons, { recordId: '$recordId', objectApiName: '$objectApiName' })
     relations;
 
 }

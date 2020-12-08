@@ -9,9 +9,4 @@
             lightning__RecordPage
         </target>
     </targets>
-    <targetConfigs>
-        <targetConfig targets="lightning__RecordPage">
-            <property name="personIdField" label="Person Id Field" type="String" description="API name of the field containing the Person__c record's Id"></property>
-        </targetConfig>
-    </targetConfigs>
 </LightningComponentBundle>
