@@ -5,7 +5,6 @@ public with sharing class NKS_NorgNavUnitService {
     private final string API_CONFIG_NAME = 'NORG2_UNIT_API'; //API Config name to set when using the ApiController
     private final string SERVICE_AUTH_HEADER = 'SaasToNavApiGw';
 
-    
     /**
      * @description Get the unit related to the geographical location submitted
      * @author Tor Håkon Sigurdsen | 26-11-2020
@@ -57,7 +56,7 @@ public with sharing class NKS_NorgNavUnitService {
             resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
             
             if(statusCode == 404) {
-                resp.errorMessage = 'Kunne ikke finne brukerens enhet i NORG2. Referanse til feil: ' + errorRef;
+                resp.errorMessage = 'Kunne ikke finne enhet i NORG2. Referanse til feil: ' + errorRef;
             } else if(statusCode == 500) {
                 resp.errorMessage = 'Noe gikk galt ved henting av enhet fra NORG2. Referanse til feil: ' + errorRef;
             }
@@ -102,9 +101,13 @@ public with sharing class NKS_NorgNavUnitService {
             resp.success = true;
             resp.contactInformation = (NKS_NAvUnitContactInformation) JSON.deserialize(bodyString, NKS_NAvUnitContactInformation.class); 
         } else{
-            String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
+            String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation for unit: ' + unitNumber + '.');
             resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' + errorRef;
             resp.success = false;
+
+            if(statusCode == 404) {
+                resp.errorMessage = 'Kunne ikke finne enhets insformasjon i NORG2. Referanse til feil: ' + errorRef;
+            }
         }
 
         return resp;
