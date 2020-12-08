@@ -6,6 +6,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         people[0].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678901","minRolleForPerson":"MOR"},{"relatertPersonsRolle":"BARN","relatertPersonsIdent":"12345678902","minRolleForPerson":"MOR"}]'; //mom of two children
         people[1].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678900","minRolleForPerson":"BARN"}]'; //child 1 
         people[2].INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678900","minRolleForPerson":"BARN"}]'; //child 2
+        //TODO: Add birthdates and tests for under 21
         update people; 
     }
 
