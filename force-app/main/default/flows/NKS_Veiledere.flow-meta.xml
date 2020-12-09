@@ -291,7 +291,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>DisplayMembers</name>
-            <fieldText>&lt;p&gt;Veiledere:&lt;/p&gt;&lt;p&gt;{!varUserNames}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Valgt liste: {!Choose_Queue}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Veiledere:&lt;/p&gt;&lt;p&gt;{!varUserNames}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
