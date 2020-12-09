@@ -80,6 +80,11 @@
         <field>LiveChatTranscript.Status</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NKS_GreetingName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Chat Permissions</label>
     <objectPermissions>
