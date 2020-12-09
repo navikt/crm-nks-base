@@ -13,15 +13,20 @@ export default class NksPersonBadges extends LightningElement {
     @track securityMeasures = [];
     @track interpreterSpokenLanguages = [];
     @track guardianships = [];
-    @track powerOfAttorney;
+    @track powerOfAttorneys = [];
     @track entitlements = [];
+    @track errors = [];
 
-    errorMessage;
     infoPanelToShow = '';
+    errorMessage;
 
     connectedCallback() {
         this.setAttribute('title', this.assistiveHeader);
         this.template.ariaLabel = this.assistiveHeader;
+    }
+
+    get hasErrors() {
+        return this.errors && 0 < this.errors.length ? true : false;
     }
 
     get hasBadges() {
@@ -29,23 +34,23 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showIntepreterSpokenLanguage() {
-        return 'spokenLanguageIntepreter' === this.infoPanelToShow;
+        return 'spokenLanguageIntepreter' === this.infoPanelToShow && 0 < this.interpreterSpokenLanguages.length;
     }
 
     get showSecurityMeasures() {
-        return 'securityMeasures' === this.infoPanelToShow;
+        return 'securityMeasures' === this.infoPanelToShow && 0 < this.securityMeasures.length;
     }
 
     get showGuardianship() {
-        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow;
+        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow && 0 < this.guardianships.length;
     }
 
     get showPowerOfAttorney() {
-        return 'powerOfAttorney' === this.infoPanelToShow;
+        return 'powerOfAttorney' === this.infoPanelToShow && 0 < this.powerOfAttorneys.length;
     }
 
     get showEntitlements() {
-        return 'entitlements' === this.infoPanelToShow;
+        return 'entitlements' === this.infoPanelToShow && 0 < this.entitlements.length;
     }
 
     get backgroundTheme() {
@@ -68,12 +73,13 @@ export default class NksPersonBadges extends LightningElement {
             this.securityMeasures = data.securityMeasures;
             this.interpreterSpokenLanguages = data.spokenLanguagesIntepreter;
             this.guardianships = data.guardianships;
-            this.powerOfAttorney = data.powerOfAttorney;
+            this.powerOfAttorneys = data.powerOfAttorneys;
             this.entitlements = data.entitlements;
+            this.errors = data.errors;
         }
 
         if (error) {
-            this.error = error.body.message;
+            this.errorMessage = error.body.message;
         }
     }
 
