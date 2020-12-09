@@ -421,6 +421,7 @@
         <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos; AND Group.DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Update User</label>
     <loops>
         <name>Loop_Picklist_Values</name>
