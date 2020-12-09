@@ -2,10 +2,13 @@
 
     <!-- ERROR MESSAGES -->
     <template if:true={errorMessage}>
-        <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-            <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small" variant="error">
-            </lightning-icon>
-            &nbsp;En feil har oppstått: {errorMessage}
+        <div class={backgroundTheme}>
+            <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
+                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
+                    variant="error">
+                </lightning-icon>
+                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b><br /> {errorMessage}
+            </div>
         </div>
     </template>
 
@@ -33,7 +36,7 @@
 
                 <!-- SECURITY MEASURES -->
                 <template if:true={showSecurityMeasures}>
-                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <lightning-layout multiple-rows="true" pull-to-boundary="small">
                                 <template for:each={securityMeasures} for:item="sm">
@@ -57,7 +60,7 @@
 
                 <!-- INTERPRETER SPOKEN LANGUAGES -->
                 <template if:true={showIntepreterSpokenLanguage}>
-                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted">
                                 <template for:each={interpreterSpokenLanguages} for:item="language">
@@ -72,25 +75,31 @@
                 <template if:true={showPowerOfAttorney}>
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <div class="slds-var-p-horizontal_small">
-                                <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle}
-                                    ({powerOfAttorney.motpartsPersonident})</div>
-                                <p>Gyldig:
-                                    <lightning-formatted-date-time value={powerOfAttorney.gyldigFraOgMed} year="numeric"
-                                        month="numeric" day="numeric">
-                                    </lightning-formatted-date-time> - <lightning-formatted-date-time
-                                        value={powerOfAttorney.gyldigTilOgMed} year="numeric" month="numeric"
-                                        day="numeric"></lightning-formatted-date-time>
-                                </p>
-                                <p>{powerOfAttorney.omraade}</p>
-                            </div>
+                            <!-- <div class="slds-var-p-horizontal_small"> -->
+                            <ul class="slds-has-dividers_bottom-space">
+                                <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
+                                    <li class="slds-item" key={powerOfAttorney.id}>
+                                        <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle}
+                                            ({powerOfAttorney.motpartsPersonident})</div>
+                                        <p>Gyldig:
+                                            <lightning-formatted-date-time value={powerOfAttorney.gyldigFraOgMed}
+                                                year="numeric" month="numeric" day="numeric">
+                                            </lightning-formatted-date-time> - <lightning-formatted-date-time
+                                                value={powerOfAttorney.gyldigTilOgMed} year="numeric" month="numeric"
+                                                day="numeric"></lightning-formatted-date-time>
+                                        </p>
+                                        <p>{powerOfAttorney.omraade}</p>
+                                    </li>
+                                </template>
+                            </ul>
+                            <!-- </div> -->
                         </div>
                     </lightning-layout-item>
                 </template>
 
                 <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
                 <template if:true={showGuardianship}>
-                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space">
                                 <template for:each={guardianships} for:item="guardianship">
@@ -109,7 +118,7 @@
 
                 <!-- HOT ENTITLEMENT -->
                 <template if:true={showEntitlements}>
-                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted">
                                 <template for:each={entitlements} for:item="entitlement">
@@ -121,6 +130,26 @@
                 </template>
 
             </lightning-layout>
+
+            <!-- ERRORS -->
+            <template if:true={hasErrors}>
+                <lightning-layout-item size="12">
+                    <div class="slds-m-top_x-small">
+                        <div
+                            class="slds-box slds-box_xx-small slds-text-color_error slds-p-left_x-small  slds-theme_default">
+                            <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
+                                variant="error">
+                            </lightning-icon>
+                            &nbsp;Følgende feil har oppstått ved henting av etiketter:
+                            <ul class="slds-list_dotted">
+                                <template iterator:error={errors}>
+                                    <li key={error.value}>{error.value}</li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </template>
         </div>
     </template>
 </template>
