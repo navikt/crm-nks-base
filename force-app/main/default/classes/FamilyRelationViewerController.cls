@@ -1,4 +1,4 @@
-public with sharing class FamilyRelationViewerController {
+public without sharing class FamilyRelationViewerController {
 
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelatedPersons(Id recordId , String objectApiName) {
@@ -18,25 +18,15 @@ public with sharing class FamilyRelationViewerController {
 
         List<Person__c> relatedPersons = getRelatedPersons(roleByRelatedPersonIdent.keySet());
 
-        List<Person__c> withoutChildrenOver21 = new List<Person__c>();
-        for(Person__c person : relatedPersons){
-            if(person.INT_DateOfBirth__c != null){
-                Integer age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
-                String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();            
-                if(!(age > 21  && role == 'Barn')) withoutChildrenOver21.add(person); 
-            }
-            else withoutChildrenOver21.add(person); 
-            //TODO: what if we do not have a birth date?? do we show or not? 
-        }
-        relatedPersons = withoutChildrenOver21;
-
+        relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent);
+        
         List<Relation> relations = new List<Relation>();
         for (Person__c person : relatedPersons) {
             Relation r = new Relation();
             r.personId = person.Id;
             r.accountId = person.CRM_Account__c; 
             r.personIdent = person.Name;
-            r.personName = person.INT_FirstName__c + ' ' + person.INT_LastName__c;
+            r.personName = person.CRM_Account__r.Name;
             r.role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
             relations.add(r);
         }
@@ -51,6 +41,19 @@ public with sharing class FamilyRelationViewerController {
         @AuraEnabled public String role;
     }
 
+    private static List<Person__c> removeChildrenUnder21(List<Person__c> familyRelations, Map<String, String> relatedPersonIds) {
+        List<Person__c> withoutChildrenOver21 = new List<Person__c>();
+        for(Person__c person : familyRelations){
+            String role = relatedPersonIds.get(person.Name).toLowerCase().capitalize();             
+            if(person.INT_DateOfBirth__c != null){
+                Integer age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
+                if(!(age > 21  && role == 'Barn')) withoutChildrenOver21.add(person); 
+            }
+            else if(role != 'Barn') withoutChildrenOver21.add(person);  
+        }
+        return withoutChildrenOver21;
+    }
+
     private static List<Person__c> getRelatedPersons(Set<String> relatedPersonIds) {
         return [
                 SELECT Id,
@@ -58,8 +61,9 @@ public with sharing class FamilyRelationViewerController {
                         INT_FirstName__c,
                         INT_MiddleName__c,
                         INT_LastName__c, 
+                        INT_DateOfBirth__c,
                         CRM_Account__c, 
-                        INT_DateOfBirth__c
+                        CRM_Account__r.Name
                 FROM Person__c
                 WHERE Name IN :relatedPersonIds
         ];
