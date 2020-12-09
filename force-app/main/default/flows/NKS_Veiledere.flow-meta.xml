@@ -62,7 +62,7 @@
             <assignToReference>varUserNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>URLtoedituser</elementReference>
+                <elementReference>htmlLINK</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -156,6 +156,11 @@
         <name>currentItemWithQuotes</name>
         <dataType>String</dataType>
         <expression>&quot;&apos;&quot;+{!Loop_members.UserOrGroupId}+&quot;&apos;&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>url</name>
+        <dataType>String</dataType>
+        <expression>&quot;/flow/NKS_Update_User?recordId=&quot;+{!Loop_users.Id}</expression>
     </formulas>
     <formulas>
         <name>URLtoedituser</name>
@@ -305,6 +310,10 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>htmlLINK</name>
+        <text>&lt;a href=&quot;{!url}&quot;  target=&quot;_blank&quot;&gt;Rediger&lt;/a&gt;</text>
+    </textTemplates>
     <textTemplates>
         <name>indent</name>
         <text>&amp;nbsp;• &amp;nbsp;</text>
