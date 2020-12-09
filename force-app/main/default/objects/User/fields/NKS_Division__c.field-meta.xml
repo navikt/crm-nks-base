@@ -370,6 +370,91 @@
                 <default>false</default>
                 <label>K21A06 Mo Avdeling 6</label>
             </value>
+            <value>
+                <fullName>K00A01 Trafikk</fullName>
+                <default>false</default>
+                <label>K00A01 Trafikk</label>
+            </value>
+            <value>
+                <fullName>K00A02 Fag og kvalitet</fullName>
+                <default>false</default>
+                <label>K00A02 Fag og kvalitet</label>
+            </value>
+            <value>
+                <fullName>K01A00 Ledere</fullName>
+                <default>false</default>
+                <label>K01A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K05A00 Ledere</fullName>
+                <default>false</default>
+                <label>K05A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K06A00 Ledere</fullName>
+                <default>false</default>
+                <label>K06A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K07A00 Ledere</fullName>
+                <default>false</default>
+                <label>K07A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K09A00 Ledere</fullName>
+                <default>false</default>
+                <label>K09A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K10A00 Ledere</fullName>
+                <default>false</default>
+                <label>K10A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K11A00 Ledere</fullName>
+                <default>false</default>
+                <label>K11A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K12A00 Ledere</fullName>
+                <default>false</default>
+                <label>K12A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K14A00 Ledere</fullName>
+                <default>false</default>
+                <label>K14A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K15A00 Ledere</fullName>
+                <default>false</default>
+                <label>K15A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K16A00 Ledere</fullName>
+                <default>false</default>
+                <label>K16A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K17A00 Ledere</fullName>
+                <default>false</default>
+                <label>K17A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K18A00 Ledere</fullName>
+                <default>false</default>
+                <label>K18A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K19A00 Ledere</fullName>
+                <default>false</default>
+                <label>K19A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K21A00 Ledere</fullName>
+                <default>false</default>
+                <label>K21A00 Ledere</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

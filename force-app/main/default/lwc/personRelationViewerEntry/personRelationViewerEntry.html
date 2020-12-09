@@ -1,0 +1,15 @@
+<template>
+
+    <div>
+        <p><b>
+            <lightning-formatted-text value={relation.role}></lightning-formatted-text>
+        </b></p>
+        <p>
+            <lightning-formatted-url value={recordPageUrl} label={relation.personName} onclick={navigateToSObject}>{relation.personName}</lightning-formatted-url>
+        </p>
+        <p>
+            <lightning-formatted-text value={relation.personIdent}></lightning-formatted-text>
+        </p>
+    </div>
+
+</template>
