@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Agent_Greeting_Name__c</fullName>
+    <description>Formula field for the agents greeting name used for storing in the journal for authenticated chats.</description>
+    <externalId>false</externalId>
+    <formula>Owner:User.NKS_GreetingName__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Agent Greeting Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
