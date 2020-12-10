@@ -145,7 +145,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>accountFields</name>
-                    <value>Name,  TAG_NavUnit__c</value>
+                    <value>Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>caseFields</name>

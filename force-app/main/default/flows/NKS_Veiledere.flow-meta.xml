@@ -107,6 +107,31 @@
         </value>
     </choices>
     <decisions>
+        <name>Found_profile</name>
+        <label>Found profile?</label>
+        <locationX>338</locationX>
+        <locationY>498</locationY>
+        <defaultConnector>
+            <targetReference>Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_profile1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Profile.Id</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Users_Without_Chat</targetReference>
+            </connector>
+            <label>Found profile</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Users_without_queues</name>
         <label>Users without queues</label>
         <locationX>168</locationX>
@@ -126,7 +151,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Users_Without_Chat</targetReference>
+                <targetReference>Get_Profile</targetReference>
             </connector>
             <label>Users without queues</label>
         </rules>
@@ -188,7 +213,7 @@
         <name>Loop_users</name>
         <label>Loop users</label>
         <locationX>652</locationX>
-        <locationY>188</locationY>
+        <locationY>189</locationY>
         <collectionReference>users</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -220,7 +245,7 @@
     <recordLookups>
         <name>Get_Group_Members</name>
         <label>Get Group Members</label>
-        <locationX>300</locationX>
+        <locationX>299</locationX>
         <locationY>188</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -238,9 +263,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Profile</name>
+        <label>Get Profile</label>
+        <locationX>221</locationX>
+        <locationY>497</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Found_profile</targetReference>
+        </connector>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NAV Kontaktsenter (Sanitized)</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Profile</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Users_Without_Chat</name>
         <label>Get Users</label>
-        <locationX>488</locationX>
+        <locationX>486</locationX>
         <locationY>478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -253,11 +298,44 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Department</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>41</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ProfileId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Profile.Id</elementReference>
+            </value>
+        </filters>
         <object>User</object>
         <outputReference>users</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>NKS_UserNameDisplayFLOW__c</queriedFields>
     </recordLookups>
+    <screens>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>64</locationX>
+        <locationY>499</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>First_screen</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>First_screen</name>
         <label>Hvilken kø ønsker du å se?</label>
