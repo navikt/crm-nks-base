@@ -6,6 +6,8 @@ public virtual class ApiController {
     protected String requestEndpoint;   //Request endpoint is the base endpoint with potential url parameter additions
     protected Integer HTTP_CALLOUT_TIMEOUT = 60000;
     protected Boolean urlParamsSet = false; //Boolean to determine if the url parameters has been set already
+    private Boolean isMockActive =false; //True if the mock is active
+    private HttpResponse mockResponse; //Mock response if mocks are turned on.
     
     /**
     * @description: Performs the callout to the defined endpoint. Throws exception if there are
@@ -21,7 +23,12 @@ public virtual class ApiController {
             throw new InvalidOperationException('Cannot perform callout without defining REST method');
         }
         req.setEndpoint(requestEndpoint);
-        this.resp = new Http().send(req);
+
+        if(false == this.isMockActive) {
+            this.resp = new Http().send(req);
+        } else {
+            this.resp = this.mockResponse;
+        }
     }
 
     public void initRequest(String apiConfigName, String serviceName) {
@@ -50,6 +57,7 @@ public virtual class ApiController {
 
         if(baseConfig.Use_Gateway__c) addApiGwHeader();
 
+        setMockSettings(serviceName);
     }
 
     /**
@@ -191,7 +199,7 @@ public virtual class ApiController {
     * @return ApiController 
     **/
     public ApiController addServiceAuthHeader(String serviceName) {
-        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
+        String serviceToken = Test.isRunningTest() || true == this.isMockActive ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
         return addHeader('Authorization', 'Bearer ' + serviceToken);
     }
 
@@ -284,6 +292,31 @@ public virtual class ApiController {
         }
         
         return this;
+    }
+
+    /**
+    * @description: Check if mock setting is turned on and set mock response
+    * @author Tor Håkon Sigurdsen | 10-12-2020 
+    * @param serviceName [String with the service name]
+    **/
+    private void setMockSettings(String serviceName) {
+        try {
+            NKS_APIControllerUseMock__c mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId());
+
+            if(null != mockSetting && true == mockSetting.NKS_UseMock__c) {
+                String fileName = 'NKS_API_MOCK_' + serviceName + '_' + mockSetting.NKS_StatusCode__c;
+                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = :fileName LIMIT 1];
+                
+                this.mockResponse = new HttpResponse();
+                this.mockResponse.setStatusCode(Integer.valueOf(mockSetting.NKS_StatusCode__c));
+                this.mockResponse.setBody(sr.Body.toString());
+                this.mockResponse.setStatus(mockSetting.NKS_Status__c);
+
+                this.isMockActive = true;
+            }
+        } catch(Exception e) {
+            //Do nothing
+        }
     }
     
     public class InvalidOperationException extends Exception {}
