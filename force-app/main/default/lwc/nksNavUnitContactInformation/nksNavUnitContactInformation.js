@@ -15,7 +15,7 @@ export default class NksNavUnitContactInformation extends LightningElement {
             this.hasContactInformation = true;
 
             if (value.publikumsmottak && value.publikumsmottak.length) {
-                hasVisitorLocations = true;
+                this.hasVisitorLocations = true;
                 this._visitorLocations = value.publikumsmottak;
                 this._visitorLocationsLength = value.publikumsmottak.length;
             }
