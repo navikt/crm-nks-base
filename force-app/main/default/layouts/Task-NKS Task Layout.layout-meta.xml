@@ -95,7 +95,7 @@
                 <field>CreatedById</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>WhatId</field>
             </layoutItems>
         </layoutColumns>
@@ -105,7 +105,7 @@
                 <field>LastModifiedById</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>WhoId</field>
             </layoutItems>
         </layoutColumns>
