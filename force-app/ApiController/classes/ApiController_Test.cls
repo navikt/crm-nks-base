@@ -59,4 +59,15 @@ public  class ApiController_Test {
         //When in test context the standard test configuration is returned
         System.assertNotEquals(ctrl.getEndpoint(), null);
     }
+
+    @isTest
+    static void testMock() {
+        insert new NKS_APIControllerUseMock__c(SetupOwnerId=UserInfo.getOrganizationId(), NKS_Status__c='OK', NKS_StatusCode__c = '200', NKS_UseMock__c = true);
+        Test.startTest();
+        ctrl.initRequest('Testing', 'TEST_SERVICE');
+        ctrl.doCallout();
+        Test.stopTest();
+
+        System.assertEquals('TEST',ctrl.getResponse().getBody());
+    }
 }
