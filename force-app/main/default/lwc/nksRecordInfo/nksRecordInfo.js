@@ -12,8 +12,8 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;                  // Name of the icon to display on the format required from the icon-name attribute in lighning:card
     @api numCols = 2;               // Number of columns for the displayed fields
-    @api showLink = false;        // Boolean to determine if action slot is to be displayed
     @api hideLabels = false;        // Boolean to determine if labels is to be displayed
+    _showLink = false;        // Boolean to determine if action slot is to be displayed
 
     connectedCallback() {
         this.viewedObjectApiName = this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
@@ -21,6 +21,15 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
         this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
+    }
+
+    @api
+    set showLink(value) {
+        this._showLink = value === 'TRUE' || value === 'true' || value === true ? true : false;
+    }
+
+    get showLink() {
+        return this._showLink;
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
