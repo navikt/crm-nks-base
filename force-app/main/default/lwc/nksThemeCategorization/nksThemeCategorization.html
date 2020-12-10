@@ -5,7 +5,7 @@
     <lightning-combobox name="Theme" label="Tema" options={themes} required placeholder="(Ikke valgt)"
         value={chosenTheme} onchange={handleThemeChange}>
     </lightning-combobox>
-    <lightning-combobox name="SubTheme" label="Undertema" placeholder="(Ikke valgt)" options={subthemes} required
+    <lightning-combobox name="SubTheme" label="Undertema" placeholder={subthemePlaceholder} options={subthemes}
         value={chosenSubtheme} onchange={handleSubthemeChange}>
     </lightning-combobox>
 </template>
