@@ -803,13 +803,13 @@
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
-0, {!$Flow.CurrentDate}+ 0,
-1, {!$Flow.CurrentDate} + 6,
-2, {!$Flow.CurrentDate} + 5,
-3, {!$Flow.CurrentDate} + 4,
-4, {!$Flow.CurrentDate} + 3,
+0, {!$Flow.CurrentDate}+ 4,
+1, {!$Flow.CurrentDate} + 3,
+2, {!$Flow.CurrentDate} + 2,
+3, {!$Flow.CurrentDate} + 2,
+4, {!$Flow.CurrentDate} + 2,
 5, {!$Flow.CurrentDate} + 2,
-6, {!$Flow.CurrentDate}+ 1,
+6, {!$Flow.CurrentDate}+ 2,
 TODAY())</expression>
     </formulas>
     <formulas>
