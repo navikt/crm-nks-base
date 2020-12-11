@@ -37,7 +37,7 @@ public class NKS_ChatTranscriptService {
     **/
     private static String generateConversationHeading(LiveChatTranscript chatTranscript, DateTime chatStart, DateTime chatEnd) {
         String heading = '<div style="text-align: center">';
-        heading += '<p align="center">Samtale - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('hh:mm:ss') + ' - ' + chatEnd.format('hh:mm:ss') + '</p>';
+        heading += '<p align="center">Samtale - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</p>';
         heading += '<p align="center">NAV-Veileder: ' + chatTranscript.NKS_Agent_Greeting_Name__c + '</p><br>';
         heading += '</div>';
         return heading;

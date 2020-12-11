@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import { subscribe } from 'lightning/empApi';
+import { subscribe, unsubscribe } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
@@ -39,6 +39,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     activeConversation;                //Boolean to determine if the componenet is rendered in a context on an active chat conversation
     chatLanguage;
     chatAuthUrl;
+    subscription = {};                  //Unique empAPI subscription for the component instance
 
     //#### GETTERS ####
 
@@ -62,10 +63,13 @@ export default class ChatAuthenticationOverview extends LightningElement {
         return this.currentAuthenticationStatus == 'Completed';
     }
 
+    get isEmpSubscribed() {
+        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
+    }
+
     //#### /GETTERS ###
 
     connectedCallback() {
-        this.handleSubscribe();
         this.getAuthUrl();
     }
 
@@ -82,6 +86,10 @@ export default class ChatAuthenticationOverview extends LightningElement {
         } else {
             this.currentAuthenticationStatus = 'Not Started'
             this.log(error);
+        }
+        //If the authentication is not completed, subscribe to the push topic to receive events
+        if (this.currentAuthenticationStatus !== 'Completed' && !this.isLoading && !this.isEmpSubscribed) {
+            this.handleSubscribe();
         }
     }
 
@@ -109,6 +117,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                 _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
                 _this.caseId = response.data.sobject.Id === _this.recordId ? response.data.sobject.CaseId : null;
                 _this.sendLoginEvent();
+                _this.handleUnsubscribe();
             }
         };
 
@@ -117,8 +126,24 @@ export default class ChatAuthenticationOverview extends LightningElement {
         //to record specific channels on initialization. New solution verifies Id in messageCallback
         subscribe("/topic/Chat_Auth_Status_Changed" /*?Id=" + this.recordId*/, -1, messageCallback).then(response => {
             // Response contains the subscription information on successful subscribe call
+            this.subscription = response;
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
+    }
+
+    handleUnsubscribe() {
+        // Invoke unsubscribe method to not receive duplicate messages for this context
+        unsubscribe(this.subscription, response => {
+            console.log('Unsubscribed: ', JSON.stringify(response));
+            // Response is true for successful unsubscribe
+        })
+            .then(success => {
+                //Successfull unsubscribe
+                this.log('Successful unsubscribe');
+            })
+            .catch(error => {
+                console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
+            });
     }
 
     sendLoginEvent() {

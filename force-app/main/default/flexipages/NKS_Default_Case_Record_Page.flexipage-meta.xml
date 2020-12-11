@@ -32,6 +32,9 @@
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
             </componentInstance>
         </itemInstances>

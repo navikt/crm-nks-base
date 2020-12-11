@@ -4,7 +4,7 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>757</locationX>
+        <locationX>756</locationX>
         <locationY>1432</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
@@ -106,8 +106,8 @@
         <description>Sends the journal request via Apex.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>366</locationX>
-        <locationY>934</locationY>
+        <locationX>572</locationX>
+        <locationY>947</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -168,7 +168,7 @@
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>369</locationX>
+        <locationX>359</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.dokumenter</assignToReference>
@@ -262,7 +262,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Post_Journal</targetReference>
+            <targetReference>Check_Social_Information</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -330,8 +330,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>600</locationX>
-        <locationY>1433</locationY>
+        <locationX>601</locationX>
+        <locationY>1432</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -416,6 +416,13 @@
                 <elementReference>Task_Priority</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Name</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
@@ -423,8 +430,8 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>718</locationX>
-        <locationY>1033</locationY>
+        <locationX>878</locationX>
+        <locationY>1031</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -500,6 +507,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Task_Priority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -614,10 +628,36 @@
         </rules>
     </decisions>
     <decisions>
+        <description>Check if the chat has set the social information flag set to true.</description>
+        <name>Check_Social_Information</name>
+        <label>Check Social Information</label>
+        <locationX>353</locationX>
+        <locationY>938</locationY>
+        <defaultConnector>
+            <targetReference>Post_Journal</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Social_Information</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Social_Service_Information</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Should_Create_Task</targetReference>
+            </connector>
+            <label>Has Social Information</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Task</name>
         <label>Check Task</label>
-        <locationX>725</locationX>
-        <locationY>860</locationY>
+        <locationX>885</locationX>
+        <locationY>858</locationY>
         <defaultConnector>
             <targetReference>NAV_Task_Assignment_0</targetReference>
         </defaultConnector>
@@ -642,8 +682,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>359</locationX>
-        <locationY>1381</locationY>
+        <locationX>353</locationX>
+        <locationY>1383</locationY>
         <defaultConnector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </defaultConnector>
@@ -668,8 +708,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task_0</name>
         <label>Should Create Task?</label>
-        <locationX>558</locationX>
-        <locationY>1176</locationY>
+        <locationX>761</locationX>
+        <locationY>1194</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -693,8 +733,8 @@
     <decisions>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>358</locationX>
-        <locationY>1096</locationY>
+        <locationX>564</locationX>
+        <locationY>1192</locationY>
         <defaultConnector>
             <targetReference>Should_Create_Task_0</targetReference>
         </defaultConnector>
@@ -720,7 +760,7 @@
         <name>Validate_NAV_Task_Callout</name>
         <label>Validate NAV Task Callout</label>
         <locationX>902</locationX>
-        <locationY>1434</locationY>
+        <locationY>1442</locationY>
         <defaultConnector>
             <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
         </defaultConnector>
@@ -777,6 +817,12 @@ TODAY())</expression>
         <dataType>String</dataType>
         <expression>{!Get_Person.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Person.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Person.INT_MiddleName__c}</expression>
     </formulas>
+    <formulas>
+        <description>Formula to generate a default task name.</description>
+        <name>Task_Name</name>
+        <dataType>String</dataType>
+        <expression>&quot;Oppgave til &quot; &amp; {!Task_NAV_Unit.recordName}</expression>
+    </formulas>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Chat Create Journal Entry</label>
     <processMetadataValues>
@@ -802,8 +848,8 @@ TODAY())</expression>
         <description>Creates task even though process fails.</description>
         <name>Create_Placeholder_Task</name>
         <label>Create Placeholder Task</label>
-        <locationX>854</locationX>
-        <locationY>1033</locationY>
+        <locationX>1014</locationX>
+        <locationY>1031</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -824,8 +870,8 @@ TODAY())</expression>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task_0</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>983</locationX>
-        <locationY>1222</locationY>
+        <locationX>1022</locationX>
+        <locationY>1241</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -834,8 +880,8 @@ TODAY())</expression>
     <recordLookups>
         <name>Check_For_Existing_Task</name>
         <label>Check For Existing Task</label>
-        <locationX>571</locationX>
-        <locationY>972</locationY>
+        <locationX>731</locationX>
+        <locationY>970</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Task</targetReference>
@@ -903,6 +949,7 @@ TODAY())</expression>
         <queriedFields>NKS_Theme_Group__c</queriedFields>
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>CaseId</queriedFields>
+        <queriedFields>NKS_Social_Service_Information__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -943,8 +990,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>1342</locationX>
-        <locationY>1038</locationY>
+        <locationX>1503</locationX>
+        <locationY>1036</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1005,7 +1052,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Delegate_NAV_Task.success</leftValueReference>
+                    <leftValueReference>Success</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -1036,7 +1083,7 @@ TODAY())</expression>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>367</locationX>
-        <locationY>384</locationY>
+        <locationY>385</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1047,6 +1094,17 @@ TODAY())</expression>
             <name>Journal_Header</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Social_Service_Information</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
+            </defaultValue>
+            <fieldText>Informasjon Sosiale Tjenester</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Huk av denne hvis chatsamtalen inneholder meldinger med informasjon om hvorvidt bruker mottar sosiale tjenester fra NAV.&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Theme_Categroization</name>
@@ -1074,19 +1132,19 @@ TODAY())</expression>
             <inputParameters>
                 <name>messageToggleActive</name>
                 <value>
-                    <stringValue>Yes</stringValue>
+                    <stringValue>Ja</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Create Task</stringValue>
+                    <stringValue>Opprett oppgave:</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>messageToggleInactive</name>
                 <value>
-                    <stringValue>No</stringValue>
+                    <stringValue>Nei</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
