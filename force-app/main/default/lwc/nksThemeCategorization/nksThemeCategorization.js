@@ -121,7 +121,7 @@ export default class NksThemeCategorization extends LightningElement {
         let listSubthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap ? this.subThemeMap[this.chosenTheme] : [];
         let returnThemes = [];
         //Adding blank value for subthemes to allow removing value after one has been set.
-        if (listSubthemes.length !== 0) { returnThemes.push({ label: '(Ikke valgt)', value: '' }); }
+        if (listSubthemes.length !== 0) { returnThemes.push({ label: '(Ikke valgt)', value: null }); }
         listSubthemes.forEach(subtheme => {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
         });
