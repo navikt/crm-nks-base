@@ -250,13 +250,13 @@ TODAY())</expression>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>511</locationX>
-        <locationY>749</locationY>
+        <locationY>750</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;En uventet feil oppsto&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -264,7 +264,7 @@ TODAY())</expression>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -387,10 +387,10 @@ TODAY())</expression>
         <allowPause>false</allowPause>
         <fields>
             <name>Success_Screen_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
