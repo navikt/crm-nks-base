@@ -109,7 +109,7 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     filterThemes() {
-        let listThemes = (this.themeGroup && this.themeMap) ? this.themeMap[this.themeGroup] : [];
+        let listThemes = (this.themeGroup && this.themeMap) && this.themeGroup in this.themeMap ? this.themeMap[this.themeGroup] : [];
         let returnThemes = [];
         listThemes.forEach(theme => {
             returnThemes.push({ label: theme.Name, value: theme.Id });
@@ -118,7 +118,7 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     filterSubthemes() {
-        let listSubthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 ? this.subThemeMap[this.chosenTheme] : [];
+        let listSubthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap ? this.subThemeMap[this.chosenTheme] : [];
         let returnThemes = [];
         listSubthemes.forEach(subtheme => {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
@@ -126,11 +126,20 @@ export default class NksThemeCategorization extends LightningElement {
         this.subthemes = returnThemes;
     }
 
+    get subthemePlaceholder() {
+        let placeholder = '(Ikke valgt)';
+        if (this.chosenTheme) {
+            placeholder = Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap ? '(Ikke valgt)' : '(Ingen undertema)';
+        }
+
+        return placeholder;
+    }
+
     //Validation preventing user moving to next screen in flow if state is not valid
     @api
     validate() {
-        //All values has to be set in the component
-        if (this.themeGroup && this.theme && this.subtheme) {
+        //Theme and theme group must be set
+        if (this.themeGroup && this.theme) {
             return { isValid: true };
         }
         else {

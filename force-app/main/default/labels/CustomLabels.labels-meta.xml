@@ -320,9 +320,9 @@
     <labels>
         <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
         <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
-        <language>en_US</language>
+        <language>no</language>
         <protected>false</protected>
         <shortDescription>Theme Categorization Validation Error</shortDescription>
-        <value>Please complete the theme categorization.</value>
+        <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
 </CustomLabels>
