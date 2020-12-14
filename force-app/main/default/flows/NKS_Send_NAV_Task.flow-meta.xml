@@ -101,6 +101,23 @@
             <targetReference>Process_NAV_task</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Need to update the ID assignment on the NAV task to be updated to prevent flow failure.</description>
+        <name>Update_Assignment</name>
+        <label>Update Assignment</label>
+        <locationX>175</locationX>
+        <locationY>747</locationY>
+        <assignmentItems>
+            <assignToReference>Process_NAV_task.task.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Salesforce_Task</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
@@ -122,7 +139,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Salesforce_Task</targetReference>
+                <targetReference>Update_Assignment</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -184,8 +201,8 @@
         <description>Updates the Salesforce task with information received from the Apex action.</description>
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
-        <locationX>176</locationX>
-        <locationY>741</locationY>
+        <locationX>171</locationX>
+        <locationY>871</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -222,8 +239,8 @@
         <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>175</locationX>
-        <locationY>887</locationY>
+        <locationX>170</locationX>
+        <locationY>1018</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
