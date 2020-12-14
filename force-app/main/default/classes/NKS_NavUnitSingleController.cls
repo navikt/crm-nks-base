@@ -21,14 +21,31 @@ public with sharing class NKS_NavUnitSingleController {
     }
 
     private static NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(String field, String parentObject, String parentRecordId) {        
-        Id personId = (Id) getQueryValue(field, parentObject, parentRecordId)[0];
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(service);
+        List<Object> objectList = getQueryValue(field, parentObject, parentRecordId);
 
+        if(true == objectList.isEmpty()) {
+            NKS_NorgNavUnitService.NavUnitResponse resp = new NKS_NorgNavUnitService.NavUnitResponse();
+            resp.errorMessage = 'Kunne ikke finne bruker.';
+            return resp;
+        }
+
+        Id personId = (Id) objectList[0];
+
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(service);
         return util.getNavUnitFromPerson(personId);
     }
 
     private static NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromNavUnitNumbers(String field, String parentObject, String parentRecordId) {        
-        String navUnitNumber = (String) getQueryValue(field, parentObject, parentRecordId)[0];
+        List<Object> objectList = getQueryValue(field, parentObject, parentRecordId);
+
+        if(true == objectList.isEmpty()) {
+            NKS_NorgNavUnitService.NavUnitResponse resp = new NKS_NorgNavUnitService.NavUnitResponse();
+            resp.errorMessage = 'Kunne ikke finne enhetsnummer.';
+            return resp;
+        }
+
+        String navUnitNumber = (String) objectList[0];
+
         return service.getNavUnitFromUnitNumber(navUnitNumber);
     }
 

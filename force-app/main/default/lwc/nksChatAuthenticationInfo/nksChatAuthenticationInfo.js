@@ -115,6 +115,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
                 _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
+                _this.caseId = response.data.sobject.Id === _this.recordId ? response.data.sobject.CaseId : null;
                 _this.sendLoginEvent();
                 _this.handleUnsubscribe();
             }

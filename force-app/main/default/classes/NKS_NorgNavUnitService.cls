@@ -94,12 +94,19 @@ public with sharing class NKS_NorgNavUnitService {
         apiCtrl.doCallout();
 
         String bodyString = apiCtrl.getResponse().getBody();
-        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+        
+        if(String.isNotBlank(bodyString)) {
+            bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+        }
+        
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.contactInformation = (NKS_NAvUnitContactInformation) JSON.deserialize(bodyString, NKS_NAvUnitContactInformation.class); 
+
+            if(true == String.isNotBlank(bodyString)) {
+                resp.contactInformation = (NKS_NAvUnitContactInformation) JSON.deserialize(bodyString, NKS_NAvUnitContactInformation.class); 
+            }
         } else{
             String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation for unit: ' + unitNumber + '.');
             resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' + errorRef;
@@ -138,13 +145,19 @@ public with sharing class NKS_NorgNavUnitService {
         apiCtrl.doCallout();
 
         String bodyString = apiCtrl.getResponse().getBody();
-        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+        
+        if(String.isNotBlank(bodyString)) {
+            bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+        }
 
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.units = (List<NKS_NavUnit>) JSON.deserialize(bodyString, List<NKS_NavUnit>.class); 
+
+            if(true == String.isNotBlank(bodyString)) {
+                resp.units = (List<NKS_NavUnit>) JSON.deserialize(bodyString, List<NKS_NavUnit>.class); 
+            }
         } else{
             String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.');
             resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
@@ -172,9 +185,18 @@ public with sharing class NKS_NorgNavUnitService {
         
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
 
+        String bodyString = apiCtrl.getResponse().getBody();
+        
+        if(String.isNotBlank(bodyString)) {
+            bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+        }
+
         if(statusCode == 200) {
             resp.success = true;
-            resp.units = (List<NKS_NavUnitWorkAllocation>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NKS_NavUnitWorkAllocation>.class); 
+
+            if(true == String.isNotBlank(bodyString)) {
+                resp.units = (List<NKS_NavUnitWorkAllocation>) JSON.deserialize(bodyString, List<NKS_NavUnitWorkAllocation>.class); 
+            }
         } else{
             String errorRef = logError(apiCtrl.getResponse(), 'Error from NKS_NorgNavUnitService.getNavUnitWorkAllocation.');
             resp.errorMessage = 'Kunne ikke hente arbeidsfordeling fra NORG2. Referanse til feil: ' + errorRef;
