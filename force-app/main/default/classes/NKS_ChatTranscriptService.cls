@@ -87,7 +87,7 @@ public class NKS_ChatTranscriptService {
         public String getFormattedMsg() {
             String formattedMessage = '<div>';
             DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-            formattedMessage += '<p>' + '<b>' + getMessageSource() + ': ' +  '</b> - ' + convertedTimestamp.format('hh:mm:ss') + '</p>';
+            formattedMessage += '<p>' + '<b>' + getMessageSource() + ': ' +  '</b> - ' + convertedTimestamp.format('HH:mm:ss') + '</p>';
             formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
             formattedMessage += '</div><br>';
 
