@@ -4,7 +4,7 @@
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
-        <locationX>177</locationX>
+        <locationX>178</locationX>
         <locationY>444</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
@@ -26,7 +26,7 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference>Subthemecode</elementReference>
+                <elementReference>subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -128,6 +128,12 @@
         </rules>
     </decisions>
     <description>Performs a post of an existing NAV task to the Oppgaver API</description>
+    <formulas>
+        <description>Formula to handle a subtheme not being set.</description>
+        <name>subthemeCode</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_NAV_Task.NKS_Subtheme__c}), {!Get_NAV_Task.NKS_Subtheme__c}, {!Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c})</expression>
+    </formulas>
     <interviewLabel>Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Send NAV Task</label>
@@ -262,16 +268,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Subthemecode</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c</elementReference>
-        </value>
     </variables>
     <variables>
         <name>Themecode</name>
