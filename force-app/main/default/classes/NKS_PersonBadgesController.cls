@@ -107,9 +107,13 @@ public with sharing class NKS_PersonBadgesController {
         
         queryString += ' FROM Person__c WHERE Id = :personId';
         
-        person = (Person__c) Database.query(queryString)[0];
+        List<Person__c> personList = (List<Person__c>) Database.query(queryString);
 
-        return person;
+        if(true == personList.isEmpty()) {
+            return null;
+        }
+
+        return personList[0];
     }
 
     /**
@@ -140,7 +144,11 @@ public with sharing class NKS_PersonBadgesController {
             //Get field set for use later in the class
             fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
             
-            setBadgeData();
+            if(null == person) {
+                errors.add('Kunne ikke finne bruker.');
+            } else {
+                setBadgeData();
+            }
         }
 
         private void setBadgeData() {

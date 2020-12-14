@@ -3,7 +3,7 @@
     <fullName>NKS_Summary__c</fullName>
     <externalId>false</externalId>
     <label>Summary</label>
-    <length>1000</length>
+    <length>3000</length>
     <type>Html</type>
     <visibleLines>25</visibleLines>
 </CustomField>
