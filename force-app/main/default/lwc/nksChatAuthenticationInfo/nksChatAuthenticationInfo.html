@@ -123,11 +123,12 @@
                                 displayed-fields={caseFields} card-label="Brukerinfo" icon-name="standard:account"
                                 num-cols="3" show-link="true">
                             </c-nks-record-info>
-                            <c-nks-record-info viewed-record-id={personId} viewed-object-api-name="Person__c"
-                                displayed-fields={personFields} num-cols="3" show-link="false">
+                            <c-nks-record-info record-id={accountId} viewed-object-api-name="Person__c"
+                                object-api-name="Account" displayed-fields={personFields}
+                                relationship-field="CRM_Person__c" num-cols="3" show-link="false">
                             </c-nks-record-info>
-                            <c-nks-nav-unit-single record-id={personId} relation-field="Id" object-api-name="Person__c"
-                                type="PERSON_LOCATION"></c-nks-nav-unit-single>
+                            <c-nks-nav-unit-single record-id={accountId} relation-field="CRM_Person__c"
+                                object-api-name="Account" type="PERSON_LOCATION"></c-nks-nav-unit-single>
                         </div>
                     </template>
                 </template>
