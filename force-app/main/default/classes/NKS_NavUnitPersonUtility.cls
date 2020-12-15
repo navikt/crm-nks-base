@@ -24,11 +24,21 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @return NKS_NorgNavUnitService.NavUnitResponse
      */
     public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Person__c person) {
+        NKS_NorgNavUnitService.NavUnitResponse resp;
+
         Boolean isShielded = getIsShielded(person);
         String location = getLocation(person);
         String discretionCode = getDiscretionaryCode(person);
-        
-        return service.getNavUnitFromGeographicLocation(location, discretionCode, isShielded);
+
+        if(String.isNotBlank(location)) {
+            resp = service.getNavUnitFromGeographicLocation(location, discretionCode, isShielded);
+        } else {
+            resp = new NKS_NorgNavUnitService.NavUnitResponse();
+            resp.errorMessage = Label.NAV_Unit_Error_person_location_missing;
+        }
+
+
+        return resp;
     }
     
     public NKS_NorgNavUnitService.WorkAllocationResponse getWorkAllocation(Id personId, String themeGroupCode, String themeCode, String themeSubThemeCode, String taskType) {

@@ -4,7 +4,7 @@
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
-        <locationX>177</locationX>
+        <locationX>178</locationX>
         <locationY>444</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
@@ -26,7 +26,7 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference>Subthemecode</elementReference>
+                <elementReference>subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -101,6 +101,23 @@
             <targetReference>Process_NAV_task</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Need to update the ID assignment on the NAV task to be updated to prevent flow failure.</description>
+        <name>Update_Assignment</name>
+        <label>Update Assignment</label>
+        <locationX>175</locationX>
+        <locationY>747</locationY>
+        <assignmentItems>
+            <assignToReference>Process_NAV_task.task.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Salesforce_Task</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
@@ -122,12 +139,18 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Salesforce_Task</targetReference>
+                <targetReference>Update_Assignment</targetReference>
             </connector>
             <label>Success</label>
         </rules>
     </decisions>
     <description>Performs a post of an existing NAV task to the Oppgaver API</description>
+    <formulas>
+        <description>Formula to handle a subtheme not being set.</description>
+        <name>subthemeCode</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_NAV_Task.NKS_Subtheme__c}), {!Get_NAV_Task.NKS_Subtheme__c}, {!Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c})</expression>
+    </formulas>
     <interviewLabel>Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Send NAV Task</label>
@@ -178,8 +201,8 @@
         <description>Updates the Salesforce task with information received from the Apex action.</description>
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
-        <locationX>176</locationX>
-        <locationY>741</locationY>
+        <locationX>171</locationX>
+        <locationY>871</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -216,8 +239,8 @@
         <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>175</locationX>
-        <locationY>887</locationY>
+        <locationX>170</locationX>
+        <locationY>1018</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -262,16 +285,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Subthemecode</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c</elementReference>
-        </value>
     </variables>
     <variables>
         <name>Themecode</name>
