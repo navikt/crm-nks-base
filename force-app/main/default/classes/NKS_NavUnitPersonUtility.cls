@@ -12,16 +12,11 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @return NKS_NorgNavUnitService.NavUnitResponse
      */
     public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Id personId) {
-        Person__c person = [SELECT Id,
-                                INT_Confidential__c,
-                                INT_DistrictNumber__c,
-                                INT_MunicipalityNumber__c,
-                                INT_IsNavEmployee__c
-                            FROM Person__c
-                            WHERE Id = :personId];
+        Person__c person = getPerson(personId);
         return getNavUnitFromPerson(person);
     }
 
+    
     /**
      * @description Use the person record to find the location, shielded and discretionaryCode
      * @author Tor Håkon Sigurdsen | 30-11-2020
@@ -44,6 +39,24 @@ public with sharing class NKS_NavUnitPersonUtility {
 
 
         return resp;
+    }
+    
+    public NKS_NorgNavUnitService.WorkAllocationResponse getWorkAllocation(Id personId, String themeGroupCode, String themeCode, String themeSubThemeCode, String taskType) {
+        Person__c person = getPerson(personId);
+        return getWorkAllocation(person, themeGroupCode, themeCode, themeSubThemeCode, taskType);
+    }
+
+    public NKS_NorgNavUnitService.WorkAllocationResponse getWorkAllocation(Person__c person, String themeGroupCode, String themeCode, String themeSubThemeCode, String taskType) {
+        NKS_NavUnitWorkAllocationInput allocationInput = new NKS_NavUnitWorkAllocationInput();
+        allocationInput.skjermet = getIsShielded(person);
+        allocationInput.geografiskOmraade = getLocation(person);
+        allocationInput.diskresjonskode = getDiscretionaryCode(person);
+        allocationInput.temagruppe = themeGroupCode;
+        allocationInput.tema = themeCode;
+        allocationInput.behandlingstema = themeSubThemeCode;
+        allocationInput.oppgavetype = taskType;
+        
+        return service.getNavUnitWorkAllocation(allocationInput);
     }
 
     /**
@@ -98,5 +111,15 @@ public with sharing class NKS_NavUnitPersonUtility {
      */
     @TestVisible private String getLocation(Person__c person) {
         return String.isNotBlank(person.INT_DistrictNumber__c) ? person.INT_DistrictNumber__c : person.INT_MunicipalityNumber__c;
+    }
+
+    private Person__c getPerson(Id personId) {
+        return [SELECT Id,
+        INT_Confidential__c,
+        INT_DistrictNumber__c,
+        INT_MunicipalityNumber__c,
+        INT_IsNavEmployee__c
+    FROM Person__c
+    WHERE Id = :personId];
     }
 }
