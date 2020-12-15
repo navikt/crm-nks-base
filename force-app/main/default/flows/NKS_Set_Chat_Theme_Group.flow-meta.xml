@@ -44,13 +44,11 @@
         <dataType>String</dataType>
         <expression>CASE({!$Record.LiveChatButton.Queue.DeveloperName},
     &apos;NKS_Chat_Familie&apos;, &apos;FMLI&apos;,
-    &apos;NKS_Chat_AAP&apos;, &apos;ARBD&apos;,
-    &apos;NKS_Chat_Gjeldsrådgivning&apos;, &apos;OKSOS&apos;,
-    &apos;NKS_Chat_Sosiale_Tjenester&apos;, &apos;ANSOS&apos;,
-    &apos;NKS_Chat_Uføre&apos;, &apos;UFRT&apos;,
-    &apos;NKS_Chat_Sykepenger&apos;, &apos;ARBD&apos;,
+    &apos;NKS_Chat_Arbeid&apos;, &apos;ARBD&apos;,
+    &apos;NKS_Chat_Ufoere&apos;, &apos;HLSE&apos;,
+    &apos;NKS_Chat_Helse&apos;, &apos;HLSE&apos;,
     &apos;NKS_Chat_Arbeidsgiver_og_Samhandler&apos;, &apos;ARBD&apos;,
-    &apos;NKS_Chat_Pensjon&apos;, &apos;PENS&apos;,
+    &apos;NKS_Chat_Pensjon&apos;, &apos;PNSJ&apos;,
     null
 )</expression>
     </formulas>
