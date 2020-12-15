@@ -1,5 +1,5 @@
 public without sharing class FamilyRelationViewerController {
-
+    //TODO: clean up code after adding quick fix for marital relation
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelatedPersons(Id recordId , String objectApiName) {
         Id personId; 
@@ -54,12 +54,10 @@ public without sharing class FamilyRelationViewerController {
                 r.child = true; 
             }
             else{
-                System.debug('IKKE BARN'); 
                 r.sex = person.INT_Sex__c; 
                 r.child = false; 
                 r.age = age; 
             }
-
             if(person.CRM_Account__r.Name == 'Ikke tilgjengelig') r.disableurl = true; 
             else r.disableurl = false;
             relations.add(r);
