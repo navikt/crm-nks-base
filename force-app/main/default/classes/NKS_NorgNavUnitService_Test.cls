@@ -224,11 +224,11 @@ private with sharing class NKS_NorgNavUnitService_Test {
 
     @IsTest static void getNavUnitWorkAllocation_TestResponse() {
         NKS_NavUnitWorkAllocation unit1 = new NKS_NavUnitWorkAllocation();
-        unit1.enhetNavn = '12345';
+        unit1.navn = '12345';
         unit1.enhetNr = 'Test Enhet1';
         
         NKS_NavUnitWorkAllocation unit2 = new NKS_NavUnitWorkAllocation();
-        unit2.enhetNavn = '54321';
+        unit2.navn = '54321';
         unit2.enhetNr = 'Test Enhet2';
 
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', JSON.serialize(new List<NKS_NavUnitWorkAllocation>{unit1,unit2}),
