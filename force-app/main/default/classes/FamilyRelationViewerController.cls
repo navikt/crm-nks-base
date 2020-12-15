@@ -23,18 +23,20 @@ public without sharing class FamilyRelationViewerController {
         List<Relation> relations = new List<Relation>();
 
         Person__c p = getPerson(personId)[0]; 
-        Relation maritalrelation = new Relation();
-        if(p.INT_MaritalRelation__c != null){
-            Person__c marriedto = getMaritalRelation(p.INT_MaritalRelation__c)[0]; 
-            maritalrelation.personId = marriedto.Id;
-            maritalrelation.accountId = marriedto.CRM_Account__c; 
-            maritalrelation.personIdent = marriedto.Name; 
-            maritalrelation.personName = marriedto.CRM_Account__r.Name;
-            if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
+        if(p.INT_MaritalStatus__c != null){
+            Relation maritalrelation = new Relation();
+            if(p.INT_MaritalRelation__c != null){
+                Person__c marriedto = getMaritalRelation(p.INT_MaritalRelation__c)[0]; 
+                maritalrelation.personId = marriedto.Id;
+                maritalrelation.accountId = marriedto.CRM_Account__c; 
+                maritalrelation.personIdent = marriedto.Name; 
+                maritalrelation.personName = marriedto.CRM_Account__r.Name;
+                if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
+            }
+            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
+            maritalrelation.child = false; 
+            relations.add(maritalrelation); 
         }
-        maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
-        maritalrelation.child = false; 
-        relations.add(maritalrelation); 
 
         for (Person__c person : relatedPersons) {
             Integer age; 
