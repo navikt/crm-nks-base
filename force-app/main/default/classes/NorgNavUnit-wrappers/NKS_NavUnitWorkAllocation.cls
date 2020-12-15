@@ -6,7 +6,7 @@ public with sharing class NKS_NavUnitWorkAllocation {
     @AuraEnabled public String behandlingstype;
     @AuraEnabled public String diskresjonskode;
     @AuraEnabled public String enhetId;
-    @AuraEnabled public String enhetNavn;
+    @AuraEnabled public String navn;
     @AuraEnabled public String enhetNr;
     @AuraEnabled public String geografiskOmraade;
     @AuraEnabled public Date gyldigFra;
@@ -16,6 +16,7 @@ public with sharing class NKS_NavUnitWorkAllocation {
     @AuraEnabled public Boolean skalTilLokalkontor;
     @AuraEnabled public String tema;
     @AuraEnabled public String temagruppe;
+    @AuraEnabled public String sfId;
 
     public NKS_NavUnitWorkAllocation() {
         this.alternateEnhetId = null;
@@ -25,7 +26,7 @@ public with sharing class NKS_NavUnitWorkAllocation {
         this.behandlingstype = null;
         this.diskresjonskode = null;
         this.enhetId = null;
-        this.enhetNavn = null;
+        this.navn = null;
         this.enhetNr = null;
         this.geografiskOmraade = null;
         this.gyldigFra = null;
