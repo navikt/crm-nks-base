@@ -1,6 +1,10 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
 import getWorkAllocations from '@salesforce/apex/NKSNavTaskWorkAllocationController.getWorkAllocations';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import ID_FIELD from '@salesforce/schema/NavUnit__c.Id';
+import NAME_FIELD from '@salesforce/schema/NavUnit__c.Name';
+import UNIT_NUMBER_FIELD from '@salesforce/schema/NavUnit__c.INT_UnitNumber__c';
 
 import {
     subscribe,
@@ -14,29 +18,34 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @api themeGroup;
     @api theme;
     @api subTheme;
-    @api selectedNavUnit;
     @track result;
     isSearching;
     errorMessage;
-    selectedId = '';
+    selectedId;
 
     @api
     get selectedUnitName() {
-        return this.selectedNavUnit ? this.selectedNavUnit.navn : '';
+        let value = getFieldValue(this.navUnit.data, NAME_FIELD);
+        return value ? value : '';
     }
 
     @api
     get selectedUnitId() {
-        return this.selectedNavUnit ? this.selectedNavUnit.sfId : '';
+        let value = getFieldValue(this.navUnit.data, ID_FIELD);
+        return value ? value : '';
     }
 
     @api
     get selectedUnitNumber() {
-        return this.selectedNavUnit ? this.selectedNavUnit.enhetNr : '';
+        let value = getFieldValue(this.navUnit.data, UNIT_NUMBER_FIELD);
+        return value ? value : '';
     }
 
     @wire(MessageContext)
     messageContext;
+
+    @wire(getRecord, { recordId: '$selectedId', fields: [ID_FIELD, NAME_FIELD, UNIT_NUMBER_FIELD] })
+    navUnit;
 
     connectedCallback() {
         this.subscribeToMessageChannel();
@@ -109,7 +118,6 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
             this.errorMessage = data.errorMessage;
 
             if (true === data.success && 1 <= data.units.length) {
-                this.selectedNavUnit = data.units[0];
                 this.selectedId = data.units[0].sfId;
             }
             this.isSearching = false;
@@ -117,5 +125,10 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
             this.errorMessage = error.body.message;
             this.isSearching = false;
         }
+    }
+
+    onChange(event) {
+        let ids = event.detail.value;
+        this.selectedId = ids && 1 === ids.length ? ids[0] : null;
     }
 }

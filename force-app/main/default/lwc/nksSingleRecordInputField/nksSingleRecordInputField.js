@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+import { getRecordCreateDefaults, getFieldValue } from 'lightning/uiRecordApi';
 import { publish, MessageContext } from 'lightning/messageService';
 
 export default class NksSingleRecordInputField extends LightningElement {
@@ -9,7 +10,7 @@ export default class NksSingleRecordInputField extends LightningElement {
     @api fieldName;
     @api readOnly;
     @api required;
-    @api value;
+    @api value = null;
     @api variant;
 
     //OBJECT PARAMS
@@ -20,6 +21,22 @@ export default class NksSingleRecordInputField extends LightningElement {
 
     @wire(MessageContext)
     messageContext;
+
+    connectedCallback() {
+        const payload = { name: this.fieldName, value: this.value };
+        publish(this.messageContext, nksSingleValueUpdate, payload);
+    }
+
+    // @wire(getRecordCreateDefaults, { objectApiName: '$objectApiName', recordTypeId: '$recordTypeId' })
+    // setRecordCreateDefaults({ data, error }) {
+    //     if (data) {
+    //         let defaultValue = getFieldValue(data.record, this.fieldName);
+
+    //         const payload = { name: this.fieldName, value: defaultValue };
+    //         publish(this.messageContext, nksSingleValueUpdate, payload);
+    //     }
+
+    // }
 
     onChange(event) {
         this.value = event.detail.value;
