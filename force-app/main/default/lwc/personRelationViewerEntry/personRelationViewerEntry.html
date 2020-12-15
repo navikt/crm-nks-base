@@ -2,14 +2,25 @@
 
     <div>
         <p><b>
-            <lightning-formatted-text value={relation.role}></lightning-formatted-text>
-        </b></p>
+                <lightning-formatted-text value={relation.role}></lightning-formatted-text>
+            </b></p>
         <p>
-            <lightning-formatted-url value={recordPageUrl} label={relation.personName} onclick={navigateToSObject}>{relation.personName}</lightning-formatted-url>
-        </p>
-        <p>
-            <lightning-formatted-text value={relation.personIdent}></lightning-formatted-text>
-        </p>
+            <template if:true={relation.disableurl}>
+                <lightning-formatted-text value={relation.personName}></lightning-formatted-text>
+            </template>
+            <template if:false={relation.disableurl}>
+                <template if:true={relation.child}>
+                    <lightning-formatted-url value={recordPageUrl} label={relation.personName}
+                        onclick={navigateToSObject}>
+                        {relation.personName}</lightning-formatted-url> {relation.sex} {relation.age} år
+                </template>
+                <template if:false={relation.child}>
+                    <lightning-formatted-url value={recordPageUrl} label={relation.personName}
+                        onclick={navigateToSObject}>
+                        {relation.personName}</lightning-formatted-url>
+                </template>
+
+            </template> </p>
     </div>
 
 </template>
