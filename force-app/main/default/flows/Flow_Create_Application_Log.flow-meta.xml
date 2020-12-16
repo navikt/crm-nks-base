@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <description>Assigns values to the application log object.</description>
+        <name>Application_Log_Assignment</name>
+        <label>Application Log Assignment</label>
+        <locationX>776</locationX>
+        <locationY>206</locationY>
+        <assignmentItems>
+            <assignToReference>Application_Log.Log_Level__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Critical</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Application_Log.Log_Message__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Log_Message</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Application_Log.Referrence_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ReferenceID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Application_Log.Referrence_Info__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Reference_Object</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Application_Log.Pay_Load__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Error_Payload</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Application_Log.Source_Class__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Error_Source</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_Application_Log</targetReference>
+        </connector>
+    </assignments>
+    <description>Autolaunched flow used for creating log entries for i.e. error handling.</description>
+    <interviewLabel>Flow Create Application Log {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow Create Application Log</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Insert_Application_Log</name>
+        <label>Insert Application Log</label>
+        <locationX>776</locationX>
+        <locationY>365</locationY>
+        <inputReference>Application_Log</inputReference>
+    </recordCreates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Application_Log_Assignment</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>Application_Log</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Application_Log__c</objectType>
+    </variables>
+    <variables>
+        <description>Payload to be store in application log.</description>
+        <name>Error_Payload</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Where did the error originate</description>
+        <name>Error_Source</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Message to be logged.</description>
+        <name>Log_Message</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Reference object type for the application log.</description>
+        <name>Reference_Object</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Record reference for the application log.</description>
+        <name>ReferenceID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
