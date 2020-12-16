@@ -12,6 +12,9 @@ import {
     MessageContext
 } from 'lightning/messageService';
 
+//#### LABEL IMPORTS ####
+import VALIDATION_ERROR from '@salesforce/label/c.NKS_Nav_Task_Work_Allocation_Validation_Error';
+
 export default class NksNavTaskWorkAllocation extends LightningElement {
     @api personId;
     @api taskType;
@@ -130,5 +133,19 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     onChange(event) {
         let ids = event.detail.value;
         this.selectedId = ids && 1 === ids.length ? ids[0] : null;
+    }
+
+    @api
+    validate() {
+        //Theme and theme group must be set
+        if (false == this.showContent || (this.selectedId && this.navUnit)) {
+            return { isValid: true };
+        }
+        else {
+            return {
+                isValid: false,
+                errorMessage: VALIDATION_ERROR
+            };
+        }
     }
 }

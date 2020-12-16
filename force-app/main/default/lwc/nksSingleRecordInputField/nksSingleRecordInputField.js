@@ -1,7 +1,9 @@
 import { LightningElement, api, wire } from 'lwc';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
-import { getRecordCreateDefaults, getFieldValue } from 'lightning/uiRecordApi';
 import { publish, MessageContext } from 'lightning/messageService';
+
+//#### LABEL IMPORTS ####
+import VALIDATION_ERROR from '@salesforce/label/c.NKS_Single_Record_Input_Validation_Error';
 
 export default class NksSingleRecordInputField extends LightningElement {
     //FIELD PARAMS
@@ -27,20 +29,24 @@ export default class NksSingleRecordInputField extends LightningElement {
         publish(this.messageContext, nksSingleValueUpdate, payload);
     }
 
-    // @wire(getRecordCreateDefaults, { objectApiName: '$objectApiName', recordTypeId: '$recordTypeId' })
-    // setRecordCreateDefaults({ data, error }) {
-    //     if (data) {
-    //         let defaultValue = getFieldValue(data.record, this.fieldName);
-
-    //         const payload = { name: this.fieldName, value: defaultValue };
-    //         publish(this.messageContext, nksSingleValueUpdate, payload);
-    //     }
-
-    // }
-
     onChange(event) {
         this.value = event.detail.value;
         const payload = { name: this.fieldName, value: this.value };
         publish(this.messageContext, nksSingleValueUpdate, payload);
+    }
+
+    //Validation preventing user moving to next screen in flow if state is not valid
+    @api
+    validate() {
+        //Theme and theme group must be set
+        if (true === this.required && this.value) {
+            return { isValid: true };
+        }
+        else {
+            return {
+                isValid: false,
+                errorMessage: VALIDATION_ERROR
+            };
+        }
     }
 }
