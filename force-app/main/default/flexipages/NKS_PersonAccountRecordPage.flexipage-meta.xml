@@ -363,6 +363,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>nksAccessErrorMessage</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
