@@ -21,6 +21,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>assignToUnitNumber</name>
+            <value>
+                <elementReference>workAllocation.selectedUnitNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>createdByUnitNumber</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>requestType</name>
             <value>
                 <stringValue>POST</stringValue>

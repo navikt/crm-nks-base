@@ -163,6 +163,10 @@ public with sharing class NKS_NavTaskManager {
         public String subthemeCode;
         @invocableVariable
         public String actorId;
+        @invocableVariable
+        public String assignToUnitNumber;
+        @invocableVariable
+        public String createdByUnitNumber;
         
 
         public NavTaskRequest(){
@@ -245,6 +249,8 @@ public with sharing class NKS_NavTaskManager {
             oppgavetype = String.valueOf(task.NKS_Task_Type__c);
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.CRM_Comments__c;
+            tildeltEnhetsnr = taskRequest.assignToUnitNumber;
+            opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
