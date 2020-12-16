@@ -57,6 +57,14 @@
         <value>Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</value>
     </labels>
     <labels>
+        <fullName>NAV_Unit_Error_person_not_accessible</fullName>
+        <categories>NAV Unit</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NAV_Unit_Error_person_not_accessible</shortDescription>
+        <value>Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</value>
+    </labels>
+    <labels>
         <fullName>NKS_Chat_Login_Message_EN</fullName>
         <categories>UI, Chat, Authentication</categories>
         <language>en_US</language>
