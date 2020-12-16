@@ -45,7 +45,7 @@ public with sharing class NKS_NavTaskManager {
             if(statusCode == 200 || statusCode == 201) {
                 OppgaveResponse apiResp = (OppgaveResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), OppgaveResponse.class);
                 task.INT_External_Reference__c = apiResp.id;
-                task.CRM_NavUnit__c = [SELECT Id FROM NavUnit__c WHERE INT_UnitNumber__c =: apiResp.tildeltEnhetsnr]?.Id;  //Setting the appropriate NAV unit received from the API
+                task.CRM_NavUnit__c = [SELECT Id FROM NavUnit__c WHERE INT_UnitNumber__c =: apiResp.tildeltEnhetsnr LIMIT 1]?.Id;  //Setting the appropriate NAV unit received from the API
                 task.NKS_Gosys_Link__c = apiCtrl.getResponse().getHeader('location');
                 resp.setResponse(true, null, task);
             }
