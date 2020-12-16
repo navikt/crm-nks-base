@@ -60,7 +60,7 @@
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_NAV_Unit.recordId</elementReference>
+                <elementReference>workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -109,7 +109,7 @@
             <assignToReference>NavTask.NKS_Task_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_Type_Picklist</elementReference>
+                <elementReference>taskTypeInput.value</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -352,12 +352,35 @@ TODAY())</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Task_Type_Picklist</name>
-            <choiceReferences>Task_Type</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Oppgavetype</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <name>taskTypeInput</name>
+            <extensionName>c:nksSingleRecordInputField</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldName</name>
+                <value>
+                    <stringValue>NKS_Task_Type__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>label-stacked</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Task_Priority</name>
@@ -385,37 +408,13 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Task_NAV_Unit</name>
-            <extensionName>flowruntime:lookup</extensionName>
+            <name>workAllocation</name>
+            <extensionName>c:nksNavTaskWorkAllocation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>fieldApiName</name>
+                <name>personId</name>
                 <value>
-                    <stringValue>CRM_NavUnit__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>NAV-enhet</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>NavTask__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>NavTask.CRM_NavUnit__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

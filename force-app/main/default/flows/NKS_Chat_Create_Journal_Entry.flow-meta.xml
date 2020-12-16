@@ -350,7 +350,7 @@
             <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_NAV_Unit.recordId</elementReference>
+                <elementReference>workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -399,7 +399,7 @@
             <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_Type</elementReference>
+                <elementReference>taskTypeInput.value</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -450,7 +450,7 @@
             <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_NAV_Unit.recordId</elementReference>
+                <elementReference>workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -492,7 +492,7 @@
             <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Task_Type</elementReference>
+                <elementReference>taskTypeInput.value</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -569,57 +569,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Transcript</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Chat_Journal_Data_0</name>
-        <label>Set Chat Journal Data</label>
-        <locationX>1175</locationX>
-        <locationY>1241</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal.journalPostStatus</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categroization.theme</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categroization.subtheme</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categroization.themeGroup</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Transcript_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -872,7 +821,7 @@ TODAY())</expression>
         <description>Formula to generate a default task name.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression>&quot;Oppgave til &quot; &amp; {!Task_NAV_Unit.recordName}</expression>
+        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
     <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Chat Create Journal Entry</label>
@@ -924,7 +873,7 @@ TODAY())</expression>
         <locationX>1022</locationX>
         <locationY>1241</locationY>
         <connector>
-            <targetReference>Set_Chat_Journal_Data_0</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </connector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
@@ -1034,16 +983,6 @@ TODAY())</expression>
         <label>Update Transcript</label>
         <locationX>1368</locationX>
         <locationY>1373</locationY>
-        <inputReference>Get_Chat_Transcript</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Transcript_0</name>
-        <label>Update Transcript</label>
-        <locationX>1321</locationX>
-        <locationY>1241</locationY>
-        <connector>
-            <targetReference>Error_Screen</targetReference>
-        </connector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -1212,12 +1151,35 @@ TODAY())</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Task_Type</name>
-            <choiceReferences>Task_Type_Picklist</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Oppgavetype:</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <name>taskTypeInput</name>
+            <extensionName>c:nksSingleRecordInputField</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldName</name>
+                <value>
+                    <stringValue>NKS_Task_Type__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>label-stacked</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1284,51 +1246,17 @@ TODAY())</expression>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Task_NAV_Unit</name>
-            <extensionName>flowruntime:lookup</extensionName>
+            <name>workAllocation</name>
+            <extensionName>c:nksNavTaskWorkAllocation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>label</name>
+                <name>personId</name>
                 <value>
-                    <stringValue>NAV-enhet</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>NavTask__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>CRM_NavUnit__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <elementReference>Create_Task_Toggle.value</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>Selected_Task_NAV_Unit</elementReference>
+                    <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>

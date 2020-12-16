@@ -57,7 +57,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>Name,INT_Sex__c, INT_DateOfBirth__c, INT_MaritalStatus__c, INT_LegalStatus__c, INT_MaritalStatusDate__c, INT_Citizenships__c</value>
+                    <value>Name,INT_Sex__c, INT_DateOfBirth__c, INT_LegalStatus__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -328,12 +328,27 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Account.NKS_Account_Create_NAV_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -375,30 +390,9 @@
                 </componentInstanceProperties>
                 <componentName>nksPersonBadges</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.CRM_Person__r.INT_IsNavEmployee__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CRM_Person__r.INT_SpokenLanguageIntepreter__c}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CRM_Person__r.INT_IsDeceased__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CRM_Person__r.INT_Confidential__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>UGRADERT</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
-                        <operator>GT</operator>
-                        <rightValue>0</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

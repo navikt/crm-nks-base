@@ -1,5 +1,8 @@
 import { LightningElement, track, api, wire } from 'lwc';
+import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
+
+import { publish, MessageContext } from 'lightning/messageService';
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Theme_Categorization_Validation_Error';
@@ -15,6 +18,10 @@ export default class NksThemeCategorization extends LightningElement {
     chosenSubtheme;
     subthemes;
     themes;
+
+    @wire(MessageContext)
+    messageContext;
+
 
     @wire(getCategorization, {})
     categoryResults({ data, error }) {
@@ -35,18 +42,23 @@ export default class NksThemeCategorization extends LightningElement {
         this.chosenThemeGroup = event.detail.value;
         this.chosenTheme = null;
         this.chosenSubtheme = null;
-
         this.filterThemes();
+
+        this.publishFieldChange('themeGroupCode', this.themeGroupCode);
     }
 
     handleThemeChange(event) {
         this.chosenTheme = event.detail.value;
         this.chosenSubtheme = null;
         this.filterSubthemes();
+
+        this.publishFieldChange('themeCode', this.themeCode);
     }
 
     handleSubthemeChange(event) {
         this.chosenSubtheme = event.detail.value;
+
+        this.publishFieldChange('subThemeCode', this.subthemeCode);
     }
 
     @api
@@ -121,7 +133,7 @@ export default class NksThemeCategorization extends LightningElement {
         let listSubthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap ? this.subThemeMap[this.chosenTheme] : [];
         let returnThemes = [];
         //Adding blank value for subthemes to allow removing value after one has been set.
-        if (listSubthemes.length !== 0) { returnThemes.push({ label: '(Ikke valgt)', value: null }); }
+        if (listSubthemes.length !== 0) { returnThemes.push({ label: '(Ikke valgt)', value: '' }); }
         listSubthemes.forEach(subtheme => {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
         });
@@ -135,6 +147,11 @@ export default class NksThemeCategorization extends LightningElement {
         }
 
         return placeholder;
+    }
+
+    publishFieldChange(field, value) {
+        const payload = { name: field, value: value };
+        publish(this.messageContext, nksSingleValueUpdate, payload);
     }
 
     //Validation preventing user moving to next screen in flow if state is not valid

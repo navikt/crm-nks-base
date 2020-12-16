@@ -29,7 +29,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         Test.stopTest(); 
         Account a = [SELECT Name FROM Account WHERE INT_PersonIdent__c = '12345678904' LIMIT 1]; 
 
-        System.assertEquals(3, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. 3 should be returned');
+        System.assertEquals(4, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. Add 1 for marital status. 4 should be returned');
         System.assertEquals('IKKE TILGJENGELIG', a.Name, 'Child is confidential. Name should be "IKKE TILGJENGELIG"');
     }
 
@@ -40,7 +40,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         Test.startTest(); 
             relations = FamilyRelationViewerController.getRelatedPersons(mom.Id, 'Account'); 
         Test.stopTest(); 
-        System.assertEquals(3, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. 3 should be returned');
+        System.assertEquals(4, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. Add 1 for marital status. 4 should be returned');
     }
 
     @isTest
@@ -51,7 +51,7 @@ public with sharing class FamilyRelationViewerControllerTest {
             relations = FamilyRelationViewerController.getRelatedPersons(child.Id, 'Account'); 
         Test.stopTest(); 
 
-        System.assertEquals(1, relations.size(), 'Child has 1 parent and 0 children. 1 chould be returned');
+        System.assertEquals(2, relations.size(), 'Child has 1 parent and 0 children. Add 1 for marital status. 2 chould be returned');
 
     }
 
@@ -63,7 +63,7 @@ public with sharing class FamilyRelationViewerControllerTest {
             relations = FamilyRelationViewerController.getRelatedPersons(c.Id, 'Case'); 
         Test.stopTest(); 
 
-        System.assertEquals(3, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. 3 should be returned');
+        System.assertEquals(4, relations.size(), 'Mom has 3 children under 21, and 1 over, 1 is confidential. Add 1 for marital status. 4 should be returned');
     }
 
 }
