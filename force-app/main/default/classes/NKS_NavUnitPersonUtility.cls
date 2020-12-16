@@ -79,7 +79,7 @@ public with sharing class NKS_NavUnitPersonUtility {
             allocationInput.diskresjonskode = getDiscretionaryCode(person);
         }
 
-        allocationInput.temagruppe = themeGroupCode;
+        //allocationInput.temagruppe = themeGroupCode; We don't use the correct theme group codes
         allocationInput.tema = themeCode;
         allocationInput.behandlingstema = themeSubThemeCode;
         allocationInput.oppgavetype = taskType;

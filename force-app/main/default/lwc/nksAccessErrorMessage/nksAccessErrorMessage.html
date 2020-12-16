@@ -1,0 +1,8 @@
+<template>
+    <template if:false={access}>
+        <div class="slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+            <lightning-icon icon-name="utility:warning" size="small" title="Warning"></lightning-icon>
+            <h2> Du mangler tilgang til å se informasjon knyttet til denne brukeren </h2>
+        </div>
+    </template>
+</template>
