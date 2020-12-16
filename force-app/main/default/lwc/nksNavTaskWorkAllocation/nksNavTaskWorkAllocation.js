@@ -110,9 +110,10 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         this.isSearching = true;
         const input = {
             personId: this.personId,
-            themeGroup: this.themeGroup,
-            theme: this.theme,
-            subTheme: this.subTheme
+            themeGroupCode: this.themeGroup,
+            themeCode: this.theme,
+            themeSubThemeCode: this.subTheme,
+            taskType: this.taskType
         }
 
         try {
