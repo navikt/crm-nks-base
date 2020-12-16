@@ -5,6 +5,12 @@ public without sharing class FamilyRelationViewerController {
         Id personId; 
         if(objectApiName == 'Case') personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id =: recordId].Account.CRM_Person__c; 
         else if(objectApiName == 'Account') personId = [SELECT CRM_Person__c FROM Account WHERE Id =: recordId].CRM_Person__c; 
+        
+        List<Relation> relations = new List<Relation>();
+
+        Id userId = UserInfo.getUserId();
+        Boolean access = [SELECT RecordId, HasReadAccess FROM UserRecordAccess WHERE UserId =: userId AND RecordId =: personId].HasReadAccess;
+        if(!access) return relations; 
 
         List<PersonJSONFieldObjects.Familierelasjoner> familyRelations = (List<PersonJSONFieldObjects.Familierelasjoner>) System.JSON.deserialize(
                 getFamilyRelationJSONString(personId),
@@ -18,9 +24,7 @@ public without sharing class FamilyRelationViewerController {
 
         List<Person__c> relatedPersons = getRelatedPersons(roleByRelatedPersonIdent.keySet());
 
-        relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent);
-        
-        List<Relation> relations = new List<Relation>();
+        relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent); 
 
         Person__c p = getPerson(personId)[0]; 
         if(p.INT_MaritalStatus__c != null){
