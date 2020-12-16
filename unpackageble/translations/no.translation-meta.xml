@@ -446,9 +446,6 @@
                     <name>Task_Description</name>
                 </fields>
                 <fields>
-                    <name>Task_NAV_Unit</name>
-                </fields>
-                <fields>
                     <fieldText>Prioritet:</fieldText>
                     <name>Task_Priority</name>
                 </fields>
