@@ -4,15 +4,15 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>756</locationX>
-        <locationY>1432</locationY>
+        <locationX>763</locationX>
+        <locationY>1500</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validate_NAV_Task_Callout</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
+            <targetReference>Create_App_Log_0_0</targetReference>
         </faultConnector>
         <inputParameters>
             <name>actorId</name>
@@ -125,6 +125,9 @@
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>journalRequest</name>
             <value>
@@ -342,8 +345,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>601</locationX>
-        <locationY>1432</locationY>
+        <locationX>609</locationX>
+        <locationY>1500</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -442,7 +445,7 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>878</locationX>
+        <locationX>894</locationX>
         <locationY>1031</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
@@ -535,8 +538,8 @@
     <assignments>
         <name>Set_Chat_Journal_Data</name>
         <label>Set Chat Journal Data</label>
-        <locationX>1200</locationX>
-        <locationY>1373</locationY>
+        <locationX>1198</locationX>
+        <locationY>1386</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -581,6 +584,73 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Transcript</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Chat_Journal_Data_0</name>
+        <label>Set Chat Journal Data</label>
+        <locationX>1336</locationX>
+        <locationY>1621</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalPostStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.theme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Transcript_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_NAV_Task_Failed</name>
+        <label>Set NAV Task Failed</label>
+        <locationX>1503</locationX>
+        <locationY>1457</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask_Failed</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -771,8 +841,8 @@
         <description>Validates the API callout</description>
         <name>Validate_NAV_Task_Callout</name>
         <label>Validate NAV Task Callout</label>
-        <locationX>902</locationX>
-        <locationY>1442</locationY>
+        <locationX>911</locationX>
+        <locationY>1502</locationY>
         <defaultConnector>
             <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
         </defaultConnector>
@@ -865,35 +935,44 @@ TODAY())</expression>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0</targetReference>
+        </faultConnector>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
     <recordCreates>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>1068</locationX>
-        <locationY>1435</locationY>
+        <locationX>1093</locationX>
+        <locationY>1500</locationY>
         <connector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0</targetReference>
+        </faultConnector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
     <recordCreates>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task_0</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>1022</locationX>
-        <locationY>1241</locationY>
+        <locationX>1012</locationX>
+        <locationY>1243</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0</targetReference>
+        </faultConnector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Check_For_Existing_Task</name>
         <label>Check For Existing Task</label>
-        <locationX>731</locationX>
-        <locationY>970</locationY>
+        <locationX>769</locationX>
+        <locationY>856</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Task</targetReference>
@@ -993,8 +1072,18 @@ TODAY())</expression>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>1368</locationX>
-        <locationY>1373</locationY>
+        <locationX>1367</locationX>
+        <locationY>1386</locationY>
+        <inputReference>Get_Chat_Transcript</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Transcript_0</name>
+        <label>Update Transcript</label>
+        <locationX>1503</locationX>
+        <locationY>1621</locationY>
+        <connector>
+            <targetReference>Set_NAV_Task_Failed</targetReference>
+        </connector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -1062,7 +1151,7 @@ TODAY())</expression>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>Success</leftValueReference>
                     <operator>EqualTo</operator>
@@ -1070,19 +1159,11 @@ TODAY())</expression>
                         <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Flow_Error</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>NavTask_Failed</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1095,7 +1176,7 @@ TODAY())</expression>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>367</locationX>
-        <locationY>385</locationY>
+        <locationY>384</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1297,6 +1378,166 @@ TODAY())</expression>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_App_Log</name>
+        <label>Create App Log</label>
+        <locationX>487</locationX>
+        <locationY>1056</locationY>
+        <connector>
+            <targetReference>Validate_Callout</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_JournalUtilities</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0</name>
+        <label>Create App Log</label>
+        <locationX>1369</locationX>
+        <locationY>1153</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0</name>
+        <label>Create App Log</label>
+        <locationX>834</locationX>
+        <locationY>1657</locationY>
+        <connector>
+            <targetReference>Validate_NAV_Task_Callout</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_NavTaskManager</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0_0</name>
+        <label>Create App Log</label>
+        <locationX>1197</locationX>
+        <locationY>1621</locationY>
+        <connector>
+            <targetReference>Set_Chat_Journal_Data_0</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>Existing_Task</name>
         <dataType>SObject</dataType>
@@ -1349,6 +1590,17 @@ TODAY())</expression>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
+        <description>Boolean set if NavTask insertion fails</description>
+        <name>NavTask_Failed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>

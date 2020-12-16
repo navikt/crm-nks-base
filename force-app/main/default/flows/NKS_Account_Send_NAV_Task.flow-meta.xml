@@ -11,6 +11,9 @@
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>actorId</name>
             <value>
@@ -223,6 +226,9 @@ TODAY())</expression>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log1</targetReference>
+        </faultConnector>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordCreates>
     <recordCreates>
@@ -230,10 +236,13 @@ TODAY())</expression>
         <name>Store_Placeholder_Task</name>
         <label>Store Placeholder Task</label>
         <locationX>363</locationX>
-        <locationY>750</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log1</targetReference>
+        </faultConnector>
         <inputReference>NavTask</inputReference>
     </recordCreates>
     <recordLookups>
@@ -246,6 +255,9 @@ TODAY())</expression>
         <connector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log1</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -412,6 +424,86 @@ TODAY())</expression>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_App_Log</name>
+        <label>Create App Log</label>
+        <locationX>363</locationX>
+        <locationY>616</locationY>
+        <connector>
+            <targetReference>Store_Placeholder_Task</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_NavTaskManager</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow Fault: Account_Send_NAV_Task</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log1</name>
+        <label>Create App Log</label>
+        <locationX>678</locationX>
+        <locationY>929</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Account_Send_NAV_Task</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow error occurred.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <description>The NAV task record to perform the action on.</description>
         <name>NavTask</name>

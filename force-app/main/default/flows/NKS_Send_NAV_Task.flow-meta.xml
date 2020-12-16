@@ -11,6 +11,9 @@
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>actorId</name>
             <value>
@@ -184,7 +187,7 @@
             <targetReference>NAV_Task_assignment</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Create_App_Log</targetReference>
         </faultConnector>
         <filters>
             <field>Id</field>
@@ -206,6 +209,9 @@
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log</targetReference>
+        </faultConnector>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordUpdates>
     <screens>
@@ -260,6 +266,86 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_App_Log</name>
+        <label>Create App Log</label>
+        <locationX>998</locationX>
+        <locationY>472</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Send_NAV_Task</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Error occurred in flow</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>NavTask__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0</name>
+        <label>Create App Log</label>
+        <locationX>340</locationX>
+        <locationY>383</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_NavTaskManager</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Error occurred in flow.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>NavTask__c</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>actorId</name>
         <dataType>String</dataType>
