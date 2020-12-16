@@ -11,4 +11,13 @@
     <description>Permission set granting access to the secure chat functionality.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Secure Chat Access</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>PushTopic</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
 </PermissionSet>
