@@ -43,12 +43,15 @@
         })
             .then(result => {
                 let conversation = result.messages;
-                console.log("CONVERSATION: " + JSON.stringify(conversation));
+                let filteredConversation = conversation.filter(function (message, index, arr) {
+                    //Filtering out all messages of type supervisor as these are "whispers" and should not be added to the journal
+                    return message.type !== 'Supervisor';
+                });
 
-                helper.callStoreConversation(component, conversation);
+                helper.callStoreConversation(component, filteredConversation);
             })
             .catch(error => {
-                //How should an error be handled?
+                //Errors require manual handling.
             });
     }
 })

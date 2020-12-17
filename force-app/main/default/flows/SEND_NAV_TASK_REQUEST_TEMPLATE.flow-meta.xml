@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <description>Calls apex with the desired action.</description>
+        <name>Process_NAV_task</name>
+        <label>Process NAV task</label>
+        <locationX>180</locationX>
+        <locationY>699</locationY>
+        <actionName>NKS_NavTaskManager</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Validate_Callout</targetReference>
+        </connector>
+        <inputParameters>
+            <name>actorId</name>
+            <value>
+                <stringValue>2280720130426</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <elementReference>ACTION</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subthemeCode</name>
+            <value>
+                <elementReference>Theme_Categorization.subthemeCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>task</name>
+            <value>
+                <elementReference>NavTask</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeCode</name>
+            <value>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeGroupCode</name>
+            <value>
+                <elementReference>Theme_Categorization.themeGroupCode</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <assignments>
+        <description>Assigns the necessary values to an outbound NAV task</description>
+        <name>Existing_NAV_Task_Assignment</name>
+        <label>Existing NAV Task Assignment</label>
+        <locationX>375</locationX>
+        <locationY>379</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns the appropriate values from the input screen to the NAV task.</description>
+        <name>NAV_Task_Assignment</name>
+        <label>NAV Task Assignment</label>
+        <locationX>179</locationX>
+        <locationY>531</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Due_Date</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_NAV_Unit.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.theme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Priority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_NoPersonInformation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Task_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Type_Picklist</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Process_NAV_task</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>DML_Decision</name>
+        <label>DML Decision</label>
+        <locationX>172</locationX>
+        <locationY>1017</locationY>
+        <defaultConnector>
+            <targetReference>Update_Salesforce_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ACTION</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>POST</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Salesforce_Task</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>POST_OR_PATCH_DECISION</name>
+        <label>POST OR PATCH DECISION</label>
+        <locationX>168</locationX>
+        <locationY>224</locationY>
+        <defaultConnector>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Existing_task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_NAV_Task</targetReference>
+            </connector>
+            <label>Existing task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Validate if the callout was successful</description>
+        <name>Validate_Callout</name>
+        <label>Validate Callout</label>
+        <locationX>174</locationX>
+        <locationY>841</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Success</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Process_NAV_task.success</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DML_Decision</targetReference>
+            </connector>
+            <label>Success</label>
+        </rules>
+    </decisions>
+    <description>Template flow for sending an outbound NAV task for creation or edit.</description>
+    <dynamicChoiceSets>
+        <name>Priority_Picklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CRM_Priority__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Task type for the NAV task</description>
+        <name>Task_Type</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NKS_Task_Type__c</picklistField>
+        <picklistObject>NavTask__c</picklistObject>
+    </dynamicChoiceSets>
+    <formulas>
+        <name>ACTION</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!NavTask.INT_External_Reference__c}), &apos;POST&apos;, &apos;EDIT&apos;)</expression>
+    </formulas>
+    <formulas>
+        <description>Formula for setting the default due date to next friday.</description>
+        <name>Default_Due_Date</name>
+        <dataType>Date</dataType>
+        <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
+0, {!$Flow.CurrentDate}+ 0,
+1, {!$Flow.CurrentDate} + 6,
+2, {!$Flow.CurrentDate} + 5,
+3, {!$Flow.CurrentDate} + 4,
+4, {!$Flow.CurrentDate} + 3,
+5, {!$Flow.CurrentDate} + 2,
+6, {!$Flow.CurrentDate}+ 1,
+TODAY())</expression>
+    </formulas>
+    <interviewLabel>SEND NAV TASK TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>SEND NAV TASK REQUEST TEMPLATE</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Salesforce_Task</name>
+        <label>Create Salesforce Task</label>
+        <locationX>71</locationX>
+        <locationY>1138</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <inputReference>Process_NAV_task.task</inputReference>
+    </recordCreates>
+    <recordLookups>
+        <description>Queries the NAV task information if this is an edit action.</description>
+        <name>Get_NAV_Task</name>
+        <label>Get NAV Task</label>
+        <locationX>375</locationX>
+        <locationY>223</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Existing_NAV_Task_Assignment</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NavTask__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates the Salesforce task with information received from the Apex action.</description>
+        <name>Update_Salesforce_Task</name>
+        <label>Update Salesforce Task</label>
+        <locationX>294</locationX>
+        <locationY>1139</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <inputReference>Process_NAV_task.task</inputReference>
+    </recordUpdates>
+    <screens>
+        <description>Something went wrong when posting/updating the NAV task.</description>
+        <name>Error_Screen</name>
+        <label>Error_Screen</label>
+        <locationX>373</locationX>
+        <locationY>842</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Header</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;En uventet feil oppsto&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Error_Screen_Message</name>
+            <fieldText>&lt;p&gt;Det oppsto en feil ved opprettelse/oppdatering av NAV oppgaven. Kontakt administrator med følgende referanse: {!Process_NAV_task.errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>NAV_Task_Input_Screen</name>
+        <label>NAV Task Input Screen</label>
+        <locationX>177</locationX>
+        <locationY>379</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>NAV_Task_Assignment</targetReference>
+        </connector>
+        <fields>
+            <name>Theme_Categorization</name>
+            <extensionName>c:nksThemeCategorization</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>subtheme</name>
+                <value>
+                    <elementReference>NavTask.NKS_Subtheme__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>NavTask.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>NavTask.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Task_Type_Picklist</name>
+            <choiceReferences>Task_Type</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Oppgavetype</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Task_Priority</name>
+            <choiceReferences>Priority_Picklist</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Priroritet</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Task_Due_Date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Default_Due_Date</elementReference>
+            </defaultValue>
+            <fieldText>Frist:</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Task_Description</name>
+            <fieldText>Oppgave til NAV-enhet</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Task_NAV_Unit</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>CRM_NavUnit__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>NAV-enhet</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>NavTask.CRM_NavUnit__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Screen for telling user that the task was successfully sent.</description>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>182</locationX>
+        <locationY>1264</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success_Screen_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>POST_OR_PATCH_DECISION</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <description>The NAV task record to perform the action on.</description>
+        <name>NavTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
+        <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

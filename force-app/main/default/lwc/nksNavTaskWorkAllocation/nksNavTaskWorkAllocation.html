@@ -1,0 +1,9 @@
+<template>
+    <template if:true={showContent}>
+        <lightning-record-edit-form object-api-name="NavTask__c">
+            <lightning-input-field field-name="CRM_NavUnit__c" required="true" value={selectedId}
+                variant="label-stacked" disabled={isSearching} onchange={onChange}>
+            </lightning-input-field>
+        </lightning-record-edit-form>
+    </template>
+</template>

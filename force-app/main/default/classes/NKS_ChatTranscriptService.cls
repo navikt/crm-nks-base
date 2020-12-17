@@ -37,8 +37,8 @@ public class NKS_ChatTranscriptService {
     **/
     private static String generateConversationHeading(LiveChatTranscript chatTranscript, DateTime chatStart, DateTime chatEnd) {
         String heading = '<div style="text-align: center">';
-        heading += '<p align="center">Samtale - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('hh:mm:ss') + ' - ' + chatEnd.format('hh:mm:ss') + '</p>';
-        heading += '<p align="center">NAV-Veileder: ' + chatTranscript.Owner.Name + '</p><br>';
+        heading += '<p align="center">Samtale - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</p>';
+        heading += '<p align="center">NAV-Veileder: ' + chatTranscript.NKS_Agent_Greeting_Name__c + '</p><br>';
         heading += '</div>';
         return heading;
     }
@@ -66,7 +66,7 @@ public class NKS_ChatTranscriptService {
     }
 
     private static LiveChatTranscript getChatDetails(String chatId) {
-        return [SELECT Owner.Name, Body, NKS_Conversation__c, Case.Description FROM LiveChatTranscript WHERE Id =: chatId];
+        return [SELECT NKS_Agent_Greeting_Name__c, Body, NKS_Conversation__c, Case.Description FROM LiveChatTranscript WHERE Id =: chatId];
     }
 
     private class Message{
@@ -87,7 +87,7 @@ public class NKS_ChatTranscriptService {
         public String getFormattedMsg() {
             String formattedMessage = '<div>';
             DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-            formattedMessage += '<p>' + '<b>' + getMessageSource() + ': ' +  '</b> - ' + convertedTimestamp.format('hh:mm:ss') + '</p>';
+            formattedMessage += '<p>' + '<b>' + getMessageSource() + ': ' +  '</b> - ' + convertedTimestamp.format('HH:mm:ss') + '</p>';
             formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
             formattedMessage += '</div><br>';
 

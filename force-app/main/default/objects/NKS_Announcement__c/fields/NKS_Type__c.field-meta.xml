@@ -11,14 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>News</fullName>
-                <default>false</default>
-                <label>News</label>
+                <fullName>Nyhet</fullName>
+                <default>true</default>
+                <label>Nyhet</label>
             </value>
             <value>
-                <fullName>Operational Messages</fullName>
+                <fullName>Glamelding</fullName>
                 <default>false</default>
-                <label>Operational Messages</label>
+                <label>Glamelding</label>
+            </value>
+            <value>
+                <fullName>Tips</fullName>
+                <default>false</default>
+                <label>Tips</label>
             </value>
         </valueSetDefinition>
     </valueSet>

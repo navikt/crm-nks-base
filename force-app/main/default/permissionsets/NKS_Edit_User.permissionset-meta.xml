@@ -14,13 +14,36 @@
     </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>User.NKS_Alias__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.NKS_Division__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NKS_GreetingName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NKS_UserNameDisplayFLOW__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
         <flow>NKS_Update_User</flow>
     </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>NKS_Veiledere</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Edit User</label>
+    <tabSettings>
+        <tab>NKS_User_administration</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

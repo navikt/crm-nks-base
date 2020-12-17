@@ -11,6 +11,7 @@
         "NKS_Knowledge_Viewer",
         "NKS_Chat_Permissions"
     ],
+    "department": "4703",
     "UserPermissionsLiveAgentUser": true,
     "UserPermissionsKnowledgeUser": true,
     "generatePassword": true

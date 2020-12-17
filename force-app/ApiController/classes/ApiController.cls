@@ -6,6 +6,8 @@ public virtual class ApiController {
     protected String requestEndpoint;   //Request endpoint is the base endpoint with potential url parameter additions
     protected Integer HTTP_CALLOUT_TIMEOUT = 60000;
     protected Boolean urlParamsSet = false; //Boolean to determine if the url parameters has been set already
+    private Boolean isMockActive =false; //True if the mock is active
+    private HttpResponse mockResponse; //Mock response if mocks are turned on.
     
     /**
     * @description: Performs the callout to the defined endpoint. Throws exception if there are
@@ -21,7 +23,12 @@ public virtual class ApiController {
             throw new InvalidOperationException('Cannot perform callout without defining REST method');
         }
         req.setEndpoint(requestEndpoint);
-        this.resp = new Http().send(req);
+
+        if(false == this.isMockActive) {
+            this.resp = new Http().send(req);
+        } else {
+            this.resp = this.mockResponse;
+        }
     }
 
     public void initRequest(String apiConfigName, String serviceName) {
@@ -48,6 +55,9 @@ public virtual class ApiController {
             setEndpoint(baseConfig.Base_Endpoint__c + servicePath);
         }
 
+        if(baseConfig.Use_Gateway__c) addApiGwHeader();
+
+        setMockSettings(serviceName);
     }
 
     /**
@@ -58,7 +68,7 @@ public virtual class ApiController {
     * @return API_Base_Configuration__mdt 
     **/
     private API_Base_Configuration__mdt getApiConfiguration(String apiConfigName, String serviceName) {
-        API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, 
+        API_Base_Configuration__mdt baseConfig = [SELECT Base_Endpoint__c,Base_Endpoint_Test__c, Named_Credential__c, Named_Credential_Test__c, Use_Gateway__c,
                                                         (SELECT Service_Path__c, Has_Path_Parameters__c, HTTP_Method__c FROM API_Service_Configurations__r WHERE DeveloperName =: serviceName)
                                                          FROM API_Base_Configuration__mdt WHERE DeveloperName =: apiConfigName LIMIT 1];
 
@@ -189,17 +199,19 @@ public virtual class ApiController {
     * @return ApiController 
     **/
     public ApiController addServiceAuthHeader(String serviceName) {
-        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
+        String serviceToken = Test.isRunningTest() || true == this.isMockActive ? 'TEST_TOKEN' : CachedTokensHandler.getServiceToken(serviceName);
         return addHeader('Authorization', 'Bearer ' + serviceToken);
     }
 
+
     /**
-    * @description: Adds the subscription key to the header of the request from the named credential
-    * @author Tor Håkon Sigurdsen | 11-09-2020
+    * @description: Dynamically adds the ApiGWKey to the request headers
+    * Only usable if endpoint is set using named credential
+    * @author Stian Ruud Schikora | 11-24-2020 
     * @return ApiController 
     **/
-    public ApiController addSubscriptionKey() {
-        return addHeader('Ocp-Apim-Subscription-Key','{!$Credential.Password}');
+    public ApiController addApiGwHeader() {
+        return addHeader('Ocp-Apim-Subscription-Key', '{!$Credential.Password}');
     }
 	
     /**
@@ -280,6 +292,31 @@ public virtual class ApiController {
         }
         
         return this;
+    }
+
+    /**
+    * @description: Check if mock setting is turned on and set mock response
+    * @author Tor Håkon Sigurdsen | 10-12-2020 
+    * @param serviceName [String with the service name]
+    **/
+    private void setMockSettings(String serviceName) {
+        try {
+            NKS_APIControllerUseMock__c mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId());
+
+            if(null != mockSetting && true == mockSetting.NKS_UseMock__c) {
+                String fileName = 'NKS_API_MOCK_' + serviceName + '_' + mockSetting.NKS_StatusCode__c;
+                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = :fileName LIMIT 1];
+                
+                this.mockResponse = new HttpResponse();
+                this.mockResponse.setStatusCode(Integer.valueOf(mockSetting.NKS_StatusCode__c));
+                this.mockResponse.setBody(sr.Body.toString());
+                this.mockResponse.setStatus(mockSetting.NKS_Status__c);
+
+                this.isMockActive = true;
+            }
+        } catch(Exception e) {
+            //Do nothing
+        }
     }
     
     public class InvalidOperationException extends Exception {}

@@ -6,7 +6,9 @@
     <permissionSets>Arbeidsgiver_contract</permissionSets>
     <permissionSets>Arbeidsgiver_opportunity</permissionSets>
     <permissionSets>Arbeidsgiver_temporaryLayoffs</permissionSets>
+    <permissionSets>NKS_Announcement_Viewer</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
+    <permissionSets>NKS_Chat_Permissions</permissionSets>
     <permissionSets>NKS_Knowledge_Viewer</permissionSets>
     <permissionSets>NKS_NAV_Task</permissionSets>
     <permissionSets>NKS_Person_Access</permissionSets>

@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Case.NKS_Case_Create_NAV_Task</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>collapsed</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsConfiguration</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideChatterActions</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numVisibleActions</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nksAccessErrorMessage</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -15,59 +60,30 @@
                     <value>Description</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>2</value>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
             </componentInstance>
         </itemInstances>
-        <name>Facet-0bdcbeb5-1d7f-4763-8f8c-810ace6601c6</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>brukerIdType</name>
-                    <value>FNR</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>field</name>
-                    <value>name</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>nmbOfJournalposts</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentObjectApiName</name>
-                    <value>Person__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentRelationField</name>
-                    <value>Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksSafJournalpostList</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-26e22062-a06d-42e1-9d00-2763d8b606b7</name>
+        <name>Facet-5088a58e-09a9-4d54-b6e1-93eb78c3d4ff</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -79,7 +95,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_KrrEmail__c, INT_ResidentialAddress__c,INT_KrrMobilePhone__c , INT_ResidentialZipCode__c,INT_Phone1__c</value>
+                    <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -87,7 +107,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>3</value>
+                    <value>2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
@@ -114,11 +134,63 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
+                    <value>Kontaktinformasjon fra KRR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>INT_KrrEmail__c, INT_KrrMobilePhone__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:call_coaching</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_KrrEmail__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_KrrMobilePhone__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
                     <value>Midlertidig Adresse</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -142,6 +214,102 @@
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Flytting</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom98</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>allSectionsOpenOnLoad</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>boxLayout</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>cardLayout</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>type</name>
+                    <value>PERSON_LOCATION</value>
+                </componentInstanceProperties>
+                <componentName>nksNavUnitSingle</componentName>
+                <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
@@ -151,42 +319,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>columnLabels</name>
-                    <value>Person, Relasjon</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>INT_Related_Person_Name__c, INT_Relation_Type__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterConditions</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>headerColor</name>
-                    <value>white</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:household</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>listTitle</name>
-                    <value>Relasjoner</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>parentRelationField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedObjectApiName</name>
-                    <value>Relation__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationField</name>
-                    <value>INT_Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksRelatedList</componentName>
+                <componentName>personRelationViewer</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
@@ -202,33 +335,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>active</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-0bdcbeb5-1d7f-4763-8f8c-810ace6601c6</value>
+                    <value>Facet-5088a58e-09a9-4d54-b6e1-93eb78c3d4ff</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Oversikt</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>active</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-26e22062-a06d-42e1-9d00-2763d8b606b7</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Saker</value>
+                    <value>Samtalelogg</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -266,24 +378,66 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>componentTitle</name>
-                    <value>sikkerhetstiltak er knyttet til denne brukeren.</value>
+                    <name>addBoxLayout</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>AccountId</value>
+                    <name>assistiveHeader</name>
+                    <value>Sikkerhetstiltak og andre etiketter</value>
                 </componentInstanceProperties>
-                <componentName>nksSecurityMeasures</componentName>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonBadges</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>0</rightValue>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Brukeren er registrert død</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>INT_DateOfDeath__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom15</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_IsDeceased__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -296,7 +450,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>Name, INT_MaritalStatus__c, INT_Sex__c, INT_MaritalStatusDate__c, INT_LegalStatus__c</value>
+                    <value>Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -304,7 +462,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>3</value>
+                    <value>2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
@@ -330,14 +488,44 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>decorate</name>
+                    <name>cardLabel</name>
+                    <value>Nyttige linker</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Nyttige linker&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;Side 1&lt;/a&gt;    &lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 2&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 3    Side 4&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;http://&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(107, 109, 112);&quot;&gt;Side 5    Side 6&lt;/a&gt;&lt;/p&gt;</value>
+                    <name>iconName</name>
+                    <value>standard:link</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

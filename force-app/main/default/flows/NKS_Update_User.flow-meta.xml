@@ -226,6 +226,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Edit_Alias</name>
+        <label>Edit Alias?</label>
+        <locationX>1735</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Edit_Division</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Set_alias</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_User_Alias</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Edit_Division</name>
         <label>Edit Division?</label>
         <locationX>1730</locationX>
@@ -238,7 +263,7 @@
             <name>EditDivisionTrue</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>EditDivision.value</leftValueReference>
+                <leftValueReference>SetDivision</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -260,7 +285,7 @@
             <name>EditQueuesTrue</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>EditQueues.value</leftValueReference>
+                <leftValueReference>SetQueues</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -388,12 +413,12 @@
     <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos;&quot;</expression>
+        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos; AND DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>WhereClauseForMembers</name>
         <dataType>String</dataType>
-        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos;&quot;</expression>
+        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos; AND Group.DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
@@ -510,6 +535,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Set_chat_user</name>
+        <label>Set chat user</label>
+        <locationX>1848</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Edit_Alias</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>UserPermissionsLiveAgentUser</field>
+            <value>
+                <elementReference>Chat_user_permission</elementReference>
+            </value>
+        </inputAssignments>
+        <object>User</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
         <locationX>1592</locationX>
@@ -532,72 +580,86 @@
         </inputAssignments>
         <object>User</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_User_Alias</name>
+        <label>Update User Alias</label>
+        <locationX>1597</locationX>
+        <locationY>396</locationY>
+        <connector>
+            <targetReference>Edit_Division</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NKS_Alias__c</field>
+            <value>
+                <elementReference>Alias</elementReference>
+            </value>
+        </inputAssignments>
+        <object>User</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>1739</locationX>
-        <locationY>398</locationY>
+        <locationX>1962</locationX>
+        <locationY>396</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Edit_Division</targetReference>
+            <targetReference>Set_chat_user</targetReference>
         </connector>
         <fields>
             <name>display</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!Get_User.NKS_Division__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;Veilederens har i dag disse køene:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 18px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>EditDivision</name>
-            <extensionName>flowruntime:toggle</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>messageToggleActive</name>
-                <value>
-                    <stringValue>Ja</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleInactive</name>
-                <value>
-                    <stringValue>Nei</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Rediger avdeling</stringValue>
-                </value>
-            </inputParameters>
+            <name>Chat_user_permission</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
+            </defaultValue>
+            <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>EditQueues</name>
-            <extensionName>flowruntime:toggle</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>messageToggleActive</name>
-                <value>
-                    <stringValue>Ja</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleInactive</name>
-                <value>
-                    <stringValue>Nei</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Rediger køer/skills</stringValue>
-                </value>
-            </inputParameters>
+            <name>Set_alias</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Sett chat alias</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Alias</name>
+            <dataType>String</dataType>
+            <fieldText>Alias</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Set_alias</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SetDivision</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Rediger avdeling</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>UpdateDivision</name>
@@ -650,13 +712,20 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>EditDivision.value</leftValueReference>
+                    <leftValueReference>SetDivision</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>SetQueues</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Rediger køer</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>SelectQueues</name>
@@ -668,7 +737,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>EditQueues.value</leftValueReference>
+                    <leftValueReference>SetQueues</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>

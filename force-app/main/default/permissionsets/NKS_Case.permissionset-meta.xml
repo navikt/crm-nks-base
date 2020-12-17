@@ -18,6 +18,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NKS_AccountName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.NKS_Subtheme__c</field>
         <readable>true</readable>
     </fieldPermissions>

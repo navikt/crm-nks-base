@@ -3,7 +3,7 @@ public without sharing class NKS_TestDataFactory {
     public static List<Person__c> createPersons( Integer amount ) {
         List<Person__c> persons = new List<Person__c>(); 
 		for ( Integer i = 0; i < amount; i++ ) {
-			Person__c p = new Person__c(Name = '1234567890' + i, INT_MunicipalityNumber__c = '0301', INT_LastName__c = 'Test' + i);
+			Person__c p = new Person__c(Name = '1234567890' + i, INT_MunicipalityNumber__c = '0301', INT_LastName__c = 'Test' + i, INT_Confidential__c = 'UGRADERT', INT_MaritalStatus__c = 'UOPPGITT');
 			persons.add( p );
         }
         insert persons; 
@@ -71,6 +71,28 @@ public without sharing class NKS_TestDataFactory {
         units[0].CRM_QueueId__c=null;
         insert units;
         return units; 
+    }
+
+    public static List<NKS_Announcement__c> createAnnouncements(Integer amount){
+        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>(); 
+        for(Integer i = 0; i < amount; i++){
+            NKS_Announcement__c a = new NKS_Announcement__c(Name = 'Test ' + i, NKS_Information__c = '12345', NKS_Type__c = 'Tips');
+            announcements.add(a); 
+        }
+        insert announcements; 
+        return announcements;
+    }
+
+    public static Account getAccount(String lastname){
+        Account a = [SELECT Id FROM Account WHERE LastName =: lastname]; 
+        return a; 
+    }
+
+    public static Case createCase(String lastname){
+        Account a = [SELECT Id FROM Account WHERE LastName =: lastname]; 
+        Case c = new Case(AccountId = a.Id, Status = 'New', Origin = 'Web'); 
+        insert c; 
+        return c; 
     }
 
 }

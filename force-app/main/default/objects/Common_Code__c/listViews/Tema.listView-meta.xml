@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tema</fullName>
+    <columns>NAME</columns>
+    <columns>CRM_Code__c</columns>
+    <columns>CRM_Code_Set__c</columns>
+    <columns>CRM_Parent_Code__c</columns>
+    <columns>CRM_Active__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CRM_Code_Set__c</field>
+        <operation>equals</operation>
+        <value>Tema</value>
+    </filters>
+    <label>Tema</label>
+</ListView>

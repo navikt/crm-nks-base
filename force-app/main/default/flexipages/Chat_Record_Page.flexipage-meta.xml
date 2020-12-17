@@ -30,7 +30,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>chatHeight</name>
-                    <value>500</value>
+                    <value>700</value>
                 </componentInstanceProperties>
                 <componentName>runtime_service_liveagent:chatBody</componentName>
             </componentInstance>
@@ -121,7 +121,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>buttonLabel</name>
-                    <value>Journal</value>
+                    <value>Journalfør</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
@@ -132,13 +132,24 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksFlowStarter</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>accountFields</name>
-                    <value>Name,  TAG_NavUnit__c</value>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>caseFields</name>
+                    <value>NKS_AccountName__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>loggingEnabled</name>
@@ -149,6 +160,13 @@
                     <value>Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentName>nksChatAuthenticationInfoContainer</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

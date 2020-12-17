@@ -52,6 +52,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LiveChatTranscript.NKS_Social_Service_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LiveChatTranscript.NKS_Subtheme__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -73,6 +78,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.Status</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NKS_GreetingName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

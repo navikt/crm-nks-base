@@ -7,7 +7,12 @@
     <filters>
         <field>NKS_Type__c</field>
         <operation>equals</operation>
-        <value>News</value>
+        <value>Nyhet</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>NKS_Announcement__c.News</value>
     </filters>
     <label>Nyheter</label>
 </ListView>
