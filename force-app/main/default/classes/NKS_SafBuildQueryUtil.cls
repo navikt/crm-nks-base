@@ -1,7 +1,7 @@
 public with sharing class NKS_SafBuildQueryUtil {
     private final static String QUERY_TEMPLATE = 'query {!queryName}({!schema}) { {!queryName}({!queryParameters}) {!queryField} }';
 
-    public static NKS_SafApexTypes.SafQuery buildQuery(String queryType, NKS_SafApexTypes.SafQueryField queryField, NKS_SafApexTypes.SafQueryVariables queryVariables) {
+    public static NKS_SafQuery buildQuery(String queryType, NKS_SafQueryField queryField, NKS_SafQueryVariables queryVariables) {
         String queryString;
 
         switch on queryType {
@@ -25,14 +25,14 @@ public with sharing class NKS_SafBuildQueryUtil {
             }
         }
 
-        NKS_SafApexTypes.SafQuery queryObj = new NKS_SafApexTypes.safQuery();
+        NKS_SafQuery queryObj = new NKS_SafQuery();
         queryObj.query = queryString;
         queryObj.variables = queryVariables;
 
         return queryObj;
     }
 
-    private static String getDokumentoversiktBrukerQuery(NKS_SafApexTypes.SafQueryField queryField) {
+    private static String getDokumentoversiktBrukerQuery(NKS_SafQueryField queryField) {
         String schema = '$brukerId: BrukerIdInput!,'
         + '$fraDato: Date, '
         + '$tilDato: Date, '
@@ -54,7 +54,7 @@ public with sharing class NKS_SafBuildQueryUtil {
         return buildQuery('dokumentoversiktBruker', schema, queryParameters, queryField);
     }
 
-    private static String getDokumentoversiktFagsakQuery(NKS_SafApexTypes.SafQueryField queryField) {
+    private static String getDokumentoversiktFagsakQuery(NKS_SafQueryField queryField) {
         String schema = '$fagsakId: FagsakInput!,'
         + '$fraDato: Date,'
         + '$tema: [Tema],'
@@ -75,7 +75,7 @@ public with sharing class NKS_SafBuildQueryUtil {
         return buildQuery('dokumentoversiktFagsak', schema, queryParameters, queryField);
     }
 
-    private static String getJournalpostQuery(NKS_SafApexTypes.SafQueryField queryField) {
+    private static String getJournalpostQuery(NKS_SafQueryField queryField) {
         String schema = '$journalpostId: String!';
         
         String queryParameters = 'journalpostId: $journalpostId';
@@ -83,7 +83,7 @@ public with sharing class NKS_SafBuildQueryUtil {
         return buildQuery('journalpost', schema, queryParameters, queryField);
     }
 
-    private static String getTilknyttedeJournalposterQuery(NKS_SafApexTypes.SafQueryField queryField) {
+    private static String getTilknyttedeJournalposterQuery(NKS_SafQueryField queryField) {
         String schema = '$dokumentInfoId: String!,'
         + '$tilknytning: Tilknytning';
         
@@ -93,7 +93,7 @@ public with sharing class NKS_SafBuildQueryUtil {
         return buildQuery('tilknyttedeJournalposter', schema, queryParameters, queryField);
     }
 
-    private static String getDokumentoversiktJournalstatusQuery(NKS_SafApexTypes.SafQueryField queryField) {
+    private static String getDokumentoversiktJournalstatusQuery(NKS_SafQueryField queryField) {
         String schema = '$journalposttype: {Journalposttype],'
         + '$journalstatus: [Journalstatus],'
         + '$tema: [Tema],'
@@ -111,7 +111,7 @@ public with sharing class NKS_SafBuildQueryUtil {
         return buildQuery('dokumentoversiktJournalstatus', schema, queryParameters, queryField);
     }
 
-    private static String buildQuery(String queryName, String schema, String queryParameters, NKS_SafApexTypes.SafQueryField queryField) {
+    private static String buildQuery(String queryName, String schema, String queryParameters, NKS_SafQueryField queryField) {
         String query = QUERY_TEMPLATE;
         query = query.replace('{!queryName}',queryName);
         query = query.replace('{!schema}',schema);

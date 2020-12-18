@@ -5,19 +5,19 @@
  */
 @IsTest
 public with sharing class NKS_SafServiceMock implements StubProvider {
-    private List<NKS_SafApexTypes.SafGetDocumentResponse> safGetDocumentResponseList;
-    private List<NKS_SafApexTypes.SafQueryResponse> safQueryResponseList;
+    private List<NKS_SafGetDocumentResponse> safGetDocumentResponseList;
+    private List<NKS_SafQueryResponse> safQueryResponseList;
 
     public NKS_SafServiceMock() {
-        safGetDocumentResponseList = new List<NKS_SafApexTypes.SafGetDocumentResponse>();
-        safQueryResponseList = new List<NKS_SafApexTypes.SafQueryResponse>();
+        safGetDocumentResponseList = new List<NKS_SafGetDocumentResponse>();
+        safQueryResponseList = new List<NKS_SafQueryResponse>();
     }
 
-    public void addSafGetDocumentResponse(NKS_SafApexTypes.SafGetDocumentResponse safGetDocumentResponse) {
+    public void addSafGetDocumentResponse(NKS_SafGetDocumentResponse safGetDocumentResponse) {
         safGetDocumentResponseList.add(safGetDocumentResponse);
     }
 
-    public void addSafQueryResponse(NKS_SafApexTypes.SafQueryResponse safQueryResponse) {
+    public void addSafQueryResponse(NKS_SafQueryResponse safQueryResponse) {
         safQueryResponseList.add(safQueryResponse);
     }
     

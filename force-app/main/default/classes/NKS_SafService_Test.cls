@@ -1,8 +1,8 @@
 @IsTest
 private with sharing class NKS_SafService_Test {
 
-    @isTest static void doSafQuery_Success() {
-        NKS_SafApexTypes.SafQueryResponse result;
+    @isTest static void doSafQuerySuccess() {
+        NKS_SafQueryResponse result;
         NKS_SafService service = new NKS_SafService();
 
         String responseBody = '{'
@@ -47,7 +47,7 @@ private with sharing class NKS_SafService_Test {
         Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-            result = service.doSafQuery(new NKS_SafApexTypes.SafQuery());
+            result = service.doSafQuery(new NKS_SafQuery());
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
@@ -56,8 +56,8 @@ private with sharing class NKS_SafService_Test {
         System.assertEquals(1, result.documentOverview.journalposter.size(), 'Expected 1 journalpost record');
     }
 
-    @isTest static void doSafQuery_Error() {
-        NKS_SafApexTypes.SafQueryResponse result;
+    @isTest static void doSafQueryError() {
+        NKS_SafQueryResponse result;
         NKS_SafService service = new NKS_SafService();
 
         String errorBody = '{"timestamp":"'+DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX')+'","status":401,"error":"Unauthorized","message":"no valid token found in validation context","path":"/graphql"}';
@@ -67,7 +67,7 @@ private with sharing class NKS_SafService_Test {
         Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-            result = service.doSafQuery(new NKS_SafApexTypes.SafQuery());
+            result = service.doSafQuery(new NKS_SafQuery());
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
@@ -76,29 +76,8 @@ private with sharing class NKS_SafService_Test {
         System.assertNotEquals(null, result.error, 'Expected to have an error');
     }
 
-    @isTest static void doSafQuery_Exception() {
-        NKS_SafService.NKS_SafException result;
-        NKS_SafService service = new NKS_SafService();
-        
-        // SingleRequestMock mock = new SingleRequestMock(200,'Success',null, new Map<String, String>());
-
-        // Test.setMock(HttpCalloutMock.class, mock);
-
-        Test.startTest();
-        try {
-            service.doSafQuery(new NKS_SafApexTypes.SafQuery());
-        } catch (NKS_SafService.NKS_SafException ex) {
-            result = ex;
-        } catch (Exception ex) {
-            System.assert(false, 'Expected a NKS_SafException');
-        }
-        Test.stopTest();
-
-        System.assertNotEquals(null, result, 'Expected to have caught a NKS_SafException');
-    }
-
     @isTest static void getDokumentoversiktFromSafQueryResponseNotExpectedJSON() {
-        NKS_SafApexTypes.Dokumentoversikt result;
+        NKS_SafDokumentoversikt result;
         String jsonString = '{'
         +'  "data": {'
         +'   "dokumentoversikt": {'
@@ -134,7 +113,7 @@ private with sharing class NKS_SafService_Test {
     }
 
     @isTest static void getDokumentoversiktFromSafQueryResponseExpectedJSON() {
-        NKS_SafApexTypes.Dokumentoversikt result;
+        NKS_SafDokumentoversikt result;
         String jsonString = '{'
         +'  "data": {'
         +'    "dokumentoversiktBruker": {'
@@ -169,7 +148,7 @@ private with sharing class NKS_SafService_Test {
     }
 
     @isTest static void getSafDocumentTest() {
-        NKS_SafApexTypes.SafGetDocumentResponse result;
+        NKS_SafGetDocumentResponse result;
         NKS_SafService service = new NKS_SafService();
 
         Map<String, String> headers = new Map<String, String>();
@@ -190,8 +169,8 @@ private with sharing class NKS_SafService_Test {
         System.assertEquals('inline', result.contentDisposition, 'result.contentDisposition is not set correctly. Expected to get inline');
     }
 
-    @isTest static void getSafDocument_Error() {
-        NKS_SafApexTypes.SafGetDocumentResponse result;
+    @isTest static void getSafDocumentError() {
+        NKS_SafGetDocumentResponse result;
         NKS_SafService service = new NKS_SafService();
 
         String errorBody = '{"timestamp":"'+DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX')+'","status":401,"error":"Unauthorized","message":"no valid token found in validation context","path":"/rest/hentdokument/journalId/documentInfoId/variantFormat"}';
@@ -215,26 +194,5 @@ private with sharing class NKS_SafService_Test {
         System.assertEquals(true, String.isNotBlank(result.error.message), 'Expected to get a value in message');
         System.assertEquals(true, String.isNotBlank(result.error.path), 'Expected to get a value in path');
         System.assertNotEquals(null, result.error.timestamp, 'Expected to get a value in timestamp');
-    }
-
-    @isTest static void getSafDocumentTest_Exception() {
-        NKS_SafService.NKS_SafException result;
-        NKS_SafService service = new NKS_SafService();
-
-        // SingleRequestMock mock = new SingleRequestMock(401,'Unauthorized',null, null);
-
-        // Test.setMock(HttpCalloutMock.class, mock);
-
-        Test.startTest();
-        try {
-            service.getSafDocument('journalId','documentInfoId','variantFormat');
-        } catch(NKS_SafService.NKS_SafException ex) {
-            result = ex;
-        } catch(Exception ex) {
-            System.assert(false, 'Excpected to  have caught a NKS_SafException, not any other exceptions.');
-        }
-        Test.stopTest();
-
-        System.assertNotEquals(null, result, 'Excpected to  have caught a NKS_SafException');
     }
 }

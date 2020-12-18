@@ -2,60 +2,42 @@
  * Service class for making callouts to the SAF API
  * The output is Apex Types defined in the class NKS_SafApexTypes
  * * You should check the SAF documentation before using this class.
- * TODO: Go through and check that everything is in sync with the ApiController class
- * ? Move mock callount/mock checks to ApiController?
  */
-public with sharing class NKS_SafService extends ApiController {
+public with sharing class NKS_SafService {
 
-    private final Boolean isIntegrationActive = false;
-    private Boolean isSandbox = false;
-
-    /**
-     * Constructor sets the isSandbox parameter
-     */
-    public NKS_SafService() {
-        isSandbox();
-    }
+    private final String API_CONFIG_NAME = 'SAF_API';
+    private final string SERVICE_AUTH_HEADER = 'saf';
 
     /**
      * Do a query for documents by calling the SAF api
      * @param query String of the query towards SAF, check the SAF documentation for details.
      * @param queryVariables apex type holding all the possible query varaibles for a SAF query.
      */
-    public NKS_SafApexTypes.SafQueryResponse doSafQuery(NKS_SafApexTypes.SafQuery queryObj) {
+    public NKS_SafQueryResponse doSafQuery(NKS_SafQuery queryObj) {
         //Create the result
-        NKS_SafApexTypes.SafQueryResponse queryResult = new NKS_SafApexTypes.SafQueryResponse();
+        NKS_SafQueryResponse queryResult = new NKS_SafQueryResponse();
         queryResult.isSuccess = false;
+
+        String query = JSON.Serialize(queryObj, true);
+
+        ApiController apiCtrl = new ApiController();
+        apiCtrl.initRequest(API_CONFIG_NAME, 'POST_SAF_QUERY');
+        apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
+        apiCtrl.setBody(query);
+        apiCtrl.doCallout();
         
-		try{
-            String queryString = JSON.Serialize(queryObj, true);
-            getRequest().setBody(queryString);
-            
-            //Prepare the request
-            initPostQueryRequest();
+        Integer statusCode = apiCtrl.getResponse().getStatusCode();
+        String bodyString = apiCtrl.getResponse().getBody();
 
-            if(isIntegrationLive()) {
-                doCallout();
-            } else {
-                resp = NKS_SafServiceIntegrationMock.mockPostQueryStringResponse(200);
-            }
+        bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
 
-            //Prepare the response
-            Integer resStatusCode = getResponse().getStatusCode();
-			String JSONContent = getResponse().getBody();
-            
-            //If success add the result and set as a success, if not add the query result error.
-			if(resStatusCode == 200) {
-				queryResult.documentOverview = getDokumentoversiktFromSafQueryResponse(JSONContent);
-                queryResult.isSuccess = true;
-                System.debug(queryResult.documentOverview);
 
-			} else {
-				queryResult.error = (NKS_SafApexTypes.SafError) JSON.deserialize(JSONContent,NKS_SafApexTypes.SafError.class);
-            }
-            
-        } catch(Exception ex){
-            throw new NKS_SafException('Failed when trying to run query towards SAF.', ex);
+        if(statusCode == 200) {
+            queryResult.documentOverview = getDokumentoversiktFromSafQueryResponse(bodyString);
+            queryResult.isSuccess = true;
+        } else {
+            logError(apiCtrl.getResponse(), 'Error from NKS_SafService.doSafQuery. Query: \n' + query);
+            queryResult.error = (NKS_SafError) JSON.deserialize(bodyString,NKS_SafError.class);
         }
 		
 		return queryResult;
@@ -67,8 +49,8 @@ public with sharing class NKS_SafService extends ApiController {
      * @param JSONContent String with the content returned from the saf query
      */
     @TestVisible
-	private NKS_SafApexTypes.Dokumentoversikt getDokumentoversiktFromSafQueryResponse(String JSONContent) {
-		JSONParser parser = JSON.createParser(JSONContent);
+	private NKS_SafDokumentoversikt getDokumentoversiktFromSafQueryResponse(String jsonContent) {
+		JSONParser parser = JSON.createParser(jsonContent);
         
         // Go throgh the JSON tokens to find the Dokumentoversikt object
         parser.nextToken();
@@ -77,99 +59,50 @@ public with sharing class NKS_SafService extends ApiController {
         parser.nextToken();
         parser.nextToken();
 	
-		return (NKS_SafApexTypes.Dokumentoversikt) parser.readValueAs(NKS_SafApexTypes.Dokumentoversikt.class);
+		return (NKS_SafDokumentoversikt) parser.readValueAs(NKS_SafDokumentoversikt.class);
 	}
 
 	/**
     * Call saf hentdokument and returns the Apex Type SafGetDocumentResponse. Containg the document information.
 	*/
-	public NKS_SafApexTypes.SafGetDocumentResponse getSafDocument(String journalId, String documentInfoId, String variantFormat) {
-        NKS_SafApexTypes.SafGetDocumentResponse getDocumentResponse = new NKS_SafApexTypes.SafGetDocumentResponse();
+	public NKS_SafGetDocumentResponse getSafDocument(String journalId, String documentInfoId, String variantFormat) {
+        NKS_SafGetDocumentResponse getDocumentResponse = new NKS_SafGetDocumentResponse();
         getDocumentResponse.isSuccess = false;
         
-		try{
-            //Set the path and add the paramt
-            Map<String,String> params = new Map<String,String>();
+        Map<String,String> params = new Map<String,String>();
             params.put('journalpostId',journalId);
             params.put('dokumentInfoId',documentInfoId);
             params.put('variantFormat',variantFormat);
 
-            initGetDocumentRequest(params);
-            
-            //Prepare the returned data.
-            
-            if(isIntegrationLive()) {
-                doCallout();
-            } else {
-                resp = NKS_SafServiceIntegrationMock.mockGetDocumentResponse(200);
-            }
+        ApiController apiCtrl = new ApiController();
+        apiCtrl.initRequest(API_CONFIG_NAME, 'GET_SAF_DOKUMENT', params);
+        apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
+        apiCtrl.doCallout();
 
-            Integer resStatusCode = getResponse().getStatusCode();
-            String body = getResponse().getBody();
-            
-            // If success add the document data, content type and content disposition
-			if(resStatusCode == 200) {
-				getDocumentResponse.isSuccess = true;
-                getDocumentResponse.documentString = body;
-                getDocumentResponse.contentType = getResponse().getHeader('Content Type');
-                getDocumentResponse.contentDisposition = getResponse().getHeader('Content Disposition');
-			} else {
-                getDocumentResponse.error = (NKS_SafApexTypes.SafError) JSON.deserialize(body,NKS_SafApexTypes.SafError.class);
-			}
-        }
-        catch(Exception ex){
-			throw new NKS_SafException('Failed when trying to get document from SAF.', ex);
+        Integer statusCode = apiCtrl.getResponse().getStatusCode();
+        String bodyString = apiCtrl.getResponse().getBody();
+
+        if(200 == statusCode) {
+            getDocumentResponse.isSuccess = true;
+            getDocumentResponse.documentString = bodyString;
+            getDocumentResponse.contentType = apiCtrl.getResponse().getHeader('Content Type');
+            getDocumentResponse.contentDisposition = apiCtrl.getResponse().getHeader('Content Disposition');
+        } else {
+            logError(apiCtrl.getResponse(), 'Error from NKS_SafService.getSafDocument. Params: [ journalpostId: ' + journalId + ', ' + documentInfoId + ', ' + variantFormat + '].');
+            getDocumentResponse.error = (NKS_SafError) JSON.deserialize(bodyString,NKS_SafError.class);
         }
 		
 		return getDocumentResponse;
-	}
-
-    /**
-    * Add the correct path, content-type and authorization token for the saf POST graphQL callout
-    */
-	public void initPostQueryRequest() {
-        initRequest('SAF_API', 'POST_SAF_QUERY');
-        setAuthHeaders();
     }
+    
+    private String logError(HttpResponse resp, String message) {
+        String errorRef = '';
 
-    /**
-    * Add the correct content-type and the users authorization token for the SAF GET hentDokument callout
-    */
-	private void initGetDocumentRequest(Map<String,String> params) {
-        initRequest('SAF_API', 'GET_SAF_DOKUMENT',params);
-        setAuthHeaders();
+        LoggerUtility logger = new LoggerUtility();
+        logger.error(message + '\n ' + 'Status: ' + resp.getStatus() + '\n' + 'Body: ' + resp.getBody(), null);
+        errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
+        logger.publish();
+
+        return errorRef;
     }
-
-    /**
-     * Set the auth headers, subscription key and on-behalf-of token
-     */
-    private void setAuthHeaders() {
-        addServiceAuthHeader('saf');
-        addSubscriptionKey();
-    }
-
-    /**
-     * Check the different set parameters to see if we should use a live connection or mocks.
-     * 
-     * Criterias for using the "live" connection (either must be true):
-     * * isSanbox is false
-     * * isIntegrationActive is true
-     * * Running in test context
-     */
-    private Boolean isIntegrationLive() {
-        if(!isSandbox || isIntegrationActive || Test.isRunningTest()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Set the parameter isSandbox
-     */
-    private void isSandbox() {
-        isSandbox = [SELECT Id, isSandbox FROM Organization].isSandbox;
-    }
-	
-    public class NKS_SafException extends Exception {}
 }

@@ -11,12 +11,11 @@
 
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property name="field" label="Field API Name" description="Field API name for id to use" type="String" required="true" default="name" />
-            <property name="relationField" label="Relation field" description="API name of field relating the record to the parent" type="String" required="true" default="Account.CRM_Person__c" />
-            <property name="parentRelationField" label="Parent Relation Field" description="API name of field relating the parent to the record" type="String" required="true" default="Id" />
-            <property name="parentObjectApiName" label="Parent Relation Object" description="API name of parent object to the record" type="String" required="true" default="CRM_Person__c" />
-            <property name="brukerIdType" label="User Id Type" description="The user id type. Valid values: AKTOERID, ORGNR or FNR" type="String" required="true" default="FNR" />
-            <property name="nmbOfJournalposts" label="Number of Journalposts" description="The maximum number of Journalposts to get per load" type="Integer" required="true" default="10" />
+            <property name="viewedObjectApiName" label="Object API Name" description="Required if displaying information on a record not directly related to object where you are getting the Bruker Id" type="String" />
+            <property name="relationshipField" label="Relationship field (API)" description="Required if displaying information from a related record" required="true" type="String" default="Id" />
+            <property name="brukerIdField" label="Bruker Id Field (API)" description="The field pointing to the identifier sent to saf" type="String" required="true" default="Name" />
+            <property name="brukerIdType" label="Bruker Id Type" description="Valid values: AKTOERID, ORGNR or FNR" type="String" required="true" default="FNR" />
+            <!-- <property name="nmbOfJournalposts" label="Number of Journalposts" description="The maximum number of Journalposts to get per load" type="Integer" default="10" /> -->
         </targetConfig>
     </targetConfigs>
 

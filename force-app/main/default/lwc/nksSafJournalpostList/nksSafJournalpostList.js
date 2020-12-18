@@ -49,32 +49,31 @@ const QUERY_FIELDS = {
 };
 
 export default class NksSafJournalpostList extends LightningElement {
-    @api recordId;
-    @api selectedJornalpostTypes;
-    @api selectedTema;
-    @api nmbOfJournalposts;
-
-    @api field;
-    @api objectApiName;
-    @api relationField;
-    @api parentRelationField;
-    @api parentObjectApiName;
-    @api brukerIdType;
+    @api selectedJornalpostTypes;   //The selected Journalpost types to show
+    @api selectedTema;              //The selected Tema to show
+    @api recordId;                  // Id from record page (From UiRecordAPI)
+    @api objectApiName;             // Value from UiRecordAPI
+    @api viewedRecordId;            // Id of the record to display information for
+    @api viewedObjectApiName = null // API name of the object to display information from
+    @api relationshipField = null;  // Field api name if the recordId is to be set via relationship
+    @api brukerIdField;             //Field pointing to the user id
+    @api brukerIdType;              //The user Id type to use
 
     // tracked resources
-    @track journalposts;
-    @track filteredJournalPosts;
-    @track error;
-
+    @track journalposts = [];
+    @track filteredJournalPosts = [];
+    @track errors = [];
     @track availableThemes = [];
     @track availableProcessThemes = [];
 
-    isLoaded;
-    isLoadingMore;
+    isLoaded = false;
+    isLoadingMore = false;
 
     //Account data that can be used
     wiredAccount;
     account;
+
+    _nmbOfJournalposts;
 
     //Query variables
     queryVariables = {
@@ -82,34 +81,40 @@ export default class NksSafJournalpostList extends LightningElement {
         foerste: 10
     }
 
+    set nmbOfJournalPosts(value) {
+        this._nmbOfJournalposts = value ? value : DEFAULT_NMB_JOURNALPOSTS;
+        this.queryVariables.foerste = this.nmbOfJournalPosts;
+    }
+
+    @api get nmbOfJournalPosts() {
+        return this._nmbOfJournalposts;
+    }
+
+    get hasErrors() {
+        return 1 <= this.errors.length ? true : false;
+    }
+
     connectedCallback() {
-        //Set default variables
-        this.isLoadingMore = false;
-        this.isLoaded = false;
-        this.nmbOfJournalposts = (this.nmbOfJournalposts) ? this.nmbOfJournalposts : DEFAULT_NMB_JOURNALPOSTS;
+        this.viewedObjectApiName = this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
+        this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
         this.selectedTema = (this.selectedTema) ? this.selectedTema : DEFAULT_SELECTED_TEMA;
         this.selectedJornalpostTypes = (this.selectedJornalpostTypes) ? this.selectedJornalpostTypes : DEFAULT_SELECTED_JOURNALPOST_TYPES;
-        this.journalposts = [];
-        this.filteredJournalPosts = [];
-
-        this.queryVariables.foerste = this.nmbOfJournalposts;
 
         this.getAccountQueryVariables();
-        this.callGetJournalpostsUser();
     }
 
     async getAccountQueryVariables() {
         const inputParams = {
-            field: this.field,
-            parentId: this.recordId,
-            objectApiName: this.objectApiName,
-            relationField: this.relationField,
-            parentRelationField: this.parentRelationField,
-            parentObjectApiName: this.parentObjectApiName,
+            brukerIdField: this.brukerIdField,
+            objectApiName: this.viewedObjectApiName,
+            relationshipField: this.relationshipField,
+            viewedRecordId: this.viewedRecordId,
             brukerIdType: this.brukerIdType
         };
+
         try {
             this.queryVariables.brukerId = await getAccountQueryVariables(inputParams);
+            this.callGetJournalpostsUser();
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
         }
@@ -131,11 +136,10 @@ export default class NksSafJournalpostList extends LightningElement {
      * Call getJournalpostsUser apex method and add the new journalposts to the journalpost list
      */
     async callGetJournalpostsUser() {
-        // Apex can't handle inner classes.
-        // We need to stringify and parse on the other side.
+
         const inputParams = {
-            queryVariablesString: JSON.stringify(this.queryVariables),
-            queryFieldString: JSON.stringify(QUERY_FIELDS)
+            queryVariables: this.queryVariables,
+            queryField: QUERY_FIELDS
         };
 
         this.error = null;
@@ -205,32 +209,42 @@ export default class NksSafJournalpostList extends LightningElement {
         console.log(this.filteredJournalPosts);
     }
 
+    /**
+     * Add error messages to the error message list.
+     */
+    setErrorMessage(error) {
+        this.setErrorMessage(error, '');
+    }
+
     setErrorMessage(error, type) {
-        let errorString;
+
+        type = error.body && type === 'caughtError' ? 'fetchResponseError' : type;
 
         switch (type) {
             case 'fetchResponseError':
                 if (Array.isArray(error.body)) {
-                    errorString = error.body.map(e => e.message).join(', ');
+                    this.errors = this.errors.concat(error.body.map(e => e.message));
                 } else if (typeof error.body.message === 'string') {
-                    errorString = error.body.message;
+                    this.errors.push(error.body.message);
                 }
                 break;
             case 'journalpostError':
-                errorString = '';
+                let errorString = '';
+
                 if (error.status) {
                     errorString = error.status + ' ';
                 }
                 errorString += error.error + ' - ' + error.message;
+
+                this.errors.push(errorString);
                 break;
             case 'caughtError':
-                errorString = 'Ukjent feil: ' + error.message;
+                this.errors.push('Ukjent feil: ' + error.message);
                 break;
             default:
-                errorString = 'Ukjent feil ' + err;
-
+                this.errors.push('Ukjent feil: ' + err);
+                break;
         }
 
-        this.error = errorString;
     }
 }

@@ -1,41 +1,34 @@
 @IsTest
 private with sharing class NKS_SafJournalPostListControllerTest {
-    @isTest static void getJournalposts_Test() {
-        NKS_SafApexTypes.SafQueryResponse result;
+    @isTest static void getJournalpostsTest() {
+        NKS_SafQueryResponse result;
 
         //Prepare mock
         NKS_SafServiceMock mock = new NKS_SafServiceMock();
-        NKS_SafApexTypes.SafQueryResponse queryResponse = new NKS_SafApexTypes.SafQueryResponse();
+        NKS_SafQueryResponse queryResponse = new NKS_SafQueryResponse();
         queryResponse.isSuccess = true;
-        queryResponse.documentOverview = new NKS_SafApexTypes.Dokumentoversikt();
+        queryResponse.documentOverview = new NKS_SafDokumentoversikt();
         mock.addSafQueryResponse(queryResponse);
 
         //Set mock
         NKS_SafJournalPostListController.safService = (NKS_SafService) Test.createStub(NKS_SafService.class, mock);
 
         //Prepare input data
-        NKS_SafApexTypes.SafQueryVariables qv = new NKS_SafApexTypes.SafQueryVariables();
+        NKS_SafQueryVariables qv = new NKS_SafQueryVariables();
 
-        NKS_SafApexTypes.SafQueryField queryField = new NKS_SafApexTypes.SafQueryField('tittel');
-        queryField.queryFields.add(new NKS_SafApexTypes.SafQueryField('journalpost'));
-        // NKS_SafApexTypes.SafQueryField queryField1 = new NKS_SafApexTypes.SafQueryField('tittel');
-        // //queryField1.name = 'tittel';
-        
-        // NKS_SafApexTypes.SafQueryField queryField2 = new NKS_SafApexTypes.SafQueryField('journalpost');
-        // //queryField2.name = 'journalpost';
-        // //queryField2.queryFields = new List<NKS_SafApexTypes.SafQueryField>();
-        // queryField2.queryFields.add(queryField1);
+        NKS_SafQueryField queryField = new NKS_SafQueryField('tittel');
+        queryField.queryFields.add(new NKS_SafQueryField('journalpost'));
 
         Test.startTest();
-            result = NKS_SafJournalPostListController.getJournalpostsUser(JSON.serialize(qv), JSON.serialize(queryField));
+            result = NKS_SafJournalPostListController.getJournalpostsUser(qv, queryField);
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Did expect to get a value in response');
         System.assertEquals(true, result.isSuccess, 'Expected to have a success');
     }
 
-    @isTest static void getJournalposts_TriggerExceptionTest() {
-        NKS_SafApexTypes.SafQueryResponse result;
+    @isTest static void getJournalpostsTriggerExceptionTest() {
+        NKS_SafQueryResponse result;
 
         Test.startTest();
             result = NKS_SafJournalPostListController.getJournalpostsUser(null,null);

@@ -20,7 +20,7 @@
 
                 <template if:true={isLoaded}>
                     <!-- ERROR MESSAGE -->
-                    <template if:true={error}>
+                    <template if:true={hasErrors}>
                         <div class="slds-text-color_error slds-p-left_x-small">
                             <p>
                                 <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
@@ -28,9 +28,14 @@
                                 </lightning-icon>
                                 &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
                             </p>
-                            <p class="slds-p-left_medium">
+                            <ul class="slds-list_dotted">
+                                <template for:each={errors} for:item="error">
+                                    <li key={error}>{error}</li>
+                                </template>
+                            </ul>
+                            <!-- <p class="slds-p-left_medium">
                                 {error}
-                            </p>
+                            </p> -->
                         </div>
                     </template>
 
