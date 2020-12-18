@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <lightning:omniToolkitAPI aura:id="omniToolkit" />
+    <aura:handler name="workNotification" event="lightning:omniChannelWorkAssigned" action="{!c.notifyAgent}" />
+    <lightning:button label="NOTIFY" onclick="{!c.onWorkAssigned}" />
+</aura:component>
