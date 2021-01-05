@@ -2,8 +2,7 @@ import { LightningElement, wire } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 
 export default class nksHomePageList extends LightningElement {
-
-    @wire(getRelatedPersons, { recordId: '$recordId', objectApiName: '$objectApiName' })
+    @wire(getList, { recordId: '$recordId', objectApiName: '$objectApiName' })
     relations;
 
     /*listitems;
