@@ -26,33 +26,7 @@ public without sharing class FamilyRelationViewerController {
 
         relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent); 
         relations.add(getMaritalRelation(personId)); 
-
-        for (Person__c person : relatedPersons) {
-            Integer age; 
-            if(person.INT_DateOfBirth__c != null) age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
-            String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
-
-            Relation r = new Relation();
-            r.personId = person.Id;
-            r.accountId = person.CRM_Account__c; 
-            r.personIdent = person.Name;
-            r.personName = person.CRM_Account__r.Name;
-            r.role = role;
-            if(role == 'Barn'){
-                if(person.INT_Sex__c == 'Kvinne') r.sex = 'Jente'; 
-                else if(person.INT_Sex__c == 'Mann') r.sex = 'Gutt'; 
-                r.age = age; 
-                r.child = true; 
-            }
-            else{
-                r.sex = person.INT_Sex__c; 
-                r.child = false; 
-                r.age = age; 
-            }
-            if(person.CRM_Account__r.Name == 'Ikke tilgjengelig') r.disableurl = true; 
-            else r.disableurl = false;
-            relations.add(r);
-        }
+        relations.addAll(createRelations(relatedPersons, roleByRelatedPersonIdent)); 
 
         return relations;
     }
@@ -99,6 +73,37 @@ public without sharing class FamilyRelationViewerController {
             return maritalrelation; 
         }
         else return null; 
+    }
+
+    private static List<Relation> createRelations(List<Person__c> relatedPersons, Map<String, String> roleByRelatedPersonIdent){
+        List<Relation> relations = new List<Relation>();
+        for (Person__c person : relatedPersons) {
+            Integer age; 
+            if(person.INT_DateOfBirth__c != null) age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
+            String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
+
+            Relation r = new Relation();
+            r.personId = person.Id;
+            r.accountId = person.CRM_Account__c; 
+            r.personIdent = person.Name;
+            r.personName = person.CRM_Account__r.Name;
+            r.role = role;
+            if(role == 'Barn'){
+                if(person.INT_Sex__c == 'Kvinne') r.sex = 'Jente'; 
+                else if(person.INT_Sex__c == 'Mann') r.sex = 'Gutt'; 
+                r.age = age; 
+                r.child = true; 
+            }
+            else{
+                r.sex = person.INT_Sex__c; 
+                r.child = false; 
+                r.age = age; 
+            }
+            if(person.CRM_Account__r.Name == 'Ikke tilgjengelig') r.disableurl = true; 
+            else r.disableurl = false;
+            relations.add(r);
+        }
+        return relations; 
     }
 
 
