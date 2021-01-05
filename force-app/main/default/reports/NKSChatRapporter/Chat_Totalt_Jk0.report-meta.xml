@@ -47,6 +47,7 @@
     <filter>
         <criteriaItems>
             <column>AgentWork$ServiceChannel</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>sfdc_liveagent</value>
@@ -64,11 +65,6 @@
         <field>AgentWork$NKS_Request_Hour__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>AgentWork$NKS_Request_Quarter__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
     <name>Chat Totalt</name>
     <params>
         <name>co</name>
@@ -80,7 +76,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>AgentWork$AcceptDateTime</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <dateColumn>AgentWork$CreatedDate</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
     </timeFrameFilter>
 </Report>
