@@ -426,9 +426,6 @@
                     <name>Error_Header</name>
                 </fields>
                 <fields>
-                    <name>Flow_Error</name>
-                </fields>
-                <fields>
                     <fieldText>&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
                     <name>Missing_Account_Error</name>
                 </fields>
