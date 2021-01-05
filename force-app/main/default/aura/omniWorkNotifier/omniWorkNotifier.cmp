@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:backgroundUtilityItem" access="global">
+
+    <aura:attribute name="notificationsEnabled" type="Boolean" default="false" />
+    <aura:attribute name="iconUrl" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="lightning:omniChannelWorkAssigned" action="{!c.onWorkAssigned}" />
+
+    <lightning:omniToolkitAPI aura:id="omniToolkit" />
+</aura:component>
