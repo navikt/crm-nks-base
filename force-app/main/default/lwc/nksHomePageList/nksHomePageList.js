@@ -1,8 +1,12 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 
 export default class nksHomePageList extends LightningElement {
-    listitems;
+
+    @wire(getRelatedPersons, { recordId: '$recordId', objectApiName: '$objectApiName' })
+    relations;
+
+    /*listitems;
     error;
 
     connectedCallback() {
@@ -17,5 +21,5 @@ export default class nksHomePageList extends LightningElement {
             .catch(error => {
                 this.error = error;
             });
-    }
+    }*/
 }

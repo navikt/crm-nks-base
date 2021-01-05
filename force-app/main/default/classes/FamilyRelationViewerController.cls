@@ -25,22 +25,7 @@ public without sharing class FamilyRelationViewerController {
         List<Person__c> relatedPersons = getRelatedPersons(roleByRelatedPersonIdent.keySet());
 
         relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent); 
-
-        Person__c p = getPerson(personId)[0]; 
-        if(p.INT_MaritalStatus__c != null){
-            Relation maritalrelation = new Relation();
-            if(p.INT_MaritalRelation__c != null){
-                Person__c marriedto = getMaritalRelation(p.INT_MaritalRelation__c)[0]; 
-                maritalrelation.personId = marriedto.Id;
-                maritalrelation.accountId = marriedto.CRM_Account__c; 
-                maritalrelation.personIdent = marriedto.Name; 
-                maritalrelation.personName = marriedto.CRM_Account__r.Name;
-                if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
-            }
-            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
-            maritalrelation.child = false; 
-            relations.add(maritalrelation); 
-        }
+        relations.add(getMaritalRelation(personId)); 
 
         for (Person__c person : relatedPersons) {
             Integer age; 
@@ -96,6 +81,26 @@ public without sharing class FamilyRelationViewerController {
         }
         return withoutChildrenOver21;
     }
+    
+    private static Relation getMaritalRelation(Id personId){
+        Person__c p = getPerson(personId)[0];
+        if(p.INT_MaritalStatus__c != null){
+            Relation maritalrelation = new Relation();
+            if(p.INT_MaritalRelation__c != null){
+                Person__c marriedto = getMaritalPerson(p.INT_MaritalRelation__c)[0]; 
+                maritalrelation.personId = marriedto.Id;
+                maritalrelation.accountId = marriedto.CRM_Account__c; 
+                maritalrelation.personIdent = marriedto.Name; 
+                maritalrelation.personName = marriedto.CRM_Account__r.Name;
+                if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
+            }
+            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
+            maritalrelation.child = false; 
+            return maritalrelation; 
+        }
+        else return null; 
+    }
+
 
     private static List<Person__c> getRelatedPersons(Set<String> relatedPersonIds) {
         return [
@@ -130,7 +135,7 @@ public without sharing class FamilyRelationViewerController {
         ];
     }
 
-    private static List<Person__c> getMaritalRelation(String personId) {
+    private static List<Person__c> getMaritalPerson(String personId) {
         return [
                 SELECT 
                         Id,
