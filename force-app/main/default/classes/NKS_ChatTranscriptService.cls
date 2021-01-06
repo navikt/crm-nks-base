@@ -10,10 +10,12 @@ public class NKS_ChatTranscriptService {
     @AuraEnabled
     public static void storeConversation(String chatId, String jsonConversation) {
         String conversation = '';
+        Boolean addedAuthSeparator = false;
         List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         DateTime chatStart = DateTime.newInstance(Long.valueOf(messageList[0].timestamp));
         DateTime chatEnd = DateTime.now(); //Method is called when endChat event is received
         LiveChatTranscript chatTranscript = getChatDetails(chatId);
+        DateTime authTimestamp = chatTranscript.NKS_Authentication_Timestamp__c;
         
         if(String.isNotBlank(chatTranscript.Case.Description)) { 
             conversation += formatBotConversation(chatTranscript.Case.Description);
@@ -21,6 +23,13 @@ public class NKS_ChatTranscriptService {
         conversation += generateConversationHeading(chatTranscript, chatStart, chatEnd);
 
         for (Message msg : messageList) {
+            //If the message timestamp exceeds the auth timestamp, then we add a separator to cleary separate the authenticated and unauthenticated conversation
+            if(authTimestamp != null && DateTime.newInstance(Long.valueOf(msg.timestamp)) > authTimestamp && !addedAuthSeparator) {
+                conversation += '<div style="text-align: center">';
+                conversation += '<p align="center"><b>Bruker logget inn: ' + authTimestamp.format('dd/mm/yyyy') + '-' + authTimestamp.format('HH:mm:ss') + '</b></p>';
+                conversation += '</div><br>';
+                addedAuthSeparator = true;
+            }
             conversation += msg.getFormattedMsg();
         }
 
@@ -66,7 +75,7 @@ public class NKS_ChatTranscriptService {
     }
 
     private static LiveChatTranscript getChatDetails(String chatId) {
-        return [SELECT NKS_Agent_Greeting_Name__c, Body, NKS_Conversation__c, Case.Description FROM LiveChatTranscript WHERE Id =: chatId];
+        return [SELECT NKS_Agent_Greeting_Name__c, Body, NKS_Conversation__c, Case.Description, NKS_Authentication_Timestamp__c FROM LiveChatTranscript WHERE Id =: chatId];
     }
 
     private class Message{
