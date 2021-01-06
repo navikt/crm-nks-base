@@ -1,5 +1,4 @@
 public without sharing class FamilyRelationViewerController {
-    //TODO: clean up code after adding quick fix for marital relation
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelatedPersons(Id recordId , String objectApiName) {
         Id personId; 
