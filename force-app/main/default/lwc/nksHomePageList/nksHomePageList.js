@@ -1,11 +1,14 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 
 export default class nksHomePageList extends LightningElement {
-    @wire(getList, { recordId: '$recordId', objectApiName: '$objectApiName' })
-    relations;
+    @api cardLabel;
+    @api iconName;
+    @api fields;
+    @api objectName;
+    @api filter;
 
-    /*listitems;
+    @track records;
     error;
 
     connectedCallback() {
@@ -13,12 +16,20 @@ export default class nksHomePageList extends LightningElement {
     }
 
     loadList() {
-        getList()
+        getList({
+            fields: this.fields,
+            objectName: this.objectName,
+            filter: this.filter,
+        })
             .then(result => {
-                this.listitems = result;
+                this.records = result;
             })
             .catch(error => {
                 this.error = error;
             });
-    }*/
+    }
+
+    //@wire(getList, { fields: 'Name', objectName: 'NKS_Announcement__c', filter: 'NKS_Type__c' })
+    //relations;
+
 }

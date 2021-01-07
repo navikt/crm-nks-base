@@ -6,28 +6,30 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<SObject> getList(String type) {
-        List<SObject> listtoreturn = new List<SObject>(); 
-    
-        return listtoreturn; 
+    public static List<Record> getList(String fields, String objectName, String filter) {
+        List<Record> records = new List<Record>();
+
+        String query = 'SELECT ' + fields + ' FROM ' + objectName;
+        query += ' WHERE ' + filter;
+
+        List<SObject> listtoreturn = Database.query(query);
+        records = createRecords(listtoreturn); 
+        return records; 
     }
 
-    /*List<NKS_HomePageController.homePageItem> items = new List<NKS_HomePageController.homePageItem>(recordId, Name); 
-
-    for(NKS_Announcement__c a : [SELECT Id, Name FROM NKS_Announcement__c]){
-            items.add(new homePageItem(a.Id, a.Name));
+    public class Record {
+        @AuraEnabled public String recordId;
+        @AuraEnabled public String name;
     }
-    return items;
 
-    public class homePageItem{
-        @AuraEnabled
-        public Id RecordId {get;set;}
-        @AuraEnabled
-        public string Name {get;set;}
-
-        public homePageItem(Id recordId, String name){
-            this.RecordId=recordId;
-            this.Name=name;
+    private static List<Record> createRecords(List<sObject> listofrecords){
+        system.debug('CREATE records'); 
+        List<Record> records = new List<Record>();
+        for (sObject r : listofrecords) {
+            Record record = new Record();
+            record.recordId = r.Id;
+            records.add(record);
         }
-    }*/
+        return records; 
+    }
 }
