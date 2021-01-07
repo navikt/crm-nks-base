@@ -125,7 +125,7 @@ public class NKS_ChatTranscriptService {
            conversation = fileData;
            messageIndex = fileData.length(); 
         }
-         
+
         public Boolean hasNext(){
            return messageIndex >= 0;
         }
@@ -135,8 +135,8 @@ public class NKS_ChatTranscriptService {
            if (key == -1)
              key = 0;
                   
-           String row = conversation.subString(key, messageIndex);
-           messageIndex = key - 1;
+           String row = messageIndex == this.conversation.length() ? conversation.subString(key, messageIndex) : conversation.subString(key, messageIndex + 1);
+           messageIndex = key -1;
            return row;
         }
      
