@@ -27,7 +27,7 @@ public class NKS_ChatTranscriptService {
             if(authTimestamp != null && DateTime.newInstance(Long.valueOf(msg.timestamp)) > authTimestamp && !addedAuthSeparator) {
                 String separatorText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Started authenticated chat: ' : 'Startet innlogget chat: ';
                 conversation += '<div style="text-align: center">';
-                conversation += '<p align="center"><b>' + separatorText + authTimestamp.format('dd/mm/yyyy') + '-' + authTimestamp.format('HH:mm:ss') + '</b></p>';
+                conversation += '<p align="center"><b>' + separatorText + authTimestamp.format('dd/MM/yyyy') + '-' + authTimestamp.format('HH:mm:ss') + '</b></p>';
                 conversation += '</div><br>';
                 addedAuthSeparator = true;
             }
@@ -50,7 +50,7 @@ public class NKS_ChatTranscriptService {
         String counsellorText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US'  ? 'Counsellor' : 'Veileder';
 
         String heading = '<div style="text-align: center">';
-        heading += '<p align="center">' + conversationText + ' - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</p>';
+        heading += '<p align="center">' + conversationText + ' - Chat: ' + chatStart.format('dd/MM/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</p>';
         heading += '<p align="center">NAV-' + counsellorText + ': ' + chatTranscript.NKS_Agent_Greeting_Name__c + '</p><br>';
         heading += '</div>';
         return heading;
