@@ -14,6 +14,7 @@ public without sharing class ChatAuthController {
                 Id contactId = getPersonContactId();
                 lct.AccountId = accountId;
                 lct.ContactId = contactId;
+                lct.NKS_Authentication_Timestamp__c = DateTime.now();
 
                 if(String.isNotBlank(lct.CaseId)) {
                     Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
