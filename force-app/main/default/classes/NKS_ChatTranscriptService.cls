@@ -27,7 +27,7 @@ public class NKS_ChatTranscriptService {
             if(authTimestamp != null && DateTime.newInstance(Long.valueOf(msg.timestamp)) > authTimestamp && !addedAuthSeparator) {
                 String separatorText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Started authenticated chat: ' : 'Startet innlogget chat: ';
                 conversation += '<div style="text-align: center">';
-                conversation += '<p align="center"><b>' + separatorText + authTimestamp.format('dd/mm/yyyy') + '-' + authTimestamp.format('HH:mm:ss') + '</b></p>';
+                conversation += '<p align="center"><b>' + separatorText + authTimestamp.format('dd/MM/yyyy') + '-' + authTimestamp.format('HH:mm:ss') + '</b></p>';
                 conversation += '</div><br>';
                 addedAuthSeparator = true;
             }
@@ -49,9 +49,9 @@ public class NKS_ChatTranscriptService {
         String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
         String counsellorText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US'  ? 'Counsellor' : 'Veileder';
 
-        String heading = '<div style="text-align: center">';
-        heading += '<p align="center">' + conversationText + ' - Chat: ' + chatStart.format('dd/mm/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</p>';
-        heading += '<p align="center">NAV-' + counsellorText + ': ' + chatTranscript.NKS_Agent_Greeting_Name__c + '</p><br>';
+        String heading = '<br><div style="text-align: center">';
+        heading += '<p align="center"><b>' + conversationText + ' - Chat: ' + chatStart.format('dd/MM/yyyy') + ', ' + chatStart.format('HH:mm:ss') + ' - ' + chatEnd.format('HH:mm:ss') + '</b></p>';
+        heading += '<p align="center"><b>NAV-' + counsellorText + ': ' + chatTranscript.NKS_Agent_Greeting_Name__c + '</b></p><br>';
         heading += '</div>';
         return heading;
     }
@@ -65,18 +65,19 @@ public class NKS_ChatTranscriptService {
     private static String formatBotConversation(LiveChatTranscript chatTranscript) {
         String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
         String returnText = '<div style="text-align: center">';
-        returnText += '<p align="center">' + conversationText + ' - Frida</p>';
+        returnText += '<p align="center"><b>' + conversationText + ' - Frida</b></p>';
         returnText += '</div><br>';
+        String message;
 
         String botConversation = chatTranscript.Case.Description;
 
         //For long conversations string.split() has a chance to encounter regex exceptions. Using custom iterator instead
         BotConversation_Iterator conversationIterator = new BotConversation_Iterator(botConversation);
         while(conversationIterator.hasNext()) {
-            returnText += '<p>' + conversationIterator.next() + '</p>';
+            message = '<p>' + conversationIterator.next().replaceAll('\r', '<br>').replaceAll('\n', '') + '</p>';
+            if(!conversationIterator.hasNext()) {message = '<br>' + message;}
+            returnText += message;
         }
-
-        returnText += '<br>';
 
         return returnText;
     }
@@ -118,13 +119,13 @@ public class NKS_ChatTranscriptService {
         
         private String conversation;
         private Integer messageIndex;
-        private String message_rowDelimiter = '\n';
+        private String message_rowDelimiter = '\r\n';
          
         public BotConversation_Iterator(String fileData){
            conversation = fileData;
            messageIndex = fileData.length(); 
         }
-         
+
         public Boolean hasNext(){
            return messageIndex >= 0;
         }
@@ -134,8 +135,8 @@ public class NKS_ChatTranscriptService {
            if (key == -1)
              key = 0;
                   
-           String row = conversation.subString(key, messageIndex);
-           messageIndex = key - 1;
+           String row = messageIndex == this.conversation.length() ? conversation.subString(key, messageIndex) : conversation.subString(key, messageIndex + 1);
+           messageIndex = key -1;
            return row;
         }
      
