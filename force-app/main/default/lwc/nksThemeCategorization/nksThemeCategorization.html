@@ -3,9 +3,9 @@
         onchange={handleThemeGroupChange} value={chosenThemeGroup}>
     </lightning-combobox>
     <lightning-combobox name="Theme" label="Tema" options={themes} required placeholder="(Ikke valgt)"
-        value={chosenTheme} onchange={handleThemeChange}>
+        value={chosenTheme} onchange={handleThemeChange} disabled={themeDisabled}>
     </lightning-combobox>
     <lightning-combobox name="SubTheme" label="Undertema" placeholder={subthemePlaceholder} options={subthemes}
-        value={chosenSubtheme} onchange={handleSubthemeChange}>
+        value={chosenSubtheme} onchange={handleSubthemeChange} disabled={subthemeDisabled}>
     </lightning-combobox>
 </template>
