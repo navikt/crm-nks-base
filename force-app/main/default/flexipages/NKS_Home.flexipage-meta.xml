@@ -90,6 +90,10 @@
                     <value>custom:custom82</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>linklabel</name>
                     <value>Vis alle</value>
                 </componentInstanceProperties>
@@ -132,6 +136,10 @@
                 <componentInstanceProperties>
                     <name>iconName</name>
                     <value>standard:knowledge</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
