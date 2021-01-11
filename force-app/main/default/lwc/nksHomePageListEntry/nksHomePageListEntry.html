@@ -1,13 +1,15 @@
 <template>
 
     <div>
-        <p><b>
-                <lightning-formatted-text value={record.recordId}></lightning-formatted-text>
-            </b></p>
         <p>
-            <lightning-formatted-url value={recordPageUrl} label={record.recordId} onclick={navigateToSObject}>
-                {record.recordId}</lightning-formatted-url>
+            <lightning-formatted-url value={recordPageUrl} label={record.name} onclick={navigateToSObject}>
+                {record.name}</lightning-formatted-url>
         </p>
+
+        <p>
+            <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+        </p>
+        <p>{record.modifiedDate}</p>
     </div>
 
 </template>

@@ -4,30 +4,50 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>enableInlineEdit</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>entityName</name>
-                    <value>NKS_Announcement__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterName</name>
+                    <name>cardLabel</name>
                     <value>Nyheter</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideActionBar</name>
+                    <name>content</name>
+                    <value>NKS_Information__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>NKS_Type__c = &apos;Nyhet&apos; AND RecordType.Name = &apos;News&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom18</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>Nyheter</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>NKS_Announcement__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showimage</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideSearchBar</name>
-                    <value>true</value>
+                    <name>title</name>
+                    <value>Name</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>pageSize</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:filterListCard</componentName>
+                <componentName>nksHomePageList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -54,59 +74,86 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>enableInlineEdit</name>
-                    <value>false</value>
+                    <name>cardLabel</name>
+                    <value>Driftsmeldinger</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>entityName</name>
-                    <value>NKS_Announcement__c</value>
+                    <name>content</name>
+                    <value>NKS_Information__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>filterName</name>
+                    <name>filter</name>
+                    <value>RecordType.Name = &apos;Operational&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom39</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
                     <value>Teknisk_og_drift</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideActionBar</name>
-                    <value>true</value>
+                    <name>objectName</name>
+                    <value>NKS_Announcement__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideSearchBar</name>
-                    <value>true</value>
+                    <name>orderby</name>
+                    <value>LastModifiedDate DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>pageSize</name>
-                    <value>3</value>
+                    <name>showimage</name>
+                    <value>false</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:filterListCard</componentName>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>enableInlineEdit</name>
-                    <value>false</value>
+                    <name>cardLabel</name>
+                    <value>Sist oppdaterte servicerutiner</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>entityName</name>
+                    <name>content</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>Title != &apos;&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom43</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>published_articles</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
                     <value>Knowledge__kav</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>filterName</name>
-                    <value>NKS_Last_updated</value>
+                    <name>orderby</name>
+                    <value>LastModifiedDate DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideActionBar</name>
-                    <value>true</value>
+                    <name>title</name>
+                    <value>Title</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideSearchBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>pageSize</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:filterListCard</componentName>
+                <componentName>nksHomePageList</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
