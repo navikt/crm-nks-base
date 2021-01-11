@@ -17,7 +17,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
-                    <value>custom:custom18</value>
+                    <value>custom:custom82</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>limit</name>
@@ -87,7 +87,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
-                    <value>custom:custom39</value>
+                    <value>custom:custom82</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
@@ -131,7 +131,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
-                    <value>custom:custom43</value>
+                    <value>standard:knowledge</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
