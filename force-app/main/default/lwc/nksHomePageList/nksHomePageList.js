@@ -42,7 +42,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             objectName: this.objectName,
             filter: this.filter,
             orderby: this.orderby,
-            limitNumber: this.limit
+            limitNumber: this.limit,
+            showimage: this.showimage
         })
             .then(result => {
                 this.records = result;

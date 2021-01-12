@@ -158,6 +158,10 @@
                     <value>LastModifiedDate DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showimage</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>title</name>
                     <value>Title</value>
                 </componentInstanceProperties>

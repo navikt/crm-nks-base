@@ -11,15 +11,15 @@
         <targetConfig targets="lightning__HomePage">
             <property name="cardLabel" label="Card title" type="String" default="Title" />
             <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="custom:custom1" />
-            <property name="title" label="API name of title field" type="String" required="true" default="Name" />
-            <property name="content" label="API name of content" type="String" required="false" default="Name" />
-            <property name="objectName" label="Object API Name" description="Object to get data from" required="true" type="String" />
-            <property name="filter" label="SOQL filter" type="String" required="true" default="Name = 'Navn'" />
-            <property name="orderby" label="SOQL orderby" type="String" required="false" default="" />
-            <property name="limit" label="SOQL number of records" type="String" required="false" />
-            <property name="listviewname" label="Name of list view to redirect" default="Recent" type="String" required="false" />
-            <property name="linklabel" label="Link label to redirect to list view" default="Vis alle" type="String" required="false" />
-            <property name="showimage" label="show latest related image?" type="Boolean" required="false" />
+            <property name="title" label="Title" type="String" required="true" default="Name" />
+            <property name="content" label="Content" type="String" required="false" default="Name" description="API name of content field. If empty, only title will appear" />
+            <property name="objectName" label="Object Name" description="API Name of Object to get data from" required="true" type="String" />
+            <property name="filter" label="Filter" description="SOQL Filter. For example 'RecordType.Name = 'PersonAccount' '" type="String" required="true" default="Name = 'Navn'" />
+            <property name="orderby" label="Order list by" description="SOQL Order by. For example 'LastModifiedDate DESC' to see the last edited first" type="String" required="false" default="" />
+            <property name="limit" label="Limit" description="SOQL number of records. For example '3'" type="String" required="false" />
+            <property name="listviewname" label="List view" description="API Name of list view to redirect to" default="Recent" type="String" required="true" />
+            <property name="linklabel" label="Link Label" description="Label of link to redirect to list view" default="Vis alle" type="String" required="false" />
+            <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
