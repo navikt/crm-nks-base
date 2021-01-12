@@ -107,13 +107,16 @@ export default class NksThemeCategorization extends LightningElement {
 
     @api
     get subthemeCode() {
-        let subthemeCode;
+        let subthemeCode = '';
 
-        let subthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 ? this.subThemeMap[this.theme] : [];
-        for (let subtheme of subthemes) {
-            if (subtheme.Id === this.subtheme) {
-                subthemeCode = subtheme.CRM_Code__c;
-                break;
+        //Added subtheme check as flow was failing when chosing themes with no subthemes
+        if (this.subtheme) {
+            let subthemes = this.chosenTheme && Object.keys(this.subThemeMap).length !== 0 ? this.subThemeMap[this.theme] : [];
+            for (let subtheme of subthemes) {
+                if (subtheme.Id === this.subtheme) {
+                    subthemeCode = subtheme.CRM_Code__c;
+                    break;
+                }
             }
         }
 
@@ -137,6 +140,7 @@ export default class NksThemeCategorization extends LightningElement {
         listSubthemes.forEach(subtheme => {
             returnThemes.push({ label: subtheme.Name, value: subtheme.Id });
         });
+
         this.subthemes = returnThemes;
     }
 
@@ -147,6 +151,15 @@ export default class NksThemeCategorization extends LightningElement {
         }
 
         return placeholder;
+    }
+
+    get themeDisabled() {
+        return !this.chosenThemeGroup ? true : false;
+    }
+
+    get subthemeDisabled() {
+        let disabled = !this.chosenTheme || (this.chosenTheme && (Object.keys(this.subThemeMap).length === 0 || !(this.chosenTheme in this.subThemeMap)));
+        return disabled;
     }
 
     publishFieldChange(field, value) {
