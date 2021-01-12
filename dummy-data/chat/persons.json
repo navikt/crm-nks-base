@@ -14,7 +14,9 @@
             "INT_ResidentialAddress__c": "Galtvortveien 101",
             "INT_ResidentialZipCode__c": "1001",
             "INT_Sex__c": "Mann",
-            "INT_Confidential__c": "UGRADERT"
+            "INT_Confidential__c": "UGRADERT",
+            "INT_MaritalStatus__c": "GIFT",
+            "INT_MaritalRelation__c": "12345678902"
         },
         {
             "attributes": {
