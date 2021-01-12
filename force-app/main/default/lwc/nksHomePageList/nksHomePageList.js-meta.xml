@@ -13,7 +13,7 @@
             <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="custom:custom1" />
             <property name="title" label="Title" type="String" required="true" default="Name" />
             <property name="content" label="Content" type="String" required="false" default="Name" description="API name of content field. If empty, only title will appear" />
-            <property name="objectName" label="Object Name" description="API Name of Object to get data from" required="true" type="String" />
+            <property name="objectName" label="Object Name" description="API Name of Object to get data from" default="NKS_Announcement__c" required="true" type="String" />
             <property name="filter" label="Filter" description="SOQL Filter. For example 'RecordType.Name = 'PersonAccount' '" type="String" required="true" default="Name = 'Navn'" />
             <property name="orderby" label="Order list by" description="SOQL Order by. For example 'LastModifiedDate DESC' to see the last edited first" type="String" required="false" default="" />
             <property name="limit" label="Limit" description="SOQL number of records. For example '3'" type="String" required="false" />
