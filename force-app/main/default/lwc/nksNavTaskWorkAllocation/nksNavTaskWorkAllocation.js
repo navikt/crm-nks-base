@@ -34,7 +34,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @track result;
     isSearching;
     errorMessage;
-    selectedId;
+    @api selectedId;
     runningUserUnitNumber;
     runningUserIdent;
     delegateToSelf = false;
@@ -49,6 +49,10 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     get selectedUnitId() {
         let value = getFieldValue(this.navUnit.data, ID_FIELD);
         return value ? value : '';
+    }
+
+    set selectedUnitId(unitId) {
+        this.selectedId = unitId;
     }
 
     @api

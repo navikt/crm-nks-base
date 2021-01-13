@@ -1372,6 +1372,12 @@ TODAY())</expression>
                     <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__r.CRM_Code__c</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
