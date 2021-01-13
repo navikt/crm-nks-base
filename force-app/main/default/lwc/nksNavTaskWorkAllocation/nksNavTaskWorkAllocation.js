@@ -34,7 +34,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @track result;
     isSearching;
     errorMessage;
-    @api selectedId;
+    selectedId;
     runningUserUnitNumber;
     runningUserIdent;
     delegateToSelf = false;
