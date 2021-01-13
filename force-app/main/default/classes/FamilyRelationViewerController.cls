@@ -1,5 +1,4 @@
 public without sharing class FamilyRelationViewerController {
-    //TODO: clean up code after adding quick fix for marital relation
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelatedPersons(Id recordId , String objectApiName) {
         Id personId; 
@@ -25,49 +24,8 @@ public without sharing class FamilyRelationViewerController {
         List<Person__c> relatedPersons = getRelatedPersons(roleByRelatedPersonIdent.keySet());
 
         relatedPersons = removeChildrenUnder21(relatedPersons, roleByRelatedPersonIdent); 
-
-        Person__c p = getPerson(personId)[0]; 
-        if(p.INT_MaritalStatus__c != null){
-            Relation maritalrelation = new Relation();
-            if(p.INT_MaritalRelation__c != null){
-                Person__c marriedto = getMaritalRelation(p.INT_MaritalRelation__c)[0]; 
-                maritalrelation.personId = marriedto.Id;
-                maritalrelation.accountId = marriedto.CRM_Account__c; 
-                maritalrelation.personIdent = marriedto.Name; 
-                maritalrelation.personName = marriedto.CRM_Account__r.Name;
-                if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
-            }
-            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
-            maritalrelation.child = false; 
-            relations.add(maritalrelation); 
-        }
-
-        for (Person__c person : relatedPersons) {
-            Integer age; 
-            if(person.INT_DateOfBirth__c != null) age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
-            String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
-
-            Relation r = new Relation();
-            r.personId = person.Id;
-            r.accountId = person.CRM_Account__c; 
-            r.personIdent = person.Name;
-            r.personName = person.CRM_Account__r.Name;
-            r.role = role;
-            if(role == 'Barn'){
-                if(person.INT_Sex__c == 'Kvinne') r.sex = 'Jente'; 
-                else if(person.INT_Sex__c == 'Mann') r.sex = 'Gutt'; 
-                r.age = age; 
-                r.child = true; 
-            }
-            else{
-                r.sex = person.INT_Sex__c; 
-                r.child = false; 
-                r.age = age; 
-            }
-            if(person.CRM_Account__r.Name == 'Ikke tilgjengelig') r.disableurl = true; 
-            else r.disableurl = false;
-            relations.add(r);
-        }
+        relations.add(getMaritalRelation(personId)); 
+        relations.addAll(createRelations(relatedPersons, roleByRelatedPersonIdent)); 
 
         return relations;
     }
@@ -96,6 +54,57 @@ public without sharing class FamilyRelationViewerController {
         }
         return withoutChildrenOver21;
     }
+    
+    private static Relation getMaritalRelation(Id personId){
+        Person__c p = getPerson(personId)[0];
+        if(p.INT_MaritalStatus__c != null){
+            Relation maritalrelation = new Relation();
+            if(p.INT_MaritalRelation__c != null){
+                Person__c marriedto = getMaritalPerson(p.INT_MaritalRelation__c)[0]; 
+                maritalrelation.personId = marriedto.Id;
+                maritalrelation.accountId = marriedto.CRM_Account__c; 
+                maritalrelation.personIdent = marriedto.Name; 
+                maritalrelation.personName = marriedto.CRM_Account__r.Name;
+                if(marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig') maritalrelation.disableurl = true; 
+            }
+            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize(); 
+            maritalrelation.child = false; 
+            return maritalrelation; 
+        }
+        else return null; 
+    }
+
+    private static List<Relation> createRelations(List<Person__c> relatedPersons, Map<String, String> roleByRelatedPersonIdent){
+        List<Relation> relations = new List<Relation>();
+        for (Person__c person : relatedPersons) {
+            Integer age; 
+            if(person.INT_DateOfBirth__c != null) age = Integer.valueOf(Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today())/365);
+            String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
+
+            Relation r = new Relation();
+            r.personId = person.Id;
+            r.accountId = person.CRM_Account__c; 
+            r.personIdent = person.Name;
+            r.personName = person.CRM_Account__r.Name;
+            r.role = role;
+            if(role == 'Barn'){
+                if(person.INT_Sex__c == 'Kvinne') r.sex = 'Jente'; 
+                else if(person.INT_Sex__c == 'Mann') r.sex = 'Gutt'; 
+                r.age = age; 
+                r.child = true; 
+            }
+            else{
+                r.sex = person.INT_Sex__c; 
+                r.child = false; 
+                r.age = age; 
+            }
+            if(person.CRM_Account__r.Name == 'Ikke tilgjengelig') r.disableurl = true; 
+            else r.disableurl = false;
+            relations.add(r);
+        }
+        return relations; 
+    }
+
 
     private static List<Person__c> getRelatedPersons(Set<String> relatedPersonIds) {
         return [
@@ -130,7 +139,7 @@ public without sharing class FamilyRelationViewerController {
         ];
     }
 
-    private static List<Person__c> getMaritalRelation(String personId) {
+    private static List<Person__c> getMaritalPerson(String personId) {
         return [
                 SELECT 
                         Id,

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>KnowledgeSearchEventHistory</baseObject>
+    <category>admin</category>
+    <deployed>true</deployed>
+    <description>Knowledge Article Searches</description>
+    <label>Knowledge Article Searches</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Duration</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AsOfDate</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Channel</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DeltaCount</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CumulativeCount</field>
+            <table>KnowledgeSearchEventHistory</table>
+        </columns>
+        <masterLabel>Knowledge Article Searches</masterLabel>
+    </sections>
+</ReportType>
