@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>KnowledgeKeywordSearchHistory</baseObject>
+    <category>admin</category>
+    <deployed>true</deployed>
+    <description>Knowledge Keyword Search</description>
+    <label>Knowledge Keyword Search</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Duration</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AsOfDate</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Channel</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Success</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Keyword</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Count</field>
+            <table>KnowledgeKeywordSearchHistory</table>
+        </columns>
+        <masterLabel>Knowledge Keyword Search</masterLabel>
+    </sections>
+</ReportType>

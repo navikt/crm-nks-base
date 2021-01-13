@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>KnowledgeViewEventHistory</baseObject>
+    <category>admin</category>
+    <deployed>true</deployed>
+    <description>Knowledge Article Views</description>
+    <label>Knowledge Article Views</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Duration</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AsOfDate</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Channel</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DeltaCount</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CumulativeCount</field>
+            <table>KnowledgeViewEventHistory</table>
+        </columns>
+        <masterLabel>Knowledge Article Views</masterLabel>
+    </sections>
+</ReportType>
