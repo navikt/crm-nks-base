@@ -80,7 +80,8 @@ public with sharing class NKS_NavTaskManager {
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
         //External reference for the specific task as a URL path paramter
-        Map<String, String> paramMap = new Map<String, String> {'id' => String.valueOf(task.INT_External_Reference__c)};
+        //When field is queried by flow a zero decimal is added even though the field is without decimals. Workaround by converting to INT before converting to String.
+        Map<String, String> paramMap = new Map<String, String> {'id' => String.valueOf(Integer.valueOf(task.INT_External_Reference__c))};
         apiCtrl.initRequest('Oppgave_API', 'PATCH_EDIT_OPPGAVE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');
         apiCtrl.setHeaders(httpHeaders);
@@ -219,6 +220,7 @@ public with sharing class NKS_NavTaskManager {
     }
 
     private class OppgaveRequest {
+        private Integer id;
         private String tildeltEnhetsnr; //Enheten oppgaven er tildelt. Dersom enhet ikke er angitt, så vil oppgaven automatisk fordeles iht. standard arbeidsfordelingsregler (se norg2)
         private String opprettetAvEnhetsnr;
         private String aktoerId;
@@ -258,6 +260,7 @@ public with sharing class NKS_NavTaskManager {
             tilordnetRessurs = task.NKS_Assignee__c;  //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
             versjon = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.NKS_Task_Version__c) : null;
+            id = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.INT_External_Reference__c) : null;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;

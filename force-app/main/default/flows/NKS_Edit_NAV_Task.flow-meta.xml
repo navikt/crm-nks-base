@@ -155,6 +155,13 @@
                 <elementReference>Get_NAV_Task.NKS_Task_Version__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.INT_External_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.INT_External_Reference__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Check_External_Reference</targetReference>
         </connector>
@@ -189,7 +196,7 @@
             <name>Do_Callout</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_NAV_Task.INT_External_Reference__c</leftValueReference>
+                <leftValueReference>NavTask.INT_External_Reference__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -539,7 +546,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Error_Source</name>
             <value>
-                <stringValue>NKS_Case_Send_NAV_Task</stringValue>
+                <stringValue>NKS_Edit_NAV_Task</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -551,7 +558,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Reference_Object</name>
             <value>
-                <stringValue>Case</stringValue>
+                <stringValue>NavTask__c</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
