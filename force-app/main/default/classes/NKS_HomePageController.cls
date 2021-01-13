@@ -6,28 +6,52 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<SObject> getList(String type) {
-        List<SObject> listtoreturn = new List<SObject>(); 
-    
-        return listtoreturn; 
+    public static List<Record> getList(String title, String content, String objectName, String filter, String orderby, String limitNumber, Boolean showimage) {
+        List<Record> records = new List<Record>();
+
+        String query = 'SELECT LastModifiedDate, CreatedDate ,' + title;
+        if(content != null) query += ' , ' + content;
+        query += ' FROM ' + objectName;
+        query += ' WHERE ' + filter;
+        if(orderby != null) query += ' ORDER BY ' + orderby; 
+        if(limitNumber != null) query += ' LIMIT ' + limitNumber; 
+
+        List<SObject> listtoreturn = Database.query(query);
+        records = createRecords(listtoreturn, objectName, title, content, showimage); 
+        return records; 
     }
 
-    /*List<NKS_HomePageController.homePageItem> items = new List<NKS_HomePageController.homePageItem>(recordId, Name); 
-
-    for(NKS_Announcement__c a : [SELECT Id, Name FROM NKS_Announcement__c]){
-            items.add(new homePageItem(a.Id, a.Name));
+    public class Record {
+        @AuraEnabled public String recordId;
+        @AuraEnabled public String name;
+        @AuraEnabled public String content;
+        @AuraEnabled public String summary;
+        @AuraEnabled public Datetime modifiedDate;
+        @AuraEnabled public String imageurl; 
     }
-    return items;
 
-    public class homePageItem{
-        @AuraEnabled
-        public Id RecordId {get;set;}
-        @AuraEnabled
-        public string Name {get;set;}
-
-        public homePageItem(Id recordId, String name){
-            this.RecordId=recordId;
-            this.Name=name;
+    private static List<Record> createRecords(List<sObject> listofrecords, String objectName, String title, String content, Boolean showimage){
+        List<Record> records = new List<Record>();
+        for (sObject r : listofrecords) {
+            Record record = new Record();
+            record.recordId = r.Id;
+            record.name = r.get(title).toString(); 
+            record.modifiedDate = Datetime.valueOf(r.get('CreatedDate'));
+            if(showimage) record.imageurl = getImageUrl(r.Id); 
+            if(content != null) {  
+                record.content = r.get(content).toString().replaceAll('\\<.*?\\>', ''); 
+                if(record.content.length()>200){
+                    record.summary=record.content.mid(0,200) + '...';
+                }
+                else record.summary=record.content;
+            }
+            records.add(record);
         }
-    }*/
+        return records; 
+    }
+
+    private static String getImageUrl(Id recordId){
+        String contentversionid = [SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.ContentModifiedDate FROM ContentDocumentLink WHERE LinkedEntityId  =: recordId  ORDER BY ContentDocument.ContentModifiedDate DESC LIMIT 1]?.ContentDocument.LatestPublishedVersionId; 
+        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId='+contentversionid;
+    }
 }
