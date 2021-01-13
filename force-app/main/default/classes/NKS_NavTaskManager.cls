@@ -94,6 +94,8 @@ public with sharing class NKS_NavTaskManager {
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if(statusCode == 200 || statusCode == 201) {
+                OppgaveResponse apiResp = (OppgaveResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), OppgaveResponse.class);
+                task.NKS_Task_Version__c = apiResp.versjon;
                 resp.setResponse(true, null, task);
             }
             else{
@@ -212,6 +214,8 @@ public with sharing class NKS_NavTaskManager {
         private Long id;
         @testVisible
         private String tildeltEnhetsnr;
+        @testVisible
+        private Integer versjon; //Version number of the task needed for the patch/edit callout
     }
 
     private class OppgaveRequest {
@@ -232,6 +236,7 @@ public with sharing class NKS_NavTaskManager {
         private String aktivDato; //Datestring, REQUIRED 
         private String fristFerdigstillelse; //Datestring
         private String prioritet; // [HOY, NORM, LAV], 
+        private Integer versjon;
         
         public OppgaveRequest(){
             
@@ -250,7 +255,9 @@ public with sharing class NKS_NavTaskManager {
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.CRM_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
+            tilordnetRessurs = task.NKS_Assignee__c;  //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
+            versjon = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.NKS_Task_Version__c) : null;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;

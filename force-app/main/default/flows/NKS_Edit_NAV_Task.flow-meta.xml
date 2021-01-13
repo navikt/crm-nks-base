@@ -4,8 +4,8 @@
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
-        <locationX>174</locationX>
-        <locationY>713</locationY>
+        <locationX>359</locationX>
+        <locationY>594</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,7 +17,7 @@
         <inputParameters>
             <name>actorId</name>
             <value>
-                <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                <elementReference>Get_NAV_Task.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -35,7 +35,7 @@
         <inputParameters>
             <name>requestType</name>
             <value>
-                <stringValue>POST</stringValue>
+                <stringValue>EDIT</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -62,8 +62,8 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>176</locationX>
-        <locationY>555</locationY>
+        <locationX>180</locationX>
+        <locationY>453</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +131,7 @@
             <assignToReference>NavTask.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case.AccountId</elementReference>
+                <elementReference>Get_NAV_Task.CRM_Account__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -141,44 +141,74 @@
                 <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Task_Version__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.NKS_Task_Version__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Process_NAV_task</targetReference>
+            <targetReference>Check_External_Reference</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Updates the task version with the version received from the API callout.</description>
+        <name>Update_Task_Version</name>
+        <label>Update Task Version</label>
+        <locationX>281</locationX>
+        <locationY>915</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Task_Version__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Process_NAV_task.task.NKS_Task_Version__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Salesforce_Task</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <description>Check if the case is related to an account before allowing to create task.</description>
-        <name>Validate_Account</name>
-        <label>Validate Account</label>
-        <locationX>272</locationX>
-        <locationY>303</locationY>
+        <name>Check_External_Reference</name>
+        <label>Check External Reference</label>
+        <locationX>171</locationX>
+        <locationY>598</locationY>
         <defaultConnector>
-            <targetReference>NAV_Task_Input_Screen</targetReference>
+            <targetReference>Update_Salesforce_Task</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>No_Account</name>
+            <name>Do_Callout</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.AccountId</leftValueReference>
+                <leftValueReference>Get_NAV_Task.INT_External_Reference__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Error_Screen</targetReference>
+                <targetReference>Process_NAV_task</targetReference>
             </connector>
-            <label>No Account</label>
+            <label>Do Callout</label>
         </rules>
     </decisions>
     <decisions>
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>164</locationX>
-        <locationY>848</locationY>
+        <locationX>350</locationX>
+        <locationY>734</locationY>
         <defaultConnector>
-            <targetReference>Store_Placeholder_Task</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -192,12 +222,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Salesforce_Task</targetReference>
+                <targetReference>Update_Task_Version</targetReference>
             </connector>
             <label>Success</label>
         </rules>
     </decisions>
-    <description>Creates and sends an outbound NAV task from a case view.</description>
+    <description>Allows editing a NAV Task and sending a patch request to oppgave if necessary.</description>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
@@ -230,8 +260,7 @@
 TODAY())</expression>
     </formulas>
     <interviewLabel>Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
-    <label>Case Send NAV Task</label>
+    <label>Edit NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -251,42 +280,15 @@ TODAY())</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Salesforce_Task</name>
-        <label>Create Salesforce Task</label>
-        <locationX>174</locationX>
-        <locationY>1040</locationY>
-        <connector>
-            <targetReference>Success_Screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log</targetReference>
-        </faultConnector>
-        <inputReference>Process_NAV_task.task</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Store the NAV task in Salesforce for resubmission after error is handled.</description>
-        <name>Store_Placeholder_Task</name>
-        <label>Store Placeholder Task</label>
-        <locationX>363</locationX>
-        <locationY>848</locationY>
-        <connector>
-            <targetReference>Error_Screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log</targetReference>
-        </faultConnector>
-        <inputReference>NavTask</inputReference>
-    </recordCreates>
     <recordLookups>
-        <description>Query information needed from the Case and its relations.</description>
-        <name>Get_Case</name>
-        <label>Get Case</label>
+        <description>Allows editing a NAV Task and sending a patch request to oppgave API if needed.</description>
+        <name>Get_NAV_Task</name>
+        <label>Get NAV Task</label>
         <locationX>176</locationX>
         <locationY>190</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Validate_Account</targetReference>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
@@ -299,34 +301,35 @@ TODAY())</expression>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
+        <object>NavTask__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Salesforce_Task</name>
+        <label>Update Salesforce Task</label>
+        <locationX>185</locationX>
+        <locationY>1033</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log</targetReference>
+        </faultConnector>
+        <inputReference>NavTask</inputReference>
+    </recordUpdates>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>556</locationX>
-        <locationY>768</locationY>
+        <locationX>587</locationX>
+        <locationY>733</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;Feil ved oppdatering av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>No_Account_Error</name>
-            <fieldText>&lt;p&gt;Henvendelsen er ikke relatert til en bruker.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>No_Account</leftValueReference>
-                    <operator>EqualTo</operator>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Error_Screen_Message</name>
@@ -350,7 +353,7 @@ TODAY())</expression>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>176</locationX>
-        <locationY>408</locationY>
+        <locationY>311</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -364,19 +367,19 @@ TODAY())</expression>
             <inputParameters>
                 <name>subtheme</name>
                 <value>
-                    <elementReference>NavTask.NKS_Subtheme__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Subtheme__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference>NavTask.NKS_Theme_Group__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>theme</name>
                 <value>
-                    <elementReference>NavTask.NKS_Theme__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -410,6 +413,12 @@ TODAY())</expression>
                     <stringValue>NavTask__c</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -425,7 +434,7 @@ TODAY())</expression>
             <name>Task_Due_Date</name>
             <dataType>Date</dataType>
             <defaultValue>
-                <elementReference>Default_Due_Date</elementReference>
+                <elementReference>Get_NAV_Task.CRM_DueDate__c</elementReference>
             </defaultValue>
             <fieldText>Frist:</fieldText>
             <fieldType>InputField</fieldType>
@@ -433,6 +442,9 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Description</name>
+            <defaultValue>
+                <stringValue>{!Get_NAV_Task.CRM_Comments__c}</stringValue>
+            </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>
@@ -445,7 +457,37 @@ TODAY())</expression>
             <inputParameters>
                 <name>personId</name>
                 <value>
-                    <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+                    <elementReference>Get_NAV_Task.CRM_Account__r.CRM_Person__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>taskType</name>
+                <value>
+                    <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>subTheme</name>
+                <value>
+                    <elementReference>Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_NAV_Task.NKS_Theme__r.CRM_Code__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_NAV_Task.NKS_Theme_Group__r.CRM_Code__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedUnitId</name>
+                <value>
+                    <elementReference>Get_NAV_Task.CRM_NavUnit__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -458,14 +500,14 @@ TODAY())</expression>
         <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>174</locationX>
-        <locationY>1206</locationY>
+        <locationX>182</locationX>
+        <locationY>1203</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Success_Screen_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble oppdatert&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
@@ -475,7 +517,7 @@ TODAY())</expression>
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Get_NAV_Task</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -522,10 +564,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
-        <locationX>361</locationX>
-        <locationY>712</locationY>
+        <locationX>585</locationX>
+        <locationY>593</locationY>
         <connector>
-            <targetReference>Store_Placeholder_Task</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
@@ -549,7 +591,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Reference_Object</name>
             <value>
-                <stringValue>Case</stringValue>
+                <stringValue>NavTask__c</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

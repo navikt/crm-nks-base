@@ -438,6 +438,13 @@
                 <elementReference>Task_Name</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>workAllocation.assignedResource</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
         </connector>
@@ -445,7 +452,7 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>894</locationX>
+        <locationX>888</locationX>
         <locationY>1031</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
@@ -529,6 +536,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Task_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1356,6 +1370,12 @@ TODAY())</expression>
                 <name>personId</name>
                 <value>
                     <elementReference>Get_Person.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

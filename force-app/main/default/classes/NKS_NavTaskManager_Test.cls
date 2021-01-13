@@ -81,6 +81,7 @@ public class NKS_NavTaskManager_Test {
         NKS_NavTaskManager.OppgaveResponse resp = new NKS_NavTaskManager.OppgaveResponse();
         resp.id = 123456789;
         resp.tildeltEnhetsnr = '4100';
+        resp.versjon = 2;
         NavTask__c task = getTask();
         task.CRM_Priority__c = 'NORM';
         task.INT_External_Reference__c = 123456789;
@@ -100,6 +101,6 @@ public class NKS_NavTaskManager_Test {
     }
 
     private static NavTask__c getTask() {
-        return [SELECT Id, NKS_Task_Type__c, CRM_DueDate__c, INT_Journal_Entry_Id__c, CRM_Priority__c, CRM_Comments__c FROM NavTask__c LIMIT 1];
+        return [SELECT Id, NKS_Task_Type__c, CRM_DueDate__c, INT_Journal_Entry_Id__c, CRM_Priority__c, CRM_Comments__c, NKS_Assignee__c, NKS_Task_Version__c FROM NavTask__c LIMIT 1];
     }
 }

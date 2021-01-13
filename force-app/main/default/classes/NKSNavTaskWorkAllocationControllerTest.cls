@@ -80,4 +80,15 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
         System.assertEquals(1, result.units.size(), 'Expected one unit');
         System.assertEquals(unit1.Id, result.units[0].sfId, 'Expected to the sf id populated with the correct Id');
     }
+
+    @isTest
+    static void testGetUserNavUnitId() {
+        UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '0701'));
+
+        Test.startTest();
+            String unitId = NKSNavTaskWorkAllocationController.getUserNavUnitId('0701');
+        Test.stopTest();
+
+        System.assert(String.isNotBlank(unitId));
+    }
 }
