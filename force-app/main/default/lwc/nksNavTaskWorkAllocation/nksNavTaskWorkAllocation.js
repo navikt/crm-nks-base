@@ -72,7 +72,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @wire(getRecord, { recordId: '$selectedId', fields: [ID_FIELD, NAME_FIELD, UNIT_NUMBER_FIELD] })
     navUnit;
 
-    @wire(getRecord, { recordId: USER_ID, fields: USER_NAV_UNIT_FIELD, USER_NAV_IDENT_FIELD })
+    @wire(getRecord, { recordId: USER_ID, fields: [USER_NAV_UNIT_FIELD, USER_NAV_IDENT_FIELD] })
     wireUser({
         error,
         data
