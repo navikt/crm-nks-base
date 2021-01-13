@@ -36,7 +36,7 @@ public with sharing class NKS_HomePageController {
             Record record = new Record();
             record.recordId = r.Id;
             record.name = r.get(title).toString(); 
-            record.modifiedDate = Datetime.valueOf(r.get('LastModifiedDate'));
+            record.modifiedDate = Datetime.valueOf(r.get('CreatedDate'));
             if(showimage) record.imageurl = getImageUrl(r.Id); 
             if(content != null) {  
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', ''); 
