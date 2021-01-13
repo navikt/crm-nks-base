@@ -212,7 +212,7 @@ public with sharing class NKS_NavTaskManager {
         private Long id;
         @testVisible
         private String tildeltEnhetsnr;
-        private String versjon; //Version number of the task need for the path/edit callout
+        private String versjon; //Version number of the task needed for the patch/edit callout
     }
 
     private class OppgaveRequest {
