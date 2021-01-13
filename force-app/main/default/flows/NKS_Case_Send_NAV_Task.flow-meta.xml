@@ -134,6 +134,13 @@
                 <elementReference>Get_Case.AccountId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>workAllocation.assignedResource</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>

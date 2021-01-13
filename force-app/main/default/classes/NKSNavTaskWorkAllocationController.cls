@@ -24,5 +24,10 @@ public with sharing class NKSNavTaskWorkAllocationController {
 
             unit.sfId = null == unit ? '' : sfUnit.Id;
         }
-    } 
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static String getUserNavUnitId(String userUnitNumber) {
+        return [SELECT Id FROM NavUnit__c WHERE INT_UnitNumber__c =: userUnitNumber]?.Id;
+    }
 }

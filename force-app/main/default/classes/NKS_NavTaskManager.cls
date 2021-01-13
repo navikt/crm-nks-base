@@ -212,6 +212,7 @@ public with sharing class NKS_NavTaskManager {
         private Long id;
         @testVisible
         private String tildeltEnhetsnr;
+        private String versjon; //Version number of the task need for the path/edit callout
     }
 
     private class OppgaveRequest {
@@ -250,6 +251,7 @@ public with sharing class NKS_NavTaskManager {
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.CRM_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
+            tilordnetRessurs = task.NKS_Assignee__c;  //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;

@@ -13,9 +13,9 @@
                 <property name="theme" type="String" label="Theme: (Salesforce ID)"/>
                 <property name="subtheme" type="String" label="Subtheme: (Salesforce ID)"/>
 
-                <property name="themeGroupCode" type="String" label="Output theme group code from kodeverk"/>
-                <property name="themeCode" type="String" label="Output theme code from kodeverk"/>
-                <property name="subthemeCode" type="String" label="Output subtheme code from kodeverk"/>
+                <property name="themeGroupCode" type="String" label="Output theme group code from kodeverk" role="outputonly"/>
+                <property name="themeCode" type="String" label="Output theme code from kodeverk" role="outputonly"/>
+                <property name="subthemeCode" type="String" label="Output subtheme code from kodeverk" role="outputonly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

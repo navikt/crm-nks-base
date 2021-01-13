@@ -1,10 +1,14 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
 import getWorkAllocations from '@salesforce/apex/NKSNavTaskWorkAllocationController.getWorkAllocations';
+import getUserNavUnit from '@salesforce/apex/NKSNavTaskWorkAllocationController.getUserNavUnitId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import ID_FIELD from '@salesforce/schema/NavUnit__c.Id';
 import NAME_FIELD from '@salesforce/schema/NavUnit__c.Name';
 import UNIT_NUMBER_FIELD from '@salesforce/schema/NavUnit__c.INT_UnitNumber__c';
+import USER_ID from '@salesforce/user/Id';
+import USER_NAV_UNIT_FIELD from '@salesforce/schema/User.Department';
+import USER_NAV_IDENT_FIELD from '@salesforce/schema/User.CRM_NAV_Ident__c';
 
 import {
     subscribe,
@@ -14,8 +18,14 @@ import {
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Nav_Task_Work_Allocation_Validation_Error';
+import DELEGATE_TO_SELF_LABEL from '@salesforce/label/c.NKS_Nav_Task_Work_Allocation_Delegate_to_Self';
 
 export default class NksNavTaskWorkAllocation extends LightningElement {
+    labels = {
+        VALIDATION_ERROR,
+        DELEGATE_TO_SELF_LABEL
+    }
+
     @api personId;
     @api taskType;
     @api themeGroup;
@@ -25,6 +35,9 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     isSearching;
     errorMessage;
     selectedId;
+    runningUserUnitNumber;
+    runningUserIdent;
+    delegateToSelf = false;
 
     @api
     get selectedUnitName() {
@@ -44,11 +57,31 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         return value ? value : '';
     }
 
+    @api
+    get assignedResource() {
+        return this.delegateToSelf === true ? this.runningUserIdent : null;
+    }
+
+    get navUnitInputDisabled() {
+        return this.isSearching || this.delegateToSelf === true;
+    }
+
     @wire(MessageContext)
     messageContext;
 
     @wire(getRecord, { recordId: '$selectedId', fields: [ID_FIELD, NAME_FIELD, UNIT_NUMBER_FIELD] })
     navUnit;
+
+    @wire(getRecord, { recordId: USER_ID, fields: USER_NAV_UNIT_FIELD, USER_NAV_IDENT_FIELD })
+    wireUser({
+        error,
+        data
+    }) {
+        if (data) {
+            this.runningUserIdent = data.fields.CRM_NAV_Ident__c.value;
+            this.runningUserUnitNumber = data.fields.Department.value;
+        }
+    }
 
     connectedCallback() {
         this.subscribeToMessageChannel();
@@ -131,9 +164,19 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         }
     }
 
+    @wire(getUserNavUnit, { userUnitNumber: '$runningUserUnitNumber' })
+    userNavUnitId;
+
+
     onChange(event) {
         let ids = event.detail.value;
         this.selectedId = ids && 1 === ids.length ? ids[0] : null;
+    }
+
+    delegationChange(event) {
+        this.delegateToSelf = event.target.checked;
+
+        this.selectedId = this.delegateToSelf === true ? this.userNavUnitId.data : null;
     }
 
     @api

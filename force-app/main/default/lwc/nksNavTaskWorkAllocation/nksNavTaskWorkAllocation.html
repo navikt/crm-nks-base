@@ -1,8 +1,11 @@
 <template>
     <template if:true={showContent}>
+        <lightning-input type="checkbox" label={labels.DELEGATE_TO_SELF_LABEL} name="delegateInput"
+            checked={delegateToSelf} onchange={delegationChange}>
+        </lightning-input>
         <lightning-record-edit-form object-api-name="NavTask__c">
             <lightning-input-field field-name="CRM_NavUnit__c" required="true" value={selectedId}
-                variant="label-stacked" disabled={isSearching} onchange={onChange}>
+                variant="label-stacked" disabled={navUnitInputDisabled} onchange={onChange}>
             </lightning-input-field>
         </lightning-record-edit-form>
     </template>
