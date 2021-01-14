@@ -141,6 +141,13 @@
                 <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Name</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>
@@ -228,6 +235,12 @@
 5, {!$Flow.CurrentDate} + 2,
 6, {!$Flow.CurrentDate}+ 2,
 TODAY())</expression>
+    </formulas>
+    <formulas>
+        <description>Default name for the task generated.</description>
+        <name>Task_Name</name>
+        <dataType>String</dataType>
+        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
     <interviewLabel>Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
