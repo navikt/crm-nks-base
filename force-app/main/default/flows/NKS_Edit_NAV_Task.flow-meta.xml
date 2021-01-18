@@ -324,6 +324,7 @@ TODAY())</expression>
         </faultConnector>
         <inputReference>NavTask</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
