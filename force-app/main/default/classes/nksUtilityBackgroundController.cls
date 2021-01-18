@@ -4,13 +4,14 @@ public with sharing class nksUtilityBackgroundController {
         try {
             String tabname; 
             SObjectType objectName = Id.valueOf(recordId).getSobjectType(); 
-            if(objectName == Schema.Case.getSObjectType()) {
-                tabname = [SELECT Name, LiveChatButton.DeveloperName, CaseId FROM LiveChatTranscript WHERE CaseId =: recordId]?.LiveChatButton.DeveloperName.replace('_',' ');
+            
+            if(objectName == Schema.LiveChatTranscript.getSObjectType()) {
+                tabname = [SELECT Name, LiveChatButton.DeveloperName FROM LiveChatTranscript WHERE Id =: recordId]?.LiveChatButton?.DeveloperName.replace('_',' ');
+            }
+            /*else if(objectName == Schema.Case.getSObjectType()) {
+                tabname = [SELECT Name, LiveChatButton.DeveloperName, CaseId FROM LiveChatTranscript WHERE CaseId =: recordId]?.LiveChatButton?.DeveloperName.replace('_',' ');
                 //TODO: Finn ut hva case tab name skal være 
-            }
-            else if(objectName == Schema.LiveChatTranscript.getSObjectType()) {
-                tabname = [SELECT Name, LiveChatButton.DeveloperName FROM LiveChatTranscript WHERE Id =: recordId]?.LiveChatButton.DeveloperName.replace('_',' ');
-            }
+            }*/
             return tabname; 
             
         } catch (Exception e) {

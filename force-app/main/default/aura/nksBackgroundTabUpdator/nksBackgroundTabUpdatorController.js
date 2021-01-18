@@ -9,7 +9,6 @@
             action.setParams({ "recordId": response.recordId });
             action.setCallback(this, function (data) {
                 if (data.getReturnValue().length > 0) {
-                    console.log('teeRETURN' + data.getReturnValue());
                     workspace.setTabLabel({
                         tabId: newTabId,
                         label: data.getReturnValue(),

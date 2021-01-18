@@ -421,7 +421,6 @@
         <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos; AND Group.DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Update User</label>
     <loops>
         <name>Loop_Picklist_Values</name>
@@ -537,8 +536,8 @@
     <recordUpdates>
         <name>Set_chat_user</name>
         <label>Set chat user</label>
-        <locationX>1848</locationX>
-        <locationY>398</locationY>
+        <locationX>1850</locationX>
+        <locationY>396</locationY>
         <connector>
             <targetReference>Edit_Alias</targetReference>
         </connector>
@@ -549,6 +548,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CRM_NAV_Ident__c</field>
+            <value>
+                <elementReference>NAV_Ident</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>UserPermissionsLiveAgentUser</field>
             <value>
@@ -619,6 +624,16 @@
             <name>display</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NAV_Ident</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_User.CRM_NAV_Ident__c</elementReference>
+            </defaultValue>
+            <fieldText>NAV Ident</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Chat_user_permission</name>
