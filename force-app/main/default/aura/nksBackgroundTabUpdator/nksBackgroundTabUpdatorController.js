@@ -2,6 +2,9 @@
     onTabCreated: function (component, event, helper) {
         var newTabId = event.getParam('tabId');
         var workspace = component.find("workspace");
+        workspace.focusTab({
+            tabId: newTabId
+        })
         workspace.getTabInfo({
             tabId: newTabId
         }).then(function (response) {
