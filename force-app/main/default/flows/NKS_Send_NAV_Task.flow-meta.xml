@@ -233,6 +233,7 @@
         </faultConnector>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
