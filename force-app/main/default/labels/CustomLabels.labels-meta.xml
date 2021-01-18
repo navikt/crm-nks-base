@@ -81,6 +81,14 @@
         <value>Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
+        <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
+        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nav Task Work Allocation Delegate to Self</shortDescription>
+        <value>Send til meg</value>
+    </labels>
+    <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Validation_Error</fullName>
         <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>

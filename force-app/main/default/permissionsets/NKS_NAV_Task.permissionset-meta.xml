@@ -72,6 +72,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NavTask__c.INT_Journal_Entry_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Assignee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavTask__c.NKS_Gosys_Link__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -88,6 +98,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NavTask__c.NKS_Task_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Task_Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

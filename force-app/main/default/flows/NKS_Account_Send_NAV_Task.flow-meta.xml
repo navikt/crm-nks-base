@@ -62,7 +62,7 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>176</locationX>
+        <locationX>177</locationX>
         <locationY>457</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
@@ -134,6 +134,20 @@
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>workAllocation.assignedResource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Name</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>
@@ -195,6 +209,12 @@
 5, {!$Flow.CurrentDate} + 2,
 6, {!$Flow.CurrentDate}+ 2,
 TODAY())</expression>
+    </formulas>
+    <formulas>
+        <description>Default name of the generated task</description>
+        <name>Task_Name</name>
+        <dataType>String</dataType>
+        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
     <interviewLabel>Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
@@ -269,6 +289,7 @@ TODAY())</expression>
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>

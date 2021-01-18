@@ -46,7 +46,7 @@ public with sharing class NKS_NavTaskManager {
                 OppgaveResponse apiResp = (OppgaveResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), OppgaveResponse.class);
                 task.INT_External_Reference__c = apiResp.id;
                 task.CRM_NavUnit__c = [SELECT Id FROM NavUnit__c WHERE INT_UnitNumber__c =: apiResp.tildeltEnhetsnr LIMIT 1]?.Id;  //Setting the appropriate NAV unit received from the API
-                task.NKS_Gosys_Link__c = apiCtrl.getResponse().getHeader('location');
+                task.NKS_Gosys_Link__c = apiCtrl.getResponse().getHeader('Location');
                 resp.setResponse(true, null, task);
             }
             else{
@@ -80,7 +80,8 @@ public with sharing class NKS_NavTaskManager {
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
         //External reference for the specific task as a URL path paramter
-        Map<String, String> paramMap = new Map<String, String> {'id' => String.valueOf(task.INT_External_Reference__c)};
+        //When field is queried by flow a zero decimal is added even though the field is without decimals. Workaround by converting to INT before converting to String.
+        Map<String, String> paramMap = new Map<String, String> {'id' => String.valueOf(Integer.valueOf(task.INT_External_Reference__c))};
         apiCtrl.initRequest('Oppgave_API', 'PATCH_EDIT_OPPGAVE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');
         apiCtrl.setHeaders(httpHeaders);
@@ -94,6 +95,8 @@ public with sharing class NKS_NavTaskManager {
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if(statusCode == 200 || statusCode == 201) {
+                OppgaveResponse apiResp = (OppgaveResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), OppgaveResponse.class);
+                task.NKS_Task_Version__c = apiResp.versjon;
                 resp.setResponse(true, null, task);
             }
             else{
@@ -212,9 +215,12 @@ public with sharing class NKS_NavTaskManager {
         private Long id;
         @testVisible
         private String tildeltEnhetsnr;
+        @testVisible
+        private Integer versjon; //Version number of the task needed for the patch/edit callout
     }
 
     private class OppgaveRequest {
+        private Integer id;
         private String tildeltEnhetsnr; //Enheten oppgaven er tildelt. Dersom enhet ikke er angitt, så vil oppgaven automatisk fordeles iht. standard arbeidsfordelingsregler (se norg2)
         private String opprettetAvEnhetsnr;
         private String aktoerId;
@@ -232,6 +238,7 @@ public with sharing class NKS_NavTaskManager {
         private String aktivDato; //Datestring, REQUIRED 
         private String fristFerdigstillelse; //Datestring
         private String prioritet; // [HOY, NORM, LAV], 
+        private Integer versjon;
         
         public OppgaveRequest(){
             
@@ -250,7 +257,10 @@ public with sharing class NKS_NavTaskManager {
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.CRM_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
+            tilordnetRessurs = task.NKS_Assignee__c;  //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
+            versjon = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.NKS_Task_Version__c) : null;
+            id = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.INT_External_Reference__c) : null;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;

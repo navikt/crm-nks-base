@@ -21,6 +21,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>assignToUnitNumber</name>
+            <value>
+                <elementReference>Get_NAV_Task.CRM_NavUnit__r.INT_UnitNumber__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>createdByUnitNumber</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>requestType</name>
             <value>
                 <stringValue>POST</stringValue>
@@ -98,6 +110,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_NAV_Task.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.NKS_Assignee__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -214,6 +233,7 @@
         </faultConnector>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
