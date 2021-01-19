@@ -11,7 +11,7 @@
             var action = component.get("c.getTabName");
             action.setParams({ "recordId": response.recordId });
             action.setCallback(this, function (data) {
-                if (data.getReturnValue().length > 0) {
+                if (data.getReturnValue() != null && data.getReturnValue().length > 0) {
                     workspace.setTabLabel({
                         tabId: newTabId,
                         label: data.getReturnValue(),
