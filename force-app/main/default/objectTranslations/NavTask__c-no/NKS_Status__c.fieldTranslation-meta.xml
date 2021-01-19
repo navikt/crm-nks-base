@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Status --></label>
+    <name>NKS_Status__c</name>
+    <picklistValues>
+        <masterLabel>Created</masterLabel>
+        <translation>Opprettet</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Done</masterLabel>
+        <translation>Ferdigstilt</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>In Progress</masterLabel>
+        <translation>Under behandling</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Incorrectly Registered</masterLabel>
+        <translation>Feilregistrert</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Opened</masterLabel>
+        <translation>Åpnet</translation>
+    </picklistValues>
+</CustomFieldTranslation>
