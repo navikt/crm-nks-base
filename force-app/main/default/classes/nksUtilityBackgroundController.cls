@@ -18,4 +18,9 @@ public with sharing class nksUtilityBackgroundController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    @AuraEnabled
+    public static string getOnlineId(){
+        String statusId = String.valueOf([SELECT Id FROM ServicePresenceStatus WHERE DeveloperName = 'Available_for_Chat']?.Id); 
+        return statusId.substring(0,15); 
+    }
 }
