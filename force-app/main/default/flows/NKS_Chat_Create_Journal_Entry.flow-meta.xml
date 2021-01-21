@@ -654,7 +654,7 @@
     <assignments>
         <name>Set_NAV_Task_Failed</name>
         <label>Set NAV Task Failed</label>
-        <locationX>1503</locationX>
+        <locationX>1495</locationX>
         <locationY>1457</locationY>
         <assignmentItems>
             <assignToReference>NavTask_Failed</assignToReference>
@@ -1098,16 +1098,22 @@ TODAY())</expression>
         <label>Update Transcript</label>
         <locationX>1367</locationX>
         <locationY>1386</locationY>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0</targetReference>
+        </faultConnector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Transcript_0</name>
         <label>Update Transcript</label>
-        <locationX>1503</locationX>
+        <locationX>1494</locationX>
         <locationY>1621</locationY>
         <connector>
             <targetReference>Set_NAV_Task_Failed</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0</targetReference>
+        </faultConnector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -1535,6 +1541,46 @@ TODAY())</expression>
         <locationY>1621</locationY>
         <connector>
             <targetReference>Set_Chat_Journal_Data_0</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0_0_0</name>
+        <label>Create App Log</label>
+        <locationX>1760</locationX>
+        <locationY>1395</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
