@@ -21,5 +21,13 @@ public with sharing class nksUtilityBackgroundControllerTest {
         System.assertEquals(null, tablabelchat, 'Should be null because there is no chat button connected to the transcript');
         System.assertEquals(null, tablabelcase, 'Should be null because there is no chat connected to the case');
     }
+
+    @isTest
+    static void getOnlineIdTest(){
+        Test.startTest(); 
+        String onlineid = nksUtilityBackgroundController.getOnlineId(); 
+        Test.stopTest(); 
+        System.assertNotEquals(null, onlineid); 
+    }
 }
 
