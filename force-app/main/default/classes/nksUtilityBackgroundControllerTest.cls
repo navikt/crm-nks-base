@@ -5,7 +5,6 @@ public with sharing class nksUtilityBackgroundControllerTest {
         NKS_TestDataFactory.createLiveChatTranscripts(1);
         NKS_TestDataFactory.createPersons(1); 
         NKS_TestDataFactory.createCase('Test0'); 
-
     }
 
     @isTest
