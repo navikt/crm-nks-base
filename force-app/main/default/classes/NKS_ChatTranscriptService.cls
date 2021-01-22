@@ -16,6 +16,8 @@ public class NKS_ChatTranscriptService {
         DateTime chatEnd = DateTime.now(); //Method is called when endChat event is received
         LiveChatTranscript chatTranscript = getChatDetails(chatId);
         DateTime authTimestamp = chatTranscript.NKS_Authentication_Timestamp__c;
+
+        if(chatTranscript.NKS_Conversation_Stored__c == true) return; //Chat ended event is sent multiple times, handle not performing unnecesary DML
         
         if(String.isNotBlank(chatTranscript.Case.Description)) { 
             conversation += formatBotConversation(chatTranscript);
@@ -34,7 +36,7 @@ public class NKS_ChatTranscriptService {
             conversation += msg.getFormattedMsg(chatTranscript.LiveChatButton?.WindowLanguage);
         }
 
-        update new LiveChatTranscript(Id = chatId, 	NKS_Conversation__c = conversation);
+        update new LiveChatTranscript(Id = chatId, 	NKS_Conversation__c = conversation, NKS_Conversation_Stored__c = true);
     }
 
     /**
@@ -84,7 +86,7 @@ public class NKS_ChatTranscriptService {
 
     private static LiveChatTranscript getChatDetails(String chatId) {
         return [SELECT NKS_Agent_Greeting_Name__c, Body, NKS_Conversation__c, Case.Description, 
-                NKS_Authentication_Timestamp__c, LiveChatButton.WindowLanguage FROM LiveChatTranscript WHERE Id =: chatId FOR UPDATE];
+                NKS_Authentication_Timestamp__c, LiveChatButton.WindowLanguage, NKS_Conversation_Stored__c FROM LiveChatTranscript WHERE Id =: chatId FOR UPDATE];
     }
 
     private class Message{
