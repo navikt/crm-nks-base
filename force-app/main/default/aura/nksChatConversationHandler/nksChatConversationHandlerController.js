@@ -14,7 +14,7 @@
                     return message.type !== 'Supervisor';
                 });
 
-                helper.callStoreConversation(component, filteredConversation);
+                helper.callStoreConversation(component, filteredConversation, eventRecordId);
             })
             .catch(error => {
                 //Errors require manual handling.

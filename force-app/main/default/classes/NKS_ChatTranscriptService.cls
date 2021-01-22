@@ -34,7 +34,7 @@ public class NKS_ChatTranscriptService {
             conversation += msg.getFormattedMsg(chatTranscript.LiveChatButton?.WindowLanguage);
         }
 
-        update new LiveChatTranscript(Id = chatId, 	NKS_Conversation__c = conversation, NKS_Conversation_Stored__c = true);
+        update new LiveChatTranscript(Id = chatId, 	NKS_Conversation__c = conversation);
     }
 
     /**
@@ -84,7 +84,7 @@ public class NKS_ChatTranscriptService {
 
     private static LiveChatTranscript getChatDetails(String chatId) {
         return [SELECT NKS_Agent_Greeting_Name__c, Body, NKS_Conversation__c, Case.Description, 
-                NKS_Authentication_Timestamp__c, LiveChatButton.WindowLanguage FROM LiveChatTranscript WHERE Id =: chatId AND NKS_Conversation_Stored__c = false FOR UPDATE];
+                NKS_Authentication_Timestamp__c, LiveChatButton.WindowLanguage FROM LiveChatTranscript WHERE Id =: chatId FOR UPDATE];
     }
 
     private class Message{
