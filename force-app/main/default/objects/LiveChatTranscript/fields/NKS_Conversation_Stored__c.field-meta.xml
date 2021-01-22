@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Conversation_Stored__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Value set to true when transcript service successfully stores the formatted conversation ready for journal entry.</description>
+    <externalId>false</externalId>
+    <label>Conversation Stored</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

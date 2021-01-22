@@ -1,9 +1,9 @@
 ({
-    callStoreConversation: function (component, conversation) {
+    callStoreConversation: function (component, conversation, recordId) {
         let storeAction = component.get("c.storeConversation");
 
         storeAction.setParams({
-            chatId: component.get("v.recordId"),
+            chatId: recordId,
             jsonConversation: JSON.stringify(conversation)
         });
 

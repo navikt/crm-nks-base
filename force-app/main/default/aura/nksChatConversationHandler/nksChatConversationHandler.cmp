@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId"
+<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId, lightning:backgroundUtilityItem"
     controller="NKS_ChatTranscriptService">
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
     <aura:handler event="lightning:conversationChatEnded" action="{!c.handleChatEnded}" />
