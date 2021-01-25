@@ -10,6 +10,11 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nksChatConversationHandler</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
