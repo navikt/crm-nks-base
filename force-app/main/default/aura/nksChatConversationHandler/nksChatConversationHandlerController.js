@@ -10,8 +10,8 @@
             .then(result => {
                 let conversation = result.messages;
                 let filteredConversation = conversation.filter(function (message, index, arr) {
-                    //Filtering out all messages of type supervisor as these are "whispers" and should not be added to the journal
-                    return message.type !== 'Supervisor';
+                    //Filtering out all messages of type supervisor and AgentWhisper as these are "whispers" and should not be added to the journal
+                    return message.type !== 'Supervisor' && message.type !== 'AgentWhisper';
                 });
 
                 helper.callStoreConversation(component, filteredConversation, eventRecordId);
