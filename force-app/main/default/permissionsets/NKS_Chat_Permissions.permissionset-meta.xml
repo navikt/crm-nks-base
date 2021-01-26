@@ -4,6 +4,10 @@
         <apexClass>ChatAuthController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>nksUtilityBackgroundController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Necessary object permissions needed to give a user access to chat functionality.</description>
     <fieldPermissions>
         <editable>false</editable>
