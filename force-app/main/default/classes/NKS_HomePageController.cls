@@ -6,7 +6,7 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<Record> getList(String title, String content, String objectName, String filter, String orderby, String limitNumber, Boolean showimage) {
+    public static List<Record> getList(String title, String content, String objectName, String filter, String orderby, String limitNumber, String datefield, Boolean showimage) {
         List<Record> records = new List<Record>();
 
         String query = 'SELECT LastModifiedDate, CreatedDate ,' + title;
@@ -17,7 +17,7 @@ public with sharing class NKS_HomePageController {
         if(limitNumber != null) query += ' LIMIT ' + limitNumber; 
 
         List<SObject> listtoreturn = Database.query(query);
-        records = createRecords(listtoreturn, objectName, title, content, showimage); 
+        records = createRecords(listtoreturn, objectName, title, content, datefield, showimage); 
         return records; 
     }
 
@@ -30,13 +30,13 @@ public with sharing class NKS_HomePageController {
         @AuraEnabled public String imageurl; 
     }
 
-    private static List<Record> createRecords(List<sObject> listofrecords, String objectName, String title, String content, Boolean showimage){
+    private static List<Record> createRecords(List<sObject> listofrecords, String objectName, String title, String content, String datefield, Boolean showimage){
         List<Record> records = new List<Record>();
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
             record.name = r.get(title).toString(); 
-            record.modifiedDate = Datetime.valueOf(r.get('CreatedDate'));
+            record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if(showimage) record.imageurl = getImageUrl(r.Id); 
             if(content != null) {  
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', ''); 
