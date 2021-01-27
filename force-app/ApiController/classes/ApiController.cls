@@ -107,7 +107,7 @@ public virtual class ApiController {
         Matcher m = p.matcher(inputPath);
         while(m.find()) {
             String matcherParam = m.group(0).remove('{').remove('}');
-            if(!paramMap.containsKey(matcherParam)) throw new InvalidPathParamException('Missing parameter in paramMap: ' + matcherParam);
+            if(paramMap == null || !paramMap.containsKey(matcherParam)) throw new InvalidPathParamException('Missing parameter in paramMap: ' + matcherParam);
         }
     }
 

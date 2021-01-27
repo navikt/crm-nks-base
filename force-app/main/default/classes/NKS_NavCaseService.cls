@@ -15,12 +15,10 @@ public class NKS_NavCaseService {
     public static List<NavCaseWrapper> getNavCases(String actorId) {
         ApiController apiCtrl = new ApiController();
 
-        //apiCtrl.initRequest('SAK_OG_BEHANDLING_API', 'GET_NAV_CASES');
+        Map<String, String> pathParams = new Map<String, String> {'actorId' => actorId};
+        apiCtrl.initRequest('SAK_OG_BEHANDLING_API', 'GET_NAV_CASES', pathParams);
         apiCtrl.setBody(JSON.serialize(new FinnSakOgBehandlingskjedeListeRequest(actorId)));
-        List<NavCaseWrapper> navCases = new List<NavCaseWrapper>{new NavCaseWrapper('DGP', '000012974'), new NavCaseWrapper('BAR', '000012975')};
-        addThemeFriendlyName(navCases);
-        return navCases;
-        /*apiCtrl.doCallout();
+        apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if(statusCode == 200 || statusCode == 201) {
             List<NavCaseWrapper> responseList = (List<NavCaseWrapper>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NavCaseWrapper>.class);
@@ -30,12 +28,12 @@ public class NKS_NavCaseService {
         else{
             LoggerUtility logger = new LoggerUtility();
             logger.error('Error retrieving person cases \n ' + 'Status: ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
-            logger.peek().Pay_Load__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());
+            logger.peek().Payload__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());
             logger.publish();
             AuraHandledException ex = new AuraHandledException('Something crashed..');
             ex.setMessage('Something crashed');
             throw ex;
-        }*/
+        }
     }
 
     private static void addThemeFriendlyName(List<NavCaseWrapper> navCases) {

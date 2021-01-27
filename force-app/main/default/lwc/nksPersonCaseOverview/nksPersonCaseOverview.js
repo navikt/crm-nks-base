@@ -1,6 +1,9 @@
 import { LightningElement, api, wire } from 'lwc';
 import getCases from '@salesforce/apex/NKS_NavCaseService.getNavCases';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
+import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+
+import { publish, MessageContext } from 'lightning/messageService';
 
 //##LABEL IMPORTS
 import NAV_CASE_TITLE from '@salesforce/label/c.NKS_NAV_Case_Title';
@@ -24,6 +27,19 @@ export default class NksPersonCaseOverview extends LightningElement {
     themeMap;
     dataLoaded = false;
     error = false;
+    selectedCaseType = 'FAGSAK'; //Default value
+
+    caseTypeOptions = [
+        { label: 'Fagsak', value: 'FAGSAK' },
+        { label: 'Generell', value: 'GENERELL_SAK' }
+    ];
+
+    renderedCallback() {
+        this.setSelectedNavCase(this.selectedCaseId);
+    }
+
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getCategorization, {})
     categoryResults({ data, error }) {
@@ -47,8 +63,6 @@ export default class NksPersonCaseOverview extends LightningElement {
             this.themeGroupOptions = themeGroups;
             this.themeMap = mappedThemes;
         }
-        this.dataLoaded = data || error;
-        if (error) this.error = true;
     }
 
     @wire(getCases, { actorId: '' })
@@ -59,10 +73,14 @@ export default class NksPersonCaseOverview extends LightningElement {
         if (data) {
             this.caseList = data;
             this.displayedCases = this.caseList;
+
         }
         else {
+            this.error = true;
             console.log(JSON.stringify(error, null, 2));
         }
+        this.dataLoaded = data || error;
+        this.error = !data && error;
     }
 
     //Handles the nksNavCaseItem click event and updates the selected attribute for all the childs
@@ -70,6 +88,11 @@ export default class NksPersonCaseOverview extends LightningElement {
         let selectedNavCaseId = event.detail.selectedCase.saksId;
         this.selectedCase = event.detail.selectedCase;
 
+        this.setSelectedNavCase(selectedNavCaseId);
+        this.publishFieldChange('themeCode', this.selectedCaseTheme);
+    }
+
+    setSelectedNavCase(selectedNavCaseId) {
         let caseItems = this.template.querySelectorAll('c-nks-nav-case-item');
         caseItems.forEach(caseItem => {
             caseItem.selected = caseItem.navCase.saksId == selectedNavCaseId ? true : false;
@@ -87,13 +110,18 @@ export default class NksPersonCaseOverview extends LightningElement {
             this.displayedCases = this.caseList.filter(navCase => {
                 return this.themeMap[themeGroup].includes(navCase.sakstema);
             })
-            console.log(themeGroup);
         }
     }
 
-    //Support pagination if 
-    paginate(event) {
+    handleCaseTypeChange(event) {
+        this.selectedCase = null;
+        this.selectedCaseType = event.detail.value;
+    }
 
+    //Publish to nksWorkAllocation component to trigger search in flow context
+    publishFieldChange(field, value) {
+        const payload = { name: field, value: value };
+        publish(this.messageContext, nksSingleValueUpdate, payload);
     }
 
     @api
@@ -106,8 +134,9 @@ export default class NksPersonCaseOverview extends LightningElement {
         return this.selectedCase ? this.selectedCase.sakstema : null;
     }
 
-    get isLoading() {
-        return this.caseList.length === 0;
+    @api
+    get navCaseType() {
+        return this.selectedCaseType;
     }
 
     get title() {

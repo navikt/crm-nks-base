@@ -13,6 +13,7 @@
                 <property name="actorId" type="String" label="Actor ID:" role="inputOnly"/>
                 <property name="selectedCaseId" type="String" label="NAV Case ID" role="outputOnly"/>
                 <property name="selectedCaseTheme" type="String" label="NAV Case Theme" role="outputOnly"/>
+                <property name="navCaseType" type="String" label="NAV Case Type" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -96,7 +96,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     }
 
     get showContent() {
-        return (null != this.personId && null != this.themeGroup && null != this.theme && null != this.taskType);
+        return (null != this.personId && null != this.theme && null != this.taskType);
     }
 
     //Lightning message service subscribe

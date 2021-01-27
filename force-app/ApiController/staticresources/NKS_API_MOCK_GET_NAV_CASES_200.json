@@ -1,0 +1,16 @@
+[
+    {
+        "saksId": "000012974",
+        "opprettet": "2021-01-12T18:25:43.511Z",
+        "lukket": null,
+        "behandlingskjede": null,
+        "sakstema": "DAG"
+    },
+    {
+        "saksId": "000012975",
+        "opprettet": "2021-01-12T18:25:43.511Z",
+        "lukket": null,
+        "behandlingskjede": null,
+        "sakstema": "BAR"
+    }
+]
