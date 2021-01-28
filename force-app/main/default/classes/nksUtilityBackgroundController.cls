@@ -6,7 +6,7 @@ public with sharing class nksUtilityBackgroundController {
             SObjectType objectName = Id.valueOf(recordId).getSobjectType(); 
             
             if(objectName == Schema.LiveChatTranscript.getSObjectType()) {
-                tabname = [SELECT Name, LiveChatButton.DeveloperName FROM LiveChatTranscript WHERE Id =: recordId]?.LiveChatButton?.DeveloperName.replace('_',' ');
+                tabname = [SELECT Name, LiveChatButton.DeveloperName, LiveChatButton.MasterLabel FROM LiveChatTranscript WHERE Id =: recordId]?.LiveChatButton?.MasterLabel.replace('_',' ');
             }
             /*else if(objectName == Schema.Case.getSObjectType()) {
                 tabname = [SELECT Name, LiveChatButton.DeveloperName, CaseId FROM LiveChatTranscript WHERE CaseId =: recordId]?.LiveChatButton?.DeveloperName.replace('_',' ');
