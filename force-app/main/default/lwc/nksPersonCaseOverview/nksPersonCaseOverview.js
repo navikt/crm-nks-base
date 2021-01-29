@@ -108,7 +108,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
         else {
             this.displayedCases = this.caseList.filter(navCase => {
-                return this.themeMap[themeGroup].includes(navCase.sakstema);
+                return this.themeMap[themeGroup].includes(navCase.sakstema.value);
             })
         }
     }
@@ -131,7 +131,7 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @api
     get selectedCaseTheme() {
-        return this.selectedCase ? this.selectedCase.sakstema : null;
+        return this.selectedCase ? this.selectedCase.sakstema.value : null;
     }
 
     @api

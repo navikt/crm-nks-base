@@ -38,7 +38,7 @@ public class NKS_NavCaseService {
 
     private static void addThemeFriendlyName(List<NavCaseWrapper> navCases) {
         for (NavCaseWrapper navCase : navCases) {
-            navCase.themeName = themeMap.containsKey(navCase.sakstema) ? themeMap.get(navCase.saksTema) : '';
+            navCase.themeName = themeMap.containsKey(navCase.sakstema.value) ? themeMap.get(navCase.sakstema.value) : '';
         }
     }
 
@@ -57,8 +57,11 @@ public class NKS_NavCaseService {
 
     private class NavCaseWrapper {
         public NavCaseWrapper(String theme, String caseId){
+            sakstema sTheme = new sakstema();
+            sTheme.value = theme;
+            
             this.saksId = caseId;
-            this.sakstema = theme;
+            this.sakstema = sTheme;
             this.lukket = DateTime.now();
         }
 
@@ -66,8 +69,14 @@ public class NKS_NavCaseService {
         @AuraEnabled public DateTime opprettet;
         @AuraEnabled public DateTime lukket;
         @AuraEnabled public String behandlingskjede;
-        @AuraEnabled public String sakstema;
+        @AuraEnabled public sakstema sakstema;
         @AuraEnabled public String themeName;
+    }
+
+    private class sakstema {
+        @AuraEnabled public String value; //Kodeverks value
+        private String kodeRef; //Check return type
+        private String kodeverksRef;
     }
 
 }

@@ -1230,6 +1230,19 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Person_NAV_Cases</name>
+            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Person.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
             <name>Theme_Categroization</name>
             <extensionName>c:nksThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1241,6 +1254,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>$Flow.CurrentDate</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Create_Task_Toggle</name>

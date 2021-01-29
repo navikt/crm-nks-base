@@ -301,7 +301,14 @@ public virtual class ApiController {
     **/
     private void setMockSettings(String serviceName) {
         try {
-            NKS_APIControllerUseMock__c mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId());
+            //If there is a setting at the user level, this takes precedence, else check for profile level
+            NKS_APIControllerUseMock__c mockSetting;
+            if(NKS_APIControllerUseMock__c.getInstance(UserInfo.getUserId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getUserId());
+            }
+            else if(NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId());
+            }
 
             if(null != mockSetting && true == mockSetting.NKS_UseMock__c) {
                 String fileName = 'NKS_API_MOCK_' + serviceName + '_' + mockSetting.NKS_StatusCode__c;
@@ -317,6 +324,15 @@ public virtual class ApiController {
         } catch(Exception e) {
             //Do nothing
         }
+    }
+
+    public class ApiMock {
+        public Map<String, mockResponse> mockResponses;
+    }
+
+    private class mockResponse {
+        public Map<String, String> headers;
+        public String body;
     }
     
     public class InvalidOperationException extends Exception {}
