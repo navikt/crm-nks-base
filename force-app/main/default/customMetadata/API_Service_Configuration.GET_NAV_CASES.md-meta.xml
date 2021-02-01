@@ -18,11 +18,11 @@
         <field>Mock_Response__c</field>
         <value xsi:type="xsd:string">{
     &quot;200&quot;: {
-        &quot;headers&quot; : null,
+        &quot;headers&quot; :null,
         &quot;body&quot; : [{&quot;saksId&quot;:&quot;000012974&quot;,&quot;opprettet&quot;:&quot;2021-01-12T18:25:43.511Z&quot;,&quot;lukket&quot;:null,&quot;behandlingskjede&quot;:null,&quot;sakstema&quot;:{&quot;value&quot;:&quot;DAG&quot;,&quot;kodeRef&quot;:null,&quot;kodeverksRef&quot;:&quot;http://nav.no/kodeverk/Kodeverk/Sakstemaer&quot;}},{&quot;saksId&quot;:&quot;000012975&quot;,&quot;opprettet&quot;:&quot;2021-01-12T18:25:43.511Z&quot;,&quot;lukket&quot;:null,&quot;behandlingskjede&quot;:null,&quot;sakstema&quot;:{&quot;value&quot;:&quot;BAR&quot;,&quot;kodeRef&quot;:null,&quot;kodeverksRef&quot;:&quot;http://nav.no/kodeverk/Kodeverk/Sakstemaer&quot;}}]
     },
     &quot;401&quot;: {
-        &quot;headers&quot; : null,
+        &quot;headers&quot; :null,
         &quot;body&quot; : null
     }
 }</value>
