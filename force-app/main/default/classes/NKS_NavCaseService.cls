@@ -55,16 +55,8 @@ public class NKS_NavCaseService {
         private DateTime tidspunkt; //If set returns only cases that has a close date after the defined datetime
     }
 
+    @testVisible
     private class NavCaseWrapper {
-        public NavCaseWrapper(String theme, String caseId){
-            sakstema sTheme = new sakstema();
-            sTheme.value = theme;
-            
-            this.saksId = caseId;
-            this.sakstema = sTheme;
-            this.lukket = DateTime.now();
-        }
-
         @AuraEnabled public String saksId;
         @AuraEnabled public DateTime opprettet;
         @AuraEnabled public DateTime lukket;
