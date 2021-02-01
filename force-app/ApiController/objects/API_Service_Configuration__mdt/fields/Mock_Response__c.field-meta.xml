@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Mock_Response__c</fullName>
-    <defaultValue>&quot;{\n&quot; +
-    &quot;\&quot;200\&quot;: {\n&quot; +
-								&quot;\&quot;headers\&quot;: null,\n&quot;+
-								&quot;\&quot;body\&quot;: null\n&quot;+
-					&quot;}\n,&quot; +
-    &quot;\&quot;401\&quot;: {\n&quot; +
-									&quot;\&quot;headers\&quot;: null,\n&quot;+
-										&quot;\&quot;body\&quot;: null\n&quot;+
-					&quot;}\n,&quot; +
-    &quot;\&quot;404\&quot;: {\n&quot; +
-									 &quot;\&quot;headers\&quot;: null,\n&quot;+
-										&quot;\&quot;body\&quot;: null\n&quot;+
-					&quot;}\n,&quot; +
-    &quot;\&quot;500\&quot;: {\n&quot; +
-									 &quot;\&quot;headers\&quot;: null,\n&quot;+
-										&quot;\&quot;body\&quot;: null\n&quot;+
-		 		&quot;}\n&quot; +
+    <defaultValue>&quot;{&quot; + BR() +
+    &quot;\&quot;200\&quot;: {&quot; + BR() +
+								&quot;\&quot;headers\&quot;: null,&quot;+ BR() +
+								&quot;\&quot;body\&quot;: null&quot;+ BR() +
+					&quot;},&quot; + BR() +
+    &quot;\&quot;401\&quot;: {&quot; + BR() +
+									&quot;\&quot;headers\&quot;: null,&quot;+ BR() +
+										&quot;\&quot;body\&quot;: null&quot;+ BR() +
+					&quot;},&quot; + BR() +
+    &quot;\&quot;404\&quot;: {&quot; +
+									 &quot;\&quot;headers\&quot;: null,&quot;+ BR() +
+										&quot;\&quot;body\&quot;: null&quot;+ BR() +
+					&quot;},&quot; + BR() +
+    &quot;\&quot;500\&quot;: {&quot; + BR() +
+									 &quot;\&quot;headers\&quot;: null,&quot;+ BR() +
+										&quot;\&quot;body\&quot;: null&quot;+ BR() +
+		 		&quot;}&quot; + BR() +
 &quot;}&quot;</defaultValue>
     <description>JSON formatted mock response</description>
     <externalId>false</externalId>
