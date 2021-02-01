@@ -8,7 +8,6 @@
     <aura:attribute name="conversation" type="object[]" />
 
     <lightning:conversationToolkitApi aura:id="chatToolkit" />
-    <aura:handler event="lightning:conversationChatEnded" action="{!c.handleChatEnded}" />
 
     <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
         caseFields="{!v.caseFields}" accountFields="{!v.accountFields}" personFields="{!v.personFields}"
