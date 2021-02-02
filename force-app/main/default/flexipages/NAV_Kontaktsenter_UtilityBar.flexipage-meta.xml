@@ -50,6 +50,11 @@
                 <componentName>nksChatConversationHandler</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>nksBackgroundTabUpdator</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
