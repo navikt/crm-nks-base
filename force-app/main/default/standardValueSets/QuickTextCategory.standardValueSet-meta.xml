@@ -6,4 +6,19 @@
         <default>true</default>
         <label>Arbeidsgiver</label>
     </standardValue>
+    <standardValue>
+        <fullName>Generell</fullName>
+        <default>false</default>
+        <label>Generell</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gjeldsrådgivning</fullName>
+        <default>false</default>
+        <label>Gjeldsrådgivning</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Arbeid</fullName>
+        <default>false</default>
+        <label>Arbeid</label>
+    </standardValue>
 </StandardValueSet>
