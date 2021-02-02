@@ -17,7 +17,7 @@
             <property name="filter" label="Filter" description="SOQL Filter. For example 'RecordType.Name = 'PersonAccount' '" type="String" required="true" default="Name = 'Navn'" />
             <property name="orderby" label="Order list by" description="SOQL Order by. For example 'LastModifiedDate DESC' to see the last edited first" type="String" required="false" default="" />
             <property name="limit" label="Limit" description="SOQL number of records. For example '3'" type="String" required="false" />
-            <property name="listviewname" label="List view" description="API Name of list view to redirect to" default="Recent" type="String" required="true" />
+            <property name="leistviewname" label="List view" description="API Name of list view to redirect to" default="Recent" type="String" required="true" />
             <property name="linklabel" label="Link Label" description="Label of link to redirect to list view" default="Vis alle" type="String" required="false" />
             <property name="datefield" label="Date field" description="API Name of date field. Supported: LastModifiedDate, CreatedDate" default="CreatedDate" type="String" required="true" />
             <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" />
