@@ -377,14 +377,7 @@
             <field>DeveloperName</field>
             <operator>StartsWith</operator>
             <value>
-                <stringValue>NKS</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
+                <stringValue>NKS_Skill</stringValue>
             </value>
         </filters>
         <object>Group</object>
@@ -413,12 +406,12 @@
     <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND Type = &apos;Queue&apos; AND DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
+        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND DeveloperName LIKE &apos;NKS_SKILL%&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>WhereClauseForMembers</name>
         <dataType>String</dataType>
-        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.Type = &apos;Queue&apos; AND Group.DeveloperName LIKE &apos;NKS_%&apos;&quot;</expression>
+        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.DeveloperName LIKE &apos;NKS_Skill%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update User</label>
