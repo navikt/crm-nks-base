@@ -2,6 +2,11 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Chat Gjeldsrådgivning</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>NKS_Skill_Gjeldsraadgivning</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueRoutingConfig>NKS_Chat_Gjeldsraadgivning_RConfig</queueRoutingConfig>
     <queueSobject>
         <sobjectType>LiveChatTranscript</sobjectType>
