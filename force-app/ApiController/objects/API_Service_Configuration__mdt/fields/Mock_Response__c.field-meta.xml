@@ -22,6 +22,14 @@
     <description>JSON formatted mock response</description>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>JSON formatted mock response used when running API controller in &quot;mock-mode&quot;. Formatted as:
+{
+&quot;STATUSCODETOMOCK&quot;: (
+       &quot;headers&quot;: {
+          &quot;HEADER1&quot;: HEADERMOCK1&quot;
+},
+      &quot;body&quot;: JSONBODY
+}</inlineHelpText>
     <label>Mock Response</label>
     <length>131072</length>
     <type>LongTextArea</type>

@@ -23,6 +23,7 @@ public virtual class ApiController {
             throw new InvalidOperationException('Cannot perform callout without defining REST method');
         }
         req.setEndpoint(requestEndpoint);
+        req.setTimeout(HTTP_CALLOUT_TIMEOUT);
 
         if(false == this.isMockActive) {
             this.resp = new Http().send(req);
