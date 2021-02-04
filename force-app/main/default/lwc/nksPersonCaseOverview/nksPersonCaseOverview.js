@@ -9,6 +9,7 @@ import { publish, MessageContext } from 'lightning/messageService';
 import NAV_CASE_TITLE from '@salesforce/label/c.NKS_NAV_Case_Title';
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_NAV_Case_Validation_Error';
 import NAV_CASE_RETRIEVE_ERROR from '@salesforce/label/c.NKS_NAV_Case_Retrieve_Error';
+import IsApiGroupable from '@salesforce/schema/EntityParticle.IsApiGroupable';
 
 export default class NksPersonCaseOverview extends LightningElement {
 
@@ -48,17 +49,40 @@ export default class NksPersonCaseOverview extends LightningElement {
             let mappedThemes = {};
 
             data.themeGroups.forEach(themeGroup => {
-                console.log(themeGroup.Name);
                 themeGroups.push({ label: themeGroup.Name, value: themeGroup.Id });
-                //Creating the theme map (ThemegroupId (SF) => [theme CRM_Code__c])
-                let groupThemes = [];
+                //Creating the theme map (ThemegroupId (SF) => [{ themeCode: code, themeSfId: id}])
+                let groupThemes = {};
+                groupThemes.themes = [];
                 if (data.themeMap[themeGroup.Id]) {
-                    groupThemes = data.themeMap[themeGroup.Id].map(theme => {
-                        return theme.CRM_Code__c;
+                    groupThemes.themes = data.themeMap[themeGroup.Id].map(theme => {
+                        return { themeCode: theme.CRM_Code__c, themeSfId: theme.Id };
                     });
                 }
+                //Property function to determine if the group of themes includes an input theme
+                groupThemes.hasTheme = (inputTheme) => {
+                    let returnTheme = null;
+                    for (let idx = 0; idx < groupThemes.themes.length; idx++) {
+                        const theme = groupThemes.themes[idx];
+                        if (theme.themeCode == inputTheme) {
+                            returnTheme = theme;
+                            break;
+                        }
+                    }
+                    return returnTheme;
+                };
                 mappedThemes[themeGroup.Id] = groupThemes;
+                mappedThemes.getTheme = (inputTheme) => {
+                    let returnTheme = null;
+                    for (const themeGroupId in mappedThemes) {
+                        if (mappedThemes.hasOwnProperty(themeGroupId)) {
+                            returnTheme = mappedThemes[themeGroupId].hasOwnProperty('hasTheme') ? mappedThemes[themeGroupId].hasTheme(inputTheme) : null;
+                            if (returnTheme !== null) break;
+                        }
+                    }
+                    return returnTheme;
+                }
             });
+
 
             this.themeGroupOptions = themeGroups;
             this.themeMap = mappedThemes;
@@ -73,11 +97,9 @@ export default class NksPersonCaseOverview extends LightningElement {
         if (data) {
             this.caseList = data;
             this.displayedCases = this.caseList;
-
         }
         else {
-            this.error = true;
-            console.log(JSON.stringify(error, null, 2));
+            if (error) console.log(JSON.stringify(error, null, 2));
         }
         this.dataLoaded = data || error;
         this.error = !data && error;
@@ -108,7 +130,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
         else {
             this.displayedCases = this.caseList.filter(navCase => {
-                return this.themeMap[themeGroup].includes(navCase.sakstema.value);
+                return this.themeMap[themeGroup].hasTheme(navCase.sakstema.value) !== null;
             })
         }
     }
@@ -131,7 +153,45 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @api
     get selectedCaseTheme() {
-        return this.selectedCase ? this.selectedCase.sakstema.value : null;
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            return themeCmp.themeCode;
+        }
+        else {
+            return this.selectedCase ? this.selectedCase.sakstema.value : null;
+        }
+    }
+
+    @api
+    get selectedCaseThemeSfId() {
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            return themeCmp.theme;
+        }
+        else {
+            let returnTheme = this.themeMap ? this.themeMap.getTheme(this.selectedCaseTheme) : null;
+            return returnTheme !== null ? returnTheme.themeSfId : null;
+        }
+    }
+
+    @api
+    get selectedThemeGroupSfId() {
+        let themeGroupSfId;
+
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            themeGroupSfId = themeCmp.themeGroup;
+        }
+        else {
+            if (this.themeMap) {
+                Object.keys(this.themeMap).forEach(themeGroupId => {
+                    if (this.themeMap[themeGroupId].hasOwnProperty('hasTheme')) {
+                        if (this.themeMap[themeGroupId].hasTheme(this.selectedCaseTheme) !== null) themeGroupSfId = themeGroupId;
+                    }
+                });
+            }
+        }
+        return themeGroupSfId;
     }
 
     @api
@@ -139,8 +199,30 @@ export default class NksPersonCaseOverview extends LightningElement {
         return this.selectedCaseType;
     }
 
+    //When GENERELL_SAK is chosen, the agent has the ability to also select a subtheme for the journal entry
+    @api
+    get selectedSubthemeSfId() {
+        let subtheme = '';
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            subtheme = themeCmp.subtheme;
+        }
+        return subtheme;
+    }
+
+    @api
+    get selectedSubtheme() { }
+
+    get isGeneralCase() {
+        return this.selectedCaseType === 'GENERELL_SAK';
+    }
+
     get title() {
         return NAV_CASE_TITLE + ' (' + this.caseList.length + ')';
+    }
+
+    get showCases() {
+        return this.hasCases && !this.isGeneralCase;
     }
 
     get hasCases() {
@@ -152,6 +234,10 @@ export default class NksPersonCaseOverview extends LightningElement {
         //Theme and theme group must be set
         if (this.selectedCase) {
             return { isValid: true };
+        }
+        else if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            return themeCmp.validate();
         }
         else {
             return {

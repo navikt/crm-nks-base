@@ -13,11 +13,16 @@ public class NKS_NavCaseService {
 
     @AuraEnabled(Cacheable=true)
     public static List<NavCaseWrapper> getNavCases(String actorId) {
+       return getNavCases(actorId, false);
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static List<NavCaseWrapper> getNavCases(String actorId, Boolean onlyOpenCases) {
         ApiController apiCtrl = new ApiController();
 
-        Map<String, String> pathParams = new Map<String, String> {'actorId' => actorId};
+        Map<String, String> pathParams = new Map<String, String> {'aktoerid' => actorId};
         apiCtrl.initRequest('SAK_OG_BEHANDLING_API', 'GET_NAV_CASES', pathParams);
-        apiCtrl.setBody(JSON.serialize(new FinnSakOgBehandlingskjedeListeRequest(actorId)));
+        apiCtrl.addUrlParam('kunAapneBehandlingskjeder', String.valueOf(onlyOpenCases));
         apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if(statusCode == 200 || statusCode == 201) {
@@ -30,8 +35,8 @@ public class NKS_NavCaseService {
             logger.error('Error retrieving person cases \n ' + 'Status: ' + apiCtrl.getResponse().getStatus() + '\n' + 'Body: ' + apiCtrl.getResponse().getBody(), null);
             logger.peek().Payload__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());
             logger.publish();
-            AuraHandledException ex = new AuraHandledException('Something crashed..');
-            ex.setMessage('Something crashed');
+            AuraHandledException ex = new AuraHandledException('Error retrieving cases');
+            ex.setMessage('Error retrieving cases');
             throw ex;
         }
     }
@@ -42,21 +47,12 @@ public class NKS_NavCaseService {
         }
     }
 
-    public class FinnSakOgBehandlingskjedeListeRequest {
-
-        public FinnSakOgBehandlingskjedeListeRequest(String aktoerREF) {
-            this.aktoerREF = aktoerREF;
-        }
-
-        private String aktoerREF;
-        private List<String> sakstema; //List of tema from kodeverk used as filter
-        private List<String> behandlingskjedetype;
-        private Boolean kunAapneBehandlingskjeder; //Set to true if only querying open cases
-        private DateTime tidspunkt; //If set returns only cases that has a close date after the defined datetime
+    public class NavCaseResponse{
+        private List<NavCaseWrapper> saker;
     }
 
     @testVisible
-    private class NavCaseWrapper {
+    public class NavCaseWrapper {
         @AuraEnabled public String saksId;
         @AuraEnabled public DateTime opprettet;
         @AuraEnabled public DateTime lukket;
