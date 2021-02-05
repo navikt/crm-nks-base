@@ -62,8 +62,8 @@
         <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
-        <locationX>366</locationX>
-        <locationY>702</locationY>
+        <locationX>324</locationX>
+        <locationY>770</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -87,8 +87,8 @@
         <description>Generates a base 64 encoded pdf string</description>
         <name>Generate_PDF</name>
         <label>Generate PDF</label>
-        <locationX>366</locationX>
-        <locationY>578</locationY>
+        <locationX>324</locationX>
+        <locationY>646</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -146,8 +146,8 @@
         <description>Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
         <label>Add Journal Entry</label>
-        <locationX>1018</locationX>
-        <locationY>586</locationY>
+        <locationX>948</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_Text</assignToReference>
             <operator>Add</operator>
@@ -177,8 +177,8 @@
         <description>Assigns values to the document wrapper class.</description>
         <name>Create_Document_Wrapper</name>
         <label>Create Document Wrapper</label>
-        <locationX>72</locationX>
-        <locationY>834</locationY>
+        <locationX>30</locationX>
+        <locationY>902</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.tittel</assignToReference>
             <operator>Assign</operator>
@@ -208,8 +208,8 @@
         <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
-        <locationX>359</locationX>
-        <locationY>834</locationY>
+        <locationX>317</locationX>
+        <locationY>902</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.dokumenter</assignToReference>
             <operator>Add</operator>
@@ -316,8 +316,8 @@
         <description>Assigns values to the original document variant.</description>
         <name>Create_Original_Document_Variant</name>
         <label>Create Original Document Variant</label>
-        <locationX>77</locationX>
-        <locationY>702</locationY>
+        <locationX>35</locationX>
+        <locationY>770</locationY>
         <assignmentItems>
             <assignToReference>Journal_Variant_Original.filtype</assignToReference>
             <operator>Assign</operator>
@@ -347,8 +347,8 @@
         <description>Assigns values to the PDF document variant.</description>
         <name>Create_PDF_Document_Variant</name>
         <label>Create PDF Document Variant</label>
-        <locationX>233</locationX>
-        <locationY>702</locationY>
+        <locationX>191</locationX>
+        <locationY>770</locationY>
         <assignmentItems>
             <assignToReference>Journal_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -703,8 +703,8 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>699</locationX>
-        <locationY>438</locationY>
+        <locationX>698</locationX>
+        <locationY>429</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
         </defaultConnector>
@@ -759,8 +759,8 @@
         <description>Check if the chat has set the social information flag set to true.</description>
         <name>Check_Social_Information</name>
         <label>Check Social Information</label>
-        <locationX>353</locationX>
-        <locationY>990</locationY>
+        <locationX>311</locationX>
+        <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>Post_Journal</targetReference>
         </defaultConnector>
@@ -966,8 +966,8 @@ TODAY())</expression>
         <description>Loops through the journal entries to generate text output to user.</description>
         <name>Journal_Entry_Loop</name>
         <label>Journal Entry Loop</label>
-        <locationX>833</locationX>
-        <locationY>587</locationY>
+        <locationX>712</locationX>
+        <locationY>646</locationY>
         <collectionReference>Get_Journal_Entries</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1062,12 +1062,15 @@ TODAY())</expression>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>591</locationX>
-        <locationY>436</locationY>
+        <locationX>512</locationX>
+        <locationY>418</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1092,6 +1095,9 @@ TODAY())</expression>
         <connector>
             <targetReference>Get_Journal_Entries</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1124,6 +1130,9 @@ TODAY())</expression>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>NKS_Chat_Transcript__c</field>
             <operator>EqualTo</operator>
@@ -1139,12 +1148,15 @@ TODAY())</expression>
         <description>Query the related person record</description>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>482</locationX>
-        <locationY>436</locationY>
+        <locationX>422</locationX>
+        <locationY>505</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Input_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1273,8 +1285,8 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>367</locationX>
-        <locationY>436</locationY>
+        <locationX>325</locationX>
+        <locationY>504</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1446,12 +1458,6 @@ TODAY())</expression>
                     <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>themeGroup</name>
-                <value>
-                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__r.CRM_Code__c</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1462,7 +1468,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Ferdigstill</stringValue>
+                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1486,8 +1492,8 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>708</locationX>
-        <locationY>765</locationY>
+        <locationX>512</locationX>
+        <locationY>648</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1506,7 +1512,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Ny journalføring</stringValue>
+                    <elementReference>$Label.NKS_Journal_Flow_New_Journal</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1694,6 +1700,46 @@ TODAY())</expression>
         <label>Create App Log</label>
         <locationX>1760</locationX>
         <locationY>1446</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0_0_0_0</name>
+        <label>Create App Log</label>
+        <locationX>1324</locationX>
+        <locationY>247</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>

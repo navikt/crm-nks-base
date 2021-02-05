@@ -26,9 +26,10 @@ public class NKS_NavCaseService {
         apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if(statusCode == 200 || statusCode == 201) {
-            List<NavCaseWrapper> responseList = (List<NavCaseWrapper>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NavCaseWrapper>.class);
-            addThemeFriendlyName(responseList);
-            return responseList;
+            NavCaseResponse caseResponse = (NavCaseResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), NavCaseResponse.class);
+            List<NavCaseWrapper> navCases = caseResponse.sak; 
+            addThemeFriendlyName(navCases);
+            return navCases;
         }
         else{
             LoggerUtility logger = new LoggerUtility();
@@ -48,7 +49,7 @@ public class NKS_NavCaseService {
     }
 
     public class NavCaseResponse{
-        private List<NavCaseWrapper> saker;
+        private List<NavCaseWrapper> sak;
     }
 
     @testVisible
