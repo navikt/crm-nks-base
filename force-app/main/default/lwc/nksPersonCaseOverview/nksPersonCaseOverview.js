@@ -9,7 +9,6 @@ import { publish, MessageContext } from 'lightning/messageService';
 import NAV_CASE_TITLE from '@salesforce/label/c.NKS_NAV_Case_Title';
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_NAV_Case_Validation_Error';
 import NAV_CASE_RETRIEVE_ERROR from '@salesforce/label/c.NKS_NAV_Case_Retrieve_Error';
-import IsApiGroupable from '@salesforce/schema/EntityParticle.IsApiGroupable';
 
 export default class NksPersonCaseOverview extends LightningElement {
 
