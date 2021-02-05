@@ -217,7 +217,29 @@ public class UTIL_TestDataFactory {
     //        OBJECT DEFAULTS           //
     // The following classes defines default field values. When a field is made required on an
     // object, a default value should be defined for it in the object's respective class
-     
+    
+    public class UserDefaults implements FieldDefaults{
+        public Map<String, Object> getFieldDefaults() {return getFieldDefaults(false);}
+        public Map<String,Object> getFieldDefaults(Boolean bulkify){
+            return new Map<String,Object>{
+                'FirstName' => 'Test',
+                'LastName' => 'Testesen' + generateRandomString(6),
+                'LanguageLocaleKey' => 'no',
+                'TimeZoneSidKey' => 'Europe/Paris',
+                'LocaleSidKey' => 'no_NO',
+                'EmailEncodingKey' => 'UTF-8',
+                'Department' => '1',
+                'ProfileId' => [SELECT Id FROM Profile LIMIT 1].Id,
+                'Alias' => generateRandomString(8),
+                'Email' => generateRandomString(8) + '@test.com'
+            };
+        }
+        public Map<String,String> getDmlFields(){
+            return new Map<String,String>{
+                //No dml fields
+            };
+        }
+    }
     
     public class ContactDefaults implements FieldDefaults{
         public Map<String, Object> getFieldDefaults() {return getFieldDefaults(false);}

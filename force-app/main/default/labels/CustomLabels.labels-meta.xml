@@ -97,30 +97,6 @@
         <value>Ny journalføring</value>
     </labels>
     <labels>
-        <fullName>NKS_NAV_Case_Retrieve_Error</fullName>
-        <categories>UI, NKS, NAV Case, nksPersonCaseOverview, Error</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NAV Case Retrieve Error</shortDescription>
-        <value>Det oppsto en feil ved uthenting av brukerens saker.</value>
-    </labels>
-    <labels>
-        <fullName>NKS_NAV_Case_Title</fullName>
-        <categories>UI, NKS, NAV Case, nksPersonCaseOverview</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NAV Case Title</shortDescription>
-        <value>Saker</value>
-    </labels>
-    <labels>
-        <fullName>NKS_NAV_Case_Validation_Error</fullName>
-        <categories>UI, NKS, NAV Case, nksPersonCaseOverview, Validation, Error</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NAV Case Validation Error</shortDescription>
-        <value>Velg minst en sak for journalføring.</value>
-    </labels>
-    <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
         <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>
@@ -143,14 +119,6 @@
         <protected>false</protected>
         <shortDescription>Single Record Input Validation Error</shortDescription>
         <value>Vennligst fyll ut feltet.</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
-        <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
-        <language>no</language>
-        <protected>false</protected>
-        <shortDescription>Theme Categorization Validation Error</shortDescription>
-        <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
     <labels>
         <fullName>fbc_AccessLevel</fullName>
