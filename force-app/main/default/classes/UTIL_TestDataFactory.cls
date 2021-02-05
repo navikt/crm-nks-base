@@ -229,9 +229,10 @@ public class UTIL_TestDataFactory {
                 'LocaleSidKey' => 'no_NO',
                 'EmailEncodingKey' => 'UTF-8',
                 'Department' => '1',
-                'ProfileId' => [SELECT Id FROM Profile LIMIT 1].Id,
+                'ProfileId' => [SELECT Id FROM Profile WHERE Name = 'Standard User' OR Name = 'Standardbruker' LIMIT 1].Id,
                 'Alias' => generateRandomString(8),
-                'Email' => generateRandomString(8) + '@test.com'
+                'Email' => generateRandomString(8) + '@test.com',
+                'isActive' => true
             };
         }
         public Map<String,String> getDmlFields(){
