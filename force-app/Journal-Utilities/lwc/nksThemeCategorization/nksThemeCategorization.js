@@ -6,7 +6,7 @@ import { publish, MessageContext } from 'lightning/messageService';
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Theme_Categorization_Validation_Error';
-import ApiVersion from '@salesforce/schema/ApexClass.ApiVersion';
+
 
 export default class NksThemeCategorization extends LightningElement {
 
