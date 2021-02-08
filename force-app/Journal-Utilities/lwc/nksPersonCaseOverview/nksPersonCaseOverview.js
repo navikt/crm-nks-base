@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getCases from '@salesforce/apex/NKS_NavCaseService.getNavCases';
+import getCases from '@salesforce/apex/NKS_NavSakService.getActorCases';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
 
@@ -27,7 +27,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     themeMap;
     dataLoaded = false;
     error = false;
-    selectedCaseType = 'FAGSAK'; //Default value
+    selectedCaseType = 'GENERELL_SAK'; //Default value
 
     caseTypeOptions = [
         { label: 'Fagsak', value: 'FAGSAK' },
@@ -106,7 +106,7 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     //Handles the nksNavCaseItem click event and updates the selected attribute for all the childs
     handleCaseSelected(event) {
-        let selectedNavCaseId = event.detail.selectedCase.saksId;
+        let selectedNavCaseId = event.detail.selectedCase.id;
         this.selectedCase = event.detail.selectedCase;
 
         this.setSelectedNavCase(selectedNavCaseId);
@@ -116,7 +116,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     setSelectedNavCase(selectedNavCaseId) {
         let caseItems = this.template.querySelectorAll('c-nks-nav-case-item');
         caseItems.forEach(caseItem => {
-            caseItem.selected = caseItem.navCase.saksId == selectedNavCaseId ? true : false;
+            caseItem.selected = caseItem.navCase.id == selectedNavCaseId ? true : false;
         });
     }
 
@@ -129,7 +129,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
         else {
             this.displayedCases = this.caseList.filter(navCase => {
-                return this.themeMap[themeGroup].hasTheme(navCase.sakstema.value) !== null;
+                return this.themeMap[themeGroup].hasTheme(navCase.tema) !== null;
             })
         }
     }
@@ -147,7 +147,7 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @api
     get selectedCaseId() {
-        return this.selectedCase ? this.selectedCase.saksId : null;
+        return this.selectedCase ? this.selectedCase.id : null;
     }
 
     @api
@@ -157,7 +157,7 @@ export default class NksPersonCaseOverview extends LightningElement {
             return themeCmp.themeCode;
         }
         else {
-            return this.selectedCase ? this.selectedCase.sakstema.value : null;
+            return this.selectedCase ? this.selectedCase.tema : null;
         }
     }
 

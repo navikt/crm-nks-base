@@ -12,10 +12,11 @@
         <lightning-layout-item flexibility="shrink">
             <lightning-layout>
                 <lightning-radio-group name="caseType" class="slds-p-right_small" options={caseTypeOptions}
-                    value={selectedCaseType} onchange={handleCaseTypeChange} type="button" variant="label-hidden">
+                    value={selectedCaseType} onchange={handleCaseTypeChange} type="button" disabled
+                    variant="label-hidden">
                 </lightning-radio-group>
                 <lightning-combobox name="themeGroup" value={value} placeholder="Temagruppe" options={themeGroupOptions}
-                    onchange={handleFilterChange} variant="label-hidden">
+                    onchange={handleFilterChange} variant="label-hidden" disabled>
                 </lightning-combobox>
             </lightning-layout>
         </lightning-layout-item>

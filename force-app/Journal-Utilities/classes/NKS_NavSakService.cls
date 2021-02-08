@@ -10,7 +10,7 @@ public class NKS_NavSakService {
         } private set{}
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<SakWrapper> getActorCases(String actorId){
         ApiController apiCtrl = new ApiController();
 
