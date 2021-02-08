@@ -25,9 +25,9 @@ export default class NksPersonCaseOverview extends LightningElement {
     themeGroupOptions = [];
     filteredThemes = [];
     themeMap;
-    dataLoaded = false;
+    casesLoaded = false;
     error = false;
-    selectedCaseType = 'GENERELL_SAK'; //Default value
+    selectedCaseType = 'GENERELL_SAK'; //Default value: Set to generell sak as we go live with this before having the integration set up
 
     caseTypeOptions = [
         { label: 'Fagsak', value: 'FAGSAK' },
@@ -88,7 +88,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
     }
 
-    @wire(getCases, { actorId: '' })
+    /*@wire(getCases, { actorId: '' })
     wireUser({
         error,
         data
@@ -100,9 +100,9 @@ export default class NksPersonCaseOverview extends LightningElement {
         else {
             if (error) console.log(JSON.stringify(error, null, 2));
         }
-        this.dataLoaded = data || error;
+        this.casesLoaded = true;
         this.error = !data && error;
-    }
+    }*/
 
     //Handles the nksNavCaseItem click event and updates the selected attribute for all the childs
     handleCaseSelected(event) {
@@ -226,6 +226,11 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     get hasCases() {
         return this.dataLoaded && this.caseList.length !== 0;
+    }
+
+    get dataLoaded() {
+        //Temporary solution before API connection
+        return /*(this.error === true || this.casesLoaded) &&*/ this.themeMap
     }
 
     @api
