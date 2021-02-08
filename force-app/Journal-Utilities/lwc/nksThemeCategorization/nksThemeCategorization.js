@@ -11,7 +11,7 @@ import VALIDATION_ERROR from '@salesforce/label/c.NKS_Theme_Categorization_Valid
 export default class NksThemeCategorization extends LightningElement {
 
     @track themeGroups = [];
-    @track subThemeMap;
+    @track subthemeMap;
     @track themeMap;
     categories;
     chosenThemeGroup;
@@ -33,7 +33,7 @@ export default class NksThemeCategorization extends LightningElement {
             });
 
             this.themeGroups = groups;
-            this.subThemeMap = data.subthemeMap;
+            this.subthemeMap = data.subthemeMap;
             this.themeMap = data.themeMap;
 
             if (this.chosenThemeGroup) this.filterThemes();
@@ -126,7 +126,7 @@ export default class NksThemeCategorization extends LightningElement {
 
         //Added subtheme check as flow was failing when chosing themes with no subthemes
         if (this.subtheme) {
-            let subthemes = (this.chosenTheme && this.subthemeMap && Object.keys(this.subThemeMap).length !== 0) ? this.subThemeMap[this.theme] : [];
+            let subthemes = (this.chosenTheme && this.subthemeMap && Object.keys(this.subthemeMap).length !== 0) ? this.subthemeMap[this.theme] : [];
             for (let subtheme of subthemes) {
                 if (subtheme.Id === this.subtheme) {
                     subthemeCode = subtheme.CRM_Code__c;
@@ -148,7 +148,7 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     filterSubthemes() {
-        let listSubthemes = (this.chosenTheme && this.subThemeMap && Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap) ? this.subThemeMap[this.chosenTheme] : [];
+        let listSubthemes = (this.chosenTheme && this.subthemeMap && Object.keys(this.subthemeMap).length !== 0 && this.chosenTheme in this.subthemeMap) ? this.subthemeMap[this.chosenTheme] : [];
         let returnThemes = [];
         //Adding blank value for subthemes to allow removing value after one has been set.
         if (listSubthemes.length !== 0) { returnThemes.push({ label: '(Ikke valgt)', value: '' }); }
@@ -162,7 +162,8 @@ export default class NksThemeCategorization extends LightningElement {
     get subthemePlaceholder() {
         let placeholder = '(Ikke valgt)';
         if (this.chosenTheme) {
-            placeholder = (this.subthemeMap && Object.keys(this.subThemeMap).length !== 0 && this.chosenTheme in this.subThemeMap) ? '(Ikke valgt)' : '(Ingen undertema)';
+            let themeInMap = this.chosenTheme in this.subthemeMap;
+            placeholder = (this.subthemeMap && themeInMap) ? '(Ikke valgt)' : '(Ingen undertema)';
         }
 
         return placeholder;
@@ -173,7 +174,7 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     get subthemeDisabled() {
-        let disabled = !this.chosenTheme || (this.chosenTheme && this.subthemeMap && (Object.keys(this.subThemeMap).length === 0 || !(this.chosenTheme in this.subThemeMap)));
+        let disabled = !this.chosenTheme || (this.chosenTheme && this.subthemeMap && (Object.keys(this.subthemeMap).length === 0 || !(this.chosenTheme in this.subthemeMap)));
         return disabled;
     }
 

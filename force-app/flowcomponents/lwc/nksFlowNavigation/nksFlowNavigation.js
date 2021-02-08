@@ -24,7 +24,7 @@ export default class NksFlowNavigation extends LightningElement {
             default:
                 break;
         }
-        console.log('FIRING: ' + flowEvent);
+
         if (flowEvent) this.dispatchEvent(flowEvent);
     }
 
