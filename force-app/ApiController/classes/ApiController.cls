@@ -304,17 +304,16 @@ public virtual class ApiController {
         try {
             //If there is a setting at the user level, this takes precedence, else check for profile level
             NKS_APIControllerUseMock__c mockSetting;
+
             if(NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId()) != null) {
                 mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId());
             }
             else if(NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId()) != null) {
                 mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId());
             }
-
             if(null != mockSetting && true == mockSetting.NKS_UseMock__c) {
                 ApiMock mocker = new ApiMock();
                 this.mockResponse = mocker.initMock(serviceName, Integer.valueOf(mockSetting.NKS_StatusCode__c), mockSetting.NKS_Status__c).respond();
-
                 this.isMockActive = true;
             }
         } catch(Exception e) {

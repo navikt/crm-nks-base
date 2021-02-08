@@ -62,7 +62,7 @@ public  class ApiController_Test {
 
     @isTest
     static void testMock() {
-        User usr = [SELECT Id FROM User LIMIT 1];
+        User usr = [SELECT Id FROM User WHERE isActive = true LIMIT 1];
         insert new NKS_APIControllerUseMock__c(SetupOwnerId=usr.Id, NKS_Status__c='OK', NKS_StatusCode__c = '200', NKS_UseMock__c = true);
         Test.startTest();
         System.runAs(usr){
@@ -71,6 +71,6 @@ public  class ApiController_Test {
         }
         Test.stopTest();
 
-        System.assertEquals('TEST',ctrl.getResponse().getBody());
+        System.assertEquals('\"TEST\"',ctrl.getResponse().getBody());
     }
 }
