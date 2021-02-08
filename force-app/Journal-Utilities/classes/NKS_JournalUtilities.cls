@@ -48,7 +48,6 @@ public class NKS_JournalUtilities {
             resp.journalpostId = (String) responseMap.get('journalpostId');
             Boolean journalCompleted = (Boolean) responseMap.get('journalpostferdigstilt');
             resp.journalPostStatus = journalCompleted ? 'Completed' : 'In Progress';
-            storeJournalEntry(journalRequest, resp, referenceId);
         }
         else{
             resp.success = false;
@@ -62,65 +61,6 @@ public class NKS_JournalUtilities {
         }
 
         return resp;
-    }
-
-    /**
-    * @description: Stores the created journal entry in the database, relating to the reference record
-    * @author Stian Ruud Schikora | 02-03-2021 
-    * @param journalRequest 
-    * @param apiResponse 
-    * @param referenceId 
-    **/
-    private static void storeJournalEntry(NKS_JournalEntryWrapper journalRequest, UtilityResponse apiResponse, Id referenceId) {
-        Journal_Entry__c jEntry = new Journal_Entry__c(
-            Journal_Entry_ID__c = apiResponse.journalpostId,
-            Journal_Entry_Status__c = apiResponse.journalPostStatus,
-            NAV_Case_Reference__c =  journalRequest.sak?.fagsakId,
-            Theme__r = new Common_Code__c (CRM_UniqueKey__c = 'Tema'+journalRequest.tema)
-        );
-        if(String.isNotBlank(journalRequest.behandlingstema)) {
-            jEntry.Subtheme__r = new Common_Code__c (CRM_UniqueKey__c = 'Behandlingstema' + journalRequest.behandlingstema);
-        }
-
-        try{
-            String relationField = getJournalEntryRelationField(referenceId);
-            if(String.isNotBlank(referenceId) && String.isNotBlank(relationField)) {
-                jEntry.put(relationField, referenceId);
-            }
-            insert jEntry;
-        }
-        catch(Exception ex) {
-            LoggerUtility logger = new LoggerUtility();
-            logger.exception(ex, jEntry);
-            logger.peek().PayLoad__c = JSON.serializePretty(JEntry);
-            logger.publish();
-        }
-    }
-
-    /**
-    * @description: Determine if the Journal Entry object has a defined relation field to the
-    * object type defined by the reference id
-    * @author Stian Ruud Schikora | 02-03-2021 
-    * @param referenceId 
-    * @return String [Field API name for reference]
-    **/
-    private static String getJournalEntryRelationField(Id referenceId) {
-        SObjectType referenceObjType = referenceId.getSobjectType();
-        Map<String, Schema.SObjectField> fieldMap = Journal_Entry__c.sObjectType.getDescribe().fields.getMap();
-        String relationField;
-        for (Schema.SObjectField objField : fieldMap.values()) {
-            DescribeFieldResult fieldRes = objField.getDescribe();
-            //If the field is a relation field
-            if (fieldRes.getType() == DisplayType.Reference) {
-                for (SObjectType referenceType : fieldRes.getReferenceTo()) {
-                    //If the reference field is a reference to the reference object type
-                    if(referenceType == referenceObjType) {
-                        relationField = fieldRes.getName();
-                    }
-                }
-            }
-        }
-        return relationField;
     }
 
     /**

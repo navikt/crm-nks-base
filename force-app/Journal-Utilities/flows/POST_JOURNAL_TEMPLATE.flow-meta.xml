@@ -28,6 +28,43 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <description>Call loggerutility to store an application log entry.</description>
+        <name>Log_Journal_Entry_Error</name>
+        <label>Log Journal Entry Error</label>
+        <locationX>1210</locationX>
+        <locationY>145</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Journal_Entry__c</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>Journal_Entry</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>source</name>
+            <value>
+                <stringValue>TEMPLATE FLOW NAME</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <description>Call Apex to post the journal entry</description>
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
@@ -221,11 +258,56 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Assign field values to the journal entry to be stored.</description>
+        <name>Set_Journal_Entry_Data</name>
+        <label>Set Journal Entry Data</label>
+        <locationX>1071</locationX>
+        <locationY>354</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal_Request.journalPostStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.NAV_Case_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Overview.selectedCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Overview.selectedSubthemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_Journal_Entry</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>TEMPLATE: Perform necessary updates to store the journal post external reference</description>
         <name>Update_Record</name>
         <label>Update Record</label>
-        <locationX>1101</locationX>
-        <locationY>353</locationY>
+        <locationX>1355</locationX>
+        <locationY>354</locationY>
         <assignmentItems>
             <assignToReference>Get_Record_Info.BillingStreet</assignToReference>
             <operator>Assign</operator>
@@ -255,7 +337,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Record</targetReference>
+                <targetReference>Set_Journal_Entry_Data</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -289,6 +371,19 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Insert_Journal_Entry</name>
+        <label>Insert Journal Entry</label>
+        <locationX>1210</locationX>
+        <locationY>354</locationY>
+        <connector>
+            <targetReference>Update_Record</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Log_Journal_Entry_Error</targetReference>
+        </faultConnector>
+        <inputReference>Journal_Entry</inputReference>
+    </recordCreates>
     <recordLookups>
         <description>Get the related account</description>
         <name>Get_Account_Info</name>
@@ -400,6 +495,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Journal entry record to be inserted</description>
+        <name>Journal_Entry</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
         <description>Journal request wrapper.</description>

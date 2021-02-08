@@ -23,6 +23,7 @@ public class NKS_NavCaseService {
         Map<String, String> pathParams = new Map<String, String> {'aktoerid' => actorId};
         apiCtrl.initRequest('SAK_OG_BEHANDLING_API', 'GET_SOGB_NAV_CASES', pathParams);
         apiCtrl.addUrlParam('kunAapneBehandlingskjeder', String.valueOf(onlyOpenCases));
+        apiCtrl.addServiceAuthHeader('SakOgBehandling');
         apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if(statusCode == 200 || statusCode == 201) {

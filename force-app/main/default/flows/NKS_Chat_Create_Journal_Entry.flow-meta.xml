@@ -4,8 +4,8 @@
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
         <label>Delegate NAV Task</label>
-        <locationX>763</locationX>
-        <locationY>1552</locationY>
+        <locationX>112</locationX>
+        <locationY>1558</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -112,8 +112,8 @@
         <description>Sends the journal request via Apex.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>564</locationX>
-        <locationY>998</locationY>
+        <locationX>629</locationX>
+        <locationY>1069</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -142,12 +142,52 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <description>Passes the reference sObject to the logger utility to be stored in app logs.</description>
+        <name>Store_Application_Log</name>
+        <label>Store Application Log</label>
+        <locationX>996</locationX>
+        <locationY>1394</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Journal_Entry__c</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>Journal_Entry</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <assignments>
         <description>Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
         <label>Add Journal Entry</label>
-        <locationX>948</locationX>
-        <locationY>647</locationY>
+        <locationX>1129</locationX>
+        <locationY>646</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_Text</assignToReference>
             <operator>Add</operator>
@@ -377,8 +417,8 @@
     <assignments>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>609</locationX>
-        <locationY>1552</locationY>
+        <locationX>115</locationX>
+        <locationY>1389</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -484,8 +524,8 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>802</locationX>
-        <locationY>1045</locationY>
+        <locationX>876</locationX>
+        <locationY>989</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -584,8 +624,8 @@
     <assignments>
         <name>Set_Chat_Journal_Data</name>
         <label>Set Chat Journal Data</label>
-        <locationX>1198</locationX>
-        <locationY>1438</locationY>
+        <locationX>576</locationX>
+        <locationY>1395</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -629,14 +669,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Transcript</targetReference>
+            <targetReference>Store_Journal_Entry</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Chat_Journal_Data_0</name>
         <label>Set Chat Journal Data</label>
-        <locationX>1336</locationX>
-        <locationY>1673</locationY>
+        <locationX>816</locationX>
+        <locationY>1716</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -680,14 +720,66 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Transcript_0</targetReference>
+            <targetReference>Store_Journal_Entry_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns field values for the journal entry record to be created.</description>
+        <name>Set_Journal_Entry_Data</name>
+        <label>Set Journal Entry Data</label>
+        <locationX>434</locationX>
+        <locationY>1288</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Journal_Entry_ID__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalpostId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Post_Journal.journalPostStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.NAV_Case_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.NKS_Chat_Transcript__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Entry.Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_Create_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_NAV_Task_Failed</name>
         <label>Set NAV Task Failed</label>
-        <locationX>1495</locationX>
-        <locationY>1509</locationY>
+        <locationX>1349</locationX>
+        <locationY>1723</locationY>
         <assignmentItems>
             <assignToReference>NavTask_Failed</assignToReference>
             <operator>Assign</operator>
@@ -696,15 +788,15 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Error_Screen_0</targetReference>
         </connector>
     </assignments>
     <decisions>
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>698</locationX>
-        <locationY>429</locationY>
+        <locationX>872</locationX>
+        <locationY>349</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
         </defaultConnector>
@@ -735,7 +827,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Error_Screen</targetReference>
+                <targetReference>Error_Screen_0_0</targetReference>
             </connector>
             <label>No Transcript</label>
         </rules>
@@ -750,7 +842,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Error_Screen</targetReference>
+                <targetReference>Error_Screen_0_0</targetReference>
             </connector>
             <label>No Account</label>
         </rules>
@@ -785,8 +877,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
-        <locationX>353</locationX>
-        <locationY>1434</locationY>
+        <locationX>312</locationX>
+        <locationY>1385</locationY>
         <defaultConnector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </defaultConnector>
@@ -811,8 +903,8 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task_0</name>
         <label>Should Create Task?</label>
-        <locationX>790</locationX>
-        <locationY>1246</locationY>
+        <locationX>864</locationX>
+        <locationY>1236</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -836,8 +928,8 @@
     <decisions>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>564</locationX>
-        <locationY>1244</locationY>
+        <locationX>622</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Should_Create_Task_0</targetReference>
         </defaultConnector>
@@ -853,7 +945,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Should_Create_Task</targetReference>
+                <targetReference>Set_Journal_Entry_Data</targetReference>
             </connector>
             <label>Successful Post</label>
         </rules>
@@ -862,8 +954,8 @@
         <description>Validates the API callout</description>
         <name>Validate_NAV_Task_Callout</name>
         <label>Validate NAV Task Callout</label>
-        <locationX>911</locationX>
-        <locationY>1554</locationY>
+        <locationX>305</locationX>
+        <locationY>1645</locationY>
         <defaultConnector>
             <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
         </defaultConnector>
@@ -941,7 +1033,7 @@ TODAY())</expression>
         <description>Loops through the journal entries to generate text output to user.</description>
         <name>Journal_Entry_Loop</name>
         <label>Journal Entry Loop</label>
-        <locationX>712</locationX>
+        <locationX>881</locationX>
         <locationY>646</locationY>
         <collectionReference>Get_Journal_Entries</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -975,13 +1067,13 @@ TODAY())</expression>
         <description>Creates task even though process fails.</description>
         <name>Create_Placeholder_Task</name>
         <label>Create Placeholder Task</label>
-        <locationX>995</locationX>
-        <locationY>1045</locationY>
+        <locationX>1009</locationX>
+        <locationY>989</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_App_Log_0</targetReference>
+            <targetReference>Create_App_Log_0_0_0_0</targetReference>
         </faultConnector>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
@@ -989,8 +1081,8 @@ TODAY())</expression>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>1093</locationX>
-        <locationY>1552</locationY>
+        <locationX>436</locationX>
+        <locationY>1525</locationY>
         <connector>
             <targetReference>Set_Chat_Journal_Data</targetReference>
         </connector>
@@ -1003,22 +1095,50 @@ TODAY())</expression>
         <description>Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task_0</name>
         <label>Create Salesforce NAV Task</label>
-        <locationX>1012</locationX>
-        <locationY>1294</locationY>
+        <locationX>309</locationX>
+        <locationY>1860</locationY>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Error_Screen_0</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log_0</targetReference>
         </faultConnector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
+    <recordCreates>
+        <description>Stores the generated journal entry data i custom object</description>
+        <name>Store_Journal_Entry</name>
+        <label>Store Journal Entry</label>
+        <locationX>707</locationX>
+        <locationY>1396</locationY>
+        <connector>
+            <targetReference>Update_Transcript</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Store_Application_Log</targetReference>
+        </faultConnector>
+        <inputReference>Journal_Entry</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <description>Stores the generated journal entry data i custom object</description>
+        <name>Store_Journal_Entry_0</name>
+        <label>Store Journal Entry</label>
+        <locationX>991</locationX>
+        <locationY>1715</locationY>
+        <connector>
+            <targetReference>Update_Transcript_0</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Store_Application_Log</targetReference>
+        </faultConnector>
+        <inputReference>Journal_Entry</inputReference>
+    </recordCreates>
     <recordLookups>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>512</locationX>
-        <locationY>418</locationY>
+        <locationX>700</locationX>
+        <locationY>428</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person</targetReference>
@@ -1079,8 +1199,8 @@ TODAY())</expression>
         <description>Check to see if there are any journal entries created for this chat already</description>
         <name>Get_Journal_Entries</name>
         <label>Get Journal Entries</label>
-        <locationX>707</locationX>
-        <locationY>296</locationY>
+        <locationX>880</locationX>
+        <locationY>194</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
@@ -1131,8 +1251,8 @@ TODAY())</expression>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>1367</locationX>
-        <locationY>1438</locationY>
+        <locationX>906</locationX>
+        <locationY>1505</locationY>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0</targetReference>
         </faultConnector>
@@ -1141,8 +1261,8 @@ TODAY())</expression>
     <recordUpdates>
         <name>Update_Transcript_0</name>
         <label>Update Transcript</label>
-        <locationX>1494</locationX>
-        <locationY>1673</locationY>
+        <locationX>1129</locationX>
+        <locationY>1715</locationY>
         <connector>
             <targetReference>Set_NAV_Task_Failed</targetReference>
         </connector>
@@ -1156,8 +1276,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>1503</locationX>
-        <locationY>1088</locationY>
+        <locationX>1572</locationX>
+        <locationY>1230</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1237,11 +1357,179 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <description>Screen for displaying potential error messages</description>
+        <name>Error_Screen_0</name>
+        <label>Error Screen</label>
+        <locationX>1831</locationX>
+        <locationY>1847</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Header_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Missing_Account_Error_0</name>
+            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conversation_Error_0</name>
+            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Journal_Post_Error_Msg_0</name>
+            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Successful_Post</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Task_Error_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NavTask_Failed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Screen for displaying potential error messages</description>
+        <name>Error_Screen_0_0</name>
+        <label>Error Screen</label>
+        <locationX>1515</locationX>
+        <locationY>344</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Header_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Missing_Account_Error_0_0</name>
+            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Conversation_Error_0_0</name>
+            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Journal_Post_Error_Msg_0_0</name>
+            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Successful_Post</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Task_Error_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Success</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NavTask_Failed</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>325</locationX>
-        <locationY>504</locationY>
+        <locationY>505</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1447,7 +1735,7 @@ TODAY())</expression>
     <screens>
         <name>Journal_Completed_Screen</name>
         <label>Journal Completed Screen</label>
-        <locationX>512</locationX>
+        <locationX>700</locationX>
         <locationY>648</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1493,8 +1781,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>487</locationX>
-        <locationY>1108</locationY>
+        <locationX>432</locationX>
+        <locationY>1161</locationY>
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
@@ -1533,10 +1821,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
-        <locationX>1369</locationX>
-        <locationY>1205</locationY>
+        <locationX>1356</locationX>
+        <locationY>1871</locationY>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Error_Screen_0</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
@@ -1573,8 +1861,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0_0</name>
         <label>Create App Log</label>
-        <locationX>834</locationX>
-        <locationY>1709</locationY>
+        <locationX>112</locationX>
+        <locationY>1740</locationY>
         <connector>
             <targetReference>Validate_NAV_Task_Callout</targetReference>
         </connector>
@@ -1613,8 +1901,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0_0_0</name>
         <label>Create App Log</label>
-        <locationX>1197</locationX>
-        <locationY>1673</locationY>
+        <locationX>668</locationX>
+        <locationY>1717</locationY>
         <connector>
             <targetReference>Set_Chat_Journal_Data_0</targetReference>
         </connector>
@@ -1653,10 +1941,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0_0_0_0</name>
         <label>Create App Log</label>
-        <locationX>1760</locationX>
-        <locationY>1446</locationY>
+        <locationX>1374</locationX>
+        <locationY>1517</locationY>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Error_Screen_0</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
@@ -1693,10 +1981,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0_0_0_0_0</name>
         <label>Create App Log</label>
-        <locationX>1324</locationX>
-        <locationY>247</locationY>
+        <locationX>1515</locationX>
+        <locationY>186</locationY>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Error_Screen_0_0</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
@@ -1746,6 +2034,15 @@ TODAY())</expression>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Journal entry to be stored.</description>
+        <name>Journal_Entry</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
         <description>Output text to display existing journal entries for the chat transcript.</description>
