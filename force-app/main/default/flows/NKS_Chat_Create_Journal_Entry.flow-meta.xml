@@ -1562,6 +1562,12 @@ TODAY())</expression>
                     <elementReference>Get_Person.INT_ActorId__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>prefilledThemeGroup</name>
+                <value>
+                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
