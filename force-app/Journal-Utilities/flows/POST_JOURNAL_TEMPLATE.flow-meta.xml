@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Generate_Document</name>
         <label>Generate Document</label>
-        <locationX>428</locationX>
+        <locationX>429</locationX>
         <locationY>355</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -31,7 +31,7 @@
         <description>Call Apex to post the journal entry</description>
         <name>Post_Journal_Request</name>
         <label>Post Journal Request</label>
-        <locationX>742</locationX>
+        <locationX>743</locationX>
         <locationY>355</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
@@ -42,6 +42,12 @@
             <name>journalRequest</name>
             <value>
                 <elementReference>Journal_Request</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>referenceId</name>
+            <value>
+                <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -99,7 +105,7 @@
             <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>TEAMPLTE_ID</stringValue>
+                <elementReference>Journal_Case_Overview.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -155,21 +161,28 @@
             <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>LASTNAME, FIRSTNAME MIDDLENAME</stringValue>
+                <elementReference>Person_Full_Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.themeCode</elementReference>
+                <elementReference>Journal_Case_Overview.selectedCaseTheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.subtheme</elementReference>
+                <elementReference>Journal_Case_Overview.selectedSubtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.sak.sakstype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Journal_Case_Overview.navCaseType</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -248,6 +261,12 @@
         </rules>
     </decisions>
     <description>Template flow journal entry posts</description>
+    <formulas>
+        <description>Generates the person name on the correct archive convention.</description>
+        <name>Person_Full_Name</name>
+        <dataType>String</dataType>
+        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
+    </formulas>
     <interviewLabel>POST JOURNAL TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>POST JOURNAL TEMPLATE</label>
@@ -342,9 +361,15 @@
             <targetReference>Generate_Document</targetReference>
         </connector>
         <fields>
-            <name>Theme_Categorization</name>
-            <extensionName>c:nksThemeCategorization</extensionName>
+            <name>Journal_Case_Overview</name>
+            <extensionName>c:nksPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Account_Info.CRM_Person__r.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

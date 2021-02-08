@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Chat_Transcript__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to chat transcript if the journal entry is related to a chat conversation.</description>
+    <externalId>false</externalId>
+    <label>Chat Transcript</label>
+    <referenceTo>LiveChatTranscript</referenceTo>
+    <relationshipLabel>Journal Entries</relationshipLabel>
+    <relationshipName>Journal_Entries</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

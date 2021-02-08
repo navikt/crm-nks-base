@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>TEST SERVICE CONFIG</label>
+    <label>GET_SAK_NAV_CASES</label>
     <protected>false</protected>
     <values>
         <field>API_Base_Configuration__c</field>
-        <value xsi:type="xsd:string">TEST_CONFIG</value>
+        <value xsi:type="xsd:string">SAK_API</value>
     </values>
     <values>
         <field>HTTP_Method__c</field>
@@ -18,11 +18,29 @@
         <field>Mock_Response__c</field>
         <value xsi:type="xsd:string">{
 &quot;200&quot;: {
-&quot;headers&quot;: {
-&quot;testheader1&quot;: &quot;test1&quot;,
-&quot;testheader2&quot;: &quot;test2&quot;
-},
-&quot;body&quot;: &quot;TEST&quot;
+&quot;headers&quot;: null,
+&quot;body&quot;: [
+  {
+    &quot;id&quot;: 145183760,
+    &quot;tema&quot;: &quot;DAG&quot;,
+    &quot;applikasjon&quot;: &quot;FS22&quot;,
+    &quot;aktoerId&quot;: &quot;1000001000199&quot;,
+    &quot;orgnr&quot;: null,
+    &quot;fagsakNr&quot;: null,
+    &quot;opprettetAv&quot;: &quot;K105348&quot;,
+    &quot;opprettetTidspunkt&quot;: &quot;2020-05-15T09:18:35.561+02:00&quot;
+  },
+  {
+    &quot;id&quot;: 139923046,
+    &quot;tema&quot;: &quot;BAR&quot;,
+    &quot;applikasjon&quot;: &quot;OB36&quot;,
+    &quot;aktoerId&quot;: &quot;1000001000199&quot;,
+    &quot;orgnr&quot;: null,
+    &quot;fagsakNr&quot;: null,
+    &quot;opprettetAv&quot;: &quot;srvutbetalingsmeld&quot;,
+    &quot;opprettetTidspunkt&quot;: &quot;2019-06-03T05:39:30.994+02:00&quot;
+  }
+]
 },
 &quot;401&quot;: {
 &quot;headers&quot;: null,
@@ -39,6 +57,6 @@
     </values>
     <values>
         <field>Service_Path__c</field>
-        <value xsi:type="xsd:string">/test</value>
+        <value xsi:type="xsd:string">/v1/saker</value>
     </values>
 </CustomMetadata>

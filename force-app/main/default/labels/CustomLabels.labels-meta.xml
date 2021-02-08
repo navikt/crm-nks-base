@@ -81,6 +81,22 @@
         <value>Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
+        <fullName>NKS_Journal_Flow_Complete_Button</fullName>
+        <categories>UI, NKS, Journal, Flow</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Flow Complete Button</shortDescription>
+        <value>Ferdigstill</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal_Flow_New_Journal</fullName>
+        <categories>UI, NKS, Journal, Flow</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Flow New Journal</shortDescription>
+        <value>Ny journalføring</value>
+    </labels>
+    <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
         <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>
@@ -103,14 +119,6 @@
         <protected>false</protected>
         <shortDescription>Single Record Input Validation Error</shortDescription>
         <value>Vennligst fyll ut feltet.</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
-        <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
-        <language>no</language>
-        <protected>false</protected>
-        <shortDescription>Theme Categorization Validation Error</shortDescription>
-        <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
     <labels>
         <fullName>fbc_AccessLevel</fullName>

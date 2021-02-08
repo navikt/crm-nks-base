@@ -15,6 +15,30 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+&quot;200&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: {
+&quot;id&quot;:null,
+&quot;tildeltEnhetsnr&quot;: &quot;4100&quot;,
+&quot;versjon&quot;: 1
+}
+},
+&quot;401&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;404&quot;: {&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;500&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+}
+}</value>
+    </values>
+    <values>
         <field>Service_Path__c</field>
         <value xsi:type="xsd:string">/oppgave/api/v1/oppgaver</value>
     </values>

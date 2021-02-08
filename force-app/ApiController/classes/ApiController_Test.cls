@@ -53,7 +53,7 @@ public  class ApiController_Test {
     static void testInitRequest() {
 
         Test.startTest();
-        ctrl.initRequest('Testing', 'TEST_SERVICE');
+        ctrl.initRequest('Testing', 'TEST_SERVICE_CONFIG');
         Test.stopTest();
 
         //When in test context the standard test configuration is returned
@@ -62,12 +62,15 @@ public  class ApiController_Test {
 
     @isTest
     static void testMock() {
-        insert new NKS_APIControllerUseMock__c(SetupOwnerId=UserInfo.getOrganizationId(), NKS_Status__c='OK', NKS_StatusCode__c = '200', NKS_UseMock__c = true);
+        User usr = [SELECT Id FROM User WHERE isActive = true LIMIT 1];
+        insert new NKS_APIControllerUseMock__c(SetupOwnerId=usr.Id, NKS_Status__c='OK', NKS_StatusCode__c = '200', NKS_UseMock__c = true);
         Test.startTest();
-        ctrl.initRequest('Testing', 'TEST_SERVICE');
-        ctrl.doCallout();
+        System.runAs(usr){
+            ctrl.initRequest('Testing', 'TEST_SERVICE_CONFIG');
+            ctrl.doCallout();
+        }
         Test.stopTest();
 
-        System.assertEquals('TEST',ctrl.getResponse().getBody());
+        System.assertEquals('\"TEST\"',ctrl.getResponse().getBody());
     }
 }
