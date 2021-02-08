@@ -19,6 +19,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     }
 
     @api actorId;
+    @api prefilledThemeGroup; //Give the theme categorization child component a prefilled value
     caseList = []; //Contains all NAV cases returned from the API
     displayedCases = []; //Holds the list of cases to be displayed
     selectedCase;

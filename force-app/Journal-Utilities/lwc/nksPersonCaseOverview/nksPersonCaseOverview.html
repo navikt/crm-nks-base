@@ -24,7 +24,7 @@
     <div class="slds-p-top_small slds-p-bottom_small">
         <template if:true={isGeneralCase}>
             <!--IF GENERELL SAK IS CHOSEN, THE CATEGORIZATION IS DONE MANUALLY-->
-            <c-nks-theme-categorization></c-nks-theme-categorization>
+            <c-nks-theme-categorization theme-group={prefilledThemeGroup}></c-nks-theme-categorization>
         </template>
         <template if:false={dataLoaded}>
             <lightning-spinner size="medium" alternative-text="Loading" variant="brand"></lightning-spinner>
