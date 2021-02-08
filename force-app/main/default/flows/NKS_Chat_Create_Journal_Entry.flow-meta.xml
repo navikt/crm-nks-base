@@ -1016,11 +1016,14 @@ TODAY())</expression>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>591</locationX>
-        <locationY>384</locationY>
+        <locationY>392</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1045,6 +1048,9 @@ TODAY())</expression>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1077,6 +1083,9 @@ TODAY())</expression>
         <connector>
             <targetReference>Input_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1378,12 +1387,6 @@ TODAY())</expression>
                     <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>themeGroup</name>
-                <value>
-                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__r.CRM_Code__c</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1579,6 +1582,46 @@ TODAY())</expression>
         <label>Create App Log</label>
         <locationX>1760</locationX>
         <locationY>1395</locationY>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0_0_0_0</name>
+        <label>Create App Log</label>
+        <locationX>1366</locationX>
+        <locationY>210</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
