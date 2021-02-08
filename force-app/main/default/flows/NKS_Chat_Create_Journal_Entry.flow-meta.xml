@@ -484,8 +484,8 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>888</locationX>
-        <locationY>1082</locationY>
+        <locationX>802</locationX>
+        <locationY>1045</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -782,31 +782,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_Task</name>
-        <label>Check Task</label>
-        <locationX>885</locationX>
-        <locationY>910</locationY>
-        <defaultConnector>
-            <targetReference>NAV_Task_Assignment_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Task_Existis</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Existing_Task</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Error_Screen</targetReference>
-            </connector>
-            <label>Task Existis</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task</name>
         <label>Should Create Task?</label>
@@ -836,7 +811,7 @@
         <description>Decide if a task should be created or not.</description>
         <name>Should_Create_Task_0</name>
         <label>Should Create Task?</label>
-        <locationX>761</locationX>
+        <locationX>790</locationX>
         <locationY>1246</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -853,7 +828,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_For_Existing_Task</targetReference>
+                <targetReference>NAV_Task_Assignment_0</targetReference>
             </connector>
             <label>Do Create Task</label>
         </rules>
@@ -1000,8 +975,8 @@ TODAY())</expression>
         <description>Creates task even though process fails.</description>
         <name>Create_Placeholder_Task</name>
         <label>Create Placeholder Task</label>
-        <locationX>1014</locationX>
-        <locationY>1082</locationY>
+        <locationX>995</locationX>
+        <locationY>1045</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -1038,26 +1013,6 @@ TODAY())</expression>
         </faultConnector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
-    <recordLookups>
-        <name>Check_For_Existing_Task</name>
-        <label>Check For Existing Task</label>
-        <locationX>769</locationX>
-        <locationY>908</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_Task</targetReference>
-        </connector>
-        <filters>
-            <field>NKS_Internal_Reference__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <object>NavTask__c</object>
-        <outputReference>Existing_Task</outputReference>
-        <queriedFields>Id</queriedFields>
-    </recordLookups>
     <recordLookups>
         <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>

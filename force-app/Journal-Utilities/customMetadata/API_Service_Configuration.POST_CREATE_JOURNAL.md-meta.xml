@@ -20,7 +20,7 @@
 &quot;200&quot;: {
 &quot;headers&quot;: null,
 &quot;body&quot;: {
-&quot;journalpostId&quot;: &quot;123456789&quot;,
+&quot;journalpostId&quot;: null,
 &quot;journalpostferdigstilt&quot;: true
 }
 },
