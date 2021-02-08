@@ -1004,7 +1004,7 @@
 3, {!$Flow.CurrentDate} + 2,
 4, {!$Flow.CurrentDate} + 2,
 5, {!$Flow.CurrentDate} + 2,
-6, {!$Flow.CurrentDate}+ 2,
+6, {!$Flow.CurrentDate}+ 4,
 TODAY())</expression>
     </formulas>
     <formulas>
