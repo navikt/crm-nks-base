@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
-        <description>Defines the chat theme group based on the original queue.</description>
+        <description
+        >Defines the chat theme group based on the original queue.</description>
         <name>Set_Theme_Group</name>
         <label>Set Theme Group</label>
         <locationX>176</locationX>
@@ -14,21 +15,25 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>$Record.NKS_Social_Service_Information__c</assignToReference>
+            <assignToReference
+            >$Record.NKS_Social_Service_Information__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>isSocialServices</elementReference>
             </value>
         </assignmentItems>
     </assignments>
-    <description>Automatically populates the theme group value for the chat based on which queue it originates from.</description>
+    <description
+    >Automatically populates the theme group value for the chat based on which queue it originates from.</description>
     <formulas>
         <name>isSocialServices</name>
         <dataType>Boolean</dataType>
-        <expression>{!$Record.LiveChatButton.Queue.DeveloperName} == &apos;NKS_Chat_Sosiale_Tjenester&apos;</expression>
+        <expression
+        >{!$Record.LiveChatButton.Queue.DeveloperName} == &apos;NKS_Chat_Sosiale_Tjenester&apos;</expression>
     </formulas>
     <formulas>
-        <description>Maps the incoming queue names to a theme group.</description>
+        <description
+        >Maps the incoming queue names to a theme group.</description>
         <name>Queue_Theme_Mapping</name>
         <dataType>String</dataType>
         <expression>CASE({!$Record.LiveChatButton.Queue.DeveloperName},
@@ -43,7 +48,8 @@
     null
 )</expression>
     </formulas>
-    <interviewLabel>Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel
+    >Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Set Chat Theme Group</label>
     <processMetadataValues>
         <name>BuilderType</name>

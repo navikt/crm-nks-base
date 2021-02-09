@@ -3,24 +3,23 @@ import getNavUnit from '@salesforce/apex/NKS_NavUnitSingleController.findUnit';
 import getContactInformation from '@salesforce/apex/NKS_NavUnitSingleController.getContactInformation';
 
 export default class NksNavUnitSingle extends LightningElement {
-    @api recordId;                      // The record id
-    @api objectApiName;                 // The object api name
-    @api relationField;                 // Points to either the Person__c.Id or a field containging a unit number
-    @api type;                          // If based on person location or unit
+    @api recordId; // The record id
+    @api objectApiName; // The object api name
+    @api relationField; // Points to either the Person__c.Id or a field containging a unit number
+    @api type; // If based on person location or unit
     @api allSectionsOpenOnLoad = false; // If all sections should be open when the component loads
-    @api numCols = 2;                   // Number of columns for the displayed fields
-    @api cardLayout = false;            // If true, use the card layout, if not use box layout
+    @api numCols = 2; // Number of columns for the displayed fields
+    @api cardLayout = false; // If true, use the card layout, if not use box layout
     @api boxLayout = false;
 
-    @track navUnit;                     // The nav unit
-    @track contactInformation;          // The nav unit contact information
+    @track navUnit; // The nav unit
+    @track contactInformation; // The nav unit contact information
 
-    errorMessage;                       // Error messages
-    isError = false;                    // If error has occured
-    isLoaded = false;                   // If the nav unit and contact information has loaded
+    errorMessage; // Error messages
+    isError = false; // If error has occured
+    isLoaded = false; // If the nav unit and contact information has loaded
     firstRun = false;
     noLayout = false;
-
 
     connectedCallback() {
         this.setAttribute('title', 'NAV Enhet');
@@ -43,7 +42,6 @@ export default class NksNavUnitSingle extends LightningElement {
         let errorString = '';
 
         try {
-
             const unitData = await getNavUnit({
                 field: this.relationField,
                 parentObject: this.objectApiName,
@@ -52,14 +50,21 @@ export default class NksNavUnitSingle extends LightningElement {
             });
             this.isError = !unitData.success;
             this.navUnit = unitData.unit;
-            errorString += unitData.errorMessage ? ' ' + unitData.errorMessage : '';
+            errorString += unitData.errorMessage
+                ? ' ' + unitData.errorMessage
+                : '';
 
             if (false === this.isError) {
                 try {
-                    const contactInfoData = await getContactInformation({ unitNumber: this.navUnit.enhetNr });
+                    const contactInfoData = await getContactInformation({
+                        unitNumber: this.navUnit.enhetNr
+                    });
                     this.isError = !contactInfoData.success;
-                    this.contactInformation = contactInfoData.contactInformation;
-                    errorString += contactInfoData.errorMessage ? ' ' + contactInfoData.errorMessage : '';
+                    this.contactInformation =
+                        contactInfoData.contactInformation;
+                    errorString += contactInfoData.errorMessage
+                        ? ' ' + contactInfoData.errorMessage
+                        : '';
                 } catch (error) {
                     errorString += error.body.message;
                     this.isError = true;

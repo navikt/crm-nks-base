@@ -7,7 +7,7 @@ export default class nksSecurityMeasures extends LightningElement {
     @api componentTitle;
     @track relatedRecords;
     @api objectApiName;
-    @api relationshipField
+    @api relationshipField;
 
     get title() {
         const numRecords = this.relatedRecords ? this.relatedRecords.length : 0;
@@ -20,10 +20,10 @@ export default class nksSecurityMeasures extends LightningElement {
 
     handleClick() {
         var x = this.template.querySelector('[data-id="modal"]');
-        if (x.style.display != "block") {
-            x.style.display = "block";
+        if (x.style.display != 'block') {
+            x.style.display = 'block';
         } else {
-            x.style.display = "none";
+            x.style.display = 'none';
         }
     }
 
@@ -37,12 +37,13 @@ export default class nksSecurityMeasures extends LightningElement {
             relationshipField: this.relationshipField,
             parentObjectApiName: this.objectApiName
         })
-            .then(data => {
-                this.relatedRecords = (data && data.length > 0) ? data : null;
+            .then((data) => {
+                this.relatedRecords = data && data.length > 0 ? data : null;
             })
-            .catch(error => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            .catch((error) => {
+                console.log(
+                    'An error occurred: ' + JSON.stringify(error, null, 2)
+                );
             });
     }
-
 }

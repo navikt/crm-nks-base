@@ -1,12 +1,13 @@
 @isTest
 public class NKS_NavSakService_Test {
-    
     @isTest
     static void testGetSakNavCases() {
         ApiMock.setTestMock('GET_SAK_NAV_CASES', 200, 'OK');
 
         Test.startTest();
-        List<NKS_NavSakService.SakWrapper> returnList = NKS_NavSakService.getActorCases('12345678910');
+        List<NKS_NavSakService.SakWrapper> returnList = NKS_NavSakService.getActorCases(
+            '12345678910'
+        );
         Test.stopTest();
 
         System.assert(!returnList.isEmpty());
@@ -18,14 +19,13 @@ public class NKS_NavSakService_Test {
         List<NKS_NavSakService.SakWrapper> returnList = new List<NKS_NavSakService.SakWrapper>();
 
         Test.startTest();
-        try{
-           returnList = NKS_NavSakService.getActorCases('12345678910');
-        }
-        catch(AuraHandledException ex) {
+        try {
+            returnList = NKS_NavSakService.getActorCases('12345678910');
+        } catch (AuraHandledException ex) {
             //Safely catching the aura handled exception
         }
         Test.stopTest();
         System.assert(returnList.isEmpty());
-        System.assert([SELECT count() FROM Application_Log__c ] != 0);
+        System.assert([SELECT COUNT() FROM Application_Log__c] != 0);
     }
 }

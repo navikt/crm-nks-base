@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Conversation_Stored__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Set to true by transcript service when the chat is successfully store on proper journal format.</description>
+    <description
+    >Set to true by transcript service when the chat is successfully store on proper journal format.</description>
     <externalId>false</externalId>
     <label>Conversation Stored</label>
     <trackHistory>false</trackHistory>

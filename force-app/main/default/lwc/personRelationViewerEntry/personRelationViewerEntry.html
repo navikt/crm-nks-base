@@ -1,26 +1,39 @@
 <template>
-
     <div>
-        <p><b>
-                <lightning-formatted-text value={relation.role}></lightning-formatted-text>
-            </b></p>
+        <p>
+            <b>
+                <lightning-formatted-text
+                    value={relation.role}
+                ></lightning-formatted-text>
+            </b>
+        </p>
         <p>
             <template if:true={relation.disableurl}>
-                <lightning-formatted-text value={relation.personName}></lightning-formatted-text>
+                <lightning-formatted-text
+                    value={relation.personName}
+                ></lightning-formatted-text>
             </template>
             <template if:false={relation.disableurl}>
                 <template if:true={relation.child}>
-                    <lightning-formatted-url value={recordPageUrl} label={relation.personName}
-                        onclick={navigateToSObject}>
-                        {relation.personName}</lightning-formatted-url> {relation.sex} {relation.age} år
+                    <lightning-formatted-url
+                        value={recordPageUrl}
+                        label={relation.personName}
+                        onclick={navigateToSObject}
+                    >
+                        {relation.personName}</lightning-formatted-url
+                    >
+                    {relation.sex} {relation.age} år
                 </template>
                 <template if:false={relation.child}>
-                    <lightning-formatted-url value={recordPageUrl} label={relation.personName}
-                        onclick={navigateToSObject}>
-                        {relation.personName}</lightning-formatted-url>
+                    <lightning-formatted-url
+                        value={recordPageUrl}
+                        label={relation.personName}
+                        onclick={navigateToSObject}
+                    >
+                        {relation.personName}</lightning-formatted-url
+                    >
                 </template>
-
-            </template> </p>
+            </template>
+        </p>
     </div>
-
 </template>

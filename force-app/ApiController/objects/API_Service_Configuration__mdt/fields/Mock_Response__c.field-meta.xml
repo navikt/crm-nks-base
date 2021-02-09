@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Mock_Response__c</fullName>
     <defaultValue>&quot;{&quot; + BR() +
@@ -22,7 +22,8 @@
     <description>JSON formatted mock response</description>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <inlineHelpText>JSON formatted mock response used when running API controller in &quot;mock-mode&quot;. Formatted as:
+    <inlineHelpText
+    >JSON formatted mock response used when running API controller in &quot;mock-mode&quot;. Formatted as:
 {
 &quot;STATUSCODETOMOCK&quot;: (
        &quot;headers&quot;: {

@@ -15,11 +15,13 @@ export default class NksAccessErrorMessage extends LightningElement {
             recordId: this.recordId,
             objectApiName: this.objectApiName
         })
-            .then(data => {
-                this.text = (data && data.length > 0) ? data : null;
+            .then((data) => {
+                this.text = data && data.length > 0 ? data : null;
             })
-            .catch(error => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            .catch((error) => {
+                console.log(
+                    'An error occurred: ' + JSON.stringify(error, null, 2)
+                );
             });
     }
 }

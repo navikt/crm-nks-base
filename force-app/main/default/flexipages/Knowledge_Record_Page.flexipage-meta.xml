@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -1067,7 +1067,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <componentName
+                >forceKnowledge:articleSearchDesktop</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.PublishStatus}</leftValue>
@@ -1079,7 +1080,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+                <componentName
+                >forceKnowledge:articleDataCategoryViewer</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.PublishStatus}</leftValue>
@@ -1114,7 +1116,8 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue
+                        >{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1123,10 +1126,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleVersionHistory</componentName>
+                <componentName
+                >forceKnowledge:articleVersionHistory</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue
+                        >{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

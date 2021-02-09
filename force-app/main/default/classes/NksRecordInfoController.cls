@@ -1,15 +1,18 @@
 public class NksRecordInfoController {
-
     /**
-    * @description 
-    * @author Stian Ruud Schikora | 09-14-2020 
-    * @param parentId [Id of the object to query to relation from]
-    * @param relationshipField [API name of lookup field]
-    * @param objectApiName [API name of parent]
-    * @return sObject 
-    **/
+     * @description
+     * @author Stian Ruud Schikora | 09-14-2020
+     * @param parentId [Id of the object to query to relation from]
+     * @param relationshipField [API name of lookup field]
+     * @param objectApiName [API name of parent]
+     * @return sObject
+     **/
     @AuraEnabled
-    public static sObject getRelatedRecord(String parentId, String relationshipField, String objectApiName){
+    public static sObject getRelatedRecord(
+        String parentId,
+        String relationshipField,
+        String objectApiName
+    ) {
         String query = 'SELECT ' + relationshipField + ' FROM ' + objectApiName;
         query += ' WHERE Id =\'' + parentId + '\'';
 
