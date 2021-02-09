@@ -23,6 +23,7 @@ public virtual class ApiController {
             throw new InvalidOperationException('Cannot perform callout without defining REST method');
         }
         req.setEndpoint(requestEndpoint);
+        req.setTimeout(HTTP_CALLOUT_TIMEOUT);
 
         if(false == this.isMockActive) {
             this.resp = new Http().send(req);
@@ -107,7 +108,7 @@ public virtual class ApiController {
         Matcher m = p.matcher(inputPath);
         while(m.find()) {
             String matcherParam = m.group(0).remove('{').remove('}');
-            if(!paramMap.containsKey(matcherParam)) throw new InvalidPathParamException('Missing parameter in paramMap: ' + matcherParam);
+            if(paramMap == null || !paramMap.containsKey(matcherParam)) throw new InvalidPathParamException('Missing parameter in paramMap: ' + matcherParam);
         }
     }
 
@@ -301,17 +302,18 @@ public virtual class ApiController {
     **/
     private void setMockSettings(String serviceName) {
         try {
-            NKS_APIControllerUseMock__c mockSetting = NKS_APIControllerUseMock__c.getInstance(UserInfo.getProfileId());
+            //If there is a setting at the user level, this takes precedence, else check for profile level
+            NKS_APIControllerUseMock__c mockSetting;
 
+            if(NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId());
+            }
+            else if(NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId());
+            }
             if(null != mockSetting && true == mockSetting.NKS_UseMock__c) {
-                String fileName = 'NKS_API_MOCK_' + serviceName + '_' + mockSetting.NKS_StatusCode__c;
-                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = :fileName LIMIT 1];
-                
-                this.mockResponse = new HttpResponse();
-                this.mockResponse.setStatusCode(Integer.valueOf(mockSetting.NKS_StatusCode__c));
-                this.mockResponse.setBody(sr.Body.toString());
-                this.mockResponse.setStatus(mockSetting.NKS_Status__c);
-
+                ApiMock mocker = new ApiMock();
+                this.mockResponse = mocker.initMock(serviceName, Integer.valueOf(mockSetting.NKS_StatusCode__c), mockSetting.NKS_Status__c).respond();
                 this.isMockActive = true;
             }
         } catch(Exception e) {

@@ -15,6 +15,29 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+&quot;200&quot;: {
+&quot;headers&quot;: {
+&quot;testheader1&quot;: &quot;test1&quot;,
+&quot;testheader2&quot;: &quot;test2&quot;
+},
+&quot;body&quot;: &quot;TEST&quot;
+},
+&quot;401&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;404&quot;: {&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;500&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+}
+}</value>
+    </values>
+    <values>
         <field>Service_Path__c</field>
         <value xsi:type="xsd:string">/test</value>
     </values>

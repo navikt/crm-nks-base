@@ -32,26 +32,5 @@
             .then(function (result) {
                 //Message success
             });
-    },
-
-    handleChatEnded: function (component, event, helper) {
-        const chatToolkit = component.find("chatToolkit");
-        const recordId = component.get("v.recordId");
-
-        chatToolkit.getChatLog({
-            recordId: recordId
-        })
-            .then(result => {
-                let conversation = result.messages;
-                let filteredConversation = conversation.filter(function (message, index, arr) {
-                    //Filtering out all messages of type supervisor as these are "whispers" and should not be added to the journal
-                    return message.type !== 'Supervisor';
-                });
-
-                helper.callStoreConversation(component, filteredConversation);
-            })
-            .catch(error => {
-                //Errors require manual handling.
-            });
     }
 })

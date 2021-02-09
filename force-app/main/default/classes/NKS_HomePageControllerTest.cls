@@ -17,7 +17,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetList(){
         Test.startTest();
-            List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList('Name', 'NKS_Information__c', 'NKS_Announcement__c', 'NKS_Type__c != null', 'LastModifiedDate DESC', '3', true); 
+            List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList('Name', 'NKS_Information__c', 'NKS_Announcement__c', 'NKS_Type__c != null', 'LastModifiedDate DESC', '3', 'CreatedDate',true); 
         Test.stopTest();
 
         System.assertEquals(1, recordlist.size());

@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
+        <article>Definite</article>
         <plural>false</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartikkelen</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value><!-- Knowledge --></value>
-    </caseValues>
-    <caseValues>
-        <article>Definite</article>
-        <plural>false</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartikkel</value>
     </caseValues>
     <caseValues>
         <article>None</article>
+        <plural>false</plural>
+        <value>Kunnskapsartikkel</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartiklene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsbase</value>
     </caseValues>
     <caseValues>
-        <article>Definite</article>
+        <article>None</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsbase</value>
     </caseValues>
-    <gender><!-- Neuter --></gender>
+    <gender>Masculine</gender>
     <layouts>
         <layout>Knowledge Layout</layout>
+        <sections>
+            <label><!-- Arbeidgiver --></label>
+            <section>Arbeidgiver</section>
+        </sections>
         <sections>
             <label><!-- Bruker --></label>
             <section>Bruker</section>
@@ -42,8 +46,20 @@
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Internt --></label>
-            <section>Internt</section>
+            <label><!-- Høyre side --></label>
+            <section>Høyre side</section>
+        </sections>
+        <sections>
+            <label><!-- Internasjonalt --></label>
+            <section>Internasjonalt</section>
+        </sections>
+        <sections>
+            <label><!-- Lege og behandler --></label>
+            <section>Lege og behandler</section>
+        </sections>
+        <sections>
+            <label><!-- Oversettelser --></label>
+            <section>Oversettelser</section>
         </sections>
     </layouts>
     <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
@@ -67,4 +83,8 @@
         <label>Ressurser</label>
         <name>NKS_Resources</name>
     </quickActions>
+    <recordTypes>
+        <label><!-- Servicerutine --></label>
+        <name>Servicerutine</name>
+    </recordTypes>
 </CustomObjectTranslation>
