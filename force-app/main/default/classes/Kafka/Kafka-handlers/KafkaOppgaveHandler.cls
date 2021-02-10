@@ -1,18 +1,26 @@
 public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
 
     private LoggerUtility logger = new LoggerUtility();
+    private Map<String, String> actorAccMap = new Map<String, String>(); 
     
     public void processMessages(List<KafkaMessage__c> messages) {
-        List<NavTask__c> tasksToUpdate = new List<NavTask__c>();
+        List<NavTask__c> tasksToUpsert = new List<NavTask__c>();
         Map<Decimal, KafkaOppgave> kafkaTaskMap = convertToKafkaTasks(messages);
+        initAccountMap();
         
         for (NavTask__c navTask : [SELECT Id, INT_External_Reference__c FROM NavTask__c WHERE INT_External_Reference__c IN: kafkaTaskMap.keySet()]) {
             Decimal extRef = NavTask.INT_External_Reference__c;   
-            tasksToUpdate.add(convertToNavTask(kafkaTaskMap.get(extRef)));
+            tasksToUpsert.add(convertToNavTask(kafkaTaskMap.get(extRef)));
         }
 
         // Errors from DML will be caught by calling context and saved on the related AsyncRequest record
-        update tasksToUpdate;
+        upsert tasksToUpsert INT_External_Reference__c;
+    }
+
+    private void initAccountMap() {
+        for (Person__c person : [SELECT Id, CRM_Account__c, INT_ActorId__c FROM Person__c WHERE INT_ActorId__c IN: this.actorAccMap.keySet()]) {
+            this.actorAccMap.put(person.INT_ActorId__c, person.CRM_Account__c);
+        }
     }
 
     /**
@@ -37,13 +45,15 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         
         for (KafkaMessage__c message : messages) {
             try{
+                KafkaOppgave kafkaOppgave = convertToKafkaTask(message);
+                actorAccMap.put(kafkaOppgave.aktoerId, ''); //Adding the actor ids to map for initialization aftert successful conversions
                 //If the map already contains the unique task reference, check which of the messages containcs the latest version number
                 if(returnMap.containsKey(Decimal.valueOf(message.CRM_Key__c))) {
-                    KafkaOppgave latestVersjon = getLatestTaskVersion(convertToKafkaTask(message), returnMap.get(Decimal.valueOf(message.CRM_Key__c)));
+                    KafkaOppgave latestVersjon = getLatestTaskVersion(kafkaOppgave, returnMap.get(Decimal.valueOf(message.CRM_Key__c)));
                     returnMap.put(Decimal.valueOf(latestVersjon.id), latestVersjon);
                 }
                 else{
-                    returnMap.put(Decimal.valueOf(message.CRM_Key__c), convertToKafkaTask(message));
+                    returnMap.put(Decimal.valueOf(message.CRM_Key__c), kafkaOppgave);
                 }
                 message.CRM_Status__c = KafkaMessageService.STATUS_PROCESSED;
             }
@@ -68,17 +78,23 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     **/
     private NavTask__c convertToNavTask(KafkaOppgave kafkaOppgave) {
         NavTask__c navTask = new NavTask__c();
-        navTask.INT_External_Reference__c = kafkaOppgave.Id;
-        navTask.NKS_Task_Version__c = kafkaOppgave.versjon;
-        navTask.CRM_NavUnit__r = new NavUnit__c(INT_UnitNumber__c = kafkaOppgave.tildeltEnhetsnr);
-        navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
-        navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
-        navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype; //Need to solve how we should handle this as not all task types are implemented in the picklist --> Mapping via Common code?
-        //navTask.NKS_Theme__r Need to be sure this do not break anything
-        //navTask.NKS_Subtheme__r
-        navTask.CRM_DueDate__c = Date.parse(kafkaOppgave.fristFerdigstillelse);
-        navTask.CRM_Priority__c = kafkaOppgave.prioritet;
-        navTask.CRM_Status__c = kafkaOppgave.status;
+        if(this.actorAccMap.containsKey(kafkaOppgave.aktoerId)) {
+            navTask.CRM_Account__c = this.actorAccMap.get(kafkaOppgave.aktoerId);
+            navTask.INT_External_Reference__c = kafkaOppgave.Id;
+            navTask.NKS_Task_Version__c = kafkaOppgave.versjon;
+            navTask.CRM_NavUnit__r = new NavUnit__c(INT_UnitNumber__c = kafkaOppgave.tildeltEnhetsnr);
+            navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
+            navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
+            navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype; //Need to solve how we should handle this as not all task types are implemented in the picklist --> Mapping via Common code?
+            //navTask.NKS_Theme__r Need to be sure this do not break anything
+            //navTask.NKS_Subtheme__r
+            navTask.CRM_DueDate__c = Date.parse(kafkaOppgave.fristFerdigstillelse);
+            navTask.CRM_Priority__c = kafkaOppgave.prioritet;
+            navTask.CRM_Status__c = kafkaOppgave.status;
+        }
+        else{
+            //HOW DO WE HANDLE ACTORS NOT EXISTING IN SALESFORCE?
+        }
         return navTask;
     }
 }
