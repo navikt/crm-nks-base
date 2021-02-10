@@ -35,7 +35,7 @@
     <flowAccesses>
         <enabled>true</enabled>
         <flow>
-NKS_Update_User;
+NKS_Update_User
         </flow>
     </flowAccesses>
     <flowAccesses>
