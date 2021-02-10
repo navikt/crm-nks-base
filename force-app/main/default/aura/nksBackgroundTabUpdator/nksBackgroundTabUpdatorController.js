@@ -2,15 +2,21 @@
     onTabCreated: function (component, event, helper) {
         var newTabId = event.getParam('tabId');
         var workspace = component.find("workspace");
-        workspace.isSubtab({
-            tabId: newTabId
-        }).then(function (response) {
-            if (!response) {
-                workspace.focusTab({
+
+        workspace.getAllTabInfo().then(function (response) {
+            if (response.length === 1) {
+                workspace.isSubtab({
                     tabId: newTabId
-                })
+                }).then(function (response) {
+                    if (!response) {
+                        workspace.focusTab({
+                            tabId: newTabId
+                        })
+                    }
+                });
             }
-        });
+        })
+
         workspace.getTabInfo({
             tabId: newTabId
         }).then(function (response) {
