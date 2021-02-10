@@ -27,8 +27,7 @@ public class NKS_NavCaseService {
         apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if(statusCode == 200 || statusCode == 201) {
-            NavCaseResponse caseResponse = (NavCaseResponse) JSON.deserialize(apiCtrl.getResponse().getBody(), NavCaseResponse.class);
-            List<NavCaseWrapper> navCases = caseResponse.sak; 
+            List<NavCaseWrapper> navCases = (List<NavCaseWrapper>) JSON.deserialize(apiCtrl.getResponse().getBody(), List<NavCaseWrapper>.class);
             addThemeFriendlyName(navCases);
             return navCases;
         }
@@ -49,24 +48,14 @@ public class NKS_NavCaseService {
         }
     }
 
-    public class NavCaseResponse{
-        private List<NavCaseWrapper> sak;
-    }
-
     @testVisible
     public class NavCaseWrapper {
         @AuraEnabled public String saksId;
         @AuraEnabled public DateTime opprettet;
         @AuraEnabled public DateTime lukket;
-        @AuraEnabled public String behandlingskjede;
-        @AuraEnabled public sakstema sakstema;
+        @AuraEnabled public List<NKS_Behandlingskjede> behandlingskjede;
+        @AuraEnabled public NKS_Kodeverk sakstema;
         @AuraEnabled public String themeName;
-    }
-
-    private class sakstema {
-        @AuraEnabled public String value; //Kodeverks value
-        private String kodeRef; //Check return type
-        private String kodeverksRef;
     }
 
 }
