@@ -37,6 +37,6 @@
     </values>
     <values>
         <field>Service_Path__c</field>
-        <value xsi:type="xsd:string">/sf-sob-proxy/saklista/{aktoerid}</value>
+        <value xsi:type="xsd:string">/sf-sob-proxy/saker/{aktoerid}/filter</value>
     </values>
 </CustomMetadata>
