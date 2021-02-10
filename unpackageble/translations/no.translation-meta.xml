@@ -349,9 +349,6 @@
                     <fieldText>Frist:</fieldText>
                     <name>Task_due_date</name>
                 </fields>
-                <fields>
-                    <name>Theme_Categroization</name>
-                </fields>
                 <name>Input_Screen</name>
             </screens>
             <screens>
