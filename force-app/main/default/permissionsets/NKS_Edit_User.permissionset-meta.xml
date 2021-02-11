@@ -34,9 +34,7 @@
     </fieldPermissions>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>
-NKS_Update_User
-        </flow>
+        <flow>NKS_Update_User</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
