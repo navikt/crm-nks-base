@@ -7,11 +7,8 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         List<NavTask__c> tasksToUpsert = new List<NavTask__c>();
         Map<Decimal, KafkaOppgave> kafkaTaskMap = convertToKafkaTasks(messages);
         initAccountMap();
-        
-        for (NavTask__c navTask : [SELECT Id, INT_External_Reference__c FROM NavTask__c WHERE INT_External_Reference__c IN: kafkaTaskMap.keySet()]) {
-            Decimal extRef = NavTask.INT_External_Reference__c;   
-            tasksToUpsert.add(convertToNavTask(kafkaTaskMap.get(extRef)));
-        }
+
+        tasksToUpsert = convertToNavTasks(kafkaTaskMap.values());
 
         // Errors from DML will be caught by calling context and saved on the related AsyncRequest record
         upsert tasksToUpsert INT_External_Reference__c;
@@ -68,6 +65,16 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
 
     private KafkaOppgave getLatestTaskVersion(KafkaOppgave lhKafka, KafkaOppgave rhKafka) {
         return lhKafka.versjon >= rhKafka.versjon ? lhKafka : rhKafka;
+    }
+
+    private List<NavTask__c> convertToNavTasks(List<KafkaOppgave> kafkaOppgaver) {
+        List<NavTask__c> returnList = new List<NavTask__c>();
+
+        for (KafkaOppgave kafkaOppgave : kafkaOppgaver) {
+            returnList.add(convertToNavTask(kafkaOppgave));
+        }
+
+        return returnList;
     }
 
     /**
