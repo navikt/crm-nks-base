@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>CRM_Chat_Authentication_Init_Failed</fullName>
@@ -6,7 +6,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Authentication Init Failed</shortDescription>
-        <value>Kunne ikke igangsette autentisering. Hvis problemet vedvarer, kontakt din administrator.</value>
+        <value
+        >Kunne ikke igangsette autentisering. Hvis problemet vedvarer, kontakt din administrator.</value>
     </labels>
     <labels>
         <fullName>CRM_Chat_Authentication_Requested</fullName>
@@ -46,7 +47,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Unconfirmed Identity Warning</shortDescription>
-        <value>Vær oppmerksom - brukeren har ikke bekreftet sin identitet</value>
+        <value
+        >Vær oppmerksom - brukeren har ikke bekreftet sin identitet</value>
     </labels>
     <labels>
         <fullName>NAV_Unit_Error_person_location_missing</fullName>
@@ -54,15 +56,18 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NAV Unit person location missing</shortDescription>
-        <value>Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</value>
+        <value
+        >Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</value>
     </labels>
     <labels>
         <fullName>NAV_Unit_Error_person_not_accessible</fullName>
         <categories>NAV Unit</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NAV_Unit_Error_person_not_accessible</shortDescription>
-        <value>Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</value>
+        <shortDescription
+        >NAV_Unit_Error_person_not_accessible</shortDescription>
+        <value
+        >Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</value>
     </labels>
     <labels>
         <fullName>NKS_Chat_Login_Message_EN</fullName>
@@ -70,7 +75,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Login Message EN</shortDescription>
-        <value>You are now in a secure chat with NAV. We advise you according to forvaltningsloven §11. To ensure your right to privacy, we ask you to only provide information regarding your case. The counsellor already has access to your case. The transcript will be stored and cannot be amended after completion. When the chat is over, you will find the transcript on Ditt NAV and it will be available to NAV for future case handling. You can read more about how NAV processes your personal data here (norwegian): https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
+        <value
+        >You are now in a secure chat with NAV. We advise you according to forvaltningsloven §11. To ensure your right to privacy, we ask you to only provide information regarding your case. The counsellor already has access to your case. The transcript will be stored and cannot be amended after completion. When the chat is over, you will find the transcript on Ditt NAV and it will be available to NAV for future case handling. You can read more about how NAV processes your personal data here (norwegian): https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
         <fullName>NKS_Chat_Login_Message_NO</fullName>
@@ -78,7 +84,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Login Message NO</shortDescription>
-        <value>Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
+        <value
+        >Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
         <fullName>NKS_Journal_Flow_Complete_Button</fullName>
@@ -98,18 +105,22 @@
     </labels>
     <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
-        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <categories
+        >NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Nav Task Work Allocation Delegate to Self</shortDescription>
+        <shortDescription
+        >Nav Task Work Allocation Delegate to Self</shortDescription>
         <value>Send til meg</value>
     </labels>
     <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Validation_Error</fullName>
-        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <categories
+        >NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Nav Task Work Allocation Validation Error</shortDescription>
+        <shortDescription
+        >Nav Task Work Allocation Validation Error</shortDescription>
         <value>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</value>
     </labels>
     <labels>
@@ -117,7 +128,8 @@
         <categories>UI, nksSingleReecordInputField</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Single Record Input Validation Error</shortDescription>
+        <shortDescription
+        >Single Record Input Validation Error</shortDescription>
         <value>Vennligst fyll ut feltet.</value>
     </labels>
     <labels>
@@ -150,7 +162,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ConditionLogicHelpText</shortDescription>
-        <value>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</value>
+        <value
+        >Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</value>
     </labels>
     <labels>
         <fullName>fbc_Delete</fullName>
@@ -182,7 +195,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LackingPermissions</shortDescription>
-        <value>You don\&apos;t have the proper permissions for ths action</value>
+        <value
+        >You don\&apos;t have the proper permissions for ths action</value>
     </labels>
     <labels>
         <fullName>fbc_ManagerEmptyMessage</fullName>
@@ -222,7 +236,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OWDReadWrite</shortDescription>
-        <value>Sharing Settings must be private or public read/write to enable manual sharing</value>
+        <value
+        >Sharing Settings must be private or public read/write to enable manual sharing</value>
     </labels>
     <labels>
         <fullName>fbc_OwnerAdminModify</fullName>
@@ -230,7 +245,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OwnerAdminModify</shortDescription>
-        <value>Only the record owner or administrators can modify permissions</value>
+        <value
+        >Only the record owner or administrators can modify permissions</value>
     </labels>
     <labels>
         <fullName>fbc_PublicGroups</fullName>
@@ -317,7 +333,8 @@
         <categories>messages</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>SupportedAddCapabilitiesEmptyMessage</shortDescription>
+        <shortDescription
+        >SupportedAddCapabilitiesEmptyMessage</shortDescription>
         <value>&quot;Add Capabilities&quot; can not be empty</value>
     </labels>
     <labels>
@@ -333,7 +350,8 @@
         <categories>messages</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>SupportedEditCapabilitiesEmptyMessage</shortDescription>
+        <shortDescription
+        >SupportedEditCapabilitiesEmptyMessage</shortDescription>
         <value>&quot;Edit Capabilities&quot; can not be empty</value>
     </labels>
     <labels>
@@ -342,7 +360,8 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TooManyResultsMessage</shortDescription>
-        <value>Your search found more than 200 results.  Keep typing to make it more specific</value>
+        <value
+        >Your search found more than 200 results.  Keep typing to make it more specific</value>
     </labels>
     <labels>
         <fullName>fbc_Type</fullName>

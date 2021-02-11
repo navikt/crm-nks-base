@@ -1,8 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
-import searchRecords from "@salesforce/apex/NKS_QuickTextSearchController.searchRecords";
+import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
 
 export default class nksQuickText extends LightningElement {
-
     @api comments;
     @api conversationNote;
     @track data;
@@ -15,7 +14,6 @@ export default class nksQuickText extends LightningElement {
     }
 
     handleKeyUp(evt) {
-
         const isEnterKey = evt.keyCode === 13;
         const queryTerm = evt.target.value;
 
@@ -24,32 +22,34 @@ export default class nksQuickText extends LightningElement {
             searchRecords({
                 search: queryTerm
             })
-                .then(result => {
+                .then((result) => {
                     this.numberOfRows = result.length;
                     this.data = result;
                     this.loadingData = false;
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(error);
-                })
+                });
         }
     }
 
     showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
+        this.template.querySelector('[data-id="modal"]').className =
+            'modalShow';
         this.template.querySelector('lightning-input').focus();
     }
 
-
     hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+        this.template.querySelector('[data-id="modal"]').className =
+            'modalHide';
     }
 
     insertText(event) {
         this.myVal = this.comments + event.currentTarget.dataset.message;
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+        this.template.querySelector('[data-id="modal"]').className =
+            'modalHide';
         this.template.querySelector('textarea ').value = this.myVal;
-        const attributeChangeEvent = new CustomEvent("commentschange", {
+        const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.template.querySelector('textarea').value
         });
         this.dispatchEvent(attributeChangeEvent);
@@ -57,7 +57,7 @@ export default class nksQuickText extends LightningElement {
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        const attributeChangeEvent = new CustomEvent("commentschange", {
+        const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.template.querySelector('textarea').value
         });
         this.dispatchEvent(attributeChangeEvent);

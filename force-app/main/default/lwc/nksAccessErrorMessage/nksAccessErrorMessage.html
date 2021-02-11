@@ -1,7 +1,14 @@
 <template>
     <template if:true={text}>
-        <div class="slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
-            <lightning-icon icon-name="utility:warning" size="small" title="Warning"></lightning-icon>
+        <div
+            class="slds-notify_alert slds-theme_alert-texture slds-theme_warning"
+            role="alert"
+        >
+            <lightning-icon
+                icon-name="utility:warning"
+                size="small"
+                title="Warning"
+            ></lightning-icon>
             <h2>{text}</h2>
         </div>
     </template>

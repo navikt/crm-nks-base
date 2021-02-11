@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -32,7 +32,8 @@
                     <name>chatHeight</name>
                     <value>700</value>
                 </componentInstanceProperties>
-                <componentName>runtime_service_liveagent:chatBody</componentName>
+                <componentName
+                >runtime_service_liveagent:chatBody</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</name>
@@ -50,7 +51,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>runtime_service_liveagent:pastChats</componentName>
+                <componentName
+                >runtime_service_liveagent:pastChats</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-1a9941e8-5d6c-4dbb-a356-e7cc4fc3b1f1</name>
@@ -134,7 +136,8 @@
                 <componentName>nksFlowStarter</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <leftValue
+                        >{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -159,10 +162,12 @@
                     <name>personFields</name>
                     <value>Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
-                <componentName>nksChatAuthenticationInfoContainer</componentName>
+                <componentName
+                >nksChatAuthenticationInfoContainer</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <leftValue
+                        >{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -171,7 +176,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <componentName
+                >forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

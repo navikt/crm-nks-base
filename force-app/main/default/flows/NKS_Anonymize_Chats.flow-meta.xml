@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
         <name>Empty_Fields</name>
@@ -9,14 +9,14 @@
             <assignToReference>$Record.Body</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.NKS_Conversation__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -30,7 +30,8 @@
             <targetReference>Update_Transcripts</targetReference>
         </connector>
     </assignments>
-    <description>Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
+    <description
+    >Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
     <formulas>
         <name>Deletion_Date</name>
         <dataType>DateTime</dataType>

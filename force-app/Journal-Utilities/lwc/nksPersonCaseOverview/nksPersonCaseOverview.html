@@ -1,22 +1,46 @@
 <template>
-
-    <lightning-layout class="slds-p-top_small" multiple-rows="true" vertical-align="center">
+    <lightning-layout
+        class="slds-p-top_small"
+        multiple-rows="true"
+        vertical-align="center"
+    >
         <lightning-layout-item size="3" alignment-bump="right">
             <lightning-layout>
-                <lightning-icon icon-name="custom:custom13" class="nav-red" size="medium"></lightning-icon>
-                <h1 class="slds-text-heading_small slds-p-left_small" style="margin-top: auto; margin-bottom: auto">
+                <lightning-icon
+                    icon-name="custom:custom13"
+                    class="nav-red"
+                    size="medium"
+                ></lightning-icon>
+                <h1
+                    class="slds-text-heading_small slds-p-left_small"
+                    style="margin-top: auto; margin-bottom: auto"
+                >
                     {title}
                 </h1>
             </lightning-layout>
         </lightning-layout-item>
         <lightning-layout-item flexibility="shrink">
             <lightning-layout>
-                <lightning-radio-group name="caseType" class="slds-p-right_small" options={caseTypeOptions}
-                    value={selectedCaseType} onchange={handleCaseTypeChange} type="button" disabled
-                    variant="label-hidden">
+                <lightning-radio-group
+                    name="caseType"
+                    class="slds-p-right_small"
+                    options={caseTypeOptions}
+                    value={selectedCaseType}
+                    onchange={handleCaseTypeChange}
+                    type="button"
+                    disabled
+                    variant="label-hidden"
+                >
                 </lightning-radio-group>
-                <lightning-combobox name="themeGroup" value={value} placeholder="Temagruppe" options={themeGroupOptions}
-                    onchange={handleFilterChange} variant="label-hidden" disabled>
+                <lightning-combobox
+                    name="themeGroup"
+                    value={value}
+                    placeholder="Temagruppe"
+                    options={themeGroupOptions}
+                    onchange={handleFilterChange}
+                    variant="label-hidden"
+                    disabled
+                >
                 </lightning-combobox>
             </lightning-layout>
         </lightning-layout-item>
@@ -24,21 +48,37 @@
     <div class="slds-p-top_small slds-p-bottom_small">
         <template if:true={isGeneralCase}>
             <!--IF GENERELL SAK IS CHOSEN, THE CATEGORIZATION IS DONE MANUALLY-->
-            <c-nks-theme-categorization theme-group={prefilledThemeGroup}></c-nks-theme-categorization>
+            <c-nks-theme-categorization
+                theme-group={prefilledThemeGroup}
+            ></c-nks-theme-categorization>
         </template>
         <template if:false={dataLoaded}>
-            <lightning-spinner size="medium" alternative-text="Loading" variant="brand"></lightning-spinner>
+            <lightning-spinner
+                size="medium"
+                alternative-text="Loading"
+                variant="brand"
+            ></lightning-spinner>
         </template>
         <template if:true={showCases}>
-            <template for:each={displayedCases} for:item="navCase" for:index="rowIndex">
-                <c-nks-nav-case-item key={navCase.Id} nav-case={navCase} oncaseselected={handleCaseSelected}>
+            <template
+                for:each={displayedCases}
+                for:item="navCase"
+                for:index="rowIndex"
+            >
+                <c-nks-nav-case-item
+                    key={navCase.Id}
+                    nav-case={navCase}
+                    oncaseselected={handleCaseSelected}
+                >
                 </c-nks-nav-case-item>
             </template>
         </template>
         <template if:true={error}>
             <!--ERROR OCCURRED-->
-            <c-nks-alert-banner type="Error" message={labels.NAV_CASE_RETRIEVE_ERROR}></c-nks-alert-banner>
+            <c-nks-alert-banner
+                type="Error"
+                message={labels.NAV_CASE_RETRIEVE_ERROR}
+            ></c-nks-alert-banner>
         </template>
     </div>
-
 </template>

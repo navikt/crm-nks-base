@@ -1,8 +1,22 @@
 <template>
-    <lightning-combobox name="Theme" label="Tema" options={themes} onchange={handleThemeChange} required=""
-        placeholder="(Ikke valgt)" value={theme}>
+    <lightning-combobox
+        name="Theme"
+        label="Tema"
+        options={themes}
+        onchange={handleThemeChange}
+        required=""
+        placeholder="(Ikke valgt)"
+        value={theme}
+    >
     </lightning-combobox>
-    <lightning-combobox name="SubTheme" label="Undertema" placeholder="(Ikke valgt)" options={subthemes}
-        onchange={handleSubThemeChange} required="" value={subTheme}>
+    <lightning-combobox
+        name="SubTheme"
+        label="Undertema"
+        placeholder="(Ikke valgt)"
+        options={subthemes}
+        onchange={handleSubThemeChange}
+        required=""
+        value={subTheme}
+    >
     </lightning-combobox>
 </template>

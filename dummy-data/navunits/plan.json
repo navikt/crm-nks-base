@@ -3,8 +3,6 @@
         "sobject": "NavUnits__c",
         "saveRefs": true,
         "resolveRefs": false,
-        "files": [
-            "navunits.json"
-        ]
+        "files": ["navunits.json"]
     }
 ]

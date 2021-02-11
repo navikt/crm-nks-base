@@ -1,31 +1,71 @@
 <template>
-    <lightning-button-icon class="quicktext-button" icon-name="utility:quick_text" variant="border-filled"
-        onclick={showModal} alternative-text="Legg til hurtigtekst" title="Hurtigtekst"></lightning-button-icon>
+    <lightning-button-icon
+        class="quicktext-button"
+        icon-name="utility:quick_text"
+        variant="border-filled"
+        onclick={showModal}
+        alternative-text="Legg til hurtigtekst"
+        title="Hurtigtekst"
+    ></lightning-button-icon>
     <div data-id="modal" class="modalHide">
-        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+        >
             <div class="slds-modal__container">
-
                 <header class="slds-modal__header">
-                    <lightning-button-icon class="slds-modal__close" title="Lukk" icon-name="utility:close"
-                        icon-class="slds-button_icon-inverse" onclick={hideModal} variant="bare">
+                    <lightning-button-icon
+                        class="slds-modal__close"
+                        title="Lukk"
+                        icon-name="utility:close"
+                        icon-class="slds-button_icon-inverse"
+                        onclick={hideModal}
+                        variant="bare"
+                    >
                     </lightning-button-icon>
 
                     <div onkeyup={handleKeyUp}>
-                        <lightning-input name="enter-search" label="Søk her" placeholder="Søk i hurtigtekst..."
-                            type="search" variant="label-hidden">
+                        <lightning-input
+                            name="enter-search"
+                            label="Søk her"
+                            placeholder="Søk i hurtigtekst..."
+                            type="search"
+                            variant="label-hidden"
+                        >
                         </lightning-input>
                     </div>
                 </header>
 
-                <div class="slds-modal__content slds-var-p-horizontal_small slds-var-p-vertical_x-small"
-                    id="modal-content-id-1">
-                    <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
-                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
-                        <template if:true={data} for:each={data} for:item="record" for:index="index">
-                            <lightning-layout-item key={record.RecordId} class="slds-size_1-of-1 quicktext-item"
-                                onclick={insertText} data-message={record.Message}>
-                                <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
+                <div
+                    class="slds-modal__content slds-var-p-horizontal_small slds-var-p-vertical_x-small"
+                    id="modal-content-id-1"
+                >
+                    <div if:true={data} class="slds-text-title_caps">
+                        {numberOfRows} resultater
+                    </div>
+                    <lightning-layout
+                        multiple-rows="true"
+                        pull-to-boundary="small"
+                    >
+                        <template
+                            if:true={data}
+                            for:each={data}
+                            for:item="record"
+                            for:index="index"
+                        >
+                            <lightning-layout-item
+                                key={record.RecordId}
+                                class="slds-size_1-of-1 quicktext-item"
+                                onclick={insertText}
+                                data-message={record.Message}
+                            >
+                                <div
+                                    class="slds-var-p-horizontal_small slds-var-p-vertical_x-small"
+                                >
                                     <p class="slds-text-link">{record.Name}</p>
                                     <p>{record.Summary}</p>
                                 </div>
@@ -33,16 +73,24 @@
                         </template>
                     </lightning-layout>
                 </div>
-
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
     <div class="slds-form-element">
-        <label class="slds-form-element__label" for="textarea-id-01">Samtalenotat</label>
+        <label class="slds-form-element__label" for="textarea-id-01"
+            >Samtalenotat</label
+        >
         <div class="slds-form-element__control">
-            <textarea id="comments" class="slds-textarea" required="" rows=10
-                onchange={handleChange}>{conversationNote}</textarea>
+            <textarea
+                id="comments"
+                class="slds-textarea"
+                required=""
+                rows="10"
+                onchange={handleChange}
+            >
+{conversationNote}</textarea
+            >
         </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
-import { NavigationMixin } from "lightning/navigation";
+import { NavigationMixin } from 'lightning/navigation';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
@@ -26,12 +26,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             type: 'standard__objectPage',
             attributes: {
                 objectApiName: this.objectName,
-                actionName: 'list',
+                actionName: 'list'
             },
             state: {
                 filterName: this.listviewname
             }
-        }).then(url => {
+        }).then((url) => {
             this.pageUrl = url;
         });
     }
@@ -47,10 +47,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             datefield: this.datefield,
             showimage: this.showimage
         })
-            .then(result => {
+            .then((result) => {
                 this.records = result;
             })
-            .catch(error => {
+            .catch((error) => {
                 this.error = error;
             });
     }
@@ -67,5 +67,4 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             }
         });
     }
-
 }

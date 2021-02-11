@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Request_Hour__c</fullName>
-    <description>Retrieves the hour from the datetime the agent work request was created. Takes into account both timezone offset and DST.</description>
+    <description
+    >Retrieves the hour from the datetime the agent work request was created. Takes into account both timezone offset and DST.</description>
     <externalId>false</externalId>
     <formula>IF(AND(
 /*Checking if the requested date is in between the start and end date for daylight saving time*/

@@ -4,11 +4,17 @@
             <ul class="slds-has-dividers_top-space">
                 <template for:each={records} for:item="record">
                     <li class="slds-item" key={record.personId}>
-                        <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
+                        <c-nks-home-page-list-entry
+                            record={record}
+                        ></c-nks-home-page-list-entry>
                     </li>
                 </template>
             </ul>
-            <lightning-formatted-url value='{pageUrl}' label='{linklabel}' onclick={navigateToList}>
+            <lightning-formatted-url
+                value={pageUrl}
+                label={linklabel}
+                onclick={navigateToList}
+            >
             </lightning-formatted-url>
         </div>
     </lightning-card>

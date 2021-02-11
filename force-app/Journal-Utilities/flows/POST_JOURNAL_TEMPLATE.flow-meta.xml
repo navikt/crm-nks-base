@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Generate_Document</name>
@@ -28,7 +28,8 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <description>Call loggerutility to store an application log entry.</description>
+        <description
+        >Call loggerutility to store an application log entry.</description>
         <name>Log_Journal_Entry_Error</name>
         <label>Log Journal Entry Error</label>
         <locationX>1210</locationX>
@@ -102,7 +103,8 @@
         <locationX>575</locationX>
         <locationY>517</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <assignToReference
+            >Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Document_Variant_PDF</elementReference>
@@ -142,11 +144,13 @@
             <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedCaseId</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.journalpostType</assignToReference>
+            <assignToReference
+            >Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INNGAAENDE/UTGAAENDE</stringValue>
@@ -160,7 +164,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
+            <assignToReference
+            >Journal_Request.journalfoerendeEnhet</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Department</elementReference>
@@ -177,25 +182,29 @@
             <assignToReference>Journal_Request.bruker.id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account_Info.INT_PersonIdent__c</elementReference>
+                <elementReference
+                >Get_Account_Info.INT_PersonIdent__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.idType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>FNR/ORGNR</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.id</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>TEMPLATE_IDENTIFIER</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.navn</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Person_Full_Name</elementReference>
@@ -205,21 +214,25 @@
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedCaseTheme</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedCaseTheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.behandlingstema</assignToReference>
+            <assignToReference
+            >Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedSubtheme</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedSubtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.sak.sakstype</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.navCaseType</elementReference>
+                <elementReference
+                >Journal_Case_Overview.navCaseType</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -240,14 +253,16 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Variant_PDF.fysiskDokument</assignToReference>
+            <assignToReference
+            >Document_Variant_PDF.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>PDF_DOCUMENT</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Document_Variant_PDF.variantformat</assignToReference>
+            <assignToReference
+            >Document_Variant_PDF.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ARKIV</stringValue>
@@ -258,44 +273,53 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Assign field values to the journal entry to be stored.</description>
+        <description
+        >Assign field values to the journal entry to be stored.</description>
         <name>Set_Journal_Entry_Data</name>
         <label>Set Journal Entry Data</label>
         <locationX>1071</locationX>
         <locationY>354</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Entry.Journal_Entry_ID__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+                <elementReference
+                >Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry.Journal_Entry_Status__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal_Request.journalPostStatus</elementReference>
+                <elementReference
+                >Post_Journal_Request.journalPostStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry.NAV_Case_Reference__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.NAV_Case_Reference__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedCaseId</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Entry.Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Entry.Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Journal_Case_Overview.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Journal_Case_Overview.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -303,7 +327,8 @@
         </connector>
     </assignments>
     <assignments>
-        <description>TEMPLATE: Perform necessary updates to store the journal post external reference</description>
+        <description
+        >TEMPLATE: Perform necessary updates to store the journal post external reference</description>
         <name>Update_Record</name>
         <label>Update Record</label>
         <locationX>1355</locationX>
@@ -312,7 +337,8 @@
             <assignToReference>Get_Record_Info.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal_Request.journalpostId</elementReference>
+                <elementReference
+                >Post_Journal_Request.journalpostId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -330,7 +356,8 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Post_Journal_Request.success</leftValueReference>
+                <leftValueReference
+                >Post_Journal_Request.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -344,12 +371,15 @@
     </decisions>
     <description>Template flow journal entry posts</description>
     <formulas>
-        <description>Generates the person name on the correct archive convention.</description>
+        <description
+        >Generates the person name on the correct archive convention.</description>
         <name>Person_Full_Name</name>
         <dataType>String</dataType>
-        <expression>{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
+        <expression
+        >{!Get_Account_Info.CRM_Person__r.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Account_Info.CRM_Person__r.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Account_Info.CRM_Person__r.INT_MiddleName__c}</expression>
     </formulas>
-    <interviewLabel>POST JOURNAL TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel
+    >POST JOURNAL TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>POST JOURNAL TEMPLATE</label>
     <processMetadataValues>
@@ -390,7 +420,8 @@
         <label>Get Account Info</label>
         <locationX>177</locationX>
         <locationY>355</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Theme_Input_Screen</targetReference>
         </connector>
@@ -406,12 +437,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>TEMPLATE: Get relevant information from record needed for journal entry creation</description>
+        <description
+        >TEMPLATE: Get relevant information from record needed for journal entry creation</description>
         <name>Get_Record_Info</name>
         <label>Get Record Info</label>
         <locationX>176</locationX>
         <locationY>210</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Info</targetReference>
         </connector>
@@ -427,7 +460,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <description>TEMPLATE: If an error was received upon post, show an error message to the user.</description>
+        <description
+        >TEMPLATE: If an error was received upon post, show an error message to the user.</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>914</locationX>
@@ -437,14 +471,16 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Error_Message</name>
-            <fieldText>&lt;p&gt;Noe gikk galt. Kontakt din administrator med følgende referanse: {!Post_Journal_Request.errorMessage}&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Noe gikk galt. Kontakt din administrator med følgende referanse: {!Post_Journal_Request.errorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <description>Input screen for theme and subtheme categorization.</description>
+        <description
+        >Input screen for theme and subtheme categorization.</description>
         <name>Theme_Input_Screen</name>
         <label>Theme Input Screen</label>
         <locationX>303</locationX>
@@ -462,7 +498,8 @@
             <inputParameters>
                 <name>actorId</name>
                 <value>
-                    <elementReference>Get_Account_Info.CRM_Person__r.INT_ActorId__c</elementReference>
+                    <elementReference
+                    >Get_Account_Info.CRM_Person__r.INT_ActorId__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -515,7 +552,8 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>The base 64 encoded document string to be sent.</description>
+        <description
+        >The base 64 encoded document string to be sent.</description>
         <name>PDF_DOCUMENT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

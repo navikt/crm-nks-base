@@ -1,9 +1,11 @@
 import { LightningElement, api } from 'lwc';
-import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
-
+import {
+    FlowNavigationBackEvent,
+    FlowNavigationNextEvent,
+    FlowNavigationFinishEvent
+} from 'lightning/flowSupport';
 
 export default class NksFlowNavigation extends LightningElement {
-
     @api action;
     @api buttonLabel;
     @api buttonAlignment;
@@ -37,7 +39,7 @@ export default class NksFlowNavigation extends LightningElement {
             case 'CENTER':
                 return 'center';
             default:
-                return 'end'
+                return 'end';
         }
     }
 }

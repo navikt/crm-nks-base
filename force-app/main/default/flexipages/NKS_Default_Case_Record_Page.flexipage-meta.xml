@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -10,7 +10,8 @@
                             <value>Case.NKS_Case_Create_NAV_Task</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                                    <leftValue
+                                    >{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -95,7 +96,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c</value>
+                    <value
+                    >INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -124,7 +126,8 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -168,11 +171,13 @@
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_KrrEmail__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_KrrEmail__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_KrrMobilePhone__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_KrrMobilePhone__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -186,7 +191,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
+                    <value
+                    >INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -216,11 +222,13 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -234,7 +242,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+                    <value
+                    >INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -264,19 +273,23 @@
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -311,7 +324,8 @@
                 <componentName>nksNavUnitSingle</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -322,7 +336,8 @@
                 <componentName>personRelationViewer</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -392,7 +407,8 @@
                 <componentName>nksPersonBadges</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -435,7 +451,8 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_IsDeceased__c}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.INT_IsDeceased__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -450,7 +467,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
+                    <value
+                    >Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -479,7 +497,8 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -493,7 +512,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c</value>
+                    <value
+                    >NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -522,7 +542,8 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue
+                        >{!Record.Account.CRM_Person__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -530,7 +551,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <componentName
+                >forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

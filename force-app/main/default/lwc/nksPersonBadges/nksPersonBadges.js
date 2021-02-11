@@ -34,23 +34,38 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showIntepreterSpokenLanguage() {
-        return 'spokenLanguageIntepreter' === this.infoPanelToShow && 0 < this.interpreterSpokenLanguages.length;
+        return (
+            'spokenLanguageIntepreter' === this.infoPanelToShow &&
+            0 < this.interpreterSpokenLanguages.length
+        );
     }
 
     get showSecurityMeasures() {
-        return 'securityMeasures' === this.infoPanelToShow && 0 < this.securityMeasures.length;
+        return (
+            'securityMeasures' === this.infoPanelToShow &&
+            0 < this.securityMeasures.length
+        );
     }
 
     get showGuardianship() {
-        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow && 0 < this.guardianships.length;
+        return (
+            'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow &&
+            0 < this.guardianships.length
+        );
     }
 
     get showPowerOfAttorney() {
-        return 'powerOfAttorney' === this.infoPanelToShow && 0 < this.powerOfAttorneys.length;
+        return (
+            'powerOfAttorney' === this.infoPanelToShow &&
+            0 < this.powerOfAttorneys.length
+        );
     }
 
     get showEntitlements() {
-        return 'entitlements' === this.infoPanelToShow && 0 < this.entitlements.length;
+        return (
+            'entitlements' === this.infoPanelToShow &&
+            0 < this.entitlements.length
+        );
     }
 
     get backgroundTheme() {
@@ -60,8 +75,11 @@ export default class NksPersonBadges extends LightningElement {
         return '';
     }
 
-
-    @wire(getPersonBadgesAndInfo, { field: '$personRelationField', parentObject: '$objectApiName', parentRecordId: '$recordId' })
+    @wire(getPersonBadgesAndInfo, {
+        field: '$personRelationField',
+        parentObject: '$objectApiName',
+        parentRecordId: '$recordId'
+    })
     wiredBadgeInfo(value) {
         this.wiredBadge = value;
 
@@ -102,5 +120,4 @@ export default class NksPersonBadges extends LightningElement {
             this.infoPanelToShow = selectedBadge;
         }
     }
-
 }

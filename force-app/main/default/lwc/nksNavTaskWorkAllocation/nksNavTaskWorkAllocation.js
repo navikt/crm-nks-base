@@ -24,7 +24,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     labels = {
         VALIDATION_ERROR,
         DELEGATE_TO_SELF_LABEL
-    }
+    };
 
     @api personId;
     @api taskType;
@@ -73,14 +73,17 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @wire(MessageContext)
     messageContext;
 
-    @wire(getRecord, { recordId: '$selectedId', fields: [ID_FIELD, NAME_FIELD, UNIT_NUMBER_FIELD] })
+    @wire(getRecord, {
+        recordId: '$selectedId',
+        fields: [ID_FIELD, NAME_FIELD, UNIT_NUMBER_FIELD]
+    })
     navUnit;
 
-    @wire(getRecord, { recordId: USER_ID, fields: [USER_NAV_UNIT_FIELD, USER_NAV_IDENT_FIELD] })
-    wireUser({
-        error,
-        data
-    }) {
+    @wire(getRecord, {
+        recordId: USER_ID,
+        fields: [USER_NAV_UNIT_FIELD, USER_NAV_IDENT_FIELD]
+    })
+    wireUser({ error, data }) {
         if (data) {
             this.runningUserIdent = data.fields.CRM_NAV_Ident__c.value;
             this.runningUserUnitNumber = data.fields.Department.value;
@@ -96,7 +99,9 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     }
 
     get showContent() {
-        return (null != this.personId && null != this.theme && null != this.taskType);
+        return (
+            null != this.personId && null != this.theme && null != this.taskType
+        );
     }
 
     //Lightning message service subscribe
@@ -136,7 +141,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
                 break;
         }
 
-        let showContent = this.showContent
+        let showContent = this.showContent;
         if (true == showContent) {
             this.findAllocation();
         }
@@ -151,7 +156,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
             themeCode: this.theme,
             themeSubThemeCode: this.subTheme,
             taskType: this.taskType
-        }
+        };
 
         try {
             const data = await getWorkAllocations(input);
@@ -171,7 +176,6 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @wire(getUserNavUnit, { userUnitNumber: '$runningUserUnitNumber' })
     userNavUnitId;
 
-
     onChange(event) {
         let ids = event.detail.value;
         this.selectedId = ids && 1 === ids.length ? ids[0] : null;
@@ -180,7 +184,8 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     delegationChange(event) {
         this.delegateToSelf = event.target.checked;
 
-        this.selectedId = this.delegateToSelf === true ? this.userNavUnitId.data : null;
+        this.selectedId =
+            this.delegateToSelf === true ? this.userNavUnitId.data : null;
     }
 
     @api
@@ -188,8 +193,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         //Theme and theme group must be set
         if (false == this.showContent || (this.selectedId && this.navUnit)) {
             return { isValid: true };
-        }
-        else {
+        } else {
             return {
                 isValid: false,
                 errorMessage: VALIDATION_ERROR

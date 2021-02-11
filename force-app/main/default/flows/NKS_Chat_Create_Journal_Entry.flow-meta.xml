@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
     <actionCalls>
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
@@ -23,7 +26,8 @@
         <inputParameters>
             <name>assignToUnitNumber</name>
             <value>
-                <elementReference>workAllocation.selectedUnitNumber</elementReference>
+                <elementReference
+                >workAllocation.selectedUnitNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -41,7 +45,8 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubtheme</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubtheme</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -53,13 +58,15 @@
         <inputParameters>
             <name>themeCode</name>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseTheme</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseTheme</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <description>Base 64 encodes the original document for archiving</description>
+        <description
+        >Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
         <locationX>324</locationX>
@@ -72,7 +79,8 @@
         <inputParameters>
             <name>documentString</name>
             <value>
-                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.NKS_Conversation__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -97,7 +105,8 @@
         <inputParameters>
             <name>documentString</name>
             <value>
-                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.NKS_Conversation__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -143,7 +152,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <description>Passes the reference sObject to the logger utility to be stored in app logs.</description>
+        <description
+        >Passes the reference sObject to the logger utility to be stored in app logs.</description>
         <name>Store_Application_Log</name>
         <label>Store Application Log</label>
         <locationX>996</locationX>
@@ -183,7 +193,8 @@
         </inputParameters>
     </actionCalls>
     <assignments>
-        <description>Adds information from the iterated journal entry.</description>
+        <description
+        >Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
         <label>Add Journal Entry</label>
         <locationX>1129</locationX>
@@ -199,7 +210,8 @@
             <assignToReference>Journal_Entry_Text</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Journal_Entry_Loop.Theme__r.Name</elementReference>
+                <elementReference
+                >Journal_Entry_Loop.Theme__r.Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -227,14 +239,16 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <assignToReference
+            >Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Journal_Variant_Original</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Documents.dokumentvarianter</assignToReference>
+            <assignToReference
+            >Journal_Documents.dokumentvarianter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Journal_Variant_PDF</elementReference>
@@ -245,7 +259,8 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Assigns the apprrpriate values to the journal post request</description>
+        <description
+        >Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
         <locationX>317</locationX>
@@ -272,7 +287,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.journalpostType</assignToReference>
+            <assignToReference
+            >Journal_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INNGAAENDE</stringValue>
@@ -282,28 +298,33 @@
             <assignToReference>Journal_Request.sak.sakstype</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.navCaseType</elementReference>
+                <elementReference
+                >Person_NAV_Cases.navCaseType</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.tema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseTheme</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseTheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.behandlingstema</assignToReference>
+            <assignToReference
+            >Journal_Request.behandlingstema</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubtheme</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Request.bruker.id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+                <elementReference
+                >Get_Account.INT_PersonIdent__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -314,28 +335,33 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
+            <assignToReference
+            >Journal_Request.journalfoerendeEnhet</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$User.Department</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+                <elementReference
+                >Get_Account.INT_PersonIdent__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.idType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>FNR</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
+            <assignToReference
+            >Journal_Request.avsenderMottaker.navn</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Person_Full_Name</elementReference>
@@ -345,7 +371,8 @@
             <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -353,30 +380,35 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Assigns values to the original document variant.</description>
+        <description
+        >Assigns values to the original document variant.</description>
         <name>Create_Original_Document_Variant</name>
         <label>Create Original Document Variant</label>
         <locationX>35</locationX>
         <locationY>770</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Variant_Original.filtype</assignToReference>
+            <assignToReference
+            >Journal_Variant_Original.filtype</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>XML</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Variant_Original.variantformat</assignToReference>
+            <assignToReference
+            >Journal_Variant_Original.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ORIGINAL</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Variant_Original.fysiskDokument</assignToReference>
+            <assignToReference
+            >Journal_Variant_Original.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Encode_Original.documentString</elementReference>
+                <elementReference
+                >Encode_Original.documentString</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -397,14 +429,16 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Variant_PDF.variantformat</assignToReference>
+            <assignToReference
+            >Journal_Variant_PDF.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ARKIV</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Variant_PDF.fysiskDokument</assignToReference>
+            <assignToReference
+            >Journal_Variant_PDF.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Generate_PDF.documentString</elementReference>
@@ -423,7 +457,8 @@
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -437,7 +472,8 @@
             <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.selectedUnitId</elementReference>
+                <elementReference
+                >workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -448,7 +484,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference
+            >NAV_Task.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -458,25 +495,29 @@
             <assignToReference>NAV_Task.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.INT_Journal_Entry_ID__c</assignToReference>
+            <assignToReference
+            >NAV_Task.INT_Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Post_Journal.journalpostId</elementReference>
@@ -490,7 +531,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <assignToReference
+            >NAV_Task.NKS_Internal_Reference__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -514,7 +556,8 @@
             <assignToReference>NAV_Task.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.assignedResource</elementReference>
+                <elementReference
+                >workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -530,7 +573,8 @@
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -544,7 +588,8 @@
             <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.selectedUnitId</elementReference>
+                <elementReference
+                >workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -555,7 +600,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference
+            >NAV_Task.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -565,21 +611,24 @@
             <assignToReference>NAV_Task.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -590,7 +639,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <assignToReference
+            >NAV_Task.NKS_Internal_Reference__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -614,7 +664,8 @@
             <assignToReference>NAV_Task.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.assignedResource</elementReference>
+                <elementReference
+                >workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -627,42 +678,52 @@
         <locationX>576</locationX>
         <locationY>1395</locationY>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.journalPostStatus</elementReference>
+                <elementReference
+                >Post_Journal.journalPostStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Post_Journal.journalpostId</elementReference>
@@ -678,42 +739,52 @@
         <locationX>816</locationX>
         <locationY>1716</locationY>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.journalPostStatus</elementReference>
+                <elementReference
+                >Post_Journal.journalPostStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
+            <assignToReference
+            >Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Post_Journal.journalpostId</elementReference>
@@ -724,34 +795,41 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Assigns field values for the journal entry record to be created.</description>
+        <description
+        >Assigns field values for the journal entry record to be created.</description>
         <name>Set_Journal_Entry_Data</name>
         <label>Set Journal Entry Data</label>
         <locationX>434</locationX>
         <locationY>1288</locationY>
         <assignmentItems>
-            <assignToReference>Journal_Entry.Journal_Entry_ID__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Post_Journal.journalpostId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry.Journal_Entry_Status__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Post_Journal.journalPostStatus</elementReference>
+                <elementReference
+                >Post_Journal.journalPostStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry.NAV_Case_Reference__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.NAV_Case_Reference__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Journal_Entry.NKS_Chat_Transcript__c</assignToReference>
+            <assignToReference
+            >Journal_Entry.NKS_Chat_Transcript__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -761,14 +839,16 @@
             <assignToReference>Journal_Entry.Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Journal_Entry.Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
+                <elementReference
+                >Person_NAV_Cases.selectedSubthemeSfId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -792,7 +872,8 @@
         </connector>
     </assignments>
     <decisions>
-        <description>Checks if a journal entry has already been created.</description>
+        <description
+        >Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
         <locationX>872</locationX>
@@ -820,7 +901,8 @@
             <name>No_Transcript</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                <leftValueReference
+                >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -835,7 +917,8 @@
             <name>No_Account</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                <leftValueReference
+                >Get_Chat_Transcript.AccountId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -848,7 +931,8 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Check if the chat has set the social information flag set to true.</description>
+        <description
+        >Check if the chat has set the social information flag set to true.</description>
         <name>Check_Social_Information</name>
         <label>Check Social Information</label>
         <locationX>311</locationX>
@@ -861,7 +945,8 @@
             <name>Has_Social_Information</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Social_Service_Information</leftValueReference>
+                <leftValueReference
+                >Social_Service_Information</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -887,7 +972,8 @@
             <name>Do_Create_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                <leftValueReference
+                >Create_Task_Toggle.value</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -913,7 +999,8 @@
             <name>Do_Create_Task_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                <leftValueReference
+                >Create_Task_Toggle.value</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -964,7 +1051,8 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Delegate_NAV_Task.success</leftValueReference>
+                <leftValueReference
+                >Delegate_NAV_Task.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -981,16 +1069,16 @@
         <description>Task priority picklist values.</description>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Task_Type_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -1008,10 +1096,12 @@
 TODAY())</expression>
     </formulas>
     <formulas>
-        <description>Formula for det template document title to handle different languages.</description>
+        <description
+        >Formula for det template document title to handle different languages.</description>
         <name>Document_Title</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!Get_Chat_Transcript.LiveChatButton.WindowLanguage}, &apos;en_US&apos;),
+        <expression
+        >IF(ISPICKVAL({!Get_Chat_Transcript.LiveChatButton.WindowLanguage}, &apos;en_US&apos;),
 &apos;Authenticated written conversation with NAV&apos;,
 &apos;Innlogget skriftlig samtale med NAV&apos;
 )</expression>
@@ -1019,18 +1109,22 @@ TODAY())</expression>
     <formulas>
         <name>Person_Full_Name</name>
         <dataType>String</dataType>
-        <expression>{!Get_Person.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Person.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Person.INT_MiddleName__c}</expression>
+        <expression
+        >{!Get_Person.INT_LastName__c} &amp; &apos;, &apos; &amp; {!Get_Person.INT_FirstName__c} &amp; &apos; &apos; &amp;{!Get_Person.INT_MiddleName__c}</expression>
     </formulas>
     <formulas>
         <description>Formula to generate a default task name.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
+        <expression
+        >&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
-    <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel
+    >NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Chat Create Journal Entry</label>
     <loops>
-        <description>Loops through the journal entries to generate text output to user.</description>
+        <description
+        >Loops through the journal entries to generate text output to user.</description>
         <name>Journal_Entry_Loop</name>
         <label>Journal Entry Loop</label>
         <locationX>881</locationX>
@@ -1078,7 +1172,8 @@ TODAY())</expression>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
     <recordCreates>
-        <description>Inserts the Salesforce NAV task after a successful callout.</description>
+        <description
+        >Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task</name>
         <label>Create Salesforce NAV Task</label>
         <locationX>436</locationX>
@@ -1092,7 +1187,8 @@ TODAY())</expression>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
     <recordCreates>
-        <description>Inserts the Salesforce NAV task after a successful callout.</description>
+        <description
+        >Inserts the Salesforce NAV task after a successful callout.</description>
         <name>Create_Salesforce_NAV_Task_0</name>
         <label>Create Salesforce NAV Task</label>
         <locationX>309</locationX>
@@ -1106,7 +1202,8 @@ TODAY())</expression>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
     <recordCreates>
-        <description>Stores the generated journal entry data i custom object</description>
+        <description
+        >Stores the generated journal entry data i custom object</description>
         <name>Store_Journal_Entry</name>
         <label>Store Journal Entry</label>
         <locationX>707</locationX>
@@ -1120,7 +1217,8 @@ TODAY())</expression>
         <inputReference>Journal_Entry</inputReference>
     </recordCreates>
     <recordCreates>
-        <description>Stores the generated journal entry data i custom object</description>
+        <description
+        >Stores the generated journal entry data i custom object</description>
         <name>Store_Journal_Entry_0</name>
         <label>Store Journal Entry</label>
         <locationX>991</locationX>
@@ -1134,12 +1232,14 @@ TODAY())</expression>
         <inputReference>Journal_Entry</inputReference>
     </recordCreates>
     <recordLookups>
-        <description>Queries the account related from the transcript.</description>
+        <description
+        >Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>700</locationX>
         <locationY>428</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person</targetReference>
         </connector>
@@ -1150,7 +1250,8 @@ TODAY())</expression>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.AccountId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1161,12 +1262,14 @@ TODAY())</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Query the chat transcript triggering the flow.</description>
+        <description
+        >Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
         <locationX>707</locationX>
         <locationY>185</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Journal_Entries</targetReference>
         </connector>
@@ -1196,12 +1299,14 @@ TODAY())</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Check to see if there are any journal entries created for this chat already</description>
+        <description
+        >Check to see if there are any journal entries created for this chat already</description>
         <name>Get_Journal_Entries</name>
         <label>Get Journal Entries</label>
         <locationX>880</locationX>
         <locationY>194</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
         </connector>
@@ -1225,7 +1330,8 @@ TODAY())</expression>
         <label>Get Person</label>
         <locationX>422</locationX>
         <locationY>505</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Input_Screen</targetReference>
         </connector>
@@ -1273,7 +1379,8 @@ TODAY())</expression>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <description>Screen for displaying potential error messages</description>
+        <description
+        >Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>1572</locationX>
@@ -1283,17 +1390,20 @@ TODAY())</expression>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Missing_Account_Error</name>
-            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.AccountId</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1303,12 +1413,14 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Conversation_Error</name>
-            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1318,7 +1430,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg</name>
-            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1333,7 +1446,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Error</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1357,7 +1471,8 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Screen for displaying potential error messages</description>
+        <description
+        >Screen for displaying potential error messages</description>
         <name>Error_Screen_0</name>
         <label>Error Screen</label>
         <locationX>1831</locationX>
@@ -1367,17 +1482,20 @@ TODAY())</expression>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Missing_Account_Error_0</name>
-            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.AccountId</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1387,12 +1505,14 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Conversation_Error_0</name>
-            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1402,7 +1522,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg_0</name>
-            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1417,7 +1538,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Error_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1441,7 +1563,8 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Screen for displaying potential error messages</description>
+        <description
+        >Screen for displaying potential error messages</description>
         <name>Error_Screen_0_0</name>
         <label>Error Screen</label>
         <locationX>1515</locationX>
@@ -1451,17 +1574,20 @@ TODAY())</expression>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Missing_Account_Error_0_0</name>
-            <fieldText>&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.AccountId</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1471,12 +1597,14 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Conversation_Error_0_0</name>
-            <fieldText>&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1486,7 +1614,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg_0_0</name>
-            <fieldText>&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få journalført chatten på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1501,7 +1630,8 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Error_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1525,7 +1655,8 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
+        <description
+        >Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>325</locationX>
@@ -1538,18 +1669,21 @@ TODAY())</expression>
         </connector>
         <fields>
             <name>Journal_Header</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Social_Service_Information</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <elementReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
+                <elementReference
+                >Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
             </defaultValue>
             <fieldText>Informasjon Sosiale Tjenester</fieldText>
             <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Huk av denne hvis chatsamtalen inneholder meldinger med informasjon om hvorvidt bruker mottar sosiale tjenester fra NAV.&lt;/p&gt;</helpText>
+            <helpText
+            >&lt;p&gt;Huk av denne hvis chatsamtalen inneholder meldinger med informasjon om hvorvidt bruker mottar sosiale tjenester fra NAV.&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -1559,13 +1693,15 @@ TODAY())</expression>
             <inputParameters>
                 <name>actorId</name>
                 <value>
-                    <elementReference>Get_Person.INT_ActorId__c</elementReference>
+                    <elementReference
+                    >Get_Person.INT_ActorId__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>prefilledThemeGroup</name>
                 <value>
-                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+                    <elementReference
+                    >Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -1635,7 +1771,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference
+                    >Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1653,7 +1790,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference
+                    >Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1673,7 +1811,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference
+                    >Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1689,7 +1828,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference
+                    >Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -1717,7 +1857,8 @@ TODAY())</expression>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                    <elementReference
+                    >$Label.NKS_Journal_Flow_Complete_Button</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1751,7 +1892,8 @@ TODAY())</expression>
         </connector>
         <fields>
             <name>Entry_Completed_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;﻿Chatsamtalen er journalført på:&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!Journal_Entry_Text}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;﻿Chatsamtalen er journalført på:&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!Journal_Entry_Text}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1761,7 +1903,8 @@ TODAY())</expression>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Journal_Flow_New_Journal</elementReference>
+                    <elementReference
+                    >$Label.NKS_Journal_Flow_New_Journal</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1808,7 +1951,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1848,7 +1992,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1888,7 +2033,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1928,7 +2074,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1968,7 +2115,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2008,7 +2156,8 @@ TODAY())</expression>
         <inputAssignments>
             <name>Log_Message</name>
             <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+                <stringValue
+                >Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2051,7 +2200,8 @@ TODAY())</expression>
         <objectType>Journal_Entry__c</objectType>
     </variables>
     <variables>
-        <description>Output text to display existing journal entries for the chat transcript.</description>
+        <description
+        >Output text to display existing journal entries for the chat transcript.</description>
         <name>Journal_Entry_Text</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

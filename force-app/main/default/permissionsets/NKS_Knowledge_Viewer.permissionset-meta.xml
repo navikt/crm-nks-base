@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Grants permission to view published knowledge articles</description>
+    <description
+    >Grants permission to view published knowledge articles</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Knowledge__kav.AdvisorInformationInternal__c</field>

@@ -1,6 +1,6 @@
 ({
     callStoreConversation: function (component, conversation, recordId) {
-        let storeAction = component.get("c.storeConversation");
+        let storeAction = component.get('c.storeConversation');
 
         storeAction.setParams({
             chatId: recordId,
@@ -9,14 +9,13 @@
 
         storeAction.setCallback(this, function (response) {
             let state = response.getState();
-            if (state === "SUCCESS") {
+            if (state === 'SUCCESS') {
                 //Conversation stored successfully
-            }
-            else {
+            } else {
                 //Error handling
             }
         });
 
         $A.enqueueAction(storeAction);
     }
-})
+});

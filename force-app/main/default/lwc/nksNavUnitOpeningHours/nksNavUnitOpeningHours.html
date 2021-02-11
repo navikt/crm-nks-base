@@ -2,9 +2,12 @@
     <template if:true={hasOpeningHours}>
         <!-- <lightning-card title={title}> -->
         <div class="slds-box slds-box_xx-small">
-            <div class="slds-text-heading_small slds-p-around_xx-small">{title}</div>
+            <div class="slds-text-heading_small slds-p-around_xx-small">
+                {title}
+            </div>
             <table
-                class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered slds-no-row-hover slds-table_striped">
+                class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered slds-no-row-hover slds-table_striped"
+            >
                 <thead class="slds-assistive-text">
                     <tr class="slds-line-height_reset">
                         <th class="" scope="col">
@@ -14,10 +17,14 @@
                             <div class="slds-truncate" title="Åpent">Åpent</div>
                         </th>
                         <th class="" scope="col">
-                            <div class="slds-truncate" title="Åpningstid">Åpningstid</div>
+                            <div class="slds-truncate" title="Åpningstid">
+                                Åpningstid
+                            </div>
                         </th>
                         <th class="" scope="col">
-                            <div class="slds-truncate" title="Kommentar">Kommentar</div>
+                            <div class="slds-truncate" title="Kommentar">
+                                Kommentar
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -25,20 +32,33 @@
                     <template for:each={openingHours} for:item="openingHour">
                         <tr key={openingHour.id} class="slds-hint-parent">
                             <th data-label="Dag" scope="row">
-                                <div class="slds-truncate" title={openingHour.day}>
+                                <div
+                                    class="slds-truncate"
+                                    title={openingHour.day}
+                                >
                                     {openingHour.day}
                                 </div>
                             </th>
                             <td data-label="Åpent">
-                                <div class="slds-truncate" title={openingHour.status}>{openingHour.status}</div>
+                                <div
+                                    class="slds-truncate"
+                                    title={openingHour.status}
+                                >
+                                    {openingHour.status}
+                                </div>
                             </td>
                             <td data-label="Åpningstid">
-                                <div class="slds-truncate" title={openingHour.openingHours}>
+                                <div
+                                    class="slds-truncate"
+                                    title={openingHour.openingHours}
+                                >
                                     {openingHour.openingHours}
                                 </div>
                             </td>
                             <td class="slds-cell-wrap" data-label="Kommentar">
-                                <div title={openingHour.comments}>{openingHour.comments}</div>
+                                <div title={openingHour.comments}>
+                                    {openingHour.comments}
+                                </div>
                             </td>
                         </tr>
                     </template>

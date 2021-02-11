@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <aggregates>
         <calculatedFormula>RowCount</calculatedFormula>
@@ -37,7 +37,8 @@
         <field>CDF1</field>
     </columns>
     <customDetailFormulas>
-        <calculatedFormula>IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
+        <calculatedFormula
+        >IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
         <dataType>Double</dataType>
         <developerName>CDF1</developerName>
         <label>Lost Chats</label>
