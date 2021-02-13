@@ -1,4 +1,6 @@
 public class NKS_KrrInformationController {
+    static LoggerUtility logger = new LoggerUtility();
+
     @AuraEnabled
     public static void updateKrrInformation(String personIdent) {
         Person__c personToUpdate;
@@ -29,6 +31,8 @@ public class NKS_KrrInformationController {
             if (personToUpdate != null)
                 update personToUpdate;
         } catch (Exception e) {
+            logger.exception(e, personToUpdate);
+            logger.publish();
             throw new AuraHandledException(
                 'Failed to refresh KRR information.'
             );
