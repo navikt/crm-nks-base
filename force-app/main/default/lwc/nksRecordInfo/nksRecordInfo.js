@@ -1,6 +1,8 @@
 import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 
 export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api recordId; // Id from record page (From UiRecordAPI)
@@ -14,6 +16,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api numCols = 2; // Number of columns for the displayed fields
     @api hideLabels = false; // Boolean to determine if labels is to be displayed
     _showLink = false; // Boolean to determine if action slot is to be displayed
+    @api wireFields;
 
     connectedCallback() {
         this.viewedObjectApiName =
@@ -26,6 +29,8 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
         this.viewedRecordId = this.viewedRecordId
             ? this.viewedRecordId
             : this.recordId;
+
+        this.wireFields = [this.viewedObjectApiName + '.Id'];
     }
 
     @api
@@ -80,6 +85,26 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
                 actionName: 'view'
             }
         });
+    }
+
+    @wire(getRecord, {
+        recordId: '$viewedRecordId',
+        fields: '$wireFields'
+    })
+    wireRecord;
+
+    //Supports refreshing the record
+    @api
+    refreshRecord() {
+        refreshApex(this.wireRecord);
+    }
+
+    recordLoaded(event) {
+        //Sending event to tell parent the record is loaded
+        const recordLoadedEvt = new CustomEvent('recordloaded', {
+            detail: {}
+        });
+        this.dispatchEvent(recordLoadedEvt);
     }
 
     /*
