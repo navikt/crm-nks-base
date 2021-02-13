@@ -7,7 +7,14 @@ public class NKS_KrrInformationController {
                 new List<String>{ personIdent }
             );
             if (!personer.isEmpty()) {
+                Id personId = [
+                    SELECT Id
+                    FROM Person__c
+                    WHERE Name = :personIdent
+                ]
+                ?.Id;
                 personToUpdate = new Person__c(
+                    Id = personId,
                     INT_KrrEmail__c = personer[0]
                         ?.kontaktinformasjon
                         ?.epostadresse,
