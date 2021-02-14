@@ -19,6 +19,7 @@ public with sharing class AdGroupService {
         paramMap.put('group-id',groupId);
 
         ApiController apiCtrl = new ApiController();
+
         apiCtrl.initRequest(API_CONFIG_NAME, 'GET_GROUP_MEMBERS', paramMap);
         apiCtrl.addHeader('Authorization', 'Bearer ' + 'serviceToken');
 
@@ -31,7 +32,8 @@ public with sharing class AdGroupService {
 
         if(statusCode == 200) {
             resp.success = true;
-            resp.members= (List<MicrosoftGraphUser>) JSON.deserialize(bodyString, List<MicrosoftGraphUser>.class);
+            system.debug(new AdGroupResponse(JSON.createParser(bodyString)));
+
         } else {
             String params = '[groupId: ' + groupId +']';
             String errorRef = logError(apiCtrl.getResponse(), 'Error from AdGroupService.getAdGroupMembers Parameters: ' + params);
@@ -64,23 +66,5 @@ public with sharing class AdGroupService {
         logger.publish();
 
         return errorRef;
-    }
-
-    // RESPONSE WRAPPERS
-
-    public class AdGroupResponse {
-        public Boolean success;
-        public List<MicrosoftGraphUser> members;
-        public String errorMessage;
-
-        public AdGroupResponse() {
-            this.success = false;
-            this.members = null;
-            this.errorMessage = null;
-        }
-    }
-
-    public class MicrosoftGraphUser{
-        public String userPrincipalName;
     }
 }
