@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
         <apexClass>FamilyRelationViewerController</apexClass>
@@ -8,8 +8,7 @@
         <apexClass>NKS_AccessErrorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description
-    >Permission set granting read access to person fields</description>
+    <description>Permission set granting read access to person fields</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_Person__c</field>
@@ -72,6 +71,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.INT_KRR_Reservation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.INT_KrrEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -83,6 +87,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.INT_LastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_LastUpdatedFromKRR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

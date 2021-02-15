@@ -1,6 +1,8 @@
 import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 
 export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api recordId; // Id from record page (From UiRecordAPI)
@@ -14,26 +16,22 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api numCols = 2; // Number of columns for the displayed fields
     @api hideLabels = false; // Boolean to determine if labels is to be displayed
     _showLink = false; // Boolean to determine if action slot is to be displayed
+    @api wireFields;
 
     connectedCallback() {
         this.viewedObjectApiName =
-            this.viewedObjectApiName == null
-                ? this.objectApiName
-                : this.viewedObjectApiName;
+            this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
         if (this.relationshipField != null && this.relationshipField != '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
-        this.viewedRecordId = this.viewedRecordId
-            ? this.viewedRecordId
-            : this.recordId;
+        this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
+
+        this.wireFields = [this.viewedObjectApiName + '.Id'];
     }
 
     @api
     set showLink(value) {
-        this._showLink =
-            value === 'TRUE' || value === 'true' || value === true
-                ? true
-                : false;
+        this._showLink = value === 'TRUE' || value === 'true' || value === true ? true : false;
     }
 
     get showLink() {
@@ -64,9 +62,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
 
     get fieldList() {
         let fieldList =
-            this.displayedFields != null
-                ? this.displayedFields.replace(/\s/g, '').split(',')
-                : [];
+            this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
         return fieldList;
     }
 
@@ -80,6 +76,27 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
                 actionName: 'view'
             }
         });
+    }
+
+    @wire(getRecord, {
+        recordId: '$viewedRecordId',
+        fields: '$wireFields'
+    })
+    wireRecord;
+
+    //Supports refreshing the record
+    @api
+    refreshRecord() {
+        refreshApex(this.wireRecord);
+    }
+
+    recordLoaded(event) {
+        let recordFields = event.detail.records[this.viewedRecordId].fields;
+        //Sending event to tell parent the record is loaded
+        const recordLoadedEvt = new CustomEvent('recordloaded', {
+            detail: recordFields
+        });
+        this.dispatchEvent(recordLoadedEvt);
     }
 
     /*

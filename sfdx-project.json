@@ -9,7 +9,7 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.64.0.LATEST"
+                    "versionNumber": "0.66.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -18,6 +18,10 @@
                 {
                     "package": "crm-arbeidsgiver-base",
                     "versionNumber": "1.74.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-integration",
+                    "versionNumber": "0.34.0.LATEST"
                 }
             ]
         }
@@ -29,6 +33,7 @@
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-platform-access-control": "0Ho2o0000008OR3CAM",
-        "crm-arbeidsgiver-base": "0Ho2o0000008OQtCAM"
+        "crm-arbeidsgiver-base": "0Ho2o0000008OQtCAM",
+        "crm-platform-integration": "0Ho2o0000008ORrCAM"
     }
 }

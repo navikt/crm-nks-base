@@ -42,8 +42,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_IsDeceased__c}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_IsDeceased__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -58,8 +57,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value
-                    >Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
+                    <value>Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -130,15 +128,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
-                    <value>Kontaktinformasjon fra KRR</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>INT_KrrEmail__c, INT_KrrMobilePhone__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideLabels</name>
-                    <value>false</value>
+                    <value>Kontakinformasjon KRR</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -152,28 +142,7 @@
                     <name>relationshipField</name>
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>viewedObjectApiName</name>
-                    <value>Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_KrrEmail__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                    <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_KrrMobilePhone__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
+                <componentName>nksKrrInformation</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -214,8 +183,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -260,23 +228,19 @@
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
-                        <leftValue
-                        >{!Record.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
+                        <leftValue>{!Record.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -417,8 +381,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >forceKnowledge:articleSearchDesktop</componentName>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
