@@ -20,25 +20,18 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
         this.viewedObjectApiName =
-            this.viewedObjectApiName == null
-                ? this.objectApiName
-                : this.viewedObjectApiName;
+            this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
         if (this.relationshipField != null && this.relationshipField != '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
-        this.viewedRecordId = this.viewedRecordId
-            ? this.viewedRecordId
-            : this.recordId;
+        this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
 
         this.wireFields = [this.viewedObjectApiName + '.Id'];
     }
 
     @api
     set showLink(value) {
-        this._showLink =
-            value === 'TRUE' || value === 'true' || value === true
-                ? true
-                : false;
+        this._showLink = value === 'TRUE' || value === 'true' || value === true ? true : false;
     }
 
     get showLink() {
@@ -69,9 +62,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
 
     get fieldList() {
         let fieldList =
-            this.displayedFields != null
-                ? this.displayedFields.replace(/\s/g, '').split(',')
-                : [];
+            this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
         return fieldList;
     }
 
@@ -100,9 +91,10 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     }
 
     recordLoaded(event) {
+        let recordFields = event.detail.records[this.viewedRecordId].fields;
         //Sending event to tell parent the record is loaded
         const recordLoadedEvt = new CustomEvent('recordloaded', {
-            detail: {}
+            detail: recordFields
         });
         this.dispatchEvent(recordLoadedEvt);
     }

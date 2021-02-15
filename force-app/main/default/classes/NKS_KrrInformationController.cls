@@ -10,13 +10,14 @@ public class NKS_KrrInformationController {
             );
             if (!personer.isEmpty()) {
                 Id personId = [SELECT Id FROM Person__c WHERE Name = :personIdent]?.Id;
+                System.debug('PERSON ID: ' + personId);
                 personToUpdate = new Person__c(
                     Id = personId,
                     INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
                     INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
-                    INT_LastUpdatedFromKRR__c = Datetime.now()
+                    INT_LastUpdatedFromKRR__c = Datetime.now(),
+                    INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
                 );
-                personToUpdate.INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA';
             }
 
             if (personToUpdate != null)

@@ -11,22 +11,27 @@ export default class NksKrrInformation extends LightningElement {
     isLoading = false;
     krrFields =
         'INT_KrrEmail__c, INT_KrrMobilePhone__c, INT_KRR_Reservation__c, INT_LastUpdatedFromKRR__c';
+    updated = false;
 
     get recordCmp() {
         return this.template.querySelector('c-nks-record-info');
     }
 
     handleDataLoaded(event) {
-        this.initiateKrrUpdate();
+        let personIdent = event.detail.Name.value;
+        if (this.updated === false) {
+            this.initiateKrrUpdate(personIdent);
+        }
     }
 
-    initiateKrrUpdate() {
+    initiateKrrUpdate(personIdent) {
         this.isLoading = true;
         //Get ident from record info component
-        updateKrrInfo({ personIdent: this.recordCmp.viewedRecordId })
+        updateKrrInfo({ personIdent: personIdent })
             .then((result) => {
                 //Successful update
                 this.refreshRecord();
+                this.updated = true; //Preventing loop when child fires another event after refresh
             })
             .catch((error) => {
                 //Update failed
