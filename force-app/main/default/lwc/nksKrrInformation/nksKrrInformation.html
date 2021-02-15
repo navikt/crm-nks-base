@@ -1,14 +1,19 @@
 <template>
-    <c-nks-record-info
-        record-id={recordId}
-        viewed-object-api-name="Person__c"
-        object-api-name={objectApiName}
-        displayed-fields={krrFields}
-        relationship-field={relationshipField}
-        num-cols="1"
-        show-link="false"
-        card-label={cardLabel}
-        icon-name={iconName}
-        onrecordloaded={handleDataLoaded}
-    ></c-nks-record-info>
+    <div class="slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner variant="brand"></lightning-spinner>
+        </template>
+        <c-nks-record-info
+            record-id={recordId}
+            viewed-object-api-name="Person__c"
+            object-api-name={objectApiName}
+            displayed-fields={krrFields}
+            relationship-field={relationshipField}
+            num-cols={numCols}
+            show-link="false"
+            card-label={cardLabel}
+            icon-name={iconName}
+            onrecordloaded={handleDataLoaded}
+        ></c-nks-record-info>
+    </div>
 </template>
