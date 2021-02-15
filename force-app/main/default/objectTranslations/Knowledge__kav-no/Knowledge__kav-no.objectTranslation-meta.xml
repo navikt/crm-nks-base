@@ -34,35 +34,45 @@
     <layouts>
         <layout>Knowledge Layout</layout>
         <sections>
-            <label><!-- Arbeidgiver --></label>
+            <label>
+                <!-- Arbeidgiver -->
+            </label>
             <section>Arbeidgiver</section>
         </sections>
         <sections>
-            <label><!-- Bruker --></label>
+            <label>
+                <!-- Bruker -->
+            </label>
             <section>Bruker</section>
         </sections>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label>
+                <!-- Custom Links -->
+            </label>
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Høyre side --></label>
-            <section>Høyre side</section>
-        </sections>
-        <sections>
-            <label><!-- Internasjonalt --></label>
+            <label>
+                <!-- Internasjonalt -->
+            </label>
             <section>Internasjonalt</section>
         </sections>
         <sections>
-            <label><!-- Lege og behandler --></label>
+            <label>
+                <!-- Lege og behandler -->
+            </label>
             <section>Lege og behandler</section>
         </sections>
         <sections>
-            <label><!-- Oversettelser --></label>
+            <label>
+                <!-- Oversettelser -->
+            </label>
             <section>Oversettelser</section>
         </sections>
     </layouts>
-    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
+    <nameFieldLabel>
+        <!-- Knowledge Name -->
+    </nameFieldLabel>
     <quickActions>
         <label>Engelsk</label>
         <name>NKS_English</name>
@@ -84,7 +94,9 @@
         <name>NKS_Resources</name>
     </quickActions>
     <recordTypes>
-        <label><!-- Servicerutine --></label>
+        <label>
+            <!-- Servicerutine -->
+        </label>
         <name>Servicerutine</name>
     </recordTypes>
 </CustomObjectTranslation>
