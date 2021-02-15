@@ -162,11 +162,6 @@
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>EditDraftKnowledgeArticleVersion</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>Query</fields>
