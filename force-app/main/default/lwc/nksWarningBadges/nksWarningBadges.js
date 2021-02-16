@@ -21,11 +21,13 @@ export default class NksWarningBadges extends LightningElement {
             parentId: this.recordId,
             parentObjectApiName: this.objectApiName
         })
-            .then(data => {
-                this.badges = (data && data.length > 0) ? data : null;
+            .then((data) => {
+                this.badges = data && data.length > 0 ? data : null;
             })
-            .catch(error => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            .catch((error) => {
+                console.log(
+                    'An error occurred: ' + JSON.stringify(error, null, 2)
+                );
             });
     }
 }

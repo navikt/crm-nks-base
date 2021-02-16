@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Allowed_change_only_status</fullName>
     <active>true</active>
@@ -13,5 +13,6 @@ ISCHANGED( CRM_NoPersonInformation__c ),
 ISCHANGED( CRM_SubTheme__c ),
 ISCHANGED( CRM_Theme__c )
 ))</errorConditionFormula>
-    <errorMessage>Du har ikke rettigheter til å endre dette feltet.</errorMessage>
+    <errorMessage
+    >Du har ikke rettigheter til å endre dette feltet.</errorMessage>
 </ValidationRule>

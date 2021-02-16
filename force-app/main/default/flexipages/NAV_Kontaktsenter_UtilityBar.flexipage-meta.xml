@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -38,7 +38,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+                <componentName
+                >runtime_service_omnichannel:omniWidget</componentName>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <decisions>
         <processMetadataValues>
@@ -40,7 +40,8 @@
                         <stringValue>String</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.LiveChatButton.DeveloperName</leftValueReference>
+                <leftValueReference
+                >myVariable_current.LiveChatButton.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Chat_Sosiale_Tjenester</stringValue>
@@ -71,7 +72,8 @@
                         <stringValue>String</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.LiveChatButton.DeveloperName</leftValueReference>
+                <leftValueReference
+                >myVariable_current.LiveChatButton.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Chat_Sosiale_Tjenester_EN</stringValue>
@@ -102,7 +104,8 @@
                         <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.Status</leftValueReference>
+                <leftValueReference
+                >myVariable_current.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Completed</stringValue>
@@ -139,7 +142,8 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>myVariable_current.AccountId</leftValueReference>
+                <leftValueReference
+                >myVariable_current.AccountId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -151,7 +155,8 @@
             <label>Check for completed and chat button name</label>
         </rules>
     </decisions>
-    <interviewLabel>Delete_chat_body_Sosiale_tjenester-1_InterviewLabel</interviewLabel>
+    <interviewLabel
+    >Delete_chat_body_Sosiale_tjenester-1_InterviewLabel</interviewLabel>
     <label>Delete chat body - Sosiale tjenester</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -242,7 +247,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue />
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -253,7 +258,7 @@
             </processMetadataValues>
             <field>Body</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -278,7 +283,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue />
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -289,7 +294,7 @@
             </processMetadataValues>
             <field>NKS_Conversation__c</field>
             <value>
-                <stringValue/>
+                <stringValue />
             </value>
         </inputAssignments>
         <object>LiveChatTranscript</object>

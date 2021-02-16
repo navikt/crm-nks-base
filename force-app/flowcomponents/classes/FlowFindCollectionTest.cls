@@ -1,64 +1,63 @@
 @isTest
 public with sharing class FlowFindCollectionTest {
-    
-        @isTest
-        public static void   FlowFindCollectionTest() { 
-            //create sample  data
-            Account A = new Account(
-               Name = 'test Account12345'
-            );
-            insert A;
-    
-            
-            FlowFindCollection.Requests request = new FlowFindCollection.Requests();
-            request.sObjectName 	= 'Account';
-            request.FieldApiINames 	= 'Name';
-            request.WhereClause		= 'Name = \'test Account12345\'';
-            
-            system.debug(request);
-            
-            List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{ request };
-    
-            Test.startTest();
+    @isTest
+    public static void FlowFindCollectionTest() {
+        //create sample  data
+        Account A = new Account(Name = 'test Account12345');
+        insert A;
 
-            list<FlowFindCollection.Results> responses = FlowFindCollection.execute( requests );
-    
-            Test.stopTest();
+        FlowFindCollection.Requests request = new FlowFindCollection.Requests();
+        request.sObjectName = 'Account';
+        request.FieldApiINames = 'Name';
+        request.WhereClause = 'Name = \'test Account12345\'';
 
-            system.assertEquals(1, responses[0].outputCollection.size());
+        system.debug(request);
 
-             //Todo - assertions around sharing access. Can NOT view
-        }
+        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{
+            request
+        };
 
-        @isTest
-        public static void   FlowFindCollectionTest_WithoutSharing() { 
-            //create sample  data
-            Account A = new Account(
-               Name = 'test Account12345'
-            );
-            insert A;
-    
-            
-            FlowFindCollection.Requests request = new FlowFindCollection.Requests();
-            request.sObjectName 	= 'Account';
-            request.FieldApiINames 	= 'Name';
-            request.WhereClause		= 'Name = \'test Account12345\'';
-            request.BypassSharing		=true;
-                     List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{ request };
-    
-                    
-            //No sharing
-            
-            List<FlowFindCollection.Requests> requests2 = new List<FlowFindCollection.Requests>{ request };
-            Test.startTest();
-            list<FlowFindCollection.Results> responses_withoutsharing = FlowFindCollection.execute( requests2 );
-            Test.stopTest();
+        Test.startTest();
 
+        list<FlowFindCollection.Results> responses = FlowFindCollection.execute(
+            requests
+        );
 
-            //Todo - assertions around sharing access. Can still view
-        }
+        Test.stopTest();
 
+        system.assertEquals(1, responses[0].outputCollection.size());
 
-        //Test IDS
+        //Todo - assertions around sharing access. Can NOT view
+    }
 
+    @isTest
+    public static void FlowFindCollectionTest_WithoutSharing() {
+        //create sample  data
+        Account A = new Account(Name = 'test Account12345');
+        insert A;
+
+        FlowFindCollection.Requests request = new FlowFindCollection.Requests();
+        request.sObjectName = 'Account';
+        request.FieldApiINames = 'Name';
+        request.WhereClause = 'Name = \'test Account12345\'';
+        request.BypassSharing = true;
+        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{
+            request
+        };
+
+        //No sharing
+
+        List<FlowFindCollection.Requests> requests2 = new List<FlowFindCollection.Requests>{
+            request
+        };
+        Test.startTest();
+        list<FlowFindCollection.Results> responses_withoutsharing = FlowFindCollection.execute(
+            requests2
+        );
+        Test.stopTest();
+
+        //Todo - assertions around sharing access. Can still view
+    }
+
+    //Test IDS
 }

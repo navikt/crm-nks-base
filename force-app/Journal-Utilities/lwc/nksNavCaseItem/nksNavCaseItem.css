@@ -1,0 +1,24 @@
+.case-tile-bg  {
+    background-color: rgb(242, 242, 242);
+    border-style: solid;
+    border-color: rgb(242, 242, 242);
+    border-width: 1px;
+    cursor: pointer;
+    border-radius: 0.2em;
+}
+
+.case-tile-bg:hover {
+    border-color: rgb(21, 137, 238);
+    border-style: solid;
+    box-shadow: 0 0 0.1em #0070d2;
+    border-width: 1px;
+}
+
+lightning-icon[data-selected='false'] {
+    --sds-c-icon-color-background: lightgray;
+    --sds-c-icon-color-foreground: white;
+}
+
+lightning-icon[data-selected='true'] {
+    --sds-c-icon-color-background: green;
+}

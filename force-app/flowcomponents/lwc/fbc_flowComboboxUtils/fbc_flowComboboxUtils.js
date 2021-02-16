@@ -10,17 +10,18 @@ const flowComboboxDefaults = {
     stringDataType: 'String',
     referenceDataType: 'reference',
     defaultKeyPrefix: 'flowCombobox-',
-    recordLookupsType:'recordLookups',
+    recordLookupsType: 'recordLookups',
     dataTypeSObject: 'SObject',
     isCollectionField: 'isCollection'
-
-}
+};
 
 const isReference = (value) => {
     if (!value) {
         return false;
     }
-    let isRef = value.indexOf('{!') === 0 && value.lastIndexOf('}') === (value.length - 1);
+    let isRef =
+        value.indexOf('{!') === 0 &&
+        value.lastIndexOf('}') === value.length - 1;
     return isRef;
 };
 
@@ -30,21 +31,25 @@ const getDataType = (currentText) => {
     } else {
         return flowComboboxDefaults.stringDataType;
     }
-}
+};
 
 const formattedValue = (value, dataType) => {
     if (isReference(value)) {
         return value;
     } else {
-        return dataType === flowComboboxDefaults.referenceDataType ? '{!' + value + '}' : value;
+        return dataType === flowComboboxDefaults.referenceDataType
+            ? '{!' + value + '}'
+            : value;
     }
-}
+};
 
 const removeFormatting = (value) => {
     if (!value) {
         return value;
     }
     let isRef = isReference(value);
-    let clearValue = isRef ? value.substring(0, value.lastIndexOf('}')).replace('{!', '') : value;
+    let clearValue = isRef
+        ? value.substring(0, value.lastIndexOf('}')).replace('{!', '')
+        : value;
     return clearValue;
-}
+};

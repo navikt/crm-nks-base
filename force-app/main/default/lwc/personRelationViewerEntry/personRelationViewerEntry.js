@@ -1,8 +1,9 @@
 import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from "lightning/navigation";
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class PersonRelationViewerEntry extends NavigationMixin(LightningElement) {
-
+export default class PersonRelationViewerEntry extends NavigationMixin(
+    LightningElement
+) {
     @api relation;
     recordPageUrl;
 
@@ -13,8 +14,8 @@ export default class PersonRelationViewerEntry extends NavigationMixin(Lightning
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.relation.accountId,
-                actionName: 'view',
-            },
+                actionName: 'view'
+            }
         });
     }
 
@@ -23,11 +24,10 @@ export default class PersonRelationViewerEntry extends NavigationMixin(Lightning
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.relation.accountId,
-                actionName: 'view',
-            },
-        }).then(url => {
+                actionName: 'view'
+            }
+        }).then((url) => {
             this.recordPageUrl = url;
         });
     }
-
 }

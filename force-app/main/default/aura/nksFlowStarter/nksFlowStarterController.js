@@ -1,25 +1,27 @@
 ({
     doInit: function (component, event, helper) {
-        let buttonLabel = component.get("v.buttonLabel");
+        let buttonLabel = component.get('v.buttonLabel');
         //If the button label is a reference to a custom label, use the custom label reference, else fallback to the input value
-        buttonLabel = helper.isLabelReference(component, buttonLabel) ? $A.getReference("$Label.c." + buttonLabel) : buttonLabel;
+        buttonLabel = helper.isLabelReference(component, buttonLabel)
+            ? $A.getReference('$Label.c.' + buttonLabel)
+            : buttonLabel;
 
-        component.set("v.buttonLabel", buttonLabel);
+        component.set('v.buttonLabel', buttonLabel);
     },
 
     toggleFlow: function (component, event, helper) {
-        let showFlow = !component.get("v.showFlow");
-        component.set("v.showFlow", showFlow);
+        let showFlow = !component.get('v.showFlow');
+        component.set('v.showFlow', showFlow);
 
         if (showFlow) {
-            const flow = component.find("flowData");
-            const flowName = component.get("v.flowName");
+            const flow = component.find('flowData');
+            const flowName = component.get('v.flowName');
 
             let input = [
                 {
                     name: 'recordId',
                     type: 'String',
-                    value: component.get("v.recordId")
+                    value: component.get('v.recordId')
                 }
             ];
 
@@ -28,9 +30,9 @@
     },
 
     flowStatusChange: function (component, event, helper) {
-        let flowStatus = event.getParam('status')
-        if (flowStatus === "FINISHED" || flowStatus === "FINISHED_SCREEN") {
+        let flowStatus = event.getParam('status');
+        if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
             //Flow finished
         }
     }
-})
+});
