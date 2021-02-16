@@ -13,7 +13,7 @@ public with sharing class AdGroupService {
      */
     public AdGroupResponse getAdGroupMembers(String groupId) {
         
-        AdGroupResponse resp = new AdGroupResponse();
+       
         
         Map<String,String> paramMap = new Map<String,String>();
         paramMap.put('group-id',groupId);
@@ -29,11 +29,9 @@ public with sharing class AdGroupService {
         String bodyString = apiCtrl.getResponse().getBody();
 
         bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
-
+        AdGroupResponse resp = AdGroupResponse.parse(bodyString);
         if(statusCode == 200) {
             resp.success = true;
-            system.debug(new AdGroupResponse(JSON.createParser(bodyString)));
-
         } else {
             String params = '[groupId: ' + groupId +']';
             String errorRef = logError(apiCtrl.getResponse(), 'Error from AdGroupService.getAdGroupMembers Parameters: ' + params);
@@ -45,7 +43,7 @@ public with sharing class AdGroupService {
                 resp.errorMessage = 'Noe gikk galt ved henting av AD-gruppemedlemmer. Referanse til feil: ' + errorRef;
             }
         }
-
+     
         return resp;
     }
 

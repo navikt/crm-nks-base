@@ -21,7 +21,6 @@ public class AdGroupResponse {
 					    if (text == 'userPrincipalName') {
 							userPrincipalName = parser.getText();
 						} else {
-							System.debug(LoggingLevel.WARN, 'Value consuming unrecognized property: '+text);
 							consumeObject(parser);
 						}
 					}
