@@ -8,7 +8,7 @@ private with sharing class AdGroupServiceTest {
         SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', sr.Body.toString(),
         null);
         Test.setMock(HttpCalloutMock.class, httpMock);
-        AdGroupResponse result;
+        AdGroupService.AdGroupResponse result;
         
         AdGroupService service = new AdGroupService();
 
@@ -16,10 +16,10 @@ private with sharing class AdGroupServiceTest {
         result = service.getAdGroupMembers('abcdef');
         Test.stopTest();
         System.assertNotEquals(null,result);
-        System.assertNotEquals(null,result.value);
         System.assertEquals(true, result.success, 'Expected to get a success');
-        System.assertEquals(2, result.value.size(),'Expected to get two users');
-        System.assertEquals('F_Z994586.E_Z994586@trygdeetaten.no', result.value[0].userPrincipalName, 'Expected to get F_Z994586.E_Z994586@trygdeetaten.no test user');
+        System.assertNotEquals(null, result.usernames, 'Expected to get usernames');
+        System.assertEquals(2, result.usernames.size(),'Expected to get two users');
+        System.assertEquals('F_Z994586.E_Z994586@trygdeetaten.no', result.usernames[0], 'Expected to get F_Z994586.E_Z994586@trygdeetaten.no test user');
         System.assertEquals(null, result.errorMessage, 'Did not expected an error message');
     }
 
@@ -30,7 +30,7 @@ private with sharing class AdGroupServiceTest {
 
         Test.setMock(HttpCalloutMock.class, httpMock);
 
-        AdGroupResponse result;
+        AdGroupService.AdGroupResponse result;
         
         AdGroupService service = new AdGroupService();
 
@@ -39,7 +39,7 @@ private with sharing class AdGroupServiceTest {
         Test.stopTest();
 
         System.assertEquals(false, result.success, 'Expected to get a failure');
-        System.assertEquals(null, result.value, 'Expected to get NULL');
+        System.assertEquals(null, result.usernames, 'Expected to get NULL');
         System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
     }
 
@@ -50,7 +50,7 @@ private with sharing class AdGroupServiceTest {
 
         Test.setMock(HttpCalloutMock.class, httpMock);
 
-        AdGroupResponse result;
+        AdGroupService.AdGroupResponse result;
         
         AdGroupService service = new AdGroupService();
 
@@ -59,7 +59,7 @@ private with sharing class AdGroupServiceTest {
         Test.stopTest();
 
         System.assertEquals(false, result.success, 'Expected to get a failure');
-        System.assertEquals(null, result.value, 'Expected to get NULL');
+        System.assertEquals(null, result.usernames, 'Expected to get NULL');
         System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
     }
 
@@ -70,7 +70,7 @@ private with sharing class AdGroupServiceTest {
 
         Test.setMock(HttpCalloutMock.class, httpMock);
 
-        AdGroupResponse result;
+        AdGroupService.AdGroupResponse result;
         
         AdGroupService service = new AdGroupService();
 
@@ -79,7 +79,7 @@ private with sharing class AdGroupServiceTest {
         Test.stopTest();
 
         System.assertEquals(false, result.success, 'Expected to get a failure');
-        System.assertEquals(null, result.value, 'Expected to get NULL');
+        System.assertEquals(null, result.usernames, 'Expected to get NULL');
         System.assertEquals(true, String.isNotBlank(result.errorMessage), 'Expected an error message to be set');
     }
 }

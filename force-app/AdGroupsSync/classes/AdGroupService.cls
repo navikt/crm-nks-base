@@ -13,8 +13,7 @@ public with sharing class AdGroupService {
      */
     public AdGroupResponse getAdGroupMembers(String groupId) {
         
-       
-        
+        AdGroupResponse resp=new AdGroupResponse();
         Map<String,String> paramMap = new Map<String,String>();
         paramMap.put('group-id',groupId);
 
@@ -31,11 +30,12 @@ public with sharing class AdGroupService {
         bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
         
         if(statusCode == 200) {
-            AdGroupResponse resp = AdGroupResponse.parse(bodyString);
+           
             resp.success = true;
-            return resp;
+            resp.parse(bodyString);
+           
         } else {
-            AdGroupResponse resp=new AdGroupResponse();
+            
             String params = '[groupId: ' + groupId +']';
             String errorRef = logError(apiCtrl.getResponse(), 'Error from AdGroupService.getAdGroupMembers Parameters: ' + params);
             resp.errorMessage = 'Kunne ikke hente AD-gruppe medlemmer fra Microsoft Graph. Referanse til feil: ' + errorRef;
@@ -45,8 +45,8 @@ public with sharing class AdGroupService {
             } else if(statusCode == 500) {
                 resp.errorMessage = 'Noe gikk galt ved henting av AD-gruppemedlemmer. Referanse til feil: ' + errorRef;
             }
-            return resp;
         }
+        return resp;
     }
 
 
@@ -66,5 +66,57 @@ public with sharing class AdGroupService {
         logger.publish();
 
         return errorRef;
+    }
+
+    public class AdGroupResponse {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public List<String> usernames;
+        @AuraEnabled public String errorMessage;
+
+        public AdGroupResponse() {
+            this.success = false;
+            this.usernames=null;
+            this.errorMessage = null;
+        }
+
+        public void parse(String json){
+            System.JSONParser parser = System.JSON.createParser(json);
+            while (parser.nextToken() != System.JSONToken.END_OBJECT) {
+                if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
+                    String text = parser.getText();
+                    if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
+                        if (text == '@odata.context') {
+    
+                        } else if (text == 'value') {
+                            usernames = arrayOfRecord(parser);
+                    }
+                }
+            }
+        }
+        }
+
+        private List<String> arrayOfRecord(System.JSONParser p) {
+            List<String> res = new List<String>();
+            if (p.getCurrentToken() == null) p.nextToken();
+            while (p.nextToken() != System.JSONToken.END_ARRAY) {
+                res.add(getUsername(p));
+            }
+            return res;
+        }
+
+        private String getUsername(System.JSONParser parser){
+            String res=null;
+            while (parser.nextToken() != System.JSONToken.END_OBJECT) {
+				if (parser.getCurrentToken() == System.JSONToken.FIELD_NAME) {
+					String text = parser.getText();
+					if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
+					    if (text == 'userPrincipalName') {
+							res= parser.getText();
+						} 
+					}
+				}
+			}
+            return res;
+        }
     }
 }
