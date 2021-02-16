@@ -29,10 +29,13 @@ public with sharing class AdGroupService {
         String bodyString = apiCtrl.getResponse().getBody();
 
         bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
-        AdGroupResponse resp = AdGroupResponse.parse(bodyString);
+        
         if(statusCode == 200) {
+            AdGroupResponse resp = AdGroupResponse.parse(bodyString);
             resp.success = true;
+            return resp;
         } else {
+            AdGroupResponse resp=new AdGroupResponse();
             String params = '[groupId: ' + groupId +']';
             String errorRef = logError(apiCtrl.getResponse(), 'Error from AdGroupService.getAdGroupMembers Parameters: ' + params);
             resp.errorMessage = 'Kunne ikke hente AD-gruppe medlemmer fra Microsoft Graph. Referanse til feil: ' + errorRef;
@@ -42,9 +45,8 @@ public with sharing class AdGroupService {
             } else if(statusCode == 500) {
                 resp.errorMessage = 'Noe gikk galt ved henting av AD-gruppemedlemmer. Referanse til feil: ' + errorRef;
             }
+            return resp;
         }
-     
-        return resp;
     }
 
 
