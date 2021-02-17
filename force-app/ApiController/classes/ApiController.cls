@@ -16,9 +16,7 @@ public virtual class ApiController {
      **/
     public void doCallout() {
         if (String.isBlank(baseEndpoint)) {
-            throw new InvalidOperationException(
-                'Cannot perform callout without endpoint'
-            );
+            throw new InvalidOperationException('Cannot perform callout without endpoint');
         } else if (String.isBlank(req.getMethod())) {
             throw new InvalidOperationException(
                 'Cannot perform callout without defining REST method'
@@ -90,10 +88,7 @@ public virtual class ApiController {
                 Named_Credential_Test__c,
                 Use_Gateway__c,
                 (
-                    SELECT
-                        Service_Path__c,
-                        Has_Path_Parameters__c,
-                        HTTP_Method__c
+                    SELECT Service_Path__c, Has_Path_Parameters__c, HTTP_Method__c
                     FROM API_Service_Configurations__r
                     WHERE DeveloperName = :serviceName
                 )
@@ -117,20 +112,12 @@ public virtual class ApiController {
      * @param paramMap [[Map<String, String>]]
      * @return String [STRING: Updates path]
      **/
-    public String replacePathParameters(
-        String inputPath,
-        Map<String, String> paramMap
-    ) {
+    public String replacePathParameters(String inputPath, Map<String, String> paramMap) {
         validatePathInput(inputPath, paramMap); //Throws an exception if any parameters are missing
 
         String outputPath = inputPath;
         for (String param : paramMap.keySet()) {
-            outputPath = outputPath.replace(
-                '{' +
-                param +
-                '}',
-                paramMap.get(param)
-            );
+            outputPath = outputPath.replace('{' + param + '}', paramMap.get(param));
         }
 
         return outputPath;
@@ -142,10 +129,7 @@ public virtual class ApiController {
      * @param inputPath
      * @param paramMap
      **/
-    private void validatePathInput(
-        String inputPath,
-        Map<String, String> paramMap
-    ) {
+    private void validatePathInput(String inputPath, Map<String, String> paramMap) {
         Pattern p = Pattern.compile('\\{.+?\\}');
 
         Matcher m = p.matcher(inputPath);
@@ -233,10 +217,7 @@ public virtual class ApiController {
      * @param servicePath    [Path of the service to be called]
      * @return ApiController [SELF]
      **/
-    public ApiController setNamedCredential(
-        String credentialName,
-        String servicePath
-    ) {
+    public ApiController setNamedCredential(String credentialName, String servicePath) {
         this.setEndpoint('callout:' + credentialName + servicePath);
         return this;
     }
@@ -262,10 +243,7 @@ public virtual class ApiController {
      * @return ApiController
      **/
     public ApiController addApiGwHeader() {
-        return addHeader(
-            'Ocp-Apim-Subscription-Key',
-            '{!$Credential.Password}'
-        );
+        return addHeader('Ocp-Apim-Subscription-Key', '{!$Credential.Password}');
     }
 
     /**
@@ -361,21 +339,10 @@ public virtual class ApiController {
             //If there is a setting at the user level, this takes precedence, else check for profile level
             NKS_APIControllerUseMock__c mockSetting;
 
-            if (
-                NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId()) !=
-                null
-            ) {
-                mockSetting = NKS_APIControllerUseMock__c.getValues(
-                    UserInfo.getUserId()
-                );
-            } else if (
-                NKS_APIControllerUseMock__c.getValues(
-                    UserInfo.getProfileId()
-                ) != null
-            ) {
-                mockSetting = NKS_APIControllerUseMock__c.getValues(
-                    UserInfo.getProfileId()
-                );
+            if (NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getUserId());
+            } else if (NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId()) != null) {
+                mockSetting = NKS_APIControllerUseMock__c.getValues(UserInfo.getProfileId());
             }
             if (null != mockSetting && true == mockSetting.NKS_UseMock__c) {
                 ApiMock mocker = new ApiMock();
