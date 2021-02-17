@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Tolk Egne Ansatte</label>
+    <protected>false</protected>
+    <values>
+        <field>AdGroupIdPreprod__c</field>
+        <value xsi:type="xsd:string">e3e22472-d5c3-42ab-a6c3-21354b70ce34</value>
+    </values>
+    <values>
+        <field>AdGroupIdProd__c</field>
+        <value xsi:type="xsd:string">c8602cc9-fcb7-4505-959a-1eadaf384b5f</value>
+    </values>
+    <values>
+        <field>SalesforceDeveloperGroupName__c</field>
+        <value xsi:type="xsd:string">AD_Tolk_Egne_Ansatte</value>
+    </values>
+</CustomMetadata>
