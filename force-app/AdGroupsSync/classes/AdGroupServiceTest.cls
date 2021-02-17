@@ -3,11 +3,9 @@ private with sharing class AdGroupServiceTest {
     
     @IsTest static void getAdGroupMembers_TestResponse() {
         StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'NKS_API_MOCK_GET_GROUP_MEMBERS_200' LIMIT 1];
-                
-
-        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', sr.Body.toString(),
-        null);
+        SingleRequestMock httpMock = new SingleRequestMock(200, 'Success', sr.Body.toString(),null);
         Test.setMock(HttpCalloutMock.class, httpMock);
+        
         AdGroupService.AdGroupResponse result;
         
         AdGroupService service = new AdGroupService();
