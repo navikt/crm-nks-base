@@ -24,7 +24,7 @@ public with sharing class NKS_HomePageController {
         Boolean showimage
     ) {
         List<Record> records = new List<Record>();
-
+        String userId = UserInfo.getUserID();
         String query = 'SELECT LastModifiedDate, CreatedDate ,' + title;
         if (content != null)
             query += ' , ' + content;
@@ -36,14 +36,7 @@ public with sharing class NKS_HomePageController {
             query += ' LIMIT ' + limitNumber;
 
         List<SObject> listtoreturn = Database.query(query);
-        records = createRecords(
-            listtoreturn,
-            objectName,
-            title,
-            content,
-            datefield,
-            showimage
-        );
+        records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
 
@@ -79,9 +72,7 @@ public with sharing class NKS_HomePageController {
             if (showimage)
                 record.imageurl = getImageUrl(r.Id);
             if (content != null) {
-                record.content = r.get(content)
-                    .toString()
-                    .replaceAll('\\<.*?\\>', '');
+                record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
                 if (record.content.length() > 200) {
                     record.summary = record.content.mid(0, 200) + '...';
                 } else
