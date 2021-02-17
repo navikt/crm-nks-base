@@ -33,10 +33,10 @@ public class AdGroupSyncHandler extends AsyncJob {
       }
 
       //add members
-      insert membersToCreate;
-      
+      if(membersToCreate.size()>0){
+        insert membersToCreate;
+      }
     }
-
 
     private Map<String,Id> getSalesforceGroupMembers(Id salesforceGroupId){
         //get userid of group members
@@ -48,7 +48,7 @@ public class AdGroupSyncHandler extends AsyncJob {
         //map username and userid
         Map<String,Id> userIdByUsername=new Map<String,Id>();
         for(User u:[SELECT Id, Username FROM User WHERE Id in:userids]){
-            userIdByUsername.put(u.Username,u.Id);
+            userIdByUsername.put(u.Username.toLowerCase(),u.Id);
         }
         return userIdByUsername;
     }
@@ -60,6 +60,21 @@ public class AdGroupSyncHandler extends AsyncJob {
         for(User u:[SELECT Id, Username FROM User WHERE Username in:adGroupMembers.usernames]){
             userIdByUsername.put(u.Username,u.Id);
         }
+
+        //check if user is missing in Salesforce
+        if(userIdByUsername.size()!=adGroupMembers.usernames.size()){
+            for(String username:adGroupMembers.usernames){
+                if(!userIdByUsername.keySet().contains(username)){
+                   logError('AdGroupSyncHandler kunne ikke opprette medlem ' + username + ' fra gruppen ' + adGroupId);
+                }
+            }
+        }
         return userIdByUsername;
+    }
+
+    private void logError(String message){
+        LoggerUtility logger = new LoggerUtility();
+        logger.error(message,null);
+        logger.publish();
     }
 }

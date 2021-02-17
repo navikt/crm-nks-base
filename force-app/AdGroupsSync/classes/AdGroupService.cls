@@ -3,7 +3,6 @@
  */
 public with sharing class AdGroupService {
     private final string API_CONFIG_NAME = 'Microsoft_Graph_API'; //API Config name to set when using the ApiController
-    private final string SERVICE_AUTH_HEADER = 'SaasToNavApiGw';
 
     /**
      * @description Get members of group id submitted
@@ -20,7 +19,9 @@ public with sharing class AdGroupService {
         ApiController apiCtrl = new ApiController();
 
         apiCtrl.initRequest(API_CONFIG_NAME, 'GET_GROUP_MEMBERS', paramMap);
-        apiCtrl.addHeader('Authorization', 'Bearer ' + 'serviceToken');
+        String serviceToken = Test.isRunningTest() ? 'TEST_TOKEN' : CachedTokensHandler.getAccessToken();
+       
+        apiCtrl.addHeader('Authorization', 'Bearer ' + serviceToken);
 
         apiCtrl.doCallout();
         
@@ -99,7 +100,7 @@ public with sharing class AdGroupService {
             List<String> res = new List<String>();
             if (p.getCurrentToken() == null) p.nextToken();
             while (p.nextToken() != System.JSONToken.END_ARRAY) {
-                res.add(getUsername(p));
+                res.add(getUsername(p).toLowerCase());
             }
             return res;
         }
