@@ -11,7 +11,7 @@
         <value xsi:type="xsd:string">c8602cc9-fcb7-4505-959a-1eadaf384b5f</value>
     </values>
     <values>
-        <field>SalesforceDeveloperGroupName__c</field>
+        <field>SalesforceGroupDeveloperName__c</field>
         <value xsi:type="xsd:string">AD_Tolk_Egne_Ansatte</value>
     </values>
 </CustomMetadata>
