@@ -1,4 +1,4 @@
-name: "[PUSH] Create Package"
+name: "[PUSH] Create Package No Validation"
 on:
   workflow_dispatch:
   push:
