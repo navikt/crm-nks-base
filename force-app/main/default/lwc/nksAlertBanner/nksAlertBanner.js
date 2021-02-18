@@ -1,7 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
 export default class NksAlertBanner extends LightningElement {
-
     @api type;
     @api message;
 

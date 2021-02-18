@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Get_Current_Memberships</name>
@@ -137,7 +137,8 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_the_Selected_Account_String</targetReference>
+            <targetReference
+            >Update_the_Selected_Account_String</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -292,7 +293,8 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Selected_Value_To_String</targetReference>
+                <targetReference
+                >Assign_Selected_Value_To_String</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -332,7 +334,8 @@
             <name>DeleteCurrentMemberships</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>groupMembershipsToDelete</leftValueReference>
+                <leftValueReference
+                >groupMembershipsToDelete</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>emptyRecordCollection</elementReference>
@@ -391,7 +394,8 @@
     <formulas>
         <name>singleGroup</name>
         <dataType>String</dataType>
-        <expression>TRIM(SUBSTITUTE(LEFT({!selectedGroupIds},FIND(&quot;;&quot;,{!selectedGroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
+        <expression
+        >TRIM(SUBSTITUTE(LEFT({!selectedGroupIds},FIND(&quot;;&quot;,{!selectedGroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>test</name>
@@ -401,17 +405,20 @@
     <formulas>
         <name>UpdatedSelectedGroupString</name>
         <dataType>String</dataType>
-        <expression>TRIM(SUBSTITUTE({!selectedGroupIds},{!singleGroupString}+&quot;;&quot;,&quot;&quot;))</expression>
+        <expression
+        >TRIM(SUBSTITUTE({!selectedGroupIds},{!singleGroupString}+&quot;;&quot;,&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND DeveloperName LIKE &apos;NKS_SKILL%&apos;&quot;</expression>
+        <expression
+        >&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND DeveloperName LIKE &apos;NKS_SKILL%&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>WhereClauseForMembers</name>
         <dataType>String</dataType>
-        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.DeveloperName LIKE &apos;NKS_Skill%&apos;&quot;</expression>
+        <expression
+        >&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.DeveloperName LIKE &apos;NKS_Skill%&apos;&quot;</expression>
     </formulas>
     <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update User</label>
@@ -511,7 +518,8 @@
         <label>Get User</label>
         <locationX>1736</locationX>
         <locationY>206</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
         </connector>
@@ -615,7 +623,8 @@
         </connector>
         <fields>
             <name>display</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -632,7 +641,8 @@
             <name>Chat_user_permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
+                <elementReference
+                >Get_User.UserPermissionsLiveAgentUser</elementReference>
             </defaultValue>
             <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
             <fieldType>InputField</fieldType>

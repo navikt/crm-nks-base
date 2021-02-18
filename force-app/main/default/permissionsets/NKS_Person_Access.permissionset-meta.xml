@@ -71,6 +71,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.INT_KRR_Reservation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.INT_KrrEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -82,6 +87,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.INT_LastName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_LastUpdatedFromKRR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

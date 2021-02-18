@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>KRR Information</masterLabel>
+    <description>Component displaying information retrieved from KRR.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="cardLabel" label="Card title" type="String" default="Title" />
+            <property
+                name="iconName"
+                label="Icon name"
+                description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/"
+                type="String"
+                default="Title"
+            />
+            <property
+                name="relationshipField"
+                label="Relationship field (API)"
+                description="Field relating the viewed record to Person__c (Can be cross relations i.e. Account.Person__c when displayed on a case)"
+                type="String"
+                required="true"
+            />
+            <property
+                name="numCols"
+                label="Number of columns"
+                type="Integer"
+                required="true"
+                min="1"
+                max="4"
+                default="2"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

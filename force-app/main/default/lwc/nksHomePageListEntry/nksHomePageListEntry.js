@@ -1,8 +1,9 @@
 import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from "lightning/navigation";
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
-
+export default class NksHomePageListEntry extends NavigationMixin(
+    LightningElement
+) {
     @api record;
     recordPageUrl;
 
@@ -13,8 +14,8 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.record.recordId,
-                actionName: 'view',
-            },
+                actionName: 'view'
+            }
         });
     }
 
@@ -23,11 +24,10 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.record.recordId,
-                actionName: 'view',
-            },
-        }).then(url => {
+                actionName: 'view'
+            }
+        }).then((url) => {
             this.recordPageUrl = url;
         });
     }
-
 }

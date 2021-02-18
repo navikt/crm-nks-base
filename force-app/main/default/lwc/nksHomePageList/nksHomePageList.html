@@ -1,5 +1,11 @@
 <template>
-    <lightning-card title={cardLabel} icon-name={iconName}>
+    <lightning-card
+        title={cardLabel}
+        icon-name={iconName}
+        tabindex="0"
+        aria-label={cardLabel}
+        role="heading"
+    >
         <div class="slds-p-horizontal_small">
             <ul class="slds-has-dividers_top-space">
                 <template for:each={records} for:item="record">
@@ -8,7 +14,7 @@
                     </li>
                 </template>
             </ul>
-            <lightning-formatted-url value='{pageUrl}' label='{linklabel}' onclick={navigateToList}>
+            <lightning-formatted-url value={pageUrl} label={linklabel} onclick={navigateToList}>
             </lightning-formatted-url>
         </div>
     </lightning-card>

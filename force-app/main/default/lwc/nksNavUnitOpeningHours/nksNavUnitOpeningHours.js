@@ -14,7 +14,7 @@ export default class NksNavUnitOpeningHours extends LightningElement {
 
     @api
     set viewWeekDays(value) {
-        this._viewWeekDays = ('true' == value);
+        this._viewWeekDays = 'true' == value;
     }
 
     get viewWeekDays() {
@@ -35,10 +35,12 @@ export default class NksNavUnitOpeningHours extends LightningElement {
     }
 
     setOpeningHours() {
-
         let formatedOpeningHours = [];
-        this._norgOpeningHours.forEach(norgOpeningHour => {
-            if ((true === this._viewWeekDays && null == norgOpeningHour.dag) || (false === this._viewWeekDays && null == norgOpeningHour.dato)) {
+        this._norgOpeningHours.forEach((norgOpeningHour) => {
+            if (
+                (true === this._viewWeekDays && null == norgOpeningHour.dag) ||
+                (false === this._viewWeekDays && null == norgOpeningHour.dato)
+            ) {
                 return;
             }
 
@@ -48,11 +50,13 @@ export default class NksNavUnitOpeningHours extends LightningElement {
             let til = this.cleanStringValue(norgOpeningHour.til);
 
             weekDay.id = norgOpeningHour.id;
-            weekDay.openingHours = (fra + til) ? fra + ' - ' + til : '';
+            weekDay.openingHours = fra + til ? fra + ' - ' + til : '';
             weekDay.status = norgOpeningHour.stengt ? 'Stengt' : 'Åpent';
             weekDay.comments = this.cleanStringValue(norgOpeningHour.kommentar);
 
-            weekDay.day = norgOpeningHour.dag ? this.capitalize(norgOpeningHour.dag) : norgOpeningHour.dato;
+            weekDay.day = norgOpeningHour.dag
+                ? this.capitalize(norgOpeningHour.dag)
+                : norgOpeningHour.dato;
             switch (norgOpeningHour.dag) {
                 case 'MANDAG':
                     weekDay.dayOfWeek = 1;
@@ -81,7 +85,6 @@ export default class NksNavUnitOpeningHours extends LightningElement {
             }
 
             formatedOpeningHours.push(weekDay);
-
         });
 
         formatedOpeningHours.sort((a, b) => a.dayOfWeek - b.dayOfWeek);

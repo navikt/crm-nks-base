@@ -1,9 +1,18 @@
 <template>
     <div class={bannerClass} role="alert">
         <lightning-layout vertical-align="center">
-            <lightning-icon icon-name={iconName} size="x-small" variant="inverse"></lightning-icon>
+            <lightning-icon
+                icon-name={iconName}
+                size="x-small"
+                variant="inverse"
+            ></lightning-icon>
             <span class="slds-assistive-text">{type}</span>
-            <h2 class="slds-p-left_small" style="margin-top: auto; margin-bottom: auto">{message}</h2>
+            <h2
+                class="slds-p-left_small"
+                style="margin-top: auto; margin-bottom: auto"
+            >
+                {message}
+            </h2>
         </lightning-layout>
     </div>
 </template>

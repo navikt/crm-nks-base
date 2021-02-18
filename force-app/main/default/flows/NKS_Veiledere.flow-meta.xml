@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Get_Users</name>
@@ -76,7 +76,8 @@
             <assignToReference>varUserNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_users.NKS_UserNameDisplayFLOW__c</elementReference>
+                <elementReference
+                >Loop_users.NKS_UserNameDisplayFLOW__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -180,20 +181,24 @@
     <formulas>
         <name>currentItemWithQuotes</name>
         <dataType>String</dataType>
-        <expression>&quot;&apos;&quot;+{!Loop_members.UserOrGroupId}+&quot;&apos;&quot;</expression>
+        <expression
+        >&quot;&apos;&quot;+{!Loop_members.UserOrGroupId}+&quot;&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>URLtoedituser</name>
         <dataType>String</dataType>
-        <expression>HYPERLINK(&quot;/flow/NKS_Update_User?recordId=&quot;+{!Loop_users.Id} , &quot;Rediger &quot; , &apos;_blank&apos; )</expression>
+        <expression
+        >HYPERLINK(&quot;/flow/NKS_Update_User?recordId=&quot;+{!Loop_users.Id} , &quot;Rediger &quot; , &apos;_blank&apos; )</expression>
     </formulas>
     <formulas>
         <name>whereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id IN &quot; +SUBSTITUTE(SUBSTITUTE({!varUserIds} , &apos;[&apos;, &apos;(&apos;),&quot;]&quot;, &quot;)&quot;)</expression>
+        <expression
+        >&quot;Id IN &quot; +SUBSTITUTE(SUBSTITUTE({!varUserIds} , &apos;[&apos;, &apos;(&apos;),&quot;]&quot;, &quot;)&quot;)</expression>
     </formulas>
     <interviewLabel>NKS Veiledere {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <isAdditionalPermissionRequiredToRun
+    >true</isAdditionalPermissionRequiredToRun>
     <label>NKS Veiledere</label>
     <loops>
         <name>Loop_members</name>
@@ -247,7 +252,8 @@
         <label>Get Group Members</label>
         <locationX>299</locationX>
         <locationY>188</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_members</targetReference>
         </connector>
@@ -267,7 +273,8 @@
         <label>Get Profile</label>
         <locationX>221</locationX>
         <locationY>497</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_profile</targetReference>
         </connector>
@@ -287,7 +294,8 @@
         <label>Get Users</label>
         <locationX>486</locationX>
         <locationY>478</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_users</targetReference>
         </connector>
@@ -330,7 +338,8 @@
         </connector>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -369,7 +378,8 @@
         <allowPause>true</allowPause>
         <fields>
             <name>DisplayMembers</name>
-            <fieldText>&lt;p&gt;Valgt liste: {!Choose_Queue}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Veiledere:&lt;/p&gt;&lt;p&gt;{!varUserNames}&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;Valgt liste: {!Choose_Queue}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Veiledere:&lt;/p&gt;&lt;p&gt;{!varUserNames}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

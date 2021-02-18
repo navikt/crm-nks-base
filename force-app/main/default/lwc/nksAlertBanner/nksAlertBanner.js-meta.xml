@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
@@ -10,12 +10,40 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                <property name="type" type="String" label="Banner Type:" datasource="Error,Warning,Info" role="inputOnly" required="true" default="Info"/>
-                <property name="message" type="String" label="Message:" role="inputOnly" required="true" default="MESSAGE"/>
+                <property
+                name="type"
+                type="String"
+                label="Banner Type:"
+                datasource="Error,Warning,Info"
+                role="inputOnly"
+                required="true"
+                default="Info"
+            />
+                <property
+                name="message"
+                type="String"
+                label="Message:"
+                role="inputOnly"
+                required="true"
+                default="MESSAGE"
+            />
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
-                <property name="type" type="String" datasource="Error,Warning,Info" label="Banner Type:" required="true" default="Info" />
-                <property name="message" type="String" label="Message:" required="true" default="MESSAGE" />
+                <property
+                name="type"
+                type="String"
+                datasource="Error,Warning,Info"
+                label="Banner Type:"
+                required="true"
+                default="Info"
+            />
+                <property
+                name="message"
+                type="String"
+                label="Message:"
+                required="true"
+                default="MESSAGE"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
