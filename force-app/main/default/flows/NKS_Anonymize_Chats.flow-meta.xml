@@ -30,8 +30,7 @@
             <targetReference>Update_Transcripts</targetReference>
         </connector>
     </assignments>
-    <description
-    >Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
+    <description>Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
     <formulas>
         <name>Deletion_Date</name>
         <dataType>DateTime</dataType>

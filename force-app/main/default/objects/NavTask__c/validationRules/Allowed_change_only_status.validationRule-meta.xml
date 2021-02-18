@@ -13,6 +13,5 @@ ISCHANGED( CRM_NoPersonInformation__c ),
 ISCHANGED( CRM_SubTheme__c ),
 ISCHANGED( CRM_Theme__c )
 ))</errorConditionFormula>
-    <errorMessage
-    >Du har ikke rettigheter til å endre dette feltet.</errorMessage>
+    <errorMessage>Du har ikke rettigheter til å endre dette feltet.</errorMessage>
 </ValidationRule>

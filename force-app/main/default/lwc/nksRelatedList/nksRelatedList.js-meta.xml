@@ -9,12 +9,7 @@
   </targets>
   <targetConfigs>
       <targetConfig targets="lightning__RecordPage">
-        <property
-                name="listTitle"
-                label="List title"
-                type="String"
-                default="Title"
-            />
+        <property name="listTitle" label="List title" type="String" default="Title" />
         <property
                 name="iconName"
                 label="Icon name"

@@ -18,8 +18,7 @@
     </labels>
     <labels>
         <fullName>NKS_NAV_Case_Validation_Error</fullName>
-        <categories
-        >UI, NKS, NAV Case, nksPersonCaseOverview, Validation, Error</categories>
+        <categories>UI, NKS, NAV Case, nksPersonCaseOverview, Validation, Error</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>NAV Case Validation Error</shortDescription>
@@ -27,12 +26,10 @@
     </labels>
     <labels>
         <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
-        <categories
-        >UI, Chat, Categorization, nksThemeCategorization</categories>
+        <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
         <language>no</language>
         <protected>false</protected>
-        <shortDescription
-        >Theme Categorization Validation Error</shortDescription>
+        <shortDescription>Theme Categorization Validation Error</shortDescription>
         <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
 </CustomLabels>

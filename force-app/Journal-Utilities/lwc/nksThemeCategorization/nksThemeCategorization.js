@@ -93,10 +93,7 @@ export default class NksThemeCategorization extends LightningElement {
     get themeCode() {
         let themeCode = '';
 
-        let themes =
-            this.themeGroup && this.themeMap
-                ? this.themeMap[this.themeGroup]
-                : [];
+        let themes = this.themeGroup && this.themeMap ? this.themeMap[this.themeGroup] : [];
         for (let theme of themes) {
             if (theme.Id === this.theme) {
                 themeCode = theme.CRM_Code__c;
@@ -128,9 +125,7 @@ export default class NksThemeCategorization extends LightningElement {
         //Added subtheme check as flow was failing when chosing themes with no subthemes
         if (this.subtheme) {
             let subthemes =
-                this.chosenTheme &&
-                this.subthemeMap &&
-                Object.keys(this.subthemeMap).length !== 0
+                this.chosenTheme && this.subthemeMap && Object.keys(this.subthemeMap).length !== 0
                     ? this.subthemeMap[this.theme]
                     : [];
             for (let subtheme of subthemes) {
@@ -146,9 +141,7 @@ export default class NksThemeCategorization extends LightningElement {
 
     filterThemes() {
         let listThemes =
-            this.themeGroup && this.themeMap && this.themeGroup in this.themeMap
-                ? this.themeMap[this.themeGroup]
-                : [];
+            this.themeGroup && this.themeMap && this.themeGroup in this.themeMap ? this.themeMap[this.themeGroup] : [];
         let returnThemes = [];
         listThemes.forEach((theme) => {
             returnThemes.push({ label: theme.Name, value: theme.Id });
@@ -180,10 +173,7 @@ export default class NksThemeCategorization extends LightningElement {
         let placeholder = '(Ikke valgt)';
         if (this.chosenTheme) {
             let themeInMap = this.chosenTheme in this.subthemeMap;
-            placeholder =
-                this.subthemeMap && themeInMap
-                    ? '(Ikke valgt)'
-                    : '(Ingen undertema)';
+            placeholder = this.subthemeMap && themeInMap ? '(Ikke valgt)' : '(Ingen undertema)';
         }
 
         return placeholder;
@@ -198,8 +188,7 @@ export default class NksThemeCategorization extends LightningElement {
             !this.chosenTheme ||
             (this.chosenTheme &&
                 this.subthemeMap &&
-                (Object.keys(this.subthemeMap).length === 0 ||
-                    !(this.chosenTheme in this.subthemeMap)));
+                (Object.keys(this.subthemeMap).length === 0 || !(this.chosenTheme in this.subthemeMap)));
         return disabled;
     }
 

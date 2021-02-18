@@ -10,66 +10,16 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property
-                name="dirty"
-                label="Field Input: Dirty"
-                type="Boolean"
-                role="inputOnly"
-            />
-            <property
-                name="disabled"
-                label="Field Input: disabled"
-                type="Boolean"
-                role="inputOnly"
-            />
-            <property
-                name="fieldName"
-                label="Field Input: Field API Name"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="readOnly"
-                label="Field Input: Read Only"
-                type="Boolean"
-                role="inputOnly"
-            />
-            <property
-                name="required"
-                label="Field Input: required"
-                type="Boolean"
-                role="inputOnly"
-            />
-            <property
-                name="variant"
-                label="Field Input: variant"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="density"
-                label="Object Input: density"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="objectApiName"
-                label="Object Input: Object Api Name"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="recordId"
-                label="Object Input: Record Id"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="recordTypeId"
-                label="Object Input: Record Type Id"
-                type="String"
-                role="inputOnly"
-            />
+            <property name="dirty" label="Field Input: Dirty" type="Boolean" role="inputOnly" />
+            <property name="disabled" label="Field Input: disabled" type="Boolean" role="inputOnly" />
+            <property name="fieldName" label="Field Input: Field API Name" type="String" role="inputOnly" />
+            <property name="readOnly" label="Field Input: Read Only" type="Boolean" role="inputOnly" />
+            <property name="required" label="Field Input: required" type="Boolean" role="inputOnly" />
+            <property name="variant" label="Field Input: variant" type="String" role="inputOnly" />
+            <property name="density" label="Object Input: density" type="String" role="inputOnly" />
+            <property name="objectApiName" label="Object Input: Object Api Name" type="String" role="inputOnly" />
+            <property name="recordId" label="Object Input: Record Id" type="String" role="inputOnly" />
+            <property name="recordTypeId" label="Object Input: Record Type Id" type="String" role="inputOnly" />
             <property name="value" label="Value" type="String" />
         </targetConfig>
     </targetConfigs>

@@ -114,8 +114,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment
-        >Action override created by Lightning App Builder during activation.</comment>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Chat_Record_Page</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -134,26 +133,19 @@
     <enableFeeds>false</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <searchLayouts>
-        <customTabListAdditionalFields
-        >LiveChatVisitor</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LiveChatVisitor</customTabListAdditionalFields>
         <customTabListAdditionalFields>StartTime</customTabListAdditionalFields>
         <customTabListAdditionalFields>EndTime</customTabListAdditionalFields>
         <customTabListAdditionalFields>Status</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields
-        >LiveChatVisitor</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>LiveChatVisitor</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>StartTime</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EndTime</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields
-        >LiveChatVisitor</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields
-        >StartTime</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields
-        >EndTime</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields
-        >Status</lookupPhoneDialogsAdditionalFields>
-        <searchResultsAdditionalFields
-        >LiveChatVisitor</searchResultsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LiveChatVisitor</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>StartTime</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>EndTime</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>LiveChatVisitor</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>StartTime</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>EndTime</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status</searchResultsAdditionalFields>

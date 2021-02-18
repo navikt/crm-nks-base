@@ -21,11 +21,7 @@ public class NKS_RelatedListController {
         String parentObjectApiName,
         String filterConditions
     ) {
-        Set<String> parentRelationIds = getParentRelation(
-            parentId,
-            parentRelationField,
-            parentObjectApiName
-        );
+        Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
         String query = 'SELECT ';
 
         //Appending fields to query string
@@ -33,14 +29,8 @@ public class NKS_RelatedListController {
             query += field + ', ';
         }
 
-        query =
-            query.removeEndIgnoreCase(', ') +
-            ' FROM ' +
-            objectApiName +
-            ' WHERE ';
-        query += String.isNotBlank(filterConditions)
-            ? filterConditions.trim() + ' AND '
-            : '';
+        query = query.removeEndIgnoreCase(', ') + ' FROM ' + objectApiName + ' WHERE ';
+        query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
         query += relationField + ' IN :parentRelationIds';
 
@@ -62,17 +52,10 @@ public class NKS_RelatedListController {
         String parentObjectApiName
     ) {
         Set<String> parentRelationIds = new Set<String>();
-        String query =
-            'SELECT ' +
-            parentRelationField +
-            ' FROM ' +
-            parentObjectApiName +
-            ' WHERE Id = :parentId';
+        String query = 'SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = :parentId';
 
         for (SObject sObj : Database.query(query)) {
-            parentRelationIds.add(
-                getParentRelationId(sObj, parentRelationField)
-            );
+            parentRelationIds.add(getParentRelationId(sObj, parentRelationField));
         }
 
         return parentRelationIds;
@@ -85,20 +68,14 @@ public class NKS_RelatedListController {
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @return String
      */
-    private static String getParentRelationId(
-        Sobject obj,
-        String parentRelationField
-    ) {
+    private static String getParentRelationId(Sobject obj, String parentRelationField) {
         List<String> relationHierarchy = parentRelationField.split('\\.');
         String fieldApiName = relationHierarchy.remove(0);
 
         if (relationHierarchy.isEmpty()) {
             return (String) obj.get(fieldApiName);
         } else {
-            return getParentRelationId(
-                obj.getSObject(fieldApiName),
-                String.join(relationHierarchy, '.')
-            );
+            return getParentRelationId(obj.getSObject(fieldApiName), String.join(relationHierarchy, '.'));
         }
     }
 }

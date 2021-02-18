@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Subtheme__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description
-    >Subtheme categorization. Relation to common code from code set behandlingstema</description>
+    <description>Subtheme categorization. Relation to common code from code set behandlingstema</description>
     <externalId>false</externalId>
     <label>Subtheme</label>
     <lookupFilter>

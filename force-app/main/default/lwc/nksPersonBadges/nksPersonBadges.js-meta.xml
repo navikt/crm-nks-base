@@ -3,8 +3,7 @@
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>NKS Person Badges</masterLabel>
-    <description
-    >Component that display important information about the person as badges.</description>
+    <description>Component that display important information about the person as badges.</description>
 
     <targets>
         <target>lightning__RecordPage</target>

@@ -8,10 +8,7 @@ export default class NksNavUnit extends LightningElement {
     @track activeSections = []; // The active sections on component load
 
     connectedCallback() {
-        if (
-            'true' === this.allSectionsOpenOnLoad ||
-            true === this.allSectionsOpenOnLoad
-        ) {
+        if ('true' === this.allSectionsOpenOnLoad || true === this.allSectionsOpenOnLoad) {
             this.activeSections = ['UNIT_SERVICES', 'CONTACT_DETAILS'];
         }
     }

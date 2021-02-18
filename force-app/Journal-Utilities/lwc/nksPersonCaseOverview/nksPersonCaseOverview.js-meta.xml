@@ -10,54 +10,14 @@
   </targets>
   <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                <property
-                name="actorId"
-                type="String"
-                label="Actor ID:"
-                role="inputOnly"
-            />
-                <property
-                name="prefilledThemeGroup"
-                type="String"
-                label="Preselected theme group:"
-                role="inputOnly"
-            />
-                <property
-                name="selectedCaseId"
-                type="String"
-                label="NAV Case ID"
-                role="outputOnly"
-            />
-                <property
-                name="selectedCaseTheme"
-                type="String"
-                label="NAV Case Theme"
-                role="outputOnly"
-            />
-                <property
-                name="navCaseType"
-                type="String"
-                label="NAV Case Type"
-                role="outputOnly"
-            />
-                <property
-                name="selectedSubtheme"
-                type="String"
-                label="Selected subtheme"
-                role="outputOnly"
-            />
-                <property
-                name="selectedSubthemeSfId"
-                type="String"
-                label="Selected subtheme SF ID"
-                role="outputOnly"
-            />
-                <property
-                name="selectedCaseThemeSfId"
-                type="String"
-                label="Selected Theme SF ID"
-                role="outputOnly"
-            />
+                <property name="actorId" type="String" label="Actor ID:" role="inputOnly" />
+                <property name="prefilledThemeGroup" type="String" label="Preselected theme group:" role="inputOnly" />
+                <property name="selectedCaseId" type="String" label="NAV Case ID" role="outputOnly" />
+                <property name="selectedCaseTheme" type="String" label="NAV Case Theme" role="outputOnly" />
+                <property name="navCaseType" type="String" label="NAV Case Type" role="outputOnly" />
+                <property name="selectedSubtheme" type="String" label="Selected subtheme" role="outputOnly" />
+                <property name="selectedSubthemeSfId" type="String" label="Selected subtheme SF ID" role="outputOnly" />
+                <property name="selectedCaseThemeSfId" type="String" label="Selected Theme SF ID" role="outputOnly" />
                 <property
                 name="selectedThemeGroupSfId"
                 type="String"

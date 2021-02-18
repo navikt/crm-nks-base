@@ -85,18 +85,13 @@ public with sharing class NKS_HomePageController {
 
     private static String getImageUrl(Id recordId) {
         String contentversionid = [
-            SELECT
-                Id,
-                ContentDocumentId,
-                ContentDocument.LatestPublishedVersionId,
-                ContentDocument.ContentModifiedDate
+            SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.ContentModifiedDate
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
             ORDER BY ContentDocument.ContentModifiedDate DESC
             LIMIT 1
         ]
         ?.ContentDocument.LatestPublishedVersionId;
-        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
-            contentversionid;
+        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 }

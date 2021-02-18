@@ -3,19 +3,13 @@
     <apiVersion>49.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Record Detail</masterLabel>
-    <description
-    >Component to display selected fields from a record</description>
+    <description>Component to display selected fields from a record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property
-                name="cardLabel"
-                label="Card title"
-                type="String"
-                default="Title"
-            />
+            <property name="cardLabel" label="Card title" type="String" default="Title" />
             <property
                 name="iconName"
                 label="Icon name"

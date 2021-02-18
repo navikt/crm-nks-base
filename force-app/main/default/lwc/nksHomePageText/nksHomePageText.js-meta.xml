@@ -8,12 +8,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage">
-            <property
-                name="cardTitle"
-                label="Title"
-                type="String"
-                default="Title"
-            />
+            <property name="cardTitle" label="Title" type="String" default="Title" />
             <property
                 name="iconName"
                 label="Icon name"
@@ -21,12 +16,7 @@
                 type="String"
                 default="Title"
             />
-            <property
-                name="type"
-                label="Type of announcement"
-                type="String"
-                required="true"
-            />
+            <property name="type" label="Type of announcement" type="String" required="true" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

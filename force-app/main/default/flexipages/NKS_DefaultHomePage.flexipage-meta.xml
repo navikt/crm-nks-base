@@ -110,8 +110,7 @@
     </itemInstances>
         <itemInstances>
         <componentInstance>
-            <componentName
-                >runtime_sales_activities:todayTaskContainer</componentName>
+            <componentName>runtime_sales_activities:todayTaskContainer</componentName>
         </componentInstance>
     </itemInstances>
         <itemInstances>

@@ -4,15 +4,9 @@ public with sharing class NKS_AccessErrorController {
         Id userId = UserInfo.getUserId();
         Id personId;
         if (objectApiName == 'Case')
-            personId = [
-                SELECT Account.CRM_Person__c
-                FROM Case
-                WHERE Id = :recordId
-            ]
-            ?.Account.CRM_Person__c;
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account.CRM_Person__c;
         else if (objectApiName == 'Account')
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]
-            ?.CRM_Person__c;
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
 
         if (personId != null) {
             Boolean access = [

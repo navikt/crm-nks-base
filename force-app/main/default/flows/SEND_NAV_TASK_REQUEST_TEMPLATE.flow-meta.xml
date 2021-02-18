@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Flow
-    xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
->
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
@@ -29,8 +26,7 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.subthemeCode</elementReference>
+                <elementReference>Theme_Categorization.subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,22 +38,19 @@
         <inputParameters>
             <name>themeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.themeCode</elementReference>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>themeGroupCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.themeGroupCode</elementReference>
+                <elementReference>Theme_Categorization.themeGroupCode</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
-        <description
-        >Assigns the necessary values to an outbound NAV task</description>
+        <description>Assigns the necessary values to an outbound NAV task</description>
         <name>Existing_NAV_Task_Assignment</name>
         <label>Existing NAV Task Assignment</label>
         <locationX>375</locationX>
@@ -74,8 +67,7 @@
         </connector>
     </assignments>
     <assignments>
-        <description
-        >Assigns the appropriate values from the input screen to the NAV task.</description>
+        <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>179</locationX>
@@ -105,8 +97,7 @@
             <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -120,8 +111,7 @@
             <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.subtheme</elementReference>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -132,8 +122,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NavTask.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference>NavTask.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -214,8 +203,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Process_NAV_task.success</leftValueReference>
+                <leftValueReference>Process_NAV_task.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -227,8 +215,7 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <description
-    >Template flow for sending an outbound NAV task for creation or edit.</description>
+    <description>Template flow for sending an outbound NAV task for creation or edit.</description>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
@@ -249,12 +236,10 @@
     <formulas>
         <name>ACTION</name>
         <dataType>String</dataType>
-        <expression
-        >IF(ISBLANK({!NavTask.INT_External_Reference__c}), &apos;POST&apos;, &apos;EDIT&apos;)</expression>
+        <expression>IF(ISBLANK({!NavTask.INT_External_Reference__c}), &apos;POST&apos;, &apos;EDIT&apos;)</expression>
     </formulas>
     <formulas>
-        <description
-        >Formula for setting the default due date to next friday.</description>
+        <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
@@ -267,8 +252,7 @@
 6, {!$Flow.CurrentDate}+ 1,
 TODAY())</expression>
     </formulas>
-    <interviewLabel
-    >SEND NAV TASK TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>SEND NAV TASK TEMPLATE {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>SEND NAV TASK REQUEST TEMPLATE</label>
     <processMetadataValues>
@@ -301,14 +285,12 @@ TODAY())</expression>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordCreates>
     <recordLookups>
-        <description
-        >Queries the NAV task information if this is an edit action.</description>
+        <description>Queries the NAV task information if this is an edit action.</description>
         <name>Get_NAV_Task</name>
         <label>Get NAV Task</label>
         <locationX>375</locationX>
         <locationY>223</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Existing_NAV_Task_Assignment</targetReference>
         </connector>
@@ -324,8 +306,7 @@ TODAY())</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <description
-        >Updates the Salesforce task with information received from the Apex action.</description>
+        <description>Updates the Salesforce task with information received from the Apex action.</description>
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
         <locationX>294</locationX>
@@ -336,8 +317,7 @@ TODAY())</expression>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordUpdates>
     <screens>
-        <description
-        >Something went wrong when posting/updating the NAV task.</description>
+        <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>373</locationX>
@@ -384,8 +364,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference
-                    >NavTask.NKS_Theme_Group__c</elementReference>
+                    <elementReference>NavTask.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -472,8 +451,7 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description
-        >Screen for telling user that the task was successfully sent.</description>
+        <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>182</locationX>
@@ -508,8 +486,7 @@ TODAY())</expression>
         <objectType>NavTask__c</objectType>
     </variables>
     <variables>
-        <description
-        >Record ID if the flow is called with a reference to an existing NAV task.</description>
+        <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

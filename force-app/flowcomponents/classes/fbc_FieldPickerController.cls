@@ -9,8 +9,7 @@ global with sharing class fbc_FieldPickerController {
         }
 
         for (String objType : availableObjectTypes) {
-            Schema.DescribeSObjectResult describeObject = allTypes.get(objType)
-                .getDescribe();
+            Schema.DescribeSObjectResult describeObject = allTypes.get(objType).getDescribe();
             String objectType = describeObject.getName();
             String objectLabel = describeObject.getLabel();
             Boolean isCustom = describeObject.isCustom();
@@ -25,19 +24,12 @@ global with sharing class fbc_FieldPickerController {
         return result;
     }
     @AuraEnabled(cacheable=true)
-    global static List<Member> getPicklistValues(
-        String objectApiName,
-        String fieldName
-    ) {
+    global static List<Member> getPicklistValues(String objectApiName, String fieldName) {
         List<Member> options = new List<Member>();
 
-        Schema.DescribeSObjectResult describeObject = Schema.getGlobalDescribe()
-            .get(objectApiName)
-            .getDescribe();
+        Schema.DescribeSObjectResult describeObject = Schema.getGlobalDescribe().get(objectApiName).getDescribe();
         Map<String, Schema.SObjectField> fieldMap = describeObject.fields.getMap();
-        List<Schema.PicklistEntry> values = fieldMap.get(fieldName)
-            .getDescribe()
-            .getPickListValues();
+        List<Schema.PicklistEntry> values = fieldMap.get(fieldName).getDescribe().getPickListValues();
 
         for (Schema.PicklistEntry a : values) {
             options.add(new Member(a.getValue(), a.getLabel()));

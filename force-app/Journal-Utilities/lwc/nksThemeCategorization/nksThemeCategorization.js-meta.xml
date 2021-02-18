@@ -3,28 +3,15 @@
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Theme categorization</masterLabel>
-    <description
-    >Component for efficient categorization by theme group, theme and subtheme</description>
+    <description>Component for efficient categorization by theme group, theme and subtheme</description>
     <targets>
       <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                <property
-                name="themeGroup"
-                type="String"
-                label="Theme Group: (Salesforce ID)"
-            />
-                <property
-                name="theme"
-                type="String"
-                label="Theme: (Salesforce ID)"
-            />
-                <property
-                name="subtheme"
-                type="String"
-                label="Subtheme: (Salesforce ID)"
-            />
+                <property name="themeGroup" type="String" label="Theme Group: (Salesforce ID)" />
+                <property name="theme" type="String" label="Theme: (Salesforce ID)" />
+                <property name="subtheme" type="String" label="Subtheme: (Salesforce ID)" />
 
                 <property
                 name="themeGroupCode"
@@ -32,12 +19,7 @@
                 label="Output theme group code from kodeverk"
                 role="outputOnly"
             />
-                <property
-                name="themeCode"
-                type="String"
-                label="Output theme code from kodeverk"
-                role="outputOnly"
-            />
+                <property name="themeCode" type="String" label="Output theme code from kodeverk" role="outputOnly" />
                 <property
                 name="subthemeCode"
                 type="String"

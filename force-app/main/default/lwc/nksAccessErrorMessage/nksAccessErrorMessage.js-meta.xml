@@ -3,8 +3,7 @@
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>NKS Access Error Message</masterLabel>
-    <description
-    >Component to display error message if user does not have acces to a person record</description>
+    <description>Component to display error message if user does not have acces to a person record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>

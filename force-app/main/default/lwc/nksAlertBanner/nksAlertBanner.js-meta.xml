@@ -37,13 +37,7 @@
                 required="true"
                 default="Info"
             />
-                <property
-                name="message"
-                type="String"
-                label="Message:"
-                required="true"
-                default="MESSAGE"
-            />
+                <property name="message" type="String" label="Message:" required="true" default="MESSAGE" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

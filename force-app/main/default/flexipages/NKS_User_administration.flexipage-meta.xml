@@ -14,8 +14,7 @@
                 <componentName>flowruntime:interview</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.CustomPermission.ManageNksUsers}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.ManageNksUsers}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

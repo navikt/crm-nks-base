@@ -3,12 +3,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >forceKnowledge:articleVersionHistory</componentName>
+                <componentName>forceKnowledge:articleVersionHistory</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -17,8 +15,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >forceKnowledge:articleDataCategoryViewer</componentName>
+                <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.PublishStatus}</leftValue>
@@ -53,8 +50,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -76,8 +72,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >forceKnowledge:articleVersionCompare</componentName>
+                <componentName>forceKnowledge:articleVersionCompare</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-a25c72d9-c5cd-43b4-9692-83bcae635472</name>
@@ -166,8 +161,7 @@
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -1093,8 +1087,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >forceKnowledge:articleSearchDesktop</componentName>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.PublishStatus}</leftValue>

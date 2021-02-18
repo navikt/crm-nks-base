@@ -38,9 +38,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
                 this.relatedRecords = data && data.length > 0 ? data : null;
             })
             .catch((error) => {
-                console.log(
-                    'An error occurred: ' + JSON.stringify(error, null, 2)
-                );
+                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
             });
     }
 
@@ -88,27 +86,17 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
 
     get headerBackground() {
         return this.headerColor
-            ? 'background-color: ' +
-                  this.headerColor +
-                  '; border-color: ' +
-                  this.headerColor +
-                  'border-style: solid'
+            ? 'background-color: ' + this.headerColor + '; border-color: ' + this.headerColor + 'border-style: solid'
             : '';
     }
 
     get fieldLabels() {
-        let labels =
-            this.columnLabels != null
-                ? this.columnLabels.replace(/\s/g, '').split(',')
-                : [];
+        let labels = this.columnLabels != null ? this.columnLabels.replace(/\s/g, '').split(',') : [];
         return labels;
     }
 
     get fieldList() {
-        let fieldList =
-            this.displayedFields != null
-                ? this.displayedFields.replace(/\s/g, '').split(',')
-                : [];
+        let fieldList = this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
         return fieldList;
     }
 

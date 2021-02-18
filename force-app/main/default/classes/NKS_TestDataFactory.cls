@@ -38,10 +38,7 @@ public without sharing class NKS_TestDataFactory {
         insert acc;
     }
 
-    public static List<SecurityMeasure__c> createSecurityMeasures(
-        Integer amount,
-        Person__c person
-    ) {
+    public static List<SecurityMeasure__c> createSecurityMeasures(Integer amount, Person__c person) {
         List<SecurityMeasure__c> securityMeasures = new List<SecurityMeasure__c>();
         for (Integer i = 0; i < amount; i++) {
             SecurityMeasure__c sm = new SecurityMeasure__c(
@@ -59,10 +56,7 @@ public without sharing class NKS_TestDataFactory {
     public static List<QuickText> createQuickTexts(Integer amount) {
         List<QuickText> quickTexts = new List<QuickText>();
         for (Integer i = 0; i < amount; i++) {
-            QuickText qt = new QuickText(
-                Name = 'Test ' + i,
-                Message = 'Dette er en melding'
-            );
+            QuickText qt = new QuickText(Name = 'Test ' + i, Message = 'Dette er en melding');
             quickTexts.add(qt);
         }
         insert quickTexts;
@@ -75,15 +69,11 @@ public without sharing class NKS_TestDataFactory {
         return visitor;
     }
 
-    public static List<LiveChatTranscript> createLiveChatTranscripts(
-        Integer amount
-    ) {
+    public static List<LiveChatTranscript> createLiveChatTranscripts(Integer amount) {
         LiveChatVisitor v = NKS_TestDataFactory.createLiveChatVisitor();
         List<LiveChatTranscript> liveChatTranscripts = new List<LiveChatTranscript>();
         for (Integer i = 0; i < amount; i++) {
-            LiveChatTranscript lct = new LiveChatTranscript(
-                LiveChatVisitorId = v.Id
-            );
+            LiveChatTranscript lct = new LiveChatTranscript(LiveChatVisitorId = v.Id);
             liveChatTranscripts.add(lct);
         }
         insert liveChatTranscripts;
@@ -93,26 +83,18 @@ public without sharing class NKS_TestDataFactory {
     public static List<NavUnit__c> createNavUnits(Integer amount) {
         Group queue = new Group();
         System.runAs(new User(Id = UserInfo.getUserId())) {
-            queue = TestDataFactory.getQueue(
-                'NAV Arendal',
-                'queue_906',
-                'NavTask__c'
-            );
+            queue = TestDataFactory.getQueue('NAV Arendal', 'queue_906', 'NavTask__c');
         }
         List<NavUnit__c> units = new List<NavUnit__c>();
         for (Integer i = 0; i < amount; i++) {
-            units.add(
-                new NavUnit__c(Name = 'Unit ' + i, CRM_QueueId__c = queue.Id)
-            );
+            units.add(new NavUnit__c(Name = 'Unit ' + i, CRM_QueueId__c = queue.Id));
         }
         units[0].CRM_QueueId__c = null;
         insert units;
         return units;
     }
 
-    public static List<NKS_Announcement__c> createAnnouncements(
-        Integer amount
-    ) {
+    public static List<NKS_Announcement__c> createAnnouncements(Integer amount) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         for (Integer i = 0; i < amount; i++) {
             NKS_Announcement__c a = new NKS_Announcement__c(

@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Anonymized__c</fullName>
     <defaultValue>false</defaultValue>
-    <description
-    >Record has been handled by the policy engine and has been anonymized.</description>
+    <description>Record has been handled by the policy engine and has been anonymized.</description>
     <externalId>false</externalId>
     <label>Anonymized</label>
     <trackHistory>false</trackHistory>

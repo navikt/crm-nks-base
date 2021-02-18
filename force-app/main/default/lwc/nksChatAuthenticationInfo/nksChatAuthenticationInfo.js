@@ -55,10 +55,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
 
     get authenticationStarted() {
-        return (
-            this.currentAuthenticationStatus === 'In Progress' ||
-            this.currentAuthenticationStatus === 'Completed'
-        );
+        return this.currentAuthenticationStatus === 'In Progress' || this.currentAuthenticationStatus === 'Completed';
     }
 
     get authenticationComplete() {
@@ -66,10 +63,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
 
     get isEmpSubscribed() {
-        return (
-            Object.keys(this.subscription).length !== 0 &&
-            this.subscription.constructor === Object
-        );
+        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
     //#### /GETTERS ###
@@ -93,11 +87,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.log(error);
         }
         //If the authentication is not completed, subscribe to the push topic to receive events
-        if (
-            this.currentAuthenticationStatus !== 'Completed' &&
-            !this.isLoading &&
-            !this.isEmpSubscribed
-        ) {
+        if (this.currentAuthenticationStatus !== 'Completed' && !this.isLoading && !this.isEmpSubscribed) {
             this.handleSubscribe();
         }
     }
@@ -109,10 +99,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                 this.chatAuthUrl = url;
             })
             .catch((error) => {
-                console.log(
-                    'Failed to retrieve auth url: ' +
-                        JSON.stringify(error, null, 2)
-                );
+                console.log('Failed to retrieve auth url: ' + JSON.stringify(error, null, 2));
             });
     }
 
@@ -129,10 +116,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                     : _this.currentAuthenticationStatus;
             //If authentication now is complete, get the account id
             if (_this.authenticationComplete) {
-                _this.accountId =
-                    response.data.sobject.Id === _this.recordId
-                        ? response.data.sobject.AccountId
-                        : null;
+                _this.accountId = response.data.sobject.Id === _this.recordId ? response.data.sobject.AccountId : null;
                 _this.sendLoginEvent();
                 _this.handleUnsubscribe();
             }
@@ -141,17 +125,10 @@ export default class ChatAuthenticationOverview extends LightningElement {
         // Invoke subscribe method of empApi. Pass reference to messageCallback
         //Removed subscription to record specific channel as there are issues when loading multiple components and subscribing
         //to record specific channels on initialization. New solution verifies Id in messageCallback
-        subscribe(
-            '/topic/Chat_Auth_Status_Changed' /*?Id=" + this.recordId*/,
-            -1,
-            messageCallback
-        ).then((response) => {
+        subscribe('/topic/Chat_Auth_Status_Changed' /*?Id=" + this.recordId*/, -1, messageCallback).then((response) => {
             // Response contains the subscription information on successful subscribe call
             this.subscription = response;
-            console.log(
-                'Successfully subscribed to : ',
-                JSON.stringify(response.channel)
-            );
+            console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
     }
 
@@ -166,26 +143,18 @@ export default class ChatAuthenticationOverview extends LightningElement {
                 this.log('Successful unsubscribe');
             })
             .catch((error) => {
-                console.log(
-                    'EMP unsubscribe failed: ' + JSON.stringify(error, null, 2)
-                );
+                console.log('EMP unsubscribe failed: ' + JSON.stringify(error, null, 2));
             });
     }
 
     sendLoginEvent() {
         //Message defaults to norwegian
-        const loginMessage =
-            this.chatLanguage === 'en_US'
-                ? CHAT_LOGIN_MSG_EN
-                : CHAT_LOGIN_MSG_NO;
+        const loginMessage = this.chatLanguage === 'en_US' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
 
         //Sending event handled by parent to to trigger default chat login message
-        const authenticationCompleteEvt = new CustomEvent(
-            'authenticationcomplete',
-            {
-                detail: { loginMessage }
-            }
-        );
+        const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
+            detail: { loginMessage }
+        });
         this.dispatchEvent(authenticationCompleteEvt);
     }
 
@@ -195,12 +164,9 @@ export default class ChatAuthenticationOverview extends LightningElement {
         const authUrl = this.chatAuthUrl;
 
         //Pass the chat auth url
-        const requestAuthenticationEvent = new CustomEvent(
-            'requestauthentication',
-            {
-                detail: { authUrl }
-            }
-        );
+        const requestAuthenticationEvent = new CustomEvent('requestauthentication', {
+            detail: { authUrl }
+        });
         this.dispatchEvent(requestAuthenticationEvent);
     }
 

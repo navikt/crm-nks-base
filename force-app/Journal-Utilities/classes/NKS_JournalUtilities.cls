@@ -5,9 +5,7 @@ public class NKS_JournalUtilities {
         description='Post journal entry or generate compliant document'
         category='Journal'
     )
-    public static List<UtilityResponse> handleRequest(
-        List<utilityRequest> request
-    ) {
+    public static List<UtilityResponse> handleRequest(List<utilityRequest> request) {
         List<UtilityResponse> returnList = new List<UtilityResponse>();
 
         switch on (request[0].requestType) {
@@ -15,20 +13,11 @@ public class NKS_JournalUtilities {
                 returnList.add(generateDocument(request[0].documentString));
             }
             when 'BASE_64_ENCODE' {
-                String document = EncodingUtil.base64Encode(
-                    Blob.valueOf(request[0].documentString)
-                );
-                returnList.add(
-                    new UtilityResponse(true, document, null, null, null)
-                );
+                String document = EncodingUtil.base64Encode(Blob.valueOf(request[0].documentString));
+                returnList.add(new UtilityResponse(true, document, null, null, null));
             }
             when 'POST_JOURNAL' {
-                returnList.add(
-                    postJournal(
-                        request[0].journalRequest,
-                        request[0].referenceId
-                    )
-                );
+                returnList.add(postJournal(request[0].journalRequest, request[0].referenceId));
             }
         }
 
@@ -42,16 +31,11 @@ public class NKS_JournalUtilities {
      * @param journalRequest
      * @return UtilityResponse
      **/
-    public static UtilityResponse postJournal(
-        NKS_JournalEntryWrapper journalRequest,
-        Id referenceId
-    ) {
+    public static UtilityResponse postJournal(NKS_JournalEntryWrapper journalRequest, Id referenceId) {
         ApiController apiCtrl = new ApiController();
         UtilityResponse resp = new UtilityResponse();
 
-        Map<String, String> httpHeaders = new Map<String, String>{
-            'Content-Type' => 'application/json'
-        };
+        Map<String, String> httpHeaders = new Map<String, String>{ 'Content-Type' => 'application/json' };
 
         apiCtrl.initRequest('Journal_API', 'POST_CREATE_JOURNAL');
         apiCtrl.addServiceAuthHeader('Dokarkiv');
@@ -67,12 +51,8 @@ public class NKS_JournalUtilities {
                 apiCtrl.getResponse().getBody()
             );
             resp.journalpostId = (String) responseMap.get('journalpostId');
-            Boolean journalCompleted = (Boolean) responseMap.get(
-                'journalpostferdigstilt'
-            );
-            resp.journalPostStatus = journalCompleted
-                ? 'Completed'
-                : 'In Progress';
+            Boolean journalCompleted = (Boolean) responseMap.get('journalpostferdigstilt');
+            resp.journalPostStatus = journalCompleted ? 'Completed' : 'In Progress';
         } else {
             resp.success = false;
             //Creates a log entry for troubleshooting
@@ -116,11 +96,7 @@ public class NKS_JournalUtilities {
             this.journalRequest = null;
         }
 
-        public utilityRequest(
-            String requestType,
-            String documentString,
-            NKS_JournalEntryWrapper journalRequest
-        ) {
+        public utilityRequest(String requestType, String documentString, NKS_JournalEntryWrapper journalRequest) {
             this.requestType = requestType;
             this.documentString = documentString;
             this.journalRequest = journalRequest;
@@ -135,9 +111,7 @@ public class NKS_JournalUtilities {
         @invocableVariable
         public String documentString;
 
-        @invocableVariable(
-            label='Reference to salesforce record to be stored on journal entry'
-        )
+        @invocableVariable(label='Reference to salesforce record to be stored on journal entry')
         public Id referenceId;
 
         @invocableVariable

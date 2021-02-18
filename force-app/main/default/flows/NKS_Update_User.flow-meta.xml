@@ -137,8 +137,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference
-            >Update_the_Selected_Account_String</targetReference>
+            <targetReference>Update_the_Selected_Account_String</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -293,8 +292,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference
-                >Assign_Selected_Value_To_String</targetReference>
+                <targetReference>Assign_Selected_Value_To_String</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -334,8 +332,7 @@
             <name>DeleteCurrentMemberships</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >groupMembershipsToDelete</leftValueReference>
+                <leftValueReference>groupMembershipsToDelete</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>emptyRecordCollection</elementReference>
@@ -405,8 +402,7 @@
     <formulas>
         <name>UpdatedSelectedGroupString</name>
         <dataType>String</dataType>
-        <expression
-        >TRIM(SUBSTITUTE({!selectedGroupIds},{!singleGroupString}+&quot;;&quot;,&quot;&quot;))</expression>
+        <expression>TRIM(SUBSTITUTE({!selectedGroupIds},{!singleGroupString}+&quot;;&quot;,&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>WhereClause</name>
@@ -518,8 +514,7 @@
         <label>Get User</label>
         <locationX>1736</locationX>
         <locationY>206</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
         </connector>
@@ -641,8 +636,7 @@
             <name>Chat_user_permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <elementReference
-                >Get_User.UserPermissionsLiveAgentUser</elementReference>
+                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
             </defaultValue>
             <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
             <fieldType>InputField</fieldType>

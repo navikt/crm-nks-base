@@ -7,11 +7,7 @@
         <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
-        <targetConfig
-            targets="lightning__FlowScreen"
-            configurationEditor="c-fbc_quick-choice-cpe"
-            category="Input"
-        >
+        <targetConfig targets="lightning__FlowScreen" configurationEditor="c-fbc_quick-choice-cpe" category="Input">
             <property
                 name="value"
                 label="Value"
@@ -119,12 +115,7 @@
                 type="String"
                 description="Object Name (for Picklist Field)"
             />
-            <property
-                name="fieldName"
-                label="Field Name"
-                type="String"
-                description="Field Name (for Picklist Field)"
-            />
+            <property name="fieldName" label="Field Name" type="String" description="Field Name (for Picklist Field)" />
             <property
                 name="allowNoneToBeChosen"
                 label="Allow 'None' to be Chosen"

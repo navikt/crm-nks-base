@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Journal_Entry_Created__c</fullName>
     <defaultValue>false</defaultValue>
-    <description
-    >Checkbox field to determine if the chat transcript has been submitted to JOARK.</description>
+    <description>Checkbox field to determine if the chat transcript has been submitted to JOARK.</description>
     <externalId>false</externalId>
     <label>Journal Entry Created</label>
     <trackHistory>false</trackHistory>

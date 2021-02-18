@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
-        <description
-        >Defines the chat theme group based on the original queue.</description>
+        <description>Defines the chat theme group based on the original queue.</description>
         <name>Set_Theme_Group</name>
         <label>Set Theme Group</label>
         <locationX>50</locationX>
@@ -41,8 +40,7 @@
     <description
     >Automatically populates the theme group value for the chat based on which queue it originates from.</description>
     <formulas>
-        <description
-        >Maps the incoming queue names to a theme group.</description>
+        <description>Maps the incoming queue names to a theme group.</description>
         <name>Queue_Theme_Mapping</name>
         <dataType>String</dataType>
         <expression>CASE({!$Record.LiveChatButton.Queue.DeveloperName},
@@ -55,8 +53,7 @@
     null
 )</expression>
     </formulas>
-    <interviewLabel
-    >Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Set Chat Theme Group</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -83,8 +80,7 @@
         <label>Get theme groups</label>
         <locationX>182</locationX>
         <locationY>253</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Common_Code_Check</targetReference>
         </connector>

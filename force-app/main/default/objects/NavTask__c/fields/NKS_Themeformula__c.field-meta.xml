@@ -4,8 +4,7 @@
     <description
     >Formula field displaying the correct theme value. Displays either the NKS_Theme or the CRM_Theme depending on which value is set.</description>
     <externalId>false</externalId>
-    <formula
-    >IF(NOT(ISBLANK(NKS_Theme__c)), NKS_Theme__r.Name, TEXT(CRM_Theme__c))</formula>
+    <formula>IF(NOT(ISBLANK(NKS_Theme__c)), NKS_Theme__r.Name, TEXT(CRM_Theme__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Theme</label>
     <required>false</required>

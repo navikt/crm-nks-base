@@ -27,10 +27,7 @@
                 var action = component.get('c.getTabName');
                 action.setParams({ recordId: response.recordId });
                 action.setCallback(this, function (data) {
-                    if (
-                        data.getReturnValue() != null &&
-                        data.getReturnValue().length > 0
-                    ) {
+                    if (data.getReturnValue() != null && data.getReturnValue().length > 0) {
                         workspace.setTabLabel({
                             tabId: newTabId,
                             label: data.getReturnValue()
@@ -45,10 +42,7 @@
         var omniAPI = component.find('omniToolkit');
         var action = component.get('c.getOnlineId');
         action.setCallback(this, function (data) {
-            if (
-                data.getReturnValue() != null &&
-                data.getReturnValue().length > 0
-            ) {
+            if (data.getReturnValue() != null && data.getReturnValue().length > 0) {
                 var poll = setInterval(function () {
                     omniAPI
                         .login({ statusId: data.getReturnValue() })

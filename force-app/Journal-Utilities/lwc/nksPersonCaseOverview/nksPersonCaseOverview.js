@@ -56,14 +56,12 @@ export default class NksPersonCaseOverview extends LightningElement {
                 let groupThemes = {};
                 groupThemes.themes = [];
                 if (data.themeMap[themeGroup.Id]) {
-                    groupThemes.themes = data.themeMap[themeGroup.Id].map(
-                        (theme) => {
-                            return {
-                                themeCode: theme.CRM_Code__c,
-                                themeSfId: theme.Id
-                            };
-                        }
-                    );
+                    groupThemes.themes = data.themeMap[themeGroup.Id].map((theme) => {
+                        return {
+                            themeCode: theme.CRM_Code__c,
+                            themeSfId: theme.Id
+                        };
+                    });
                 }
                 //Property function to determine if the group of themes includes an input theme
                 groupThemes.hasTheme = (inputTheme) => {
@@ -82,12 +80,8 @@ export default class NksPersonCaseOverview extends LightningElement {
                     let returnTheme = null;
                     for (const themeGroupId in mappedThemes) {
                         if (mappedThemes.hasOwnProperty(themeGroupId)) {
-                            returnTheme = mappedThemes[
-                                themeGroupId
-                            ].hasOwnProperty('hasTheme')
-                                ? mappedThemes[themeGroupId].hasTheme(
-                                      inputTheme
-                                  )
+                            returnTheme = mappedThemes[themeGroupId].hasOwnProperty('hasTheme')
+                                ? mappedThemes[themeGroupId].hasTheme(inputTheme)
                                 : null;
                             if (returnTheme !== null) break;
                         }
@@ -129,8 +123,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     setSelectedNavCase(selectedNavCaseId) {
         let caseItems = this.template.querySelectorAll('c-nks-nav-case-item');
         caseItems.forEach((caseItem) => {
-            caseItem.selected =
-                caseItem.navCase.id == selectedNavCaseId ? true : false;
+            caseItem.selected = caseItem.navCase.id == selectedNavCaseId ? true : false;
         });
     }
 
@@ -142,9 +135,7 @@ export default class NksPersonCaseOverview extends LightningElement {
             return;
         } else {
             this.displayedCases = this.caseList.filter((navCase) => {
-                return (
-                    this.themeMap[themeGroup].hasTheme(navCase.tema) !== null
-                );
+                return this.themeMap[themeGroup].hasTheme(navCase.tema) !== null;
             });
         }
     }
@@ -168,9 +159,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     @api
     get selectedCaseTheme() {
         if (this.isGeneralCase === true) {
-            let themeCmp = this.template.querySelector(
-                'c-nks-theme-categorization'
-            );
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
             return themeCmp.themeCode;
         } else {
             return this.selectedCase ? this.selectedCase.tema : null;
@@ -180,14 +169,10 @@ export default class NksPersonCaseOverview extends LightningElement {
     @api
     get selectedCaseThemeSfId() {
         if (this.isGeneralCase === true) {
-            let themeCmp = this.template.querySelector(
-                'c-nks-theme-categorization'
-            );
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
             return themeCmp.theme;
         } else {
-            let returnTheme = this.themeMap
-                ? this.themeMap.getTheme(this.selectedCaseTheme)
-                : null;
+            let returnTheme = this.themeMap ? this.themeMap.getTheme(this.selectedCaseTheme) : null;
             return returnTheme !== null ? returnTheme.themeSfId : null;
         }
     }
@@ -197,21 +182,13 @@ export default class NksPersonCaseOverview extends LightningElement {
         let themeGroupSfId;
 
         if (this.isGeneralCase === true) {
-            let themeCmp = this.template.querySelector(
-                'c-nks-theme-categorization'
-            );
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
             themeGroupSfId = themeCmp.themeGroup;
         } else {
             if (this.themeMap) {
                 Object.keys(this.themeMap).forEach((themeGroupId) => {
-                    if (
-                        this.themeMap[themeGroupId].hasOwnProperty('hasTheme')
-                    ) {
-                        if (
-                            this.themeMap[themeGroupId].hasTheme(
-                                this.selectedCaseTheme
-                            ) !== null
-                        )
+                    if (this.themeMap[themeGroupId].hasOwnProperty('hasTheme')) {
+                        if (this.themeMap[themeGroupId].hasTheme(this.selectedCaseTheme) !== null)
                             themeGroupSfId = themeGroupId;
                     }
                 });
@@ -230,9 +207,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     get selectedSubthemeSfId() {
         let subtheme = '';
         if (this.isGeneralCase === true) {
-            let themeCmp = this.template.querySelector(
-                'c-nks-theme-categorization'
-            );
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
             subtheme = themeCmp.subtheme;
         }
         return subtheme;
@@ -268,9 +243,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         if (this.selectedCase) {
             return { isValid: true };
         } else if (this.isGeneralCase === true) {
-            let themeCmp = this.template.querySelector(
-                'c-nks-theme-categorization'
-            );
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
             return themeCmp.validate();
         } else {
             return {

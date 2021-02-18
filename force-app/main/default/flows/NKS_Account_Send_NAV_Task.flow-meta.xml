@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Flow
-    xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
->
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
@@ -20,15 +17,13 @@
         <inputParameters>
             <name>actorId</name>
             <value>
-                <elementReference
-                >Get_Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                <elementReference>Get_Account.CRM_Person__r.INT_ActorId__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>assignToUnitNumber</name>
             <value>
-                <elementReference
-                >workAllocation.selectedUnitNumber</elementReference>
+                <elementReference>workAllocation.selectedUnitNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -46,8 +41,7 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.subthemeCode</elementReference>
+                <elementReference>Theme_Categorization.subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -59,15 +53,13 @@
         <inputParameters>
             <name>themeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.themeCode</elementReference>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
-        <description
-        >Assigns the appropriate values from the input screen to the NAV task.</description>
+        <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>177</locationX>
@@ -83,8 +75,7 @@
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >workAllocation.selectedUnitId</elementReference>
+                <elementReference>workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -98,8 +89,7 @@
             <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -113,8 +103,7 @@
             <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.subtheme</elementReference>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -125,8 +114,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NavTask.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference>NavTask.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -150,8 +138,7 @@
             <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >workAllocation.assignedResource</elementReference>
+                <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -179,8 +166,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Process_NAV_task.success</leftValueReference>
+                <leftValueReference>Process_NAV_task.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -211,8 +197,7 @@
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <formulas>
-        <description
-        >Formula for setting the default due date to next friday.</description>
+        <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
@@ -229,11 +214,9 @@ TODAY())</expression>
         <description>Default name of the generated task</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression
-        >&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
+        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
-    <interviewLabel
-    >Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Account Send NAV Task</label>
     <processMetadataValues>
@@ -269,8 +252,7 @@ TODAY())</expression>
         <inputReference>Process_NAV_task.task</inputReference>
     </recordCreates>
     <recordCreates>
-        <description
-        >Store the NAV task in Salesforce for resubmission after error is handled.</description>
+        <description>Store the NAV task in Salesforce for resubmission after error is handled.</description>
         <name>Store_Placeholder_Task</name>
         <label>Store Placeholder Task</label>
         <locationX>363</locationX>
@@ -284,14 +266,12 @@ TODAY())</expression>
         <inputReference>NavTask</inputReference>
     </recordCreates>
     <recordLookups>
-        <description
-        >Query information needed from the account and its relations.</description>
+        <description>Query information needed from the account and its relations.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>176</locationX>
         <locationY>190</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
@@ -311,8 +291,7 @@ TODAY())</expression>
     </recordLookups>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <description
-        >Something went wrong when posting/updating the NAV task.</description>
+        <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>511</locationX>
@@ -359,8 +338,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference
-                    >NavTask.NKS_Theme_Group__c</elementReference>
+                    <elementReference>NavTask.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -436,8 +414,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>personId</name>
                 <value>
-                    <elementReference
-                    >Get_Account.CRM_Person__c</elementReference>
+                    <elementReference>Get_Account.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -447,8 +424,7 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description
-        >Screen for telling user that the task was successfully sent.</description>
+        <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>174</locationX>
@@ -563,8 +539,7 @@ TODAY())</expression>
         <objectType>NavTask__c</objectType>
     </variables>
     <variables>
-        <description
-        >Record ID if the flow is called with a reference to an existing NAV task.</description>
+        <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

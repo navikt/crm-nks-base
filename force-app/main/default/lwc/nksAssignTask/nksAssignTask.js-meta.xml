@@ -8,28 +8,12 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="queueId" type="String" label="Queue Id" />
-            <property
-                name="selectedTheme"
-                type="String"
-                label="Selected Theme"
-            />
-            <property
-                name="selectedSubTheme"
-                type="String"
-                label="Selected Sub Theme"
-            />
+            <property name="selectedTheme" type="String" label="Selected Theme" />
+            <property name="selectedSubTheme" type="String" label="Selected Sub Theme" />
             <property name="createTask" type="Boolean" label="Create Task" />
             <property name="dueDate" type="Date" label="DueDate" />
-            <property
-                name="additionalComments"
-                type="String"
-                label="Additional Comments"
-            />
-            <property
-                name="conversationNote"
-                type="String"
-                label="Conversation Note"
-            />
+            <property name="additionalComments" type="String" label="Additional Comments" />
+            <property name="conversationNote" type="String" label="Conversation Note" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

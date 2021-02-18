@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Flow
-    xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
->
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <description>Passes the NAV task to Apex for delegation.</description>
         <name>Delegate_NAV_Task</name>
@@ -31,8 +28,7 @@
         </inputParameters>
     </actionCalls>
     <actionCalls>
-        <description
-        >Base 64 encodes the original document for archiving</description>
+        <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
         <locationX>165</locationX>
@@ -45,8 +41,7 @@
         <inputParameters>
             <name>documentString</name>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -71,8 +66,7 @@
         <inputParameters>
             <name>documentString</name>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.NKS_Conversation__c</elementReference>
+                <elementReference>Get_Chat_Transcript.NKS_Conversation__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -84,15 +78,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
-        <description
-        >Assigns the apprrpriate values to the journal post request</description>
+        <description>Assigns the apprrpriate values to the journal post request</description>
         <name>Create_Journal_Post_Request</name>
         <label>Create Journal Post Request</label>
         <locationX>37</locationX>
         <locationY>854</locationY>
         <assignmentItems>
-            <assignToReference
-            >Journal_Post_Request.dokumenter</assignToReference>
+            <assignToReference>Journal_Post_Request.dokumenter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Journal_Document</elementReference>
@@ -106,32 +98,28 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Document.dokumentvarianter</assignToReference>
+            <assignToReference>Journal_Document.dokumentvarianter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Journal_Document_Variant</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Document_Variant.filtype</assignToReference>
+            <assignToReference>Journal_Document_Variant.filtype</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>pdf</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Document_Variant.fysiskDokument</assignToReference>
+            <assignToReference>Journal_Document_Variant.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Generate_PDF</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Document_Variant.variantformat</assignToReference>
+            <assignToReference>Journal_Document_Variant.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ARKIV</stringValue>
@@ -145,16 +133,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Post_Request.journalpostType</assignToReference>
+            <assignToReference>Journal_Post_Request.journalpostType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INNGAAENDE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Post_Request.sak.sakstype</assignToReference>
+            <assignToReference>Journal_Post_Request.sak.sakstype</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>GENERELL_SAK</stringValue>
@@ -168,24 +154,21 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Document_Original.fysiskDokument</assignToReference>
+            <assignToReference>Document_Original.fysiskDokument</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Encode_Original</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Document_Original.variantformat</assignToReference>
+            <assignToReference>Document_Original.variantformat</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>ORIGINAL</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Journal_Document.dokumentvarianter</assignToReference>
+            <assignToReference>Journal_Document.dokumentvarianter</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>Document_Original</elementReference>
@@ -201,8 +184,7 @@
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.AccountId</elementReference>
+                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -227,8 +209,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NAV_Task.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference>NAV_Task.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -245,25 +226,21 @@
             <assignToReference>NAV_Task.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categroization.subtheme</elementReference>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NAV_Task.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+                <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NAV_Task.NKS_Social_Service_Information__c</assignToReference>
+            <assignToReference>NAV_Task.NKS_Social_Service_Information__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
+                <elementReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -283,45 +260,38 @@
         <locationX>985</locationX>
         <locationY>1068</locationY>
         <assignmentItems>
-            <assignToReference
-            >Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Completed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Get_Chat_Transcript.NKS_Theme__c</assignToReference>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Theme_Categroization.theme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
+            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categroization.subtheme</elementReference>
+                <elementReference>Theme_Categroization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
+            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categroization.themeGroup</elementReference>
+                <elementReference>Theme_Categroization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -346,8 +316,7 @@
         </connector>
     </assignments>
     <decisions>
-        <description
-        >Checks if a journal entry has already been created.</description>
+        <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
         <locationX>482</locationX>
@@ -360,8 +329,7 @@
             <name>Journal_Entry_Created</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Get_Chat_Transcript.NKS_Journal_Entry_Created__c</leftValueReference>
+                <leftValueReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -376,8 +344,7 @@
             <name>No_Transcript</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -392,8 +359,7 @@
             <name>No_Account</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Get_Chat_Transcript.AccountId</leftValueReference>
+                <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -419,8 +385,7 @@
             <name>Do_Create_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Create_Task_Toggle.value</leftValueReference>
+                <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -447,8 +412,7 @@
             <name>Contains_Social_Information</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
+                <leftValueReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -520,8 +484,7 @@
 6, {!$Flow.CurrentDate}+ 1,
 TODAY())</expression>
     </formulas>
-    <interviewLabel
-    >NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>NKS Chat Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Chat Create Journal Entry SOCIAL</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -553,14 +516,12 @@ TODAY())</expression>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
     <recordLookups>
-        <description
-        >Queries the account related from the transcript.</description>
+        <description>Queries the account related from the transcript.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>301</locationX>
         <locationY>679</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Input_Screen</targetReference>
         </connector>
@@ -568,8 +529,7 @@ TODAY())</expression>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference
-                >Get_Chat_Transcript.AccountId</elementReference>
+                <elementReference>Get_Chat_Transcript.AccountId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -579,14 +539,12 @@ TODAY())</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description
-        >Query the chat transcript triggering the flow.</description>
+        <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
         <locationX>493</locationX>
         <locationY>199</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Social_Information</targetReference>
         </connector>
@@ -618,8 +576,7 @@ TODAY())</expression>
         <label>Get Integration User</label>
         <locationX>254</locationX>
         <locationY>331</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Chat_Owner</targetReference>
         </connector>
@@ -668,8 +625,7 @@ TODAY())</expression>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <description
-        >Screen for displaying potential error messages</description>
+        <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>815</locationX>
@@ -685,14 +641,12 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Missing_Account_Error</name>
-            <fieldText
-            >&lt;p&gt;Chat is not related to an account&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Chat is not related to an account&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Get_Chat_Transcript.AccountId</leftValueReference>
+                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -708,8 +662,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -724,8 +677,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -751,8 +703,7 @@ TODAY())</expression>
         </connector>
         <fields>
             <name>Journal_Header</name>
-            <fieldText
-            >&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Journal&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -762,8 +713,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference
-                    >Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
+                    <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -771,8 +721,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
+                    <leftValueReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -821,8 +770,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -842,8 +790,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -859,8 +806,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -893,8 +839,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>required</name>
                 <value>
-                    <elementReference
-                    >Create_Task_Toggle.value</elementReference>
+                    <elementReference>Create_Task_Toggle.value</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -908,8 +853,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference
-                    >Create_Task_Toggle.value</leftValueReference>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -946,8 +890,7 @@ TODAY())</expression>
     </start>
     <status>Active</status>
     <subflows>
-        <description
-        >Calls subflow to send the journal entry to JOARK</description>
+        <description>Calls subflow to send the journal entry to JOARK</description>
         <name>Send_Journal_Entry</name>
         <label>Send Journal Entry</label>
         <locationX>38</locationX>

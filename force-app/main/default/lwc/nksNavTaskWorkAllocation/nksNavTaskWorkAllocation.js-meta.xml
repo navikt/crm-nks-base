@@ -3,66 +3,21 @@
     <apiVersion>50.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>NKS NAV Unit Work Allocation</masterLabel>
-    <description
-    >Will take input and return suggested work allocation for a NAV Task</description>
+    <description>Will take input and return suggested work allocation for a NAV Task</description>
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property
-                name="personId"
-                label="Input: Person Id"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="taskType"
-                label="Input: Task Type"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="subTheme"
-                label="Input: Sub Theme Code"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="theme"
-                label="Input: Theme Code"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="themeGroup"
-                label="Input: Theme Group Code"
-                type="String"
-                role="inputOnly"
-            />
-            <property
-                name="selectedUnitName"
-                label="Selected Unit Name"
-                type="String"
-                role="outputOnly"
-            />
-            <property
-                name="selectedUnitId"
-                label="Selected Unit Id"
-                type="String"
-            />
-            <property
-                name="selectedUnitNumber"
-                label="Selected Unit Number"
-                type="String"
-                role="outputOnly"
-            />
-            <property
-                name="assignedResource"
-                label="Assigned Resource"
-                type="String"
-                role="outputOnly"
-            />
+            <property name="personId" label="Input: Person Id" type="String" role="inputOnly" />
+            <property name="taskType" label="Input: Task Type" type="String" role="inputOnly" />
+            <property name="subTheme" label="Input: Sub Theme Code" type="String" role="inputOnly" />
+            <property name="theme" label="Input: Theme Code" type="String" role="inputOnly" />
+            <property name="themeGroup" label="Input: Theme Group Code" type="String" role="inputOnly" />
+            <property name="selectedUnitName" label="Selected Unit Name" type="String" role="outputOnly" />
+            <property name="selectedUnitId" label="Selected Unit Id" type="String" />
+            <property name="selectedUnitNumber" label="Selected Unit Number" type="String" role="outputOnly" />
+            <property name="assignedResource" label="Assigned Resource" type="String" role="outputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

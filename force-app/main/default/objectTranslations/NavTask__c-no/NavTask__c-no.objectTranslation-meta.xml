@@ -52,8 +52,7 @@
     </layouts>
     <nameFieldLabel><!-- Navn --></nameFieldLabel>
     <validationRules>
-        <errorMessage
-        ><!-- Du har ikke rettigheter til å endre dette feltet. --></errorMessage>
+        <errorMessage><!-- Du har ikke rettigheter til å endre dette feltet. --></errorMessage>
         <name>Allowed_change_only_status</name>
     </validationRules>
     <validationRules>

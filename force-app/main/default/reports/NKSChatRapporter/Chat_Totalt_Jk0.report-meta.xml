@@ -37,8 +37,7 @@
         <field>CDF1</field>
     </columns>
     <customDetailFormulas>
-        <calculatedFormula
-        >IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
+        <calculatedFormula>IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
         <dataType>Double</dataType>
         <developerName>CDF1</developerName>
         <label>Lost Chats</label>

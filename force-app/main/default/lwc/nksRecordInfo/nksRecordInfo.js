@@ -19,8 +19,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api wireFields;
 
     connectedCallback() {
-        this.viewedObjectApiName =
-            this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
+        this.viewedObjectApiName = this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
         if (this.relationshipField != null && this.relationshipField != '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
@@ -61,8 +60,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     }
 
     get fieldList() {
-        let fieldList =
-            this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
+        let fieldList = this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
         return fieldList;
     }
 

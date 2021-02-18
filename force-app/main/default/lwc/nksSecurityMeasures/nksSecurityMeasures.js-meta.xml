@@ -3,8 +3,7 @@
     <apiVersion>49.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Security Measures</masterLabel>
-    <description
-    >Component to display a security measures on a record</description>
+    <description>Component to display a security measures on a record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>

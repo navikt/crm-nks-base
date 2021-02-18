@@ -17,8 +17,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value
-                    >NKS_Type__c = &apos;Nyhet&apos; AND RecordType.Name = &apos;News&apos;</value>
+                    <value>NKS_Type__c = &apos;Nyhet&apos; AND RecordType.Name = &apos;News&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>

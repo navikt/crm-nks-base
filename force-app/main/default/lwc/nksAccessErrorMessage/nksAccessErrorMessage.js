@@ -19,9 +19,7 @@ export default class NksAccessErrorMessage extends LightningElement {
                 this.text = data && data.length > 0 ? data : null;
             })
             .catch((error) => {
-                console.log(
-                    'An error occurred: ' + JSON.stringify(error, null, 2)
-                );
+                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
             });
     }
 }

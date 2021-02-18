@@ -16,21 +16,11 @@ public with sharing class FamilyRelationViewerControllerTest {
             .INT_FamilyRelations__c = '[{"relatertPersonsRolle":"MOR","relatertPersonsIdent":"12345678900","minRolleForPerson":"BARN"}]'; //child 3
 
         //add birthdates
-        people[0].INT_DateOfBirth__c = String.valueOf(
-            (Date.today().addYears(-45))
-        ); //mom
-        people[1].INT_DateOfBirth__c = String.valueOf(
-            (Date.today().addYears(-15))
-        ); //child under 21
-        people[2].INT_DateOfBirth__c = String.valueOf(
-            (Date.today().addYears(-20))
-        ); //child under 21
-        people[3].INT_DateOfBirth__c = String.valueOf(
-            (Date.today().addYears(-25))
-        ); //child older than 21
-        people[4].INT_DateOfBirth__c = String.valueOf(
-            (Date.today().addYears(-12))
-        ); //child under 21
+        people[0].INT_DateOfBirth__c = String.valueOf((Date.today().addYears(-45))); //mom
+        people[1].INT_DateOfBirth__c = String.valueOf((Date.today().addYears(-15))); //child under 21
+        people[2].INT_DateOfBirth__c = String.valueOf((Date.today().addYears(-20))); //child under 21
+        people[3].INT_DateOfBirth__c = String.valueOf((Date.today().addYears(-25))); //child older than 21
+        people[4].INT_DateOfBirth__c = String.valueOf((Date.today().addYears(-12))); //child under 21
         people[4].INT_Confidential__c = 'STRENGT_FORTROLIG';
         update people;
     }
@@ -40,28 +30,16 @@ public with sharing class FamilyRelationViewerControllerTest {
         Account mom = NKS_TestDataFactory.getAccount('Test0');
         List<FamilyRelationViewerController.Relation> relations = new List<FamilyRelationViewerController.Relation>();
         Test.startTest();
-        relations = FamilyRelationViewerController.getRelatedPersons(
-            mom.Id,
-            'Account'
-        );
+        relations = FamilyRelationViewerController.getRelatedPersons(mom.Id, 'Account');
         Test.stopTest();
-        Account a = [
-            SELECT Name
-            FROM Account
-            WHERE INT_PersonIdent__c = '12345678904'
-            LIMIT 1
-        ];
+        Account a = [SELECT Name FROM Account WHERE INT_PersonIdent__c = '12345678904' LIMIT 1];
 
         System.assertEquals(
             4,
             relations.size(),
             'Mom has 3 children under 21, and 1 over, 1 is confidential. Add 1 for marital status. 4 should be returned'
         );
-        System.assertEquals(
-            'IKKE TILGJENGELIG',
-            a.Name,
-            'Child is confidential. Name should be "IKKE TILGJENGELIG"'
-        );
+        System.assertEquals('IKKE TILGJENGELIG', a.Name, 'Child is confidential. Name should be "IKKE TILGJENGELIG"');
     }
 
     @isTest
@@ -69,10 +47,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         Account mom = NKS_TestDataFactory.getAccount('Test0');
         List<FamilyRelationViewerController.Relation> relations = new List<FamilyRelationViewerController.Relation>();
         Test.startTest();
-        relations = FamilyRelationViewerController.getRelatedPersons(
-            mom.Id,
-            'Account'
-        );
+        relations = FamilyRelationViewerController.getRelatedPersons(mom.Id, 'Account');
         Test.stopTest();
         System.assertEquals(
             4,
@@ -86,10 +61,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         Account child = NKS_TestDataFactory.getAccount('Test1');
         List<FamilyRelationViewerController.Relation> relations = new List<FamilyRelationViewerController.Relation>();
         Test.startTest();
-        relations = FamilyRelationViewerController.getRelatedPersons(
-            child.Id,
-            'Account'
-        );
+        relations = FamilyRelationViewerController.getRelatedPersons(child.Id, 'Account');
         Test.stopTest();
 
         System.assertEquals(
@@ -104,10 +76,7 @@ public with sharing class FamilyRelationViewerControllerTest {
         Case c = NKS_TestDataFactory.createCase('Test0');
         List<FamilyRelationViewerController.Relation> relations = new List<FamilyRelationViewerController.Relation>();
         Test.startTest();
-        relations = FamilyRelationViewerController.getRelatedPersons(
-            c.Id,
-            'Case'
-        );
+        relations = FamilyRelationViewerController.getRelatedPersons(c.Id, 'Case');
         Test.stopTest();
 
         System.assertEquals(

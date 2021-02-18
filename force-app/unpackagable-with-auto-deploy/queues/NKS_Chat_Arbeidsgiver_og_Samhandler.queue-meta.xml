@@ -7,8 +7,7 @@
             <publicGroup>NKS_Skill_ArbeidsgiverSamhandler</publicGroup>
         </publicGroups>
     </queueMembers>
-    <queueRoutingConfig
-    >NKS_Chat_Arbeidsgiver_og_Samhandler_RConfig</queueRoutingConfig>
+    <queueRoutingConfig>NKS_Chat_Arbeidsgiver_og_Samhandler_RConfig</queueRoutingConfig>
     <queueSobject>
         <sobjectType>LiveChatTranscript</sobjectType>
     </queueSobject>

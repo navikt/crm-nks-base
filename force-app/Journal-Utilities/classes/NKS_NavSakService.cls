@@ -20,9 +20,7 @@ public class NKS_NavSakService {
     public static List<SakWrapper> getActorCases(String actorId) {
         ApiController apiCtrl = new ApiController();
 
-        Map<String, String> queryParams = new Map<String, String>{
-            'aktoerid' => actorId
-        };
+        Map<String, String> queryParams = new Map<String, String>{ 'aktoerid' => actorId };
         apiCtrl.initRequest('SAK_API', 'GET_SAK_NAV_CASES');
         apiCtrl.setUrlParams(queryParams);
         apiCtrl.doCallout();
@@ -45,13 +43,9 @@ public class NKS_NavSakService {
                 apiCtrl.getResponse().getBody(),
                 null
             );
-            logger.peek().Payload__c =
-                'REQUEST: \n\n' +
-                JSON.serializePretty(apiCtrl.getRequest().getBody());
+            logger.peek().Payload__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());
             logger.publish();
-            AuraHandledException ex = new AuraHandledException(
-                'Error retrieving cases'
-            );
+            AuraHandledException ex = new AuraHandledException('Error retrieving cases');
             ex.setMessage('Error retrieving cases');
             throw ex;
         }
@@ -59,9 +53,7 @@ public class NKS_NavSakService {
 
     private static void addThemeFriendlyName(List<SakWrapper> navCases) {
         for (SakWrapper navCase : navCases) {
-            navCase.themeName = themeMap.containsKey(navCase.tema)
-                ? themeMap.get(navCase.tema)
-                : '';
+            navCase.themeName = themeMap.containsKey(navCase.tema) ? themeMap.get(navCase.tema) : '';
         }
     }
 

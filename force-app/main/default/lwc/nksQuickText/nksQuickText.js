@@ -34,20 +34,17 @@ export default class nksQuickText extends LightningElement {
     }
 
     showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalShow';
+        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
     }
 
     hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalHide';
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
 
     insertText(event) {
         this.myVal = this.comments + event.currentTarget.dataset.message;
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalHide';
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         this.template.querySelector('textarea ').value = this.myVal;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.template.querySelector('textarea').value

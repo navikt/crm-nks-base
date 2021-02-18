@@ -324,8 +324,7 @@
                     <name>Error_Header</name>
                 </fields>
                 <fields>
-                    <fieldText
-                    >&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
                     <name>Missing_Account_Error</name>
                 </fields>
                 <name>Error_Screen</name>
@@ -433,11 +432,9 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name
-        >VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
         <promptVersions>
-            <name
-            >Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
         </promptVersions>
     </prompts>
     <prompts>

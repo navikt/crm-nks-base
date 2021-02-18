@@ -4,8 +4,7 @@
     <description
     >Formula field displaying the correct subtheme value. Displays either the NKS_Subtheme or the CRM_SubTheme depending on which value is set.</description>
     <externalId>false</externalId>
-    <formula
-    >IF(NOT(ISBLANK(NKS_Subtheme__c)), NKS_Subtheme__r.Name, TEXT(CRM_SubTheme__c))</formula>
+    <formula>IF(NOT(ISBLANK(NKS_Subtheme__c)), NKS_Subtheme__r.Name, TEXT(CRM_SubTheme__c))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Subtheme</label>
     <required>false</required>

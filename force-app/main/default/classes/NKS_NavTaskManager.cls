@@ -1,8 +1,6 @@
 public with sharing class NKS_NavTaskManager {
     @InvocableMethod(label='Process NAV task' category='Task Handling')
-    public static List<NavTaskResponse> handleNavTaskRequests(
-        List<NavTaskRequest> taskRequests
-    ) {
+    public static List<NavTaskResponse> handleNavTaskRequests(List<NavTaskRequest> taskRequests) {
         List<NavTaskResponse> responseList = new List<NavTaskResponse>();
 
         for (NavTaskRequest taskRequest : taskRequests) {
@@ -59,8 +57,7 @@ public with sharing class NKS_NavTaskManager {
                     LIMIT 1
                 ]
                 ?.Id; //Setting the appropriate NAV unit received from the API
-                task.NKS_Gosys_Link__c = apiCtrl.getResponse()
-                    .getHeader('Location');
+                task.NKS_Gosys_Link__c = apiCtrl.getResponse().getHeader('Location');
                 resp.setResponse(true, null, task);
             } else {
                 logError(apiCtrl, logger, task);
@@ -95,9 +92,7 @@ public with sharing class NKS_NavTaskManager {
         //External reference for the specific task as a URL path paramter
         //When field is queried by flow a zero decimal is added even though the field is without decimals. Workaround by converting to INT before converting to String.
         Map<String, String> paramMap = new Map<String, String>{
-            'id' => String.valueOf(
-                Integer.valueOf(task.INT_External_Reference__c)
-            )
+            'id' => String.valueOf(Integer.valueOf(task.INT_External_Reference__c))
         };
         apiCtrl.initRequest('Oppgave_API', 'PATCH_EDIT_OPPGAVE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');
@@ -139,16 +134,8 @@ public with sharing class NKS_NavTaskManager {
      * @param logger
      * @param task
      **/
-    private static void addXCorrelation(
-        ApiController apiCtrl,
-        LoggerUtility logger,
-        NavTask__c task
-    ) {
-        logger.info(
-            'Delegating task via Oppgave API: \n' +
-            apiCtrl.getRequest().getBody(),
-            task
-        );
+    private static void addXCorrelation(ApiController apiCtrl, LoggerUtility logger, NavTask__c task) {
+        logger.info('Delegating task via Oppgave API: \n' + apiCtrl.getRequest().getBody(), task);
         apiCtrl.addHeader('X-Correlation-ID', logger.peek().UUID__c); //Adds the unique app log id to the request
     }
 
@@ -158,11 +145,7 @@ public with sharing class NKS_NavTaskManager {
      * @param apiCtrl
      * @param logger
      **/
-    private static void logError(
-        ApiController apiCtrl,
-        LoggerUtility logger,
-        NavTask__c task
-    ) {
+    private static void logError(ApiController apiCtrl, LoggerUtility logger, NavTask__c task) {
         logger.error(
             'Error posting NAV task to oppgave: \n ' +
             'Status: ' +
@@ -174,9 +157,7 @@ public with sharing class NKS_NavTaskManager {
             apiCtrl.getResponse().getBody(),
             task
         );
-        logger.peek().Payload__c = JSON.serializePretty(
-            JSON.deserializeUntyped(apiCtrl.getRequest().getBody())
-        );
+        logger.peek().Payload__c = JSON.serializePretty(JSON.deserializeUntyped(apiCtrl.getRequest().getBody()));
     }
 
     /**
@@ -194,10 +175,7 @@ public with sharing class NKS_NavTaskManager {
     //#################################################
 
     public class NavTaskRequest {
-        @invocableVariable(
-            label='Request type for the NAV task, valid valued are POST or EDIT'
-            required=true
-        )
+        @invocableVariable(label='Request type for the NAV task, valid valued are POST or EDIT' required=true)
         public String requestType;
         @invocableVariable
         public NavTask__c task;
@@ -239,21 +217,13 @@ public with sharing class NKS_NavTaskManager {
             this.task = null;
         }
 
-        public void setResponse(
-            Boolean success,
-            String errorMessage,
-            NavTask__c task
-        ) {
+        public void setResponse(Boolean success, String errorMessage, NavTask__c task) {
             this.success = success;
             this.errorMessage = errorMessage;
             this.task = task;
         }
 
-        public NavTaskResponse(
-            Boolean success,
-            String errorMessage,
-            NavTask__c task
-        ) {
+        public NavTaskResponse(Boolean success, String errorMessage, NavTask__c task) {
             this.success = success;
             this.errorMessage = errorMessage;
             this.task = task;
@@ -311,12 +281,8 @@ public with sharing class NKS_NavTaskManager {
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
             tilordnetRessurs = task.NKS_Assignee__c; //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
-            versjon = taskRequest.requestType == 'EDIT'
-                ? Integer.valueOf(task.NKS_Task_Version__c)
-                : null;
-            id = taskRequest.requestType == 'EDIT'
-                ? Integer.valueOf(task.INT_External_Reference__c)
-                : null;
+            versjon = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.NKS_Task_Version__c) : null;
+            id = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.INT_External_Reference__c) : null;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
