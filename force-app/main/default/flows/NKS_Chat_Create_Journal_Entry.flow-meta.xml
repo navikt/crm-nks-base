@@ -677,57 +677,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Chat_Journal_Data_0</name>
-        <label>Set Chat Journal Data</label>
-        <locationX>916</locationX>
-        <locationY>1716</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Created__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal.journalPostStatus</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedCaseThemeSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedSubthemeSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedThemeGroupSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Post_Journal.journalpostId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Store_Journal_Entry_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Assigns field values for the journal entry record to be created.</description>
         <name>Set_Journal_Entry_Data</name>
         <label>Set Journal Entry Data</label>
@@ -828,7 +777,7 @@
         <name>Set_NAV_Task_Failed</name>
         <label>Set NAV Task Failed</label>
         <locationX>1449</locationX>
-        <locationY>1723</locationY>
+        <locationY>1724</locationY>
         <assignmentItems>
             <assignToReference>NavTask_Failed</assignToReference>
             <operator>Assign</operator>
@@ -1202,7 +1151,7 @@ TODAY())</expression>
         <name>Store_Journal_Entry_0</name>
         <label>Store Journal Entry</label>
         <locationX>1091</locationX>
-        <locationY>1715</locationY>
+        <locationY>1716</locationY>
         <connector>
             <targetReference>Update_Transcript_0</targetReference>
         </connector>
@@ -1341,7 +1290,7 @@ TODAY())</expression>
         <name>Update_Transcript_0</name>
         <label>Update Transcript</label>
         <locationX>1229</locationX>
-        <locationY>1715</locationY>
+        <locationY>1716</locationY>
         <connector>
             <targetReference>Set_NAV_Task_Failed</targetReference>
         </connector>
@@ -2026,9 +1975,9 @@ TODAY())</expression>
         <name>Create_App_Log_0_0_0</name>
         <label>Create App Log</label>
         <locationX>768</locationX>
-        <locationY>1717</locationY>
+        <locationY>1716</locationY>
         <connector>
-            <targetReference>Set_Chat_Journal_Data_0</targetReference>
+            <targetReference>Store_Journal_Entry_0</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
