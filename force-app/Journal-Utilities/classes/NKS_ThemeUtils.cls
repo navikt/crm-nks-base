@@ -21,20 +21,13 @@ public class NKS_ThemeUtils {
                 CRM_Code_Set__c,
                 CRM_Parent_Code__r.CRM_Code__c,
                 (
-                    SELECT
-                        Id,
-                        Name,
-                        CRM_Code__c,
-                        CRM_Code_Set__c,
-                        CRM_Parent_Code__r.CRM_Code__c
+                    SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c, CRM_Parent_Code__r.CRM_Code__c
                     FROM Child_Codes__r
-                    WHERE
-                        CRM_Code_Set__c = 'Behandlingstema'
-                        AND CRM_Active__c = TRUE
+                    WHERE CRM_Code_Set__c = 'Behandlingstema' AND CRM_Active__c = TRUE
                     ORDER BY Name
                 )
             FROM Common_Code__c
-            WHERE CRM_Code_set__c = 'Tema' AND CRM_Active__c = TRUE
+            WHERE CRM_Code_set__c = 'Tema' AND CRM_Active__c = TRUE AND CRM_Archive_Theme__c = TRUE
             ORDER BY Name
         ];
 
@@ -43,16 +36,11 @@ public class NKS_ThemeUtils {
 
         for (Common_Code__c theme : themesAndSubthemes) {
             if (themeMap.containsKey(theme.CRM_Parent_Code__r.Id)) {
-                List<Common_Code__c> mapThemes = themeMap.get(
-                    theme.CRM_Parent_Code__r.Id
-                );
+                List<Common_Code__c> mapThemes = themeMap.get(theme.CRM_Parent_Code__r.Id);
                 mapThemes.add(theme);
                 themeMap.put(theme.CRM_Parent_Code__r.Id, mapThemes);
             } else {
-                themeMap.put(
-                    theme.CRM_Parent_Code__r.Id,
-                    new List<Common_Code__c>{ theme }
-                );
+                themeMap.put(theme.CRM_Parent_Code__r.Id, new List<Common_Code__c>{ theme });
             }
 
             for (Common_Code__c subtheme : theme.Child_Codes__r) {
@@ -61,10 +49,7 @@ public class NKS_ThemeUtils {
                         subtheme.CRM_Parent_Code__r.Id
                     );
                     mapSubthemes.add(subtheme);
-                    subthemeMap.put(
-                        subtheme.CRM_Parent_Code__r.Id,
-                        mapSubthemes
-                    );
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.Id, mapSubthemes);
                 } else {
                     subthemeMap.put(
                         subtheme.CRM_Parent_Code__r.Id,
