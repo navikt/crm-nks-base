@@ -1,6 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getPersonBadgesAndInfo from '@salesforce/apex/NKS_PersonAccessBadgesController.getPersonAccessBadges';
-import hasPersonAccess from '@salesforce/apex/NKS_PersonAccessBadgesController.hasPersonAccess';
 
 export default class NksPersonAccessBadges extends LightningElement {
     @api recordId;
