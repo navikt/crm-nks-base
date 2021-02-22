@@ -1,4 +1,4 @@
-public inherited sharing class NKS_PersonAccessBadgesController {
+public without sharing class NKS_PersonAccessBadgesController {
     /**
      * @description Get an apex type holding all the data we need for showing badges.
      */
@@ -10,15 +10,17 @@ public inherited sharing class NKS_PersonAccessBadgesController {
     ) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
 
-        if (hasAccess(personId)) {
-            return new PersonAccessBadges(createAccessBadgeList(getPerson(personId)), '', true);
-        } else {
-            return new PersonAccessBadges(
-                new List<AccessBadge>(),
-                'Du mangler tilgang til å se informasjon knyttet til denne brukeren',
-                false
-            );
-        }
+        Boolean hasAccess = hasAccess(personId);
+
+        String message = hasAccess
+            ? ''
+            : 'Du mangler tilgang til å se informasjon knyttet til denne brukeren';
+
+        return new PersonAccessBadges(
+            createAccessBadgeList(getPerson(personId)),
+            message,
+            hasAccess
+        );
     }
 
     private static List<AccessBadge> createAccessBadgeList(Person__c person) {
