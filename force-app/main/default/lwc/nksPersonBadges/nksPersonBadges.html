@@ -2,9 +2,7 @@
     <!-- ERROR MESSAGES -->
     <template if:true={errorMessage}>
         <div class={backgroundTheme}>
-            <div
-                class="slds-text-color_error slds-p-left_x-small slds-theme_default"
-            >
+            <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
                 <lightning-icon
                     alternative-text="Feilmelding"
                     icon-name="utility:error"
@@ -12,14 +10,22 @@
                     variant="error"
                 >
                 </lightning-icon>
-                &nbsp;<b
-                    >En feil har oppstått, kan ikke vise sikkerhetstiltak eller
-                    etiketter:</b
+                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b
                 ><br />
                 {errorMessage}
             </div>
         </div>
     </template>
+
+    <c-nks-person-access-badges
+        record-id={recordId}
+        object-api-name={objectApiName}
+        person-relation-field={personRelationField}
+        add-box-layout={addBoxLayout}
+        assistive-header={assistiveHeader}
+        add-assistive-header="false"
+    >
+    </c-nks-person-access-badges>
 
     <!-- BADGES -->
     <template if:true={hasBadges}>
@@ -60,31 +66,16 @@
 
                 <!-- SECURITY MEASURES -->
                 <template if:true={showSecurityMeasures}>
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-m-vertical_x-small"
-                    >
-                        <div
-                            class="slds-box slds-box_xx-small slds-theme_default"
-                        >
-                            <lightning-layout
-                                multiple-rows="true"
-                                pull-to-boundary="small"
-                            >
-                                <template
-                                    for:each={securityMeasures}
-                                    for:item="sm"
-                                >
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                                <template for:each={securityMeasures} for:item="sm">
                                     <lightning-layout-item
                                         key={sm.RecordId}
                                         class="slds-var-p-around_xx-small slds-size_1-of-1"
                                     >
-                                        <div
-                                            class="slds-var-p-horizontal_small"
-                                        >
-                                            <p
-                                                class="slds-text-color_destructive"
-                                            >
+                                        <div class="slds-var-p-horizontal_small">
+                                            <p class="slds-text-color_destructive">
                                                 {sm.SecurityMeasure}
                                             </p>
                                             <p>
@@ -115,18 +106,10 @@
 
                 <!-- INTERPRETER SPOKEN LANGUAGES -->
                 <template if:true={showIntepreterSpokenLanguage}>
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-m-vertical_x-small"
-                    >
-                        <div
-                            class="slds-box slds-box_xx-small slds-theme_default"
-                        >
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted">
-                                <template
-                                    for:each={interpreterSpokenLanguages}
-                                    for:item="language"
-                                >
+                                <template for:each={interpreterSpokenLanguages} for:item="language">
                                     <li key={language}>{language}</li>
                                 </template>
                             </ul>
@@ -136,23 +119,12 @@
 
                 <!-- POWER OF ATTORNEY -->
                 <template if:true={showPowerOfAttorney}>
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-p-vertical_x-small"
-                    >
-                        <div
-                            class="slds-box slds-box_xx-small slds-theme_default"
-                        >
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <!-- <div class="slds-var-p-horizontal_small"> -->
                             <ul class="slds-has-dividers_bottom-space">
-                                <template
-                                    for:each={powerOfAttorneys}
-                                    for:item="powerOfAttorney"
-                                >
-                                    <li
-                                        class="slds-item"
-                                        key={powerOfAttorney.id}
-                                    >
+                                <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
+                                    <li class="slds-item" key={powerOfAttorney.id}>
                                         <div class="slds-text-heading_small">
                                             {powerOfAttorney.motpartsRolle}
                                             ({powerOfAttorney.motpartsPersonident})
@@ -185,24 +157,13 @@
 
                 <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
                 <template if:true={showGuardianship}>
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-m-vertical_x-small"
-                    >
-                        <div
-                            class="slds-box slds-box_xx-small slds-theme_default"
-                        >
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space">
-                                <template
-                                    for:each={guardianships}
-                                    for:item="guardianship"
-                                >
+                                <template for:each={guardianships} for:item="guardianship">
                                     <li class="slds-item" key={guardianship.id}>
                                         <p>Type: {guardianship.type}</p>
-                                        <p>
-                                            Motpart ident:
-                                            {guardianship.motpartsPersonident}
-                                        </p>
+                                        <p>Motpart ident: {guardianship.motpartsPersonident}</p>
                                         <p>Omfang: {guardianship.omfang}</p>
                                         <p>
                                             Innen personlig område:
@@ -218,18 +179,10 @@
 
                 <!-- HOT ENTITLEMENT -->
                 <template if:true={showEntitlements}>
-                    <lightning-layout-item
-                        size="12"
-                        class="slds-m-vertical_x-small"
-                    >
-                        <div
-                            class="slds-box slds-box_xx-small slds-theme_default"
-                        >
+                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted">
-                                <template
-                                    for:each={entitlements}
-                                    for:item="entitlement"
-                                >
+                                <template for:each={entitlements} for:item="entitlement">
                                     <li key={entitlement}>{entitlement}</li>
                                 </template>
                             </ul>
@@ -252,8 +205,7 @@
                                 variant="error"
                             >
                             </lightning-icon>
-                            &nbsp;Følgende feil har oppstått ved henting av
-                            etiketter:
+                            &nbsp;Følgende feil har oppstått ved henting av etiketter:
                             <ul class="slds-list_dotted">
                                 <template iterator:error={errors}>
                                     <li key={error.value}>{error.value}</li>

@@ -1,0 +1,26 @@
+<template>
+    <!-- BADGES -->
+    <template if:true={showBadges}>
+        <div class={backgroundTheme}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <template for:each={badges} for:item="badge">
+                        <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}>
+                        </lightning-badge>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+
+    <template if:true={showNoAccess}>
+        <div class="slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+            <lightning-icon
+                icon-name="utility:warning"
+                size="small"
+                title="Warning"
+            ></lightning-icon>
+            <h2>{noAccessMessage}</h2>
+        </div>
+    </template>
+</template>
