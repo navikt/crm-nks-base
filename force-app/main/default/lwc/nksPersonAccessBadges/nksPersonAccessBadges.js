@@ -8,6 +8,7 @@ export default class NksPersonAccessBadges extends LightningElement {
     @api addBoxLayout = false;
     @api assistiveHeader;
     @api addAssistiveHeader = false;
+    _hideNoAccessMessage = false;
 
     @track wiredBadge;
     @track badges = [];
@@ -19,16 +20,36 @@ export default class NksPersonAccessBadges extends LightningElement {
 
     errorMessage;
 
+    @api get hideNoAccessMessage() {
+        return this._hideNoAccessMessage;
+    }
+
+    set hideNoAccessMessage(value) {
+        if ('true' === value || 'TRUE' === value || true === value) {
+            this._hideNoAccessMessage = true;
+        } else {
+            this._hideNoAccessMessage = false;
+        }
+    }
+
+    get showNoBadgesAssistiveMessage() {
+        return this.addAssistiveHeader === true && !this.hasBadges;
+    }
+
     get hasBadges() {
         return this.badges && 0 < this.badges.length ? true : false;
     }
 
     get showBadges() {
-        return this.isLoaded == true ? this.hasBadges : false;
+        return this.isLoaded === true ? this.hasBadges : false;
     }
 
     get showNoAccess() {
-        return this.isLoaded == true ? !this.hasAccess : false;
+        if (true === this.hideNoAccessMessage) {
+            return false;
+        }
+
+        return this.isLoaded === true ? !this.hasAccess : false;
     }
 
     get backgroundTheme() {

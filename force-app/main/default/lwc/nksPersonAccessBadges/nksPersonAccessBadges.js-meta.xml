@@ -36,8 +36,15 @@
                 name="assistiveHeader"
                 label="Assistive Header"
                 type="String"
-                default="Sikkerhetstiltak"
+                default="Skjerming"
                 description="Text that appear in the beginning of the component in case it's free standing without any heading"
+            />
+            <property
+                name="hideNoAccessMessage"
+                label="Hide no access message"
+                type="Boolean"
+                default="false"
+                description="Hide the message that appears if user has no access"
             />
         </targetConfig>
     </targetConfigs>

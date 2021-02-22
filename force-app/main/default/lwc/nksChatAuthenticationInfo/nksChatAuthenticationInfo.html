@@ -3,10 +3,7 @@
         <!-- Spinner while loading authentication information -->
         <template if:true={isLoading}>
             <div class="slds-var-p-top_small slds-var-p-bottom_small">
-                <lightning-spinner
-                    size="medium"
-                    title="Getting authentication status"
-                >
+                <lightning-spinner size="medium" title="Getting authentication status">
                 </lightning-spinner>
             </div>
         </template>
@@ -14,10 +11,7 @@
         <template if:false={isLoading}>
             <div class="slds-var-p-left_medium slds-var-p-right_medium">
                 <template if:true={authenticationComplete}>
-                    <div
-                        class="slds-notify_alert slds-theme_success"
-                        role="alert"
-                    >
+                    <div class="slds-notify_alert slds-theme_success" role="alert">
                         <span class="slds-assistive-text"
                             >{labels.IDENTITY_CONFIRMED_DISCLAIMER}</span
                         >
@@ -43,10 +37,7 @@
                         <span class="slds-assistive-text">warning</span>
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
-                                <lightning-icon
-                                    icon-name="utility:warning"
-                                    size="x-small"
-                                >
+                                <lightning-icon icon-name="utility:warning" size="x-small">
                                 </lightning-icon>
                             </div>
                             <h2>{labels.UNCONFIRMED_IDENTITY_WARNING}</h2>
@@ -58,10 +49,7 @@
                 <template if:false={authenticationRequested}>
                     <div class="slds-var-p-top_small">
                         <template if:true={sendingAuthRequest}>
-                            <lightning-spinner
-                                size="small"
-                                title="Sending authentication request"
-                            >
+                            <lightning-spinner size="small" title="Sending authentication request">
                             </lightning-spinner>
                         </template>
                         <lightning-button
@@ -81,10 +69,7 @@
                     <template if:false={authenticationComplete}>
                         <div class="slds-progress slds-progress_vertical">
                             <ol class="slds-progress__list" role="list">
-                                <li
-                                    class="slds-progress__item slds-is-completed"
-                                    role="listitem"
-                                >
+                                <li class="slds-progress__item slds-is-completed" role="listitem">
                                     <span
                                         class="slds-icon_container slds-icon-utility-success slds-progress__marker slds-progress__marker_icon slds-progress__marker_icon-success"
                                         title="Complete"
@@ -124,13 +109,8 @@
                                 </template>
 
                                 <template if:false={authenticationStarted}>
-                                    <li
-                                        class="slds-progress__item slds-is-active"
-                                        role="listitem"
-                                    >
-                                        <div
-                                            class="slds-progress__marker"
-                                        ></div>
+                                    <li class="slds-progress__item slds-is-active" role="listitem">
+                                        <div class="slds-progress__marker"></div>
                                         <div
                                             class="slds-progress__item_content slds-grid slds-grid_align-spread"
                                         >
@@ -162,13 +142,8 @@
                                 </template>
 
                                 <template if:false={authenticationComplete}>
-                                    <li
-                                        class="slds-progress__item"
-                                        role="listitem"
-                                    >
-                                        <div
-                                            class="slds-progress__marker"
-                                        ></div>
+                                    <li class="slds-progress__item" role="listitem">
+                                        <div class="slds-progress__marker"></div>
                                         <div
                                             class="slds-progress__item_content slds-grid slds-grid_align-spread"
                                         >
@@ -181,7 +156,17 @@
                     </template>
                     <template if:true={authenticationComplete}>
                         <div class="slds-var-p-top_small">
-                            <!-- CASE LINK -->
+                            <!-- ACCESS BADGES -->
+                            <c-nks-person-access-badges
+                                record-id={accountId}
+                                object-api-name="Account"
+                                person-relation-field="CRM_Person__c"
+                                assistive-header="Skjerming"
+                                add-assistive-header="true"
+                            >
+                            </c-nks-person-access-badges>
+
+                            <!-- SECURITY BADGES -->
                             <c-nks-person-badges
                                 record-id={accountId}
                                 object-api-name="Account"
