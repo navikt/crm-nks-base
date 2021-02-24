@@ -8,14 +8,12 @@ export default class NksPersonAccessBadges extends LightningElement {
     @api addBoxLayout = false;
     @api assistiveHeader;
     @api addAssistiveHeader = false;
+    @api cssClasses = '';
     _hideNoAccessMessage = false;
 
     @track wiredBadge;
     @track badges = [];
 
-    noAccessMessage = '';
-
-    hasAccess = false;
     isLoaded = false;
 
     errorMessage;
@@ -44,18 +42,19 @@ export default class NksPersonAccessBadges extends LightningElement {
         return this.isLoaded === true ? this.hasBadges : false;
     }
 
-    get showNoAccess() {
-        if (true === this.hideNoAccessMessage) {
-            return false;
-        }
-
-        return this.isLoaded === true ? !this.hasAccess : false;
+    get showMessageWhenNoBadges() {
+        return (
+            this.hideNoAccessMessage === false && this.isLoaded === true && this.hasBadges === false
+        );
     }
 
-    get backgroundTheme() {
+    get containerClasses() {
         if (true === this.addBoxLayout) {
             return 'slds-box slds-box_xx-small slds-theme_alert-texture slds-theme_info';
+        } else if (this.cssClasses.length > 0) {
+            return this.cssClasses;
         }
+
         return '';
     }
 
@@ -71,9 +70,7 @@ export default class NksPersonAccessBadges extends LightningElement {
         this.errorMessage = undefined;
 
         if (data) {
-            this.badges = data.badges;
-            this.hasAccess = data.hasPersonAccess;
-            this.noAccessMessage = data.message;
+            this.badges = data;
             this.setAssistiveHeader();
             this.isLoaded = true;
         }

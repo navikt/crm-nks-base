@@ -3,37 +3,35 @@ public without sharing class NKS_PersonAccessBadgesController {
      * @description Get an apex type holding all the data we need for showing badges.
      */
     @AuraEnabled(cacheable=true)
-    public static PersonAccessBadges getPersonAccessBadges(
+    public static List<AccessBadge> getPersonAccessBadges(
         String field,
         String parentObject,
         String parentRecordId
     ) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
-
-        Boolean hasAccess = hasAccess(personId);
-
-        String message = hasAccess
-            ? ''
-            : 'Du mangler tilgang til å se informasjon knyttet til denne brukeren';
-
-        return new PersonAccessBadges(
-            createAccessBadgeList(getPerson(personId)),
-            message,
-            hasAccess
-        );
+        Person__c person = getPerson(personId);
+        return createAccessBadgeList(person);
     }
 
     private static List<AccessBadge> createAccessBadgeList(Person__c person) {
         List<AccessBadge> accessBadgeList = new List<AccessBadge>();
 
+        // Add INT_IsNavEmployee__c
         if (person.INT_IsNavEmployee__c) {
-            accessBadgeList.add(new AccessBadge('isNavEmployee', 'Skjermet person'));
+            accessBadgeList.add(new AccessBadge('isNavEmployee', 'Skjermet person (NAV Ansatt)'));
         }
 
-        if (false == person.INT_Confidential__c.equalsIgnoreCase('UGRADERT')) {
-            accessBadgeList.add(new AccessBadge('isConfidential', 'Skjermet adresse'));
+        // Add INT_Confidential__c
+        // prettier-ignore
+        if (true == person.INT_Confidential__c.equalsIgnoreCase('FORTROLIG')) {
+            accessBadgeList.add(new AccessBadge('FORTROLIG', 'Skjermet adresse - fortrolig'));
+        } else if (true == person.INT_Confidential__c.equalsIgnoreCase('STRENGT_FORTROLIG')) {
+            accessBadgeList.add(new AccessBadge('STRENGT_FORTROLIG', 'Skjermet adresse - strengt fortrolig'));
+        } else if (
+            true == person.INT_Confidential__c.equalsIgnoreCase('STRENGT_FORTROLIG_UTLAND')
+        ) {
+            accessBadgeList.add(new AccessBadge('STRENGT_FORTROLIG_UTLAND', 'Skjermet adresse - strengt fortrolig'));
         }
-
         return accessBadgeList;
     }
 
@@ -96,25 +94,6 @@ public without sharing class NKS_PersonAccessBadgesController {
         ];
 
         return personList.isEmpty() ? null : personList[0];
-    }
-
-    public class PersonAccessBadges {
-        @AuraEnabled
-        public List<AccessBadge> badges;
-        @AuraEnabled
-        public String message;
-        @AuraEnabled
-        public Boolean hasPersonAccess;
-
-        public PersonAccessBadges(
-            List<AccessBadge> badges,
-            String message,
-            Boolean hasPersonAccess
-        ) {
-            this.badges = badges;
-            this.message = message;
-            this.hasPersonAccess = hasPersonAccess;
-        }
     }
 
     public class AccessBadge {

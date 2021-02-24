@@ -15,7 +15,7 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
 
         p = [SELECT Id, CRM_Account__c FROM Person__c WHERE Id = :p.Id];
 
-        NKS_PersonAccessBadgesController.PersonAccessBadges result;
+        List<NKS_PersonAccessBadgesController.AccessBadge> result;
 
         Test.startTest();
         result = NKS_PersonAccessBadgesController.getPersonAccessBadges(
@@ -25,6 +25,6 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(2, result.badges.size(), 'Expected tow results');
+        System.assertEquals(2, result.size(), 'Expected two results');
     }
 }
