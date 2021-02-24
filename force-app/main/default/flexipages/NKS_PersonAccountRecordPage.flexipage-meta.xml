@@ -340,6 +340,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
                 <componentName>nksAccessErrorMessage</componentName>
             </componentInstance>
         </itemInstances>
