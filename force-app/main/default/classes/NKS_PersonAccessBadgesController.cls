@@ -76,16 +76,6 @@ public without sharing class NKS_PersonAccessBadgesController {
         return obj.get(fieldNameList[0]);
     }
 
-    private static Boolean hasAccess(Id recordId) {
-        List<UserRecordAccess> result = [
-            SELECT RecordID, HasReadAccess
-            FROM UserRecordAccess
-            WHERE UserId = :UserInfo.getUserId() AND RecordID = :recordId
-        ];
-
-        return result.isEmpty() ? false : result[0].HasReadAccess;
-    }
-
     private static Person__c getPerson(Id personId) {
         List<Person__c> personList = [
             SELECT Id, INT_Confidential__c, INT_IsNavEmployee__c

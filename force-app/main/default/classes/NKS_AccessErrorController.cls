@@ -6,7 +6,7 @@ public without sharing class NKS_AccessErrorController {
         Person__c person = getPerson(personId);
         Boolean hasAccess = hasAccess(personId);
 
-        if (false == hasAccess && false == accountNameSetToNotAvailable(person)) {
+        if (false == accountNameSetToNotAvailable(person) && false == hasAccess) {
             return 'Du mangler tilgang til å se informasjon knyttet til denne brukeren';
         }
 
