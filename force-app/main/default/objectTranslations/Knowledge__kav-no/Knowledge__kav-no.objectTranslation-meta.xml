@@ -34,46 +34,66 @@
     <layouts>
         <layout>Clarifications Layout</layout>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label>
+                <!-- Custom Links -->
+            </label>
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Faglige avklaringer --></label>
+            <label>
+                <!-- Faglige avklaringer -->
+            </label>
             <section>Faglige avklaringer</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Knowledge Layout</layout>
         <sections>
-            <label><!-- Arbeidgiver --></label>
-            <section>Arbeidgiver</section>
+            <label>
+                <!-- Arbeidgiver / Dialog -->
+            </label>
+            <section>Arbeidgiver / Dialog</section>
         </sections>
         <sections>
-            <label><!-- Bruker --></label>
-            <section>Bruker</section>
+            <label>
+                <!-- Bruker / Generelt -->
+            </label>
+            <section>Bruker / Generelt</section>
         </sections>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label>
+                <!-- Custom Links -->
+            </label>
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Internasjonalt --></label>
-            <section>Internasjonalt</section>
+            <label>
+                <!-- Internasjonalt / Taushetsplikt -->
+            </label>
+            <section>Internasjonalt / Taushetsplikt</section>
         </sections>
         <sections>
-            <label><!-- Lege og behandler --></label>
-            <section>Lege og behandler</section>
+            <label>
+                <!-- Lege og behandler / Sikkerhet -->
+            </label>
+            <section>Lege og behandler / Sikkerhet</section>
         </sections>
         <sections>
-            <label><!-- Oversettelser --></label>
+            <label>
+                <!-- Oversettelser -->
+            </label>
             <section>Oversettelser</section>
         </sections>
         <sections>
-            <label><!-- Til høyre --></label>
+            <label>
+                <!-- Til høyre -->
+            </label>
             <section>Til høyre</section>
         </sections>
     </layouts>
-    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
+    <nameFieldLabel>
+        <!-- Knowledge Name -->
+    </nameFieldLabel>
     <quickActions>
         <label>Engelsk</label>
         <name>NKS_English</name>
@@ -99,7 +119,11 @@
         <name>Clarifications</name>
     </recordTypes>
     <recordTypes>
-        <label>Kunnskapsartikkel</label>
+        <label>Kunnskapsartikkel - felles</label>
+        <name>Common</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Kunnskapsartikkel - fag</label>
         <name>Servicerutine</name>
     </recordTypes>
 </CustomObjectTranslation>
