@@ -19,20 +19,27 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         }
     }
 
-    public void processMessages(List<KafkaMessage__c> messages) {
-        try {
-            List<NavTask__c> tasksToUpsert = new List<NavTask__c>();
-            Map<Decimal, KafkaOppgave> kafkaTaskMap = convertToKafkaTasks(messages);
-            initAccountMap();
-
-            tasksToUpsert = convertToNavTasks(kafkaTaskMap.values());
-
-            doUpsert(tasksToUpsert);
-            logger.publish();
-        } catch (Exception ex) {
-            logger.exception(ex);
-            logger.publish();
+    private static Map<String, String> navUnitMap {
+        get {
+            Map<String, String> returnMap = new Map<String, String>();
+            for (NavUnit__c navUnit : [SELECT Id, INT_UnitNumber__c FROM NavUnit__c]) {
+                returnMap.put(navUnit.INT_UnitNumber__c, navUnit.Id);
+            }
+            return returnMap;
         }
+        private set {
+        }
+    }
+
+    public void processMessages(List<KafkaMessage__c> messages) {
+        List<NavTask__c> tasksToUpsert = new List<NavTask__c>();
+        Map<Decimal, KafkaOppgave> kafkaTaskMap = convertToKafkaTasks(messages);
+        initAccountMap();
+
+        tasksToUpsert = convertToNavTasks(kafkaTaskMap.values());
+
+        doUpsert(tasksToUpsert);
+        logger.publish();
     }
 
     private void doUpsert(List<NavTask__c> tasksToUpsert) {
@@ -127,11 +134,27 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      **/
     private List<NavTask__c> convertToNavTasks(List<KafkaOppgave> kafkaOppgaver) {
         List<NavTask__c> returnList = new List<NavTask__c>();
+        NavTask__c convertedTask;
 
         for (KafkaOppgave kafkaOppgave : kafkaOppgaver) {
-            NavTask__c convertedTask = convertToNavTask(kafkaOppgave);
+            try {
+                convertedTask = convertToNavTask(kafkaOppgave);
+            } catch (Exception ex) {
+                //If conversion throws exception, add error to related kafka message
+                getRelatedMessage(String.valueOf(kafkaOppgave.id))
+                    .CRM_Status__c = KafkaMessageService.STATUS_ERROR;
+                String errorMsg =
+                    'Exception: ' +
+                    ex.getTypeName() +
+                    ' - ' +
+                    ex.getMessage() +
+                    ' - ' +
+                    ex.getStackTraceString();
+                getRelatedMessage(String.valueOf(kafkaOppgave.id))
+                    .CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
+            }
             if (convertedTask != null)
-                returnList.add(convertToNavTask(kafkaOppgave));
+                returnList.add(convertedTask);
         }
 
         return returnList;
@@ -147,20 +170,19 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         NavTask__c navTask = new NavTask__c();
         if (
             this.actorAccMap.containsKey(kafkaOppgave.getActorId()) &&
-            String.isNotBlank(this.actorAccMap.get(kafkaOppgave.getActorId()))
+            String.isNotBlank(this.actorAccMap.get(kafkaOppgave.getActorId())) &&
+            commonCodeMap.containsKey('Tema' + kafkaOppgave.tema)
         ) {
             navTask.CRM_Account__c = this.actorAccMap.get(kafkaOppgave.getActorId());
             navTask.INT_External_Reference__c = kafkaOppgave.id;
             navTask.NKS_Task_Version__c = kafkaOppgave.versjon;
-            navTask.CRM_NavUnit__r = new NavUnit__c(
-                INT_UnitNumber__c = kafkaOppgave.tildeltEnhetsnr
-            );
+            navTask.CRM_NavUnit__c = navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
+                ? navUnitMap.get(kafkaOppgave.tildeltEnhetsnr)
+                : null;
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
-            //navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype; //Need to solve how we should handle this as not all task types are implemented in the picklist --> Mapping via Common code?
-            navTask.NKS_Theme__c = commonCodeMap.containsKey('Tema' + kafkaOppgave.tema)
-                ? commonCodeMap.get('Tema' + kafkaOppgave.tema)
-                : null;
+            navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype;
+            navTask.NKS_Theme__c = commonCodeMap.get('Tema' + kafkaOppgave.tema);
             navTask.NKS_Subtheme__c = commonCodeMap.containsKey(
                     'Behandlingstema' + kafkaOppgave.tema
                 )
