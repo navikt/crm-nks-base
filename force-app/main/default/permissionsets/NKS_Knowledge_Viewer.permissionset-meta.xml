@@ -92,6 +92,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>Knowledge__kav.Common</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>Knowledge__kav.Servicerutine</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

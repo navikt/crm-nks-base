@@ -117,7 +117,7 @@
         <label>All</label>
         <name>All</name>
     </dataCategory>
-    <label>Privatperson</label>
+    <label>Tema</label>
     <objectUsage>
         <object>KnowledgeArticleVersion</object>
     </objectUsage>

@@ -9,6 +9,7 @@ public with sharing class NKS_HomePageController {
             LIMIT 1
         ]
         .NKS_Information__c;
+        information = information.replace('<img', '<img style="max-height: 100px"');
         return information;
     }
 
