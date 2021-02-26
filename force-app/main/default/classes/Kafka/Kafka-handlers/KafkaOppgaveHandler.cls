@@ -75,7 +75,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         for (KafkaMessage__c message : messages) {
             try {
                 KafkaOppgave kafkaOppgave = convertToKafkaTask(message);
-                System.debug('Deserialized Oppgave:' + kafkaOppgave);
                 if (kafkaOppgave != null) {
                     if (kafkaOppgave.getActorId() != null)
                         actorAccMap.put(kafkaOppgave.getActorId(), ''); //Adding the actor ids to map for initialization aftert successful conversions

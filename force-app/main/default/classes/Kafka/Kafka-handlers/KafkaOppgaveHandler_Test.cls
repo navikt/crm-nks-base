@@ -81,10 +81,6 @@ public class KafkaOppgaveHandler_Test {
         handler.processMessages(messages);
         Test.stopTest();
 
-        System.debug([SELECT Id, Log_Message__c, Pay_Load__c FROM Application_Log__c]);
-
-        System.debug([SELECT Id, Name FROM NavTask__c]);
-
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
     }
 }
