@@ -43,6 +43,9 @@ public class KafkaOppgaveHandler_Test {
     static void makeData() {
         UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789'));
         UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '2990'));
+        UTIL_TestDataFactory.createRecord(
+            new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
+        );
     }
 
     @isTest
