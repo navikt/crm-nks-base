@@ -12,6 +12,7 @@
     toggleFlow: function (component, event, helper) {
         let showFlow = !component.get('v.showFlow');
         component.set('v.showFlow', showFlow);
+        component.set('v.ariaExpanded', showFlow.toString()); //Aria attribute requires string
 
         if (showFlow) {
             const flow = component.find('flowData');
