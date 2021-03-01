@@ -1,52 +1,99 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
-        <article>None</article>
+        <article>Definite</article>
         <plural>false</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartikkelen</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value><!-- Knowledge --></value>
-    </caseValues>
-    <caseValues>
-        <article>Definite</article>
-        <plural>false</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartikkel</value>
     </caseValues>
     <caseValues>
         <article>None</article>
+        <plural>false</plural>
+        <value>Kunnskapsartikkel</value>
+    </caseValues>
+    <caseValues>
+        <article>Definite</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsartiklene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsbase</value>
     </caseValues>
     <caseValues>
-        <article>Definite</article>
+        <article>None</article>
         <plural>true</plural>
-        <value><!-- Knowledge --></value>
+        <value>Kunnskapsbase</value>
     </caseValues>
-    <gender><!-- Neuter --></gender>
+    <gender>Masculine</gender>
     <layouts>
-        <layout>Knowledge Layout</layout>
+        <layout>Clarifications Layout</layout>
         <sections>
-            <label><!-- Bruker --></label>
-            <section>Bruker</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
+            <label>
+                <!-- Custom Links -->
+            </label>
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Internt --></label>
-            <section>Internt</section>
+            <label>
+                <!-- Faglige avklaringer -->
+            </label>
+            <section>Faglige avklaringer</section>
         </sections>
     </layouts>
-    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
+    <layouts>
+        <layout>Knowledge Layout</layout>
+        <sections>
+            <label>
+                <!-- Arbeidgiver / Dialog -->
+            </label>
+            <section>Arbeidgiver / Dialog</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Bruker / Generelt -->
+            </label>
+            <section>Bruker / Generelt</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Custom Links -->
+            </label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Internasjonalt / Taushetsplikt -->
+            </label>
+            <section>Internasjonalt / Taushetsplikt</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Lege og behandler / Sikkerhet -->
+            </label>
+            <section>Lege og behandler / Sikkerhet</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Oversettelser -->
+            </label>
+            <section>Oversettelser</section>
+        </sections>
+        <sections>
+            <label>
+                <!-- Til høyre -->
+            </label>
+            <section>Til høyre</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel>
+        <!-- Knowledge Name -->
+    </nameFieldLabel>
     <quickActions>
         <label>Engelsk</label>
         <name>NKS_English</name>
@@ -67,4 +114,16 @@
         <label>Ressurser</label>
         <name>NKS_Resources</name>
     </quickActions>
+    <recordTypes>
+        <label>Faglig avklaring</label>
+        <name>Clarifications</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Kunnskapsartikkel - felles</label>
+        <name>Common</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Kunnskapsartikkel - fag</label>
+        <name>Servicerutine</name>
+    </recordTypes>
 </CustomObjectTranslation>

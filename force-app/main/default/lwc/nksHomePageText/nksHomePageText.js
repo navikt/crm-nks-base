@@ -16,11 +16,13 @@ export default class NksHomePageText extends LightningElement {
         getField({
             type: this.type
         })
-            .then(data => {
-                this.text = (data && data.length > 0) ? data : null;
+            .then((data) => {
+                this.text = data && data.length > 0 ? data : null;
             })
-            .catch(error => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            .catch((error) => {
+                console.log(
+                    'An error occurred: ' + JSON.stringify(error, null, 2)
+                );
             });
     }
 
@@ -30,10 +32,4 @@ export default class NksHomePageText extends LightningElement {
 
         return nameString;
     }
-
 }
-
-
-
-
-

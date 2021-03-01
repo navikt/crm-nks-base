@@ -15,6 +15,7 @@
         "NKS_Quick_Text_Reader",
         "NKS_Person_Access",
         "NKS_Announcement_Operational_Editor",
-        "NKS_Announcement_News_Editor"
+        "NKS_Announcement_News_Editor",
+        "NKS_Secure_Chat_Access"
     ]
 }

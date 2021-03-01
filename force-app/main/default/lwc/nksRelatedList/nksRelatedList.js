@@ -3,14 +3,13 @@ import getRelatedList from '@salesforce/apex/NKS_RelatedListController.getRelate
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
-
     @api recordId;
     @api objectApiName;
     @track relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
-    @api iconName; //Displayed icon. 
+    @api iconName; //Displayed icon.
     @api columnLabels; //Columns to be displayed.
     @api displayedFields = null;
     @api relatedObjectApiName; //Object name of the records in the list
@@ -18,7 +17,6 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api parentRelationField; //Field API name of hos the parent is related in the junction
     @api filterConditions; //Optional filter conditions (i.e. Name != 'TEST')
     @api headerColor; // Color for the component header
-
 
     connectedCallback() {
         //Call apex to retrieve related records
@@ -36,11 +34,13 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             parentObjectApiName: this.objectApiName,
             filterConditions: this.filterConditions
         })
-            .then(data => {
-                this.relatedRecords = (data && data.length > 0) ? data : null;
+            .then((data) => {
+                this.relatedRecords = data && data.length > 0 ? data : null;
             })
-            .catch(error => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            .catch((error) => {
+                console.log(
+                    'An error occurred: ' + JSON.stringify(error, null, 2)
+                );
             });
     }
 
@@ -64,12 +64,14 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     get listRecords() {
         let returnRecords = [];
         if (this.relatedRecords) {
-            this.relatedRecords.forEach(dataRecord => {
+            this.relatedRecords.forEach((dataRecord) => {
                 let recordFields = [];
-                this.fieldList.forEach(key => {
+                this.fieldList.forEach((key) => {
                     if (key !== 'Id') {
-                        let recordField =
-                            { label: key, value: this.resolve(key, dataRecord) };
+                        let recordField = {
+                            label: key,
+                            value: this.resolve(key, dataRecord)
+                        };
                         recordFields.push(recordField);
                     }
                 });
@@ -85,18 +87,28 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     }
 
     get headerBackground() {
-        return this.headerColor ?
-            'background-color: ' + this.headerColor + '; border-color: ' + this.headerColor + 'border-style: solid' :
-            '';
+        return this.headerColor
+            ? 'background-color: ' +
+                  this.headerColor +
+                  '; border-color: ' +
+                  this.headerColor +
+                  'border-style: solid'
+            : '';
     }
 
     get fieldLabels() {
-        let labels = this.columnLabels != null ? this.columnLabels.replace(/\s/g, "").split(",") : [];
+        let labels =
+            this.columnLabels != null
+                ? this.columnLabels.replace(/\s/g, '').split(',')
+                : [];
         return labels;
     }
 
     get fieldList() {
-        let fieldList = this.displayedFields != null ? this.displayedFields.replace(/\s/g, "").split(",") : [];
+        let fieldList =
+            this.displayedFields != null
+                ? this.displayedFields.replace(/\s/g, '').split(',')
+                : [];
         return fieldList;
     }
 
@@ -109,13 +121,12 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
 
     /**
      * Retrieves the value from the given object's data path
-     * @param {data path} path 
-     * @param {JS object} obj 
+     * @param {data path} path
+     * @param {JS object} obj
      */
     resolve(path, obj) {
         return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null
-        }, obj || self)
+            return prev ? prev[curr] : null;
+        }, obj || self);
     }
-
 }

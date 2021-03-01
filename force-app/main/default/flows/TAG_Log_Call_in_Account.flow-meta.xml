@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
     <actionCalls>
         <name>Get_account_nav_unit</name>
         <label>Get account&apos;s nav unit</label>
@@ -178,7 +181,8 @@
                 <operator>EqualTo</operator>
             </conditions>
             <connector>
-                <targetReference>Setconversationnoteerrormessage</targetReference>
+                <targetReference
+                >Setconversationnoteerrormessage</targetReference>
             </connector>
             <label>Has conversation note errors</label>
         </rules>
@@ -225,8 +229,8 @@
     <dynamicChoiceSets>
         <name>themePicklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Theme__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -241,7 +245,8 @@
   TODAY() + 2
 )</expression>
     </formulas>
-    <interviewLabel>TAG Log Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel
+    >TAG Log Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TAG Log Call in Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -401,7 +406,8 @@
         <label>Get Selected NAV unit</label>
         <locationX>871</locationX>
         <locationY>232</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+        >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_New_Call_Task</targetReference>
         </connector>
@@ -431,12 +437,14 @@
         </connector>
         <fields>
             <name>ShowIfNote</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Opprett et samtalenotat&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;b&gt;Opprett et samtalenotat&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>error</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -517,7 +525,8 @@
         </fields>
         <fields>
             <name>UnitInfo</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Virksomhetens lokale NAV-enhet kan ikke ta imot oppgaver i Salesforce ennå.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+            >&lt;p&gt;&lt;b&gt;Virksomhetens lokale NAV-enhet kan ikke ta imot oppgaver i Salesforce ennå.&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -525,7 +534,7 @@
                     <leftValueReference>queueId</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue/>
+                        <stringValue />
                     </rightValue>
                 </conditions>
             </visibilityRule>

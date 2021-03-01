@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Assignee__c</fullName>
+    <description>NAV Ident of the user assigned to the task.</description>
+    <externalId>true</externalId>
+    <label>Assignee</label>
+    <length>7</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

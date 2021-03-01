@@ -1,13 +1,18 @@
 <template>
-
     <!-- ERROR MESSAGES -->
     <template if:true={errorMessage}>
         <div class={backgroundTheme}>
             <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
-                    variant="error">
+                <lightning-icon
+                    alternative-text="Feilmelding"
+                    icon-name="utility:error"
+                    size="xx-small"
+                    variant="error"
+                >
                 </lightning-icon>
-                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b><br /> {errorMessage}
+                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b
+                ><br />
+                {errorMessage}
             </div>
         </div>
     </template>
@@ -19,16 +24,31 @@
                 <lightning-layout-item size="12">
                     <template for:each={badges} for:item="badge">
                         <template if:true={badge.clickable}>
-                            <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}
-                                icon-name={badge.iconName} icon-alternative-text={badge.iconAltText}
-                                icon-position="start" class={badge.styling} tabindex={badge.tabindex}
-                                onkeypress={onKeyPressHandler} onclick={onClickHandler} role="button">
+                            <lightning-badge
+                                key={badge.name}
+                                data-id={badge.name}
+                                label={badge.label}
+                                icon-name={badge.iconName}
+                                icon-alternative-text={badge.iconAltText}
+                                icon-position="start"
+                                class={badge.styling}
+                                tabindex={badge.tabindex}
+                                onkeypress={onKeyPressHandler}
+                                onclick={onClickHandler}
+                                role="button"
+                            >
                             </lightning-badge>
                         </template>
                         <template if:false={badge.clickable}>
-                            <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}
-                                icon-name={badge.iconName} icon-alternative-text={badge.iconAltText}
-                                icon-position="start" class={badge.styling}>
+                            <lightning-badge
+                                key={badge.name}
+                                data-id={badge.name}
+                                label={badge.label}
+                                icon-name={badge.iconName}
+                                icon-alternative-text={badge.iconAltText}
+                                icon-position="start"
+                                class={badge.styling}
+                            >
                             </lightning-badge>
                         </template>
                     </template>
@@ -40,14 +60,30 @@
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <lightning-layout multiple-rows="true" pull-to-boundary="small">
                                 <template for:each={securityMeasures} for:item="sm">
-                                    <lightning-layout-item key={sm.RecordId}
-                                        class="slds-var-p-around_xx-small slds-size_1-of-1">
+                                    <lightning-layout-item
+                                        key={sm.RecordId}
+                                        class="slds-var-p-around_xx-small slds-size_1-of-1"
+                                    >
                                         <div class="slds-var-p-horizontal_small">
-                                            <p class="slds-text-color_destructive">{sm.SecurityMeasure}</p>
-                                            <p>Gyldig: <lightning-formatted-date-time value={sm.FromDate} year="numeric"
-                                                    month="numeric" day="numeric">
-                                                </lightning-formatted-date-time> - <lightning-formatted-date-time
-                                                    value={sm.ToDate} year="numeric" month="numeric" day="numeric">
+                                            <p class="slds-text-color_destructive">
+                                                {sm.SecurityMeasure}
+                                            </p>
+                                            <p>
+                                                Gyldig:
+                                                <lightning-formatted-date-time
+                                                    value={sm.FromDate}
+                                                    year="numeric"
+                                                    month="numeric"
+                                                    day="numeric"
+                                                >
+                                                </lightning-formatted-date-time>
+                                                -
+                                                <lightning-formatted-date-time
+                                                    value={sm.ToDate}
+                                                    year="numeric"
+                                                    month="numeric"
+                                                    day="numeric"
+                                                >
                                                 </lightning-formatted-date-time>
                                             </p>
                                         </div>
@@ -79,14 +115,26 @@
                             <ul class="slds-has-dividers_bottom-space">
                                 <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
                                     <li class="slds-item" key={powerOfAttorney.id}>
-                                        <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle}
-                                            ({powerOfAttorney.motpartsPersonident})</div>
-                                        <p>Gyldig:
-                                            <lightning-formatted-date-time value={powerOfAttorney.gyldigFraOgMed}
-                                                year="numeric" month="numeric" day="numeric">
-                                            </lightning-formatted-date-time> - <lightning-formatted-date-time
-                                                value={powerOfAttorney.gyldigTilOgMed} year="numeric" month="numeric"
-                                                day="numeric"></lightning-formatted-date-time>
+                                        <div class="slds-text-heading_small">
+                                            {powerOfAttorney.motpartsRolle}
+                                            ({powerOfAttorney.motpartsPersonident})
+                                        </div>
+                                        <p>
+                                            Gyldig:
+                                            <lightning-formatted-date-time
+                                                value={powerOfAttorney.gyldigFraOgMed}
+                                                year="numeric"
+                                                month="numeric"
+                                                day="numeric"
+                                            >
+                                            </lightning-formatted-date-time>
+                                            -
+                                            <lightning-formatted-date-time
+                                                value={powerOfAttorney.gyldigTilOgMed}
+                                                year="numeric"
+                                                month="numeric"
+                                                day="numeric"
+                                            ></lightning-formatted-date-time>
                                         </p>
                                         <p>{powerOfAttorney.omraade}</p>
                                     </li>
@@ -107,7 +155,10 @@
                                         <p>Type: {guardianship.type}</p>
                                         <p>Motpart ident: {guardianship.motpartsPersonident}</p>
                                         <p>Omfang: {guardianship.omfang}</p>
-                                        <p>Innen personlig område: {omfangetErInnenPersonligOmraadeTxt}</p>
+                                        <p>
+                                            Innen personlig område:
+                                            {omfangetErInnenPersonligOmraadeTxt}
+                                        </p>
                                         <p>Embete: {guardianship.embete}</p>
                                     </li>
                                 </template>
@@ -128,7 +179,6 @@
                         </div>
                     </lightning-layout-item>
                 </template>
-
             </lightning-layout>
 
             <!-- ERRORS -->
@@ -136,9 +186,14 @@
                 <lightning-layout-item size="12">
                     <div class="slds-m-top_x-small">
                         <div
-                            class="slds-box slds-box_xx-small slds-text-color_error slds-p-left_x-small  slds-theme_default">
-                            <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
-                                variant="error">
+                            class="slds-box slds-box_xx-small slds-text-color_error slds-p-left_x-small slds-theme_default"
+                        >
+                            <lightning-icon
+                                alternative-text="Feilmelding"
+                                icon-name="utility:error"
+                                size="xx-small"
+                                variant="error"
+                            >
                             </lightning-icon>
                             &nbsp;Følgende feil har oppstått ved henting av etiketter:
                             <ul class="slds-list_dotted">

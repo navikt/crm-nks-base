@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>SearchActivity</baseObject>
+    <category>admin</category>
+    <deployed>true</deployed>
+    <description>Knowledge Search Activity</description>
+    <label>Knowledge Search Activity</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SearchTerm</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QueryDate</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CountQueries</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CountUsers</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AvgNumResults</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>KbChannel</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Period</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClickRank</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>QueryLanguage</field>
+            <table>SearchActivity</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ClickedRecordName</field>
+            <table>SearchActivity</table>
+        </columns>
+        <masterLabel>Knowledge Search Activity</masterLabel>
+    </sections>
+</ReportType>

@@ -22,15 +22,29 @@ export default class NksNavUnitContactInformation extends LightningElement {
         }
     }
 
-    get columnWidth() { return 12 / this.numCols; }
+    get columnWidth() {
+        return 12 / this.numCols;
+    }
 
     //get hasContactInformation() { return this._contactInformation ? true : false; }
-    get contactInformation() { return this._contactInformation; }
+    get contactInformation() {
+        return this._contactInformation;
+    }
 
     //get hasVisitorLocations() { return 0 < this._visitorLocationsLength; }
-    get visitorLocations() { return this._visitorLocations; }
+    get visitorLocations() {
+        return this._visitorLocations;
+    }
 
-    get postalAddress() { return this.contactInformation.postadresse ? this.contactInformation.postadresse.concatenatedAddress : ''; }
+    get postalAddress() {
+        return this.contactInformation.postadresse
+            ? this.contactInformation.postadresse.concatenatedAddress
+            : '';
+    }
 
-    get visitingAddress() { return this.contactInformation.besoeksadresse ? this.contactInformation.besoeksadresse.concatenatedAddress : ''; }
+    get visitingAddress() {
+        return this.contactInformation.besoeksadresse
+            ? this.contactInformation.besoeksadresse.concatenatedAddress
+            : '';
+    }
 }

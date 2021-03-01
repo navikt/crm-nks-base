@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
         <label>
@@ -18,106 +18,6 @@
         </label>
         <name>TAG_NAV_default</name>
     </customApplications>
-    <customLabels>
-        <label>Aktiviteter</label>
-        <name>ActTime_Activities</name>
-    </customLabels>
-    <customLabels>
-        <label>Skjul</label>
-        <name>ActTime_Collapse</name>
-    </customLabels>
-    <customLabels>
-        <label>Her er det ingenting!</label>
-        <name>ActTime_EmptyGroup</name>
-    </customLabels>
-    <customLabels>
-        <label>Det ser ikke ut til å være noen relaterte objekter her.</label>
-        <name>ActTime_EmptySubtitle</name>
-    </customLabels>
-    <customLabels>
-        <label>Tomt!</label>
-        <name>ActTime_EmptyTitle</name>
-    </customLabels>
-    <customLabels>
-        <label>Feil!</label>
-        <name>ActTime_ErrorTitle</name>
-    </customLabels>
-    <customLabels>
-        <label>Utvid</label>
-        <name>ActTime_Expand</name>
-    </customLabels>
-    <customLabels>
-        <label>forrige</label>
-        <name>ActTime_Last</name>
-    </customLabels>
-    <customLabels>
-        <label>Last flere</label>
-        <name>ActTime_LoadMore</name>
-    </customLabels>
-    <customLabels>
-        <label>nb-no</label>
-        <name>ActTime_MomentJsLanguage</name>
-    </customLabels>
-    <customLabels>
-        <label>Ny</label>
-        <name>ActTime_New</name>
-    </customLabels>
-    <customLabels>
-        <label>En Administrator har enten ikke konfigurert denne komponent eller så har du ikke tilgang til denne type data. Kontakt din Administrator.</label>
-        <name>ActTime_NotConfugred</name>
-    </customLabels>
-    <customLabels>
-        <label>Eldre</label>
-        <name>ActTime_Older</name>
-    </customLabels>
-    <customLabels>
-        <label>Forfalt</label>
-        <name>ActTime_Overdue</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- [ActTime] Previous Month -->
-        </label>
-        <name>ActTime_PreviousMonth</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- [ActTime] This Month -->
-        </label>
-        <name>ActTime_ThisMonth</name>
-    </customLabels>
-    <customLabels>
-        <label>i dag</label>
-        <name>ActTime_Today</name>
-    </customLabels>
-    <customLabels>
-        <label>i morgen</label>
-        <name>ActTime_Tomorrow</name>
-    </customLabels>
-    <customLabels>
-        <label>Noen</label>
-        <name>ActTime_Unknown</name>
-    </customLabels>
-    <customLabels>
-        <label>I dag og kommende</label>
-        <name>ActTime_Upcoming</name>
-    </customLabels>
-    <customLabels>
-        <label>Se alle</label>
-        <name>ActTime_ViewAll</name>
-    </customLabels>
-    <customLabels>
-        <label>Se flere</label>
-        <name>ActTime_ViewMore</name>
-    </customLabels>
-    <customLabels>
-        <label>i går</label>
-        <name>ActTime_Yesterday</name>
-    </customLabels>
-    <customLabels>
-        <label>Du</label>
-        <name>ActTime_You</name>
-    </customLabels>
     <customLabels>
         <label>
             <!-- [ActTime] Activities -->
@@ -408,28 +308,24 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows />
-        <fullName>CourseRegistration</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
         <fullName>NAVTask_Owner_Change</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
             <screens>
                 <fields>
-                    <fieldText>&lt;p&gt;Samtaleloggen er ikke lagret. Vennligst avslutt samtalen for å lagre loggen og fullføre journalføring&lt;/p&gt;</fieldText>
+                    <fieldText
+                    >&lt;p&gt;Samtaleloggen er ikke lagret. Vennligst avslutt samtalen for å lagre loggen og fullføre journalføring&lt;/p&gt;</fieldText>
                     <name>Conversation_Error</name>
                 </fields>
                 <fields>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218,13,13);&quot;&gt;Det oppsto en feil&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldText
+                    >&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218,13,13);&quot;&gt;Det oppsto en feil&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <name>Error_Header</name>
                 </fields>
                 <fields>
-                    <name>Flow_Error</name>
-                </fields>
-                <fields>
-                    <fieldText>&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
+                    <fieldText
+                    >&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
                     <name>Missing_Account_Error</name>
                 </fields>
                 <name>Error_Screen</name>
@@ -453,14 +349,12 @@
                     <fieldText>Frist:</fieldText>
                     <name>Task_due_date</name>
                 </fields>
-                <fields>
-                    <name>Theme_Categroization</name>
-                </fields>
                 <name>Input_Screen</name>
             </screens>
             <screens>
                 <fields>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0,0,0); font-size: 16px;&quot;&gt;Chatsamtalen er journalført&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldText
+                    >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0,0,0); font-size: 16px;&quot;&gt;Chatsamtalen er journalført&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <name>Entry_Completed_Text</name>
                 </fields>
                 <name>Journal_Completed_Screen</name>
@@ -539,9 +433,11 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <name
+        >VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
         <promptVersions>
-            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+            <name
+            >Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
         </promptVersions>
     </prompts>
     <prompts>

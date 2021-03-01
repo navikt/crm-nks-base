@@ -1,9 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
         <fullName>Arbeidsgiver</fullName>
         <default>true</default>
         <label>Arbeidsgiver</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Generell</fullName>
+        <default>false</default>
+        <label>Generell</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gjeldsrådgivning</fullName>
+        <default>false</default>
+        <label>Gjeldsrådgivning</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Arbeid</fullName>
+        <default>false</default>
+        <label>Arbeid</label>
     </standardValue>
 </StandardValueSet>

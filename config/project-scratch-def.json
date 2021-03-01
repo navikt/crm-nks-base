@@ -60,6 +60,9 @@
         "knowledgeSettings": {
             "enableKnowledge": true,
             "enableLightningKnowledge": true
+        },
+        "userManagementSettings": {
+            "enableNewProfileUI": true
         }
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
     <isExposed>true</isExposed>
@@ -9,15 +9,66 @@
   </targets>
   <targetConfigs>
       <targetConfig targets="lightning__RecordPage">
-        <property name="listTitle" label="List title" type="String" default="Title" />
-        <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="Title" />
-        <property name="headerColor" label="Header color" type="String" datasource="white, whitesmoke, lightgray, gainsboro, beige, aliceblue, azure, lightgoldenrodyellow, honeydew, khaki, lavender, wheat" default="white" />
-        <property name="relatedObjectApiName" label="Object API name for the related list" type="String" required="true" />
-        <property name="relationField" label="API name of field relating the records to the parent" type="String" required="true"/>
-        <property name="parentRelationField" label="API name of field relating the parent to the records" type="String" required="true"/>
-        <property name="displayedFields" label="Fields to display (API names, comma separated)" type="String" required="true" default="Name" />
-        <property name="columnLabels" label="Labels for the table columns (match the order of the displayed fields input)" type="String" required="true" default="Name" />
-        <property name="filterConditions" label="Filter conditions" description="I.e. Name != 'Test'" type="String" required="false" default="" />
+        <property
+                name="listTitle"
+                label="List title"
+                type="String"
+                default="Title"
+            />
+        <property
+                name="iconName"
+                label="Icon name"
+                description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/"
+                type="String"
+                default="Title"
+            />
+        <property
+                name="headerColor"
+                label="Header color"
+                type="String"
+                datasource="white, whitesmoke, lightgray, gainsboro, beige, aliceblue, azure, lightgoldenrodyellow, honeydew, khaki, lavender, wheat"
+                default="white"
+            />
+        <property
+                name="relatedObjectApiName"
+                label="Object API name for the related list"
+                type="String"
+                required="true"
+            />
+        <property
+                name="relationField"
+                label="API name of field relating the records to the parent"
+                type="String"
+                required="true"
+            />
+        <property
+                name="parentRelationField"
+                label="API name of field relating the parent to the records"
+                type="String"
+                required="true"
+            />
+        <property
+                name="displayedFields"
+                label="Fields to display (API names, comma separated)"
+                type="String"
+                required="true"
+                default="Name"
+            />
+        <property
+                name="columnLabels"
+                label="Labels for the table columns (match the order of the displayed fields input)"
+                type="String"
+                required="true"
+                default="Name"
+            />
+        <property
+                name="filterConditions"
+                label="Filter conditions"
+                description="I.e. Name != 'Test'"
+                type="String"
+                required="false"
+                default=""
+            />
       </targetConfig>
   </targetConfigs>
 </LightningComponentBundle>

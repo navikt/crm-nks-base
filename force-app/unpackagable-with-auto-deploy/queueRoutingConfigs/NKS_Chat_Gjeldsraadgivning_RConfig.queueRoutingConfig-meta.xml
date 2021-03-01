@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <QueueRoutingConfig xmlns="http://soap.sforce.com/2006/04/metadata">
     <capacityWeight>1.0</capacityWeight>
     <isAttributeBased>false</isAttributeBased>
     <label>Chat Gjeldsrådgivning RConfig</label>
     <pushTimeout>30</pushTimeout>
-    <routingModel>MOST_AVAILABLE</routingModel>
+    <routingModel>EXTERNAL_ROUTING</routingModel>
     <routingPriority>5</routingPriority>
 </QueueRoutingConfig>

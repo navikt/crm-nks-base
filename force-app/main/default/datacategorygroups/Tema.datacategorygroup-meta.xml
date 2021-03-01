@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Arbeidsavklaringspenger</label>
+                <name>Arbeidsavklaringspenger</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Meldekort</label>
+                    <name>Meldekort</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Registrering som arbeidssøker</label>
+                    <name>Registrering_som_arbeidss_ker</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Tiltak</label>
+                    <name>Tiltak</name>
+                </dataCategory>
+                <label>Arbeidssøker</label>
+                <name>Arbeidss_ker</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Dagpenger</label>
+                <name>Dagpenger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Inkluderende arbeidsliv</label>
+                <name>Inkluderende_arbeidsliv</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Tilleggsstønader</label>
+                <name>Tilleggsst_nader</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Tiltakspenger</label>
+                <name>Tiltakspenger</name>
+            </dataCategory>
+            <label>Arbeid</label>
+            <name>Arbeid</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Dialogrutinen</label>
+            <name>Dialogrutinen</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Eures</label>
+            <name>Eures</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Familie og Foreldrepenger</label>
+            <name>Familie_og_Foreldrepenger</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Generell servicerutine</label>
+            <name>Generell_servicerutine</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Helse</label>
+            <name>Helse</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Internasjonalt</label>
+            <name>Internasjonalt</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Klage og anke</label>
+            <name>Klage_og_anke</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Korona</label>
+            <name>Korona</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Pensjon</label>
+            <name>Pensjon</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Sentralbord</label>
+            <name>Sentralbord</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Sikkerhetsrutinen</label>
+            <name>Sikkerhetsrutinen</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Skatt og trekkrutine</label>
+            <name>Skatt_og_trekkrutine</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Sosiale tjenester</label>
+            <name>Sosiale_tjenester</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Stillingsregistrering</label>
+            <name>Stillingsregistrering</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Taushetspliktsrutinen</label>
+            <name>Taushetspliktsrutinen</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Teknisk brukerstøtte</label>
+            <name>Teknisk_brukerst_tte</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Uføretrygd</label>
+            <name>Uf_retrygd</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Økonomi og gjeld</label>
+            <name>konomi_og_gjeld</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <label>Tema</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

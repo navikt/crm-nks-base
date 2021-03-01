@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
     <baseObject>LiveChatTranscript</baseObject>
     <category>cases</category>
@@ -163,6 +163,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>NKS_Journal_Entry_Created__c</field>
+            <table>LiveChatTranscript</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Platform</field>
             <table>LiveChatTranscript</table>
         </columns>
@@ -174,6 +179,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ReferrerUri</field>
+            <table>LiveChatTranscript</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NKS_Journal_Entry_ID__c</field>
+            <table>LiveChatTranscript</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>NKS_Journal_Entry_Status__c</field>
             <table>LiveChatTranscript</table>
         </columns>
         <columns>

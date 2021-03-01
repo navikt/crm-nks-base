@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Empty_Fields</name>
+        <label>Empty Fields</label>
+        <locationX>776</locationX>
+        <locationY>330</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Body</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue />
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NKS_Conversation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue />
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.NKS_Anonymized__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Transcripts</targetReference>
+        </connector>
+    </assignments>
+    <description
+    >Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
+    <formulas>
+        <name>Deletion_Date</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} - 15</expression>
+    </formulas>
+    <interviewLabel>Anonymize Chats {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Anonymize Chats</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Transcripts</name>
+        <label>Update Transcripts</label>
+        <locationX>776</locationX>
+        <locationY>507</locationY>
+        <faultConnector>
+            <targetReference>Log_Failed_Deletion</targetReference>
+        </faultConnector>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Empty_Fields</targetReference>
+        </connector>
+        <filters>
+            <field>NKS_Ready_for_Anonymization__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>LiveChatTranscript</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2020-12-21</startDate>
+            <startTime>00:15:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Log_Failed_Deletion</name>
+        <label>Log Failed Deletion</label>
+        <locationX>1003</locationX>
+        <locationY>510</locationY>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <stringValue>Failed to anonymize record.</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Aonoymize_Chats</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Anonymization failure</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

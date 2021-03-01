@@ -1,6 +1,5 @@
 <template>
     <lightning-layout multiple-rows="true">
-
         <lightning-layout-item size={columnWidth} padding="horizontal-small">
             <div class="slds-form-element slds-form-element_readonly">
                 <span class="slds-form-element__label">Nav kontor</span>
@@ -14,22 +13,37 @@
             <div class="slds-form-element slds-form-element_readonly">
                 <span class="slds-form-element__label">Kontornummer</span>
                 <div class="slds-form-element__control">
-                    <div class="slds-form-element__static">{navUnit.enhetNr}</div>
+                    <div class="slds-form-element__static">
+                        {navUnit.enhetNr}
+                    </div>
                 </div>
             </div>
         </lightning-layout-item>
 
         <lightning-layout-item size="12">
-            <lightning-accordion active-section-name={activeSections} allow-multiple-sections-open>
-                <lightning-accordion-section name="UNIT_SERVICES" label="Sosiale tjenester">
-                    <p style="white-space: pre-line">{navUnit.sosialeTjenester}</p>
+            <lightning-accordion
+                active-section-name={activeSections}
+                allow-multiple-sections-open
+            >
+                <lightning-accordion-section
+                    name="UNIT_SERVICES"
+                    label="Sosiale tjenester"
+                >
+                    <p style="white-space: pre-line">
+                        {navUnit.sosialeTjenester}
+                    </p>
                 </lightning-accordion-section>
-                <lightning-accordion-section name="CONTACT_DETAILS" label="Kontaktdetaljer">
-                    <c-nks-nav-unit-contact-information contact-information={contactInformation} num-cols={numCols}>
+                <lightning-accordion-section
+                    name="CONTACT_DETAILS"
+                    label="Kontaktdetaljer"
+                >
+                    <c-nks-nav-unit-contact-information
+                        contact-information={contactInformation}
+                        num-cols={numCols}
+                    >
                     </c-nks-nav-unit-contact-information>
                 </lightning-accordion-section>
             </lightning-accordion>
         </lightning-layout-item>
-
     </lightning-layout>
 </template>

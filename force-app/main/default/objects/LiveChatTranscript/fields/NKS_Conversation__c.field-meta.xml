@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Conversation__c</fullName>
-    <description>Technical field allowing the storage of JSON formatted conversation in real-time.</description>
+    <description
+    >Technical field allowing the storage of JSON formatted conversation in real-time.</description>
     <externalId>false</externalId>
     <label>Conversation</label>
     <length>131072</length>

@@ -1,13 +1,22 @@
 public with sharing class NKS_NavUnitWorkAllocationInput {
-    @AuraEnabled public String behandlingstema;
-    @AuraEnabled public String behandlingstype;
-    @AuraEnabled public String diskresjonskode;
-    @AuraEnabled public String enhetNummer;
-    @AuraEnabled public String geografiskOmraade;
-    @AuraEnabled public String oppgavetype;
-    @AuraEnabled public Boolean skjermet;
-    @AuraEnabled public String tema;
-    @AuraEnabled public String temagruppe;
+    @AuraEnabled
+    public String behandlingstema;
+    @AuraEnabled
+    public String behandlingstype;
+    @AuraEnabled
+    public String diskresjonskode;
+    @AuraEnabled
+    public String enhetNummer;
+    @AuraEnabled
+    public String geografiskOmraade;
+    @AuraEnabled
+    public String oppgavetype;
+    @AuraEnabled
+    public Boolean skjermet;
+    @AuraEnabled
+    public String tema;
+    @AuraEnabled
+    public String temagruppe;
 
     public NKS_NavUnitWorkAllocationInput() {
         this.behandlingstema = null;

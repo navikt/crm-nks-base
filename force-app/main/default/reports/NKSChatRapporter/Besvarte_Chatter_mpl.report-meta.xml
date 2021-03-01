@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
         <field>LiveChatTranscript$NKS_Request_Quarter__c</field>
@@ -14,7 +14,8 @@
         <field>LiveChatTranscript$NKS_Active_Time__c</field>
     </columns>
     <customDetailFormulas>
-        <calculatedFormula>IF(ISPICKVAL(LiveChatTranscript.CRM_Authentication_Status__c, &apos;Completed&apos;), 1, 0)</calculatedFormula>
+        <calculatedFormula
+        >IF(ISPICKVAL(LiveChatTranscript.CRM_Authentication_Status__c, &apos;Completed&apos;), 1, 0)</calculatedFormula>
         <dataType>Double</dataType>
         <developerName>CDF1</developerName>
         <label>Authenticated</label>

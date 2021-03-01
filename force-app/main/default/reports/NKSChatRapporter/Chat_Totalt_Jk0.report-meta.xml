@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <aggregates>
         <calculatedFormula>RowCount</calculatedFormula>
@@ -37,7 +37,8 @@
         <field>CDF1</field>
     </columns>
     <customDetailFormulas>
-        <calculatedFormula>IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
+        <calculatedFormula
+        >IF(ISPICKVAL(AgentWork.Status, &apos;Canceled&apos;), 1, 0)</calculatedFormula>
         <dataType>Double</dataType>
         <developerName>CDF1</developerName>
         <label>Lost Chats</label>
@@ -47,6 +48,7 @@
     <filter>
         <criteriaItems>
             <column>AgentWork$ServiceChannel</column>
+            <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>sfdc_liveagent</value>
@@ -64,11 +66,6 @@
         <field>AgentWork$NKS_Request_Hour__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <groupingsDown>
-        <dateGranularity>Day</dateGranularity>
-        <field>AgentWork$NKS_Request_Quarter__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
     <name>Chat Totalt</name>
     <params>
         <name>co</name>
@@ -80,7 +77,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>AgentWork$AcceptDateTime</dateColumn>
-        <interval>INTERVAL_CUSTOM</interval>
+        <dateColumn>AgentWork$CreatedDate</dateColumn>
+        <interval>INTERVAL_TODAY</interval>
     </timeFrameFilter>
 </Report>
