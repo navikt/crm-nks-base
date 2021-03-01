@@ -6,13 +6,21 @@
     <aura:attribute name="fullButtonWidth" type="Boolean" default="true" />
 
     <aura:attribute name="showFlow" type="Boolean" default="false" />
+    <aura:attribute name="ariaExpanded" type="String" default="false" />
+    <!--Aria attribute requires string value-->
     <aura:attribute name="dynamicLabel" type="String" access="private" />
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <div class="slds-clearfix">
-        <lightning:button label="{!v.buttonLabel}" variant="brand" onclick="{!c.toggleFlow}" iconName="{!v.buttonIcon}"
-            class="{!v.fullButtonWidth ? 'slds-button_stretch' : 'slds-float_right'}" />
+        <lightning:button
+            label="{!v.buttonLabel}"
+            variant="brand"
+            onclick="{!c.toggleFlow}"
+            iconName="{!v.buttonIcon}"
+            class="{!v.fullButtonWidth ? 'slds-button_stretch' : 'slds-float_right'}"
+            ariaExpanded="{! v.ariaExpanded }"
+        />
     </div>
 
     <aura:renderIf isTrue="{!v.showFlow}">
