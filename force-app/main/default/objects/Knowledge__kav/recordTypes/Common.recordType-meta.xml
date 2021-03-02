@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Servicerutine</fullName>
+    <fullName>Common</fullName>
     <active>true</active>
-    <label>Kunnskapsartikkel</label>
+    <label>Knowledge Article - Common</label>
 </RecordType>

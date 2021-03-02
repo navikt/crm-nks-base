@@ -37,11 +37,7 @@ public with sharing class NKS_PersonBadgesController {
      * - recordId = '5001X000007xMSuQAM';
      * - relation = 'Id';
      */
-    private static Id getPersonId(
-        String field,
-        String parentObject,
-        String parentRecordId
-    ) {
+    private static Id getPersonId(String field, String parentObject, String parentRecordId) {
         Id personId = null;
         String queryString =
             'SELECT ' +
@@ -49,15 +45,10 @@ public with sharing class NKS_PersonBadgesController {
             ' FROM ' +
             parentObject +
             ' WHERE Id = :parentRecordId LIMIT 1';
-        List<SObject> objList = Database.query(
-            String.escapeSingleQuotes(queryString)
-        );
+        List<SObject> objList = Database.query(String.escapeSingleQuotes(queryString));
 
         if (false == objList.isEmpty()) {
-            personId = (Id) NKS_PersonBadgesController.getFieldValue(
-                objList[0],
-                field
-            );
+            personId = (Id) NKS_PersonBadgesController.getFieldValue(objList[0], field);
         }
 
         return personId;
@@ -84,17 +75,16 @@ public with sharing class NKS_PersonBadgesController {
      */
     private static Person__c getPerson(Id personId) {
         Person__c person;
-        Set<String> objectFields = Schema.SObjectType.Person__c.fields.getMap()
-            .keySet();
+        Set<String> objectFields = Schema.SObjectType.Person__c.fields.getMap().keySet();
         Set<String> fields = new Set<String>();
         Set<String> fieldsToLabel = new Set<String>();
         String queryString = 'SELECT ';
 
         fields.add('Id');
-        fieldsToLabel.add('INT_Confidential__c');
+        //fieldsToLabel.add('INT_Confidential__c');
         fields.add('INT_GuardianshipOrFuturePowerOfAttorney__c');
         fields.add('INT_IsDeceased__c');
-        fields.add('INT_IsNavEmployee__c');
+        //fields.add('INT_IsNavEmployee__c');
         fields.add('INT_PowerOfAttorney__c');
         fields.add('INT_SpokenLanguageIntepreter__c');
         fields.add('NKS_NumberOfSecurityMeasures__c');
@@ -128,9 +118,7 @@ public with sharing class NKS_PersonBadgesController {
 
         queryString += ' FROM Person__c WHERE Id = :personId';
 
-        List<Person__c> personList = (List<Person__c>) Database.query(
-            queryString
-        );
+        List<Person__c> personList = (List<Person__c>) Database.query(queryString);
 
         if (true == personList.isEmpty()) {
             return null;
@@ -183,8 +171,6 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setBadgeData() {
             setSecurityMeasures();
-            setIsConfidential();
-            setIsNavEmployee();
             setIsDeceased();
             setPowerOfAttorney();
             setGuardianshipOrFuturePowerOfAttorney();
@@ -198,8 +184,7 @@ public with sharing class NKS_PersonBadgesController {
                 badges.add(
                     new Badge(
                         'securityMeasures',
-                        person.NKS_NumberOfSecurityMeasures__c +
-                        ' sikkerhetstiltak',
+                        person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak',
                         'slds-theme_warning pointer',
                         'utility:warning',
                         'Vær oppmerksom',
@@ -224,33 +209,8 @@ public with sharing class NKS_PersonBadgesController {
             }
         }
 
-        private void setIsConfidential() {
-            if (
-                String.isNotBlank(person.INT_Confidential__c) &&
-                'UGRADERT' != person.INT_Confidential__c
-            ) {
-                badges.add(
-                    new Badge('confidential', person.INT_Confidential__c)
-                );
-            }
-        }
-
-        private void setIsNavEmployee() {
-            if (true == person.INT_IsNavEmployee__c) {
-                badges.add(
-                    new Badge(
-                        'isNavEmployee',
-                        getFieldLabel('INT_IsNavEmployee__c')
-                    )
-                );
-            }
-        }
-
         private void setSpokenLanguagesIntepreter() {
-            if (
-                true ==
-                String.isNotBlank(person.INT_SpokenLanguageIntepreter__c)
-            ) {
+            if (true == String.isNotBlank(person.INT_SpokenLanguageIntepreter__c)) {
                 badges.add(
                     new Badge(
                         'spokenLanguageIntepreter',
@@ -263,11 +223,7 @@ public with sharing class NKS_PersonBadgesController {
                 );
 
                 try {
-                    for (
-                        String language : person.INT_SpokenLanguageIntepreter__c.split(
-                            ';'
-                        )
-                    ) {
+                    for (String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
                         spokenLanguagesIntepreter.add(language);
                     }
                 } catch (Exception e) {
@@ -278,24 +234,13 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setIsDeceased() {
             if (true == person.INT_IsDeceased__c) {
-                badges.add(
-                    new Badge('isDeceased', getFieldLabel('INT_IsDeceased__c'))
-                );
+                badges.add(new Badge('isDeceased', getFieldLabel('INT_IsDeceased__c')));
             }
         }
 
         private void setPowerOfAttorney() {
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-                badges.add(
-                    new Badge(
-                        'powerOfAttorney',
-                        'Fullmakt',
-                        'pointer',
-                        '',
-                        '',
-                        true
-                    )
-                );
+                badges.add(new Badge('powerOfAttorney', 'Fullmakt', 'pointer', '', '', true));
 
                 try {
                     Integer i = 0;
@@ -316,11 +261,7 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         private void setGuardianshipOrFuturePowerOfAttorney() {
-            if (
-                String.isNotBlank(
-                    person.INT_GuardianshipOrFuturePowerOfAttorney__c
-                )
-            ) {
+            if (String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
                 badges.add(
                     new Badge(
                         'guardianshipOrFuturePowerOfAttorney',
@@ -354,9 +295,7 @@ public with sharing class NKS_PersonBadgesController {
          * @description We don't have the HOT fields in all sanboxes or scratch orgs, therefore we need to check if they exist before trying to add any badges;
          */
         private void setDegreeOfHearingAndVisualImpairment() {
-            if (
-                fieldSet.contains('hot_degreeofhearingandvisualimpairment__c')
-            ) {
+            if (fieldSet.contains('hot_degreeofhearingandvisualimpairment__c')) {
                 String degreeOfHearingAndVisualImpairment = (String) person.get(
                     'HOT_DegreeOfHearingAndVisualImpairment__c'
                 );
@@ -402,8 +341,7 @@ public with sharing class NKS_PersonBadgesController {
 
         private String getFieldLabel(String fieldApiName) {
             SObjectType type = Schema.getGlobalDescribe().get('Person__c');
-            Map<String, Schema.SObjectField> mfields = type.getDescribe()
-                .fields.getMap();
+            Map<String, Schema.SObjectField> mfields = type.getDescribe().fields.getMap();
             return mfields.get(fieldApiName).getDescribe().getLabel();
         }
     }
@@ -532,12 +470,7 @@ public with sharing class NKS_PersonBadgesController {
         @AuraEnabled
         public string SecurityMeasure;
 
-        public SecurityMeasure(
-            Id recordId,
-            Date toDate,
-            Date fromDate,
-            String securityMeasure
-        ) {
+        public SecurityMeasure(Id recordId, Date toDate, Date fromDate, String securityMeasure) {
             this.RecordId = recordId;
             this.ToDate = toDate;
             this.FromDate = fromDate;

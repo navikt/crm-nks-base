@@ -42,11 +42,6 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>nksAccessErrorMessage</componentName>
-            </componentInstance>
-        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -345,6 +340,15 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksAccessErrorMessage</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-5f352804-09d6-4448-ab4c-64196136b434</value>
                 </componentInstanceProperties>
@@ -355,6 +359,31 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>addAssistiveHeader</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>addBoxLayout</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>assistiveHeader</name>
+                    <value>Skjerming</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideNoAccessMessage</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonAccessBadges</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

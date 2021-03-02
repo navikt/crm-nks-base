@@ -340,6 +340,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
                 <componentName>nksAccessErrorMessage</componentName>
             </componentInstance>
         </itemInstances>
@@ -359,6 +363,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>addAssistiveHeader</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>addBoxLayout</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>assistiveHeader</name>
+                    <value>Skjerming</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideNoAccessMessage</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonAccessBadges</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>addBoxLayout</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -371,12 +400,6 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksPersonBadges</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

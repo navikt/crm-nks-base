@@ -4,7 +4,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Bruker</label>
+        <label>Bruker / Generelt</label>
         <layoutColumns>
             <layoutItems>
                 <field>NKS_Summary__c</field>
@@ -37,7 +37,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Arbeidgiver</label>
+        <label>Arbeidgiver / Dialog</label>
         <layoutColumns>
             <layoutItems>
                 <field>EmployerInformation__c</field>
@@ -52,7 +52,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Internasjonalt</label>
+        <label>Internasjonalt / Taushetsplikt</label>
         <layoutColumns>
             <layoutItems>
                 <field>InternationalInformation__c</field>
@@ -67,7 +67,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Lege og behandler</label>
+        <label>Lege og behandler / Sikkerhet</label>
         <layoutColumns>
             <layoutItems>
                 <field>AdvisorInformation__c</field>
@@ -137,8 +137,7 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName
-            >CreateDraftFromOnlineKnowledgeArticleVersion</actionName>
+            <actionName>CreateDraftFromOnlineKnowledgeArticleVersion</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
