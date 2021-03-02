@@ -14,6 +14,7 @@ public class KafkaOppgave {
     public String aktivDato; //Datestring, REQUIRED
     public String fristFerdigstillelse; //Datestring
     public String prioritet; // [HOY, NORM, LAV],
+    public String opprettetTidspunkt; //Datetime String
     public String status; //ENUM: [OPPRETTET, AAPNET, UNDER_BEHANDLING, FERDIGSTILT, FEILREGISTRERT]
     public Integer versjon;
     public List<Ident> identer; //To-be model
