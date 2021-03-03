@@ -22,6 +22,7 @@ public with sharing class NKS_SafService {
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest(API_CONFIG_NAME, 'POST_SAF_QUERY');
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
+        apiCtrl.addHeader('Content-Type', 'application/json');
         apiCtrl.setBody(query);
         apiCtrl.doCallout();
 
