@@ -1,37 +1,43 @@
 <template>
     <div class="slds-p-horizontal_small">
-
-        <!-- Date and type -->
-        {jornalpostDate}/{fromToType}
-
         <!-- Journalpost header -->
         <div class="slds-text-heading_small">
             <template if:true={mainDocument}>
-                <c-nks-saf-document-link journalpost-id={journalpost.journalpostId} dokument-info={mainDocument}>
+                <c-nks-saf-document-link
+                    journalpost-id={journalpost.journalpostId}
+                    dokument-info={mainDocument}
+                >
                 </c-nks-saf-document-link>
             </template>
             <!-- If no document fount -->
             <template if:false={mainDocument}>
-                Ingen dokument funnet på denne journalposten.
+                <div class="slds-text-heading_small">
+                    Ingen dokument funnet på denne journalposten.
+                </div>
             </template>
         </div>
 
+        <!-- Date and type -->
+        <div class="slds-text-body_regular">{journalpostDate}/{fromToType}</div>
+
         <!-- Journalpost attachments -->
         <template if:true={hasAttachments}>
-            <h2>Dokumentet har {numberOfAttachments} vedlegg:</h2>
+            <div class="slds-text-body_regular">Dokumentet har {numberOfAttachments} vedlegg:</div>
 
             <ul class="slds-list_dotted">
-                <template for:each={attachments} for:item='dokument'>
+                <template for:each={attachments} for:item="dokument">
                     <li key={dokument.dokumentInfoId}>
-                        <c-nks-saf-document-link dokument-info={dokument} journalpost-id={journalpost.journalpostId}>
+                        <c-nks-saf-document-link
+                            dokument-info={dokument}
+                            journalpost-id={journalpost.journalpostId}
+                        >
                         </c-nks-saf-document-link>
                     </li>
                 </template>
-
             </ul>
         </template>
 
         <!-- NAV Case ID -->
-        SaksId:&nbsp;{journalpost.sak.fagsakId}
+        <div class="slds-text-body_small">SaksId:&nbsp;{journalpost.sak.fagsakId}</div>
     </div>
 </template>

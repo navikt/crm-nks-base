@@ -1,28 +1,30 @@
 public with sharing class NKS_SafQueryField {
-    public String name;
-        public List<NKS_SafQueryField> queryFields;
+    @AuraEnabled
+    public String name { get; set; }
+    @AuraEnabled
+    public List<NKS_SafQueryField> queryFields { get; set; }
 
-        public NKS_SafQueryField() {
-            queryFields = new List<NKS_SafQueryField>();
-        }
+    public NKS_SafQueryField() {
+        queryFields = new List<NKS_SafQueryField>();
+    }
 
-        public NKS_SafQueryField(String name) {
-            this();
-            this.name = name;
-        }
+    public NKS_SafQueryField(String name) {
+        this();
+        this.name = name;
+    }
 
-        public override String toString() {
-            String stringToReturn = name;
+    public override String toString() {
+        String stringToReturn = name;
 
-            if(null != queryFields && false == queryFields.isEmpty()) {
-                stringToReturn += ' { ';
+        if (false == queryFields.isEmpty()) {
+            stringToReturn += ' { ';
 
-                for(NKS_SafQueryField qf : queryFields) {
-                    stringToReturn += qf.toString() + ' ';
-                }
-                stringToReturn += '}';
+            for (NKS_SafQueryField qf : queryFields) {
+                stringToReturn += qf.toString() + ' ';
             }
-
-            return stringToReturn;
+            stringToReturn += '}';
         }
+
+        return stringToReturn;
+    }
 }

@@ -1,35 +1,46 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class NksSafJournalpost extends LightningElement {
-    @api journalpost;
+    //@api journalpost;
+    _journalpost;
 
     @track mainDocument = null;
     @track attachments = null;
 
     numberOfAttachments = 0;
-    hasAttachments = false;
-    jornalpostDate = null;
     fromToType = null;
 
-    connectedCallback() {
+    @api set journalpost(value) {
+        this._journalpost = value;
+
         this.getNumberOfAttachments();
         this.setFromToType();
         this.setMainDocument();
         this.setAttachments();
-        this.setJornalpostDate();
-        this.hasAttachments = (0 < this.numberOfAttachments) ? true : false;
+    }
+
+    get hasAttachments() {
+        return 0 < this.numberOfAttachments ? true : false;
+    }
+
+    get journalpost() {
+        return this._journalpost;
     }
 
     setFromToType() {
         let fromToType;
+        let kanal =
+            this.journalpost.kanal && this.journalpost.kanal != 'UKJENT'
+                ? this.journalpost.kanalnavn
+                : null;
         switch (this.journalpost.journalposttype) {
-            case "I":
+            case 'I':
                 fromToType = 'Fra ' + this.journalpost.avsenderMottaker.navn;
                 break;
-            case "U":
+            case 'U':
                 fromToType = 'Fra NAV (Sendt til ' + this.journalpost.avsenderMottaker.navn + ')';
                 break;
-            case "N":
+            case 'N':
                 fromToType = 'Notat';
                 break;
             default:
@@ -37,15 +48,24 @@ export default class NksSafJournalpost extends LightningElement {
                 break;
         }
 
+        fromToType = kanal ? fromToType + ' - ' + kanal : fromToType;
+
         this.fromToType = fromToType;
     }
 
-    setJornalpostDate() {
+    get journalpostDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         let dateString = this.journalpost.datoOpprettet;
 
-        this.jornalpostDate = new Date(dateString).toLocaleDateString('no-NO', options);
+        return new Date(dateString).toLocaleDateString('no-NO', options);
     }
+
+    // setJournalpostDate() {
+    //     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    //     let dateString = this.journalpost.datoOpprettet;
+
+    //     this.journalpostDate = new Date(dateString).toLocaleDateString('no-NO', options);
+    // }
 
     setMainDocument() {
         this.mainDocument = null;
@@ -59,7 +79,9 @@ export default class NksSafJournalpost extends LightningElement {
         let attachments = [];
         if (this.journalpost.dokumenter) {
             attachments = this.journalpost.dokumenter.filter((dokument, i) => {
-                if (i > 0) { return dokument }
+                if (i > 0) {
+                    return dokument;
+                }
             });
         }
 

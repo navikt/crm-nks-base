@@ -1,6 +1,6 @@
 /**
  * Controller or the Visualforce Page NKS_SafViewDocument
- * 
+ *
  * The VF page accepts the following url parameters
  * journalId *required
  * documentInfoId *required
@@ -8,50 +8,77 @@
  * fileName
  * width
  * height
-*/
+ */
 public with sharing class NKS_SafViewDocumentController {
-    @TestVisible private string journalId;
-    @TestVisible private string documentInfoId;
-    
-    public Boolean initialised{get; set;}
-    public Boolean isError{get; set;}
-    
-    public string documentData { public get; public set; }
-    public string title {get; set;}
-    public string contentType {get; set;}
-    public string errorTitle {get; set;}
-    public string errorMessage {get; set;}
-    
+    @TestVisible
+    private string journalId;
+    @TestVisible
+    private string documentInfoId;
+
+    public Boolean initialised { get; set; }
+    public Boolean isError { get; set; }
+
+    public string documentData { public get; private set; }
+    public string title { get; set; }
+    //public string contentType {get; set;}
+    public string errorTitle { get; set; }
+    public string errorMessage { get; set; }
+
     //With default values
     public string fileName {
         public get {
-            if(String.isBlank(fileName)) { return 'dokument'; }
+            if (String.isBlank(fileName)) {
+                return 'dokument';
+            }
             return fileName;
         }
         private set;
     }
     public string variantFormat {
         public get {
-            if(String.isBlank(variantFormat)) { return 'ARKIV'; }
+            if (String.isBlank(variantFormat)) {
+                return 'ARKIV';
+            }
             return variantFormat;
         }
         private set;
     }
     public string width {
         public get {
-            if(String.isBlank(width)) { return '100%'; }
+            if (String.isBlank(width)) {
+                return '100%';
+            }
             return width;
         }
         private set;
     }
     public string height {
         public get {
-            if(String.isBlank(height)) { return '900px'; }
+            if (String.isBlank(height)) {
+                return '900px';
+            }
             return height;
         }
         private set;
     }
-
+    public string contentDisposition {
+        public get {
+            if (String.isBlank(contentDisposition)) {
+                return 'inline';
+            }
+            return contentDisposition;
+        }
+        private set;
+    }
+    public string contentType {
+        public get {
+            if (String.isBlank(contentType)) {
+                return 'application/pdf';
+            }
+            return contentType;
+        }
+        private set;
+    }
 
     /**
      * Constructor.
@@ -61,16 +88,17 @@ public with sharing class NKS_SafViewDocumentController {
         initialised = false;
         isError = false;
 
-        journalId = System.currentPagereference().getParameters().get('journalId');
-        documentInfoId = System.currentPagereference().getParameters().get('documentInfoId');
-        variantFormat = System.currentPagereference().getParameters().get('variantFormat');
-        fileName = System.currentPagereference().getParameters().get('fileName');
+        journalId = getPageParameter('journalId');
+        documentInfoId = getPageParameter('documentInfoId');
+        variantFormat = getPageParameter('variantFormat');
+        fileName = getPageParameter('fileName');
 
-        width = System.currentPagereference().getParameters().get('width');
-        height = System.currentPagereference().getParameters().get('height');
+        width = getPageParameter('width');
+        height = getPageParameter('height');
         title = fileName;
 
-        Apexpages.currentPage().getHeaders().put('filename',fileName);
+        setPageHeader('filename', fileName);
+        setPageHeader('content-disposition', contentDisposition);
 
         validateParameters();
     }
@@ -79,7 +107,7 @@ public with sharing class NKS_SafViewDocumentController {
      * Validate that we have the required parameters to actually get the document.
      */
     private void validateParameters() {
-        if(String.isBlank(journalId) || String.isBlank(documentInfoId)) {
+        if (String.isBlank(journalId) || String.isBlank(documentInfoId)) {
             setError('Kan ikke hente dokument.', 'Mangler journalpost id og dokument id.');
         }
     }
@@ -95,20 +123,49 @@ public with sharing class NKS_SafViewDocumentController {
      * Get the document from SAF and create the document data string
      */
     public void getDocument(NKS_SafService service) {
+        contentDisposition = '';
+        contentType = 'application/pdf';
+
         try {
-            NKS_SafApexTypes.SafGetDocumentResponse response = service.getSafDocument(journalId,documentInfoId,variantFormat);
-        
-            if(true == response.isSuccess) {
-                Apexpages.currentPage().getHeaders().put('content-disposition', response.contentDisposition);
-                documentData='data:'+response.contentType+';base64,'+response.documentString+'#statusbar=0&messages=0&view=Fit&toolbar=0';
+            NKS_SafGetDocumentResponse response = service.getSafDocument(
+                journalId,
+                documentInfoId,
+                variantFormat
+            );
+
+            if (true == response.isSuccess) {
+                contentType = response.contentType;
+                contentDisposition = response.contentDisposition + '; filename="' + fileName + '"';
+
+                setPageHeader('content-disposition', contentDisposition);
+
+                documentData =
+                    'data:' +
+                    contentType +
+                    ';base64,' +
+                    response.documentString +
+                    '#statusbar=0&messages=0&view=Fit&toolbar=0';
             } else {
-                setError('Kunne ikke laste dokumentet [' + response.error.error + '].', response.error.message);
+                setError(
+                    'Kunne ikke laste dokumentet [' +
+                    response.error.error +
+                    '].',
+                    response.error.message
+                );
             }
         } catch (Exception ex) {
             setError('Kunne ikke laste dokumentet.', ex.getMessage());
         }
-        
+
         initialised = true;
+    }
+
+    private void setPageHeader(String key, String value) {
+        Apexpages.currentPage().getHeaders().put(key, value);
+    }
+
+    private String getPageParameter(String key) {
+        return System.currentPagereference().getParameters().get(key);
     }
 
     private void setError(String title, String message) {

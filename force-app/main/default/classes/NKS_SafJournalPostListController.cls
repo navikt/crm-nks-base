@@ -1,24 +1,38 @@
 /**
  * Get journal posts from SAF
- * !Method receives strings not apex types
  */
 public with sharing class NKS_SafJournalPostListController {
-    @TestVisible private static NKS_SafService safService;
+    @TestVisible
+    private static NKS_SafService safService;
 
-    @AuraEnabled
-    public static NKS_SafQueryResponse getJournalpostsUser(NKS_SafQueryVariables queryVariables, NKS_SafQueryField queryField) {
+    @AuraEnabled(cacheable=true)
+    public static NKS_SafQueryResponse getJournalPosts(
+        String brukerIdField,
+        String objectApiName,
+        String relationshipField,
+        String viewedRecordId,
+        NKS_SafQueryVariables queryVariables,
+        NKS_SafQueryField queryField
+    ) {
         NKS_SafQueryResponse queryResults;
 
         try {
             //Added to make safService mockable
-            if(safService == null) { 
+            if (safService == null) {
                 safService = new NKS_SafService();
             }
 
-            // NKS_SafQueryVariables queryVariables = (NKS_SafApexTypes.SafQueryVariables) JSON.deserialize(queryVariablesString, NKS_SafApexTypes.SafQueryVariables.class);
-            // NKS_SafQueryField queryField = (NKS_SafApexTypes.SafQueryField) JSON.deserialize(queryFieldString, NKS_SafApexTypes.SafQueryField.class);
-            
-            queryResults = safService.doSafQuery(NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktBruker', queryField, queryVariables));
+            queryVariables.brukerId = getBrukerIdFromPerson(
+                getPersonId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
+            );
+
+            queryResults = safService.doSafQuery(
+                NKS_SafBuildQueryUtil.buildQuery(
+                    'dokumentoversiktBruker',
+                    queryField,
+                    queryVariables
+                )
+            );
         } catch (Exception ex) {
             queryResults = new NKS_SafQueryResponse();
             queryResults.isSuccess = false;
@@ -30,31 +44,60 @@ public with sharing class NKS_SafJournalPostListController {
         return queryResults;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<NKS_NavCaseService.NavCaseWrapper> getNavCases(
+        String brukerIdField,
+        String objectApiName,
+        String relationshipField,
+        String viewedRecordId
+    ) {
+        String actorId = getPersonActorId(
+            getPersonId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
+        );
 
-    @AuraEnabled
-    public static NKS_SafBrukerIdInput getAccountQueryVariables(String brukerIdField, String objectApiName, String relationshipField, String viewedRecordId, String brukerIdType){
-        NKS_SafBrukerIdInput brukerIdInput = new NKS_SafBrukerIdInput();
+        return NKS_NavCaseService.getNavCases(actorId);
+    }
 
-        String query = 'SELECT ' + brukerIdField + ' FROM ' + objectApiName + ' WHERE ';
-        query +=  relationshipField + ' = :viewedRecordId';
+    private static Id getPersonId(
+        String personIdField,
+        String objectApiName,
+        String relationshipField,
+        String viewedRecordId
+    ) {
+        Id personId;
 
-        sObject returnObject = Database.query(query)[0];
-        
-        brukerIdInput.id = getFieldValue(returnObject,brukerIdField);
-        brukerIdInput.type = brukerIdType.toUpperCase();
+        String query = 'SELECT ' + personIdField + ' FROM ' + objectApiName + ' WHERE ';
+        query += relationshipField + ' = :viewedRecordId';
 
-        return brukerIdInput;
+        sObject returnObject = Database.query(String.escapeSingleQuotes(query))[0];
+
+        return (Id) getFieldValue(returnObject, personIdField);
+    }
+
+    private static NKS_SafBrukerIdInput getBrukerIdFromPerson(Id personId) {
+        NKS_SafBrukerIdInput brukerId = new NKS_SafBrukerIdInput();
+
+        Person__c person = [SELECT Id, Name, INT_ActorId__c FROM Person__c WHERE Id = :personId];
+
+        brukerId.id = person.INT_ActorId__c;
+        brukerId.type = 'AKTOERID';
+
+        return brukerId;
+    }
+
+    private static String getPersonActorId(Id personId) {
+        Person__c person = [SELECT INT_ActorId__c FROM Person__c WHERE Id = :personId];
+        return person.INT_ActorId__c;
     }
 
     private static String getFieldValue(Sobject obj, String parentRelationField) {
         List<String> relationHierarchy = parentRelationField.split('\\.');
         String fieldApiName = relationHierarchy.remove(0);
 
-        if(relationHierarchy.isEmpty()) {
+        if (relationHierarchy.isEmpty()) {
             return (String) obj.get(fieldApiName);
         } else {
-            return getFieldValue(obj.getSObject(fieldApiName),String.join(relationHierarchy, '.'));
+            return getFieldValue(obj.getSObject(fieldApiName), String.join(relationHierarchy, '.'));
         }
     }
-
 }

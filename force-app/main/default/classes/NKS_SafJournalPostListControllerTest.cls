@@ -1,43 +1,98 @@
 @IsTest
 private with sharing class NKS_SafJournalPostListControllerTest {
-    @isTest static void getJournalpostsTest() {
+    @IsTest
+    static void getJournalPosts() {
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter'
+            ),
+            true
+        );
+
+        String brukerIdField = 'Id';
+        String objectApiName = 'Person__c';
+        String relationshipField = 'Id';
+        String viewedRecordId = p.Id;
+
+        NKS_SafQueryVariables queryVariables = new NKS_SafQueryVariables();
+        queryVariables.foerste = 10;
+
+        NKS_SafQueryField queryField = new NKS_SafQueryField();
+        queryField.name = 'Test';
+
         NKS_SafQueryResponse result;
 
-        //Prepare mock
-        NKS_SafServiceMock mock = new NKS_SafServiceMock();
-        NKS_SafQueryResponse queryResponse = new NKS_SafQueryResponse();
-        queryResponse.isSuccess = true;
-        queryResponse.documentOverview = new NKS_SafDokumentoversikt();
-        mock.addSafQueryResponse(queryResponse);
+        NKS_SafDokumentoversikt dokumentoversikt = new NKS_SafDokumentoversikt();
+        dokumentoversikt.journalposter = new List<NKS_SafJournalpost>();
+        dokumentoversikt.sideInfo = new NKS_SafSideInfo();
+        dokumentoversikt.sideInfo.finnesNesteSide = false;
 
-        //Set mock
-        NKS_SafJournalPostListController.safService = (NKS_SafService) Test.createStub(NKS_SafService.class, mock);
-
-        //Prepare input data
-        NKS_SafQueryVariables qv = new NKS_SafQueryVariables();
-
-        NKS_SafQueryField queryField = new NKS_SafQueryField('tittel');
-        queryField.queryFields.add(new NKS_SafQueryField('journalpost'));
+        SingleRequestMock mock = new SingleRequestMock(
+            200,
+            'Success',
+            '{  "data": { "dokumentoversiktBruker": ' +
+            JSON.serialize(dokumentoversikt) +
+            '}}',
+            new Map<String, String>()
+        );
+        Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-            result = NKS_SafJournalPostListController.getJournalpostsUser(qv, queryField);
+        result = NKS_SafJournalPostListController.getJournalPosts(
+            brukerIdField,
+            objectApiName,
+            relationshipField,
+            viewedRecordId,
+            queryVariables,
+            queryField
+        );
         Test.stopTest();
 
-        System.assertNotEquals(null, result, 'Did expect to get a value in response');
-        System.assertEquals(true, result.isSuccess, 'Expected to have a success');
+        System.assertEquals(true, result.isSuccess, 'Expected success');
+        System.assertEquals(0, result.documentOverview.journalposter.size(), 'Expected empty list');
     }
 
-    @isTest static void getJournalpostsTriggerExceptionTest() {
-        NKS_SafQueryResponse result;
+    @IsTest
+    static void getNavCases() {
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter'
+            ),
+            true
+        );
+
+        String brukerIdField = 'Id';
+        String objectApiName = 'Person__c';
+        String relationshipField = 'Id';
+        String viewedRecordId = p.Id;
+
+        SingleRequestMock mock = new SingleRequestMock(
+            200,
+            'Success',
+            '[]',
+            new Map<String, String>()
+        );
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        List<NKS_NavCaseService.NavCaseWrapper> result;
 
         Test.startTest();
-            result = NKS_SafJournalPostListController.getJournalpostsUser(null,null);
+        result = NKS_SafJournalPostListController.getNavCases(
+            brukerIdField,
+            objectApiName,
+            relationshipField,
+            viewedRecordId
+        );
         Test.stopTest();
 
-        System.assertNotEquals(null, result, 'Did expect to get a value in response');
-        System.assertEquals(false, result.isSuccess, 'Expected the result to not be success when missing input data');
-        System.assertNotEquals(null, result.error, 'Expected to have the error object not returning null when we have a handled exception');
-        System.assertEquals(true, String.isNotBlank(result.error.error), 'Expected to have a value in error');
-        System.assertEquals(true, String.isNotBlank(result.error.message), 'Expected to have something in the error message field');
+        System.assertEquals(0, result.size(), 'expected empty list');
     }
 }

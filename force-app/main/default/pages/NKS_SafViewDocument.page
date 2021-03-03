@@ -16,9 +16,13 @@
     width
     height
 -->
-<apex:page controller="NKS_SafViewDocumentController" title="{!title}" contentType="{!contentType}" sidebar="false" showHeader="false"
-    docType="html-5.0">
-
+<apex:page
+    controller="NKS_SafViewDocumentController"
+    title="{!title}"
+    sidebar="false"
+    showHeader="false"
+    docType="html-5.0"
+>
     <!-- Import the Design System style sheet -->
     <apex:slds />
     <!-- REQUIRED SLDS WRAPPER -->
@@ -29,14 +33,23 @@
 
             <!-- Penal that is refreshed when all the document has been loaded. Contain all ux parts -->
             <apex:outputPanel id="allPanel">
-
                 <!-- Panel for error messages to the user -->
                 <apex:outputPanel rendered="{!isError}">
                     <div class="slds-text-color_error">
                         <div class="slds-text-heading_medium">
-                            <span class="slds-icon_container slds-icon-utility-error" title="Feilmelding">
-                                <svg class="slds-icon slds-icon-text-error slds-icon_x-small" aria-hidden="true">
-                                    <use xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}"></use>
+                            <span
+                                class="slds-icon_container slds-icon-utility-error"
+                                title="Feilmelding"
+                            >
+                                <svg
+                                    class="slds-icon slds-icon-text-error slds-icon_x-small"
+                                    aria-hidden="true"
+                                >
+                                    <use
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}"
+                                    ></use>
                                 </svg>
                                 <span class="slds-assistive-text">Feilmelding</span>
                             </span>
@@ -48,10 +61,10 @@
 
                 <!-- Panel BEFORE document load -->
                 <apex:outputPanel rendered="{!AND(NOT(initialised), NOT(isError))}">
-                    <div role="status" class="slds-spinner slds-spinner--medium ">
-                        <span class="slds-assistive-text ">Laster dokument.</span>
-                        <div class="slds-spinner__dot-a "></div>
-                        <div class="slds-spinner__dot-b "></div>
+                    <div role="status" class="slds-spinner slds-spinner--medium">
+                        <span class="slds-assistive-text">Laster dokument.</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
                     </div>
 
                     <!-- script that runs on load after the controller is initialized and triggers the doInit action function on top -->
@@ -64,13 +77,16 @@
 
                 <!-- Panel AFTER document load -->
                 <apex:outputPanel rendered="{!AND(initialised, NOT(isError))}">
-                    <iframe src="{!DocumentData}" width="{!width}" height="{!height}" title="Dokument: {!title}">
+                    <iframe
+                        src="{!DocumentData}"
+                        width="{!width}"
+                        height="{!height}"
+                        title="Dokument: {!title}"
+                    >
                         Kan ikke laste dokumentet.
                     </iframe>
                 </apex:outputPanel>
-
             </apex:outputPanel>
-
         </apex:form>
     </div>
 

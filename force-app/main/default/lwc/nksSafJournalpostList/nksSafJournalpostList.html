@@ -1,77 +1,140 @@
 <template>
-    <lightning-card title="Journalposter" icon-name="standard:file">
+    <lightning-card>
         <!-- CARD BODY -->
         <lightning-layout>
-
             <!-- SAF Available theme vertical navigation list -->
             <lightning-layout-item padding="around-small" size="2">
-                <c-nks-saf-vertical-navigation onthemeselection={setSelectedTheme} available-themes={availableThemes}
-                    available-process-themes={availableProcessThemes}>
+                <!-- <template if:true={isLoaded}> -->
+                <c-nks-saf-vertical-navigation
+                    onnewselection={handleNewSelection}
+                    viewed-object-api-name={viewedObjectApiName}
+                    viewed-record-id={viewedRecordId}
+                    bruker-id-field={brukerIdField}
+                    relationship-field={relationshipField}
+                    onsetavailablethemes={handleAvailableThemes}
+                    onselectcase={handleSelectCase}
+                >
                 </c-nks-saf-vertical-navigation>
+                <!-- </template> -->
             </lightning-layout-item>
 
             <!-- CONTENT -->
             <lightning-layout-item padding="around-small" size="10">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="12">
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Inngående"
+                                    name="I"
+                                    class="journalpostType"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                    field-level-help='Dokumentasjon som NAV har mottatt fra en ekstern part. De fleste inngående dokumenter er søknader, ettersendelser av dokumentasjon til sak, eller innsendinger fra arbeidsgivere. Meldinger brukere har sendt til "Skriv til NAV" arkiveres også som inngående dokumenter.'
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Utgående"
+                                    name="U"
+                                    class="journalpostType"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                    field-level-help='Dokumentasjon som NAV har produsert og sendt ut til en ekstern part. De fleste utgående dokumenter er informasjons- eller vedtaksbrev til privatpersoner eller organisasjoner. "Skriv til NAV"-meldinger som saksbehandlere har sendt til brukere arkiveres også som utgående dokumenter.'
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Notat"
+                                    name="N"
+                                    class="journalpostType"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                    field-level-help="Dokumentasjon som NAV har produsert selv, uten at formålet er å distribuere dette ut av NAV. Eksempler på notater er samtalereferater med veileder på kontaktsenter og interne forvaltningsnotater."
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">
+                        <!-- SPINNER -->
+                        <template if:false={isLoaded}>
+                            <lightning-spinner
+                                alternative-text="Loading"
+                                size="medium"
+                            ></lightning-spinner>
+                        </template>
 
-                <!-- SPINNER -->
-                <template if:false={isLoaded}>
-                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                </template>
-
-                <template if:true={isLoaded}>
-                    <!-- ERROR MESSAGE -->
-                    <template if:true={hasErrors}>
-                        <div class="slds-text-color_error slds-p-left_x-small">
-                            <p>
-                                <lightning-icon alternative-text="Feilmelding" icon-name="utility:error" size="xx-small"
-                                    variant="error">
-                                </lightning-icon>
-                                &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
-                            </p>
-                            <ul class="slds-list_dotted">
-                                <template for:each={errors} for:item="error">
-                                    <li key={error}>{error}</li>
-                                </template>
-                            </ul>
-                            <!-- <p class="slds-p-left_medium">
-                                {error}
-                            </p> -->
-                        </div>
-                    </template>
-
-                    <!-- EMPTY RESULT -->
-                    <template if:false={journalposts}>
-                        <p>Kunne ikke finne noen journalposter.</p>
-                    </template>
-
-                    <!-- LIST OF JOURNALPOSTS -->
-                    <template if:true={filteredJournalPosts}>
-                        <ul class="slds-has-dividers_top">
-
-                            <template for:each={filteredJournalPosts} for:item='journalpost'>
-                                <li class="slds-item" key={journalpost.journalpostId}>
-                                    <c-nks-saf-journalpost journalpost={journalpost}></c-nks-saf-journalpost>
-                                </li>
+                        <template if:true={isLoaded}>
+                            <!-- ERROR MESSAGE -->
+                            <template if:true={hasErrors}>
+                                <div class="slds-text-color_error slds-p-left_x-small">
+                                    <p>
+                                        <lightning-icon
+                                            alternative-text="Feilmelding"
+                                            icon-name="utility:error"
+                                            size="xx-small"
+                                            variant="error"
+                                        >
+                                        </lightning-icon>
+                                        &nbsp;En feil har oppstått og journalpostene kan ikke
+                                        hentes.
+                                    </p>
+                                    <ul class="slds-list_dotted">
+                                        <template for:each={errors} for:item="error">
+                                            <li key={error}>{error}</li>
+                                        </template>
+                                    </ul>
+                                </div>
                             </template>
 
-                        </ul>
-                    </template>
-                </template>
+                            <!-- EMPTY RESULT -->
+                            <template if:false={journalposts}>
+                                <p>Kunne ikke finne noen journalposter.</p>
+                            </template>
 
+                            <!-- LIST OF JOURNALPOSTS -->
+                            <template if:true={filteredJournalPosts}>
+                                <ul class="slds-has-dividers_top">
+                                    <template
+                                        for:each={filteredJournalPosts}
+                                        for:item="journalpost"
+                                    >
+                                        <li class="slds-item" key={journalpost.journalpostId}>
+                                            <c-nks-saf-journalpost
+                                                journalpost={journalpost}
+                                            ></c-nks-saf-journalpost>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
             </lightning-layout-item>
         </lightning-layout>
 
         <!-- CARD FOOTER -->
-        <p slot="footer">
-            <template if:true={isLoadingMore}>
-                <div class="slds-is-relative">
-                    Last flere
-                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
-                </div>
-            </template>
-            <template if:false={isLoadingMore}>
-                <a onclick={queryMoreJournalPosts}>Last flere</a>
-            </template>
-        </p>
+        <template if:true={canLoadMore}>
+            <p slot="footer">
+                <template if:true={isLoadingMore}>
+                    <div class="slds-is-relative">
+                        Last flere
+                        <lightning-spinner
+                            alternative-text="Loading"
+                            size="small"
+                        ></lightning-spinner>
+                    </div>
+                </template>
+                <template if:false={isLoadingMore}>
+                    <a onclick={queryMoreJournalPosts}>Last flere</a>
+                </template>
+            </p>
+        </template>
     </lightning-card>
 </template>
