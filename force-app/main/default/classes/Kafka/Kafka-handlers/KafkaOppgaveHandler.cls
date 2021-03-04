@@ -2,6 +2,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private LoggerUtility logger = new LoggerUtility();
     private Map<String, String> actorAccMap = new Map<String, String>();
     private Map<String, KafkaMessage__c> messageMap = new Map<String, KafkaMessage__c>();
+    private Map<String, List<FeedItem>> feedItemMap = new Map<String, List<FeedItem>>(); //Maps a oppgave ref (INT_External_Reference__c) to a list of feed items to be created
 
     private static Map<String, String> commonCodeMap {
         get {
@@ -123,7 +124,39 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @return KafkaOppgave
      **/
     private KafkaOppgave getLatestTaskVersion(KafkaOppgave lhKafka, KafkaOppgave rhKafka) {
-        return lhKafka.versjon >= rhKafka.versjon ? lhKafka : rhKafka;
+        KafkaOppgave newestKafka = lhKafka.versjon > rhKafka.versjon ? lhKafka : rhKafka;
+        KafkaOppgave oldestKafka = lhKafka.versjon > rhKafka.versjon ? rhKafka : lhKafka;
+
+        //If beskrivelse is changed, create feed item for this to be displayed in the history
+        if (newestKafka.beskrivelse != oldestKafka.beskrivelse) {
+            addFeedItem(oldestKafka);
+        }
+        return newestKafka;
+    }
+
+    private void addFeedItem(KafkaOppgave kafkaOppgave) {
+        String oppgaveRef = String.valueOf(kafkaOppgave.id);
+
+        if (this.feedItemMap.containsKey(oppgaveRef)) {
+            List<FeedItem> mappedItems = this.feedItemMap.get(oppgaveRef);
+            mappedItems.add(createFeedItem(kafkaOppgave));
+            this.feedItemMap.put(oppgaveRef, mappedItems);
+        } else {
+            this.feedItemMap.put(oppgaveRef, new List<FeedItem>{ createFeedItem(kafkaOppgave) });
+        }
+    }
+
+    /**
+     * @description: Creating a placeholder feeditem that needs the parent ID field
+     * updated after successful upsert of NAV Tasks
+     * @author Stian Ruud Schikora | 03-04-2021
+     * @param kafkaOppgave
+     * @return FeedItem
+     **/
+    private FeedItem createFeedItem(KafkaOppgave kafkaOppgave) {
+        FeedItem post = new FeedItem();
+        post.Body = kafkaOppgave.beskrivelse;
+        return post;
     }
 
     /**
@@ -226,14 +259,49 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         List<Database.UpsertResult> upsList,
         List<NavTask__c> taskList
     ) {
+        Map<Id, NavTask__c> successMap = new Map<Id, NavTask__c>();
+
         for (Integer index = 0; index < upsList.size(); index++) {
             if (upsList[index].isSuccess()) {
                 //Successful upsert
+                Id taskId = upsList[index].getId();
+                successMap.put(taskId, taskList[index]);
             } else {
                 setMessageError(
                     upsList[index].getErrors(),
                     getRelatedMessage(String.valueOf(taskList[index].INT_External_Reference__c))
                 );
+            }
+        }
+
+        processFeedItems(successMap);
+    }
+
+    /**
+     * @description: Creates feed items for the updated NAV Tasks where the beskrivelse was changed
+     * @author Stian Ruud Schikora | 03-04-2021
+     * @param successList : List og external references successfully created/updated
+     **/
+    private void processFeedItems(Map<Id, NavTask__c> successMap) {
+        List<FeedItem> postsToInsert = new List<FeedItem>();
+
+        for (Id navTaskId : successMap.keySet()) {
+            String oppgaveRef = String.valueOf(successMap.get(navTaskId).INT_External_Reference__c);
+            if (this.feedItemMap.containsKey(oppgaveRef)) {
+                for (FeedItem post : this.feedItemMap.get(oppgaveRef)) {
+                    post.ParentId = navTaskId;
+                    postsToInsert.add(post);
+                }
+            }
+        }
+
+        List<Database.SaveResult> srList = Database.insert(postsToInsert);
+        for (Integer index = 0; index < srList.size(); index++) {
+            if (!srList[index].isSuccess()) {
+                String messageReference = String.valueOf(
+                    successMap.get(postsToInsert[index].ParentId).INT_External_Reference__c
+                );
+                setMessageError(srList[index].getErrors(), getRelatedMessage(messageReference));
             }
         }
     }

@@ -28,6 +28,7 @@ public class KafkaOppgaveHandler_Test {
 
         version2 = testOppgave.clone();
         version2.versjon = 2;
+        version2.beskrivelse = 'NEW TEST DESCRIPTION';
 
         errorTest = testOppgave.clone();
         errorTest.id = 53337;
@@ -85,5 +86,8 @@ public class KafkaOppgaveHandler_Test {
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
+        System.assert(
+            [SELECT COUNT() FROM FeedItem WHERE ParentId IN :[SELECT Id FROM NavTask__c]] != 0
+        );
     }
 }
