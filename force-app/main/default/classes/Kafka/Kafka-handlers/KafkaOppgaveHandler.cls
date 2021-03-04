@@ -1,7 +1,7 @@
 public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private LoggerUtility logger = new LoggerUtility();
     private Map<String, String> actorAccMap = new Map<String, String>();
-    private Map<String, KafkaMessage__c> messageMap = new Map<String, KafkaMessage__c>();
+    private Map<String, List<KafkaMessage__c>> messageMap = new Map<String, List<KafkaMessage__c>>(); //Maps CRM_Key__c to a list of KafkaMessages for that key
     private Map<String, List<FeedItem>> feedItemMap = new Map<String, List<FeedItem>>(); //Maps a oppgave ref (INT_External_Reference__c) to a list of feed items to be created
 
     private static Map<String, String> commonCodeMap {
@@ -97,7 +97,16 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                         returnMap.put(Decimal.valueOf(message.CRM_Key__c), kafkaOppgave);
                     }
                     //Put in message map for later status update depending on DML
-                    this.messageMap.put(message.CRM_Key__c, message);
+                    if (this.messageMap.containsKey(message.CRM_Key__c)) {
+                        List<KafkaMessage__c> mappedMsgs = this.messageMap.get(message.CRM_Key__c);
+                        mappedMsgs.add(message);
+                        this.messageMap.put(message.CRM_Key__c, mappedMsgs);
+                    } else {
+                        this.messageMap.put(
+                            message.CRM_Key__c,
+                            new List<KafkaMessage__c>{ message }
+                        );
+                    }
                     message.CRM_Status__c = KafkaMessageService.STATUS_PROCESSED;
                 } else {
                     message.CRM_Status__c = KafkaMessageService.STATUS_PROCESSED;
@@ -173,18 +182,21 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             try {
                 convertedTask = convertToNavTask(kafkaOppgave);
             } catch (Exception ex) {
-                //If conversion throws exception, add error to related kafka message
-                getRelatedMessage(String.valueOf(kafkaOppgave.id))
-                    .CRM_Status__c = KafkaMessageService.STATUS_ERROR;
-                String errorMsg =
-                    'Exception: ' +
-                    ex.getTypeName() +
-                    ' - ' +
-                    ex.getMessage() +
-                    ' - ' +
-                    ex.getStackTraceString();
-                getRelatedMessage(String.valueOf(kafkaOppgave.id))
-                    .CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
+                //If conversion throws exception, add error to related kafka messages
+                for (
+                    KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))
+                ) {
+                    String errorMsg =
+                        'Exception: ' +
+                        ex.getTypeName() +
+                        ' - ' +
+                        ex.getMessage() +
+                        ' - ' +
+                        ex.getStackTraceString();
+                    message.CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
+
+                    setMessageError(errorMsg, message);
+                }
             }
             if (convertedTask != null)
                 returnList.add(convertedTask);
@@ -235,10 +247,10 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 null,
                 CRM_ApplicationDomain.domain.NKS
             );
-            getRelatedMessage(String.valueOf(kafkaOppgave.id))
-                .CRM_Status__c = KafkaMessageService.STATUS_ERROR;
-            getRelatedMessage(String.valueOf(kafkaOppgave.id)).CRM_ErrorMessage__c =
-                'Actor not found: ' + kafkaOppgave.getActorId();
+
+            for (KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))) {
+                setMessageError('Actor not found: ' + kafkaOppgave.getActorId(), message);
+            }
             return null;
         }
         return navTask;
@@ -267,10 +279,14 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 Id taskId = upsList[index].getId();
                 successMap.put(taskId, taskList[index]);
             } else {
-                setMessageError(
-                    upsList[index].getErrors(),
-                    getRelatedMessage(String.valueOf(taskList[index].INT_External_Reference__c))
-                );
+                //Sets an error on every kafka message with the unique key
+                for (
+                    KafkaMessage__c message : getRelatedMessages(
+                        String.valueOf(taskList[index].INT_External_Reference__c)
+                    )
+                ) {
+                    setMessageError(upsList[index].getErrors(), message);
+                }
             }
         }
 
@@ -301,7 +317,10 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 String messageReference = String.valueOf(
                     successMap.get(postsToInsert[index].ParentId).INT_External_Reference__c
                 );
-                setMessageError(srList[index].getErrors(), getRelatedMessage(messageReference));
+                //Sets an error on every kafka message with the unique key
+                for (KafkaMessage__c message : getRelatedMessages(messageReference)) {
+                    setMessageError(srList[index].getErrors(), message);
+                }
             }
         }
     }
@@ -309,7 +328,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     /**
      * @description: Sets the message error
      * @author Stian Ruud Schikora | 02-26-2021
-     * @param errList
+     * @param errList [List<Database.Error>]
      * @param message
      **/
     private void setMessageError(List<Database.Error> errList, KafkaMessage__c message) {
@@ -326,13 +345,24 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     }
 
     /**
-     * @description: Returns the message related to the task matching CRM_Key__c
+     * @description: Sets the message error
+     * @author Stian Ruud Schikora | 02-26-2021
+     * @param String : errorMessage
+     * @param message
+     **/
+    private void setMessageError(String errorMessage, KafkaMessage__c message) {
+        message.CRM_ErrorMessage__c = errorMessage;
+        message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
+    }
+
+    /**
+     * @description: Returns a list of kafka messages with a matching CRM_Key__c
      * and the INT_EXternal_Reference__c field
      * @author Stian Ruud Schikora | 02-26-2021
-     * @param task
-     * @return KafkaMessage__c
+     * @param String : reference
+     * @return List<KafkaMessage__c>
      **/
-    private KafkaMessage__c getRelatedMessage(String reference) {
+    private List<KafkaMessage__c> getRelatedMessages(String reference) {
         return this.messageMap.get(reference);
     }
 }
