@@ -40,6 +40,12 @@
                 type="Integer"
                 default="10"
             />
+            <property
+                name="themeGroupField"
+                label="Theme group field"
+                description="The field where the theme group can be found. If blank all theme groups are selected"
+                type="String"
+            />
         </targetConfig>
     </targetConfigs>
 

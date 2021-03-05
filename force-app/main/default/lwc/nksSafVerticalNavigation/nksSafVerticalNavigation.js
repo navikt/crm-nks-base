@@ -71,10 +71,8 @@ export default class NksSafVerticalNavigation extends LightningElement {
         return this._selectedCase;
     }
 
-    // get isThemeSelectionDisabled() { return this.selectedThemeGroup === 'all' ? true : false; }
-
     set selectedThemeGroup(value) {
-        this._selectedThemeGroup = value ? value : all;
+        this._selectedThemeGroup = value ? value : 'all';
         this.filterThemes();
         this.dispatchAvailableThemes();
         this.selectedTheme = 'all';
@@ -101,7 +99,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
         await this.callGetThemes();
         await this.callGetCases();
         await this.callGetSelectedTheme();
-        //this.selectedThemeGroup = 'all';
         this.isLoading = false;
     }
 
@@ -122,6 +119,8 @@ export default class NksSafVerticalNavigation extends LightningElement {
             } catch (err) {
                 this.setErrorMessage(err, 'caughtError');
             }
+        } else {
+            this.selectedThemeGroup = 'all';
         }
     }
 
@@ -231,10 +230,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
     handleThemeGroupChange(event) {
         this.selectedThemeGroup = event.detail.value;
     }
-
-    // handleThemeChange(event) {
-    //     this.selectedTheme = event.detail.value
-    // }
 
     handleSelectCaseChange(event) {
         this.selectedCase = event.detail.name;

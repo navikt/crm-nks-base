@@ -86,6 +86,14 @@ export default class NksSafJournalpostList extends LightningElement {
         return this.queryVariables.tema;
     }
 
+    @api get themeGroupField() {
+        return this._themeGroupField ? this._themeGroupField : null;
+    }
+
+    set themeGroupField(value) {
+        this._themeGroupField = value ? value : null;
+    }
+
     @api get viewedObjectApiName() {
         return this._viewedObjectApiName ? this._viewedObjectApiName : this.objectApiName;
     }
