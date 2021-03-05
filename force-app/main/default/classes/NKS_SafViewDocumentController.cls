@@ -116,15 +116,10 @@ public with sharing class NKS_SafViewDocumentController {
      * Get the document from SAF and create the document data string
      */
     public void getDocument() {
-        getDocument(new NKS_SafService());
-    }
-
-    /**
-     * Get the document from SAF and create the document data string
-     */
-    public void getDocument(NKS_SafService service) {
         contentDisposition = '';
         contentType = 'application/pdf';
+
+        NKS_SafService service = new NKS_SafService();
 
         try {
             NKS_SafGetDocumentResponse response = service.getSafDocument(
@@ -135,7 +130,7 @@ public with sharing class NKS_SafViewDocumentController {
 
             if (true == response.isSuccess) {
                 contentType = response.contentType;
-                contentDisposition = response.contentDisposition + '; filename="' + fileName + '"';
+                contentDisposition = response.contentDisposition;
 
                 setPageHeader('content-disposition', contentDisposition);
 

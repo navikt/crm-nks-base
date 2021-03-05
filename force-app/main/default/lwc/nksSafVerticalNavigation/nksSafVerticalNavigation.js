@@ -1,10 +1,15 @@
 import { LightningElement, api, track } from 'lwc';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
+import getRecordId from '@salesforce/apex/NKS_SafJournalpostListController.getRecordId';
 
 export default class NksSafVerticalNavigation extends LightningElement {
     @api objectApiName;
     @api recordId;
+
+    @api get themeGroupField() {
+        return this._themeGroupField;
+    }
 
     @api get viewedObjectApiName() {
         return this._viewedObjectApiName ? this._viewedObjectApiName : this.objectApiName;
@@ -19,6 +24,9 @@ export default class NksSafVerticalNavigation extends LightningElement {
         return this._relationshipField;
     }
 
+    set themeGroupField(value) {
+        this._themeGroupField = value ? value : null;
+    }
     set viewedObjectApiName(value) {
         this._viewedObjectApiName = value ? value : this.objectApiName;
     }
@@ -32,6 +40,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
         this._relationshipField = value;
     }
 
+    _themeGroupField;
     _viewedObjectApiName;
     _viewedRecordId;
     _brukerIdField;
@@ -65,7 +74,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
     // get isThemeSelectionDisabled() { return this.selectedThemeGroup === 'all' ? true : false; }
 
     set selectedThemeGroup(value) {
-        this._selectedThemeGroup = value;
+        this._selectedThemeGroup = value ? value : all;
         this.filterThemes();
         this.dispatchAvailableThemes();
         this.selectedTheme = 'all';
@@ -88,10 +97,32 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
     async loadThemeAndCase() {
         this.isLoading = true;
+        this.error = null;
         await this.callGetThemes();
         await this.callGetCases();
-        this.selectedThemeGroup = 'all';
+        await this.callGetSelectedTheme();
+        //this.selectedThemeGroup = 'all';
         this.isLoading = false;
+    }
+
+    async callGetSelectedTheme() {
+        if (this.themeGroupField) {
+            const inputParams = {
+                field: this.themeGroupField,
+                objectApiName: this.viewedObjectApiName,
+                relationshipField: 'Id',
+                relationshipValue: this.viewedRecordId
+            };
+
+            this.error = null;
+
+            try {
+                let data = await getRecordId(inputParams);
+                this.selectedThemeGroup = data;
+            } catch (err) {
+                this.setErrorMessage(err, 'caughtError');
+            }
+        }
     }
 
     async callGetCases() {
@@ -102,8 +133,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
             viewedRecordId: this.viewedRecordId
         };
 
-        this.error = null;
-
         try {
             let data = await getCases(inputParams);
             this.caseMap = new Map();
@@ -113,7 +142,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
                     caseId: element.saksId,
                     themeName: element.themeName,
                     themeCode: element.sakstema.value,
-                    isOpen: element.lukket ? true : false,
+                    isOpen: element.lukket ? false : true,
                     openDate: element.opprettet,
                     closeDate: element.lukket
                 };
@@ -181,7 +210,13 @@ export default class NksSafVerticalNavigation extends LightningElement {
             }
         });
 
-        if (listCases.length > 1) {
+        listCases.push({
+            caseId: 'gs',
+            label: 'Generell Sak',
+            isOpen: true
+        });
+
+        if (listCases.length > 2) {
             listCases.splice(0, 0, {
                 caseId: 'all',
                 label: 'Alle',

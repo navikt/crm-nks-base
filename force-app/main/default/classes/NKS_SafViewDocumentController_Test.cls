@@ -205,9 +205,8 @@ private with sharing class NKS_SafViewDocumentController_Test {
         SingleRequestMock mock = new SingleRequestMock(200, 'Success', 'TEST_STRING', headers);
         Test.setMock(HttpCalloutMock.class, mock);
 
-        NKS_SafService service = new NKS_SafService();
         Test.startTest();
-        ctrl.getDocument(service);
+        ctrl.getDocument();
         Test.stopTest();
 
         System.assertEquals(
@@ -265,9 +264,8 @@ private with sharing class NKS_SafViewDocumentController_Test {
         );
         Test.setMock(HttpCalloutMock.class, mock);
 
-        NKS_SafService service = new NKS_SafService();
         Test.startTest();
-        ctrl.getDocument(service);
+        ctrl.getDocument();
         Test.stopTest();
 
         System.assertEquals(

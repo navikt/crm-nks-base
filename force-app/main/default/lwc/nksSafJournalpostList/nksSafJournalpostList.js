@@ -119,7 +119,11 @@ export default class NksSafJournalpostList extends LightningElement {
         return 1 <= this.errors.length ? true : false;
     }
     get canLoadMore() {
-        return this.sideInfo ? this.sideInfo.finnesNesteSide : false;
+        if (this.sideInfo) {
+            return this.sideInfo.finnesNesteSide;
+        }
+
+        return false;
     }
 
     getHasJournalposttype(statusElement) {
@@ -222,7 +226,9 @@ export default class NksSafJournalpostList extends LightningElement {
     filterAllJournalposts() {
         this.filteredJournalPosts = this.journalposts.filter(
             (journalpost) =>
-                (this.selectedCase == null || this.selectedCase === journalpost.sak.fagsakId) &&
+                (this.selectedCase == null ||
+                    this.selectedCase === journalpost.sak.fagsakId ||
+                    (this.selectedCase === 'gs' && null == journalpost.sak.fagsakId)) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );
     }

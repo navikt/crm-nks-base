@@ -10,6 +10,7 @@
                     viewed-object-api-name={viewedObjectApiName}
                     viewed-record-id={viewedRecordId}
                     bruker-id-field={brukerIdField}
+                    theme-group-field="NKS_Theme_Group__c"
                     relationship-field={relationshipField}
                     onsetavailablethemes={handleAvailableThemes}
                     onselectcase={handleSelectCase}
@@ -120,21 +121,18 @@
         </lightning-layout>
 
         <!-- CARD FOOTER -->
-        <template if:true={canLoadMore}>
-            <p slot="footer">
-                <template if:true={isLoadingMore}>
-                    <div class="slds-is-relative">
-                        Last flere
-                        <lightning-spinner
-                            alternative-text="Loading"
-                            size="small"
-                        ></lightning-spinner>
-                    </div>
-                </template>
-                <template if:false={isLoadingMore}>
-                    <a onclick={queryMoreJournalPosts}>Last flere</a>
-                </template>
-            </p>
-        </template>
+        <!-- <template if:true={canLoadMore}> -->
+        <p slot="footer">
+            <template if:true={isLoadingMore}>
+                <div class="slds-is-relative">
+                    Last flere
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </div>
+            </template>
+            <template if:false={isLoadingMore}>
+                <a onclick={queryMoreJournalPosts}>Last flere</a>
+            </template>
+        </p>
+        <!-- </template> -->
     </lightning-card>
 </template>

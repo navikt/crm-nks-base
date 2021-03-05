@@ -2,9 +2,6 @@
  * Get journal posts from SAF
  */
 public with sharing class NKS_SafJournalPostListController {
-    @TestVisible
-    private static NKS_SafService safService;
-
     @AuraEnabled(cacheable=true)
     public static NKS_SafQueryResponse getJournalPosts(
         String brukerIdField,
@@ -14,17 +11,17 @@ public with sharing class NKS_SafJournalPostListController {
         NKS_SafQueryVariables queryVariables,
         NKS_SafQueryField queryField
     ) {
+        NKS_SafService safService = new NKS_SafService();
         NKS_SafQueryResponse queryResults;
 
         try {
-            //Added to make safService mockable
-            if (safService == null) {
-                safService = new NKS_SafService();
-            }
-
             queryVariables.brukerId = getBrukerIdFromPerson(
-                getPersonId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
+                getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
             );
+
+            if (null == queryVariables.fraDato) {
+                queryVariables.fraDato = '2016-01-01';
+            }
 
             queryResults = safService.doSafQuery(
                 NKS_SafBuildQueryUtil.buildQuery(
@@ -52,26 +49,29 @@ public with sharing class NKS_SafJournalPostListController {
         String viewedRecordId
     ) {
         String actorId = getPersonActorId(
-            getPersonId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
+            getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
         );
 
         return NKS_NavCaseService.getNavCases(actorId);
     }
 
-    private static Id getPersonId(
-        String personIdField,
+    @AuraEnabled(cacheable=true)
+    public static Id getRecordId(
+        String field,
         String objectApiName,
         String relationshipField,
-        String viewedRecordId
+        String relationshipValue
     ) {
-        Id personId;
-
-        String query = 'SELECT ' + personIdField + ' FROM ' + objectApiName + ' WHERE ';
-        query += relationshipField + ' = :viewedRecordId';
-
+        String query =
+            'SELECT ' +
+            field +
+            ' FROM ' +
+            objectApiName +
+            ' WHERE ' +
+            relationshipField +
+            ' = :relationshipValue';
         sObject returnObject = Database.query(String.escapeSingleQuotes(query))[0];
-
-        return (Id) getFieldValue(returnObject, personIdField);
+        return (Id) getFieldValue(returnObject, field);
     }
 
     private static NKS_SafBrukerIdInput getBrukerIdFromPerson(Id personId) {
