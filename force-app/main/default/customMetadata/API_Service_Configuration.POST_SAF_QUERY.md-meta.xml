@@ -76,7 +76,7 @@
 &quot;kanal&quot;: &quot;NAV_NO&quot;,
 &quot;kanalnavn&quot;: &quot;Ditt NAV&quot;,
 &quot;sak&quot;: {
-&quot;fagsakId&quot;: &quot;000012974&quot;
+&quot;fagsakId&quot;: &quot;000200019&quot;
 },
 &quot;avsenderMottaker&quot;: {
 &quot;navn&quot;: &quot;Harry&quot;
@@ -108,7 +108,7 @@
 &quot;kanal&quot;: &quot;SKAN_IM&quot;,
 &quot;kanalnavn&quot;: &quot;Skanning Iron Mountain&quot;,
 &quot;sak&quot;: {
-&quot;fagsakId&quot;: &quot;sdsgsgsd&quot;
+&quot;fagsakId&quot;: null
 },
 &quot;avsenderMottaker&quot;: {
 &quot;navn&quot;: &quot;Harry&quot;
