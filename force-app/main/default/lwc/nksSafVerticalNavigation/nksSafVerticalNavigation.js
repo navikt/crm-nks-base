@@ -53,7 +53,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
     @track themeGroupArr = [];
     @track themeArr = [];
     @track themeCodeArr = [];
-    @track caseMap;
+    @track caseMap = new Map();
     @track caseArr = [];
 
     _selectedThemeGroup = 'all';
