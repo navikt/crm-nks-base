@@ -13,6 +13,10 @@ public with sharing class NKS_SafService {
      * @return NKS_SafQueryResponse
      */
     public NKS_SafQueryResponse doSafQuery(NKS_SafQuery queryObj) {
+        if (String.isBlank(queryObj.variables.fraDato)) {
+            queryObj.variables.fraDato = '2016-06-04';
+        }
+
         //Create the result
         NKS_SafQueryResponse queryResult = new NKS_SafQueryResponse();
         queryResult.isSuccess = false;

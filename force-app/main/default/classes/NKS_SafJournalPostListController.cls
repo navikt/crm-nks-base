@@ -19,10 +19,6 @@ public with sharing class NKS_SafJournalPostListController {
                 getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
             );
 
-            if (null == queryVariables.fraDato) {
-                queryVariables.fraDato = '2016-01-01';
-            }
-
             queryResults = safService.doSafQuery(
                 NKS_SafBuildQueryUtil.buildQuery(
                     'dokumentoversiktBruker',
