@@ -1,0 +1,90 @@
+<template>
+    <lightning-card title={listTitle} icon-name="utility:money">
+        <lightning-layout>
+            <lightning-layout-item flexibility="shrink">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
+                        <div>
+                            <h1>Periode</h1>
+                        </div>
+                        <lightning-radio-group
+                            name="periodOptions"
+                            label="Periode"
+                            variant="label-hidden"
+                            options={periodOptions}
+                            value={selectedPeriod}
+                            type="radio"
+                            disabled={error}
+                        ></lightning-radio-group>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <div>
+                            <h1>Ytelse</h1>
+                        </div>
+                        <lightning-checkbox-group
+                            name="ytelseOptions"
+                            label="Ytelse"
+                            variant="label-hidden"
+                            options={ytelseOptions}
+                            value={selectedYtelser}
+                            onchange={ytelseChanged}
+                            disabled={error}
+                        >
+                        </lightning-checkbox-group>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <template if:true={isLoading}>
+                    <lightning-spinner
+                        variant="brand"
+                        alternative-text="Loading"
+                    ></lightning-spinner>
+                </template>
+                <template if:false={isLoading}>
+                    <template if:true={hasPayments}>
+                        <c-nks-payment-totals payment-groups={paymentGroups}></c-nks-payment-totals>
+                        <template for:each={paymentGroups} for:item="paymentGroup">
+                            <template iterator:it={paymentGroup}>
+                                <h1
+                                    if:true={it.first}
+                                    class="slds-text-title_caps slds-border_bottom slds-var-m-bottom_small"
+                                    key={it.value.group}
+                                >
+                                    <lightning-formatted-date-time
+                                        year="numeric"
+                                        month="long"
+                                        value={it.value.data.utbetalingsdato}
+                                    ></lightning-formatted-date-time>
+                                </h1>
+                                <c-nks-person-payment
+                                    key={it.value.data.posteringsdato}
+                                    payment={it.value.data}
+                                ></c-nks-person-payment>
+                                <div
+                                    if:true={it.last}
+                                    key={it.value.group}
+                                    class="slds-var-m-bottom_xx-large"
+                                ></div>
+                            </template>
+                        </template>
+                    </template>
+                    <template if:false={error}>
+                        <template if:false={hasPayments}>
+                            <c-nks-alert-banner
+                                type="Info"
+                                message={noPaymentsMessage}
+                            ></c-nks-alert-banner>
+                        </template>
+                    </template>
+                    <template if:true={error}>
+                        <!--Error message-->
+                        <c-nks-alert-banner type="Error" message={errorMessage}
+                            >/</c-nks-alert-banner
+                        >
+                    </template>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

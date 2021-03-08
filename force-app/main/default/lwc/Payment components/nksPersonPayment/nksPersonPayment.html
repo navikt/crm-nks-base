@@ -1,0 +1,59 @@
+<template>
+    <div
+        class="payment-tile-bg slds-var-p-around_small slds-var-m-bottom_x-small"
+        aria-expanded={expanded}
+        onclick={toggleExpand}
+    >
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item
+                size="1"
+                padding="horizontal-small"
+                class="slds-align_absolute-center"
+            >
+                <lightning-icon
+                    data-paid={paid}
+                    icon-name={statusIcon}
+                    size="small"
+                    class="slds-var-p-right_small"
+                >
+                </lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item size="11">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" padding="horizontal-small">
+                        <b class="slds-text-title_caps">{ytelserHeader}</b>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="10" padding="horizontal-small">
+                        <lightning-layout>
+                            <lightning-formatted-date-time
+                                value={payment.utbetalingsdato}
+                            ></lightning-formatted-date-time>
+                            &nbsp;
+                            <p>- {payment.utbetalingsstatus}</p>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" padding="horizontal-small">
+                        <lightning-layout horizontal-align="end">
+                            <b>
+                                <lightning-formatted-number
+                                    value={payment.utbetalingNettobeloep}
+                                    maximum-fraction-digits="2"
+                                    minimum-fraction-digits="2"
+                                ></lightning-formatted-number>
+                            </b>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <!--PAYMENT DETAILS-->
+            <lightning-layout-item
+                if:true={expanded}
+                class="slds-var-m-top_x-large"
+                padding="horizontal-small"
+                size="12"
+            >
+                <c-nks-payment-details payment={payment}></c-nks-payment-details>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

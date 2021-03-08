@@ -1,10 +1,9 @@
 .payment-tile-bg  {
-    background-color: rgb(242, 242, 242);
     border-style: solid;
-    border-color: rgb(242, 242, 242);
-    border-width: 1px;
+    border-color: darkolivegreen;
+    border-width: 1.5px;
     cursor: pointer;
-    border-radius: 0.2em;
+    border-radius: 0.3em;
 }
 
 .payment-tile-bg:hover {
@@ -12,4 +11,8 @@
     border-style: solid;
     box-shadow: 0 0 0.1em #0070d2;
     border-width: 1px;
+}
+
+lightning-icon[data-paid='true'] {
+    --sds-c-icon-color-foreground-default: green;
 }
