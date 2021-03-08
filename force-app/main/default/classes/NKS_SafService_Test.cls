@@ -53,7 +53,9 @@ private with sharing class NKS_SafService_Test {
         Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-        result = service.doSafQuery(new NKS_SafQuery());
+        NKS_SafQuery query = new NKS_SafQuery();
+        query.variables = new NKS_SafQueryVariables();
+        result = service.doSafQuery(query);
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
@@ -94,7 +96,9 @@ private with sharing class NKS_SafService_Test {
         Test.setMock(HttpCalloutMock.class, mock);
 
         Test.startTest();
-        result = service.doSafQuery(new NKS_SafQuery());
+        NKS_SafQuery query = new NKS_SafQuery();
+        query.variables = new NKS_SafQueryVariables();
+        result = service.doSafQuery(query);
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');

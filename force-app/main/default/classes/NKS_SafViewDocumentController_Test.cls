@@ -199,7 +199,7 @@ private with sharing class NKS_SafViewDocumentController_Test {
 
         Map<String, String> headers = new Map<String, String>{
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline'
+            'Content-Disposition' => 'inline; filename="myTestFile.pdf"'
         };
 
         SingleRequestMock mock = new SingleRequestMock(200, 'Success', 'TEST_STRING', headers);
