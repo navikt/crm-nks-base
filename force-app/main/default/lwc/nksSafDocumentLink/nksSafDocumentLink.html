@@ -1,0 +1,27 @@
+<template>
+    <template if:true={isLoaded}>
+        <!-- Link to document if readable -->
+        <template if:true={isReadable}>
+            <a href="#" onclick={navigateToDocument}>{title}</a>
+            <template if:true={hasLogicalAttachments}>
+                <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
+                    <template iterator:it={dokumentInfo.logiskeVedlegg}>
+                        <li class="slds-item" key={it.value.logiskVedleggId}>{it.value.tittel}</li>
+                    </template>
+                </ul>
+            </template>
+        </template>
+
+        <!-- Text only if not readable -->
+        <template if:false={isReadable}>
+            <lightning-icon
+                icon-name="utility:ban"
+                alternative-text="Du har ikke tilgang til dette dokumentet"
+                title="Du har ikke tilgang til dette dokumentet"
+                size="xx-small"
+            >
+            </lightning-icon>
+            &nbsp; {title}
+        </template>
+    </template>
+</template>
