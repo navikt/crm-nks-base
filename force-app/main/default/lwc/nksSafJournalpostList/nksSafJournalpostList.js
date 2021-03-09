@@ -195,10 +195,17 @@ export default class NksSafJournalpostList extends LightningElement {
 
         try {
             const journalpostData = await getJournalPosts(inputParams);
-            this.sideInfo = journalpostData.documentOverview.sideInfo;
-            this.journalposts = isQueryMore
-                ? this.journalposts.concat(journalpostData.documentOverview.journalposter)
-                : journalpostData.documentOverview.journalposter;
+            if (journalpostData.isSuccess) {
+                this.sideInfo = journalpostData.documentOverview.sideInfo;
+                this.journalposts = isQueryMore
+                    ? this.journalposts.concat(journalpostData.documentOverview.journalposter)
+                    : journalpostData.documentOverview.journalposter;
+            } else {
+                this.sideInfo = null;
+                this.journalposts = [];
+                this.setErrorMessage(journalpostData.error, 'journalpostError');
+            }
+
             this.filterAllJournalposts();
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
