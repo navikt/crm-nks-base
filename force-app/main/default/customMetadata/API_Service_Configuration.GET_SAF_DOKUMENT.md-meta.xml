@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Has_Path_Parameters__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Mock_Response__c</field>
@@ -49,6 +49,6 @@
         <field>Service_Path__c</field>
         <value
             xsi:type="xsd:string"
-        >/rest/hentdokument/{journalpostId}/{dokumentInfoId}/{variantFormat}</value>
+        >/saf/rest/hentdokument/{journalpostId}/{dokumentInfoId}/{variantFormat}</value>
     </values>
 </CustomMetadata>

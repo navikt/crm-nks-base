@@ -183,7 +183,13 @@
 },
 &quot;401&quot;: {
 &quot;headers&quot;: null,
-&quot;body&quot;: null
+&quot;body&quot;: {
+&quot;timestamp&quot;:&quot;2021-03-09T09:47:03.095+00:00&quot;,
+&quot;status&quot;:401,
+&quot;error&quot;:&quot;Unauthorized&quot;,
+&quot;message&quot;:&quot;no valid token found in validation context&quot;,
+&quot;path&quot;:&quot;/rest/hentdokument/journalId/documentInfoId/variantFormat&quot;
+}
 },
 &quot;404&quot;: {&quot;headers&quot;: null,
 &quot;body&quot;: null
@@ -196,6 +202,6 @@
     </values>
     <values>
         <field>Service_Path__c</field>
-        <value xsi:type="xsd:string">/graphql</value>
+        <value xsi:type="xsd:string">/saf/graphql</value>
     </values>
 </CustomMetadata>
