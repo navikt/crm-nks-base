@@ -1,6 +1,7 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getRelatedList from '@salesforce/apex/NKS_RelatedListController.getRelatedList';
 import { NavigationMixin } from 'lightning/navigation';
+import { getRecord } from 'lightning/uiRecordApi';
 
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -17,10 +18,27 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api parentRelationField; //Field API name of hos the parent is related in the junction
     @api filterConditions; //Optional filter conditions (i.e. Name != 'TEST')
     @api headerColor; // Color for the component header
+    @api dynamicUpdate = false; // Flag to set if component should automatically refresh if the an update is triggered on the parent record page
+    @api wireFields;
+    @api maxHeight = 20; //Defines the max height in em of the component
+    @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
 
     connectedCallback() {
         //Call apex to retrieve related records
+        this.wireFields = [this.objectApiName + '.Id'];
         this.getList();
+    }
+
+    //Wire function to allow for dynamic update
+    @wire(getRecord, { recordId: '$recordId', fields: '$wireFields' })
+    getaccountRecord({ data, error }) {
+        if (data) {
+            if (this.dynamicUpdate === true) {
+                this.getList();
+            }
+        } else if (error) {
+            //Error
+        }
     }
 
     //Calls apex to retrieve related records
@@ -38,9 +56,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
                 this.relatedRecords = data && data.length > 0 ? data : null;
             })
             .catch((error) => {
-                console.log(
-                    'An error occurred: ' + JSON.stringify(error, null, 2)
-                );
+                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
             });
     }
 
@@ -96,19 +112,23 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             : '';
     }
 
+    get tableHeaderStyle() {
+        return 'width: 100%; max-height: ' + this.maxHeight.toString() + 'em';
+    }
+
+    get scrollableStyle() {
+        return 'max-height: ' + this.maxHeight.toString() + 'em';
+    }
+
     get fieldLabels() {
         let labels =
-            this.columnLabels != null
-                ? this.columnLabels.replace(/\s/g, '').split(',')
-                : [];
+            this.columnLabels != null ? this.columnLabels.replace(/\s/g, '').split(',') : [];
         return labels;
     }
 
     get fieldList() {
         let fieldList =
-            this.displayedFields != null
-                ? this.displayedFields.replace(/\s/g, '').split(',')
-                : [];
+            this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
         return fieldList;
     }
 

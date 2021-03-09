@@ -34,7 +34,7 @@ export default class NksThemeCategorization extends LightningElement {
             this.subthemeMap = data.subthemeMap;
             this.themeMap = data.themeMap;
 
-            if (this.chosenThemeGroup) this.filterThemes();
+            if (this.chosenThemeGroup || this.chosenTheme) this.filterThemes();
             if (this.chosenTheme) this.filterSubthemes();
         }
     }
@@ -93,10 +93,7 @@ export default class NksThemeCategorization extends LightningElement {
     get themeCode() {
         let themeCode = '';
 
-        let themes =
-            this.themeGroup && this.themeMap
-                ? this.themeMap[this.themeGroup]
-                : [];
+        let themes = this.themeGroup && this.themeMap ? this.themeMap[this.themeGroup] : [];
         for (let theme of themes) {
             if (theme.Id === this.theme) {
                 themeCode = theme.CRM_Code__c;
@@ -128,9 +125,7 @@ export default class NksThemeCategorization extends LightningElement {
         //Added subtheme check as flow was failing when chosing themes with no subthemes
         if (this.subtheme) {
             let subthemes =
-                this.chosenTheme &&
-                this.subthemeMap &&
-                Object.keys(this.subthemeMap).length !== 0
+                this.chosenTheme && this.subthemeMap && Object.keys(this.subthemeMap).length !== 0
                     ? this.subthemeMap[this.theme]
                     : [];
             for (let subtheme of subthemes) {
@@ -145,15 +140,33 @@ export default class NksThemeCategorization extends LightningElement {
     }
 
     filterThemes() {
-        let listThemes =
-            this.themeGroup && this.themeMap && this.themeGroup in this.themeMap
-                ? this.themeMap[this.themeGroup]
-                : [];
         let returnThemes = [];
-        listThemes.forEach((theme) => {
-            returnThemes.push({ label: theme.Name, value: theme.Id });
-        });
-        this.themes = returnThemes;
+        //If the task already has a theme defined but no theme group
+        if (this.chosenTheme && !this.chosenThemeGroup) {
+            for (const key in this.themeMap) {
+                if (this.themeMap.hasOwnProperty(key)) {
+                    this.themeMap[key].forEach((theme) => {
+                        if (theme.Id == this.theme) {
+                            returnThemes.push({
+                                label: theme.Name,
+                                value: theme.Id
+                            });
+                        }
+                    });
+                    break;
+                }
+            }
+            this.themes = returnThemes;
+        } else {
+            let listThemes =
+                this.themeGroup && this.themeMap && this.themeGroup in this.themeMap
+                    ? this.themeMap[this.themeGroup]
+                    : [];
+            listThemes.forEach((theme) => {
+                returnThemes.push({ label: theme.Name, value: theme.Id });
+            });
+            this.themes = returnThemes;
+        }
     }
 
     filterSubthemes() {
@@ -178,12 +191,9 @@ export default class NksThemeCategorization extends LightningElement {
 
     get subthemePlaceholder() {
         let placeholder = '(Ikke valgt)';
-        if (this.chosenTheme) {
+        if (this.chosenTheme && this.subthemeMap) {
             let themeInMap = this.chosenTheme in this.subthemeMap;
-            placeholder =
-                this.subthemeMap && themeInMap
-                    ? '(Ikke valgt)'
-                    : '(Ingen undertema)';
+            placeholder = this.subthemeMap && themeInMap ? '(Ikke valgt)' : '(Ingen undertema)';
         }
 
         return placeholder;
