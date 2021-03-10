@@ -1,4 +1,4 @@
-public class KafkaOppgave {
+public class KafkaOppgave implements Comparable {
     public Integer id;
     public String tildeltEnhetsnr; //Enheten oppgaven er tildelt. Dersom enhet ikke er angitt, så vil oppgaven automatisk fordeles iht. standard arbeidsfordelingsregler (se norg2)
     public String opprettetAvEnhetsnr;
@@ -20,6 +20,19 @@ public class KafkaOppgave {
     public List<Ident> identer; //To-be model
     public LegacyIdent ident;
 
+    public Integer compareTo(Object compareToObj) {
+        KafkaOppgave compareOppg = (KafkaOppgave) compareToObj;
+
+        Integer returnValue = 0;
+        if (versjon > compareOppg.versjon) {
+            returnValue = 1;
+        } else if (versjon > compareOppg.versjon) {
+            returnValue = -1;
+        }
+
+        return returnValue;
+    }
+
     public class Ident {
         public String ident;
         public String gruppe;
@@ -28,7 +41,6 @@ public class KafkaOppgave {
     public class LegacyIdent {
         public String identType;
         public String verdi;
-        public String folkeregisterident;
     }
 
     public String getActorId() {
@@ -48,17 +60,5 @@ public class KafkaOppgave {
                 return idt.ident;
             }
         }*/
-    }
-
-    public String getPersonIdent() {
-        for (Ident idt : this.identer) {
-            if (
-                String.isNotBlank(idt.gruppe) && idt.gruppe.equalsIgnoreCase('FOLKEREGISTERIDENT')
-            ) {
-                return idt.ident;
-            }
-        }
-
-        return null;
     }
 }

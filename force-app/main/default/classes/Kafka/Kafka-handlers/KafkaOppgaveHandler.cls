@@ -34,10 +34,44 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
 
     public void processMessages(List<KafkaMessage__c> messages) {
         List<NavTask__c> tasksToUpsert = new List<NavTask__c>();
-        Map<Decimal, KafkaOppgave> kafkaTaskMap = convertToKafkaTasks(messages);
-        initAccountMap();
+        Map<Decimal, NavTask__c> existingTaskMap = new Map<Decimal, NavTask__c>();
+        Map<Decimal, List<KafkaOppgave>> kafkaTaskMap = convertToKafkaTasks(messages);
+        List<KafkaOppgave> tasksToConvert = new List<KafkaOppgave>();
 
-        tasksToUpsert = convertToNavTasks(kafkaTaskMap.values());
+        for (NavTask__c navTask : [
+            SELECT Id, INT_External_Reference__c, CRM_Comments__c, NKS_Task_Version__c
+            FROM NavTask__c
+            WHERE INT_External_Reference__c IN :kafkaTaskMap.keySet()
+        ]) {
+            existingTaskMap.put(navTask.INT_External_Reference__c, navTask);
+        }
+
+        for (Decimal taskRef : kafkaTaskMap.keySet()) {
+            String newestComment;
+            Integer existingTaskVersion = 0;
+            if (existingTaskMap.containsKey(taskRef)) {
+                newestComment = existingTaskMap.get(taskRef).CRM_Comments__c;
+                existingTaskVersion = Integer.valueOf(
+                    existingTaskMap.get(taskRef).NKS_Task_Version__c
+                );
+            }
+            KafkaOppgave taskToConvert;
+            for (KafkaOppgave kafkaOppgave : kafkaTaskMap.get(taskRef)) {
+                //As list is sorted, the taskToConvert will always be set to the newest version after finishing the loop
+                taskToConvert = kafkaOppgave;
+                if (
+                    String.isNotBlank(kafkaOppgave.beskrivelse) &&
+                    (kafkaOppgave.beskrivelse != newestComment ||
+                    taskToConvert.versjon == existingTaskVersion)
+                ) {
+                    newestComment = kafkaOppgave.beskrivelse;
+                    addFeedItem(kafkaOppgave);
+                }
+            }
+            tasksToConvert.add(taskToConvert);
+        }
+
+        tasksToUpsert = convertToNavTasks(tasksToConvert);
 
         doUpsert(tasksToUpsert);
         logger.publish();
@@ -72,29 +106,28 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     }
 
     /**
-     * @description: Generates a list of KafkaOppgave wrappers based on the kafka messages
+     * @description: Generates a map of KafkaOppgave wrappers based on the kafka messages
      * @author Stian Ruud Schikora | 01-15-2021
      * @param messages
-     * @return List<KafkaOppgave>
+     * @return Map<Decimal, KafkaOppgave>
      **/
-    private Map<Decimal, KafkaOppgave> convertToKafkaTasks(List<KafkaMessage__c> messages) {
-        Map<Decimal, KafkaOppgave> returnMap = new Map<Decimal, KafkaOppgave>();
+    private Map<Decimal, List<KafkaOppgave>> convertToKafkaTasks(List<KafkaMessage__c> messages) {
+        Map<Decimal, List<KafkaOppgave>> returnMap = new Map<Decimal, List<KafkaOppgave>>();
 
         for (KafkaMessage__c message : messages) {
             try {
+                Decimal messageKey = Decimal.valueOf(message.CRM_Key__c);
                 KafkaOppgave kafkaOppgave = convertToKafkaTask(message);
                 if (kafkaOppgave != null) {
                     if (kafkaOppgave.getActorId() != null)
                         actorAccMap.put(kafkaOppgave.getActorId(), ''); //Adding the actor ids to map for initialization aftert successful conversions
                     //If the map already contains the unique task reference, check which of the messages containcs the latest version number
-                    if (returnMap.containsKey(Decimal.valueOf(message.CRM_Key__c))) {
-                        KafkaOppgave latestVersjon = getLatestTaskVersion(
-                            kafkaOppgave,
-                            returnMap.get(Decimal.valueOf(message.CRM_Key__c))
-                        );
-                        returnMap.put(Decimal.valueOf(latestVersjon.id), latestVersjon);
+                    if (returnMap.containsKey(messageKey)) {
+                        List<KafkaOppgave> mapList = returnMap.get(messageKey);
+                        mapList.add(kafkaOppgave);
+                        returnMap.put(messageKey, mapList);
                     } else {
-                        returnMap.put(Decimal.valueOf(message.CRM_Key__c), kafkaOppgave);
+                        returnMap.put(messageKey, new List<kafkaOppgave>{ kafkaOppgave });
                     }
                     //Put in message map for later status update depending on DML
                     if (this.messageMap.containsKey(message.CRM_Key__c)) {
@@ -122,25 +155,12 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
             }
         }
-        return returnMap;
-    }
-
-    /**
-     * @description: Compares two KafkaOppgave wrappers and return the one with the highest version number
-     * @author Stian Ruud Schikora | 02-26-2021
-     * @param lhKafka
-     * @param rhKafka
-     * @return KafkaOppgave
-     **/
-    private KafkaOppgave getLatestTaskVersion(KafkaOppgave lhKafka, KafkaOppgave rhKafka) {
-        KafkaOppgave newestKafka = lhKafka.versjon > rhKafka.versjon ? lhKafka : rhKafka;
-        KafkaOppgave oldestKafka = lhKafka.versjon > rhKafka.versjon ? rhKafka : lhKafka;
-
-        //If beskrivelse is changed, create feed item for this to be displayed in the history
-        if (newestKafka.beskrivelse != oldestKafka.beskrivelse) {
-            addFeedItem(oldestKafka);
+        initAccountMap();
+        //Sorting the lists. First item is the oldest version
+        for (List<KafkaOppgave> oppgaveList : returnMap.values()) {
+            oppgaveList.sort();
         }
-        return newestKafka;
+        return returnMap;
     }
 
     private void addFeedItem(KafkaOppgave kafkaOppgave) {
@@ -332,8 +352,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @param message
      **/
     private void setMessageError(List<Database.Error> errList, KafkaMessage__c message) {
+        String errorMsg = '';
         for (Database.Error err : errList) {
-            message.CRM_ErrorMessage__c =
+            errorMsg =
                 err.getStatusCode() +
                 ': ' +
                 err.getMessage() +
@@ -341,6 +362,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 'FIELDS: ' +
                 err.getFields();
         }
+        message.CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
     }
 
