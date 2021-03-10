@@ -13,16 +13,18 @@ public with sharing class NKS_SafService {
      * @return NKS_SafQueryResponse
      */
     public NKS_SafQueryResponse doSafQuery(NKS_SafQuery queryObj) {
+        LoggerUtility logger = new LoggerUtility();
+
         if (String.isBlank(queryObj.variables.fraDato)) {
             queryObj.variables.fraDato = '2016-06-04';
         }
 
         //Create the result
-        NKS_SafQueryResponse queryResult = new NKS_SafQueryResponse();
-        queryResult.isSuccess = false;
+        NKS_SafQueryResponse queryResult; //= new NKS_SafQueryResponse();
+        //queryResult.isSuccess = false;
 
         String query = JSON.Serialize(queryObj, true);
-
+        system.debug(query);
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest(API_CONFIG_NAME, 'POST_SAF_QUERY');
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
@@ -36,7 +38,10 @@ public with sharing class NKS_SafService {
         bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
 
         if (statusCode == 200) {
-            queryResult.documentOverview = getDokumentoversiktFromSafQueryResponse(bodyString);
+            queryResult = (NKS_SafQueryResponse) JSON.deserialize(
+                bodyString,
+                NKS_SafQueryResponse.class
+            ); //.documentOverview = getDokumentoversiktFromSafQueryResponse(bodyString);
             queryResult.isSuccess = true;
         } else {
             if (queryObj.variables != null) {
@@ -44,34 +49,21 @@ public with sharing class NKS_SafService {
                 queryObj.variables.fagsakId = null;
                 queryObj.variables.dokumentInfoId = null;
             }
-            logError(
-                apiCtrl.getResponse(),
+
+            logger.httpError(
                 'Error from NKS_SafService.doSafQuery (brukerId, fagsakId and dokumentInfoId is removed). Query: \n' +
-                JSON.Serialize(queryObj, true)
+                JSON.Serialize(queryObj, true),
+                apiCtrl.getResponse(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
             );
-            queryResult.error = (NKS_SafError) JSON.deserialize(bodyString, NKS_SafError.class);
+            logger.publish();
+
+            queryResult = new NKS_SafQueryResponse();
+            queryResult.errors.add((NKS_SafError) JSON.deserialize(bodyString, NKS_SafError.class));
         }
 
         return queryResult;
-    }
-
-    /**
-     * private method used by the method doSafQuery in this class.
-     * To make things simpler we remove the data object from the response and only return the Dokumentoversikt object using the JSON Parser
-     * @param JSONContent String with the content returned from the saf query
-     */
-    @TestVisible
-    private NKS_SafDokumentoversikt getDokumentoversiktFromSafQueryResponse(String jsonContent) {
-        JSONParser parser = JSON.createParser(jsonContent);
-
-        // Go throgh the JSON tokens to find the Dokumentoversikt object
-        parser.nextToken();
-        parser.nextToken();
-        parser.nextToken();
-        parser.nextToken();
-        parser.nextToken();
-
-        return (NKS_SafDokumentoversikt) parser.readValueAs(NKS_SafDokumentoversikt.class);
     }
 
     /**
@@ -82,6 +74,7 @@ public with sharing class NKS_SafService {
         String documentInfoId,
         String variantFormat
     ) {
+        LoggerUtility logger = new LoggerUtility();
         NKS_SafGetDocumentResponse getDocumentResponse = new NKS_SafGetDocumentResponse();
         getDocumentResponse.isSuccess = false;
 
@@ -105,28 +98,26 @@ public with sharing class NKS_SafService {
             getDocumentResponse.contentDisposition = apiCtrl.getResponse()
                 .getHeader('Content-Disposition');
         } else {
-            logError(
-                apiCtrl.getResponse(),
+            logger.httpError(
                 'Error from NKS_SafService.getSafDocument. Params: [ journalpostId: ' +
                 journalId +
-                ', ' +
+                ', documentInfoId: ' +
                 documentInfoId +
-                ', ' +
+                ', variantFormat: ' +
                 variantFormat +
-                '].'
+                '].',
+                apiCtrl.getResponse(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
             );
+
             getDocumentResponse.error = (NKS_SafError) JSON.deserialize(
                 bodyString,
                 NKS_SafError.class
             );
+            logger.publish();
         }
 
         return getDocumentResponse;
-    }
-
-    private void logError(HttpResponse resp, String message) {
-        LoggerUtility logger = new LoggerUtility();
-        logger.httpError(message, resp, null, CRM_ApplicationDomain.Domain.NKS);
-        logger.publish();
     }
 }
