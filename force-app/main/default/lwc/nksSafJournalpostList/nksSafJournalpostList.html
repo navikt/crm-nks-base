@@ -121,7 +121,6 @@
         </lightning-layout>
 
         <!-- CARD FOOTER -->
-        <!-- <template if:true={canLoadMore}> -->
         <p slot="footer">
             <template if:true={isLoadingMore}>
                 <div class="slds-is-relative">
@@ -130,9 +129,10 @@
                 </div>
             </template>
             <template if:false={isLoadingMore}>
-                <a onclick={queryMoreJournalPosts}>Last flere</a>
+                <template if:true={canLoadMore}>
+                    <a onclick={queryMoreJournalPosts}>Last flere</a>
+                </template>
             </template>
         </p>
-        <!-- </template> -->
     </lightning-card>
 </template>

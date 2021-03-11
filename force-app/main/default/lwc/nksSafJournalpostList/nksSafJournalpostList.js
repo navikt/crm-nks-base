@@ -179,6 +179,7 @@ export default class NksSafJournalpostList extends LightningElement {
 
     async callGetJournalPosts(isQueryMore) {
         isQueryMore = this.canLoadMore ? isQueryMore : false;
+        this.isLoaded = isQueryMore === true ? true : false;
         this.queryVariables.etter = isQueryMore ? this.sideInfo.sluttpeker : null;
         this.isLoadingMore = isQueryMore;
         const inputParams = {

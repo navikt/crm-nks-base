@@ -1,6 +1,5 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import ThirdPartyAccountLinkKey from '@salesforce/schema/ThirdPartyAccountLink.ThirdPartyAccountLinkKey';
 
 export default class NksSafDocumentLink extends NavigationMixin(LightningElement) {
     @api dokumentInfo;
@@ -17,6 +16,9 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     }
 
     get title() {
+        if (null == this.dokumentvariant) {
+            return '';
+        }
         let title = this.dokumentInfo.tittel;
         let meta = [];
 
@@ -50,7 +52,7 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     }
 
     get fileName() {
-        return this.dokumentvariant ? this.dokumentvariant.filnavn : '';
+        return this.dokumentvariant ? this.dokumentvariant.filnavn : this.title;
     }
 
     get variantFormat() {
