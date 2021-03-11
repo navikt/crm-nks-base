@@ -18,6 +18,8 @@ public with sharing class NKS_SafQueryVariables {
     @AuraEnabled
     public List<String> journalstatuser { get; set; } // -> Enum
     @AuraEnabled
+    public string journalstatus { get; set; } //Enum
+    @AuraEnabled
     public Integer foerste { get; set; }
     @AuraEnabled
     public String etter { get; set; }

@@ -15,6 +15,14 @@ public with sharing class NKS_SafQueryResponse {
     public class NKS_SAFData {
         @AuraEnabled
         public NKS_SafDokumentoversikt dokumentoversiktBruker;
+        @AuraEnabled
+        public NKS_SafDokumentoversikt dokumentoversiktFagsak;
+        @AuraEnabled
+        public NKS_SafJournalpost journalpost;
+        @AuraEnabled
+        public List<NKS_SafJournalpost> tilknyttedeJournalposter;
+        @AuraEnabled
+        public List<NKS_SafJournalpost> dokumentoversiktJournalstatus;
     }
 
     public NKS_SafQueryResponse() {
