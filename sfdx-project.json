@@ -13,7 +13,7 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.58.0.LATEST"
+                    "versionNumber": "0.58"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
