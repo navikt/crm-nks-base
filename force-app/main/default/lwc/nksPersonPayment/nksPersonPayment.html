@@ -52,7 +52,13 @@
                 padding="horizontal-small"
                 size="12"
             >
-                <c-nks-payment-details payment={payment}></c-nks-payment-details>
+                <template for:each={payment.ytelseListe} for:item="ytelse">
+                    <c-nks-payment-details
+                        key={ytelse.ytelsestype}
+                        ytelse={ytelse}
+                        display-header={multipleYtelser}
+                    ></c-nks-payment-details>
+                </template>
             </lightning-layout-item>
         </lightning-layout>
     </div>

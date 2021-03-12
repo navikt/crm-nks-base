@@ -6,7 +6,12 @@ global class NKS_Utbetaling implements Comparable {
     @AuraEnabled
     public Double utbetalingNettobeloep;
     @AuraEnabled
-    public String utbetalingsmelding;
+    public String utbetalingsmelding {
+        get;
+        set {
+            utbetalingsmelding = String.isNotBlank(value) ? value.trim() : value;
+        }
+    }
     @AuraEnabled
     public List<NKS_Ytelse> ytelseListe;
     @AuraEnabled
@@ -16,9 +21,19 @@ global class NKS_Utbetaling implements Comparable {
     @AuraEnabled
     public Bankkonto utbetaltTilKonto;
     @AuraEnabled
-    public String utbetalingsmetode;
+    public String utbetalingsmetode {
+        get;
+        set {
+            utbetalingsmetode = String.isNotBlank(value) ? value.trim() : value;
+        }
+    }
     @AuraEnabled
-    public String utbetalingsstatus;
+    public String utbetalingsstatus {
+        get;
+        set {
+            utbetalingsstatus = String.isNotBlank(value) ? value.trim() : value;
+        }
+    }
 
     // Implement the compareTo() method - Newest payments first
     global Integer compareTo(Object compareTo) {
@@ -34,8 +49,18 @@ global class NKS_Utbetaling implements Comparable {
 
     global class Bankkonto {
         @AuraEnabled
-        public String kontonummer;
+        public String kontonummer {
+            get;
+            set {
+                kontonummer = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
         @AuraEnabled
-        public String kontotype;
+        public String kontotype {
+            get;
+            set {
+                kontotype = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
     }
 }

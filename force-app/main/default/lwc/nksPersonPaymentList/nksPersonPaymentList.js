@@ -13,7 +13,8 @@ export default class NksPersonPaymentList extends LightningElement {
     selectedYtelser = [];
     periodOptions = [
         { label: 'Siste 3 måneder', value: 'LAST_3_MONTHS' },
-        { label: 'I år', value: 'THIS_YEAR' }
+        { label: 'I år', value: 'THIS_YEAR' },
+        { label: 'I fjor', value: 'PREVIOUS_YEAR' }
     ];
     filtering = false;
 
@@ -22,6 +23,7 @@ export default class NksPersonPaymentList extends LightningElement {
 
     connectedCallback() {
         this.startDateFilter = new Date();
+        console.log('INIT START DATE FILTER: ' + this.startDateFilter);
         var endDateFilter = new Date();
         this.endDateFilter = new Date(endDateFilter.setFullYear(endDateFilter.getFullYear() - 2));
     }
@@ -97,30 +99,56 @@ export default class NksPersonPaymentList extends LightningElement {
         this.filterPayments();
     }
 
+    periodChanged(event) {
+        let periodFilter = event.detail.value;
+        switch (periodFilter) {
+            case 'LAST_3_MONTHS':
+                let startDate = new Date();
+                startDate.setMonth(startDate.getMonth() - 3, 1);
+                this.startDateFilter = startDate;
+                this.endDateFilter = new Date();
+                break;
+            case 'THIS_YEAR':
+                this.startDateFilter = new Date(new Date().getFullYear(), 0, 1);
+                this.endDateFilter = new Date();
+                break;
+            case 'PREVIOUS_YEAR':
+                this.startDateFilter = new Date(new Date().getFullYear() - 1, 0, 1);
+                this.endDateFilter = new Date(new Date().getFullYear() - 1, 11, 31);
+                break;
+            default:
+                break;
+        }
+
+        this.filterPayments();
+    }
+
     filterPayments() {
         let filtered = [];
         this.filtering = true;
-        filtered = this.filterByPeriod(this.payments);
-        filtered = this.filterByYtelse(filtered);
+        filtered = this.payments.filter((payment) => {
+            return this.hasYtelse(payment) && this.inFilterPeriod(payment);
+        });
         this.groupedPayments = this.groupPayments(filtered);
     }
 
-    filterByPeriod(payments) {
-        return payments;
+    //Returns true if the payment is in the defined filter period
+    inFilterPeriod(payment) {
+        const paymentDate = Date.parse(payment.utbetalingsdato);
+        return paymentDate >= this.startDateFilter && paymentDate <= this.endDateFilter;
     }
 
-    filterByYtelse(payments) {
-        return payments.filter((payment) => {
-            let hasYtelse = false;
-            if (payment.ytelseListe) {
-                for (let index = 0; index < payment.ytelseListe.length; index++) {
-                    let ytelse = payment.ytelseListe[index].ytelsestype.value;
-                    hasYtelse = this.selectedYtelser.includes(ytelse);
-                    if (hasYtelse === true) break;
-                }
+    //Returns true if a payment includes one of the selected ytelser
+    hasYtelse(payment) {
+        let hasYtelse = false;
+        if (payment.ytelseListe) {
+            for (let index = 0; index < payment.ytelseListe.length; index++) {
+                let ytelse = payment.ytelseListe[index].ytelsestype.value;
+                hasYtelse = this.selectedYtelser.includes(ytelse);
+                if (hasYtelse === true) break;
             }
-            return hasYtelse;
-        });
+        }
+        return hasYtelse;
     }
 
     //Default init with all values selected

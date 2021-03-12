@@ -26,11 +26,21 @@ global class NKS_Ytelse {
 
     global class Ytelseskomponent {
         @AuraEnabled
-        public String ytelseskomponenttype;
+        public String ytelseskomponenttype {
+            get;
+            set {
+                ytelseskomponenttype = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
         @AuraEnabled
         public Double satsbeloep;
         @AuraEnabled
-        public String satstype;
+        public String satstype {
+            get;
+            set {
+                satstype = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
         @AuraEnabled
         public Double satsantall;
         @AuraEnabled
@@ -39,7 +49,12 @@ global class NKS_Ytelse {
 
     global class Ytelsestype {
         @AuraEnabled
-        public String value;
+        public String value {
+            get;
+            set {
+                this.value = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
         public String kodeRef;
         public String kodeverksRef;
     }
@@ -58,10 +73,20 @@ global class NKS_Ytelse {
 
     global class Trekk {
         @AuraEnabled
-        public String trekktype;
+        public String trekktype {
+            get;
+            set {
+                trekktype = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
         @AuraEnabled
         public Double trekkbeloep;
         @AuraEnabled
-        public String kreditor;
+        public String kreditor {
+            get;
+            set {
+                kreditor = String.isNotBlank(value) ? value.trim() : value;
+            }
+        }
     }
 }
