@@ -55,6 +55,33 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
         return this.dokumentvariant ? this.dokumentvariant.filnavn : this.title;
     }
 
+    get fileIcon() {
+        let documentType = 'unknown';
+        try {
+            let iconTypes = {
+                PDF: 'pdf',
+                PDFA: 'pdf',
+                XML: 'xml',
+                RTF: 'rtf',
+                DLF: 'unknown',
+                JPEG: 'image',
+                TIFF: 'unknown',
+                AXML: 'xml',
+                DXML: 'xml',
+                JSON: 'txt',
+                PNG: 'image'
+            };
+
+            if (this.dokumentvariant.filtype) {
+                documentType = iconTypes[this.dokumentvariant.filtype];
+            }
+        } catch (err) {
+            console.error(err);
+        }
+
+        return 'doctype:' + documentType;
+    }
+
     get variantFormat() {
         return this.dokumentvariant.variantformat;
     }

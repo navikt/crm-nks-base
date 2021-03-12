@@ -2,6 +2,13 @@
     <template if:true={isLoaded}>
         <!-- Link to document if readable -->
         <template if:true={isReadable}>
+            <lightning-icon
+                icon-name={fileIcon}
+                alternative-text={dokumentvariant.filtype}
+                size="x-small"
+            >
+            </lightning-icon>
+            &nbsp;
             <a href="#" onclick={navigateToDocument}>{title}</a>
             <template if:true={hasLogicalAttachments}>
                 <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">

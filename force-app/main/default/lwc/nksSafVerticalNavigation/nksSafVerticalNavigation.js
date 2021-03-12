@@ -211,11 +211,11 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
         listCases.push({
             caseId: 'gs',
-            label: 'Generell Sak',
+            label: 'Generell',
             isOpen: true
         });
 
-        if (listCases.length > 2) {
+        if (listCases.length > 1) {
             listCases.splice(0, 0, {
                 caseId: 'all',
                 label: 'Alle',
