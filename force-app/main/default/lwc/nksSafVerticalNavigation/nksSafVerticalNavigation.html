@@ -2,9 +2,6 @@
     <template if:true={isLoading}>
         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
     </template>
-
-    <!-- THEME GROUP -->
-    <!-- <template if:true={themesLoaded}> -->
     <lightning-combobox
         name="themeGroup"
         label="Temagruppe"
@@ -12,19 +9,8 @@
         onchange={handleThemeGroupChange}
         value={selectedThemeGroup}
     ></lightning-combobox>
-    <!-- <lightning-combobox name="theme" label="Tema" options={themeArr} onchange={handleThemeChange}
-        disabled={isThemeSelectionDisabled} value={selectedTheme}>
-    </lightning-combobox> -->
-    <!-- </template> -->
-
-    <!-- CASES -->
-    <!-- <template if:true={casesLoaded}> -->
-
-    <!-- <lightning-vertical-navigation selected-item={selectedCase} onselect={handleSelectCaseChange}> -->
     <lightning-vertical-navigation onselect={handleSelectCaseChange}>
         <lightning-vertical-navigation-section label="Sak">
-            <!-- <lightning-vertical-navigation-item label="Alle" name="all"> -->
-            <!-- </lightning-vertical-navigation-item> -->
             <template for:each={caseArr} for:item="caseX">
                 <template if:false={caseX.isOpen}>
                     <lightning-vertical-navigation-item-icon
@@ -46,5 +32,4 @@
             </template>
         </lightning-vertical-navigation-section>
     </lightning-vertical-navigation>
-    <!-- </template> -->
 </template>

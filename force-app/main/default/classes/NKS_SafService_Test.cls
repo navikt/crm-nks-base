@@ -138,9 +138,9 @@ private with sharing class NKS_SafService_Test {
             'result.isSuccess is not set correctly. Expected to get a success'
         );
         System.assertEquals(
-            'TEST_BODY_STRING',
+            'VEVTVF9CT0RZX1NUUklORw==',
             result.documentString,
-            'result.documentString is not set correctly. Expected to get the string TEST_BODY_STRING'
+            'result.documentString is not set correctly. Expected to get the string VEVTVF9CT0RZX1NUUklORw=='
         );
         System.assertEquals(
             'application/pdf',
