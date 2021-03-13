@@ -68,7 +68,7 @@ public class NKS_ChatTranscriptService {
                 NKS_Conversation_Stored__c = true
             );
         } catch (Exception ex) {
-            LoggerUtility logger = new LoggerUtility('Journal');
+            LoggerUtility logger = new LoggerUtility();
             logger.exception(ex, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
         }
