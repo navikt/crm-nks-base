@@ -17,6 +17,30 @@
                             disabled={error}
                             onchange={periodChanged}
                         ></lightning-radio-group>
+                        <lightning-layout if:true={customPeriod} multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <lightning-input
+                                    type="date"
+                                    name="startDate"
+                                    value={startDateFilter}
+                                    label="FOM"
+                                    aria-label="Fra og med"
+                                    max={maxStartDate}
+                                    class="slds-var-p-right_small"
+                                ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <lightning-input
+                                    type="date"
+                                    name="endDate"
+                                    value={endDateFilter}
+                                    label="TOM"
+                                    aria-label="Til og med"
+                                    min={minEndDate}
+                                    class="slds-var-p-right_small"
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
                     </lightning-layout-item>
                     <lightning-layout-item size="12">
                         <div>

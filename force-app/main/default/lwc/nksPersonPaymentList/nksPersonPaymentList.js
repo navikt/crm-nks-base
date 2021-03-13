@@ -14,7 +14,8 @@ export default class NksPersonPaymentList extends LightningElement {
     periodOptions = [
         { label: 'Siste 3 måneder', value: 'LAST_3_MONTHS' },
         { label: 'I år', value: 'THIS_YEAR' },
-        { label: 'I fjor', value: 'PREVIOUS_YEAR' }
+        { label: 'I fjor', value: 'PREVIOUS_YEAR' },
+        { label: 'Egendefinert', value: 'CUSTOM_PERIOD' }
     ];
     filtering = false;
 
@@ -23,13 +24,24 @@ export default class NksPersonPaymentList extends LightningElement {
 
     connectedCallback() {
         this.startDateFilter = new Date();
-        console.log('INIT START DATE FILTER: ' + this.startDateFilter);
         var endDateFilter = new Date();
         this.endDateFilter = new Date(endDateFilter.setFullYear(endDateFilter.getFullYear() - 2));
     }
 
     renderedCallback() {
         this.filtering = false;
+    }
+
+    get minEndDate() {
+        return this.startDateFilter.toISOString();
+    }
+
+    get maxStartDate() {
+        return new Date().toISOString();
+    }
+
+    get customPeriod() {
+        return this.selectedPeriod === 'CUSTOM_PERIOD';
     }
 
     get isLoading() {
@@ -101,6 +113,7 @@ export default class NksPersonPaymentList extends LightningElement {
 
     periodChanged(event) {
         let periodFilter = event.detail.value;
+        this.selectedPeriod = periodFilter;
         switch (periodFilter) {
             case 'LAST_3_MONTHS':
                 let startDate = new Date();
@@ -117,7 +130,7 @@ export default class NksPersonPaymentList extends LightningElement {
                 this.endDateFilter = new Date(new Date().getFullYear() - 1, 11, 31);
                 break;
             default:
-                break;
+                return;
         }
 
         this.filterPayments();
