@@ -89,15 +89,17 @@ public with sharing class NKS_SafService {
         apiCtrl.doCallout();
 
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
-        String bodyString = apiCtrl.getResponse().getBody();
+        String bodyString = '';
 
         if (200 == statusCode) {
+            bodyString = EncodingUtil.base64Encode(apiCtrl.getResponse().getBodyAsBlob());
             getDocumentResponse.isSuccess = true;
             getDocumentResponse.documentString = bodyString;
             getDocumentResponse.contentType = apiCtrl.getResponse().getHeader('Content-Type');
             getDocumentResponse.contentDisposition = apiCtrl.getResponse()
                 .getHeader('Content-Disposition');
         } else {
+            bodyString = apiCtrl.getResponse().getBody();
             logger.httpError(
                 'Error from NKS_SafService.getSafDocument. Params: [ journalpostId: ' +
                 journalId +

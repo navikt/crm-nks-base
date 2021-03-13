@@ -18,7 +18,7 @@ const QUERY_FIELDS = {
         { name: 'kanalnavn' },
         {
             name: 'sak',
-            queryFields: [{ name: 'fagsakId' }]
+            queryFields: [{ name: 'fagsakId' }, { name: 'fagsaksystem' }]
         },
         {
             name: 'avsenderMottaker',
@@ -34,6 +34,7 @@ const QUERY_FIELDS = {
                     queryFields: [
                         { name: 'variantformat' },
                         { name: 'filnavn' },
+                        { name: 'filtype' },
                         { name: 'saksbehandlerHarTilgang' },
                         { name: 'skjerming' }
                     ]
@@ -179,6 +180,7 @@ export default class NksSafJournalpostList extends LightningElement {
 
     async callGetJournalPosts(isQueryMore) {
         isQueryMore = this.canLoadMore ? isQueryMore : false;
+        this.isLoaded = isQueryMore === true ? true : false;
         this.queryVariables.etter = isQueryMore ? this.sideInfo.sluttpeker : null;
         this.isLoadingMore = isQueryMore;
         const inputParams = {
@@ -240,7 +242,7 @@ export default class NksSafJournalpostList extends LightningElement {
             (journalpost) =>
                 (this.selectedCase == null ||
                     this.selectedCase === journalpost.sak.fagsakId ||
-                    (this.selectedCase === 'gs' && null == journalpost.sak.fagsakId)) &&
+                    (this.selectedCase === 'gs' && 'FS22' == journalpost.sak.fagsaksystem)) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );
     }

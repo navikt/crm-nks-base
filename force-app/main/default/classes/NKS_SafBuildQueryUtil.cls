@@ -24,6 +24,9 @@ public with sharing class NKS_SafBuildQueryUtil {
             when 'dokumentoversiktJournalstatus' {
                 queryString = getDokumentoversiktJournalstatusQuery(queryField);
             }
+            when 'saker' {
+                queryString = getSakerQuery(queryField);
+            }
             when else {
             }
         }
@@ -91,7 +94,7 @@ public with sharing class NKS_SafBuildQueryUtil {
     }
 
     private static String getTilknyttedeJournalposterQuery(NKS_SafQueryField queryField) {
-        String schema = '$dokumentInfoId: String!,' + '$tilknytning: Tilknytning';
+        String schema = '$dokumentInfoId: String!,' + '$tilknytning: Tilknytning!';
 
         String queryParameters = 'dokumentInfoId: $dokumentInfoId,' + 'tilknytning: $tilknytning';
 
@@ -100,8 +103,8 @@ public with sharing class NKS_SafBuildQueryUtil {
 
     private static String getDokumentoversiktJournalstatusQuery(NKS_SafQueryField queryField) {
         String schema =
-            '$journalposttyper: {Journalposttype],' +
-            '$journalstatuser: [Journalstatus],' +
+            '$journalposttyper: [Journalposttype],' +
+            '$journalstatus: Journalstatus!,' +
             '$tema: [Tema],' +
             '$fraDato: Date,' +
             '$foerste: Int!,' +
@@ -109,13 +112,21 @@ public with sharing class NKS_SafBuildQueryUtil {
 
         String queryParameters =
             'journalposttyper: $journalposttyper,' +
-            'journalstatuser: $journalstatuser,' +
+            'journalstatus: $journalstatus,' +
             'tema: $tema,' +
             'fraDato: $fraDato,' +
             'foerste: $foerste,' +
             'etter: $etter';
 
         return buildQuery('dokumentoversiktJournalstatus', schema, queryParameters, queryField);
+    }
+
+    private static String getSakerQuery(NKS_SafQueryField queryField) {
+        String schema = '$brukerId: BrukerIdInput!';
+
+        String queryParameters = 'brukerId: $brukerId';
+
+        return buildQuery('saker', schema, queryParameters, queryField);
     }
 
     private static String buildQuery(

@@ -1,7 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class NksSafJournalpost extends LightningElement {
-    //@api journalpost;
     _journalpost;
 
     @track mainDocument = null;
@@ -59,13 +58,6 @@ export default class NksSafJournalpost extends LightningElement {
 
         return new Date(dateString).toLocaleDateString('no-NO', options);
     }
-
-    // setJournalpostDate() {
-    //     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    //     let dateString = this.journalpost.datoOpprettet;
-
-    //     this.journalpostDate = new Date(dateString).toLocaleDateString('no-NO', options);
-    // }
 
     setMainDocument() {
         this.mainDocument = null;
