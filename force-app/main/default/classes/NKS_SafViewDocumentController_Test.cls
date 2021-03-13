@@ -211,8 +211,8 @@ private with sharing class NKS_SafViewDocumentController_Test {
 
         System.assertEquals(
             true,
-            ctrl.documentData.startsWith('data:application/pdf;base64,TEST_STRING'),
-            'Did not manage to set the correct start string'
+            ctrl.documentData.startsWith('data:application/pdf;base64,VEVTVF9TVFJJTkc='),
+            'Did not manage to set the correct start string, got ' + ctrl.documentData
         );
         System.assertEquals(
             'inline; filename="myTestFile.pdf"',
