@@ -40,7 +40,8 @@
             "enableTranslationWorkbench": true
         },
         "accountSettings": {
-            "enableAccountTeams": true
+            "enableAccountTeams": true,
+            "enableRelateContactToMultipleAccounts": true
         },
         "emailAdministrationSettings": {
             "enableEnhancedEmailEnabled": true

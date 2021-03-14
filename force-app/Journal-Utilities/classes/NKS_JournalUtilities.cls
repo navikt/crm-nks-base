@@ -5,9 +5,7 @@ public class NKS_JournalUtilities {
         description='Post journal entry or generate compliant document'
         category='Journal'
     )
-    public static List<UtilityResponse> handleRequest(
-        List<utilityRequest> request
-    ) {
+    public static List<UtilityResponse> handleRequest(List<utilityRequest> request) {
         List<UtilityResponse> returnList = new List<UtilityResponse>();
 
         switch on (request[0].requestType) {
@@ -18,17 +16,10 @@ public class NKS_JournalUtilities {
                 String document = EncodingUtil.base64Encode(
                     Blob.valueOf(request[0].documentString)
                 );
-                returnList.add(
-                    new UtilityResponse(true, document, null, null, null)
-                );
+                returnList.add(new UtilityResponse(true, document, null, null, null));
             }
             when 'POST_JOURNAL' {
-                returnList.add(
-                    postJournal(
-                        request[0].journalRequest,
-                        request[0].referenceId
-                    )
-                );
+                returnList.add(postJournal(request[0].journalRequest, request[0].referenceId));
             }
         }
 
@@ -67,12 +58,8 @@ public class NKS_JournalUtilities {
                 apiCtrl.getResponse().getBody()
             );
             resp.journalpostId = (String) responseMap.get('journalpostId');
-            Boolean journalCompleted = (Boolean) responseMap.get(
-                'journalpostferdigstilt'
-            );
-            resp.journalPostStatus = journalCompleted
-                ? 'Completed'
-                : 'In Progress';
+            Boolean journalCompleted = (Boolean) responseMap.get('journalpostferdigstilt');
+            resp.journalPostStatus = journalCompleted ? 'Completed' : 'In Progress';
         } else {
             resp.success = false;
             //Creates a log entry for troubleshooting
@@ -135,9 +122,7 @@ public class NKS_JournalUtilities {
         @invocableVariable
         public String documentString;
 
-        @invocableVariable(
-            label='Reference to salesforce record to be stored on journal entry'
-        )
+        @invocableVariable(label='Reference to salesforce record to be stored on journal entry')
         public Id referenceId;
 
         @invocableVariable
