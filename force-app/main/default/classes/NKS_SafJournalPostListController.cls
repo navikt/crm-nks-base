@@ -14,6 +14,8 @@ public with sharing class NKS_SafJournalPostListController {
         NKS_SafService safService = new NKS_SafService();
         NKS_SafQueryResponse queryResults;
 
+        System.debug(queryVariables);
+
         try {
             queryVariables.brukerId = getBrukerIdFromPerson(
                 getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
@@ -29,9 +31,10 @@ public with sharing class NKS_SafJournalPostListController {
         } catch (Exception ex) {
             queryResults = new NKS_SafQueryResponse();
             queryResults.isSuccess = false;
-            queryResults.error = new NKS_SafError();
-            queryResults.error.message = ex.getMessage();
-            queryResults.error.error = ex.getTypeName();
+            queryResults.errors = new List<NKS_SafError>();
+            queryResults.errors.add(new NKS_SafError());
+            queryResults.errors[0].message = ex.getMessage();
+            queryResults.errors[0].error = ex.getTypeName();
         }
 
         return queryResults;

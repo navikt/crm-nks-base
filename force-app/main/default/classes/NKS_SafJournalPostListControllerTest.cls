@@ -53,7 +53,11 @@ private with sharing class NKS_SafJournalPostListControllerTest {
         Test.stopTest();
 
         System.assertEquals(true, result.isSuccess, 'Expected success');
-        System.assertEquals(0, result.documentOverview.journalposter.size(), 'Expected empty list');
+        System.assertEquals(
+            0,
+            result.data.dokumentoversiktBruker.journalposter.size(),
+            'Expected empty list'
+        );
     }
 
     @IsTest

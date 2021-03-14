@@ -66,12 +66,12 @@ private with sharing class NKS_SafService_Test {
         );
         System.assertNotEquals(
             null,
-            result.documentOverview,
-            'result.documentOverview is not set correctly. Expected to get a value'
+            result.data.dokumentoversiktBruker,
+            'result.data.documentOverview is not set correctly. Expected to get a value'
         );
         System.assertEquals(
             1,
-            result.documentOverview.journalposter.size(),
+            result.data.dokumentoversiktBruker.journalposter.size(),
             'Expected 1 journalpost record'
         );
     }
@@ -109,89 +109,10 @@ private with sharing class NKS_SafService_Test {
         );
         System.assertEquals(
             null,
-            result.documentOverview,
-            'result.documentOverview is not set correctly. Expected to get NULL'
+            result.data,
+            'result.data is not set correctly. Expected to get NULL'
         );
-        System.assertNotEquals(null, result.error, 'Expected to have an error');
-    }
-
-    @isTest
-    static void getDokumentoversiktFromSafQueryResponseNotExpectedJSON() {
-        NKS_SafDokumentoversikt result;
-        String jsonString =
-            '{' +
-            '  "data": {' +
-            '   "dokumentoversikt": {' +
-            '    "dokumentoversiktBruker": {' +
-            '      "journalposter": [' +
-            '        {' +
-            '          "journalpostId": "111111111",' +
-            '          "tittel": "Tittel",' +
-            '          "journalposttype": "U",' +
-            '          "journalstatus": "FERDIGSTILT",' +
-            '          "tema": "OPP",' +
-            '          "dokumenter": [' +
-            '            {' +
-            '              "dokumentInfoId": "22222222",' +
-            '              "tittel": "Tittel"' +
-            '            }' +
-            '          ]' +
-            '        }' +
-            '      ]' +
-            '    }' +
-            '   }' +
-            '  }' +
-            '}';
-
-        NKS_SafService service = new NKS_SafService();
-
-        Test.startTest();
-        result = service.getDokumentoversiktFromSafQueryResponse(jsonString);
-        Test.stopTest();
-
-        System.assertNotEquals(null, result, 'Did not expect to get NULL');
-        System.assertEquals(null, result.journalposter, 'Expected to get NULL');
-    }
-
-    @isTest
-    static void getDokumentoversiktFromSafQueryResponseExpectedJSON() {
-        NKS_SafDokumentoversikt result;
-        String jsonString =
-            '{' +
-            '  "data": {' +
-            '    "dokumentoversiktBruker": {' +
-            '      "journalposter": [' +
-            '        {' +
-            '          "journalpostId": "111111111",' +
-            '          "tittel": "Tittel",' +
-            '          "journalposttype": "U",' +
-            '          "journalstatus": "FERDIGSTILT",' +
-            '          "tema": "OPP",' +
-            '          "dokumenter": [' +
-            '            {' +
-            '              "dokumentInfoId": "22222222",' +
-            '              "tittel": "Tittel"' +
-            '            }' +
-            '          ]' +
-            '        }' +
-            '      ]' +
-            '    }' +
-            '  }' +
-            '}';
-
-        NKS_SafService service = new NKS_SafService();
-
-        Test.startTest();
-        result = service.getDokumentoversiktFromSafQueryResponse(jsonString);
-        Test.stopTest();
-
-        System.assertNotEquals(null, result, 'Did not expect to get NULL');
-        System.assertEquals(1, result.journalposter.size(), 'Expected to have one Journalpost');
-        System.assertEquals(
-            '111111111',
-            result.journalposter[0].journalpostId,
-            'Expected that the journalpost was mapped correctly.'
-        );
+        System.assertEquals(1, result.errors.size(), 'Expected to have an error');
     }
 
     @isTest
@@ -217,9 +138,9 @@ private with sharing class NKS_SafService_Test {
             'result.isSuccess is not set correctly. Expected to get a success'
         );
         System.assertEquals(
-            'TEST_BODY_STRING',
+            'VEVTVF9CT0RZX1NUUklORw==',
             result.documentString,
-            'result.documentString is not set correctly. Expected to get the string TEST_BODY_STRING'
+            'result.documentString is not set correctly. Expected to get the string VEVTVF9CT0RZX1NUUklORw=='
         );
         System.assertEquals(
             'application/pdf',

@@ -18,7 +18,7 @@ const QUERY_FIELDS = {
         { name: 'kanalnavn' },
         {
             name: 'sak',
-            queryFields: [{ name: 'fagsakId' }]
+            queryFields: [{ name: 'fagsakId' }, { name: 'fagsaksystem' }]
         },
         {
             name: 'avsenderMottaker',
@@ -34,6 +34,7 @@ const QUERY_FIELDS = {
                     queryFields: [
                         { name: 'variantformat' },
                         { name: 'filnavn' },
+                        { name: 'filtype' },
                         { name: 'saksbehandlerHarTilgang' },
                         { name: 'skjerming' }
                     ]
@@ -179,9 +180,9 @@ export default class NksSafJournalpostList extends LightningElement {
 
     async callGetJournalPosts(isQueryMore) {
         isQueryMore = this.canLoadMore ? isQueryMore : false;
-        this.queryVariables.etter = isQueryMore ? this.sideInfo.sluttpeker : null; // this.journalposts[this.journalposts.length - 1].journalpostId : null;
+        this.isLoaded = isQueryMore === true ? true : false;
+        this.queryVariables.etter = isQueryMore ? this.sideInfo.sluttpeker : null;
         this.isLoadingMore = isQueryMore;
-
         const inputParams = {
             brukerIdField: this.brukerIdField,
             objectApiName: this.viewedObjectApiName,
@@ -190,27 +191,25 @@ export default class NksSafJournalpostList extends LightningElement {
             queryVariables: this.queryVariables,
             queryField: QUERY_FIELDS
         };
-
-        this.error = null;
-
+        this.errors = [];
         try {
             const journalpostData = await getJournalPosts(inputParams);
             if (journalpostData.isSuccess) {
-                this.sideInfo = journalpostData.documentOverview.sideInfo;
+                this.sideInfo = journalpostData.data.dokumentoversiktBruker.sideInfo;
                 this.journalposts = isQueryMore
-                    ? this.journalposts.concat(journalpostData.documentOverview.journalposter)
-                    : journalpostData.documentOverview.journalposter;
+                    ? this.journalposts.concat(
+                          journalpostData.data.dokumentoversiktBruker.journalposter
+                      )
+                    : journalpostData.data.dokumentoversiktBruker.journalposter;
             } else {
                 this.sideInfo = null;
                 this.journalposts = [];
-                this.setErrorMessage(journalpostData.error, 'journalpostError');
+                this.setErrorMessage(journalpostData.errors[0], 'journalpostError');
             }
-
             this.filterAllJournalposts();
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
         }
-
         this.isLoaded = true;
         this.isLoadingMore = false;
     }
@@ -243,7 +242,7 @@ export default class NksSafJournalpostList extends LightningElement {
             (journalpost) =>
                 (this.selectedCase == null ||
                     this.selectedCase === journalpost.sak.fagsakId ||
-                    (this.selectedCase === 'gs' && null == journalpost.sak.fagsakId)) &&
+                    (this.selectedCase === 'gs' && 'FS22' == journalpost.sak.fagsaksystem)) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );
     }
@@ -251,33 +250,30 @@ export default class NksSafJournalpostList extends LightningElement {
     /**
      * Add error messages to the error message list.
      */
-    setErrorMessage(error) {
-        this.setErrorMessage(error, '');
+    setErrorMessage(err) {
+        this.setErrorMessage(err, '');
     }
 
-    setErrorMessage(error, type) {
-        type = error.body && type === 'caughtError' ? 'fetchResponseError' : type;
-
+    setErrorMessage(err, type) {
+        type = err.body && type === 'caughtError' ? 'fetchResponseError' : type;
         switch (type) {
             case 'fetchResponseError':
                 if (Array.isArray(error.body)) {
-                    this.errors = this.errors.concat(error.body.map((e) => e.message));
+                    this.errors = this.errors.concat(err.body.map((e) => e.message));
                 } else if (typeof error.body.message === 'string') {
-                    this.errors.push(error.body.message);
+                    this.errors.push(err.body.message);
                 }
                 break;
             case 'journalpostError':
                 let errorString = '';
-
-                if (error.status) {
-                    errorString = error.status + ' ';
+                if (err.status) {
+                    errorString = err.status + ' ';
                 }
-                errorString += error.error + ' - ' + error.message;
-
+                errorString += err.error + ' - ' + err.message;
                 this.errors.push(errorString);
                 break;
             case 'caughtError':
-                this.errors.push('Ukjent feil: ' + error.message);
+                this.errors.push('Ukjent feil: ' + err.message);
                 break;
             default:
                 this.errors.push('Ukjent feil: ' + err);
