@@ -65,7 +65,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                     taskToConvert.versjon == existingTaskVersion)
                 ) {
                     newestComment = kafkaOppgave.beskrivelse;
-                    addFeedItem(kafkaOppgave);
+                    //addFeedItem(kafkaOppgave);
                 }
             }
             tasksToConvert.add(taskToConvert);
@@ -256,6 +256,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.CRM_DueDate__c = Date.valueOf(kafkaOppgave.fristFerdigstillelse);
             navTask.CRM_Priority__c = kafkaOppgave.prioritet;
             navTask.NKS_Status__c = kafkaOppgave.status;
+            navTask.NKS_Date_Registered__c = Date.valueOf(kafkaOppgave.opprettetTidspunkt);
             navTask.CRM_NoPersonInformation__c = true; //Need to be default set because of validation rule
         } else {
             //If actor is not existing in Salesforce, create an application log

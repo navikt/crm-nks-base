@@ -86,8 +86,5 @@ public class KafkaOppgaveHandler_Test {
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
-        System.assert(
-            [SELECT COUNT() FROM FeedItem WHERE ParentId IN :[SELECT Id FROM NavTask__c]] != 0
-        );
     }
 }
