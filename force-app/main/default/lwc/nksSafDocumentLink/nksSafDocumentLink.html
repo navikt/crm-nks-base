@@ -10,6 +10,15 @@
             </lightning-icon>
             &nbsp;
             <a href="#" onclick={navigateToDocument}>{title}</a>
+            &nbsp;
+            <lightning-button-icon
+                icon-name="utility:download"
+                onclick={downloadDocument}
+                alternative-text="Last ned"
+                size="x-small"
+            >
+            </lightning-button-icon>
+
             <template if:true={hasLogicalAttachments}>
                 <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
                     <template iterator:it={dokumentInfo.logiskeVedlegg}>
