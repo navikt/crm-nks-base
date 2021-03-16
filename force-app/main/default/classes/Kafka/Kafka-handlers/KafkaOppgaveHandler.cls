@@ -2,7 +2,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private LoggerUtility logger = new LoggerUtility();
     private Map<String, String> actorAccMap = new Map<String, String>();
     private Map<String, List<KafkaMessage__c>> messageMap = new Map<String, List<KafkaMessage__c>>(); //Maps CRM_Key__c to a list of KafkaMessages for that key
-    private Map<String, List<FeedItem>> feedItemMap = new Map<String, List<FeedItem>>(); //Maps a oppgave ref (INT_External_Reference__c) to a list of feed items to be created
 
     private static Map<String, String> commonCodeMap {
         get {
@@ -39,7 +38,12 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         List<KafkaOppgave> tasksToConvert = new List<KafkaOppgave>();
 
         for (NavTask__c navTask : [
-            SELECT Id, INT_External_Reference__c, CRM_Comments__c, NKS_Task_Version__c
+            SELECT
+                Id,
+                INT_External_Reference__c,
+                CRM_Comments__c,
+                NKS_Task_Version__c,
+                NKS_Comment_History__c
             FROM NavTask__c
             WHERE INT_External_Reference__c IN :kafkaTaskMap.keySet()
         ]) {
@@ -48,9 +52,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
 
         for (Decimal taskRef : kafkaTaskMap.keySet()) {
             String newestComment;
+            String commentHistory = '';
             Integer existingTaskVersion = 0;
             if (existingTaskMap.containsKey(taskRef)) {
                 newestComment = existingTaskMap.get(taskRef).CRM_Comments__c;
+                commentHistory = existingTaskMap.get(taskRef).NKS_Comment_History__c;
                 existingTaskVersion = Integer.valueOf(
                     existingTaskMap.get(taskRef).NKS_Task_Version__c
                 );
@@ -65,9 +71,12 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                     taskToConvert.versjon == existingTaskVersion)
                 ) {
                     newestComment = kafkaOppgave.beskrivelse;
-                    //addFeedItem(kafkaOppgave);
+                    commentHistory += String.isNotBlank(commentHistory)
+                        ? '\n\n' + newestComment
+                        : newestComment;
                 }
             }
+            taskToConvert.commentHistory = commentHistory;
             tasksToConvert.add(taskToConvert);
         }
 
@@ -163,31 +172,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         return returnMap;
     }
 
-    private void addFeedItem(KafkaOppgave kafkaOppgave) {
-        String oppgaveRef = String.valueOf(kafkaOppgave.id);
-
-        if (this.feedItemMap.containsKey(oppgaveRef)) {
-            List<FeedItem> mappedItems = this.feedItemMap.get(oppgaveRef);
-            mappedItems.add(createFeedItem(kafkaOppgave));
-            this.feedItemMap.put(oppgaveRef, mappedItems);
-        } else {
-            this.feedItemMap.put(oppgaveRef, new List<FeedItem>{ createFeedItem(kafkaOppgave) });
-        }
-    }
-
-    /**
-     * @description: Creating a placeholder feeditem that needs the parent ID field
-     * updated after successful upsert of NAV Tasks
-     * @author Stian Ruud Schikora | 03-04-2021
-     * @param kafkaOppgave
-     * @return FeedItem
-     **/
-    private FeedItem createFeedItem(KafkaOppgave kafkaOppgave) {
-        FeedItem post = new FeedItem();
-        post.Body = kafkaOppgave.beskrivelse;
-        return post;
-    }
-
     /**
      * @description: Performs converstion from KafkaOppgave => NavTask__c
      * @author Stian Ruud Schikora | 02-26-2021
@@ -233,11 +217,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      **/
     private NavTask__c convertToNavTask(KafkaOppgave kafkaOppgave) {
         NavTask__c navTask = new NavTask__c();
-        if (
+        Boolean actorExists =
             this.actorAccMap.containsKey(kafkaOppgave.getActorId()) &&
-            String.isNotBlank(this.actorAccMap.get(kafkaOppgave.getActorId())) &&
-            commonCodeMap.containsKey('Tema' + kafkaOppgave.tema)
-        ) {
+            String.isNotBlank(this.actorAccMap.get(kafkaOppgave.getActorId()));
+        Boolean mappedTheme = commonCodeMap.containsKey('Tema' + kafkaOppgave.tema);
+        if (actorExists && mappedTheme) {
             navTask.CRM_Account__c = this.actorAccMap.get(kafkaOppgave.getActorId());
             navTask.INT_External_Reference__c = kafkaOppgave.id;
             navTask.NKS_Task_Version__c = kafkaOppgave.versjon;
@@ -257,20 +241,27 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.CRM_Priority__c = kafkaOppgave.prioritet;
             navTask.NKS_Status__c = kafkaOppgave.status;
             navTask.NKS_Date_Registered__c = Date.valueOf(kafkaOppgave.opprettetTidspunkt);
+            navTask.NKS_Comment_History__c = kafkaOppgave.commentHistory;
             navTask.CRM_NoPersonInformation__c = true; //Need to be default set because of validation rule
         } else {
             //If actor is not existing in Salesforce, create an application log
-            this.logger.error(
-                'Error creating NAV task, actor not found: ' +
-                kafkaOppgave.getActorId() +
-                '\n Task reference: ' +
-                kafkaOppgave.id,
-                null,
-                CRM_ApplicationDomain.domain.NKS
-            );
+            if (!actorExists) {
+                this.logger.error(
+                    'Error creating NAV task, actor not found: ' +
+                    kafkaOppgave.getActorId() +
+                    '\n Task reference: ' +
+                    kafkaOppgave.id,
+                    null,
+                    CRM_ApplicationDomain.domain.NKS
+                );
+            }
 
+            String errorMessage = !actorExists
+                ? 'Actor not found: ' + kafkaOppgave.getActorId()
+                : '';
+            errorMessage += !mappedTheme ? ' - Theme not mapped: ' + kafkaOppgave.tema : '';
             for (KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))) {
-                setMessageError('Actor not found: ' + kafkaOppgave.getActorId(), message);
+                setMessageError(errorMessage, message);
             }
             return null;
         }
@@ -307,40 +298,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                     )
                 ) {
                     setMessageError(upsList[index].getErrors(), message);
-                }
-            }
-        }
-
-        processFeedItems(successMap);
-    }
-
-    /**
-     * @description: Creates feed items for the updated NAV Tasks where the beskrivelse was changed
-     * @author Stian Ruud Schikora | 03-04-2021
-     * @param successList : List og external references successfully created/updated
-     **/
-    private void processFeedItems(Map<Id, NavTask__c> successMap) {
-        List<FeedItem> postsToInsert = new List<FeedItem>();
-
-        for (Id navTaskId : successMap.keySet()) {
-            String oppgaveRef = String.valueOf(successMap.get(navTaskId).INT_External_Reference__c);
-            if (this.feedItemMap.containsKey(oppgaveRef)) {
-                for (FeedItem post : this.feedItemMap.get(oppgaveRef)) {
-                    post.ParentId = navTaskId;
-                    postsToInsert.add(post);
-                }
-            }
-        }
-
-        List<Database.SaveResult> srList = Database.insert(postsToInsert);
-        for (Integer index = 0; index < srList.size(); index++) {
-            if (!srList[index].isSuccess()) {
-                String messageReference = String.valueOf(
-                    successMap.get(postsToInsert[index].ParentId).INT_External_Reference__c
-                );
-                //Sets an error on every kafka message with the unique key
-                for (KafkaMessage__c message : getRelatedMessages(messageReference)) {
-                    setMessageError(srList[index].getErrors(), message);
                 }
             }
         }

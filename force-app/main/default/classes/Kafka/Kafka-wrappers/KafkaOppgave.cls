@@ -17,6 +17,7 @@ public class KafkaOppgave implements Comparable {
     public String opprettetTidspunkt; //Datetime String
     public String status; //ENUM: [OPPRETTET, AAPNET, UNDER_BEHANDLING, FERDIGSTILT, FEILREGISTRERT]
     public Integer versjon;
+    public String commentHistory; //Internal field for wrapper to be used for updating the full comment history NOT CONTAINED IN THE KAFKA MESSAGE
     public List<Ident> identer; //To-be model
     public LegacyIdent ident;
 
