@@ -73,6 +73,16 @@ public with sharing class NKS_SafJournalPostListController {
         return (Id) getFieldValue(returnObject, field);
     }
 
+    @AuraEnabled(cacheable=true)
+    public static NKS_SafGetDocumentResponse getDocument(
+        String journalpostId,
+        String documentId,
+        String variantFormat
+    ) {
+        NKS_SafService service = new NKS_SafService();
+        return service.getSafDocument(journalpostId, documentId, variantFormat);
+    }
+
     private static NKS_SafBrukerIdInput getBrukerIdFromPerson(Id personId) {
         NKS_SafBrukerIdInput brukerId = new NKS_SafBrukerIdInput();
 
