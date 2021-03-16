@@ -8,7 +8,7 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NKS_Date_Registered__c</field>
             </layoutItems>
             <layoutItems>
@@ -47,13 +47,13 @@
                 <field>CRM_NavUnit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CRM_Account__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>NKS_Assignee__c</field>
             </layoutItems>
         </layoutColumns>
