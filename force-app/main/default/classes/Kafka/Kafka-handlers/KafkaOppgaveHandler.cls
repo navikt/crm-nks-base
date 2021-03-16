@@ -19,11 +19,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         }
     }
 
-    private static Map<String, String> navUnitMap {
+    private static Map<String, NavUnit__c> navUnitMap {
         get {
-            Map<String, String> returnMap = new Map<String, String>();
-            for (NavUnit__c navUnit : [SELECT Id, INT_UnitNumber__c FROM NavUnit__c]) {
-                returnMap.put(navUnit.INT_UnitNumber__c, navUnit.Id);
+            Map<String, NavUnit__c> returnMap = new Map<String, NavUnit__c>();
+            for (NavUnit__c navUnit : [SELECT Id, INT_UnitNumber__c, Name FROM NavUnit__c]) {
+                returnMap.put(navUnit.INT_UnitNumber__c, navUnit);
             }
             return returnMap;
         }
@@ -226,8 +226,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.INT_External_Reference__c = kafkaOppgave.id;
             navTask.NKS_Task_Version__c = kafkaOppgave.versjon;
             navTask.CRM_NavUnit__c = navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
-                ? navUnitMap.get(kafkaOppgave.tildeltEnhetsnr)
+                ? navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Id
                 : null;
+            navTask.Name = navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
+                ? 'Oppgave til ' + navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Name
+                : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
             navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype;
