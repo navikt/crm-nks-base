@@ -5,7 +5,7 @@
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
         <locationX>178</locationX>
-        <locationY>444</locationY>
+        <locationY>564</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,8 +23,7 @@
         <inputParameters>
             <name>assignToUnitNumber</name>
             <value>
-                <elementReference
-                >Get_NAV_Task.CRM_NavUnit__r.INT_UnitNumber__c</elementReference>
+                <elementReference>Get_NAV_Task.CRM_NavUnit__r.INT_UnitNumber__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -70,49 +69,40 @@
         <name>NAV_Task_assignment</name>
         <label>NAV Task assignment</label>
         <locationX>176</locationX>
-        <locationY>328</locationY>
+        <locationY>448</locationY>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.INT_Journal_Entry_ID__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.INT_Journal_Entry_ID__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.INT_Journal_Entry_ID__c</elementReference>
+                <elementReference>Get_NAV_Task.INT_Journal_Entry_ID__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.CRM_DueDate__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.CRM_DueDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_NAV_Task.CRM_DueDate__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.CRM_Comments__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.CRM_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.CRM_Comments__c</elementReference>
+                <elementReference>Get_NAV_Task.CRM_Comments__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.CRM_Priority__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.CRM_Priority__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.CRM_Priority__c</elementReference>
+                <elementReference>Get_NAV_Task.CRM_Priority__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.NKS_Task_Type__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Task_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -123,12 +113,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >OUTBOUND_NAV_TASK.NKS_Assignee__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.NKS_Assignee__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_Assignee__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -141,7 +129,7 @@
         <name>Update_Assignment</name>
         <label>Update Assignment</label>
         <locationX>175</locationX>
-        <locationY>747</locationY>
+        <locationY>867</locationY>
         <assignmentItems>
             <assignToReference>Process_NAV_task.task.Id</assignToReference>
             <operator>Assign</operator>
@@ -154,11 +142,36 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Sent_Status</name>
+        <label>Check Sent Status</label>
+        <locationX>167</locationX>
+        <locationY>336</locationY>
+        <defaultConnector>
+            <targetReference>NAV_Task_assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Already_Sent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NAV_Task.INT_External_Reference__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Sent_Screen</targetReference>
+            </connector>
+            <label>Already Sent</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
         <locationX>168</locationX>
-        <locationY>573</locationY>
+        <locationY>693</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -167,8 +180,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Process_NAV_task.success</leftValueReference>
+                <leftValueReference>Process_NAV_task.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -180,8 +192,7 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <description
-    >Performs a post of an existing NAV task to the Oppgaver API</description>
+    <description>Performs a post of an existing NAV task to the Oppgaver API</description>
     <formulas>
         <description>Formula to handle a subtheme not being set.</description>
         <name>subthemeCode</name>
@@ -212,16 +223,14 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <description
-        >Queries the NAV task information if this is an edit action.</description>
+        <description>Queries the NAV task information if this is an edit action.</description>
         <name>Get_NAV_Task</name>
         <label>Get NAV Task</label>
         <locationX>176</locationX>
         <locationY>213</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>NAV_Task_assignment</targetReference>
+            <targetReference>Check_Sent_Status</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
@@ -243,7 +252,7 @@
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
         <locationX>171</locationX>
-        <locationY>871</locationY>
+        <locationY>991</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -254,12 +263,11 @@
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <description
-        >Something went wrong when posting/updating the NAV task.</description>
+        <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>508</locationX>
-        <locationY>472</locationY>
+        <locationX>592</locationX>
+        <locationY>511</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -284,12 +292,28 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description
-        >Screen for telling user that the task was successfully sent.</description>
+        <name>Sent_Screen</name>
+        <label>Sent_Screen</label>
+        <locationX>402</locationX>
+        <locationY>334</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Sent_Message</name>
+            <fieldText
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven er allerede sendt til GoSys&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>170</locationX>
-        <locationY>1018</locationY>
+        <locationY>1138</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -314,7 +338,7 @@
         <name>Create_App_Log</name>
         <label>Create App Log</label>
         <locationX>998</locationX>
-        <locationY>472</locationY>
+        <locationY>592</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -354,7 +378,7 @@
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
         <locationX>340</locationX>
-        <locationY>383</locationY>
+        <locationY>503</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -425,8 +449,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference
-            >Get_NAV_Task.NKS_Theme__r.CRM_Code__c</elementReference>
+            <elementReference>Get_NAV_Task.NKS_Theme__r.CRM_Code__c</elementReference>
         </value>
     </variables>
     <variables>
@@ -436,8 +459,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference
-            >Get_NAV_Task.NKS_Theme_Group__r.CRM_Code__c</elementReference>
+            <elementReference>Get_NAV_Task.NKS_Theme_Group__r.CRM_Code__c</elementReference>
         </value>
     </variables>
 </Flow>
