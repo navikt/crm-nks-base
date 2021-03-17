@@ -15,5 +15,6 @@
     <permissionSets>NKS_Quick_Text_Reader</permissionSets>
     <permissionSets>NKS_Secure_Chat_Access</permissionSets>
     <permissionSets>NKS_base</permissionSets>
+    <permissionSets>CRM_LoginFlow</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>

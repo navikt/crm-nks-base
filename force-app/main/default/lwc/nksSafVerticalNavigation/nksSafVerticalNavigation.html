@@ -10,26 +10,17 @@
         value={selectedThemeGroup}
     ></lightning-combobox>
     <lightning-vertical-navigation onselect={handleSelectCaseChange}>
-        <lightning-vertical-navigation-section label="Sak">
-            <template for:each={caseArr} for:item="caseX">
-                <template if:false={caseX.isOpen}>
-                    <lightning-vertical-navigation-item-icon
-                        key={caseX.caseId}
-                        label={caseX.label}
-                        name={caseX.caseId}
-                        icon-name="utility:lock"
-                    >
-                    </lightning-vertical-navigation-item-icon>
-                </template>
-                <template if:true={caseX.isOpen}>
+        <template for:each={caseMapArray} for:item="theme">
+            <lightning-vertical-navigation-section key={theme.key} label={theme.label}>
+                <template for:each={theme.value} for:item="caseX">
                     <lightning-vertical-navigation-item
-                        key={caseX.caseId}
+                        key={caseX.themeCodeCaseId}
                         label={caseX.label}
-                        name={caseX.caseId}
+                        name={caseX.themeCodeCaseId}
                     >
                     </lightning-vertical-navigation-item>
                 </template>
-            </template>
-        </lightning-vertical-navigation-section>
+            </lightning-vertical-navigation-section>
+        </template>
     </lightning-vertical-navigation>
 </template>

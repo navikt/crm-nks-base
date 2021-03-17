@@ -4,7 +4,6 @@
         <lightning-layout>
             <!-- SAF Available theme vertical navigation list -->
             <lightning-layout-item padding="around-small" size="2">
-                <!-- <template if:true={isLoaded}> -->
                 <c-nks-saf-vertical-navigation
                     onnewselection={handleNewSelection}
                     viewed-object-api-name={viewedObjectApiName}
@@ -14,19 +13,19 @@
                     relationship-field={relationshipField}
                     onsetavailablethemes={handleAvailableThemes}
                     onselectcase={handleSelectCase}
+                    onselecttheme={handleSelectTheme}
                 >
                 </c-nks-saf-vertical-navigation>
-                <!-- </template> -->
             </lightning-layout-item>
 
             <!-- CONTENT -->
             <lightning-layout-item padding="around-small" size="10">
                 <lightning-layout multiple-rows="true">
                     <!-- FILTER -->
-                    <lightning-layout-item padding="around-small" size="12">
+                    <lightning-layout-item size="12">
                         <div class="slds-form-element" title="Journalpost filter">
                             <lightning-layout>
-                                <lightning-layout-item padding="around-small">
+                                <lightning-layout-item>
                                     <lightning-input
                                         type="checkbox"
                                         label="Inngående"
@@ -34,11 +33,10 @@
                                         class="journalpostType"
                                         checked
                                         onchange={handleJournalpostTypeCheckboxChange}
-                                        field-level-help='Dokumentasjon som NAV har mottatt fra en ekstern part. De fleste inngående dokumenter er søknader, ettersendelser av dokumentasjon til sak, eller innsendinger fra arbeidsgivere. Meldinger brukere har sendt til "Skriv til NAV" arkiveres også som inngående dokumenter.'
                                     >
                                     </lightning-input>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small">
+                                <lightning-layout-item>
                                     <lightning-input
                                         type="checkbox"
                                         label="Utgående"
@@ -46,11 +44,10 @@
                                         class="journalpostType"
                                         checked
                                         onchange={handleJournalpostTypeCheckboxChange}
-                                        field-level-help='Dokumentasjon som NAV har produsert og sendt ut til en ekstern part. De fleste utgående dokumenter er informasjons- eller vedtaksbrev til privatpersoner eller organisasjoner. "Skriv til NAV"-meldinger som saksbehandlere har sendt til brukere arkiveres også som utgående dokumenter.'
                                     >
                                     </lightning-input>
                                 </lightning-layout-item>
-                                <lightning-layout-item padding="around-small">
+                                <lightning-layout-item>
                                     <lightning-input
                                         type="checkbox"
                                         label="Notat"
@@ -58,9 +55,30 @@
                                         class="journalpostType"
                                         checked
                                         onchange={handleJournalpostTypeCheckboxChange}
-                                        field-level-help="Dokumentasjon som NAV har produsert selv, uten at formålet er å distribuere dette ut av NAV. Eksempler på notater er samtalereferater med veileder på kontaktsenter og interne forvaltningsnotater."
                                     >
                                     </lightning-input>
+                                </lightning-layout-item>
+                                <lightning-layout-item flexibility="no-grow" alignment-bump="left">
+                                    <lightning-layout>
+                                        <lightning-layout-item>
+                                            <lightning-input
+                                                type="date"
+                                                label="Fra"
+                                                value={fromDate}
+                                                variant="label-inline"
+                                                onchange={handleJournalpostFromDateChange}
+                                            ></lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item>
+                                            <lightning-input
+                                                type="date"
+                                                label="Til"
+                                                value={toDate}
+                                                variant="label-inline"
+                                                onchange={handleJournalpostToDateChange}
+                                            ></lightning-input>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
                                 </lightning-layout-item>
                             </lightning-layout>
                         </div>
@@ -99,12 +117,12 @@
                                 </template>
 
                                 <!-- EMPTY RESULT -->
-                                <template if:false={journalposts}>
+                                <template if:true={isEmptyResult}>
                                     <p>Kunne ikke finne noen journalposter.</p>
                                 </template>
 
                                 <!-- LIST OF JOURNALPOSTS -->
-                                <template if:true={filteredJournalPosts}>
+                                <template if:false={isEmptyResult}>
                                     <ul class="slds-has-dividers_top">
                                         <template
                                             for:each={filteredJournalPosts}
@@ -119,6 +137,11 @@
                                     </ul>
                                 </template>
                             </template>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">
+                        <div class="slds-box slds-theme_shade">
+                            <p>Dokumenter kan kun vises fra og med 4.juni 2016.</p>
                         </div>
                     </lightning-layout-item>
                 </lightning-layout>

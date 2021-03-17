@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getJournalPosts from '@salesforce/apex/NKS_SafJournalpostListController.getJournalPosts';
+import ThreadSize from '@salesforce/schema/SocialPost.ThreadSize';
 
 const QUERY_FIELDS = {
     name: 'journalposter',
@@ -63,12 +64,15 @@ export default class NksSafJournalpostList extends LightningElement {
     _viewedObjectApiName; // API name of the object to display information from
     _viewedRecordId; // Id of the record to display information for
     selectedCase = null;
+    selectedThemeCode = null;
 
     //Query variables
-    queryVariables = {
+    @track queryVariables = {
         brukerId: {},
         tema: null,
         journalstatuser: ['JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
+        fraDato: null,
+        tilDato: null,
         foerste: 10
     };
 
@@ -135,6 +139,33 @@ export default class NksSafJournalpostList extends LightningElement {
         return false;
     }
 
+    get isEmptyResult() {
+        return this.filteredJournalPosts.length === 0 ? true : false;
+    }
+
+    get fromDate() {
+        return this.queryVariables.fraDato;
+    }
+
+    set fromDate(value) {
+        const minDate = new Date('2016-06-04');
+        const newDate = new Date(value);
+        this.queryVariables.fraDato = value;
+        if (minDate > newDate) {
+            this.queryVariables.fraDato = '2016-06-04';
+        }
+        this.callGetJournalPosts(false);
+    }
+
+    get toDate() {
+        return this.queryVariables.tilDato;
+    }
+
+    set toDate(value) {
+        this.queryVariables.tilDato = value;
+        this.callGetJournalPosts(false);
+    }
+
     getHasJournalposttype(statusElement) {
         return this._selectedJornalpostTypes.includes(statusElement);
     }
@@ -168,6 +199,14 @@ export default class NksSafJournalpostList extends LightningElement {
             this.queryVariables.tema = [value];
         } else {
             this.queryVariables.tema = value;
+        }
+    }
+
+    connectedCallback() {
+        if (this.queryVariables.fraDato == null) {
+            let d = new Date(Date.now());
+            d.setFullYear(d.getFullYear() - 1);
+            this.queryVariables.fraDato = d.toISOString().split('T')[0];
         }
     }
 
@@ -230,8 +269,19 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     handleSelectCase(event) {
-        this.selectedCase = event.detail;
+        this.selectedCase = event.detail.caseId;
+        this.selectedThemeCode = event.detail.themeCode;
         this.filterAllJournalposts();
+    }
+
+    handleJournalpostFromDateChange(event) {
+        let fromDate = event.target.value;
+        this.fromDate = fromDate;
+    }
+
+    handleJournalpostToDateChange(event) {
+        let toDate = event.target.value;
+        this.toDate = toDate;
     }
 
     /**
@@ -242,7 +292,8 @@ export default class NksSafJournalpostList extends LightningElement {
             (journalpost) =>
                 (this.selectedCase == null ||
                     this.selectedCase === journalpost.sak.fagsakId ||
-                    (this.selectedCase === 'gs' && 'FS22' == journalpost.sak.fagsaksystem)) &&
+                    (this.selectedCase === 'general' && 'FS22' == journalpost.sak.fagsaksystem)) &&
+                (this.selectedThemeCode == null || this.selectedThemeCode === journalpost.tema) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );
     }
