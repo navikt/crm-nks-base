@@ -240,10 +240,14 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 )
                 ? commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema)
                 : null;
-            navTask.CRM_DueDate__c = Date.valueOf(kafkaOppgave.fristFerdigstillelse);
+            navTask.CRM_DueDate__c = String.isNotBlank(kafkaOppgave.fristFerdigstillelse)
+                ? Date.valueOf(kafkaOppgave.fristFerdigstillelse)
+                : null;
             navTask.CRM_Priority__c = kafkaOppgave.prioritet;
             navTask.NKS_Status__c = kafkaOppgave.status;
-            navTask.NKS_Date_Registered__c = Date.valueOf(kafkaOppgave.opprettetTidspunkt);
+            navTask.NKS_Date_Registered__c = String.isNotBlank(kafkaOppgave.opprettetTidspunkt)
+                ? Date.valueOf(kafkaOppgave.opprettetTidspunkt)
+                : null;
             navTask.NKS_Comment_History__c = kafkaOppgave.commentHistory;
             navTask.CRM_NoPersonInformation__c = true; //Need to be default set because of validation rule
         } else {
@@ -286,13 +290,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         List<Database.UpsertResult> upsList,
         List<NavTask__c> taskList
     ) {
-        Map<Id, NavTask__c> successMap = new Map<Id, NavTask__c>();
-
         for (Integer index = 0; index < upsList.size(); index++) {
             if (upsList[index].isSuccess()) {
                 //Successful upsert
-                Id taskId = upsList[index].getId();
-                successMap.put(taskId, taskList[index]);
             } else {
                 //Sets an error on every kafka message with the unique key
                 for (
@@ -323,6 +323,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 'FIELDS: ' +
                 err.getFields();
         }
+        System.debug('Error Message: ' + errorMsg);
         message.CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
     }
@@ -334,6 +335,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @param message
      **/
     private void setMessageError(String errorMessage, KafkaMessage__c message) {
+        System.debug('Error Message: ' + errorMessage);
         message.CRM_ErrorMessage__c = errorMessage;
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
     }
