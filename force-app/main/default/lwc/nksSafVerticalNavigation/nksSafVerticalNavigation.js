@@ -46,7 +46,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
     _brukerIdField;
     _relationshipField;
 
-    isLoading;
+    @track isLoading;
 
     @track errors = [];
 
@@ -54,11 +54,11 @@ export default class NksSafVerticalNavigation extends LightningElement {
     @track themeArr = [];
     @track themeCodeArr = [];
     @track caseMap = new Map();
-    @track caseArr = [];
+    @track caseMapArray = [];
 
-    _selectedThemeGroup = 'all';
-    _selectedTheme = 'all';
-    _selectedCase;
+    _selectedThemeGroup = '';
+    _selectedTheme = '';
+    _selectedCase = '';
     _themeMap;
 
     get selectedThemeGroup() {
@@ -82,9 +82,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
         this.filterCases();
     }
     set selectedCase(value) {
-        if (this._selectedCase === value) {
-            return;
-        }
         this._selectedCase = value ? value : 'all';
         this.dispatchSelectedCase();
     }
@@ -96,8 +93,8 @@ export default class NksSafVerticalNavigation extends LightningElement {
     async loadThemeAndCase() {
         this.isLoading = true;
         this.error = null;
-        await this.callGetThemes();
         await this.callGetCases();
+        await this.callGetThemes();
         await this.callGetSelectedTheme();
         this.isLoading = false;
     }
@@ -135,10 +132,22 @@ export default class NksSafVerticalNavigation extends LightningElement {
         try {
             let data = await getCases(inputParams);
             this.caseMap = new Map();
+
+            this.caseMap.set('all', [
+                {
+                    label: 'Alle',
+                    caseId: 'all',
+                    themeCodeCaseId: 'all_all',
+                    themeCode: 'all',
+                    themeName: ''
+                }
+            ]);
+
             data.forEach((element) => {
                 let caseX = {
-                    label: element.themeName + ' - ' + element.saksId,
+                    label: element.saksId,
                     caseId: element.saksId,
+                    themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
                     themeName: element.themeName,
                     themeCode: element.sakstema.value,
                     isOpen: element.lukket ? false : true,
@@ -147,7 +156,24 @@ export default class NksSafVerticalNavigation extends LightningElement {
                 };
 
                 if (false === this.caseMap.has(caseX.themeCode)) {
-                    this.caseMap.set(caseX.themeCode, []);
+                    let caseAlle = {
+                        label: 'Alle',
+                        caseId: 'all',
+                        themeCodeCaseId: element.sakstema.value + '_all',
+                        themeName: element.themeName,
+                        themeCode: element.sakstema.value,
+                        isOpen: true
+                    };
+
+                    let caseGenerell = {
+                        label: 'Generell',
+                        caseId: 'general',
+                        themeCodeCaseId: element.sakstema.value + '_general',
+                        themeName: element.themeName,
+                        themeCode: element.sakstema.value,
+                        isOpen: true
+                    };
+                    this.caseMap.set(caseX.themeCode, [caseAlle, caseGenerell]);
                 }
 
                 this.caseMap.get(caseX.themeCode).push(caseX);
@@ -201,28 +227,24 @@ export default class NksSafVerticalNavigation extends LightningElement {
     }
 
     filterCases() {
-        let listCases = [];
+        let caseMapArr = [];
 
-        listCases.push({
-            caseId: 'all',
-            label: 'Alle',
-            isOpen: true
-        });
+        this.getCaseMapArrayFromCaseMap('all', caseMapArr);
 
         this.themeCodeArr.forEach((themeCode) => {
-            if (this.caseMap.has(themeCode)) {
-                listCases = listCases.concat(this.caseMap.get(themeCode));
-            }
+            this.getCaseMapArrayFromCaseMap(themeCode, caseMapArr);
         });
+        this.caseMapArray = caseMapArr;
+        this.selectedCase = caseMapArr[0].value[0].caseId;
+    }
 
-        listCases.push({
-            caseId: 'gs',
-            label: 'Generell',
-            isOpen: true
-        });
+    getCaseMapArrayFromCaseMap(themeCode, arr) {
+        if (this.caseMap.has(themeCode)) {
+            let cases = this.caseMap.get(themeCode);
+            let element = { key: themeCode, value: cases, label: cases[0].themeName };
 
-        this.caseArr = listCases;
-        this.selectedCase = listCases.length > 0 ? listCases[0].caseId : null;
+            arr.push(element);
+        }
     }
 
     handleThemeGroupChange(event) {
@@ -230,7 +252,11 @@ export default class NksSafVerticalNavigation extends LightningElement {
     }
 
     handleSelectCaseChange(event) {
-        this.selectedCase = event.detail.name;
+        let value = event.detail.name;
+        let stringArr = value.split('_');
+
+        this.selectedTheme = stringArr[0];
+        this.selectedCase = stringArr[1];
     }
 
     dispatchAvailableThemes() {
@@ -239,8 +265,14 @@ export default class NksSafVerticalNavigation extends LightningElement {
     }
 
     dispatchSelectedCase() {
-        let value = this.selectedCase === 'all' ? null : this.selectedCase;
-        this.dispatchEvent(new CustomEvent('selectcase', { detail: value }));
+        let caseId = this.selectedCase === 'all' ? null : this.selectedCase;
+        let themeCode = this.selectedTheme === 'all' ? null : this.selectedTheme;
+
+        this.dispatchEvent(
+            new CustomEvent('selectcase', {
+                detail: { caseId: caseId, themeCode: themeCode }
+            })
+        );
     }
 
     setErrorMessage(error, type) {
