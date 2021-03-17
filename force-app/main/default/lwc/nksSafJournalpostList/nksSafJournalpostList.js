@@ -70,7 +70,7 @@ export default class NksSafJournalpostList extends LightningElement {
     @track queryVariables = {
         brukerId: {},
         tema: null,
-        journalstatuser: ['JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
+        journalstatuser: ['MOTTATT', 'JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
         fraDato: null,
         tilDato: null,
         foerste: 10
