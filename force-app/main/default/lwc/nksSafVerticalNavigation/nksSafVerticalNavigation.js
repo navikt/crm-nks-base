@@ -203,6 +203,12 @@ export default class NksSafVerticalNavigation extends LightningElement {
     filterCases() {
         let listCases = [];
 
+        listCases.push({
+            caseId: 'all',
+            label: 'Alle',
+            isOpen: true
+        });
+
         this.themeCodeArr.forEach((themeCode) => {
             if (this.caseMap.has(themeCode)) {
                 listCases = listCases.concat(this.caseMap.get(themeCode));
@@ -214,14 +220,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
             label: 'Generell',
             isOpen: true
         });
-
-        if (listCases.length > 1) {
-            listCases.splice(0, 0, {
-                caseId: 'all',
-                label: 'Alle',
-                isOpen: true
-            });
-        }
 
         this.caseArr = listCases;
         this.selectedCase = listCases.length > 0 ? listCases[0].caseId : null;

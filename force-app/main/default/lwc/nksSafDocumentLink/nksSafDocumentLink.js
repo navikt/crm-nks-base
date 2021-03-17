@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import getDocument from '@salesforce/apex/NKS_SafJournalpostListController.getDocument';
 
 export default class NksSafDocumentLink extends NavigationMixin(LightningElement) {
     @api dokumentInfo;
@@ -52,7 +53,9 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     }
 
     get fileName() {
-        return this.dokumentvariant ? this.dokumentvariant.filnavn : this.title;
+        return this.dokumentvariant
+            ? this.dokumentvariant.filnavn
+            : this.title + '.' + this.dokumentvariant.filtype;
     }
 
     get fileIcon() {
@@ -114,6 +117,35 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
                     this.dokumentvariant = dokumentVariant;
                 }
             });
+        }
+    }
+
+    onClickDownload() {
+        this.downloadDocument();
+    }
+
+    async downloadDocument() {
+        try {
+            const documentResponse = await getDocument({
+                journalpostId: this.journalpostId,
+                documentId: this.dokumentInfo.dokumentInfoId,
+                variantFormat: this.variantFormat
+            });
+
+            if (documentResponse.isSuccess === true) {
+                let documentData =
+                    'data:' +
+                    documentResponse.contentType +
+                    ';base64,' +
+                    documentResponse.documentString;
+                let downloadLink = document.createElement('a');
+                downloadLink.href = documentData;
+                downloadLink.download = this.fileName;
+                downloadLink.click();
+            } else {
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
