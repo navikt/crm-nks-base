@@ -1,0 +1,37 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <lightning-combobox
+        name="themeGroup"
+        label="Temagruppe"
+        options={themeGroupArr}
+        onchange={handleThemeGroupChange}
+        value={selectedThemeGroup}
+    ></lightning-combobox>
+    <lightning-vertical-navigation onselect={handleSelectCaseChange}>
+        <template for:each={caseMapArray} for:item="theme">
+            <lightning-vertical-navigation-section key={theme.key} label={theme.label}>
+                <template for:each={theme.value} for:item="caseX">
+                    <template if:true={caseX.isOpen}>
+                        <lightning-vertical-navigation-item
+                            key={caseX.themeCodeCaseId}
+                            label={caseX.label}
+                            name={caseX.themeCodeCaseId}
+                        >
+                        </lightning-vertical-navigation-item>
+                    </template>
+                    <template if:false={caseX.isOpen}>
+                        <lightning-vertical-navigation-item-icon
+                            key={caseX.themeCodeCaseId}
+                            label={caseX.label}
+                            name={caseX.themeCodeCaseId}
+                            icon-name="utility:lock"
+                        >
+                        </lightning-vertical-navigation-item-icon>
+                    </template>
+                </template>
+            </lightning-vertical-navigation-section>
+        </template>
+    </lightning-vertical-navigation>
+</template>

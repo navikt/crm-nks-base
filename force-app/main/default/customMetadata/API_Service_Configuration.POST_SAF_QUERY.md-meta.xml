@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>POST SAF QUERY</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Base_Configuration__c</field>
+        <value xsi:type="xsd:string">SAF_API</value>
+    </values>
+    <values>
+        <field>HTTP_Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Has_Path_Parameters__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+&quot;200&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: {
+&quot;data&quot;: {
+&quot;dokumentoversiktBruker&quot;: {
+&quot;sideInfo&quot;: {
+&quot;sluttpeker&quot;:&quot;123214234&quot;,
+&quot;finnesNesteSide&quot;: true
+},
+&quot;journalposter&quot;: [
+{
+&quot;journalpostId&quot;: &quot;429111291&quot;,
+&quot;tittel&quot;: &quot;Innhenting av opplysninger&quot;,
+&quot;journalposttype&quot;: &quot;N&quot;,
+&quot;journalstatus&quot;: &quot;JOURNALFOERT&quot;,
+&quot;tema&quot;: &quot;BID&quot;,
+&quot;temanavn&quot;: &quot;Bidrag&quot;,
+&quot;behandlingstema&quot;: null,
+&quot;behandlingstemanavn&quot;: null,
+&quot;datoOpprettet&quot;: &quot;2018-01-01T12:00:00&quot;,
+&quot;kanal&quot;: &quot;UKJENT&quot;,
+&quot;kanalnavn&quot;: &quot;Ukjent&quot;,
+&quot;sak&quot;: { &quot;fagsakId&quot;: &quot;000100018&quot; },
+&quot;avsenderMottaker&quot;: {
+&quot;navn&quot;: &quot;Harry&quot;
+},
+&quot;dokumenter&quot;: [
+{
+&quot;dokumentInfoId&quot;: &quot;000012975&quot;,
+&quot;tittel&quot;: &quot;Innhenting av opplysninger&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;ARKIV&quot;,
+&quot;filnavn&quot;: &quot;innhenting_asd.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: true,
+&quot;skjerming&quot;: &quot;POL&quot;
+}
+]
+}
+]
+},
+{
+&quot;journalpostId&quot;: &quot;429108246&quot;,
+&quot;tittel&quot;: &quot;Spørsmål via nav.no&quot;,
+&quot;journalposttype&quot;: &quot;U&quot;,
+&quot;journalstatus&quot;: &quot;JOURNALFOERT&quot;,
+&quot;tema&quot;: &quot;AAP&quot;,
+&quot;temanavn&quot;: &quot;Arbeidsavklaringspenger&quot;,
+&quot;behandlingstema&quot;: &quot;ab0001&quot;,
+&quot;behandlingstemanavn&quot;: &quot;Ordinære dagpenger&quot;,
+&quot;datoOpprettet&quot;: &quot;2018-01-01T12:00:00&quot;,
+&quot;antallRetur&quot;: &quot;1&quot;,
+&quot;kanal&quot;: &quot;NAV_NO&quot;,
+&quot;kanalnavn&quot;: &quot;Ditt NAV&quot;,
+&quot;sak&quot;: {
+&quot;fagsakId&quot;: &quot;000200019&quot;
+},
+&quot;avsenderMottaker&quot;: {
+&quot;navn&quot;: &quot;Harry&quot;
+},
+&quot;dokumenter&quot;: [
+{
+&quot;dokumentInfoId&quot;: &quot;441007131&quot;,
+&quot;tittel&quot;: &quot;Spørsmål via nav.no&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;ARKIV&quot;,
+&quot;filnavn&quot;: &quot;spm123.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: true
+}
+]
+}
+]
+},
+{
+&quot;journalpostId&quot;: &quot;428965411&quot;,
+&quot;tittel&quot;: &quot;Inntektsopplysninger&quot;,
+&quot;journalposttype&quot;: &quot;I&quot;,
+&quot;journalstatus&quot;: &quot;JOURNALFOERT&quot;,
+&quot;tema&quot;: &quot;AAP&quot;,
+&quot;temanavn&quot;: &quot;Arbeidsavklaringspenger&quot;,
+&quot;behandlingstema&quot;: &quot;ab0001&quot;,
+&quot;behandlingstemanavn&quot;: &quot;Ordinære dagpenger&quot;,
+&quot;datoOpprettet&quot;: &quot;2018-01-01T12:00:00&quot;,
+&quot;kanal&quot;: &quot;SKAN_IM&quot;,
+&quot;kanalnavn&quot;: &quot;Skanning Iron Mountain&quot;,
+&quot;sak&quot;: {
+&quot;fagsakId&quot;: null,
+&quot;fagsaksystem&quot;: &quot;FS22&quot;
+},
+&quot;avsenderMottaker&quot;: {
+&quot;navn&quot;: &quot;Harry&quot;
+},
+&quot;dokumenter&quot;: [
+{
+&quot;dokumentInfoId&quot;: &quot;440831549&quot;,
+&quot;tittel&quot;: &quot;Inntektsopplysninger&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;SLADDET&quot;,
+&quot;filnavn&quot;: &quot;oppl.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: false
+}
+],
+&quot;logiskeVedlegg&quot;: [
+{
+&quot;logiskVedleggId&quot;: &quot;456456&quot;,
+&quot;tittel&quot;: &quot;Søknad om foreldrepenger&quot;
+}
+]
+},
+{
+&quot;dokumentInfoId&quot;: &quot;440831559&quot;,
+&quot;tittel&quot;: &quot;A-inntekt&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;ARKIV&quot;,
+&quot;filnavn&quot;: &quot;innt.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: true
+}
+]
+},
+{
+&quot;dokumentInfoId&quot;: &quot;440831548&quot;,
+&quot;tittel&quot;: &quot;Referat fra samtale på telefon&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;ARKIV&quot;,
+&quot;filnavn&quot;: &quot;ref.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: true
+}
+],
+&quot;logiskeVedlegg&quot;: [
+{
+&quot;logiskVedleggId&quot;: &quot;12311&quot;,
+&quot;tittel&quot;: &quot;Legeerklæring&quot;
+},
+{
+&quot;logiskVedleggId&quot;: &quot;12312&quot;,
+&quot;tittel&quot;: &quot;Dokument&quot;
+}
+]
+},
+{
+&quot;dokumentInfoId&quot;: &quot;440831569&quot;,
+&quot;tittel&quot;: &quot;Vedtak korrigert refusjon/u bet&quot;,
+&quot;dokumentvarianter&quot;: [
+{
+&quot;variantformat&quot;: &quot;ARKIV&quot;,
+&quot;filnavn&quot;: &quot;spm123.pdf&quot;,
+&quot;saksbehandlerHarTilgang&quot;: true
+}
+]
+}
+]
+}
+]
+}
+}
+}
+},
+&quot;401&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: {
+&quot;timestamp&quot;:&quot;2021-03-09T09:47:03.095+00:00&quot;,
+&quot;status&quot;:401,
+&quot;error&quot;:&quot;Unauthorized&quot;,
+&quot;message&quot;:&quot;no valid token found in validation context&quot;,
+&quot;path&quot;:&quot;/rest/hentdokument/journalId/documentInfoId/variantFormat&quot;
+}
+},
+&quot;404&quot;: {&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;500&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+}
+}</value>
+    </values>
+    <values>
+        <field>Service_Path__c</field>
+        <value xsi:type="xsd:string">/saf/graphql</value>
+    </values>
+</CustomMetadata>

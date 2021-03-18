@@ -2,5 +2,5 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Servicerutine</fullName>
     <active>true</active>
-    <label>Servicerutine</label>
+    <label>Kunnskapsartikkel</label>
 </RecordType>

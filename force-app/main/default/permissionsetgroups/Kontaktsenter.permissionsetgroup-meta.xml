@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>Kontaktsenter</label>
     <permissionSets>Arbeidsgiver_arenaActivity</permissionSets>
@@ -13,6 +13,8 @@
     <permissionSets>NKS_NAV_Task</permissionSets>
     <permissionSets>NKS_Person_Access</permissionSets>
     <permissionSets>NKS_Quick_Text_Reader</permissionSets>
+    <permissionSets>NKS_Secure_Chat_Access</permissionSets>
     <permissionSets>NKS_base</permissionSets>
+    <permissionSets>CRM_LoginFlow</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
