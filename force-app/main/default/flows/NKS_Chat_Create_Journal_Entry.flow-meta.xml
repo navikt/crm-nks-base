@@ -824,6 +824,13 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>InProgress</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Error_Screen_0_0</targetReference>
             </connector>
@@ -867,6 +874,28 @@
                 <targetReference>Chat_Journal_Social_Screen</targetReference>
             </connector>
             <label>Social Journal Entry Completed</label>
+        </rules>
+        <rules>
+            <name>Conversation_Storage_Failed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conversation_Store_Failed_Screen</targetReference>
+            </connector>
+            <label>Conversation Storage Failed</label>
         </rules>
     </decisions>
     <decisions>
@@ -1365,6 +1394,28 @@ TODAY())</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <description
+        >Sets the journal entry status to completed for the chat where the conversation storage failed.</description>
+        <name>Update_Chat_Completed</name>
+        <label>Update Chat Completed</label>
+        <locationX>1718</locationX>
+        <locationY>457</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NKS_Journal_Entry_Status__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>LiveChatTranscript</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
         <locationX>1006</locationX>
@@ -1403,6 +1454,86 @@ TODAY())</expression>
             <fieldText
             >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Chatsamtalen ble loggført med sosialt innhold.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description
+        >Storing the full conversation log failed and the chat must be handled manually.</description>
+        <name>Conversation_Store_Failed_Screen</name>
+        <label>Conversation Store Failed Screen</label>
+        <locationX>1494</locationX>
+        <locationY>457</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Chat_Completed</targetReference>
+        </connector>
+        <fields>
+            <name>Storage_Error_Text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(194, 57, 52);&quot;&gt;Lagring av meldingsloggen feilet&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;En feil oppsto ved lagring av meldingsloggen. Samtalereferatet må opprettes manuelt. Ved å klikke ferdigstill lagres denne chatten som ferdigstilt.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Manual_Journal_Text</name>
+            <fieldText
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Samtalereferat ble opprettet manuelt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ERROR_FINISH</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>action</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1560,8 +1691,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>No_Transcript</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
                     </rightValue>
@@ -1880,7 +2011,7 @@ TODAY())</expression>
         <fields>
             <name>Chat_Transferred_Text</name>
             <fieldText
-            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Chatten blir behandlet av en annen veileder, du kan lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Chatten er overført til en annen veileder. Du kan lukke chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
