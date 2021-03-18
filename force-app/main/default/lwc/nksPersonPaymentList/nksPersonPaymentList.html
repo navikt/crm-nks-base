@@ -22,22 +22,25 @@
                                 <lightning-input
                                     type="date"
                                     name="startDate"
-                                    value={startDateFilter}
+                                    value={isoStartDate}
                                     label="FOM"
                                     aria-label="Fra og med"
                                     max={maxStartDate}
                                     class="slds-var-p-right_small"
+                                    onchange={customDateChanged}
                                 ></lightning-input>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <lightning-input
                                     type="date"
                                     name="endDate"
-                                    value={endDateFilter}
+                                    value={isoEndDate}
                                     label="TOM"
                                     aria-label="Til og med"
+                                    max={maxEndDate}
                                     min={minEndDate}
                                     class="slds-var-p-right_small"
+                                    onchange={customDateChanged}
                                 ></lightning-input>
                             </lightning-layout-item>
                         </lightning-layout>

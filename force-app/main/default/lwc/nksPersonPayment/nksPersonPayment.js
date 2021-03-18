@@ -16,6 +16,10 @@ export default class NksPersonPayment extends LightningElement {
         return this.payment.utbetalingsstatus == 'Utbetalt';
     }
 
+    get chevronIcon() {
+        return this.expanded === true ? 'utility:chevronup' : 'utility:chevrondown';
+    }
+
     get multipleYtelser() {
         return this.ytelser && this.ytelser.length > 1;
     }

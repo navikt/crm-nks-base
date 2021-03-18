@@ -3,6 +3,23 @@
         <lightning-layout-item if:true={displayHeader} size="12">
             <b class="slds-text-title_caps">{ytelse.ytelsestype.value}</b>
         </lightning-layout-item>
+        <lightning-layout-item if:true={displayHeader} size="12">
+            <lightning-formatted-date-time
+                year="numeric"
+                month="2-digit"
+                day="2-digit"
+                value={ytelse.ytelsesperiode.fom}
+                key={ytelse.ytelsestype}
+            ></lightning-formatted-date-time>
+            &nbsp; - &nbsp;
+            <lightning-formatted-date-time
+                year="numeric"
+                month="2-digit"
+                day="2-digit"
+                value={ytelse.ytelsesperiode.tom}
+                key={ytelse.ytelsestype}
+            ></lightning-formatted-date-time>
+        </lightning-layout-item>
         <lightning-layout-item size="6">
             <b class="slds-text-title_caps">Detaljer</b>
         </lightning-layout-item>

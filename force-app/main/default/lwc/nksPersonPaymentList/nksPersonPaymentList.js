@@ -17,27 +17,36 @@ export default class NksPersonPaymentList extends LightningElement {
         { label: 'I fjor', value: 'PREVIOUS_YEAR' },
         { label: 'Egendefinert', value: 'CUSTOM_PERIOD' }
     ];
-    filtering = false;
 
     startDateFilter;
     endDateFilter;
 
     connectedCallback() {
-        this.startDateFilter = new Date();
-        var endDateFilter = new Date();
-        this.endDateFilter = new Date(endDateFilter.setFullYear(endDateFilter.getFullYear() - 2));
-    }
-
-    renderedCallback() {
-        this.filtering = false;
+        this.selectedPeriod = 'LAST_3_MONTHS';
+        let startDate = new Date();
+        startDate.setMonth(startDate.getMonth() - 3, 1);
+        this.startDateFilter = startDate;
+        this.endDateFilter = new Date();
     }
 
     get minEndDate() {
         return this.startDateFilter.toISOString();
     }
 
+    get maxEndDate() {
+        return new Date().toISOString();
+    }
+
     get maxStartDate() {
         return new Date().toISOString();
+    }
+
+    get isoStartDate() {
+        return this.startDateFilter.toISOString();
+    }
+
+    get isoEndDate() {
+        return this.endDateFilter.toISOString();
     }
 
     get customPeriod() {
@@ -97,7 +106,7 @@ export default class NksPersonPaymentList extends LightningElement {
         if (data) {
             this.payments = data;
             this.paymentsLoaded = true;
-            this.groupedPayments = this.groupPayments(this.payments);
+            this.filterPayments();
             this.initytelseSelection();
         } else if (error) {
             console.log('ERROR: ' + JSON.stringify(error, null, 2));
@@ -109,6 +118,23 @@ export default class NksPersonPaymentList extends LightningElement {
         let ytelseArray = event.detail.value;
         this.selectedYtelser = ytelseArray;
         this.filterPayments();
+    }
+
+    customDateChanged(event) {
+        let validInput = true;
+        const dateInputs = this.template.querySelectorAll('lightning-input');
+        dateInputs.forEach((dateInput) => {
+            if (dateInput.name === 'startDate' && dateInput.checkValidity() == true) {
+                this.startDateFilter = new Date(dateInput.value);
+            } else if (dateInput.name === 'endDate' && dateInput.checkValidity() == true) {
+                this.endDateFilter = new Date(dateInput.value);
+            } else {
+                validInput = false;
+            }
+        });
+        if (validInput) {
+            this.filterPayments();
+        }
     }
 
     periodChanged(event) {
@@ -138,7 +164,6 @@ export default class NksPersonPaymentList extends LightningElement {
 
     filterPayments() {
         let filtered = [];
-        this.filtering = true;
         filtered = this.payments.filter((payment) => {
             return this.hasYtelse(payment) && this.inFilterPeriod(payment);
         });
@@ -147,7 +172,7 @@ export default class NksPersonPaymentList extends LightningElement {
 
     //Returns true if the payment is in the defined filter period
     inFilterPeriod(payment) {
-        const paymentDate = Date.parse(payment.utbetalingsdato);
+        let paymentDate = Date.parse(payment.utbetalingsdato);
         return paymentDate >= this.startDateFilter && paymentDate <= this.endDateFilter;
     }
 

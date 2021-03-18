@@ -43,6 +43,39 @@
                             </b>
                         </lightning-layout>
                     </lightning-layout-item>
+                    <lightning-layout-item
+                        if:false={multipleYtelser}
+                        size="12"
+                        padding="horizontal-small"
+                    >
+                        <template for:each={payment.ytelseListe} for:item="ytelse">
+                            <b key={ytelse.ytelsestype}
+                                ><lightning-formatted-date-time
+                                    year="numeric"
+                                    month="2-digit"
+                                    day="2-digit"
+                                    value={ytelse.ytelsesperiode.fom}
+                                    key={ytelse.ytelsestype}
+                                ></lightning-formatted-date-time>
+                                &nbsp; - &nbsp;
+                                <lightning-formatted-date-time
+                                    year="numeric"
+                                    month="2-digit"
+                                    day="2-digit"
+                                    value={ytelse.ytelsesperiode.tom}
+                                    key={ytelse.ytelsestype}
+                                ></lightning-formatted-date-time
+                            ></b>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <lightning-icon
+                            icon-name={chevronIcon}
+                            size="x-small"
+                            class="slds-var-p-right_small slds-float_right slds-var-m-top_x-small"
+                        >
+                        </lightning-icon>
+                    </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
             <!--PAYMENT DETAILS-->
