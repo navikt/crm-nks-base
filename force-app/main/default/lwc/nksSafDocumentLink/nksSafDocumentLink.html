@@ -1,43 +1,60 @@
 <template>
     <template if:true={isLoaded}>
-        <!-- Link to document if readable -->
-        <template if:true={isReadable}>
-            <lightning-icon
-                icon-name={fileIcon}
-                alternative-text={dokumentvariant.filtype}
-                size="x-small"
-            >
-            </lightning-icon>
-            &nbsp;
-            <a href="#" onclick={navigateToDocument}>{title}</a>
-            &nbsp;
-            <lightning-button-icon
-                icon-name="utility:download"
-                onclick={downloadDocument}
-                alternative-text="Last ned"
-                size="x-small"
-            >
-            </lightning-button-icon>
-
-            <template if:true={hasLogicalAttachments}>
-                <ul class="slds-list_horizontal slds-has-dividers_right slds-text-body_small">
-                    <template iterator:it={dokumentInfo.logiskeVedlegg}>
-                        <li class="slds-item" key={it.value.logiskVedleggId}>{it.value.tittel}</li>
-                    </template>
-                </ul>
+        <lightning-layout multiple-rows="true">
+            <template if:true={isReadable}>
+                <lightning-layout-item flexibility="no-grow">
+                    <div class="slds-media slds-media_center">
+                        <lightning-icon
+                            icon-name={fileIcon}
+                            alternative-text={dokumentvariant.filtype}
+                            size="small"
+                            class="slds-media__figure"
+                        >
+                        </lightning-icon>
+                        <div class={linkTextClass}>
+                            <a href="#" onclick={navigateToDocument}>{title}</a>
+                        </div>
+                        <lightning-button-icon
+                            icon-name="utility:download"
+                            onclick={downloadDocument}
+                            alternative-text="Last ned"
+                            size="medium"
+                            variant="bare"
+                            class="slds-media__figure slds-media__figure_reverse"
+                        >
+                        </lightning-button-icon>
+                    </div>
+                </lightning-layout-item>
+                <template if:true={hasLogicalAttachments}>
+                    <lightning-layout-item size="12">
+                        <ul
+                            class="slds-list_horizontal slds-has-dividers_right slds-text-body_small slds-p-left_xx-large"
+                        >
+                            <template iterator:it={dokumentInfo.logiskeVedlegg}>
+                                <li class="slds-item" key={it.value.logiskVedleggId}>
+                                    {it.value.tittel}
+                                </li>
+                            </template>
+                        </ul>
+                    </lightning-layout-item>
+                </template>
             </template>
-        </template>
 
-        <!-- Text only if not readable -->
-        <template if:false={isReadable}>
-            <lightning-icon
-                icon-name="utility:ban"
-                alternative-text="Du har ikke tilgang til dette dokumentet"
-                title="Du har ikke tilgang til dette dokumentet"
-                size="xx-small"
-            >
-            </lightning-icon>
-            &nbsp; {title}
-        </template>
+            <!-- Text only if not readable -->
+            <template if:false={isReadable}>
+                <lightning-layout-item size="12">
+                    <div class="slds-media slds-media_center">
+                        <lightning-icon
+                            icon-name="utility:ban"
+                            alternative-text="Du har ikke tilgang til dette dokumentet"
+                            size="small"
+                            class="slds-media__figure"
+                        >
+                        </lightning-icon>
+                        <div class={linkTextClass}>{title}</div>
+                    </div>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
     </template>
 </template>

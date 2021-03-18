@@ -18,13 +18,13 @@
         </lightning-layout-item>
 
         <!-- CONTENT -->
-        <lightning-layout-item padding="horizontal-small" size="9">
+        <lightning-layout-item class="slds-p-left_small" size="9">
             <lightning-layout multiple-rows="true">
                 <!-- FILTER -->
-                <lightning-layout-item padding="horizontal-small" size="12">
-                    <div class="slds-form-element" title="Journalpost filter">
+                <lightning-layout-item size="12">
+                    <div class="slds-p-left_x-small" title="Journalpost filter">
                         <lightning-layout>
-                            <lightning-layout-item padding="horizontal-small">
+                            <lightning-layout-item>
                                 <lightning-input
                                     type="checkbox"
                                     label="Inngående"
@@ -35,7 +35,7 @@
                                 >
                                 </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item padding="horizontal-small">
+                            <lightning-layout-item>
                                 <lightning-input
                                     type="checkbox"
                                     label="Utgående"
@@ -46,7 +46,7 @@
                                 >
                                 </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item padding="horizontal-small">
+                            <lightning-layout-item>
                                 <lightning-input
                                     type="checkbox"
                                     label="Notat"
@@ -57,27 +57,28 @@
                                 >
                                 </lightning-input>
                             </lightning-layout-item>
-
-                            <lightning-layout-item padding="horizontal-small">
+                            <lightning-layout-item class="slds-p-right_x-small">
                                 <lightning-input
                                     type="date"
                                     label="Fra"
                                     value={fromDate}
+                                    class="slds-m-top_xxx-small"
                                     onchange={handleJournalpostFromDateChange}
                                 ></lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item padding="horizontal-small">
+                            <lightning-layout-item>
                                 <lightning-input
                                     type="date"
                                     label="Til"
                                     value={toDate}
+                                    class="slds-m-top_xxx-small"
                                     onchange={handleJournalpostToDateChange}
                                 ></lightning-input>
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>
                 </lightning-layout-item>
-                <lightning-layout-item padding="around-small" size="12">
+                <lightning-layout-item size="12">
                     <div title="Journalpost liste">
                         <!-- SPINNER -->
                         <template if:false={isLoaded}>
@@ -117,13 +118,13 @@
 
                             <!-- LIST OF JOURNALPOSTS -->
                             <template if:false={isEmptyResult}>
-                                <ul class="slds-has-dividers_top-space">
+                                <ul class="slds-has-dividers_bottom-space">
                                     <template
                                         for:each={filteredJournalPosts}
                                         for:item="journalpost"
                                     >
                                         <li class="slds-item" key={journalpost.journalpostId}>
-                                            <div class="slds-p-top_small">
+                                            <div>
                                                 <c-nks-saf-journalpost
                                                     journalpost={journalpost}
                                                 ></c-nks-saf-journalpost>
@@ -138,8 +139,7 @@
 
                 <template if:true={canLoadMore}>
                     <lightning-layout-item
-                        padding="around-small"
-                        class="slds-align_absolute-center"
+                        class="slds-align_absolute-center slds-p-vertical_x-small"
                         size="12"
                     >
                         <template if:true={isLoadingMore}>
@@ -156,30 +156,13 @@
                         </template>
                     </lightning-layout-item>
                 </template>
+
+                <lightning-layout-item size="12">
+                    <div class="slds-box slds-theme_shade">
+                        <p>Dokumenter kan kun vises fra og med 4.juni 2016.</p>
+                    </div>
+                </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="12">
-            <div class="slds-box slds-theme_shade">
-                <p>Dokumenter kan kun vises fra og med 4.juni 2016.</p>
-            </div>
-        </lightning-layout-item>
     </lightning-layout>
-
-    <!-- CARD FOOTER -->
-    <!-- <p slot="footer"> -->
-    <!-- <div>
-        <template if:true={isLoadingMore}>
-            <div class="slds-is-relative">
-                Last flere
-                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
-            </div>
-        </template>
-        <template if:false={isLoadingMore}>
-            <template if:true={canLoadMore}>
-                <a onclick={queryMoreJournalPosts}>Last flere</a>
-            </template>
-        </template> -->
-    <!-- </p> -->
-    <!-- </div> -->
-    <!-- </lightning-card> -->
 </template>

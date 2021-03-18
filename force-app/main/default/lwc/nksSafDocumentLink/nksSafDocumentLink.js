@@ -5,11 +5,21 @@ import getDocument from '@salesforce/apex/NKS_SafJournalpostListController.getDo
 export default class NksSafDocumentLink extends NavigationMixin(LightningElement) {
     @api dokumentInfo;
     @api journalpostId;
+    _linkTextClass;
 
     dokumentvariant;
 
     connectedCallback() {
         this.setDocumentVariant();
+    }
+
+    get linkTextClass() {
+        return this._linkTextClass;
+    }
+
+    @api
+    set linkTextClass(value) {
+        this._linkTextClass = value ? value + ' slds-media__body' : 'slds-media__body';
     }
 
     get isLoaded() {
