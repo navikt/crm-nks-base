@@ -145,13 +145,33 @@ export default class NksSafVerticalNavigation extends LightningElement {
             ]);
 
             data.forEach((element) => {
+                let nmbOfOpenCases = this.nmbOfOpenCases(element);
+                let isOpen = nmbOfOpenCases > 0 ? true : false;
+
+                let caseLabel = element.saksId;
+
+                if (isOpen) {
+                    caseLabel +=
+                        ' - (' +
+                        nmbOfOpenCases +
+                        (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
+                        ')';
+                }
+                // element.saksId +
+                //     (isOpen
+                //         ? ' (' +
+                //           nmbOfOpenCases +
+                //           (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
+                //           ')'
+                //         : '');
+
                 let caseX = {
-                    label: element.saksId,
+                    label: caseLabel,
                     caseId: element.saksId,
                     themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
                     themeName: element.themeName,
                     themeCode: element.sakstema.value,
-                    isOpen: this.isCaseOpen(element),
+                    isOpen: isOpen,
                     openDate: element.opprettet,
                     closeDate: element.lukket
                 };
@@ -184,16 +204,18 @@ export default class NksSafVerticalNavigation extends LightningElement {
         }
     }
 
-    isCaseOpen(caseX) {
+    nmbOfOpenCases(caseX) {
+        let nmbOfOpen = 0;
+
         if (caseX.lukket) {
-            return false;
+            return nmbOfOpen;
         }
         caseX.behandlingskjede.forEach((behandling) => {
             if (behandling.slutt == null) {
-                return true;
+                nmbOfOpen++;
             }
         });
-        return false;
+        return nmbOfOpen;
     }
 
     async callGetThemes() {
