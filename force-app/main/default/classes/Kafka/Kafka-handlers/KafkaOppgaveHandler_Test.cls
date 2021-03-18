@@ -20,6 +20,7 @@ public class KafkaOppgaveHandler_Test {
         testOppgave.versjon = 1;
         testOppgave.beskrivelse = 'TEST DESCRIPTION';
         testOppgave.fristFerdigstillelse = '2021-01-14';
+        testOppgave.opprettetTidspunkt = '2021-01-12';
         testOppgave.prioritet = 'NORM';
         testOppgave.status = 'AAPNET';
         testOppgave.ident = idt;
@@ -46,6 +47,9 @@ public class KafkaOppgaveHandler_Test {
         UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '2990'));
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
+        );
+        UTIL_TestDataFactory.createRecord(
+            new NavTask__c(Name = 'TEST TASK', INT_External_Reference__c = 53339)
         );
     }
 
@@ -80,14 +84,19 @@ public class KafkaOppgaveHandler_Test {
                 )
             )
         );
+        messages.add(
+            new KafkaMessage__c(
+                CRM_Key__c = '53339',
+                CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(version1)))
+            )
+        );
 
         Test.startTest();
         handler.processMessages(messages);
         Test.stopTest();
 
+        System.debug([SELECT Log_Message__c, Pay_Load__c FROM Application_Log__c]);
+
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
-        System.assert(
-            [SELECT COUNT() FROM FeedItem WHERE ParentId IN :[SELECT Id FROM NavTask__c]] != 0
-        );
     }
 }
