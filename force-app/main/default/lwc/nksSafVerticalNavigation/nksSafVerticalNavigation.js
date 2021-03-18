@@ -139,7 +139,8 @@ export default class NksSafVerticalNavigation extends LightningElement {
                     caseId: 'all',
                     themeCodeCaseId: 'all_all',
                     themeCode: 'all',
-                    themeName: ''
+                    themeName: '',
+                    isOpen: 'all'
                 }
             ]);
 
@@ -150,7 +151,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
                     themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
                     themeName: element.themeName,
                     themeCode: element.sakstema.value,
-                    isOpen: element.lukket ? false : true,
+                    isOpen: this.isCaseOpen(element),
                     openDate: element.opprettet,
                     closeDate: element.lukket
                 };
@@ -181,6 +182,18 @@ export default class NksSafVerticalNavigation extends LightningElement {
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
         }
+    }
+
+    isCaseOpen(caseX) {
+        if (caseX.lukket) {
+            return false;
+        }
+        caseX.behandlingskjede.forEach((behandling) => {
+            if (behandling.slutt == null) {
+                return true;
+            }
+        });
+        return false;
     }
 
     async callGetThemes() {

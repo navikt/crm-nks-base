@@ -67,8 +67,8 @@
 &quot;tittel&quot;: &quot;Spørsmål via nav.no&quot;,
 &quot;journalposttype&quot;: &quot;U&quot;,
 &quot;journalstatus&quot;: &quot;JOURNALFOERT&quot;,
-&quot;tema&quot;: &quot;TRK&quot;,
-&quot;temanavn&quot;: &quot;Trekkhåndtering&quot;,
+&quot;tema&quot;: &quot;AAP&quot;,
+&quot;temanavn&quot;: &quot;Arbeidsavklaringspenger&quot;,
 &quot;behandlingstema&quot;: &quot;ab0001&quot;,
 &quot;behandlingstemanavn&quot;: &quot;Ordinære dagpenger&quot;,
 &quot;datoOpprettet&quot;: &quot;2018-01-01T12:00:00&quot;,
@@ -100,15 +100,16 @@
 &quot;tittel&quot;: &quot;Inntektsopplysninger&quot;,
 &quot;journalposttype&quot;: &quot;I&quot;,
 &quot;journalstatus&quot;: &quot;JOURNALFOERT&quot;,
-&quot;tema&quot;: &quot;STO&quot;,
-&quot;temanavn&quot;: &quot;Regnskap/utbetaling&quot;,
-&quot;behandlingstema&quot;: &quot;ab0014&quot;,
-&quot;behandlingstemanavn&quot;: &quot;Arbeidsavklaringspenger&quot;,
+&quot;tema&quot;: &quot;AAP&quot;,
+&quot;temanavn&quot;: &quot;Arbeidsavklaringspenger&quot;,
+&quot;behandlingstema&quot;: &quot;ab0001&quot;,
+&quot;behandlingstemanavn&quot;: &quot;Ordinære dagpenger&quot;,
 &quot;datoOpprettet&quot;: &quot;2018-01-01T12:00:00&quot;,
 &quot;kanal&quot;: &quot;SKAN_IM&quot;,
 &quot;kanalnavn&quot;: &quot;Skanning Iron Mountain&quot;,
 &quot;sak&quot;: {
-&quot;fagsakId&quot;: null
+&quot;fagsakId&quot;: null,
+&quot;fagsaksystem&quot;: &quot;FS22&quot;
 },
 &quot;avsenderMottaker&quot;: {
 &quot;navn&quot;: &quot;Harry&quot;
