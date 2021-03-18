@@ -27,11 +27,13 @@
             <ul class="slds-list_dotted">
                 <template for:each={attachments} for:item="dokument">
                     <li key={dokument.dokumentInfoId}>
-                        <c-nks-saf-document-link
-                            dokument-info={dokument}
-                            journalpost-id={journalpost.journalpostId}
-                        >
-                        </c-nks-saf-document-link>
+                        <div class="slds-p-top_x-small">
+                            <c-nks-saf-document-link
+                                dokument-info={dokument}
+                                journalpost-id={journalpost.journalpostId}
+                            >
+                            </c-nks-saf-document-link>
+                        </div>
                     </li>
                 </template>
             </ul>
