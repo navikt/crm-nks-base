@@ -25,7 +25,8 @@ public with sharing class NKS_HomePageControllerTest {
             'LastModifiedDate DESC',
             '3',
             'CreatedDate',
-            true
+            true,
+            false
         );
         Test.stopTest();
 

@@ -22,21 +22,28 @@ public with sharing class NKS_HomePageController {
         String orderby,
         String limitNumber,
         String datefield,
-        Boolean showimage
+        Boolean showimage,
+        Boolean filterbyskills
     ) {
         List<Record> records = new List<Record>();
         String userId = UserInfo.getUserID();
-        String query = 'SELECT LastModifiedDate, CreatedDate ,' + title;
+        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
         if (content != null)
             query += ' , ' + content;
+        if (filterbyskills)
+            query += ' , Skills__c ';
         query += ' FROM ' + objectName;
         query += ' WHERE ' + filter;
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
         if (limitNumber != null)
-            query += ' LIMIT ' + limitNumber;
+            query += ' LIMIT ' + limitNumber + 10;
 
         List<SObject> listtoreturn = Database.query(query);
+
+        if (filterbyskills)
+            listtoreturn = filterBySkills(listtoreturn, objectName, userId, limitNumber);
+
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
@@ -99,5 +106,43 @@ public with sharing class NKS_HomePageController {
         ?.ContentDocument.LatestPublishedVersionId;
         return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
             contentversionid;
+    }
+
+    private static Set<String> getUserSkills(Id userId) {
+        Set<String> skills = new Set<String>();
+        for (Group g : [
+            SELECT DeveloperName, Name, Type, Id
+            FROM Group
+            WHERE
+                DeveloperName LIKE 'NKS_Skill_%'
+                AND Group.Type = 'Regular'
+                AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
+        ]) {
+            skills.add(g.Name);
+        }
+        return skills;
+    }
+
+    private static List<SObject> filterBySkills(
+        List<sObject> listofrecords,
+        String objectName,
+        Id userId,
+        String limitNumber
+    ) {
+        List<sObject> listtoreturn = new List<SObject>();
+        Set<String> userskills = getUserSkills(userId);
+        for (sObject r : listofrecords) {
+            if (r.get('Skills__c') != null) {
+                Set<String> selections = new Set<String>(r.get('Skills__c').toString().split(';'));
+                userskills.retainAll(selections);
+                if (userskills.size() > 0) {
+                    listtoreturn.add(r);
+                }
+            } else
+                listtoreturn.add(r);
+            if (listtoreturn.size() == Integer.valueOf(limitNumber))
+                return listtoreturn;
+        }
+        return listtoreturn;
     }
 }

@@ -10,4 +10,39 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Skills__c</picklist>
+        <values>
+            <fullName>Arbeid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arbeidsgiver og Samhandler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Familie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gjeldsrådgivning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pensjon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sosiale Tjenester</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uføretrygd</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

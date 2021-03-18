@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Arbeid</fullName>
+        <default>false</default>
+        <label>Arbeid</label>
+    </customValue>
+    <customValue>
+        <fullName>Arbeidsgiver og Samhandler</fullName>
+        <default>false</default>
+        <label>Arbeidsgiver og Samhandler</label>
+    </customValue>
+    <customValue>
+        <fullName>Familie</fullName>
+        <default>false</default>
+        <label>Familie</label>
+    </customValue>
+    <customValue>
+        <fullName>Gjeldsrådgivning</fullName>
+        <default>false</default>
+        <label>Gjeldsrådgivning</label>
+    </customValue>
+    <customValue>
+        <fullName>Helse</fullName>
+        <default>false</default>
+        <label>Helse</label>
+    </customValue>
+    <customValue>
+        <fullName>Pensjon</fullName>
+        <default>false</default>
+        <label>Pensjon</label>
+    </customValue>
+    <customValue>
+        <fullName>Sosiale Tjenester</fullName>
+        <default>false</default>
+        <label>Sosiale Tjenester</label>
+    </customValue>
+    <customValue>
+        <fullName>Uføretrygd</fullName>
+        <default>false</default>
+        <label>Uføretrygd</label>
+    </customValue>
+    <description
+    >Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
+    <masterLabel>Skills</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

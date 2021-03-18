@@ -15,6 +15,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api linklabel;
     @api datefield;
     @api showimage;
+    @api filterbyskills;
 
     @track records;
     error;
@@ -45,7 +46,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             orderby: this.orderby,
             limitNumber: this.limit,
             datefield: this.datefield,
-            showimage: this.showimage
+            showimage: this.showimage,
+            filterbyskills: this.filterbyskills
         })
             .then((result) => {
                 this.records = result;
