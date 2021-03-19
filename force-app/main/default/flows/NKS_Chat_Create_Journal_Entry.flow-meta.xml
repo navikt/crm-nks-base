@@ -793,7 +793,7 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>972</locationX>
+        <locationX>974</locationX>
         <locationY>349</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
@@ -822,6 +822,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>InProgress</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -867,6 +874,82 @@
                 <targetReference>Chat_Journal_Social_Screen</targetReference>
             </connector>
             <label>Social Journal Entry Completed</label>
+        </rules>
+        <rules>
+            <name>Conversation_Storage_Failed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conversation_Store_Failed_Screen</targetReference>
+            </connector>
+            <label>Conversation Storage Failed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+        >Verify that the user attempting to create a journal entry for the chat is indeed the owner of the chat transcript</description>
+        <name>Check_Owner</name>
+        <label>Check Owner</label>
+        <locationX>615</locationX>
+        <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>Wrong_Owner_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>Get_Chat_Transcript.OwnerId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Input_Screen</targetReference>
+            </connector>
+            <label>Is Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description
+        >Verify that the user attempting to create a journal entry for the chat is indeed the owner of the chat transcript</description>
+        <name>Check_Owner_0</name>
+        <label>Check Owner</label>
+        <locationX>185</locationX>
+        <locationY>382</locationY>
+        <defaultConnector>
+            <targetReference>Wrong_Owner_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Owner_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript_After.OwnerId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <elementReference>$User.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Social_Information</targetReference>
+            </connector>
+            <label>Is Owner</label>
         </rules>
     </decisions>
     <decisions>
@@ -1192,7 +1275,7 @@ TODAY())</expression>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
         <locationX>807</locationX>
-        <locationY>185</locationY>
+        <locationY>186</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Journal_Entries</targetReference>
@@ -1220,6 +1303,40 @@ TODAY())</expression>
         <queriedFields>CaseId</queriedFields>
         <queriedFields>NKS_Social_Service_Information__c</queriedFields>
         <queriedFields>LiveChatButtonId</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Query the chat transcript triggering the flow.</description>
+        <name>Get_Chat_Transcript_After</name>
+        <label>Get Chat Transcript</label>
+        <locationX>335</locationX>
+        <locationY>446</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Owner_0</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>LiveChatTranscript</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NKS_Journal_Entry_Created__c</queriedFields>
+        <queriedFields>NKS_Journal_Entry_Status__c</queriedFields>
+        <queriedFields>NKS_Journal_Entry_ID__c</queriedFields>
+        <queriedFields>NKS_Conversation__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <queriedFields>NKS_Theme_Group__c</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>CaseId</queriedFields>
+        <queriedFields>NKS_Social_Service_Information__c</queriedFields>
+        <queriedFields>LiveChatButtonId</queriedFields>
+        <queriedFields>Status</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1227,7 +1344,7 @@ TODAY())</expression>
         >Check to see if there are any journal entries created for this chat already</description>
         <name>Get_Journal_Entries</name>
         <label>Get Journal Entries</label>
-        <locationX>980</locationX>
+        <locationX>983</locationX>
         <locationY>194</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1251,11 +1368,11 @@ TODAY())</expression>
         <description>Query the related person record</description>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>522</locationX>
-        <locationY>505</locationY>
+        <locationX>622</locationX>
+        <locationY>508</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Input_Screen</targetReference>
+            <targetReference>Check_Owner</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
@@ -1276,6 +1393,28 @@ TODAY())</expression>
         <queriedFields>INT_ActorId__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <description
+        >Sets the journal entry status to completed for the chat where the conversation storage failed.</description>
+        <name>Update_Chat_Completed</name>
+        <label>Update Chat Completed</label>
+        <locationX>1718</locationX>
+        <locationY>457</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Chat_Transcript.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NKS_Journal_Entry_Status__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>LiveChatTranscript</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
@@ -1320,6 +1459,86 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <description
+        >Storing the full conversation log failed and the chat must be handled manually.</description>
+        <name>Conversation_Store_Failed_Screen</name>
+        <label>Conversation Store Failed Screen</label>
+        <locationX>1494</locationX>
+        <locationY>457</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Chat_Completed</targetReference>
+        </connector>
+        <fields>
+            <name>Storage_Error_Text</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(194, 57, 52);&quot;&gt;Lagring av meldingsloggen feilet&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;En feil oppsto ved lagring av meldingsloggen. Samtalereferatet må opprettes manuelt. Ved å klikke ferdigstill lagres denne chatten som ferdigstilt.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Manual_Journal_Text</name>
+            <fieldText
+            >&lt;p&gt;Chatten er nå lagret og satt som ferdigstilt. Du kan trygt lukke denne chattfanen. Husk å skrive et samtalereferat i Modia!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ERROR_FINISH</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>action</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference
+                    >Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen</name>
         <label>Error Screen</label>
@@ -1333,38 +1552,6 @@ TODAY())</expression>
             <fieldText
             >&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Missing_Account_Error</name>
-            <fieldText
-            >&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Conversation_Error</name>
-            <fieldText
-            >&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg</name>
@@ -1422,38 +1609,6 @@ TODAY())</expression>
             <fieldText
             >&lt;p&gt;&lt;span style=&quot;color: rgb(218, 13, 13); font-size: 18px;&quot;&gt;Feil ved journalføring/oppgaveopprettelse&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Missing_Account_Error_0</name>
-            <fieldText
-            >&lt;p&gt;Bruker må være innlogget for at chatten skal kunne journalføres.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Chat_Transcript.AccountId</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Conversation_Error_0</name>
-            <fieldText
-            >&lt;p&gt;Meldingsloggen er enda ikke lagret. Hvis dialogen fortsatt er pågående må den avsluttes før journalen kan ferdigstilles.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Journal_Post_Error_Msg_0</name>
@@ -1536,8 +1691,8 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_Chat_Transcript.NKS_Conversation__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>No_Transcript</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
                     </rightValue>
@@ -1591,13 +1746,13 @@ TODAY())</expression>
         >Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>425</locationX>
-        <locationY>505</locationY>
+        <locationX>452</locationX>
+        <locationY>446</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Check_Social_Information</targetReference>
+            <targetReference>Get_Chat_Transcript_After</targetReference>
         </connector>
         <fields>
             <name>Journal_Header</name>
@@ -1839,6 +1994,25 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description
+        >Information screen telling the user that the chat is transferred to another agent that is now responsible for creating the journal entry.</description>
+        <name>Wrong_Owner_Screen</name>
+        <label>Wrong Owner Screen</label>
+        <locationX>624</locationX>
+        <locationY>219</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Chat_Transferred_Text</name>
+            <fieldText
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Chatten er overført til en annen veileder. Du kan lukke chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>

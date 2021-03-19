@@ -63,7 +63,7 @@ public class NKS_JournalUtilities {
         } else {
             resp.success = false;
             //Creates a log entry for troubleshooting
-            LoggerUtility logger = new LoggerUtility();
+            LoggerUtility logger = new LoggerUtility('Journal');
             SObject objectRef = String.isNotBlank(referenceId)
                 ? referenceId.getSobjectType().newSObject(referenceId)
                 : null;
@@ -74,7 +74,8 @@ public class NKS_JournalUtilities {
                 '\n' +
                 'Body: ' +
                 apiCtrl.getResponse().getBody(),
-                objectRef
+                objectRef,
+                CRM_ApplicationDomain.Domain.NKS
             );
             String errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
             logger.publish();

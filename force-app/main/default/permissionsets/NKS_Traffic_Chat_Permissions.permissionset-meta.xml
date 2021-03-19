@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
         <apexClass>ChatAuthController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description
-    >Necessary object permissions needed for reporting på NAV Traffic team</description>
+    <description>Necessary object permissions needed for reporting på NAV Traffic team</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.AverageResponseTimeOperator</field>
@@ -69,6 +68,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.NKS_Active_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LiveChatTranscript.NKS_Conversation_Stored__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.NKS_Journal_Entry_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
