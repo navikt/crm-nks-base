@@ -16,7 +16,7 @@ public class KafkaOppgaveHandler_Test {
         testOppgave.tildeltEnhetsnr = '2990';
         testOppgave.tilordnetRessurs = 'Z994995';
         testOppgave.tema = 'BAR';
-        testOppgave.oppgavetype = 'BEH_SAK';
+        testOppgave.oppgavetype = 'KONT_BRUK';
         testOppgave.versjon = 1;
         testOppgave.beskrivelse = 'TEST DESCRIPTION';
         testOppgave.fristFerdigstillelse = '2021-01-14';
@@ -47,6 +47,13 @@ public class KafkaOppgaveHandler_Test {
         UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '2990'));
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
+        );
+        UTIL_TestDataFactory.createRecord(
+            new Common_Code__c(
+                CRM_Code__c = 'KONT_BRUK',
+                Name = 'Kontakt Bruker',
+                CRM_Code_Set__c = 'Oppgavetyper'
+            )
         );
         UTIL_TestDataFactory.createRecord(
             new NavTask__c(Name = 'TEST TASK', INT_External_Reference__c = 53339)
