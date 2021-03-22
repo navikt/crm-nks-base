@@ -190,8 +190,8 @@
         <description>Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
         <label>Add Journal Entry</label>
-        <locationX>1229</locationX>
-        <locationY>646</locationY>
+        <locationX>1373</locationX>
+        <locationY>735</locationY>
         <assignmentItems>
             <assignToReference>Journal_Entry_Text</assignToReference>
             <operator>Add</operator>
@@ -793,8 +793,8 @@
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
         <label>Check Journal Entry Created</label>
-        <locationX>974</locationX>
-        <locationY>349</locationY>
+        <locationX>1118</locationX>
+        <locationY>438</locationY>
         <defaultConnector>
             <targetReference>Get_Account</targetReference>
         </defaultConnector>
@@ -903,8 +903,8 @@
         >Verify that the user attempting to create a journal entry for the chat is indeed the owner of the chat transcript</description>
         <name>Check_Owner</name>
         <label>Check Owner</label>
-        <locationX>615</locationX>
-        <locationY>384</locationY>
+        <locationX>799</locationX>
+        <locationY>313</locationY>
         <defaultConnector>
             <targetReference>Wrong_Owner_Screen</targetReference>
         </defaultConnector>
@@ -916,11 +916,11 @@
                 <leftValueReference>Get_Chat_Transcript.OwnerId</leftValueReference>
                 <operator>StartsWith</operator>
                 <rightValue>
-                    <elementReference>Get_Chat_Transcript.OwnerId</elementReference>
+                    <elementReference>$User.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Input_Screen</targetReference>
+                <targetReference>Get_Journal_Entries</targetReference>
             </connector>
             <label>Is Owner</label>
         </rules>
@@ -1143,8 +1143,8 @@ TODAY())</expression>
         >Loops through the journal entries to generate text output to user.</description>
         <name>Journal_Entry_Loop</name>
         <label>Journal Entry Loop</label>
-        <locationX>981</locationX>
-        <locationY>646</locationY>
+        <locationX>1125</locationX>
+        <locationY>735</locationY>
         <collectionReference>Get_Journal_Entries</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1275,10 +1275,10 @@ TODAY())</expression>
         <name>Get_Chat_Transcript</name>
         <label>Get Chat Transcript</label>
         <locationX>807</locationX>
-        <locationY>186</locationY>
+        <locationY>180</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Journal_Entries</targetReference>
+            <targetReference>Check_Owner</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
@@ -1310,8 +1310,8 @@ TODAY())</expression>
         <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript_After</name>
         <label>Get Chat Transcript</label>
-        <locationX>335</locationX>
-        <locationY>446</locationY>
+        <locationX>349</locationX>
+        <locationY>452</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Owner_0</targetReference>
@@ -1344,8 +1344,8 @@ TODAY())</expression>
         >Check to see if there are any journal entries created for this chat already</description>
         <name>Get_Journal_Entries</name>
         <label>Get Journal Entries</label>
-        <locationX>983</locationX>
-        <locationY>194</locationY>
+        <locationX>1127</locationX>
+        <locationY>309</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Journal_Entry_Created</targetReference>
@@ -1368,11 +1368,11 @@ TODAY())</expression>
         <description>Query the related person record</description>
         <name>Get_Person</name>
         <label>Get Person</label>
-        <locationX>622</locationX>
-        <locationY>508</locationY>
+        <locationX>633</locationX>
+        <locationY>420</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Owner</targetReference>
+            <targetReference>Input_Screen</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
@@ -1398,8 +1398,8 @@ TODAY())</expression>
         >Sets the journal entry status to completed for the chat where the conversation storage failed.</description>
         <name>Update_Chat_Completed</name>
         <label>Update Chat Completed</label>
-        <locationX>1718</locationX>
-        <locationY>457</locationY>
+        <locationX>1862</locationX>
+        <locationY>546</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1444,8 +1444,8 @@ TODAY())</expression>
         >Success screen shown if the chat was logged with social information.</description>
         <name>Chat_Journal_Social_Screen</name>
         <label>Chat Journal Social Screen</label>
-        <locationX>1340</locationX>
-        <locationY>523</locationY>
+        <locationX>1484</locationX>
+        <locationY>612</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1463,8 +1463,8 @@ TODAY())</expression>
         >Storing the full conversation log failed and the chat must be handled manually.</description>
         <name>Conversation_Store_Failed_Screen</name>
         <label>Conversation Store Failed Screen</label>
-        <locationX>1494</locationX>
-        <locationY>457</locationY>
+        <locationX>1638</locationX>
+        <locationY>546</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1656,8 +1656,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen_0_0</name>
         <label>Error Screen</label>
-        <locationX>1615</locationX>
-        <locationY>344</locationY>
+        <locationX>1759</locationX>
+        <locationY>433</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1746,8 +1746,8 @@ TODAY())</expression>
         >Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>452</locationX>
-        <locationY>446</locationY>
+        <locationX>496</locationX>
+        <locationY>420</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2003,8 +2003,8 @@ TODAY())</expression>
         >Information screen telling the user that the chat is transferred to another agent that is now responsible for creating the journal entry.</description>
         <name>Wrong_Owner_Screen</name>
         <label>Wrong Owner Screen</label>
-        <locationX>624</locationX>
-        <locationY>219</locationY>
+        <locationX>500</locationX>
+        <locationY>263</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2228,7 +2228,7 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0_0_0_0_0</name>
         <label>Create App Log</label>
-        <locationX>1615</locationX>
+        <locationX>1758</locationX>
         <locationY>186</locationY>
         <connector>
             <targetReference>Error_Screen_0_0</targetReference>
