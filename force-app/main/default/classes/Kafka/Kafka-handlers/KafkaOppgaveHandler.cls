@@ -71,8 +71,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                     taskToConvert.versjon == existingTaskVersion)
                 ) {
                     newestComment = kafkaOppgave.beskrivelse;
-                    commentHistory += String.isNotBlank(commentHistory)
-                        ? '\n\n' + newestComment
+                    //Newest comment first
+                    commentHistory = String.isNotBlank(commentHistory)
+                        ? newestComment + '\n\n' + commentHistory
                         : newestComment;
                 }
             }
