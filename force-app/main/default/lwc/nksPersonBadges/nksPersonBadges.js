@@ -18,6 +18,8 @@ export default class NksPersonBadges extends LightningElement {
     @track errors = [];
 
     infoPanelToShow = '';
+    hasSecurityMeasures = false;
+    hasShownSecurityMeasuresAlert = false;
     errorMessage;
 
     connectedCallback() {
@@ -41,10 +43,7 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showSecurityMeasures() {
-        return (
-            'securityMeasures' === this.infoPanelToShow &&
-            0 < this.securityMeasures.length
-        );
+        return 'securityMeasures' === this.infoPanelToShow && 0 < this.securityMeasures.length;
     }
 
     get showGuardianship() {
@@ -55,17 +54,20 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showPowerOfAttorney() {
-        return (
-            'powerOfAttorney' === this.infoPanelToShow &&
-            0 < this.powerOfAttorneys.length
-        );
+        return 'powerOfAttorney' === this.infoPanelToShow && 0 < this.powerOfAttorneys.length;
     }
 
     get showEntitlements() {
-        return (
-            'entitlements' === this.infoPanelToShow &&
-            0 < this.entitlements.length
-        );
+        return 'entitlements' === this.infoPanelToShow && 0 < this.entitlements.length;
+    }
+
+    get showSecurityMeasureAlertDialog() {
+        if (this.hasSecurityMeasures === true && this.hasShownSecurityMeasuresAlert === false) {
+            this.hasShownSecurityMeasuresAlert = true;
+            return true;
+        }
+
+        return false;
     }
 
     get backgroundTheme() {
@@ -94,10 +96,18 @@ export default class NksPersonBadges extends LightningElement {
             this.powerOfAttorneys = data.powerOfAttorneys;
             this.entitlements = data.entitlements;
             this.errors = data.errors;
+
+            this.setHasSecurityMeasures();
         }
 
         if (error) {
             this.errorMessage = error.body.message;
+        }
+    }
+
+    setHasSecurityMeasures() {
+        if (this.hasSecurityMeasures === false && this.securityMeasures.length > 0) {
+            this.hasSecurityMeasures = true;
         }
     }
 
@@ -119,5 +129,17 @@ export default class NksPersonBadges extends LightningElement {
         } else {
             this.infoPanelToShow = selectedBadge;
         }
+        this.setToggle(selectedBadge);
+    }
+
+    setToggle(selectedBadge) {
+        let badges = this.template.querySelectorAll('.slds-badge');
+        badges.forEach((badge) => {
+            if (badge.dataset.id === selectedBadge && badge.ariaPressed === 'false') {
+                badge.setAttribute('aria-pressed', true);
+            } else if (badge.role === 'button') {
+                badge.setAttribute('aria-pressed', false);
+            }
+        });
     }
 }

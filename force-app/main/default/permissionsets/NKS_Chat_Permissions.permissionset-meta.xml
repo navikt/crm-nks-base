@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
         <apexClass>ChatAuthController</apexClass>
@@ -8,8 +8,7 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description
-    >Necessary object permissions needed to give a user access to chat functionality.</description>
+    <description>Necessary object permissions needed to give a user access to chat functionality.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>LiveChatTranscript.AccountId</field>
@@ -91,7 +90,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>LiveChatTranscript.Status</field>
         <readable>true</readable>
     </fieldPermissions>
