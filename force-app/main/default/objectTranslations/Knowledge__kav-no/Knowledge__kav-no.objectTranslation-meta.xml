@@ -91,9 +91,6 @@
             <section>Til høyre</section>
         </sections>
     </layouts>
-    <nameFieldLabel>
-        <!-- Knowledge Name -->
-    </nameFieldLabel>
     <quickActions>
         <label>Engelsk</label>
         <name>NKS_English</name>
