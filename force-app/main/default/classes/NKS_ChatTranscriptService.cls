@@ -19,8 +19,12 @@ public class NKS_ChatTranscriptService {
         LiveChatTranscript chatTranscript = getChatDetails(chatId);
         DateTime authTimestamp = chatTranscript.NKS_Authentication_Timestamp__c;
 
-        if (chatTranscript.NKS_Conversation_Stored__c == true)
+        if (
+            chatTranscript.NKS_Conversation_Stored__c == true ||
+            chatTranscript.Case.NKS_Conversation_Stored__c == true
+        ) {
             return; //Chat ended event is sent multiple times, handle not performing unnecesary DML
+        }
 
         if (String.isNotBlank(chatTranscript.Case.Description)) {
             conversation += formatBotConversation(chatTranscript);
@@ -62,8 +66,8 @@ public class NKS_ChatTranscriptService {
         }
 
         try {
-            update new LiveChatTranscript(
-                Id = chatId,
+            update new Case(
+                Id = chatTranscript.CaseId,
                 NKS_Conversation__c = conversation,
                 NKS_Conversation_Stored__c = true
             );
@@ -147,6 +151,8 @@ public class NKS_ChatTranscriptService {
                 NKS_Agent_Greeting_Name__c,
                 Body,
                 NKS_Conversation__c,
+                CaseId,
+                Case.NKS_Conversation_Stored__c,
                 Case.Description,
                 NKS_Authentication_Timestamp__c,
                 LiveChatButton.WindowLanguage,
