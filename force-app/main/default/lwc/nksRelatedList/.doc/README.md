@@ -4,17 +4,20 @@ LWC for displaying a related list with filter options based on inputs defined in
 
 ## Attributes
 
-| Name                 | Type   | Access | Required | Description                                                                                                                                            |
-| :------------------- | :----- | :----- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| listTitle            | String | global | false    | Title of the list to be displayed in the header section                                                                                                |
-| iconName             | String | global | false    | Icon name on the format required from standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/example) |
-| headerColor          | String | global | false    | Picklist in app builder config setting the background color of the header                                                                              |
-| relatedObjectApiName | String | global | true     | Object API name for records in the related list                                                                                                        |
-| relationField        | String | global | true     | API name of field relating the records to the parent where the component is displayed                                                                  |
-| parentRelationField  | String | global | true     | API name of field relating the parent to the child records                                                                                             |
-| displayedFields      | String | global | true     | Comma separated string with field API names to retrieve                                                                                                |
-| columnLabels         | String | global | true     | Comma separated string with column headers to display in table                                                                                         |
-| filterConditions     | String | global | false    | Optional filter conditions written as standard query conditions (i.e. Name != 'TEST')                                                                  |
+| Name                 | Type    | Access | Required | Description                                                                                                                                            |
+| :------------------- | :------ | :----- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| listTitle            | String  | global | false    | Title of the list to be displayed in the header section                                                                                                |
+| iconName             | String  | global | false    | Icon name on the format required from standard [lightning-icon](https://developer.salesforce.com/docs/component-library/bundle/lightning-icon/example) |
+| headerColor          | String  | global | false    | Picklist in app builder config setting the background color of the header                                                                              |
+| relatedObjectApiName | String  | global | true     | Object API name for records in the related list                                                                                                        |
+| relationField        | String  | global | true     | API name of field relating the records to the parent where the component is displayed                                                                  |
+| parentRelationField  | String  | global | true     | API name of field relating the parent to the child records                                                                                             |
+| displayedFields      | String  | global | true     | Comma separated string with field API names to retrieve                                                                                                |
+| columnLabels         | String  | global | true     | Comma separated string with column headers to display in table                                                                                         |
+| filterConditions     | String  | global | false    | Optional filter conditions written as standard query conditions (i.e. Name != 'TEST')                                                                  |
+| dynamicUpdate        | Boolean | global | false    | Determines if an update to the parent record should trigger a refresh of the list                                                                      |
+| maxHeight            | String  | global | false    | Defines the maximum height the component can consume in em                                                                                             |
+| clickableRows        | Boolean | global | false    | Enables row click to navigate to clicked record                                                                                                        |
 
 ## Usage
 

@@ -3,6 +3,7 @@
     <fullName>Allowed_change_only_status</fullName>
     <active>true</active>
     <errorConditionFormula>AND(TAG_Is_My_NAV_Region__c = False,
+			NOT($Permission.Validation_Override),
 OR(
 ISCHANGED( CRM_Account__c ), ISCHANGED (CRM_AdditionalInformation__c ),
 ISCHANGED( CRM_Comments__c ),
@@ -13,6 +14,5 @@ ISCHANGED( CRM_NoPersonInformation__c ),
 ISCHANGED( CRM_SubTheme__c ),
 ISCHANGED( CRM_Theme__c )
 ))</errorConditionFormula>
-    <errorMessage
-    >Du har ikke rettigheter til å endre dette feltet.</errorMessage>
+    <errorMessage>Du har ikke rettigheter til å endre dette feltet.</errorMessage>
 </ValidationRule>

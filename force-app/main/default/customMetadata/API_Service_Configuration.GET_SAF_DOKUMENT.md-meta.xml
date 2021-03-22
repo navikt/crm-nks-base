@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>GET SAF DOKUMENT</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Base_Configuration__c</field>
+        <value xsi:type="xsd:string">SAF_API</value>
+    </values>
+    <values>
+        <field>HTTP_Method__c</field>
+        <value xsi:type="xsd:string">GET</value>
+    </values>
+    <values>
+        <field>Has_Path_Parameters__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+&quot;200&quot;: {
+&quot;headers&quot;: {
+&quot;content-disposition&quot;:&quot;inline&quot;,
+&quot;Content-Type&quot;:&quot;application/pdf&quot;
+},
+&quot;body&quot;:&quot;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YmogPDwvRmlsdGVyL0ZsYXRlRGVjb2RlL0xlbmd0aCA5OT4+c3RyZWFtCnicK+RyCuEyNlOwMDBTCEnhMlDQNQQz9N2MFAyNFELSuDQUNEOygBIGMHkLiLwhTN45NSczL9UKrAxZm66CkaGVoZGVoRk2AzTccvJLShSsYjTRZMHWo1jqGsIVyAUA+VMkTQplbmRzdHJlYW0KZW5kb2JqCjExIDAgb2JqPDwvQ29udGVudHMgMTAgMCBSL1R5cGUvUGFnZS9SZXNvdXJjZXM8PC9Qcm9jU2V0IFsvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJXS9Gb250PDwvRjEgMSAwIFIvRjIgMiAwIFI+Pj4+L1BhcmVudCA0IDAgUi9NZWRpYUJveFswIDAgNTk1IDg0Ml0+PgplbmRvYmoKMSAwIG9iajw8L1N1YnR5cGUvVHlwZTEvVHlwZS9Gb250L0Jhc2VGb250L0hlbHZldGljYS1Cb2xkL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZz4+CmVuZG9iagoyIDAgb2JqPDwvU3VidHlwZS9UeXBlMS9UeXBlL0ZvbnQvQmFzZUZvbnQvSGVsdmV0aWNhL0VuY29kaW5nL1dpbkFuc2lFbmNvZGluZz4+CmVuZG9iago0IDAgb2JqPDwvS2lkc1s1IDAgUiA3IDAgUiA5IDAgUiAxMSAwIFJdL1R5cGUvUGFnZXMvQ291bnQgND4+CmVuZG9iagoxMiAwIG9iajw8L1R5cGUvQ2F0YWxvZy9QYWdlcyA0IDAgUj4+CmVuZG9iagoxMyAwIG9iajw8L01vZERhdGUoRDoyMDIxMDEyNjIwMTI1MlopL0NyZWF0aW9uRGF0ZShEOjIwMjEwMTI2MjAxMjUyWikvUHJvZHVjZXIoaVRleHQgMi4wLjggXChieSBsb3dhZ2llLmNvbVwpKT4+CmVuZG9iagp4cmVmCjAgMTQKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAzMDI3IDAwMDAwIG4gCjAwMDAwMDMxMTkgMDAwMDAgbiAKMDAwMDAwMDAxNSAwMDAwMCBuIAowMDAwMDAzMjA2IDAwMDAwIG4gCjAwMDAwMDA2MjEgMDAwMDAgbiAKMDAwMDAwMDc4NiAwMDAwMCBuIAowMDAwMDAxMzY2IDAwMDAwIG4gCjAwMDAwMDE1MjIgMDAwMDAgbiAKMDAwMDAwMjUyOSAwMDAwMCBuIAowMDAwMDAyNjk0IDAwMDAwIG4gCjAwMDAwMDI4NjAgMDAwMDAgbiAKMDAwMDAwMzI3NSAwMDAwMCBuIAowMDAwMDAzMzIwIDAwMDAwIG4gCnRyYWlsZXIKPDwvSW5mbyAxMyAwIFIvSUQgWzxhMjVkYzJmODA0OThlYzFlYzU5YTM1NzM0YTVlNzY4Mz48NWM5NGUyMDhmZjAyYTU0Yzk2ODFlNDYzNmZmYjZhNjg+XS9Sb290IDEyIDAgUi9TaXplIDE0Pj4Kc3RhcnR4cmVmCjM0NDAKJSVFT0YK&quot;
+},
+&quot;400&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;401&quot;: {&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;403&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;404&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+}
+}</value>
+    </values>
+    <values>
+        <field>Service_Path__c</field>
+        <value
+            xsi:type="xsd:string"
+        >/saf/rest/hentdokument/{journalpostId}/{dokumentInfoId}/{variantFormat}</value>
+    </values>
+</CustomMetadata>

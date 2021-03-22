@@ -1,0 +1,27 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <lightning-vertical-navigation onselect={handleSelectCaseChange}>
+        <lightning-combobox
+            name="themeGroup"
+            label="Temagruppe"
+            options={themeGroupArr}
+            onchange={handleThemeGroupChange}
+            value={selectedThemeGroup}
+            class="slds-p-horizontal_large slds-m-top_xxx-small"
+        ></lightning-combobox>
+        <template for:each={caseMapArray} for:item="theme">
+            <lightning-vertical-navigation-section key={theme.key} label={theme.label}>
+                <template for:each={theme.value} for:item="caseX">
+                    <lightning-vertical-navigation-item
+                        key={caseX.themeCodeCaseId}
+                        label={caseX.label}
+                        name={caseX.themeCodeCaseId}
+                    >
+                    </lightning-vertical-navigation-item>
+                </template>
+            </lightning-vertical-navigation-section>
+        </template>
+    </lightning-vertical-navigation>
+</template>

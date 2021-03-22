@@ -9,12 +9,7 @@
   </targets>
   <targetConfigs>
       <targetConfig targets="lightning__RecordPage">
-        <property
-                name="listTitle"
-                label="List title"
-                type="String"
-                default="Title"
-            />
+        <property name="listTitle" label="List title" type="String" default="Title" />
         <property
                 name="iconName"
                 label="Icon name"
@@ -28,6 +23,14 @@
                 type="String"
                 datasource="white, whitesmoke, lightgray, gainsboro, beige, aliceblue, azure, lightgoldenrodyellow, honeydew, khaki, lavender, wheat"
                 default="white"
+            />
+        <property
+                name="maxHeight"
+                label="List Max Height"
+                description="The maximum height the list is allowed to consume on the layout (in em)"
+                type="String"
+                datasource="10, 20, 30, 40"
+                default="20"
             />
         <property
                 name="relatedObjectApiName"
@@ -68,6 +71,20 @@
                 type="String"
                 required="false"
                 default=""
+            />
+            <property
+                name="dynamicUpdate"
+                label="Dynamic Update"
+                description="Set to true if an update to the parent record should trigger a list refresh"
+                type="Boolean"
+                default="false"
+            />
+            <property
+                name="clickableRows"
+                label="Clickable Rows"
+                description="Enables row clicks to navigate to the record in the list"
+                type="Boolean"
+                default="false"
             />
       </targetConfig>
   </targetConfigs>

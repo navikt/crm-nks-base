@@ -1,0 +1,94 @@
+<!--
+    This Visualforce page will get base64 data from SAF and render it in an iFrame.
+
+    Flow:
+    1. VF page is called
+    2. Constructor retrieves the parameters and apply them
+    3. doInit calls controller to get the document
+    4. Document is retrieved through the method getDocument
+    5. Document is displayed
+
+    URL parameters when using this VF page is:
+    journalId
+    documentInfoId
+    variantFormat
+    fileName
+    width
+    height
+-->
+<apex:page
+    controller="NKS_SafViewDocumentController"
+    title="{!title}"
+    sidebar="false"
+    showHeader="false"
+    docType="html-5.0"
+>
+    <!-- Import the Design System style sheet -->
+    <apex:slds />
+    <!-- REQUIRED SLDS WRAPPER -->
+    <div class="slds-scope">
+        <apex:form>
+            <!-- Action function to trigger loading of the document -->
+            <apex:actionFunction name="doInit" action="{!getDocument}" rerender="allPanel" />
+
+            <!-- Penal that is refreshed when all the document has been loaded. Contain all ux parts -->
+            <apex:outputPanel id="allPanel">
+                <!-- Panel for error messages to the user -->
+                <apex:outputPanel rendered="{!isError}">
+                    <div class="slds-text-color_error">
+                        <div class="slds-text-heading_medium">
+                            <span
+                                class="slds-icon_container slds-icon-utility-error"
+                                title="Feilmelding"
+                            >
+                                <svg
+                                    class="slds-icon slds-icon-text-error slds-icon_x-small"
+                                    aria-hidden="true"
+                                >
+                                    <use
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#error')}"
+                                    ></use>
+                                </svg>
+                                <span class="slds-assistive-text">Feilmelding</span>
+                            </span>
+                            {!errorTitle}
+                        </div>
+                        {!errorMessage}
+                    </div>
+                </apex:outputPanel>
+
+                <!-- Panel BEFORE document load -->
+                <apex:outputPanel rendered="{!AND(NOT(initialised), NOT(isError))}">
+                    <div role="status" class="slds-spinner slds-spinner--medium">
+                        <span class="slds-assistive-text">Laster dokument.</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+
+                    <!-- script that runs on load after the controller is initialized and triggers the doInit action function on top -->
+                    <script>
+                        window.onload = function () {
+                            doInit();
+                        };
+                    </script>
+                </apex:outputPanel>
+
+                <!-- Panel AFTER document load -->
+                <apex:outputPanel rendered="{!AND(initialised, NOT(isError))}">
+                    <iframe
+                        src="{!DocumentData}"
+                        width="{!width}"
+                        height="{!height}"
+                        title="Dokument: {!title}"
+                    >
+                        Kan ikke laste dokumentet.
+                    </iframe>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:form>
+    </div>
+
+    <!-- </html> -->
+</apex:page>

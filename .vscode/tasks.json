@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "SFDX: Export",
+            "type": "shell",
+            "command": "sfdx force:data:tree:export --json --outputdir \"./\" --query ${input:SOQL}",
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Import",
+            "type": "shell",
+            "command": "sfdx force:data:tree:import -f ${input:ImportFile}.json",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "SOQL",
+            "description": "SOQL:",
+            "default": "\"\"",
+            "type": "promptString"
+        },
+        {
+            "id": "ImportFile",
+            "description": "JSON file to import (no file extension):",
+            "default": "FILENAME",
+            "type": "promptString"
+        }
+    ]
+}
