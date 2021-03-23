@@ -26,24 +26,44 @@ public with sharing class NKS_HomePageController {
         Boolean filterbyskills
     ) {
         List<Record> records = new List<Record>();
+        Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
+        if (filterbyskills)
+            userskills = getUserSkills(userId);
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
         if (content != null)
             query += ' , ' + content;
-        if (filterbyskills)
+        if (filterbyskills && objectName == 'NKS_Announcement__c')
             query += ' , Skills__c ';
         query += ' FROM ' + objectName;
         query += ' WHERE ' + filter;
+        if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
+            String skillstring = '';
+            for (String u : userskills) {
+                skillstring += '\'' + u + '\',';
+            }
+            query +=
+                ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' +
+                skillstring.removeEnd(',') +
+                '))';
+        }
+        if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
+            String skillstring = '';
+            for (String u : userskills) {
+                skillstring += u.replaceAll(' ', '_') + '__c ,';
+            }
+            query +=
+                ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
+                skillstring.removeEnd(',') +
+                ')';
+        }
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
         if (limitNumber != null)
-            query += ' LIMIT ' + limitNumber + 10;
+            query += ' LIMIT ' + limitNumber;
 
+        System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
-
-        if (filterbyskills)
-            listtoreturn = filterBySkills(listtoreturn, objectName, userId, limitNumber);
-
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
@@ -121,28 +141,5 @@ public with sharing class NKS_HomePageController {
             skills.add(g.Name);
         }
         return skills;
-    }
-
-    private static List<SObject> filterBySkills(
-        List<sObject> listofrecords,
-        String objectName,
-        Id userId,
-        String limitNumber
-    ) {
-        List<sObject> listtoreturn = new List<SObject>();
-        Set<String> userskills = getUserSkills(userId);
-        for (sObject r : listofrecords) {
-            if (r.get('Skills__c') != null) {
-                Set<String> selections = new Set<String>(r.get('Skills__c').toString().split(';'));
-                userskills.retainAll(selections);
-                if (userskills.size() > 0) {
-                    listtoreturn.add(r);
-                }
-            } else
-                listtoreturn.add(r);
-            if (listtoreturn.size() == Integer.valueOf(limitNumber))
-                return listtoreturn;
-        }
-        return listtoreturn;
     }
 }

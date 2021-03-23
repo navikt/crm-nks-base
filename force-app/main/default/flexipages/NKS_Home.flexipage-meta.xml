@@ -22,7 +22,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -50,7 +50,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showimage</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
