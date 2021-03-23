@@ -4,7 +4,7 @@
         <name>Empty_Fields</name>
         <label>Empty Fields</label>
         <locationX>776</locationX>
-        <locationY>330</locationY>
+        <locationY>329</locationY>
         <assignmentItems>
             <assignToReference>$Record.Body</assignToReference>
             <operator>Assign</operator>
@@ -30,6 +30,59 @@
             <targetReference>Update_Transcripts</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Empties the fields on the case related to the chat transcript.</description>
+        <name>Emptycasefields</name>
+        <label>Empty case fields</label>
+        <locationX>989</locationX>
+        <locationY>656</locationY>
+        <assignmentItems>
+            <assignToReference>Related_Case.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.CaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Related_Case.NKS_Conversation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue />
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Related_Case.Description</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue />
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Has_case</name>
+        <label>Has case</label>
+        <locationX>768</locationX>
+        <locationY>658</locationY>
+        <defaultConnector>
+            <targetReference>Emptycasefields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has case Id</defaultConnectorLabel>
+        <rules>
+            <name>Case_Id_missing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CaseId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Case Id missing</label>
+        </rules>
+    </decisions>
     <description
     >Scheduled flow to empty the chat body and conversation for chats older than 15 days.</description>
     <formulas>
@@ -59,10 +112,23 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>1136</locationX>
+        <locationY>655</locationY>
+        <faultConnector>
+            <targetReference>Log_Failed_Deletion</targetReference>
+        </faultConnector>
+        <inputReference>Related_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Transcripts</name>
         <label>Update Transcripts</label>
         <locationX>776</locationX>
         <locationY>507</locationY>
+        <connector>
+            <targetReference>Has_case</targetReference>
+        </connector>
         <faultConnector>
             <targetReference>Log_Failed_Deletion</targetReference>
         </faultConnector>
@@ -93,8 +159,8 @@
     <subflows>
         <name>Log_Failed_Deletion</name>
         <label>Log Failed Deletion</label>
-        <locationX>1003</locationX>
-        <locationY>510</locationY>
+        <locationX>1130</locationX>
+        <locationY>506</locationY>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
             <name>Error_Payload</name>
@@ -127,4 +193,12 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>Related_Case</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
 </Flow>
