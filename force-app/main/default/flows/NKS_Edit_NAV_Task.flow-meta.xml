@@ -7,8 +7,8 @@
         <description>Calls apex with the desired action.</description>
         <name>Process_NAV_task</name>
         <label>Process NAV task</label>
-        <locationX>359</locationX>
-        <locationY>594</locationY>
+        <locationX>238</locationX>
+        <locationY>739</locationY>
         <actionName>NKS_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -27,8 +27,7 @@
         <inputParameters>
             <name>assignToUnitNumber</name>
             <value>
-                <elementReference
-                >workAllocation.selectedUnitNumber</elementReference>
+                <elementReference>workAllocation.selectedUnitNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -46,8 +45,7 @@
         <inputParameters>
             <name>subthemeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.subthemeCode</elementReference>
+                <elementReference>Theme_Categorization.subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -59,8 +57,7 @@
         <inputParameters>
             <name>themeCode</name>
             <value>
-                <elementReference
-                >Theme_Categorization.themeCode</elementReference>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -70,8 +67,8 @@
         >Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>180</locationX>
-        <locationY>453</locationY>
+        <locationX>59</locationX>
+        <locationY>598</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
             <operator>Assign</operator>
@@ -83,8 +80,7 @@
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >workAllocation.selectedUnitId</elementReference>
+                <elementReference>workAllocation.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -98,8 +94,7 @@
             <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -113,8 +108,7 @@
             <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Theme_Categorization.subtheme</elementReference>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -125,8 +119,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NavTask.CRM_NoPersonInformation__c</assignToReference>
+            <assignToReference>NavTask.CRM_NoPersonInformation__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -150,8 +143,7 @@
             <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >workAllocation.assignedResource</elementReference>
+                <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -165,17 +157,14 @@
             <assignToReference>NavTask.NKS_Task_Version__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.NKS_Task_Version__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_Task_Version__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference
-            >NavTask.INT_External_Reference__c</assignToReference>
+            <assignToReference>NavTask.INT_External_Reference__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Get_NAV_Task.INT_External_Reference__c</elementReference>
+                <elementReference>Get_NAV_Task.INT_External_Reference__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -187,14 +176,13 @@
         >Updates the task version with the version received from the API callout.</description>
         <name>Update_Task_Version</name>
         <label>Update Task Version</label>
-        <locationX>281</locationX>
-        <locationY>915</locationY>
+        <locationX>160</locationX>
+        <locationY>1060</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Task_Version__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference
-                >Process_NAV_task.task.NKS_Task_Version__c</elementReference>
+                <elementReference>Process_NAV_task.task.NKS_Task_Version__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -202,10 +190,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_Edit_Access</name>
+        <label>Check Edit Access</label>
+        <locationX>278</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Get_NAV_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Insufficient_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Task_Edit_Access</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen</targetReference>
+            </connector>
+            <label>Insufficient Access</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_External_Reference</name>
         <label>Check External Reference</label>
-        <locationX>171</locationX>
-        <locationY>598</locationY>
+        <locationX>50</locationX>
+        <locationY>743</locationY>
         <defaultConnector>
             <targetReference>Update_Salesforce_Task</targetReference>
         </defaultConnector>
@@ -214,8 +227,7 @@
             <name>Do_Callout</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >NavTask.INT_External_Reference__c</leftValueReference>
+                <leftValueReference>NavTask.INT_External_Reference__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -231,8 +243,8 @@
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>350</locationX>
-        <locationY>734</locationY>
+        <locationX>229</locationX>
+        <locationY>879</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -241,8 +253,7 @@
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-                >Process_NAV_task.success</leftValueReference>
+                <leftValueReference>Process_NAV_task.success</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -274,8 +285,7 @@
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <formulas>
-        <description
-        >Formula for setting the default due date to next friday.</description>
+        <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
@@ -314,10 +324,9 @@ TODAY())</expression>
         >Allows editing a NAV Task and sending a patch request to oppgave API if needed.</description>
         <name>Get_NAV_Task</name>
         <label>Get NAV Task</label>
-        <locationX>176</locationX>
-        <locationY>190</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <locationX>55</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
@@ -335,11 +344,46 @@ TODAY())</expression>
         <object>NavTask__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description
+        >Perform a query to see if the running user has edit access to this task</description>
+        <name>Get_User_Edit_Access</name>
+        <label>Get User Edit Access</label>
+        <locationX>285</locationX>
+        <locationY>174</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Edit_Access</targetReference>
+        </connector>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>Task_Edit_Access</assignToReference>
+            <field>HasEditAccess</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>recordId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
-        <locationX>185</locationX>
-        <locationY>1033</locationY>
+        <locationX>64</locationX>
+        <locationY>1178</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -350,12 +394,11 @@ TODAY())</expression>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
-        <description
-        >Something went wrong when posting/updating the NAV task.</description>
+        <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>587</locationX>
-        <locationY>733</locationY>
+        <locationX>466</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -379,6 +422,29 @@ TODAY())</expression>
                         <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>Insufficient_Access</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Insufficient_Access_Message</name>
+            <fieldText
+            >&lt;p&gt;Du har ikke rettigheter til å redigere denne oppgaven.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Insufficient_Access</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
@@ -387,8 +453,8 @@ TODAY())</expression>
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationX>55</locationX>
+        <locationY>456</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -402,22 +468,19 @@ TODAY())</expression>
             <inputParameters>
                 <name>subtheme</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Subtheme__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Subtheme__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Theme_Group__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>theme</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Theme__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -454,8 +517,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>value</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -497,43 +559,37 @@ TODAY())</expression>
             <inputParameters>
                 <name>personId</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.CRM_Account__r.CRM_Person__c</elementReference>
+                    <elementReference>Get_NAV_Task.CRM_Account__r.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>taskType</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>subTheme</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>theme</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Theme__r.CRM_Code__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>themeGroup</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.NKS_Theme_Group__r.CRM_Code__c</elementReference>
+                    <elementReference>Get_NAV_Task.NKS_Theme_Group__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>selectedUnitId</name>
                 <value>
-                    <elementReference
-                    >Get_NAV_Task.CRM_NavUnit__c</elementReference>
+                    <elementReference>Get_NAV_Task.CRM_NavUnit__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -543,12 +599,11 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description
-        >Screen for telling user that the task was successfully sent.</description>
+        <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>182</locationX>
-        <locationY>1203</locationY>
+        <locationX>61</locationX>
+        <locationY>1348</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -562,18 +617,18 @@ TODAY())</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>159</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Get_NAV_Task</targetReference>
+            <targetReference>Get_User_Edit_Access</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>1022</locationX>
-        <locationY>1025</locationY>
+        <locationX>901</locationX>
+        <locationY>1170</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -612,8 +667,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
-        <locationX>585</locationX>
-        <locationY>593</locationY>
+        <locationX>393</locationX>
+        <locationY>739</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -666,5 +721,16 @@ TODAY())</expression>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Determines if the running user has edit access to the task.</description>
+        <name>Task_Edit_Access</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

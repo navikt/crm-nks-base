@@ -287,12 +287,54 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>brukerIdField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nmbOfJournalPosts</name>
+                    <value>50</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentName>nksSafJournalpostList</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue
+                        >{!$Permission.CustomPermission.NKS_View_SAF_Journalpost}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Saker</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>

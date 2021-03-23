@@ -2,26 +2,17 @@
     <article class="slds-card">
         <lightning-layout multiple-rows="true">
             <!--HEADER-->
-            <lightning-layout-item
-                size="12"
-                class="slds-p-around_small"
-                style={headerBackground}
-            >
+            <lightning-layout-item size="12" class="slds-p-around_small" style={headerBackground}>
                 <lightning-layout vertical-align="center">
                     <template if:true={icon}>
                         <lightning-icon icon-name={icon}></lightning-icon>
                     </template>
-                    <h1 class="slds-p-left_x-small slds-text-heading_medium">
-                        {cardTitle}
-                    </h1>
+                    <h1 class="slds-p-left_x-small slds-text-heading_medium">{cardTitle}</h1>
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <div
-                    class="slds-table--header-fixed_container"
-                    style="width: 100%; max-height: 20em"
-                >
-                    <div class="slds-scrollable_y" style="max-height: 20em">
+                <div class="slds-table--header-fixed_container" style={tableHeaderStyle}>
+                    <div class="slds-scrollable_y" style={scrollableStyle}>
                         <table
                             class="slds-table slds-table_cell-buffer slds-table--header-fixed slds-table_bordered slds-max-medium-table_stacked-horizontal"
                         >
@@ -57,24 +48,44 @@
                                     for:item="record"
                                     for:index="rowIndex"
                                 >
-                                    <tr
-                                        key={record}
-                                        data-value={rowIndex}
-                                        class="slds-hint-parent"
-                                        onclick={handleRowClick}
-                                        style="cursor: pointer"
-                                    >
-                                        <template
-                                            for:each={record.recordFields}
-                                            for:item="field"
+                                    <template if:true={clickableRows}>
+                                        <tr
+                                            key={record}
+                                            data-value={rowIndex}
+                                            class="slds-hint-parent"
+                                            onclick={handleRowClick}
+                                            style="cursor: pointer"
                                         >
-                                            <th key={field.value} scope="row">
-                                                <div class="slds-truncate">
-                                                    {field.value}
-                                                </div>
-                                            </th>
-                                        </template>
-                                    </tr>
+                                            <template
+                                                for:each={record.recordFields}
+                                                for:item="field"
+                                            >
+                                                <th key={field.value} scope="row">
+                                                    <div class="slds-truncate slds-cell-wrap">
+                                                        {field.value}
+                                                    </div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                    <template if:false={clickableRows}>
+                                        <tr
+                                            key={record}
+                                            data-value={rowIndex}
+                                            class="slds-hint-parent"
+                                        >
+                                            <template
+                                                for:each={record.recordFields}
+                                                for:item="field"
+                                            >
+                                                <th key={field.value} scope="row">
+                                                    <div class="slds-truncate slds-cell-wrap">
+                                                        {field.value}
+                                                    </div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </template>
                                 </template>
                             </tbody>
                         </table>

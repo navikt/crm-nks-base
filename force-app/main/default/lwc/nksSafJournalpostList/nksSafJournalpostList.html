@@ -1,0 +1,168 @@
+<template>
+    <!-- <lightning-card> -->
+    <!-- CARD BODY -->
+    <lightning-layout multiple-rows="true">
+        <!-- SAF Available theme vertical navigation list -->
+        <lightning-layout-item size="3">
+            <c-nks-saf-vertical-navigation
+                onnewselection={handleNewSelection}
+                viewed-object-api-name={viewedObjectApiName}
+                viewed-record-id={viewedRecordId}
+                bruker-id-field={brukerIdField}
+                theme-group-field={themeGroupField}
+                relationship-field={relationshipField}
+                onsetavailablethemes={handleAvailableThemes}
+                onselectcase={handleSelectCase}
+            >
+            </c-nks-saf-vertical-navigation>
+        </lightning-layout-item>
+
+        <!-- CONTENT -->
+        <lightning-layout-item class="slds-p-left_small" size="9">
+            <lightning-layout multiple-rows="true">
+                <!-- FILTER -->
+                <lightning-layout-item size="12">
+                    <div class="slds-p-left_x-small" title="Journalpost filter">
+                        <lightning-layout>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Inngående"
+                                    name="I"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Utgående"
+                                    name="U"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Notat"
+                                    name="N"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="date"
+                                    label="Fra"
+                                    value={fromDate}
+                                    class="slds-m-top_xxx-small"
+                                    onchange={handleJournalpostFromDateChange}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item>
+                                <lightning-input
+                                    type="date"
+                                    label="Til"
+                                    value={toDate}
+                                    class="slds-m-top_xxx-small"
+                                    onchange={handleJournalpostToDateChange}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <div title="Journalpost liste">
+                        <!-- SPINNER -->
+                        <template if:false={isLoaded}>
+                            <lightning-spinner
+                                alternative-text="Loading"
+                                size="medium"
+                            ></lightning-spinner>
+                        </template>
+
+                        <template if:true={isLoaded}>
+                            <!-- ERROR MESSAGE -->
+                            <template if:true={hasErrors}>
+                                <div class="slds-text-color_error slds-p-left_x-small">
+                                    <p>
+                                        <lightning-icon
+                                            alternative-text="Feilmelding"
+                                            icon-name="utility:error"
+                                            size="xx-small"
+                                            variant="error"
+                                        >
+                                        </lightning-icon>
+                                        &nbsp;En feil har oppstått og journalpostene kan ikke
+                                        hentes.
+                                    </p>
+                                    <ul class="slds-list_dotted">
+                                        <template for:each={errors} for:item="error">
+                                            <li key={error}>{error}</li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+
+                            <!-- EMPTY RESULT -->
+                            <template if:true={isEmptyResult}>
+                                <p>Kunne ikke finne noen journalposter.</p>
+                            </template>
+
+                            <!-- LIST OF JOURNALPOSTS -->
+                            <template if:false={isEmptyResult}>
+                                <ul class="slds-has-dividers_bottom-space">
+                                    <template
+                                        for:each={filteredJournalPosts}
+                                        for:item="journalpost"
+                                    >
+                                        <li class="slds-item" key={journalpost.journalpostId}>
+                                            <div>
+                                                <c-nks-saf-journalpost
+                                                    journalpost={journalpost}
+                                                ></c-nks-saf-journalpost>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+
+                <template if:true={canLoadMore}>
+                    <lightning-layout-item
+                        class="slds-align_absolute-center slds-p-vertical_x-small"
+                        size="12"
+                    >
+                        <template if:true={isLoadingMore}>
+                            <div class="slds-is-relative">
+                                Last flere
+                                <lightning-spinner
+                                    alternative-text="Loading"
+                                    size="small"
+                                ></lightning-spinner>
+                            </div>
+                        </template>
+                        <template if:false={isLoadingMore}>
+                            <a onclick={queryMoreJournalPosts}>Last flere</a>
+                        </template>
+                    </lightning-layout-item>
+                </template>
+
+                <lightning-layout-item size="12">
+                    <div class="slds-box slds-theme_shade">
+                        <p>Dokumenter kan kun vises fra og med 4.juni 2016.</p>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

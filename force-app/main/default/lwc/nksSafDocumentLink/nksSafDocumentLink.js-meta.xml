@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <description
+    >Display the document name. If the user can open the document display is as a link.</description>
+    <isExposed>false</isExposed>
+    <masterLabel>SAF Document Link</masterLabel>
+</LightningComponentBundle>

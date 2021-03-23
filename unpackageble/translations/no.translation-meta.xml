@@ -315,18 +315,8 @@
             <screens>
                 <fields>
                     <fieldText
-                    >&lt;p&gt;Samtaleloggen er ikke lagret. Vennligst avslutt samtalen for å lagre loggen og fullføre journalføring&lt;/p&gt;</fieldText>
-                    <name>Conversation_Error</name>
-                </fields>
-                <fields>
-                    <fieldText
                     >&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218,13,13);&quot;&gt;Det oppsto en feil&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <name>Error_Header</name>
-                </fields>
-                <fields>
-                    <fieldText
-                    >&lt;p&gt;Brukeren er ikke logget inn&lt;/p&gt;</fieldText>
-                    <name>Missing_Account_Error</name>
                 </fields>
                 <name>Error_Screen</name>
             </screens>
@@ -433,8 +423,7 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name
-        >VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
         <promptVersions>
             <name
             >Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>

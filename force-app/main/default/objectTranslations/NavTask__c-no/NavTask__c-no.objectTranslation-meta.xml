@@ -50,10 +50,32 @@
             <section>Opplysninger</section>
         </sections>
     </layouts>
+    <layouts>
+        <layout>NKS NAV Task Layout</layout>
+        <sections>
+            <label>Aktører</label>
+            <section>Aktører</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Informasjon om oppgaven --></label>
+            <section>Informasjon om oppgaven</section>
+        </sections>
+    </layouts>
     <nameFieldLabel><!-- Navn --></nameFieldLabel>
+    <quickActions>
+        <label><!-- Endre NAV-oppgave --></label>
+        <name>Edit_NAV_Task</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Send NAV-oppgave --></label>
+        <name>Send_NAV_Task</name>
+    </quickActions>
     <validationRules>
-        <errorMessage
-        ><!-- Du har ikke rettigheter til å endre dette feltet. --></errorMessage>
+        <errorMessage><!-- Du har ikke rettigheter til å endre dette feltet. --></errorMessage>
         <name>Allowed_change_only_status</name>
     </validationRules>
     <validationRules>
