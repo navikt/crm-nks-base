@@ -21,9 +21,9 @@
     <template if:true={hasBadges}>
         <div class={backgroundTheme}>
             <!-- UU SECURITY MESSAGE ALERT -->
-            <template if:true={showSecurityMeasureAlertDialog}>
+            <!-- <template if:true={showSecurityMeasureAlertDialog}>
                 <div class="slds-assistive-text" role="alert">Bruker har sikkerhetstiltak</div>
-            </template>
+            </template> -->
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <template for:each={badges} for:item="badge">

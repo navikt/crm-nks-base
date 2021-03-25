@@ -41,6 +41,10 @@ export default class ChatAuthenticationOverview extends LightningElement {
     subscription = {}; //Unique empAPI subscription for the component instance
     loginEvtSent = false;
 
+    nmbOfSecurityMeasures = 0;
+    isNavEmployee = false;
+    isConfidential = false;
+
     //#### GETTERS ####
 
     get isLoading() {
@@ -88,6 +92,11 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.caseId = data.CASEID;
             this.personId = data.PERSONID;
             this.chatLanguage = data.CHAT_LANGUAGE;
+
+            this.nmbOfSecurityMeasures = parseInt(data.NMB_SECURITY_MEASURES);
+            this.isNavEmployee = 'true' == data.IS_NAV_EMPLOYEE;
+            this.isConfidential = 'true' == data.IS_CONFIDENTIAL;
+
             //If the authentication is not completed, subscribe to the push topic to receive events
             if (
                 this.currentAuthenticationStatus !== 'Completed' &&
@@ -223,5 +232,33 @@ export default class ChatAuthenticationOverview extends LightningElement {
     //Logger function
     log(loggable) {
         if (this.loggingEnabled) console.log(loggable);
+    }
+
+    get screenReaderLoginAlertAdditionalText() {
+        let alertText = '';
+
+        if (this.isNavEmployee || this.isConfidential || this.nmbOfSecurityMeasures > 0) {
+            let hasSecurityMeasures = this.nmbOfSecurityMeasures > 0;
+            let navEmployeeText = ' er egen ansatt';
+            let isConfidentialText = ' skjermet';
+            let securityMeasureText = ' har ' + this.nmbOfSecurityMeasures + ' sikkerhetstiltak';
+
+            alertText += 'Vær oppmerksom. Bruker';
+            alertText += this.isNavEmployee ? navEmployeeText : '';
+            alertText +=
+                this.isNavEmployee && this.isConfidential && hasSecurityMeasures
+                    ? ', '
+                    : this.isNavEmployee && this.isConfidential
+                    ? ' og'
+                    : this.isConfidential
+                    ? ' er'
+                    : '';
+            alertText += this.isConfidential ? isConfidentialText : '';
+            alertText +=
+                (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
+            alertText += hasSecurityMeasures ? securityMeasureText : '';
+            alertText += '.';
+        }
+        return alertText;
     }
 }

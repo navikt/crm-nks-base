@@ -97,7 +97,7 @@ export default class NksPersonBadges extends LightningElement {
             this.entitlements = data.entitlements;
             this.errors = data.errors;
 
-            this.setHasSecurityMeasures();
+            // this.setHasSecurityMeasures();
         }
 
         if (error) {

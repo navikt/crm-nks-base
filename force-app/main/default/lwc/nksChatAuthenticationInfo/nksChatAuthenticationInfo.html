@@ -13,7 +13,8 @@
                 <template if:true={authenticationComplete}>
                     <div class="slds-notify_alert slds-theme_success" role="alert">
                         <span class="slds-assistive-text"
-                            >{labels.IDENTITY_CONFIRMED_DISCLAIMER}</span
+                            >{labels.IDENTITY_CONFIRMED_DISCLAIMER}
+                            {screenReaderLoginAlertAdditionalText}</span
                         >
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
