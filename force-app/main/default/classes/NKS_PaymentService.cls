@@ -28,6 +28,14 @@ public without sharing class NKS_PaymentService {
             returnList.sort(); //Sorts the entries by posteringsdato
         } else {
             //Error handling
+            LoggerUtility logger = new LoggerUtility('Utbetaling');
+            logger.httpError(
+                'Error retrieving person payments',
+                apiCtrl.getResponse(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
+            );
+            logger.publish();
         }
 
         return returnList;
