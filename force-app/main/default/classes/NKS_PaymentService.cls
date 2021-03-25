@@ -26,7 +26,6 @@ public without sharing class NKS_PaymentService {
                 List<NKS_Utbetaling>.class
             );
             returnList.sort(); //Sorts the entries by posteringsdato
-            System.debug('SORTED LIST: ' + JSON.serializePretty(returnList));
         } else {
             //Error handling
         }
