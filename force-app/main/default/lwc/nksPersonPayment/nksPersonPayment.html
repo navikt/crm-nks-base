@@ -12,7 +12,7 @@
                 <lightning-icon
                     data-paid={paid}
                     icon-name={statusIcon}
-                    size="small"
+                    size="medium"
                     class="slds-var-p-right_small"
                 >
                 </lightning-icon>
@@ -95,10 +95,13 @@
             >
                 <lightning-layout multiple-rows="true" class="slds-var-m-bottom_small">
                     <lightning-layout-item size="12">
-                        <b>{labels.PAYMENT_RECIPIENT} {payment.utbetaltTil.navn}</b>
+                        <b>{labels.PAYMENT_RECIPIENT}</b> {payment.utbetaltTil.navn}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" if:true={payment.utbetaltTilKonto}>
+                        <b>{labels.BANK_ACCOUNT_NUMBER}</b> {payment.utbetaltTilKonto.kontonummer}
                     </lightning-layout-item>
                     <lightning-layout-item size="12" if:true={payment.utbetalingsmelding}>
-                        <b>{labels.PAYMENT_MESSAGE} {payment.utbetalingsmelding}</b>
+                        <b>{labels.PAYMENT_MESSAGE}</b> {payment.utbetalingsmelding}
                     </lightning-layout-item>
                 </lightning-layout>
                 <template for:each={payment.ytelseListe} for:item="ytelse">

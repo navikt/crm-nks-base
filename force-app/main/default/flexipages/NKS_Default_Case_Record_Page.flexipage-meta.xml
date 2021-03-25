@@ -364,6 +364,15 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>nksPersonPaymentList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-deab3ed2-be90-405b-9d47-e15fa5d13931</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-5088a58e-09a9-4d54-b6e1-93eb78c3d4ff</value>
@@ -397,6 +406,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Saker</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-deab3ed2-be90-405b-9d47-e15fa5d13931</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.rebateMemberPayout</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>

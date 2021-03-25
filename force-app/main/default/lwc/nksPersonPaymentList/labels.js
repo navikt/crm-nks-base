@@ -19,6 +19,7 @@ import COL_RATE from '@salesforce/label/c.NKS_Payment_List_Col_Rate';
 import COL_QUANTITY from '@salesforce/label/c.NKS_Payment_List_Col_Quantity';
 import PAYMENT_RECIPIENT from '@salesforce/label/c.NKS_Payment_List_Payment_Recipient';
 import PAYMENT_MESSAGE from '@salesforce/label/c.NKS_Payment_List_Payment_Message';
+import BANK_ACCOUNT_NUMBER from '@salesforce/label/c.NKS_Payment_List_Bank_Account';
 
 export default {
     NO_PAYMENTS,
@@ -41,5 +42,6 @@ export default {
     COL_RATE,
     COL_QUANTITY,
     PAYMENT_RECIPIENT,
-    PAYMENT_MESSAGE
+    PAYMENT_MESSAGE,
+    BANK_ACCOUNT_NUMBER
 };
