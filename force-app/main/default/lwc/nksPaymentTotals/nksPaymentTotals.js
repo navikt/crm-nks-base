@@ -2,8 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class NksPaymentTotals extends LightningElement {
     @api paymentGroups;
-
-    connectedCallback() {}
+    @api labels;
 
     get totalNetAmount() {
         let total = 0;
@@ -11,7 +10,11 @@ export default class NksPaymentTotals extends LightningElement {
             this.paymentGroups.forEach((paymentGroup) => {
                 if (paymentGroup) {
                     paymentGroup.forEach((payment) => {
-                        total += payment.data.utbetalingNettobeloep;
+                        if (payment.data.ytelseListe) {
+                            payment.data.ytelseListe.forEach((ytelse) => {
+                                total += ytelse.ytelseNettobeloep;
+                            });
+                        }
                     });
                 }
             });

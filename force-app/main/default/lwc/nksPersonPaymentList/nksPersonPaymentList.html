@@ -2,10 +2,10 @@
     <lightning-card title={listTitle} icon-name="utility:money">
         <lightning-layout>
             <lightning-layout-item flexibility="shrink">
-                <lightning-layout multiple-rows="true">
+                <lightning-layout multiple-rows="true" alternative-text="Filter">
                     <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
                         <div>
-                            <h1>Periode</h1>
+                            <h1>{labels.PERIOD_HEADER}</h1>
                         </div>
                         <lightning-radio-group
                             name="periodOptions"
@@ -47,7 +47,7 @@
                     </lightning-layout-item>
                     <lightning-layout-item size="12">
                         <div>
-                            <h1>Ytelse</h1>
+                            <h1>{labels.YTELSE_HEADER}</h1>
                         </div>
                         <lightning-checkbox-group
                             name="ytelseOptions"
@@ -71,12 +71,16 @@
                 </template>
                 <template if:false={isLoading}>
                     <template if:true={hasPayments}>
-                        <c-nks-payment-totals payment-groups={paymentGroups}></c-nks-payment-totals>
+                        <c-nks-payment-totals
+                            payment-groups={paymentGroups}
+                            labels={labels}
+                        ></c-nks-payment-totals>
                         <template for:each={paymentGroups} for:item="paymentGroup">
                             <template iterator:it={paymentGroup}>
                                 <h1
                                     if:true={it.first}
                                     class="slds-text-title_caps slds-border_bottom slds-var-m-bottom_small"
+                                    style="font-weight: bold; font-size: 1.1em"
                                     key={it.value.group}
                                 >
                                     <lightning-formatted-date-time
@@ -88,6 +92,7 @@
                                 <c-nks-person-payment
                                     key={it.value.data.posteringsdato}
                                     payment={it.value.data}
+                                    labels={labels}
                                 ></c-nks-person-payment>
                                 <div
                                     if:true={it.last}

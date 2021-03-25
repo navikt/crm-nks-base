@@ -1,8 +1,10 @@
 <template>
-    <div class="slds-var-p-around_large total-tile-bg slds-var-m-bottom_medium">
+    <div class="slds-var-p-around_small total-tile-bg slds-var-m-bottom_medium">
         <lightning-layout vertical-align="center">
             <lightning-layout-item size="4">
-                <h1 class="slds-text-heading_medium">TOTALS</h1>
+                <h1 class="slds-text-title_caps" style="font-weight: bold; font-size: large">
+                    {labels.TOTAL_HEADER}
+                </h1>
             </lightning-layout-item>
             <lightning-layout-item size="8">
                 <lightning-layout multiple-rows="true">
@@ -13,7 +15,9 @@
                     >
                         <lightning-layout horizontal-align="right" multiple-rows="true">
                             <lightning-layout-item size="12">
-                                <p class="slds-text-title_caps slds-float_right">Brutto</p>
+                                <p class="slds-text-title_caps slds-float_right">
+                                    {labels.GROSS_AMOUNT}
+                                </p>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <b
@@ -34,7 +38,9 @@
                     >
                         <lightning-layout multiple-rows="true">
                             <lightning-layout-item size="12">
-                                <p class="slds-text-title_caps slds-float_right">Trekk</p>
+                                <p class="slds-text-title_caps slds-float_right">
+                                    {labels.DEDUCTIONS}
+                                </p>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <b
@@ -55,7 +61,7 @@
                     >
                         <lightning-layout multiple-rows="true">
                             <lightning-layout-item size="12">
-                                <p class="slds-text-title_caps slds-float_right">Utbetalt</p>
+                                <p class="slds-text-title_caps slds-float_right">{labels.PAYOUT}</p>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <b

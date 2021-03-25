@@ -13,6 +13,12 @@
     border-width: 1px;
 }
 
+.chevron-toggle {
+    --sds-c-icon-color-foreground-default: #0167c5;
+    color: #0167c5;
+    align-self: flex-end;
+}
+
 lightning-icon[data-paid='true'] {
     --sds-c-icon-color-foreground-default: green;
 }

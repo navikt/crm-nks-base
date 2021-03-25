@@ -2,7 +2,6 @@
     <div
         class="payment-tile-bg slds-var-p-around_small slds-var-m-bottom_x-small"
         aria-expanded={expanded}
-        onclick={toggleExpand}
     >
         <lightning-layout multiple-rows="true">
             <lightning-layout-item
@@ -69,12 +68,21 @@
                         </template>
                     </lightning-layout-item>
                     <lightning-layout-item size="12">
-                        <lightning-icon
-                            icon-name={chevronIcon}
-                            size="x-small"
-                            class="slds-var-p-right_small slds-float_right slds-var-m-top_x-small"
+                        <lightning-layout
+                            class="slds-float_right"
+                            type="button"
+                            alternative-text={detailText}
+                            aria-expanded={expanded}
+                            onclick={toggleExpand}
                         >
-                        </lightning-icon>
+                            <p class="chevron-toggle slds-var-p-right_small">{detailText}</p>
+                            <lightning-icon
+                                icon-name={chevronIcon}
+                                size="x-small"
+                                class="slds-var-p-right_small slds-float_right slds-var-m-top_x-small chevron-toggle"
+                            >
+                            </lightning-icon>
+                        </lightning-layout>
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
@@ -85,11 +93,20 @@
                 padding="horizontal-small"
                 size="12"
             >
+                <lightning-layout multiple-rows="true" class="slds-var-m-bottom_small">
+                    <lightning-layout-item size="12">
+                        <b>{labels.PAYMENT_RECIPIENT} {payment.utbetaltTil.navn}</b>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" if:true={payment.utbetalingsmelding}>
+                        <b>{labels.PAYMENT_MESSAGE} {payment.utbetalingsmelding}</b>
+                    </lightning-layout-item>
+                </lightning-layout>
                 <template for:each={payment.ytelseListe} for:item="ytelse">
                     <c-nks-payment-details
                         key={ytelse.ytelsestype}
                         ytelse={ytelse}
                         display-header={multipleYtelser}
+                        labels={labels}
                     ></c-nks-payment-details>
                 </template>
             </lightning-layout-item>

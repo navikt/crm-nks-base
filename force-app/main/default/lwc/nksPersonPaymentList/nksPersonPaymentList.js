@@ -1,21 +1,32 @@
 import { LightningElement, api, wire } from 'lwc';
 import loadPayments from '@salesforce/apex/NKS_PaymentService.getPayments';
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
+
+//LABEL IMPORT
+import labels from './labels';
 
 export default class NksPersonPaymentList extends LightningElement {
     @api recordId;
+    @api objectApiName;
+    @api labels = labels;
+    @api relationshipField;
+    personId; //Salesforce ID to the person record
+    personIdent;
     payments = [];
     error = false;
     errorMessage = 'An error occurred'; //MAKE CUSTOM LABEL
-    noPaymentsMessage = 'Brukeren har ingen utbetalinger'; //MAKE CUSTOM LABEL
+    noPaymentsMessage = labels.NO_PAYMENTS;
     paymentsLoaded = false;
     groupedPayments;
     selectedPeriod;
     selectedYtelser = [];
     periodOptions = [
-        { label: 'Siste 3 måneder', value: 'LAST_3_MONTHS' },
-        { label: 'I år', value: 'THIS_YEAR' },
-        { label: 'I fjor', value: 'PREVIOUS_YEAR' },
-        { label: 'Egendefinert', value: 'CUSTOM_PERIOD' }
+        { label: labels.PERIOD_LAST_3_MONTHS, value: 'LAST_3_MONTHS' },
+        { label: labels.PERIOD_THIS_YEAR, value: 'THIS_YEAR' },
+        { label: labels.PERIOD_PREV_YEAR, value: 'PREVIOUS_YEAR' },
+        { label: labels.PERIOD_CUSTOM, value: 'CUSTOM_PERIOD' }
     ];
 
     startDateFilter;
@@ -27,6 +38,22 @@ export default class NksPersonPaymentList extends LightningElement {
         startDate.setMonth(startDate.getMonth() - 3, 1);
         this.startDateFilter = startDate;
         this.endDateFilter = new Date();
+
+        this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+    }
+
+    getRelatedRecordId(relationshipField, objectApiName) {
+        getRelatedRecord({
+            parentId: this.recordId,
+            relationshipField: relationshipField,
+            objectApiName: objectApiName
+        })
+            .then((record) => {
+                this.personId = this.resolve(relationshipField, record);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     get minEndDate() {
@@ -63,7 +90,8 @@ export default class NksPersonPaymentList extends LightningElement {
 
     get listTitle() {
         return (
-            'Payments (' +
+            labels.PAYMENT_HEADER +
+            ' (' +
             this.paymentGroups.map((group) => group.length).reduce((a, b) => a + b, 0) +
             ')'
         );
@@ -99,15 +127,25 @@ export default class NksPersonPaymentList extends LightningElement {
         return paymentList;
     }
 
+    @wire(getRecord, {
+        recordId: '$personId',
+        fields: [PERSON_IDENT_FIELD]
+    })
+    wiredPersonInfo({ error, data }) {
+        if (data) {
+            this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
+        }
+    }
+
     @wire(loadPayments, {
-        ident: '27115337357'
+        ident: '$personIdent'
     })
     wiredPaymentInfo({ error, data }) {
         if (data) {
             this.payments = data;
             this.paymentsLoaded = true;
-            this.filterPayments();
             this.initytelseSelection();
+            this.filterPayments();
         } else if (error) {
             console.log('ERROR: ' + JSON.stringify(error, null, 2));
             this.error = true;
@@ -163,9 +201,13 @@ export default class NksPersonPaymentList extends LightningElement {
     }
 
     filterPayments() {
-        let filtered = [];
-        filtered = this.payments.filter((payment) => {
+        //INIT a filter object allowing to mutate object properties
+        let filtered = JSON.parse(JSON.stringify(this.payments));
+        filtered = filtered.filter((payment) => {
             return this.hasYtelse(payment) && this.inFilterPeriod(payment);
+        });
+        filtered.forEach((payment) => {
+            this.filterYtelse(payment);
         });
         this.groupedPayments = this.groupPayments(filtered);
     }
@@ -187,6 +229,13 @@ export default class NksPersonPaymentList extends LightningElement {
             }
         }
         return hasYtelse;
+    }
+
+    filterYtelse(payment) {
+        let filteredYtelser = payment.ytelseListe.filter((ytelse) => {
+            return this.selectedYtelser.includes(ytelse.ytelsestype.value);
+        });
+        payment.ytelseListe = filteredYtelser;
     }
 
     //Default init with all values selected
@@ -214,5 +263,16 @@ export default class NksPersonPaymentList extends LightningElement {
             }
         });
         return paymentMap;
+    }
+
+    /**
+     * Retrieves the value from the given object's data path
+     * @param {data path} path
+     * @param {JS object} obj
+     */
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || self);
     }
 }

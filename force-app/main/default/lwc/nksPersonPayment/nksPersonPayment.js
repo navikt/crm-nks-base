@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class NksPersonPayment extends LightningElement {
     @api payment;
+    @api labels;
     expanded = false;
 
     get statusIcon() {
@@ -10,6 +11,10 @@ export default class NksPersonPayment extends LightningElement {
         } else {
             return 'utility:spinner';
         }
+    }
+
+    get detailText() {
+        return this.expanded === true ? this.labels.HIDE_DETAILS : this.labels.SHOW_DETAILS;
     }
 
     get paid() {
@@ -39,6 +44,4 @@ export default class NksPersonPayment extends LightningElement {
     toggleExpand() {
         this.expanded = !this.expanded;
     }
-
-    connectedCallback() {}
 }

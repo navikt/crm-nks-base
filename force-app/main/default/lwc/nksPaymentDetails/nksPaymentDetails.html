@@ -21,24 +21,40 @@
             ></lightning-formatted-date-time>
         </lightning-layout-item>
         <lightning-layout-item size="6">
-            <b class="slds-text-title_caps">Detaljer</b>
+            <b class="slds-text-title_caps">{labels.COL_DETAILS}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">Sats</b>
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_RATE}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">Antall</b>
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_QUANTITY}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">Beløp</b>
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_AMOUNT}</b>
         </lightning-layout-item>
         <template for:each={ytelse.ytelseskomponentListe} for:item="ytelseskomponent">
             <lightning-layout-item size="6" key={ytelseskomponent.ytelseskomponenttype}>
                 <p>{ytelseskomponent.ytelseskomponenttype}</p>
             </lightning-layout-item>
             <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
+                <div if:true={ytelseskomponent.satstype} class="slds-float_right">
+                    <p>
+                        <lightning-formatted-number
+                            value={ytelseskomponent.satsbeloep}
+                            maximum-fraction-digits="2"
+                            minimum-fraction-digits="1"
+                        ></lightning-formatted-number>
+                        /{ytelseskomponent.satstype}
+                    </p>
+                </div>
             </lightning-layout-item>
             <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
+                <lightning-formatted-number
+                    if:true={ytelseskomponent.satsantall}
+                    value={ytelseskomponent.satsantall}
+                    maximum-fraction-digits="2"
+                    class="slds-float_right"
+                ></lightning-formatted-number>
             </lightning-layout-item>
             <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
                 <lightning-formatted-number
@@ -70,7 +86,7 @@
         </template>
         <template for:each={ytelse.skattListe} for:item="skatt">
             <lightning-layout-item size="6" key={skatt.skattebeloep}>
-                <p>Skattetrekk</p>
+                <p>{labels.TAX_DEDUCTION}</p>
             </lightning-layout-item>
             <lightning-layout-item size="2" key={skatt.skattebeloep}>
                 <p class="slds-float_right">-</p>
