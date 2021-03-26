@@ -364,6 +364,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
                 <componentName>nksPersonPaymentList</componentName>
             </componentInstance>
         </itemInstances>

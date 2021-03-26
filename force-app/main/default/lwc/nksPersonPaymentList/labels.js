@@ -12,7 +12,7 @@ import COL_AMOUNT from '@salesforce/label/c.NKS_Payment_List_Col_Amount';
 import DEDUCTIONS from '@salesforce/label/c.NKS_Payment_List_Deduction';
 import GROSS_AMOUNT from '@salesforce/label/c.NKS_Payment_List_Gross_Amount';
 import PAYOUT from '@salesforce/label/c.NKS_Payment_List_Payout';
-import TOTAL_HEADER from '@salesforce/label/c.Payment_List_Total_Header';
+import TOTAL_HEADER from '@salesforce/label/c.NKS_Payment_List_Total_Header';
 import HIDE_DETAILS from '@salesforce/label/c.NKS_Payment_List_Hide_Details';
 import SHOW_DETAILS from '@salesforce/label/c.NKS_Payment_List_Show_Details';
 import COL_RATE from '@salesforce/label/c.NKS_Payment_List_Col_Rate';
@@ -20,6 +20,8 @@ import COL_QUANTITY from '@salesforce/label/c.NKS_Payment_List_Col_Quantity';
 import PAYMENT_RECIPIENT from '@salesforce/label/c.NKS_Payment_List_Payment_Recipient';
 import PAYMENT_MESSAGE from '@salesforce/label/c.NKS_Payment_List_Payment_Message';
 import BANK_ACCOUNT_NUMBER from '@salesforce/label/c.NKS_Payment_List_Bank_Account';
+import PERIOD_FROM from '@salesforce/label/c.NKS_Payment_List_Period_Custom_From';
+import PERIOD_TO from '@salesforce/label/c.NKS_Payment_List_Period_Custom_To';
 
 export default {
     NO_PAYMENTS,
@@ -43,5 +45,7 @@ export default {
     COL_QUANTITY,
     PAYMENT_RECIPIENT,
     PAYMENT_MESSAGE,
-    BANK_ACCOUNT_NUMBER
+    BANK_ACCOUNT_NUMBER,
+    PERIOD_FROM,
+    PERIOD_TO
 };

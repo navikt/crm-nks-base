@@ -14,6 +14,7 @@
                 label="Relationship field (API)"
                 description="Relationship field for identifying the person record"
                 type="String"
+                required="true"
             />
         </targetConfig>
     </targetConfigs>

@@ -23,8 +23,8 @@
                                     type="date"
                                     name="startDate"
                                     value={isoStartDate}
-                                    label="FOM"
-                                    aria-label="Fra og med"
+                                    label={labels.PERIOD_FROM}
+                                    aria-label={labels.PERIOD_FROM}
                                     max={maxStartDate}
                                     class="slds-var-p-right_small"
                                     onchange={customDateChanged}
@@ -35,8 +35,8 @@
                                     type="date"
                                     name="endDate"
                                     value={isoEndDate}
-                                    label="TOM"
-                                    aria-label="Til og med"
+                                    label={labels.PERIOD_TO}
+                                    aria-label={labels.PERIOD_TO}
                                     max={maxEndDate}
                                     min={minEndDate}
                                     class="slds-var-p-right_small"
@@ -73,6 +73,7 @@
                     <template if:true={hasPayments}>
                         <c-nks-payment-totals
                             payment-groups={paymentGroups}
+                            selected-ytelser={selectedYtelser}
                             labels={labels}
                         ></c-nks-payment-totals>
                         <template for:each={paymentGroups} for:item="paymentGroup">

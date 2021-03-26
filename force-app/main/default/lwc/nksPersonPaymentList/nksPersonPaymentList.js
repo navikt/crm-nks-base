@@ -206,9 +206,9 @@ export default class NksPersonPaymentList extends LightningElement {
         filtered = filtered.filter((payment) => {
             return this.hasYtelse(payment) && this.inFilterPeriod(payment);
         });
-        filtered.forEach((payment) => {
+        /*filtered.forEach((payment) => {
             this.filterYtelse(payment);
-        });
+        });*/
         this.groupedPayments = this.groupPayments(filtered);
     }
 

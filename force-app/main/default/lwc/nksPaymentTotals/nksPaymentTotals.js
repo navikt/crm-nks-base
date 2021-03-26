@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class NksPaymentTotals extends LightningElement {
     @api paymentGroups;
+    @api selectedYtelser;
     @api labels;
 
     get totalNetAmount() {
