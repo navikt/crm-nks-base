@@ -2,32 +2,38 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private LoggerUtility logger = new LoggerUtility();
     private Map<String, String> actorAccMap = new Map<String, String>();
     private Map<String, List<KafkaMessage__c>> messageMap = new Map<String, List<KafkaMessage__c>>(); //Maps CRM_Key__c to a list of KafkaMessages for that key
+    private Map<String, NavUnit__c> navUnitMap;
+    private Map<String, String> commonCodeMap;
 
-    private static Map<String, String> commonCodeMap {
-        get {
-            Map<String, String> returnMap = new Map<String, String>();
-            for (Common_Code__c comCode : [
-                SELECT Id, CRM_Code__c, CRM_Code_Set__c
-                FROM Common_Code__c
-                WHERE CRM_Code_Set__c IN ('Tema', 'Behandlingstema', 'Oppgavetyper')
-            ]) {
-                returnMap.put(comCode.CRM_Code_Set__c + comCode.CRM_Code__c, comCode.Id);
-            }
-            return returnMap;
-        }
-        private set {
+    //Default constructor
+    public KafkaOppgaveHandler() {
+        initCommonCodeMap();
+        initNavUnitMap();
+    }
+
+    /**
+     * @description: Initializes a map for all relevant records from common code
+     * @author Stian Ruud Schikora | 03-26-2021
+     **/
+    private void initCommonCodeMap() {
+        commonCodeMap = new Map<String, String>();
+        for (Common_Code__c comCode : [
+            SELECT Id, CRM_Code__c, CRM_Code_Set__c
+            FROM Common_Code__c
+            WHERE CRM_Code_Set__c IN ('Tema', 'Behandlingstema', 'Oppgavetyper')
+        ]) {
+            commonCodeMap.put(comCode.CRM_Code_Set__c + comCode.CRM_Code__c, comCode.Id);
         }
     }
 
-    private static Map<String, NavUnit__c> navUnitMap {
-        get {
-            Map<String, NavUnit__c> returnMap = new Map<String, NavUnit__c>();
-            for (NavUnit__c navUnit : [SELECT Id, INT_UnitNumber__c, Name FROM NavUnit__c]) {
-                returnMap.put(navUnit.INT_UnitNumber__c, navUnit);
-            }
-            return returnMap;
-        }
-        private set {
+    /**
+     * @description: Initializes a map of NAV units
+     * @author Stian Ruud Schikora | 03-26-2021
+     **/
+    private void initNavUnitMap() {
+        navUnitMap = new Map<String, NavUnit__c>();
+        for (NavUnit__c navUnit : [SELECT Id, INT_UnitNumber__c, Name FROM NavUnit__c]) {
+            navUnitMap.put(navUnit.INT_UnitNumber__c, navUnit);
         }
     }
 
@@ -221,7 +227,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         Boolean actorExists =
             this.actorAccMap.containsKey(kafkaOppgave.getActorId()) &&
             String.isNotBlank(this.actorAccMap.get(kafkaOppgave.getActorId()));
-        Boolean mappedTheme = commonCodeMap.containsKey('Tema' + kafkaOppgave.tema);
+        Boolean mappedTheme = this.commonCodeMap.containsKey('Tema' + kafkaOppgave.tema);
         if (actorExists && mappedTheme) {
             navTask.CRM_Account__c = this.actorAccMap.get(kafkaOppgave.getActorId());
             navTask.INT_External_Reference__c = kafkaOppgave.id;
@@ -229,21 +235,21 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.CRM_NavUnit__c = navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
                 ? navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Id
                 : null;
-            navTask.Name = navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
-                ? 'Oppgave til ' + navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Name
+            navTask.Name = this.navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
+                ? 'Oppgave til ' + this.navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Name
                 : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
-            navTask.NKS_TaskType__c = commonCodeMap.containsKey(
+            navTask.NKS_TaskType__c = this.commonCodeMap.containsKey(
                     'Oppgavetyper' + kafkaOppgave.oppgavetype
                 )
-                ? commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
+                ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
                 : null;
-            navTask.NKS_Theme__c = commonCodeMap.get('Tema' + kafkaOppgave.tema);
-            navTask.NKS_Subtheme__c = commonCodeMap.containsKey(
+            navTask.NKS_Theme__c = this.commonCodeMap.get('Tema' + kafkaOppgave.tema);
+            navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey(
                     'Behandlingstema' + kafkaOppgave.tema
                 )
-                ? commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema)
+                ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema)
                 : null;
             navTask.CRM_DueDate__c = String.isNotBlank(kafkaOppgave.fristFerdigstillelse)
                 ? Date.valueOf(kafkaOppgave.fristFerdigstillelse)
@@ -328,7 +334,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 'FIELDS: ' +
                 err.getFields();
         }
-        System.debug('Error Message: ' + errorMsg);
         message.CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
     }
@@ -340,7 +345,6 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @param message
      **/
     private void setMessageError(String errorMessage, KafkaMessage__c message) {
-        System.debug('Error Message: ' + errorMessage);
         message.CRM_ErrorMessage__c = errorMessage;
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;
     }
