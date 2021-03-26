@@ -9,7 +9,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             for (Common_Code__c comCode : [
                 SELECT Id, CRM_Code__c, CRM_Code_Set__c
                 FROM Common_Code__c
-                WHERE CRM_Code_Set__c IN ('Tema', 'Behandlingstema')
+                WHERE CRM_Code_Set__c IN ('Tema', 'Behandlingstema', 'Oppgavetyper')
             ]) {
                 returnMap.put(comCode.CRM_Code_Set__c + comCode.CRM_Code__c, comCode.Id);
             }
@@ -71,8 +71,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                     taskToConvert.versjon == existingTaskVersion)
                 ) {
                     newestComment = kafkaOppgave.beskrivelse;
-                    commentHistory += String.isNotBlank(commentHistory)
-                        ? '\n\n' + newestComment
+                    //Newest comment first
+                    commentHistory = String.isNotBlank(commentHistory)
+                        ? newestComment + '\n\n' + commentHistory
                         : newestComment;
                 }
             }
@@ -233,7 +234,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
-            navTask.NKS_Task_Type__c = kafkaOppgave.oppgavetype;
+            navTask.NKS_TaskType__c = commonCodeMap.containsKey(
+                    'Oppgavetyper' + kafkaOppgave.oppgavetype
+                )
+                ? commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
+                : null;
             navTask.NKS_Theme__c = commonCodeMap.get('Tema' + kafkaOppgave.tema);
             navTask.NKS_Subtheme__c = commonCodeMap.containsKey(
                     'Behandlingstema' + kafkaOppgave.tema
