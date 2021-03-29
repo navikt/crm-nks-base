@@ -263,7 +263,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.CRM_NoPersonInformation__c = true; //Need to be default set because of validation rule
         } else {
             //If actor is not existing in Salesforce, create an application log
-            if (!actorExists) {
+            if (!actorExists && kafkaOppgave.getActorId() != null) {
                 this.logger.error(
                     'Error creating NAV task, actor not found: ' +
                     kafkaOppgave.getActorId() +
@@ -274,12 +274,16 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 );
             }
 
-            String errorMessage = !actorExists
-                ? 'Actor not found: ' + kafkaOppgave.getActorId()
-                : '';
-            errorMessage += !mappedTheme ? ' - Theme not mapped: ' + kafkaOppgave.tema : '';
-            for (KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))) {
-                setMessageError(errorMessage, message);
+            if ((!actorExists && kafkaOppgave.getActorId() != null) || !mappedTheme) {
+                String errorMessage = !actorExists
+                    ? 'Actor not found: ' + kafkaOppgave.getActorId()
+                    : '';
+                errorMessage += !mappedTheme ? ' - Theme not mapped: ' + kafkaOppgave.tema : '';
+                for (
+                    KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))
+                ) {
+                    setMessageError(errorMessage, message);
+                }
             }
             return null;
         }
