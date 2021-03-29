@@ -1,25 +1,25 @@
 <template>
-    <div
-        class="slds-p-around_small slds-m-top_x-small case-tile-bg"
-        onclick={caseSelected}
-    >
+    <div class="slds-p-around_small slds-m-top_x-small case-tile-bg" onclick={caseSelected}>
         <lightning-layout vertical-align="center">
             <lightning-layout-item size="6">
                 <lightning-layout vertical-align="center">
-                    <h1 class="slds-text-heading_medium">
-                        {navCase.themeName}
-                    </h1>
+                    <h1 class="slds-text-heading_medium">{navCase.themeName}</h1>
                     <p class="slds-p-left_small">
-                        <b>{navCase.id}</b>
+                        <b>{navCase.fagsakId}</b>
                     </p>
+                    <div class="slds-p-left_small">
+                        <lightning-formatted-date-time
+                            value={navCase.datoOpprettet}
+                            year="numeric"
+                            month="2-digit"
+                            day="2-digit"
+                        ></lightning-formatted-date-time>
+                    </div>
                 </lightning-layout>
             </lightning-layout-item>
             <lightning-layout-item size="4"> </lightning-layout-item>
             <lightning-layout-item size="2" class="slds-align_absolute-center">
-                <lightning-layout
-                    horizontal-align="center"
-                    vertical-align="center"
-                >
+                <lightning-layout horizontal-align="center" vertical-align="center">
                     <lightning-icon
                         icon-name="action:check"
                         data-selected={selected}

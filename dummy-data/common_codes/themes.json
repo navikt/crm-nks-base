@@ -35,6 +35,84 @@
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@FamilieRef"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "KONRef"
+            },
+            "Name": "Kontakt NAV",
+            "CRM_Code__c": "KON",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": false,
+            "CRM_Code_Set__c": "Tema"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "FORRef"
+            },
+            "Name": "Foreldre- og svangerskapspenger",
+            "CRM_Code__c": "FOR",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": true,
+            "CRM_Code_Set__c": "Tema",
+            "CRM_Parent_Code__c": "@FamilieRef"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "SYKRef"
+            },
+            "Name": "Sykepenger",
+            "CRM_Code__c": "SYK",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": true,
+            "CRM_Code_Set__c": "Tema"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "YRKRef"
+            },
+            "Name": "Yrkesskade/Menerstatning",
+            "CRM_Code__c": "YRK",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": true,
+            "CRM_Code_Set__c": "Tema"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "STORef"
+            },
+            "Name": "Regnskap/Utbetaling",
+            "CRM_Code__c": "YRK",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": false,
+            "CRM_Code_Set__c": "Tema"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "PENRef"
+            },
+            "Name": "Pensjon",
+            "CRM_Code__c": "PEN",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": true,
+            "CRM_Code_Set__c": "Tema"
+        },
+        {
+            "attributes": {
+                "type": "Common_Code__c",
+                "referenceId": "OPPRef"
+            },
+            "Name": "Oppfølging",
+            "CRM_Code__c": "OPP",
+            "CRM_Active__c": true,
+            "CRM_Archive_Theme__c": false,
+            "CRM_Code_Set__c": "Tema"
         }
     ]
 }

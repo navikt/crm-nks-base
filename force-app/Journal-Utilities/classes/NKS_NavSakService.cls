@@ -17,72 +17,97 @@ public class NKS_NavSakService {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<SakWrapper> getActorCases(String actorId) {
+    public static List<SafCaseWrapper> getSafActorCases(String actorId) {
         ApiController apiCtrl = new ApiController();
 
-        Map<String, String> queryParams = new Map<String, String>{
-            'aktoerid' => actorId
-        };
-        apiCtrl.initRequest('SAK_API', 'GET_SAK_NAV_CASES');
-        apiCtrl.setUrlParams(queryParams);
+        //BUILD GRAPH QUERY
+
+        apiCtrl.initRequest('SAF_API', 'POST_SAF_CASE_QUERY');
+        //apiCtrl.addServiceAuthHeader('Saf');
         apiCtrl.doCallout();
+        System.debug('RESPONSE: ' + apiCtrl.getResponse().getBody());
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
-            List<SakWrapper> navCases = (List<SakWrapper>) JSON.deserialize(
+            SafApiResponse safResp = (SafApiResponse) JSON.deserialize(
                 apiCtrl.getResponse().getBody(),
-                List<SakWrapper>.class
+                SafApiResponse.class
             );
-            addThemeFriendlyName(navCases);
-            return navCases;
+
+            filterCases(safResp.data.saker);
+            safResp.data.saker.sort();
+            return safResp.data.saker;
         } else {
+            //Error handling
             LoggerUtility logger = new LoggerUtility();
-            logger.error(
-                'Error retrieving person cases from SAK \n ' +
-                'Status: ' +
-                apiCtrl.getResponse().getStatus() +
-                '\n' +
-                'Body: ' +
-                apiCtrl.getResponse().getBody(),
-                null
+            logger.httpError(
+                'Error retrieving actor cases',
+                apiCtrl.getResponse(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
             );
-            logger.peek().Payload__c =
-                'REQUEST: \n\n' +
-                JSON.serializePretty(apiCtrl.getRequest().getBody());
-            logger.publish();
-            AuraHandledException ex = new AuraHandledException(
-                'Error retrieving cases'
-            );
+            logger.publishSynch();
+            AuraHandledException ex = new AuraHandledException('Error retrieving cases');
             ex.setMessage('Error retrieving cases');
             throw ex;
         }
     }
 
-    private static void addThemeFriendlyName(List<SakWrapper> navCases) {
-        for (SakWrapper navCase : navCases) {
-            navCase.themeName = themeMap.containsKey(navCase.tema)
-                ? themeMap.get(navCase.tema)
-                : '';
+    private static void addThemeFriendlyName(SafCaseWrapper navCase) {
+        navCase.themeName = themeMap.containsKey(navCase.tema) ? themeMap.get(navCase.tema) : '';
+    }
+
+    private static void filterCases(List<SafCaseWrapper> navCases) {
+        for (Integer i = navCases.size() - 1; i >= 0; i--) {
+            if (
+                navCases[i].sakstype.equalsIgnoreCase('GENERELL_SAK') ||
+                String.isBlank(navCases[i].fagsakId)
+            ) {
+                //If the case is GENERELL_SAK or has no id, remove from result
+                navCases.remove(i);
+            } else {
+                addThemeFriendlyName(navCases[i]);
+            }
         }
     }
 
+    public class SafApiResponse {
+        public SafQueryResponse data;
+    }
+
+    public class SafQueryResponse {
+        @AuraEnabled
+        public List<SafCaseWrapper> saker;
+    }
+
     @testVisible
-    public class SakWrapper {
+    public class SafCaseWrapper implements Comparable {
         @AuraEnabled
-        public String id;
+        public String fagsakId;
         @AuraEnabled
-        public String orgnr;
+        public String sakstype;
         @AuraEnabled
-        public String applikasjon;
-        @AuraEnabled
-        public String aktoerId;
-        @AuraEnabled
-        public DateTime opprettetTidspunkt;
-        private String opprettetAv;
-        @AuraEnabled
-        public String fagsakNr;
+        public DateTime datoOpprettet;
         @AuraEnabled
         public String tema;
         @AuraEnabled
         public String themeName;
+
+        /**
+         * @description: Comparable implementation sets newest case first in list
+         * @author Stian Ruud Schikora | 03-29-2021
+         * @param compareObj
+         * @return Integer
+         **/
+        public Integer compareTo(Object compareObj) {
+            SafCaseWrapper compareCase = (SafCaseWrapper) compareObj;
+            Integer retValue = 0;
+            if (this.datoOpprettet > compareCase.datoOpprettet) {
+                retValue = -1;
+            } else {
+                retValue = 1;
+            }
+
+            return retValue;
+        }
     }
 }

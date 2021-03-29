@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>POST_SAF_CASE_QUERY</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Base_Configuration__c</field>
+        <value xsi:type="xsd:string">SAF_API</value>
+    </values>
+    <values>
+        <field>HTTP_Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Has_Path_Parameters__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+&quot;200&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: {
+  &quot;data&quot;: {
+    &quot;saker&quot;: [
+      {
+        &quot;fagsakId&quot;: &quot;3803H01&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2015-01-21T22:29:09&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803G03&quot;,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-01-17T13:57:21&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803F01&quot;,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2012-05-11T07:43:47&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803G02&quot;,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2012-09-12T09:25:20&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803H02&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2015-01-29T23:21:48&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803D04&quot;,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2016-11-21T05:32:20&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-10-29T16:15:10&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803A02&quot;,
+        &quot;tema&quot;: &quot;YRK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2013-10-24T06:14:38&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;2106222&quot;,
+        &quot;tema&quot;: &quot;OPP&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-01-03T14:38:24&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803D03&quot;,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2012-04-04T15:22:41&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-05-24T16:42:01&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;STO&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2019-05-23T03:46:14&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;21455507&quot;,
+        &quot;tema&quot;: &quot;PEN&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: null
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;OPP&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-03-09T06:21:05&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-06-20T14:49:21&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803G05&quot;,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-08-31T23:57:41&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803G01&quot;,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2012-07-19T12:20:32&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803A03&quot;,
+        &quot;tema&quot;: &quot;YRK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2013-11-19T11:33:51&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2020-08-20T07:42:51&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;YRK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2013-10-23T15:20:35&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803D01&quot;,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-05-20T15:15:01&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803I03&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2016-09-29T13:01:37&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803D05&quot;,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2017-02-15T00:13:03&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2020-09-18T12:15:14&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;OPP&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-11-15T07:34&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803I04&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2016-10-19T23:04:07&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2020-01-30T08:14:40&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;0704J01&quot;,
+        &quot;tema&quot;: &quot;BAR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2017-02-03T00:09:38&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2020-01-20T21:09:34&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;STO&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-11-30T04:36:50&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803D02&quot;,
+        &quot;tema&quot;: &quot;FOR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-10-05T15:23:58&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;SYM&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2010-12-20T18:45:01&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;STO&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2018-01-11T07:11:55&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803E01&quot;,
+        &quot;tema&quot;: &quot;BAR&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2011-07-13T21:07:04&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803I02&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2016-09-01T21:29:14&quot;
+      },
+      {
+        &quot;fagsakId&quot;: null,
+        &quot;tema&quot;: &quot;KON&quot;,
+        &quot;sakstype&quot;: &quot;GENERELL_SAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2012-05-10T15:16:22&quot;
+      },
+      {
+        &quot;fagsakId&quot;: &quot;3803I01&quot;,
+        &quot;tema&quot;: &quot;SYK&quot;,
+        &quot;sakstype&quot;: &quot;FAGSAK&quot;,
+        &quot;datoOpprettet&quot;: &quot;2015-08-26T20:16:53&quot;
+      }
+    ]
+  }
+}
+},
+&quot;401&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;404&quot;: {&quot;headers&quot;: null,
+&quot;body&quot;: null
+},
+&quot;500&quot;: {
+&quot;headers&quot;: null,
+&quot;body&quot;: null
+}
+}</value>
+    </values>
+    <values>
+        <field>Service_Path__c</field>
+        <value xsi:type="xsd:string">/saf/graphql</value>
+    </values>
+</CustomMetadata>
