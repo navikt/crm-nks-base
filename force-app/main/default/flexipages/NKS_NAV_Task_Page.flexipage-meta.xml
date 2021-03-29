@@ -119,28 +119,28 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardLabel</name>
+                    <name>buttonIcon</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>CRM_Comments__c</value>
+                    <name>buttonLabel</name>
+                    <value>Send Oppgave</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>hideLabels</name>
-                    <value>false</value>
+                    <name>flowName</name>
+                    <value>NKS_Send_NAV_Task</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>iconName</name>
+                    <name>fullButtonWidth</name>
+                    <value>true</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
+                <componentName>nksFlowStarter</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.INT_External_Reference__c}</leftValue>
+                        <operator>LE</operator>
+                        <rightValue>0</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
