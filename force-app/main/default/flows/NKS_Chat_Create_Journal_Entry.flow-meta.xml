@@ -115,8 +115,8 @@
         <description>Sends the journal request via Apex.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>1338</locationX>
-        <locationY>1155</locationY>
+        <locationX>1469</locationX>
+        <locationY>1055</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -253,8 +253,8 @@
         <description>Assigns values to the document wrapper class.</description>
         <name>Create_Document_Wrapper</name>
         <label>Create Document Wrapper</label>
-        <locationX>1051</locationX>
-        <locationY>989</locationY>
+        <locationX>1052</locationX>
+        <locationY>1023</locationY>
         <assignmentItems>
             <assignToReference>Journal_Documents.tittel</assignToReference>
             <operator>Assign</operator>
@@ -277,15 +277,109 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Journal_Post_Request</targetReference>
+            <targetReference>Check_Case_Type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Assigns the apprrpriate values to the journal post request</description>
-        <name>Create_Journal_Post_Request</name>
-        <label>Create Journal Post Request</label>
-        <locationX>1338</locationX>
-        <locationY>989</locationY>
+        <name>Create_Journal_Post_Request_Fagsak</name>
+        <label>Create Journal Post Request Fagsak</label>
+        <locationX>1344</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>Journal_Request.dokumenter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Journal_Documents</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.tittel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Document_Title</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.kanal</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NAV_NO_CHAT</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.journalpostType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INNGAAENDE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.sak.sakstype</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.navCaseType</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.bruker.id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.bruker.idType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FNR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.journalfoerendeEnhet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.idType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FNR</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.avsenderMottaker.navn</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_Full_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Post_Journal</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns the apprrpriate values to the journal post request</description>
+        <name>Create_Journal_Post_Request_Generell</name>
+        <label>Create Journal Post Request Generell</label>
+        <locationX>1342</locationX>
+        <locationY>1109</locationY>
         <assignmentItems>
             <assignToReference>Journal_Request.dokumenter</assignToReference>
             <operator>Add</operator>
@@ -375,13 +469,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Person_Full_Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Journal_Request.sak.fagsakId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -821,6 +908,32 @@
             <targetReference>Error_Screen_0</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <description>Check if case type if GENERELL_SAK or FAGSAK</description>
+        <name>Check_Case_Type</name>
+        <label>Check Case Type</label>
+        <locationX>1163</locationX>
+        <locationY>1025</locationY>
+        <defaultConnector>
+            <targetReference>Create_Journal_Post_Request_Fagsak</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Fagsak</defaultConnectorLabel>
+        <rules>
+            <name>Generell_Sak</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Person_NAV_Cases.navCaseType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GENERELL_SAK</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Journal_Post_Request_Generell</targetReference>
+            </connector>
+            <label>Generell Sak</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Checks if a journal entry has already been created.</description>
         <name>Check_Journal_Entry_Created</name>
@@ -2125,8 +2238,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>1142</locationX>
-        <locationY>1163</locationY>
+        <locationX>1143</locationX>
+        <locationY>1197</locationY>
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>

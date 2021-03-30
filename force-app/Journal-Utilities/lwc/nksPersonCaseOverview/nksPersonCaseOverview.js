@@ -221,16 +221,23 @@ export default class NksPersonCaseOverview extends LightningElement {
     //When GENERELL_SAK is chosen, the agent has the ability to also select a subtheme for the journal entry
     @api
     get selectedSubthemeSfId() {
-        let subtheme = '';
+        let subthemeSfId;
         if (this.isGeneralCase === true) {
             let themeCmp = this.template.querySelector('c-nks-theme-categorization');
-            subtheme = themeCmp.subtheme;
+            subthemeSfId = themeCmp.subtheme;
         }
-        return subtheme;
+        return subthemeSfId;
     }
 
     @api
-    get selectedSubtheme() {}
+    get selectedSubtheme() {
+        let subtheme;
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            subtheme = themeCmp.subthemeCode;
+        }
+        return subtheme;
+    }
 
     get isGeneralCase() {
         return this.selectedCaseType === 'GENERELL_SAK';
