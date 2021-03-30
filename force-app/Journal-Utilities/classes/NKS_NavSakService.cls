@@ -1,4 +1,11 @@
 public class NKS_NavSakService {
+    private static List<String> SafCaseFields = new List<String>{
+        'fagsakId',
+        'sakstype',
+        'datoOpprettet',
+        'tema'
+    };
+
     private static Map<String, String> themeMap {
         get {
             Map<String, String> returnMap = new Map<String, String>();
@@ -21,11 +28,13 @@ public class NKS_NavSakService {
         ApiController apiCtrl = new ApiController();
 
         //BUILD GRAPH QUERY
+        String graphBody = generateGraphBody(actorId);
 
         apiCtrl.initRequest('SAF_API', 'POST_SAF_CASE_QUERY');
-        //apiCtrl.addServiceAuthHeader('Saf');
+        apiCtrl.addServiceAuthHeader('Saf');
+        apiCtrl.addHeader('Content-Type', 'application/json');
+        apiCtrl.setBody(graphBody);
         apiCtrl.doCallout();
-        System.debug('RESPONSE: ' + apiCtrl.getResponse().getBody());
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
             SafApiResponse safResp = (SafApiResponse) JSON.deserialize(
@@ -50,6 +59,24 @@ public class NKS_NavSakService {
             ex.setMessage('Error retrieving cases');
             throw ex;
         }
+    }
+
+    public static String generateGraphBody(String actorId) {
+        NKS_SafBrukerIdInput brukerId = new NKS_SafBrukerIdInput();
+        brukerId.id = actorId;
+        brukerId.type = 'AKTOERID';
+
+        GraphQLFactory graphFactory = new GraphQLFactory(
+            'query',
+            'saker',
+            new Map<String, Object>{ 'brukerId' => brukerId }
+        );
+        graphFactory.addArgument('$brukerId', 'BrukerIdInput!')
+            .addNode('saker')
+            .addArgument('brukerId', '$brukerId')
+            .addFields(SafCaseFields);
+
+        return graphFactory.build();
     }
 
     private static void addThemeFriendlyName(SafCaseWrapper navCase) {

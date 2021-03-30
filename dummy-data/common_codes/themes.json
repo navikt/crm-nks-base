@@ -41,7 +41,7 @@
                 "type": "Common_Code__c",
                 "referenceId": "KONRef"
             },
-            "Name": "Kontakt NAV",
+            "Name": "Kontantstøtte",
             "CRM_Code__c": "KON",
             "CRM_Active__c": true,
             "CRM_Archive_Theme__c": false,

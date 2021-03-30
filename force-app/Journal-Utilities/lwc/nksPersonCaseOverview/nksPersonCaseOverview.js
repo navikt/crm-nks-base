@@ -6,13 +6,11 @@ import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdat
 import { publish, MessageContext } from 'lightning/messageService';
 
 //##LABEL IMPORTS
-import NAV_CASE_TITLE from '@salesforce/label/c.NKS_NAV_Case_Title';
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_NAV_Case_Validation_Error';
 import NAV_CASE_RETRIEVE_ERROR from '@salesforce/label/c.NKS_NAV_Case_Retrieve_Error';
 
 export default class NksPersonCaseOverview extends LightningElement {
     @api labels = {
-        NAV_CASE_TITLE,
         VALIDATION_ERROR,
         NAV_CASE_RETRIEVE_ERROR
     };
@@ -20,7 +18,8 @@ export default class NksPersonCaseOverview extends LightningElement {
     @api actorId;
     @api prefilledThemeGroup; //Give the theme categorization child component a prefilled value
     caseList = []; //Contains all NAV cases returned from the API
-    displayedCases = []; //Holds the list of cases to be displayed
+    displayedCaseGroups = []; //Holds the list of case groups to be displayed
+    groupedCases = [];
     selectedCase;
     themeGroupOptions = [];
     filteredThemes = [];
@@ -98,14 +97,34 @@ export default class NksPersonCaseOverview extends LightningElement {
     @wire(getCases, { actorId: null })
     wireUser({ error, data }) {
         if (data) {
+            this.groupCases(data);
             this.caseList = data;
-            this.displayedCases = this.caseList;
-            console.log(JSON.stringify(data, null, 2));
         } else {
             if (error) console.log(JSON.stringify(error, null, 2));
         }
         this.casesLoaded = true;
         this.error = !data && error;
+    }
+
+    groupCases(cases) {
+        let groupedCases = {};
+        let caseGroups = [];
+
+        cases.forEach((caseItem) => {
+            if (groupedCases.hasOwnProperty(caseItem.themeName)) {
+                groupedCases[caseItem.themeName].push(caseItem);
+            } else {
+                groupedCases[caseItem.themeName] = [];
+                groupedCases[caseItem.themeName].push(caseItem);
+            }
+        });
+
+        for (const [key, value] of Object.entries(groupedCases)) {
+            caseGroups.push({ themeName: key, theme: value[0].tema, cases: value });
+        }
+
+        this.groupedCases = caseGroups;
+        this.displayedCaseGroups = caseGroups;
     }
 
     //Handles the nksNavCaseItem click event and updates the selected attribute for all the childs
@@ -118,9 +137,9 @@ export default class NksPersonCaseOverview extends LightningElement {
     }
 
     setSelectedNavCase(selectedNavCaseId) {
-        let caseItems = this.template.querySelectorAll('c-nks-nav-case-item');
-        caseItems.forEach((caseItem) => {
-            caseItem.selected = caseItem.navCase.fagsakId == selectedNavCaseId ? true : false;
+        let caseLists = this.template.querySelectorAll('c-nks-nav-case-list');
+        caseLists.forEach((caseList) => {
+            caseList.setSelectedNavCase(selectedNavCaseId);
         });
     }
 
@@ -128,11 +147,11 @@ export default class NksPersonCaseOverview extends LightningElement {
         let themeGroup = event.target.value;
 
         if (themeGroup === 'ALL') {
-            this.displayedCases = this.caseList;
+            this.displayedCaseGroups = this.groupedCases;
             return;
         } else {
-            this.displayedCases = this.caseList.filter((navCase) => {
-                return this.themeMap[themeGroup].hasTheme(navCase.tema) !== null;
+            this.displayedCaseGroups = this.groupedCases.filter((caseGroup) => {
+                return this.themeMap[themeGroup].hasTheme(caseGroup.theme) !== null;
             });
         }
     }
@@ -150,7 +169,7 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @api
     get selectedCaseId() {
-        return this.selectedCase ? this.selectedCase.id : null;
+        return this.selectedCase ? this.selectedCase.fagsakId : null;
     }
 
     @api
@@ -215,10 +234,6 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     get isGeneralCase() {
         return this.selectedCaseType === 'GENERELL_SAK';
-    }
-
-    get title() {
-        return NAV_CASE_TITLE + ' (' + this.caseList.length + ')';
     }
 
     get showCases() {

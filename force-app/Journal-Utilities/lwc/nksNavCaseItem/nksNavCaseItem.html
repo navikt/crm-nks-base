@@ -1,32 +1,32 @@
 <template>
-    <div class="slds-p-around_small slds-m-top_x-small case-tile-bg" onclick={caseSelected}>
+    <div
+        class="slds-m-top_x-small case-tile-bg"
+        onclick={caseSelected}
+        role="button"
+        aria-selected={selected}
+        data-selected={selected}
+    >
         <lightning-layout vertical-align="center">
-            <lightning-layout-item size="6">
-                <lightning-layout vertical-align="center">
-                    <h1 class="slds-text-heading_medium">{navCase.themeName}</h1>
-                    <p class="slds-p-left_small">
-                        <b>{navCase.fagsakId}</b>
-                    </p>
-                    <div class="slds-p-left_small">
-                        <lightning-formatted-date-time
-                            value={navCase.datoOpprettet}
-                            year="numeric"
-                            month="2-digit"
-                            day="2-digit"
-                        ></lightning-formatted-date-time>
-                    </div>
-                </lightning-layout>
-            </lightning-layout-item>
-            <lightning-layout-item size="4"> </lightning-layout-item>
             <lightning-layout-item size="2" class="slds-align_absolute-center">
                 <lightning-layout horizontal-align="center" vertical-align="center">
                     <lightning-icon
-                        icon-name="action:check"
+                        icon-name="utility:success"
                         data-selected={selected}
                         size="x-small"
                     >
                     </lightning-icon>
                 </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="5">
+                <p>{navCase.fagsakId}</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="5">
+                <lightning-formatted-date-time
+                    value={navCase.datoOpprettet}
+                    year="numeric"
+                    month="long"
+                    day="numeric"
+                ></lightning-formatted-date-time>
             </lightning-layout-item>
         </lightning-layout>
     </div>
