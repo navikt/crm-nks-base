@@ -47,7 +47,7 @@ public class NKS_NavSakService {
             return safResp.data.saker;
         } else {
             //Error handling
-            LoggerUtility logger = new LoggerUtility();
+            LoggerUtility logger = new LoggerUtility('Journal');
             logger.httpError(
                 'Error retrieving actor cases',
                 apiCtrl.getResponse(),
