@@ -5,6 +5,7 @@ public class KafkaOppgaveHandler_Test {
     static KafkaOppgave version2;
     static KafkaOppgave errorTest;
     static KafkaOppgave invalidNavUnitTest;
+    static KafkaOppgave updateTest;
 
     private static void makeMocks() {
         KafkaOppgave.LegacyIdent idt = new KafkaOppgave.LegacyIdent();
@@ -16,7 +17,7 @@ public class KafkaOppgaveHandler_Test {
         testOppgave.tildeltEnhetsnr = '2990';
         testOppgave.tilordnetRessurs = 'Z994995';
         testOppgave.tema = 'BAR';
-        testOppgave.oppgavetype = 'BEH_SAK';
+        testOppgave.oppgavetype = 'KONT_BRUK';
         testOppgave.versjon = 1;
         testOppgave.beskrivelse = 'TEST DESCRIPTION';
         testOppgave.fristFerdigstillelse = '2021-01-14';
@@ -40,6 +41,9 @@ public class KafkaOppgaveHandler_Test {
         invalidNavUnitTest = testOppgave.clone();
         invalidNavUnitTest.id = 53338;
         invalidNavUnitTest.tildeltEnhetsnr = '0000';
+
+        updateTest = testOppgave.clone();
+        updateTest.id = 53339;
     }
     @TestSetup
     static void makeData() {
@@ -47,6 +51,13 @@ public class KafkaOppgaveHandler_Test {
         UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '2990'));
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
+        );
+        UTIL_TestDataFactory.createRecord(
+            new Common_Code__c(
+                CRM_Code__c = 'KONT_BRUK',
+                Name = 'Kontakt Bruker',
+                CRM_Code_Set__c = 'Oppgavetyper'
+            )
         );
         UTIL_TestDataFactory.createRecord(
             new NavTask__c(Name = 'TEST TASK', INT_External_Reference__c = 53339)
@@ -87,7 +98,7 @@ public class KafkaOppgaveHandler_Test {
         messages.add(
             new KafkaMessage__c(
                 CRM_Key__c = '53339',
-                CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(version1)))
+                CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(updateTest)))
             )
         );
 
@@ -98,5 +109,6 @@ public class KafkaOppgaveHandler_Test {
         System.debug([SELECT Log_Message__c, Pay_Load__c FROM Application_Log__c]);
 
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
+        System.assert([SELECT COUNT() FROM NavTask__c WHERE CRM_NavUnit__c = NULL] == 1);
     }
 }

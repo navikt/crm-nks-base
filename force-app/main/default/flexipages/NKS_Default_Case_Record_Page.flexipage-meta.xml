@@ -342,19 +342,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.detail</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-8a77a1e9-2943-4a11-af46-55c01977e2ba</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
                     <value>Saker</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
