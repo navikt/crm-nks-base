@@ -73,7 +73,6 @@
                     <template if:true={hasPayments}>
                         <c-nks-payment-totals
                             payment-groups={paymentGroups}
-                            selected-ytelser={selectedYtelser}
                             labels={labels}
                         ></c-nks-payment-totals>
                         <template for:each={paymentGroups} for:item="paymentGroup">
