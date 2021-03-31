@@ -51,7 +51,7 @@ export default class NksPaymentTotals extends LightningElement {
             });
         }
 
-        for (const [key, value] of object.entries(ytelseTotals)) {
+        for (const [key, value] of Object.entries(ytelseTotals)) {
             totalArray.push(new YtelseTotal(key, value));
         }
 
