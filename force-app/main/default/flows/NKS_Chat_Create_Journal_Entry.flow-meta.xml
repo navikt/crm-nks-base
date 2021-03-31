@@ -1844,7 +1844,7 @@ TODAY())</expression>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>1223</locationX>
-        <locationY>522</locationY>
+        <locationY>523</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1917,6 +1917,13 @@ TODAY())</expression>
                     <stringValue>Nei</stringValue>
                 </value>
             </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>tasktype</name>
+            <extensionName>c:nksTaskTypePicklist</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

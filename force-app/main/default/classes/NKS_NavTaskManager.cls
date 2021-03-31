@@ -34,6 +34,7 @@ public with sharing class NKS_NavTaskManager {
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
+
         apiCtrl.setHeaders(httpHeaders);
 
         //Creates a log entry used as the unique request X-Correlation-ID
@@ -125,6 +126,49 @@ public with sharing class NKS_NavTaskManager {
         }
 
         return resp;
+    }
+
+    /**
+     * @description: Performs callout to oppgave API to perform a GET for valid task types. Throws an OppgaveException if the callout is unsuccessful
+     * @author Celine Tomren | 03-29-2021
+     * @param themeCode
+     **/
+    public static NavTaskResponse getTaskTypes(String themeCode) {
+        NavTaskResponse response = new NavTaskResponse();
+
+        Map<String, String> httpHeaders = new Map<String, String>{
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json'
+        };
+        ApiController apiCtrl = new ApiController();
+        Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
+        apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
+        apiCtrl.addServiceAuthHeader('Oppgave');
+        apiCtrl.setHeaders(httpHeaders);
+        LoggerUtility logger = new LoggerUtility('Oppgave');
+        addXCorrelation(apiCtrl, logger, null);
+
+        try {
+            apiCtrl.doCallout();
+            Integer statusCode = apiCtrl.getResponse().getStatusCode();
+            if (statusCode == 200 || statusCode == 201) {
+                OppgaveTypeResponse apiResponse = (OppgaveTypeResponse) JSON.deserialize(
+                    apiCtrl.getResponse().getBody(),
+                    List<OppgaveTypeResponse>.class
+                );
+                response.setResponse(true, null, null);
+            } else {
+                logError(apiCtrl, logger, null);
+                response.setResponse(false, logger.peek().UUID__c, null);
+            }
+        } catch (Exception ex) {
+            logger.exception(ex, null, CRM_ApplicationDomain.Domain.NKS);
+            response.setResponse(false, logger.peek().UUID__c, null);
+        } finally {
+            logger.publish();
+        }
+
+        return response;
     }
 
     /**
@@ -301,5 +345,9 @@ public with sharing class NKS_NavTaskManager {
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
         }
+    }
+
+    public class OppgaveTypeResponse {
+        private String oppgavetype;
     }
 }
