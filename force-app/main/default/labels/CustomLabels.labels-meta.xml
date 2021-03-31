@@ -166,6 +166,22 @@
         <value>Sats</value>
     </labels>
     <labels>
+        <fullName>NKS_Payment_List_Col_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Details</shortDescription>
+        <value>Detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Amount</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Amount</shortDescription>
+        <value>Antall</value>
+    </labels>
+    <labels>
         <fullName>NKS_Payment_List_Deduction</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>
