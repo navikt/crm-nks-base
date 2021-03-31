@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>NKS_Payment_List_Bank_Account</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Bank Account</shortDescription>
+        <value>Kontonummer:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Quantity</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Quantity</shortDescription>
+        <value>Antall</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Rate</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Rate</shortDescription>
+        <value>Sats</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Details</shortDescription>
+        <value>Detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Amount</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Amount</shortDescription>
+        <value>Antall</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Deduction</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Deduction</shortDescription>
+        <value>Trekk</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Gross_Amount</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Gross Amount</shortDescription>
+        <value>Brutto</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Hide_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Hide Details</shortDescription>
+        <value>Skjul detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_No_Payments</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List No Payments</shortDescription>
+        <value>Brukeren har ingen utbetalinger</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Payment_Header</shortDescription>
+        <value>Utbetalinger</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Message</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payment Message</shortDescription>
+        <value>Melding:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Recipient</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payment Recipient</shortDescription>
+        <value>Utbetalt til:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payout</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payout</shortDescription>
+        <value>Utbetalt</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom</shortDescription>
+        <value>Egendefinert</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom_To</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom To</shortDescription>
+        <value>Til og med:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Header</shortDescription>
+        <value>Periode</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Last_3_Months</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Period_Last_3_Months</shortDescription>
+        <value>Siste 3 måneder</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Previous_Year</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Period_Previous_Year</shortDescription>
+        <value>I fjor</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_This_Year</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Period_This_Year</shortDescription>
+        <value>I år</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom_From</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom From</shortDescription>
+        <value>Fra og med:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Show_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Show Details</shortDescription>
+        <value>Vis detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Tax_Deduction</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Tax Deduction</shortDescription>
+        <value>Skattetrekk</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Total_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Total Header</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Ytelse_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Ytelse_Header</shortDescription>
+        <value>Ytelse</value>
+    </labels>
+</CustomLabels>
