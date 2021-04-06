@@ -22,6 +22,8 @@ import PAYMENT_MESSAGE from '@salesforce/label/c.NKS_Payment_List_Payment_Messag
 import BANK_ACCOUNT_NUMBER from '@salesforce/label/c.NKS_Payment_List_Bank_Account';
 import PERIOD_FROM from '@salesforce/label/c.NKS_Payment_List_Period_Custom_From';
 import PERIOD_TO from '@salesforce/label/c.NKS_Payment_List_Period_Custom_To';
+import NO_ACCESS from '@salesforce/label/c.NKS_Payment_List_No_Access_Error';
+import API_ERROR from '@salesforce/label/c.NKS_Payment_List_API_Error';
 
 export default {
     NO_PAYMENTS,
@@ -47,5 +49,7 @@ export default {
     PAYMENT_MESSAGE,
     BANK_ACCOUNT_NUMBER,
     PERIOD_FROM,
-    PERIOD_TO
+    PERIOD_TO,
+    NO_ACCESS,
+    API_ERROR
 };

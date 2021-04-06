@@ -16,7 +16,7 @@ export default class NksPersonPaymentList extends LightningElement {
     personIdent;
     payments = [];
     error = false;
-    errorMessage = 'An error occurred'; //MAKE CUSTOM LABEL
+    errorMessage = '';
     noPaymentsMessage = labels.NO_PAYMENTS;
     paymentsLoaded = false;
     groupedPayments;
@@ -135,6 +135,10 @@ export default class NksPersonPaymentList extends LightningElement {
         if (data) {
             this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
         }
+        if (error) {
+            this.error = true;
+            this.errorMessage = labels.NO_ACCESS;
+        }
     }
 
     @wire(loadPayments, {
@@ -149,6 +153,7 @@ export default class NksPersonPaymentList extends LightningElement {
         } else if (error) {
             console.log('ERROR: ' + JSON.stringify(error, null, 2));
             this.error = true;
+            this.errorMessage = labels.API_ERROR + error.body.message;
         }
     }
 

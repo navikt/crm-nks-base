@@ -62,7 +62,7 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
-            <lightning-layout-item size="9">
+            <lightning-layout-item if:false={error} size="9">
                 <template if:true={isLoading}>
                     <lightning-spinner
                         variant="brand"
@@ -102,21 +102,17 @@
                             </template>
                         </template>
                     </template>
-                    <template if:false={error}>
-                        <template if:false={hasPayments}>
-                            <c-nks-alert-banner
-                                type="Info"
-                                message={noPaymentsMessage}
-                            ></c-nks-alert-banner>
-                        </template>
-                    </template>
-                    <template if:true={error}>
-                        <!--Error message-->
-                        <c-nks-alert-banner type="Error" message={errorMessage}
-                            >/</c-nks-alert-banner
-                        >
+                    <template if:false={hasPayments}>
+                        <c-nks-alert-banner
+                            type="Info"
+                            message={noPaymentsMessage}
+                        ></c-nks-alert-banner>
                     </template>
                 </template>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={error} flexibility="grow">
+                <!--Error message-->
+                <c-nks-alert-banner type="Error" message={errorMessage}>/</c-nks-alert-banner>
             </lightning-layout-item>
         </lightning-layout>
     </lightning-card>

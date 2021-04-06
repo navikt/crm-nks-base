@@ -35,7 +35,10 @@ public without sharing class NKS_PaymentService {
                 null,
                 CRM_ApplicationDomain.Domain.NKS
             );
+            AuraHandledException auraEx = new AuraHandledException(logger.peek().UUID__c);
+            auraEx.setMessage(logger.peek().UUID__c);
             logger.publish();
+            throw auraEx;
         }
 
         return returnList;
