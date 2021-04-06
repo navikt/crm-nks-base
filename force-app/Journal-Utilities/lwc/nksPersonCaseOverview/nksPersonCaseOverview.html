@@ -1,9 +1,5 @@
 <template>
-    <lightning-layout
-        class="slds-p-top_small"
-        multiple-rows="true"
-        vertical-align="center"
-    >
+    <lightning-layout class="slds-p-top_small" multiple-rows="true" vertical-align="center">
         <lightning-layout-item size="3" alignment-bump="right">
             <lightning-layout>
                 <lightning-icon
@@ -60,11 +56,7 @@
             ></lightning-spinner>
         </template>
         <template if:true={showCases}>
-            <template
-                for:each={displayedCases}
-                for:item="navCase"
-                for:index="rowIndex"
-            >
+            <template for:each={displayedCases} for:item="navCase" for:index="rowIndex">
                 <c-nks-nav-case-item
                     key={navCase.Id}
                     nav-case={navCase}
