@@ -12,10 +12,6 @@
             <div class="slds-var-p-left_medium slds-var-p-right_medium">
                 <template if:true={authenticationComplete}>
                     <div class="slds-notify_alert slds-theme_success" role="alert">
-                        <span class="slds-assistive-text"
-                            >{labels.IDENTITY_CONFIRMED_DISCLAIMER}
-                            {screenReaderLoginAlertAdditionalText}</span
-                        >
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
                                 <lightning-icon
@@ -26,6 +22,9 @@
                                 </lightning-icon>
                             </div>
                             <h2>{labels.IDENTITY_CONFIRMED_DISCLAIMER}</h2>
+                            <span class="slds-assistive-text"
+                                >{screenReaderLoginAlertAdditionalText}</span
+                            >
                         </lightning-layout>
                     </div>
                 </template>
@@ -35,7 +34,6 @@
                         class="slds-notify_alert slds-theme_alert-texture slds-theme_warning"
                         role="alert"
                     >
-                        <span class="slds-assistive-text">warning</span>
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
                                 <lightning-icon icon-name="utility:warning" size="x-small">
