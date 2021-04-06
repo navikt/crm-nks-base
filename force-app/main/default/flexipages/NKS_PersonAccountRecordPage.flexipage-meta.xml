@@ -316,6 +316,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonPaymentList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-fb3d097d-2ddf-4458-b4b2-8daa8c50ce28</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
                 </componentInstanceProperties>
@@ -335,6 +348,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Saker</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-fb3d097d-2ddf-4458-b4b2-8daa8c50ce28</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.rebateMemberPayout</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>

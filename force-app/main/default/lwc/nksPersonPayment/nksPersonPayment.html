@@ -1,0 +1,118 @@
+<template>
+    <div
+        class="payment-tile-bg slds-var-p-around_small slds-var-m-bottom_x-small"
+        aria-expanded={expanded}
+    >
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item
+                size="1"
+                padding="horizontal-small"
+                class="slds-align_absolute-center"
+            >
+                <lightning-icon
+                    data-paid={paid}
+                    icon-name={statusIcon}
+                    size="medium"
+                    class="slds-var-p-right_small"
+                >
+                </lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item size="11">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" padding="horizontal-small">
+                        <b class="slds-text-title_caps">{ytelserHeader}</b>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="10" padding="horizontal-small">
+                        <lightning-layout>
+                            <lightning-formatted-date-time
+                                value={payment.utbetalingsdato}
+                            ></lightning-formatted-date-time>
+                            &nbsp;
+                            <p>- {payment.utbetalingsstatus}</p>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="2" padding="horizontal-small">
+                        <lightning-layout horizontal-align="end">
+                            <b>
+                                <lightning-formatted-number
+                                    value={payment.utbetalingNettobeloep}
+                                    maximum-fraction-digits="2"
+                                    minimum-fraction-digits="2"
+                                ></lightning-formatted-number>
+                            </b>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item
+                        if:false={multipleYtelser}
+                        size="12"
+                        padding="horizontal-small"
+                    >
+                        <template for:each={payment.ytelseListe} for:item="ytelse">
+                            <b key={ytelse.ytelsestype}
+                                ><lightning-formatted-date-time
+                                    year="numeric"
+                                    month="2-digit"
+                                    day="2-digit"
+                                    value={ytelse.ytelsesperiode.fom}
+                                    key={ytelse.ytelsestype}
+                                ></lightning-formatted-date-time>
+                                &nbsp; - &nbsp;
+                                <lightning-formatted-date-time
+                                    year="numeric"
+                                    month="2-digit"
+                                    day="2-digit"
+                                    value={ytelse.ytelsesperiode.tom}
+                                    key={ytelse.ytelsestype}
+                                ></lightning-formatted-date-time
+                            ></b>
+                        </template>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <lightning-layout
+                            class="slds-float_right"
+                            type="button"
+                            alternative-text={detailText}
+                            aria-expanded={expanded}
+                            onclick={toggleExpand}
+                        >
+                            <p class="chevron-toggle slds-var-p-right_small">{detailText}</p>
+                            <lightning-icon
+                                icon-name={chevronIcon}
+                                size="x-small"
+                                class="slds-var-p-right_small slds-float_right slds-var-m-top_x-small chevron-toggle"
+                            >
+                            </lightning-icon>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <!--PAYMENT DETAILS-->
+            <lightning-layout-item
+                if:true={expanded}
+                class="slds-var-m-top_x-large"
+                padding="horizontal-small"
+                size="12"
+            >
+                <lightning-layout multiple-rows="true" class="slds-var-m-bottom_small">
+                    <lightning-layout-item size="12">
+                        <b>{labels.PAYMENT_RECIPIENT}</b> {payment.utbetaltTil.navn}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" if:true={payment.utbetaltTilKonto}>
+                        <b>{labels.BANK_ACCOUNT_NUMBER}</b> {payment.utbetaltTilKonto.kontonummer}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" if:true={payment.utbetalingsmelding}>
+                        <b>{labels.PAYMENT_MESSAGE}</b> {payment.utbetalingsmelding}
+                    </lightning-layout-item>
+                </lightning-layout>
+                <template for:each={payment.ytelseListe} for:item="ytelse">
+                    <c-nks-payment-details
+                        key={ytelse.ytelsestype}
+                        ytelse={ytelse}
+                        display-header={multipleYtelser}
+                        labels={labels}
+                    ></c-nks-payment-details>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>
