@@ -67,7 +67,11 @@
             </lightning-layout-item>
         </lightning-layout>
         <!-- YTELSE BREAKDOWNS -->
-        <lightning-layout vertical-align="center" multiple-rows="true" class="slds-border_top">
+        <lightning-layout
+            vertical-align="center"
+            multiple-rows="true"
+            class="slds-border_top slds-var-p-top_x-small"
+        >
             <template for:each={ytelseTotals} for:item="ytelseTotal">
                 <lightning-layout-item key={ytelseTotal.ytelse} size="4">
                     <h1 class="slds-text-title_caps" style="font-weight: bold">
@@ -76,6 +80,11 @@
                 </lightning-layout-item>
                 <lightning-layout-item key={ytelseTotal.ytelse} size="8">
                     <lightning-layout horizontal-align="right" multiple-rows="true">
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">
+                                {labels.GROSS_AMOUNT}
+                            </p>
+                        </lightning-layout-item>
                         <lightning-layout-item size="12" large-device-size="4">
                             <b
                                 ><lightning-formatted-number
@@ -86,6 +95,9 @@
                                 ></lightning-formatted-number
                             ></b>
                         </lightning-layout-item>
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">{labels.DEDUCTIONS}</p>
+                        </lightning-layout-item>
                         <lightning-layout-item size="12" large-device-size="4">
                             <b
                                 ><lightning-formatted-number
@@ -95,6 +107,9 @@
                                     class="slds-float_right"
                                 ></lightning-formatted-number
                             ></b>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">{labels.PAYOUT}</p>
                         </lightning-layout-item>
                         <lightning-layout-item size="12" large-device-size="4">
                             <b

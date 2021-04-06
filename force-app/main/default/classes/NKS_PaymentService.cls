@@ -25,7 +25,7 @@ public without sharing class NKS_PaymentService {
                 apiCtrl.getResponse().getBody(),
                 List<NKS_Utbetaling>.class
             );
-            returnList.sort(); //Sorts the entries by posteringsdato
+            returnList.sort(); //Sorts the entries by utbetalingsdato
         } else {
             //Error handling
             LoggerUtility logger = new LoggerUtility('Utbetaling');
