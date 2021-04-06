@@ -316,6 +316,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonPaymentList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-fb3d097d-2ddf-4458-b4b2-8daa8c50ce28</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
                 </componentInstanceProperties>
@@ -335,6 +348,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Saker</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-fb3d097d-2ddf-4458-b4b2-8daa8c50ce28</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.rebateMemberPayout</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -458,7 +484,7 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value
-                    >NKS_ModiaURL__c,NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c</value>
+                    >NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_SpeilURL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -470,7 +496,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numCols</name>
-                    <value>1</value>
+                    <value>2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
@@ -490,7 +516,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>NKS_PersonAccountRecordPage</masterLabel>
+    <masterLabel>NKS Person Account Record Page</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>

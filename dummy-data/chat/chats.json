@@ -8,7 +8,8 @@
             "LiveChatVisitorId": "@VisitorRef1",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>",
-            "NKS_Conversation__c": "<p>Dette er en chat</p>"
+            "NKS_Conversation__c": "<p>Dette er en chat</p>",
+            "CaseId": "@CaseRef1"
         },
         {
             "attributes": {
@@ -18,7 +19,8 @@
             "LiveChatVisitorId": "@VisitorRef1",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>",
-            "NKS_Conversation__c": "<p>Dette er en chat</p>"
+            "NKS_Conversation__c": "<p>Dette er en chat</p>",
+            "CaseId": "@CaseRef1"
         },
         {
             "attributes": {
@@ -28,7 +30,8 @@
             "LiveChatVisitorId": "@VisitorRef1",
             "CRM_Authentication_Status__c": "Completed",
             "Body": "<p>Dette er en chat</p>",
-            "NKS_Conversation__c": "<p>Dette er en chat</p>"
+            "NKS_Conversation__c": "<p>Dette er en chat</p>",
+            "CaseId": "@CaseRef1"
         }
     ]
 }
