@@ -10,11 +10,16 @@ public without sharing class NKS_PaymentService {
 
         Map<String, String> paramMap = new Map<String, String>{ 'fnr' => ident };
         Map<String, String> queryParams = new Map<String, String>{
-            'startdato' => Date.today().format(),
-            'sluttdato' => Date.today().addYears(-3).format()
+            'sluttdato' => DateTime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0))
+                .format('yyyy-dd-MM'),
+            'startdato' => DateTime.newInstance(
+                    Date.today().addYears(-3),
+                    Time.newInstance(0, 0, 0, 0)
+                )
+                .format('yyyy-dd-MM')
         };
         apiCtrl.initRequest(BASE_CONFIG, serviceName, paramMap);
-        apiCtrl.addServiceAuthHeader(serviceName);
+        apiCtrl.addServiceAuthHeader('Utbetaling');
         apiCtrl.setUrlParams(queryParams);
         apiCtrl.doCallout();
 
