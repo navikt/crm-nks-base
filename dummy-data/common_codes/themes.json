@@ -87,7 +87,7 @@
                 "referenceId": "STORef"
             },
             "Name": "Regnskap/Utbetaling",
-            "CRM_Code__c": "YRK",
+            "CRM_Code__c": "STO",
             "CRM_Active__c": true,
             "CRM_Archive_Theme__c": false,
             "CRM_Code_Set__c": "Tema"
