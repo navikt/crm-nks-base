@@ -18,6 +18,7 @@ Pakken er avhengig av følgende pakker:
 -   [crm-platform-base](https://github.com/navikt/crm-platform-base)
 -   [crm-platform-access-control](https://github.com/navikt/XXXXXXXXXXXXX)
 -   [crm-arbeidsgiver-base](https://github.com/navikt/crm-arbeidsgiver-base)
+-   [crm-nks-integration](https://github.com/navikt/crm-nks-integration)
 
 ## Funksjonelt oppsett
 
