@@ -216,11 +216,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.NKS_CVURL__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Person__c.NKS_GoSysURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -232,6 +227,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.NKS_NumberOfSecurityMeasures__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.NKS_PSELVPensjonURL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.NKS_PSELVUfoeretrygdURL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.NKS_SpeilURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
