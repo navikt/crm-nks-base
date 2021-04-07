@@ -272,6 +272,7 @@ public with sharing class NKS_NavTaskManager {
         private String fristFerdigstillelse; //Datestring
         private String prioritet; // [HOY, NORM, LAV],
         private Integer versjon;
+        private String saksreferanse; //NKS-111 adding support for relating task to existing NAV Cases
 
         public OppgaveRequest() {
         }
@@ -300,6 +301,7 @@ public with sharing class NKS_NavTaskManager {
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
+            saksreferanse = task.NKS_NAV_Case_Reference__c;
         }
     }
 }
