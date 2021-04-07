@@ -140,11 +140,28 @@ public with sharing class NKS_NavTaskManager {
             'Content-Type' => 'application/json',
             'accept' => 'application/json'
         };
+
         ApiController apiCtrl = new ApiController();
+        String token = 'token';
         Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
         apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
-        apiCtrl.addServiceAuthHeader('Oppgave');
-        apiCtrl.setHeaders(httpHeaders);
+        apiCtrl.addHeader('Authorization', 'Bearer ' + token);
+        apiCtrl.addHeader('Content-Type', 'application/json');
+        apiCtrl.addApiGwHeader();
+        apiCtrl.setBody('body');
+        System.debug('CALLOUT ENDPOINT: ' + apiCtrl.getEndpoint());
+        System.debug(
+            'RESPONSE: ' +
+            apiCtrl.getResponse().getStatusCode() +
+            ' : ' +
+            apiCtrl.getResponse().getBody()
+        );
+
+        //ApiController apiCtrl = new ApiController();
+        //Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
+        //apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
+        //apiCtrl.addServiceAuthHeader('Oppgave');
+        //apiCtrl.setHeaders(httpHeaders);
         LoggerUtility logger = new LoggerUtility('Oppgave');
         addXCorrelation(apiCtrl, logger, null);
 
