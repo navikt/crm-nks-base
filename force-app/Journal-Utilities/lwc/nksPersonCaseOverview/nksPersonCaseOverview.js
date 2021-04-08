@@ -94,7 +94,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
     }
 
-    @wire(getCases, { actorId: null })
+    @wire(getCases, { actorId: '$actorId' })
     wireUser({ error, data }) {
         if (data) {
             this.groupCases(data);
