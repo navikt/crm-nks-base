@@ -3,7 +3,7 @@
     <fullName>NKS_PSELVUfoeretrygdURL__c</fullName>
     <externalId>false</externalId>
     <formula
-    >IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://pensjon-pselv-q1.nais.preprod.local/pselv/publisering/uforetrygd.jsf?_brukerId=&quot;&amp;Name&amp;&quot;&amp;context=ut&amp;_loggedOnName=&quot;&amp; $User.CRM_NAV_Ident__c, &quot;PSELV - Uføretrygd&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://pensjon-pselv.nais.adeo.no/pselv/publisering/uforetrygd.jsf?_brukerId=&quot;&amp;Name&amp;&quot;&amp;context=ut&amp;_loggedOnName=&quot;&amp; $User.CRM_NAV_Ident__c, &quot;PSELV - Uføretrygd&quot;, &quot;_self&quot;)
+    >IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://pensjon-pselv-q1.nais.preprod.local/pselv/publisering/uforetrygd.jsf?_brukerId=&quot;&amp;Name&amp;&quot;&amp;context=ut&amp;_loggedOnName=&quot;&amp; $User.CRM_NAV_Ident__c, &quot;Din Uføretrygd&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://pensjon-pselv.nais.adeo.no/pselv/publisering/uforetrygd.jsf?_brukerId=&quot;&amp;Name&amp;&quot;&amp;context=ut&amp;_loggedOnName=&quot;&amp; $User.CRM_NAV_Ident__c, &quot;Din Uføretrygd&quot;, &quot;_self&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>PSELV Uføretrygd</label>
