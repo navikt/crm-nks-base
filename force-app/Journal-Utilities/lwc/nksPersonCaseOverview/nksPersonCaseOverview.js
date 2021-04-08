@@ -99,10 +99,11 @@ export default class NksPersonCaseOverview extends LightningElement {
         if (data) {
             this.groupCases(data);
             this.caseList = data;
-        } else {
-            if (error) console.log(JSON.stringify(error, null, 2));
+            this.casesLoaded = true;
         }
-        this.casesLoaded = true;
+        if (error) {
+            console.log(JSON.stringify(error, null, 2));
+        }
         this.error = !data && error;
     }
 
@@ -252,7 +253,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     }
 
     get dataLoaded() {
-        return (this.error === true || this.casesLoaded) && this.themeMap;
+        return this.error === true || this.casesLoaded === true; // && this.themeMap;
     }
 
     @api

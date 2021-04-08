@@ -41,24 +41,31 @@ public class NKS_NavSakService {
                 apiCtrl.getResponse().getBody(),
                 SafApiResponse.class
             );
-
-            filterCases(safResp.data.saker);
-            safResp.data.saker.sort();
-            return safResp.data.saker;
+            if (safResp.errors != null && !safResp.errors.isEmpty()) {
+                //Request went through but query returned errors
+                handleError('Graph QL query error', apiCtrl.getResponse());
+                AuraHandledException ex = new AuraHandledException('Error retrieving cases');
+                ex.setMessage('Error retrieving cases');
+                throw ex;
+            } else {
+                filterCases(safResp.data.saker);
+                safResp.data.saker.sort();
+                return safResp.data.saker;
+            }
         } else {
             //Error handling
-            LoggerUtility logger = new LoggerUtility('Journal');
-            logger.httpError(
-                'Error retrieving actor cases',
-                apiCtrl.getResponse(),
-                null,
-                CRM_ApplicationDomain.Domain.NKS
-            );
-            logger.publishSynch();
+            handleError('Error retrieving actor cases', apiCtrl.getResponse());
+
             AuraHandledException ex = new AuraHandledException('Error retrieving cases');
             ex.setMessage('Error retrieving cases');
             throw ex;
         }
+    }
+
+    private static void handleError(String message, HttpResponse payload) {
+        LoggerUtility logger = new LoggerUtility('Journal');
+        logger.httpError(message, payload, null, CRM_ApplicationDomain.Domain.NKS);
+        logger.publishSynch();
     }
 
     public static String generateGraphBody(String actorId) {
@@ -99,6 +106,7 @@ public class NKS_NavSakService {
 
     public class SafApiResponse {
         public SafQueryResponse data;
+        public List<Object> errors;
     }
 
     public class SafQueryResponse {
