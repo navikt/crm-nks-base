@@ -142,13 +142,16 @@ public with sharing class NKS_NavTaskManager {
         };
 
         ApiController apiCtrl = new ApiController();
-        String token = 'token';
+        String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI0MWNhNTBiYS1lNDRmLTRiYzgtOWUzMS1iNzQ1YTAwNDE5MjYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTY2YWM1NzItZjViNy00YmJlLWFhODgtYzc2NDE5YzBmODUxL3YyLjAiLCJpYXQiOjE2MTc3OTA1NjYsIm5iZiI6MTYxNzc5MDU2NiwiZXhwIjoxNjE3Nzk0NDY0LCJhaW8iOiJBVFFBeS84VEFBQUFHaWtiVmtoeW1iZmlTcDdNd3BSTlZTTGJPUUpURXhtWXBDbFBtNVdwRzlKT3ZrRmk2eFY0aUt6ZmpXZ0ZlUHg4IiwiYXpwIjoiNmQyZDgwMzEtZjE3ZC00ZWQ2LTgzZjUtZTU1NGQ1YzA3ZWNhIiwiYXpwYWNyIjoiMSIsImdyb3VwcyI6WyI5Mjg2MzZmNC1mZDBkLTQxNDktOTc4ZS1hNmZiNjhiYjE5ZGUiXSwibmFtZSI6IkNlbGluZSBUb21yZW4iLCJvaWQiOiJkNTRjNzZjMS1lNDgyLTQ1MTUtOGRlOS0wZWQyMmYzZmI1MDciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJDZWxpbmUuVG9tcmVuQHRyeWdkZWV0YXRlbi5ubyIsInJoIjoiMC5BVWNBY3NWcWxyZjF2a3VxaU1ka0djRDRVVEdBTFcxOThkWk9nX1hsVk5YQWZzcEhBQncuIiwic2NwIjoiZGVmYXVsdGFjY2VzcyIsInN1YiI6IkJ2QVFOSWgxR2g5ZEYwNUc1NThhTjM5c3pISEloZXlha1VZY2lieEdISTQiLCJ0aWQiOiI5NjZhYzU3Mi1mNWI3LTRiYmUtYWE4OC1jNzY0MTljMGY4NTEiLCJ1dGkiOiJPY2loMU5odU8wNnhLMGQ5a09LaEFBIiwidmVyIjoiMi4wIiwiTkFWaWRlbnQiOiJUMTYwMTYxIn0.mVW4gQGaK4TpRHwz1ctR6sGJvoLXztVgxcbG_tKME2hmmTHVx4-1EoyS9sw1gDPb2VBoDtBopYfuT9aGQc6oCDXKDpZ0Q4aguTUSswVltHtDLLlxn7YT5iYuu0W_5K_UfKfcgaTndCN2Xui0jdoDCko8B6gv_KQGw26kHTOiOccmMu1ec7ffBfkV20V5OcdRBpD9mbAf6UXlrqGa7PN0bt3B4woxQU16HiNRvJ_SHGun_UxXy2PgrJcxVVGpJxSzMHMRIs6AdxuWfzR_90c9xfvCibvTKtrdwgFSdxJ7FbS1AD9od3yXkNKufFz1typH4hkFpg9nU5LFkx7GavQ6zA';
         Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
         apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
         apiCtrl.addHeader('Authorization', 'Bearer ' + token);
         apiCtrl.addHeader('Content-Type', 'application/json');
         apiCtrl.addApiGwHeader();
         apiCtrl.setBody('body');
+
+        apiCtrl.doCallout();
+
         System.debug('CALLOUT ENDPOINT: ' + apiCtrl.getEndpoint());
         System.debug(
             'RESPONSE: ' +
@@ -164,7 +167,7 @@ public with sharing class NKS_NavTaskManager {
         //apiCtrl.setHeaders(httpHeaders);
         LoggerUtility logger = new LoggerUtility('Oppgave');
         addXCorrelation(apiCtrl, logger, null);
-
+        /*
         try {
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
@@ -183,7 +186,7 @@ public with sharing class NKS_NavTaskManager {
             response.setResponse(false, logger.peek().UUID__c, null);
         } finally {
             logger.publish();
-        }
+        }*/
 
         return response;
     }
@@ -202,6 +205,7 @@ public with sharing class NKS_NavTaskManager {
     ) {
         logger.info('Delegating task via Oppgave API: \n' + apiCtrl.getRequest().getBody(), task);
         apiCtrl.addHeader('X-Correlation-ID', logger.peek().UUID__c); //Adds the unique app log id to the request
+        System.debug('X: ' + logger.peek().UUID__c);
     }
 
     /**

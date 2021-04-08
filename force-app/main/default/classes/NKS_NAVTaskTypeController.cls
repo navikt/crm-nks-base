@@ -5,9 +5,10 @@ public with sharing class NKS_NAVTaskTypeController {
 
         returnmap.put('test', 'test1');
         returnmap.put('test2', 'test13');
+        system.debug('THEMECODE: ' + themeCode);
 
         NKS_NavTaskManager.NavTaskResponse response = NKS_NavTaskManager.getTaskTypes(themeCode);
-        System.debug(response);
+        System.debug('NAVTASKRESPONSE ' + response);
 
         return returnmap;
     }
