@@ -18,7 +18,7 @@ public with sharing class NKS_SafViewDocumentController {
     public Boolean initialised { get; set; }
     public Boolean isError { get; set; }
 
-    public string documentData { public get; private set; }
+    public transient string documentData { public get; private set; }
     public string title { get; set; }
     //public string contentType {get; set;}
     public string errorTitle { get; set; }
