@@ -2,6 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import getCases from '@salesforce/apex/NKS_NavSakService.getSafActorCases';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+import hasBetaPermission from '@salesforce/customPermission/NKS_Beta';
 
 import { publish, MessageContext } from 'lightning/messageService';
 
@@ -14,6 +15,7 @@ export default class NksPersonCaseOverview extends LightningElement {
         VALIDATION_ERROR,
         NAV_CASE_RETRIEVE_ERROR
     };
+    noBetaPermission = !hasBetaPermission;
 
     @api actorId;
     @api prefilledThemeGroup; //Give the theme categorization child component a prefilled value
@@ -26,7 +28,7 @@ export default class NksPersonCaseOverview extends LightningElement {
     themeMap;
     casesLoaded = false;
     error = false;
-    selectedCaseType = 'FAGSAK'; //Default value: Set to generell sak as we go live with this before having the integration set up
+    selectedCaseType = this.noBetaPermission === true ? 'GENERELL_SAK' : 'FAGSAK'; //Default value: Set to generell sak as we go live with this before having the integration set up
 
     caseTypeOptions = [
         { label: 'Fagsak', value: 'FAGSAK' },
@@ -96,6 +98,10 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @wire(getCases, { actorId: '$actorId' })
     wireUser({ error, data }) {
+        if (this.noBetaPermission === true) {
+            this.casesLoaded = true;
+            return;
+        }
         if (data) {
             this.groupCases(data);
             this.caseList = data;
@@ -253,7 +259,10 @@ export default class NksPersonCaseOverview extends LightningElement {
     }
 
     get dataLoaded() {
-        return this.error === true || this.casesLoaded === true; // && this.themeMap;
+        return (
+            (this.error === true || this.casesLoaded === true || this.noBetaPermission === true) &&
+            this.themeMap
+        );
     }
 
     @api
