@@ -50,12 +50,6 @@
         <layout>Knowledge Layout</layout>
         <sections>
             <label>
-                <!-- Arbeidgiver / Dialog -->
-            </label>
-            <section>Arbeidgiver / Dialog</section>
-        </sections>
-        <sections>
-            <label>
                 <!-- Bruker / Generelt -->
             </label>
             <section>Bruker / Generelt</section>
@@ -65,18 +59,6 @@
                 <!-- Custom Links -->
             </label>
             <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label>
-                <!-- Internasjonalt / Taushetsplikt -->
-            </label>
-            <section>Internasjonalt / Taushetsplikt</section>
-        </sections>
-        <sections>
-            <label>
-                <!-- Lege og behandler / Sikkerhet -->
-            </label>
-            <section>Lege og behandler / Sikkerhet</section>
         </sections>
         <sections>
             <label>
