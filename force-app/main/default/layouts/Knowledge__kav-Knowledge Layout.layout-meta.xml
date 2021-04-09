@@ -37,7 +37,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Arbeidgiver / Dialog</label>
+        <label>Arbeidgiver</label>
         <layoutColumns>
             <layoutItems>
                 <field>EmployerInformation__c</field>
@@ -52,7 +52,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Internasjonalt / Taushetsplikt</label>
+        <label>Internasjonalt</label>
         <layoutColumns>
             <layoutItems>
                 <field>InternationalInformation__c</field>
@@ -67,7 +67,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Lege og behandler / Sikkerhet</label>
+        <label>Lege og behandler</label>
         <layoutColumns>
             <layoutItems>
                 <field>AdvisorInformation__c</field>
