@@ -12,9 +12,9 @@ LWC for displaying the payouts to a NAV user.
 
 The component displays a list of payments for a given user retrievet via API (Utbetaling). The component consists of the following component hierarchy:
 
-* nksPersonPaymentList
-    * nksPaymentTotals
-    * nksPayment
-        * nksPaymentDetails
- 
- ![Payment List](Payment_List.png)
+-   nksPersonPaymentList
+    -   nksPaymentTotals
+    -   nksPayment
+        -   nksPaymentDetails
+
+![Payment List](Payment_List.png)
