@@ -17,6 +17,7 @@
         <faultConnector>
             <targetReference>Create_App_Log_0_0</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>actorId</name>
             <value>
@@ -72,6 +73,7 @@
         <connector>
             <targetReference>Create_PDF_Document_Variant</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -97,6 +99,7 @@
         <connector>
             <targetReference>Encode_Original</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -125,6 +128,7 @@
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>journalRequest</name>
             <value>
@@ -161,6 +165,7 @@
             <typeName>T__refRecord</typeName>
             <typeValue>Journal_Entry__c</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>logLevel</name>
             <value>
@@ -186,6 +191,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
@@ -382,6 +388,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Person_NAV_Cases.selectedCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Journal_Request.sak.fagsaksystem</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedCaseLegacySystem</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1341,6 +1354,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1367,6 +1381,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1394,6 +1409,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1427,6 +1443,7 @@ TODAY())</expression>
         <connector>
             <targetReference>Check_Owner_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1464,6 +1481,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_Chat_Transcript__c</field>
             <operator>EqualTo</operator>
@@ -1488,6 +1506,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1511,6 +1530,7 @@ TODAY())</expression>
         <label>Update Chat Completed</label>
         <locationX>2548</locationX>
         <locationY>648</locationY>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1632,6 +1652,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1900,6 +1921,7 @@ TODAY())</expression>
                     <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1931,6 +1953,7 @@ TODAY())</expression>
                     <stringValue>Nei</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1962,6 +1985,7 @@ TODAY())</expression>
                     <stringValue>NavTask__c</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2039,6 +2063,7 @@ TODAY())</expression>
                     <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2064,6 +2089,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2103,6 +2129,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
