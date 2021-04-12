@@ -9,11 +9,13 @@ import { publish, MessageContext } from 'lightning/messageService';
 //##LABEL IMPORTS
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_NAV_Case_Validation_Error';
 import NAV_CASE_RETRIEVE_ERROR from '@salesforce/label/c.NKS_NAV_Case_Retrieve_Error';
+import NO_CASES_ERROR from '@salesforce/label/c.NKS_Journal_Case_List_No_Cases_Error';
 
 export default class NksPersonCaseOverview extends LightningElement {
     @api labels = {
         VALIDATION_ERROR,
-        NAV_CASE_RETRIEVE_ERROR
+        NAV_CASE_RETRIEVE_ERROR,
+        NO_CASES_ERROR
     };
     noBetaPermission = !hasBetaPermission;
 
@@ -177,6 +179,11 @@ export default class NksPersonCaseOverview extends LightningElement {
     @api
     get selectedCaseId() {
         return this.selectedCase ? this.selectedCase.fagsakId : null;
+    }
+
+    @api
+    get selectedCaseLegacySystem() {
+        return this.selectedCase ? this.selectedCase.fagsaksystem : null;
     }
 
     @api

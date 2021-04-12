@@ -3,7 +3,8 @@ public class NKS_NavSakService {
         'fagsakId',
         'sakstype',
         'datoOpprettet',
-        'tema'
+        'tema',
+        'fagsaksystem'
     };
 
     private static Map<String, String> themeMap {
@@ -124,6 +125,8 @@ public class NKS_NavSakService {
         public DateTime datoOpprettet;
         @AuraEnabled
         public String tema;
+        @AuraEnabled
+        public String fagsaksystem;
         @AuraEnabled
         public String themeName;
 

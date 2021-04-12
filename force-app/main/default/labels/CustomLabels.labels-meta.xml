@@ -93,6 +93,14 @@
         <shortDescription>Journal Case List Col Case Id</shortDescription>
         <value>Saks-id</value>
     </labels>
+     <labels>
+        <fullName>NKS_Journal_Case_List_No_Cases_Error</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List No Cases Error</shortDescription>
+        <value>Ingen saker registrert på bruker.</value>
+    </labels>
     <labels>
         <fullName>NKS_Journal_Case_List_Col_Created_Date</fullName>
         <categories>UI, NKS, Journal, nksCaseOverview</categories>

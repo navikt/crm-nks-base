@@ -33,29 +33,42 @@
                 theme-group={prefilledThemeGroup}
             ></c-nks-theme-categorization>
         </template>
-        <template if:false={dataLoaded}>
-            <lightning-spinner
-                size="medium"
-                alternative-text="Loading"
-                variant="brand"
-            ></lightning-spinner>
-        </template>
-        <template if:true={showCases}>
-            <template for:each={displayedCaseGroups} for:item="caseGroup">
-                <c-nks-nav-case-list
-                    key={caseGroup.theme}
-                    theme-name={caseGroup.themeName}
-                    cases={caseGroup.cases}
-                    oncaseselected={handleCaseSelected}
-                ></c-nks-nav-case-list>
+        <template if:false={isGeneralCase}>
+            <template if:false={dataLoaded}>
+                <lightning-spinner
+                    size="medium"
+                    alternative-text="Loading"
+                    variant="brand"
+                ></lightning-spinner>
             </template>
-        </template>
-        <template if:true={error}>
-            <!--ERROR OCCURRED-->
-            <c-nks-alert-banner
-                type="Error"
-                message={labels.NAV_CASE_RETRIEVE_ERROR}
-            ></c-nks-alert-banner>
+            <template if:true={dataLoaded}>
+                <template if:true={hasCases}>
+                    <template if:true={showCases}>
+                        <template for:each={displayedCaseGroups} for:item="caseGroup">
+                            <c-nks-nav-case-list
+                                key={caseGroup.theme}
+                                theme-name={caseGroup.themeName}
+                                cases={caseGroup.cases}
+                                oncaseselected={handleCaseSelected}
+                            ></c-nks-nav-case-list>
+                        </template>
+                    </template>
+                </template>
+                <template if:false={hasCases}>
+                    <!--ERROR OCCURRED-->
+                    <c-nks-alert-banner
+                        type="Info"
+                        message={labels.NO_CASES_ERROR}
+                    ></c-nks-alert-banner>
+                </template>
+                <template if:true={error}>
+                    <!--ERROR OCCURRED-->
+                    <c-nks-alert-banner
+                        type="Error"
+                        message={labels.NAV_CASE_RETRIEVE_ERROR}
+                    ></c-nks-alert-banner>
+                </template>
+            </template>
         </template>
     </div>
 </template>
