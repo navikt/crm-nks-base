@@ -13,8 +13,6 @@
     documentInfoId
     variantFormat
     fileName
-    width
-    height
 -->
 <apex:page
     controller="NKS_SafViewDocumentController"
@@ -26,7 +24,7 @@
     <!-- Import the Design System style sheet -->
     <apex:slds />
     <!-- REQUIRED SLDS WRAPPER -->
-    <div class="slds-scope">
+    <div class="slds-scope" style="height: 100%">
         <apex:form>
             <!-- Action function to trigger loading of the document -->
             <apex:actionFunction name="doInit" action="{!getDocument}" rerender="allPanel" />
@@ -79,12 +77,15 @@
                 <apex:outputPanel rendered="{!AND(initialised, NOT(isError))}">
                     <iframe
                         src="{!DocumentData}"
-                        width="{!width}"
-                        height="{!height}"
+                        width="100%"
                         title="Dokument: {!title}"
+                        id="theFrame"
                     >
                         Kan ikke laste dokumentet.
                     </iframe>
+                    <script>
+                        document.getElementById('theFrame').height = window.innerHeight;
+                    </script>
                 </apex:outputPanel>
             </apex:outputPanel>
         </apex:form>
