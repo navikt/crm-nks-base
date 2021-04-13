@@ -181,7 +181,9 @@ export default class NksPersonPaymentList extends LightningElement {
     async getPaymentHistory() {
         loadPaymentHistory({ ident: this.personIdent })
             .then((data) => {
+                let initYtelser = this.payments.length == 0;
                 this.payments = data;
+                if (initYtelser) this.initytelseSelection();
                 this.filterPayments();
             })
             .catch((error) => {
