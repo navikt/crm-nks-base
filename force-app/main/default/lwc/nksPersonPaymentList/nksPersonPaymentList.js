@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
-import loadPayments from '@salesforce/apex/NKS_PaymentService.getPayments';
+import loadRecentPayments from '@salesforce/apex/NKS_PaymentListController.getRecentPayments';
+import loadPaymentHistory from '@salesforce/apex/NKS_PaymentListController.getPaymentHistory';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
@@ -19,23 +20,38 @@ export default class NksPersonPaymentList extends LightningElement {
     errorMessage = '';
     noPaymentsMessage = labels.NO_PAYMENTS;
     paymentsLoaded = false;
+    historyLoaded = false;
     groupedPayments;
     selectedPeriod;
     selectedYtelser = [];
-    periodOptions = [
-        { label: labels.PERIOD_LAST_3_MONTHS, value: 'LAST_3_MONTHS' },
-        { label: labels.PERIOD_THIS_YEAR, value: 'THIS_YEAR' },
-        { label: labels.PERIOD_PREV_YEAR, value: 'PREVIOUS_YEAR' },
-        { label: labels.PERIOD_CUSTOM, value: 'CUSTOM_PERIOD' }
-    ];
 
     startDateFilter;
     endDateFilter;
 
+    get periodOptions() {
+        let today = new Date();
+        let lastYear = new Date();
+        lastYear.setFullYear(lastYear.getFullYear() - 1);
+
+        let options = [
+            { label: labels.PERIOD_LAST_MONTH, value: 'LAST_MONTH' },
+            {
+                label: labels.PERIOD_THIS_YEAR + ' (' + today.getFullYear() + ')',
+                value: 'THIS_YEAR'
+            },
+            {
+                label: labels.PERIOD_PREV_YEAR + ' (' + lastYear.getFullYear() + ')',
+                value: 'PREVIOUS_YEAR'
+            },
+            { label: labels.PERIOD_CUSTOM, value: 'CUSTOM_PERIOD' }
+        ];
+        return options;
+    }
+
     connectedCallback() {
-        this.selectedPeriod = 'LAST_3_MONTHS';
+        this.selectedPeriod = 'LAST_MONTH';
         let startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - 3, 1);
+        startDate.setMonth(startDate.getMonth() - 1, 1);
         this.startDateFilter = startDate;
         this.endDateFilter = new Date();
 
@@ -68,6 +84,12 @@ export default class NksPersonPaymentList extends LightningElement {
         return new Date().toISOString();
     }
 
+    get minStartDate() {
+        let minStartDate = new Date();
+        minStartDate.setFullYear(minStartDate.getFullYear() - 3);
+        return minStartDate.toISOString();
+    }
+
     get isoStartDate() {
         return this.startDateFilter.toISOString();
     }
@@ -81,11 +103,11 @@ export default class NksPersonPaymentList extends LightningElement {
     }
 
     get isLoading() {
-        return (this.error === false && this.paymentsLoaded === false) || this.filtering;
+        return this.error === false && this.paymentsLoaded === false;
     }
 
     get hasPayments() {
-        return this.payments.length != 0;
+        return this.payments.length != 0 || this.historyLoaded === false;
     }
 
     get listTitle() {
@@ -141,20 +163,40 @@ export default class NksPersonPaymentList extends LightningElement {
         }
     }
 
-    @wire(loadPayments, {
+    @wire(loadRecentPayments, {
         ident: '$personIdent'
     })
     wiredPaymentInfo({ error, data }) {
         if (data) {
-            this.payments = data;
-            this.paymentsLoaded = true;
-            this.initytelseSelection();
-            this.filterPayments();
+            this.initPayments(data);
+            //Async load of more data after returning recent payments
+            this.getPaymentHistory();
         } else if (error) {
             console.log('ERROR: ' + JSON.stringify(error, null, 2));
             this.error = true;
             this.errorMessage = labels.API_ERROR + error.body.message;
         }
+    }
+
+    async getPaymentHistory() {
+        loadPaymentHistory({ ident: this.personIdent })
+            .then((data) => {
+                this.payments = data;
+                this.filterPayments();
+            })
+            .catch((error) => {
+                console.log('ERROR: ' + JSON.stringify(error, null, 2));
+            })
+            .finally(() => {
+                this.historyLoaded = true;
+            });
+    }
+
+    initPayments(payments) {
+        this.payments = payments;
+        this.paymentsLoaded = true;
+        this.initytelseSelection();
+        this.filterPayments();
     }
 
     ytelseChanged(event) {
@@ -184,9 +226,9 @@ export default class NksPersonPaymentList extends LightningElement {
         let periodFilter = event.detail.value;
         this.selectedPeriod = periodFilter;
         switch (periodFilter) {
-            case 'LAST_3_MONTHS':
+            case 'LAST_MONTH':
                 let startDate = new Date();
-                startDate.setMonth(startDate.getMonth() - 3, 1);
+                startDate.setMonth(startDate.getMonth() - 1, 1);
                 this.startDateFilter = startDate;
                 this.endDateFilter = new Date();
                 break;
@@ -211,9 +253,6 @@ export default class NksPersonPaymentList extends LightningElement {
         filtered = filtered.filter((payment) => {
             return this.hasYtelse(payment) && this.inFilterPeriod(payment);
         });
-        /*filtered.forEach((payment) => {
-            this.filterYtelse(payment);
-        });*/
         this.groupedPayments = this.groupPayments(filtered);
     }
 

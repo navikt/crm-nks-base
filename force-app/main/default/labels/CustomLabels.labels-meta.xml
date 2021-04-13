@@ -318,12 +318,12 @@
         <value>Periode</value>
     </labels>
     <labels>
-        <fullName>NKS_Payment_List_Period_Last_3_Months</fullName>
+        <fullName>NKS_Payment_List_Period_Last_Month</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Payment_List_Period_Last_3_Months</shortDescription>
-        <value>Siste 3 måneder</value>
+        <shortDescription>Payment List Period Last Month</shortDescription>
+        <value>Siste måned</value>
     </labels>
     <labels>
         <fullName>NKS_Payment_List_Period_Previous_Year</fullName>
