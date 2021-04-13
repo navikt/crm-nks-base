@@ -8,8 +8,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ApexPages.currentPage().getParameters().put('documentInfoId', '54321');
         ApexPages.currentPage().getParameters().put('variantFormat', 'ARKIV');
         ApexPages.currentPage().getParameters().put('fileName', 'myTestFile.pdf');
-        ApexPages.currentPage().getParameters().put('width', '10%');
-        ApexPages.currentPage().getParameters().put('height', '10px');
 
         NKS_SafViewDocumentController ctrl;
         Test.startTest();
@@ -35,16 +33,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
             'myTestFile.pdf',
             ctrl.fileName,
             'Expected fileName to be set with the correct value in constructor'
-        );
-        System.assertEquals(
-            '10%',
-            ctrl.width,
-            'Expected width to be set with the correct value in constructor'
-        );
-        System.assertEquals(
-            '10px',
-            ctrl.height,
-            'Expected height to be set with the correct value in constructor'
         );
         System.assertEquals(
             'myTestFile.pdf',
@@ -109,16 +97,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
             'dokument',
             ctrl.fileName,
             'Expected fileName to be set with the correct value in constructor'
-        );
-        System.assertEquals(
-            '100%',
-            ctrl.width,
-            'Expected width to be set with the correct value in constructor'
-        );
-        System.assertEquals(
-            '900px',
-            ctrl.height,
-            'Expected height to be set with the correct value in constructor'
         );
         System.assertEquals(
             'dokument',
@@ -192,8 +170,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ApexPages.currentPage().getParameters().put('documentInfoId', '54321');
         ApexPages.currentPage().getParameters().put('variantFormat', 'ARKIV');
         ApexPages.currentPage().getParameters().put('fileName', 'myTestFile.pdf');
-        ApexPages.currentPage().getParameters().put('width', '10%');
-        ApexPages.currentPage().getParameters().put('height', '10px');
 
         NKS_SafViewDocumentController ctrl = new NKS_SafViewDocumentController();
 
@@ -245,8 +221,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ApexPages.currentPage().getParameters().put('documentInfoId', '54321');
         ApexPages.currentPage().getParameters().put('variantFormat', 'ARKIV');
         ApexPages.currentPage().getParameters().put('fileName', 'myTestFile.pdf');
-        ApexPages.currentPage().getParameters().put('width', '10%');
-        ApexPages.currentPage().getParameters().put('height', '10px');
 
         NKS_SafViewDocumentController ctrl = new NKS_SafViewDocumentController();
         NKS_SafError error = new NKS_SafError();
@@ -299,8 +273,6 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ApexPages.currentPage().getParameters().put('documentInfoId', '54321');
         ApexPages.currentPage().getParameters().put('variantFormat', 'ARKIV');
         ApexPages.currentPage().getParameters().put('fileName', 'myTestFile.pdf');
-        ApexPages.currentPage().getParameters().put('width', '10%');
-        ApexPages.currentPage().getParameters().put('height', '10px');
 
         NKS_SafViewDocumentController ctrl = new NKS_SafViewDocumentController();
 
