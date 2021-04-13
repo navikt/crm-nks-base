@@ -11,12 +11,12 @@ public without sharing class NKS_PaymentService {
         Map<String, String> paramMap = new Map<String, String>{ 'fnr' => ident };
         Map<String, String> queryParams = new Map<String, String>{
             'sluttdato' => DateTime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0))
-                .format('yyyy-dd-MM'),
+                .format('yyyy-MM-dd'),
             'startdato' => DateTime.newInstance(
                     Date.today().addYears(-3),
                     Time.newInstance(0, 0, 0, 0)
                 )
-                .format('yyyy-dd-MM')
+                .format('yyyy-MM-dd')
         };
         apiCtrl.initRequest(BASE_CONFIG, serviceName, paramMap);
         apiCtrl.addServiceAuthHeader('Utbetaling');
