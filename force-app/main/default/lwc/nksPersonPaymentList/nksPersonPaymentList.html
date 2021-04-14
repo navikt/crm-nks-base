@@ -4,19 +4,26 @@
             <lightning-layout-item flexibility="shrink">
                 <lightning-layout multiple-rows="true" alternative-text="Filter">
                     <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
-                        <div>
-                            <h1>{labels.PERIOD_HEADER}</h1>
+                        <div class="slds-is-relative">
+                            <div>
+                                <h1>{labels.PERIOD_HEADER}</h1>
+                            </div>
+                            <lightning-spinner
+                                if:false={historyLoaded}
+                                variant="brand"
+                                alternative-text="Loading"
+                            ></lightning-spinner>
+                            <lightning-radio-group
+                                name="periodOptions"
+                                label="Periode"
+                                variant="label-hidden"
+                                options={periodOptions}
+                                value={selectedPeriod}
+                                type="radio"
+                                disabled={error}
+                                onchange={periodChanged}
+                            ></lightning-radio-group>
                         </div>
-                        <lightning-radio-group
-                            name="periodOptions"
-                            label="Periode"
-                            variant="label-hidden"
-                            options={periodOptions}
-                            value={selectedPeriod}
-                            type="radio"
-                            disabled={error}
-                            onchange={periodChanged}
-                        ></lightning-radio-group>
                         <lightning-layout if:true={customPeriod} multiple-rows="true">
                             <lightning-layout-item size="12">
                                 <lightning-input
@@ -26,6 +33,7 @@
                                     label={labels.PERIOD_FROM}
                                     aria-label={labels.PERIOD_FROM}
                                     max={maxStartDate}
+                                    min={minStartDate}
                                     class="slds-var-p-right_small"
                                     onchange={customDateChanged}
                                 ></lightning-input>
