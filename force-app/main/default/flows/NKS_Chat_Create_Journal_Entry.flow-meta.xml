@@ -484,7 +484,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.CRM_Comments__c</assignToReference>
+            <assignToReference>NAV_Task.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Task_Description</elementReference>
@@ -591,7 +591,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.CRM_Comments__c</assignToReference>
+            <assignToReference>NAV_Task.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Task_Description</elementReference>
