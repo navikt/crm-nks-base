@@ -7,4 +7,6 @@ public with sharing class NKS_SafSak {
     public String fagsaksystem;
     @AuraEnabled
     public String sakstype; // Enum -> FAGSAK, GENERELL_SAK
+    @AuraEnabled
+    public String tema; //Enum
 }
