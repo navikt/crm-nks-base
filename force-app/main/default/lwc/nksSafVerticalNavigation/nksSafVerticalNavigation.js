@@ -157,13 +157,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
                         (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
                         ')';
                 }
-                // element.saksId +
-                //     (isOpen
-                //         ? ' (' +
-                //           nmbOfOpenCases +
-                //           (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
-                //           ')'
-                //         : '');
 
                 let caseX = {
                     label: caseLabel,
