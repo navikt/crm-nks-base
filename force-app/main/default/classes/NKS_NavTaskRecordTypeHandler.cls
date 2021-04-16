@@ -1,4 +1,4 @@
-global class NKS_NavTaskTriggerHandler extends MyTriggers {
+global class NKS_NavTaskRecordTypeHandler extends MyTriggers {
     private final Id PERSON_TASK_RECORD_TYPE_ID = Schema.SObjectType.NavTask__c.getRecordTypeInfosByDeveloperName()
         .get('NKS_Person_Task')
         .getRecordTypeId();

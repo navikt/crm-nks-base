@@ -1,5 +1,5 @@
 @isTest
-public class NKS_NavTaskTriggerHandler_Test {
+public class NKS_NavTaskRecordTypeHandler_Test {
     private static final Id PERSON_ACCOUNT_RCT_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName()
         .get('PersonAccount')
         .getRecordTypeId();
