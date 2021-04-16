@@ -16,7 +16,8 @@
             "INT_Sex__c": "Mann",
             "INT_Confidential__c": "UGRADERT",
             "INT_MaritalStatus__c": "GIFT",
-            "INT_MaritalRelation__c": "12345678902"
+            "INT_MaritalRelation__c": "12345678902",
+            "INT_ActorId__c": "12345678910"
         },
         {
             "attributes": {
@@ -30,7 +31,8 @@
             "INT_IsDeceased__c": false,
             "INT_RegionNumber__c": "03",
             "INT_Sex__c": "Kvinne",
-            "INT_Confidential__c": "UGRADERT"
+            "INT_Confidential__c": "UGRADERT",
+            "INT_ActorId__c": "12345678911"
         },
         {
             "attributes": {
@@ -44,7 +46,8 @@
             "INT_IsDeceased__c": false,
             "INT_RegionNumber__c": "03",
             "INT_Sex__c": "Mann",
-            "INT_Confidential__c": "UGRADERT"
+            "INT_Confidential__c": "UGRADERT",
+            "INT_ActorId__c": "12345678912"
         },
         {
             "attributes": {
@@ -60,7 +63,8 @@
             "INT_ResidentialAddress__c": "Galtvortveien 1",
             "INT_ResidentialZipCode__c": "1001",
             "INT_Sex__c": "Mann",
-            "INT_Confidential__c": "UGRADERT"
+            "INT_Confidential__c": "UGRADERT",
+            "INT_ActorId__c": "12345678913"
         },
         {
             "attributes": {
@@ -75,7 +79,8 @@
             "INT_ResidentialAddress__c": "Galtvortveien 1",
             "INT_ResidentialZipCode__c": "1001",
             "INT_Sex__c": "Kvinne",
-            "INT_Confidential__c": "UGRADERT"
+            "INT_Confidential__c": "UGRADERT",
+            "INT_ActorId__c": "12345678914"
         }
     ]
 }

@@ -288,7 +288,7 @@ public with sharing class NKS_NavTaskManager {
             aktoerId = taskRequest.actorId;
             oppgavetype = String.valueOf(task.NKS_Task_Type__c);
             aktivDato = Datetime.now().format('yyyy-MM-dd');
-            beskrivelse = task.CRM_Comments__c;
+            beskrivelse = task.NKS_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
             tilordnetRessurs = task.NKS_Assignee__c; //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;

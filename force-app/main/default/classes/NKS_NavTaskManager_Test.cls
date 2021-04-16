@@ -139,7 +139,7 @@ public class NKS_NavTaskManager_Test {
                 CRM_DueDate__c,
                 INT_Journal_Entry_Id__c,
                 CRM_Priority__c,
-                CRM_Comments__c,
+                NKS_Comments__c,
                 NKS_Assignee__c,
                 NKS_Task_Version__c,
                 NKS_NAV_Case_Reference__c

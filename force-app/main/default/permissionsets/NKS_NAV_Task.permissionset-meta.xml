@@ -72,6 +72,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NavTask__c.INT_External_Reference__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavTask__c.INT_Journal_Entry_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -87,6 +92,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NavTask__c.NKS_Comments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavTask__c.NKS_Date_Registered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -94,6 +104,16 @@
         <editable>false</editable>
         <field>NavTask__c.NKS_Gosys_Link__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Internal_Reference__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Is_Person_Account__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -156,4 +176,8 @@
         <object>NavTask__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NavTask__c.NKS_Person_Task</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>

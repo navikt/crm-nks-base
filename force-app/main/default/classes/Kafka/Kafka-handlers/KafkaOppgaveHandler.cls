@@ -47,7 +47,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             SELECT
                 Id,
                 INT_External_Reference__c,
-                CRM_Comments__c,
+                NKS_Comments__c,
                 NKS_Task_Version__c,
                 NKS_Comment_History__c
             FROM NavTask__c
@@ -61,7 +61,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             String commentHistory = '';
             Integer existingTaskVersion = 0;
             if (existingTaskMap.containsKey(taskRef)) {
-                newestComment = existingTaskMap.get(taskRef).CRM_Comments__c;
+                newestComment = existingTaskMap.get(taskRef).NKS_Comments__c;
                 commentHistory = existingTaskMap.get(taskRef).NKS_Comment_History__c;
                 existingTaskVersion = Integer.valueOf(
                     existingTaskMap.get(taskRef).NKS_Task_Version__c
@@ -239,7 +239,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 ? 'Oppgave til ' + this.navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Name
                 : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
-            navTask.CRM_Comments__c = kafkaOppgave.beskrivelse;
+            navTask.NKS_Comments__c = kafkaOppgave.beskrivelse;
             navTask.NKS_TaskType__c = this.commonCodeMap.containsKey(
                     'Oppgavetyper' + kafkaOppgave.oppgavetype
                 )
