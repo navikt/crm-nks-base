@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExternalNotification__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>See https://navikt.github.io/brukernotifikasjon-docs/ for details
+Maps to
+Beskjed -&gt; eksternvarsling
+Oppgave -&gt; eksternvarsling</description>
+    <externalId>false</externalId>
+    <label>External notification</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

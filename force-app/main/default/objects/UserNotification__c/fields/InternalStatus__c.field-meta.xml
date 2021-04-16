@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InternalStatus__c</fullName>
+    <description>See https://navikt.github.io/brukernotifikasjon-docs/ for details
+Maps to
+Statusoppdatering -&gt; statusIntern</description>
+    <externalId>false</externalId>
+    <label>Internal Status</label>
+    <length>100</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
