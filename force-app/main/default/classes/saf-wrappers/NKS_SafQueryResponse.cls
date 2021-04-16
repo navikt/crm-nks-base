@@ -23,6 +23,8 @@ public with sharing class NKS_SafQueryResponse {
         public List<NKS_SafJournalpost> tilknyttedeJournalposter;
         @AuraEnabled
         public List<NKS_SafJournalpost> dokumentoversiktJournalstatus;
+        @AuraEnabled
+        public List<NKS_SafSak> saker;
     }
 
     public NKS_SafQueryResponse() {
