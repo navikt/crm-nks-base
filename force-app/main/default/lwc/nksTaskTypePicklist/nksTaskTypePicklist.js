@@ -5,14 +5,28 @@ import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService
 
 export default class NksTaskTypePicklist extends LightningElement {
     @track tasktypes = [];
-    @track tasktype;
-    @api tasktype;
+    tasktype;
     @api theme;
     theme;
     @track theme = this.theme;
 
     @wire(MessageContext)
     messageContext;
+
+    @api
+    get selectedTaskType() {
+        return this.tasktype;
+    }
+
+    @api
+    get selectedTaskTypeId() {
+        //TODO: get salesforceid of commoncode record
+        return this.tasktype;
+    }
+
+    handleTaskTypeChange(event) {
+        this.tasktype = event.detail.value;
+    }
 
     connectedCallback() {
         this.subscribeToMessageChannel();
@@ -60,7 +74,7 @@ export default class NksTaskTypePicklist extends LightningElement {
         this.tasktypes = [];
         try {
             getTaskTypes(input).then((result) => {
-                console.log('map1: ' + JSON.stringify(result));
+                console.log('map: ' + JSON.stringify(result));
                 var map = result;
                 for (var key in map) {
                     const option = {

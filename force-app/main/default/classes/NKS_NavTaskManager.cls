@@ -133,60 +133,69 @@ public with sharing class NKS_NavTaskManager {
      * @author Celine Tomren | 03-29-2021
      * @param themeCode
      **/
-    public static NavTaskResponse getTaskTypes(String themeCode) {
-        NavTaskResponse response = new NavTaskResponse();
+    public static NavTaskTypeResponse getTaskTypes(String themeCode) {
+        NavTaskTypeResponse response = new NavTaskTypeResponse();
 
         Map<String, String> httpHeaders = new Map<String, String>{
             'Content-Type' => 'application/json',
             'accept' => 'application/json'
         };
 
+        //System.debug(CachedTokensHandler.getServiceToken('Oppgave'));
+
         ApiController apiCtrl = new ApiController();
-        String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI0MWNhNTBiYS1lNDRmLTRiYzgtOWUzMS1iNzQ1YTAwNDE5MjYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTY2YWM1NzItZjViNy00YmJlLWFhODgtYzc2NDE5YzBmODUxL3YyLjAiLCJpYXQiOjE2MTc3OTA1NjYsIm5iZiI6MTYxNzc5MDU2NiwiZXhwIjoxNjE3Nzk0NDY0LCJhaW8iOiJBVFFBeS84VEFBQUFHaWtiVmtoeW1iZmlTcDdNd3BSTlZTTGJPUUpURXhtWXBDbFBtNVdwRzlKT3ZrRmk2eFY0aUt6ZmpXZ0ZlUHg4IiwiYXpwIjoiNmQyZDgwMzEtZjE3ZC00ZWQ2LTgzZjUtZTU1NGQ1YzA3ZWNhIiwiYXpwYWNyIjoiMSIsImdyb3VwcyI6WyI5Mjg2MzZmNC1mZDBkLTQxNDktOTc4ZS1hNmZiNjhiYjE5ZGUiXSwibmFtZSI6IkNlbGluZSBUb21yZW4iLCJvaWQiOiJkNTRjNzZjMS1lNDgyLTQ1MTUtOGRlOS0wZWQyMmYzZmI1MDciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJDZWxpbmUuVG9tcmVuQHRyeWdkZWV0YXRlbi5ubyIsInJoIjoiMC5BVWNBY3NWcWxyZjF2a3VxaU1ka0djRDRVVEdBTFcxOThkWk9nX1hsVk5YQWZzcEhBQncuIiwic2NwIjoiZGVmYXVsdGFjY2VzcyIsInN1YiI6IkJ2QVFOSWgxR2g5ZEYwNUc1NThhTjM5c3pISEloZXlha1VZY2lieEdISTQiLCJ0aWQiOiI5NjZhYzU3Mi1mNWI3LTRiYmUtYWE4OC1jNzY0MTljMGY4NTEiLCJ1dGkiOiJPY2loMU5odU8wNnhLMGQ5a09LaEFBIiwidmVyIjoiMi4wIiwiTkFWaWRlbnQiOiJUMTYwMTYxIn0.mVW4gQGaK4TpRHwz1ctR6sGJvoLXztVgxcbG_tKME2hmmTHVx4-1EoyS9sw1gDPb2VBoDtBopYfuT9aGQc6oCDXKDpZ0Q4aguTUSswVltHtDLLlxn7YT5iYuu0W_5K_UfKfcgaTndCN2Xui0jdoDCko8B6gv_KQGw26kHTOiOccmMu1ec7ffBfkV20V5OcdRBpD9mbAf6UXlrqGa7PN0bt3B4woxQU16HiNRvJ_SHGun_UxXy2PgrJcxVVGpJxSzMHMRIs6AdxuWfzR_90c9xfvCibvTKtrdwgFSdxJ7FbS1AD9od3yXkNKufFz1typH4hkFpg9nU5LFkx7GavQ6zA';
+        String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI0MWNhNTBiYS1lNDRmLTRiYzgtOWUzMS1iNzQ1YTAwNDE5MjYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTY2YWM1NzItZjViNy00YmJlLWFhODgtYzc2NDE5YzBmODUxL3YyLjAiLCJpYXQiOjE2MTgzODc3OTIsIm5iZiI6MTYxODM4Nzc5MiwiZXhwIjoxNjE4MzkxNjkyLCJhaW8iOiJBVFFBeS84VEFBQUFTMXdDcVZrZ2V2TjgzYzlJR2VzZDg1MXZDSDY4Sk1lUWszcmNsRnhkOFBlZElYZUJwVmtSbEI2QzhnaEpJRWhXIiwiYXpwIjoiNmQyZDgwMzEtZjE3ZC00ZWQ2LTgzZjUtZTU1NGQ1YzA3ZWNhIiwiYXpwYWNyIjoiMSIsImdyb3VwcyI6WyI5Mjg2MzZmNC1mZDBkLTQxNDktOTc4ZS1hNmZiNjhiYjE5ZGUiXSwibmFtZSI6IkNlbGluZSBUb21yZW4iLCJvaWQiOiJkNTRjNzZjMS1lNDgyLTQ1MTUtOGRlOS0wZWQyMmYzZmI1MDciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJDZWxpbmUuVG9tcmVuQHRyeWdkZWV0YXRlbi5ubyIsInJoIjoiMC5BVWNBY3NWcWxyZjF2a3VxaU1ka0djRDRVVEdBTFcxOThkWk9nX1hsVk5YQWZzcEhBQncuIiwic2NwIjoiZGVmYXVsdGFjY2VzcyIsInN1YiI6IkJ2QVFOSWgxR2g5ZEYwNUc1NThhTjM5c3pISEloZXlha1VZY2lieEdISTQiLCJ0aWQiOiI5NjZhYzU3Mi1mNWI3LTRiYmUtYWE4OC1jNzY0MTljMGY4NTEiLCJ1dGkiOiJOc3h2VjBhOUVFaVdxUGVkcWdjdUFBIiwidmVyIjoiMi4wIiwiTkFWaWRlbnQiOiJUMTYwMTYxIn0.S0Jx2zeh36m0Y8y6Hu1IXftJR5ci1lwpm0EwtDFFNPOKS3POzwbCbqzXFJu1ivAppHSOW1PxjxBZKtI8aX-VN89nTl-j8HcAuwz13XKx1xM1jkGRA6mmfrGNeBOkLmjb7RdgfKrCo_qjj7YDslUJo69ruHgN25pKTJSTZUTSJrf_1fk7uMfjdMK58qyCnTdeIjjjJy2Lq4ljItfK8bUr8u7AHG2wUt-CLqmslkiz7Pi8Zc3euvTvqTugXi8GS-pKGWSikGI7uRf07uN7klQXOhmfJu7wCJ9iuYC4ZPINYFSE76yh6ZZ2dNbXs9wBAjxuF6flDS6T5TkRUOLv5KCIww';
         Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
         apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
         apiCtrl.addHeader('Authorization', 'Bearer ' + token);
         apiCtrl.addHeader('Content-Type', 'application/json');
         apiCtrl.addApiGwHeader();
-        apiCtrl.setBody('body');
+        LoggerUtility logger = new LoggerUtility('Oppgave');
+        addXCorrelation(apiCtrl, logger, null);
 
-        apiCtrl.doCallout();
+        //apiCtrl.doCallout();
 
         System.debug('CALLOUT ENDPOINT: ' + apiCtrl.getEndpoint());
-        System.debug(
-            'RESPONSE: ' +
-            apiCtrl.getResponse().getStatusCode() +
-            ' : ' +
-            apiCtrl.getResponse().getBody()
-        );
 
         //ApiController apiCtrl = new ApiController();
         //Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
         //apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
         //apiCtrl.addServiceAuthHeader('Oppgave');
         //apiCtrl.setHeaders(httpHeaders);
-        LoggerUtility logger = new LoggerUtility('Oppgave');
-        addXCorrelation(apiCtrl, logger, null);
-        /*
+        //LoggerUtility logger = new LoggerUtility('Oppgave');
+        //addXCorrelation(apiCtrl, logger, null);
+
         try {
             apiCtrl.doCallout();
+            System.debug(
+                'RESPONSE: ' +
+                apiCtrl.getResponse().getStatusCode() +
+                ' : ' +
+                apiCtrl.getResponse().getBody()
+            );
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if (statusCode == 200 || statusCode == 201) {
-                OppgaveTypeResponse apiResponse = (OppgaveTypeResponse) JSON.deserialize(
-                    apiCtrl.getResponse().getBody(),
+                response.success = true;
+                String bodyString = apiCtrl.getResponse().getBody();
+                if (String.isNotBlank(bodyString)) {
+                    bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+                }
+                response.tasktypes = (List<OppgaveTypeResponse>) JSON.deserialize(
+                    bodyString,
                     List<OppgaveTypeResponse>.class
                 );
-                response.setResponse(true, null, null);
             } else {
                 logError(apiCtrl, logger, null);
-                response.setResponse(false, logger.peek().UUID__c, null);
+                response.success = false;
+                response.errorMessage = logger.peek().UUID__C;
             }
         } catch (Exception ex) {
             logger.exception(ex, null, CRM_ApplicationDomain.Domain.NKS);
-            response.setResponse(false, logger.peek().UUID__c, null);
+            response.success = false;
+            response.errorMessage = logger.peek().UUID__C;
         } finally {
             logger.publish();
-        }*/
+        }
 
         return response;
     }
@@ -305,6 +314,21 @@ public with sharing class NKS_NavTaskManager {
         }
     }
 
+    public class NavTaskTypeResponse {
+        @AuraEnabled
+        public Boolean success;
+        @AuraEnabled
+        public String errorMessage;
+        @AuraEnabled
+        public List<OppgaveTypeResponse> tasktypes;
+
+        public NavTaskTypeResponse() {
+            this.success = false;
+            this.errorMessage = null;
+            this.tasktypes = null;
+        }
+    }
+
     //### API WRAPPERS ###//
 
     @testVisible
@@ -369,6 +393,11 @@ public with sharing class NKS_NavTaskManager {
     }
 
     public class OppgaveTypeResponse {
-        private String oppgavetype;
+        @AuraEnabled
+        public String oppgavetype;
+
+        public OppgaveTypeResponse() {
+            this.oppgavetype = null;
+        }
     }
 }
