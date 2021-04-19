@@ -299,14 +299,6 @@
                     <value>Id</value>
                 </componentInstanceProperties>
                 <componentName>nksSafJournalpostList</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue
-                        >{!$Permission.CustomPermission.NKS_View_SAF_Journalpost}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>
