@@ -10,7 +10,8 @@
             "NKS_Status__c": "OPPRETTET",
             "NKS_Assignee__c": "S000000",
             "CRM_Priority__c": "NORM",
-            "CRM_Comments__c": "TEST COMMENTS"
+            "CRM_Comments__c": "TEST COMMENTS",
+            "CRM_NoPersonInformation__c": true
         }
     ]
 }
