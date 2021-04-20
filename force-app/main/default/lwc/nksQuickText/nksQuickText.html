@@ -41,16 +41,12 @@
                 </header>
 
                 <div
-                    class="slds-modal__content slds-var-p-horizontal_small slds-var-p-vertical_x-small"
+                    class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
                 >
-                    <div if:true={data} class="slds-text-title_caps">
-                        {numberOfRows} resultater
-                    </div>
-                    <lightning-layout
-                        multiple-rows="true"
-                        pull-to-boundary="small"
-                    >
+                    <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
+                    <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
                         <template
                             if:true={data}
                             for:each={data}
@@ -78,14 +74,12 @@
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
     <div class="slds-form-element">
-        <label class="slds-form-element__label" for="textarea-id-01"
-            >Samtalenotat</label
-        >
+        <label class="slds-form-element__label" for="textarea-id-01">Samtalenotat</label>
         <div class="slds-form-element__control">
             <textarea
                 id="comments"
                 class="slds-textarea"
-                required=""
+                required={required}
                 rows="10"
                 onchange={handleChange}
             >

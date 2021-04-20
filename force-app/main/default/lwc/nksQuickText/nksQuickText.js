@@ -5,13 +5,8 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api conversationNote;
     @track data;
-    myVal;
-    @track comments = '';
-    @track loadingData = false;
-
-    get myVal() {
-        return;
-    }
+    loadingData = false;
+    @api required = false;
 
     handleKeyUp(evt) {
         const isEnterKey = evt.keyCode === 13;
@@ -25,30 +20,29 @@ export default class nksQuickText extends LightningElement {
                 .then((result) => {
                     this.numberOfRows = result.length;
                     this.data = result;
-                    this.loadingData = false;
                 })
                 .catch((error) => {
                     console.log(error);
+                })
+                .finally(() => {
+                    this.loadingData = false;
                 });
         }
     }
 
     showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalShow';
+        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
     }
 
     hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalHide';
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
 
     insertText(event) {
-        this.myVal = this.comments + event.currentTarget.dataset.message;
-        this.template.querySelector('[data-id="modal"]').className =
-            'modalHide';
-        this.template.querySelector('textarea ').value = this.myVal;
+        this.conversationNote = this.conversationNote + event.currentTarget.dataset.message;
+        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+        this.template.querySelector('textarea').value = this.conversationNote;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.template.querySelector('textarea').value
         });
@@ -57,9 +51,21 @@ export default class nksQuickText extends LightningElement {
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
+        this.conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.template.querySelector('textarea').value
         });
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    @api
+    validate() {
+        if (this.required === true) {
+            return this.conversationNote && this.conversationNote.length > 0
+                ? { isValid: true }
+                : { isValid: false, errorMessage: 'Samtalereferatet kan ikke være tomt' }; //CUSTOM LABEL HERE
+        } else {
+            return { isValid: true };
+        }
     }
 }

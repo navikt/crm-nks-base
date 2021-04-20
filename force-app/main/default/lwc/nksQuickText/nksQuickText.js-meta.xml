@@ -7,7 +7,14 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="comments" type="String" label="Comments" />
+            <property name="conversationNote" type="String" label="Conversation Note" />
+            <property
+                name="required"
+                type="Boolean"
+                label="Required"
+                default="false"
+                role="inputOnly"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
