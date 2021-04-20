@@ -5,7 +5,7 @@
         <name>Show_Toast</name>
         <label>Show Toast</label>
         <locationX>176</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -39,7 +39,7 @@
         <name>Case_Assignment</name>
         <label>Case Assignment</label>
         <locationX>176</locationX>
-        <locationY>1190</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Account</targetReference>
+            <targetReference>Update_Case_Account</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -133,7 +133,7 @@
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
         <locationX>176</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Case_Assignment</targetReference>
         </defaultConnector>
@@ -188,7 +188,7 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>176</locationX>
-        <locationY>734</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Log_Screen</targetReference>
@@ -231,9 +231,19 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>176</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <connector>
             <targetReference>Show_Toast</targetReference>
+        </connector>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Case_Account</name>
+        <label>Update Case Account</label>
+        <locationX>264</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Get_Account</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
@@ -242,13 +252,19 @@
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>176</locationX>
-        <locationY>854</locationY>
-        <allowBack>false</allowBack>
+        <locationY>974</locationY>
+        <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>Create_Journal_Entry_Decision</targetReference>
         </connector>
+        <fields>
+            <name>Conversation_Note_Header</name>
+            <fieldText
+            >&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;{!$Label.NKS_Create_Conversation_Note}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Case_Overview</name>
             <extensionName>c:nksPersonCaseOverview</extensionName>
@@ -313,8 +329,21 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <fields>
+            <name>Record_Refresher</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <description>Screen displayed when the case is not connected to an account</description>
@@ -366,7 +395,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>

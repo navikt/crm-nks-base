@@ -1,7 +1,13 @@
 import { LightningElement, track, api } from 'lwc';
 import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
 
+//LABEL IMPORTS
+import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
 export default class nksQuickText extends LightningElement {
+    labels = {
+        BLANK_ERROR
+    };
+
     @api comments;
     @api conversationNote;
     @track data;
@@ -63,7 +69,7 @@ export default class nksQuickText extends LightningElement {
         if (this.required === true) {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
-                : { isValid: false, errorMessage: 'Samtalereferatet kan ikke være tomt' }; //CUSTOM LABEL HERE
+                : { isValid: false, errorMessage: this.labels.BLANK_ERROR }; //CUSTOM LABEL HERE
         } else {
             return { isValid: true };
         }
