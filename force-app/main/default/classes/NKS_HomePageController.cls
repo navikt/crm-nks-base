@@ -40,7 +40,7 @@ public with sharing class NKS_HomePageController {
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
-                skillstring += '\'' + u + '\',';
+                skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
             }
             query +=
                 ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' +
@@ -50,7 +50,7 @@ public with sharing class NKS_HomePageController {
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
-                skillstring += u.replaceAll(' ', '_') + '__c ,';
+                skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
             }
             query +=
                 ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
@@ -138,7 +138,7 @@ public with sharing class NKS_HomePageController {
                 AND Group.Type = 'Regular'
                 AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
         ]) {
-            skills.add(g.Name);
+            skills.add(g.DeveloperName);
         }
         return skills;
     }

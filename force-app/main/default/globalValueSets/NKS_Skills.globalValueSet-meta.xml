@@ -6,7 +6,7 @@
         <label>Arbeid</label>
     </customValue>
     <customValue>
-        <fullName>Arbeidsgiver og Samhandler</fullName>
+        <fullName>ArbeidsgiverSamhandler</fullName>
         <default>false</default>
         <label>Arbeidsgiver og Samhandler</label>
     </customValue>
@@ -16,7 +16,7 @@
         <label>Familie</label>
     </customValue>
     <customValue>
-        <fullName>Gjeldsrådgivning</fullName>
+        <fullName>Gjeldsraadgivning</fullName>
         <default>false</default>
         <label>Gjeldsrådgivning</label>
     </customValue>
@@ -31,14 +31,24 @@
         <label>Pensjon</label>
     </customValue>
     <customValue>
-        <fullName>Sosiale Tjenester</fullName>
+        <fullName>SosialeTjenester</fullName>
         <default>false</default>
         <label>Sosiale Tjenester</label>
     </customValue>
     <customValue>
-        <fullName>Uføretrygd</fullName>
+        <fullName>Ufoeretrygd</fullName>
         <default>false</default>
         <label>Uføretrygd</label>
+    </customValue>
+    <customValue>
+        <fullName>Sykefravaersoppfolging</fullName>
+        <default>false</default>
+        <label>Sykefraværsoppfølging</label>
+    </customValue>
+    <customValue>
+        <fullName>Permittering_og_rekruttering</fullName>
+        <default>false</default>
+        <label>Permittering og rekruttering</label>
     </customValue>
     <description
     >Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>

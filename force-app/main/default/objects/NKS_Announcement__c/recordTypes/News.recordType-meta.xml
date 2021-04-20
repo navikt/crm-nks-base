@@ -25,7 +25,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Arbeidsgiver og Samhandler</fullName>
+            <fullName>ArbeidsgiverSamhandler</fullName>
             <default>false</default>
         </values>
         <values>
@@ -33,7 +33,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gjeldsrådgivning</fullName>
+            <fullName>Gjeldsraadgivning</fullName>
             <default>false</default>
         </values>
         <values>
@@ -45,11 +45,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sosiale Tjenester</fullName>
+            <fullName>Permittering_og_rekruttering</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Uføretrygd</fullName>
+            <fullName>SosialeTjenester</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sykefravaersoppfolging</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ufoeretrygd</fullName>
             <default>false</default>
         </values>
     </picklistValues>
