@@ -519,17 +519,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
+            <assignToReference>NAV_Task.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>taskTypeInput.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>tasktype.selectedTaskTypeId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -551,6 +544,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>workAllocation.assignedResource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -619,17 +619,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Task_Type__c</assignToReference>
+            <assignToReference>NAV_Task.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>taskTypeInput.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>tasktype.selectedTaskTypeId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -651,6 +644,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>workAllocation.assignedResource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.NKS_Internal_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1407,8 +1407,8 @@ TODAY())</expression>
         <description>Query the chat transcript triggering the flow.</description>
         <name>Get_Chat_Transcript_After</name>
         <label>Get Chat Transcript</label>
-        <locationX>1077</locationX>
-        <locationY>521</locationY>
+        <locationX>1025</locationX>
+        <locationY>525</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Owner_0</targetReference>
@@ -1926,6 +1926,16 @@ TODAY())</expression>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Task_Toggle.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>taskTypeInput</name>

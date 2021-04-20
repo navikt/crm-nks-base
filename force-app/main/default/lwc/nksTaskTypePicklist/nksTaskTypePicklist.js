@@ -6,6 +6,8 @@ import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService
 export default class NksTaskTypePicklist extends LightningElement {
     @track tasktypes = [];
     tasktype;
+    commoncodes;
+    @api showcomponent;
     @api theme;
     theme;
     @track theme = this.theme;
@@ -15,12 +17,20 @@ export default class NksTaskTypePicklist extends LightningElement {
 
     @api
     get selectedTaskType() {
-        return this.tasktype;
+        let selectedTaskType = '';
+        if (this.commoncodes) {
+            for (let tt of this.commoncodes) {
+                if (tt.id === this.tasktype) {
+                    selectedTaskType = tt.commoncode;
+                    break;
+                }
+            }
+        }
+        return selectedTaskType;
     }
 
     @api
     get selectedTaskTypeId() {
-        //TODO: get salesforceid of commoncode record
         return this.tasktype;
     }
 
@@ -30,6 +40,8 @@ export default class NksTaskTypePicklist extends LightningElement {
 
     connectedCallback() {
         this.subscribeToMessageChannel();
+        console.log('CALLBACK: ');
+        this.findTaskTypes();
     }
 
     disconnectedCallback() {
@@ -52,16 +64,16 @@ export default class NksTaskTypePicklist extends LightningElement {
     handleMessage(message) {
         let fieldName = message.name;
         let value = message.value;
-        console.log('handle message');
 
         switch (fieldName) {
             case 'themeCode':
                 this.theme = value;
+                //this.findTaskTypes();
                 break;
         }
 
-        let showContent = this.showContent;
-        if (true == showContent) {
+        let showcomponent = this.showcomponent;
+        if (true == showcomponent) {
             console.log('showcontent true');
             this.findTaskTypes();
         }
@@ -72,24 +84,24 @@ export default class NksTaskTypePicklist extends LightningElement {
             themeCode: this.theme
         };
         this.tasktypes = [];
+        console.log('FINDING TASKTYPES with theme code: ' + this.theme);
         try {
             getTaskTypes(input).then((result) => {
-                console.log('map: ' + JSON.stringify(result));
-                var map = result;
-                for (var key in map) {
+                this.commoncodes = result;
+                result.forEach((tasktype) => {
                     const option = {
-                        value: key,
-                        label: map[key]
+                        value: tasktype.id,
+                        label: tasktype.name
                     };
                     this.tasktypes = [...this.tasktypes, option];
-                }
+                });
             });
         } catch (error) {
             this.errorMessage = error.body.message;
         }
     }
 
-    get showContent() {
-        return null != this.theme;
+    get showcomponent() {
+        return this.showcomponent;
     }
 }
