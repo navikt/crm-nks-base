@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>NavTask__c</entityName>
+    <fieldName>NKS_Status__c</fieldName>
+    <masterLabel>NAV Person Task Status</masterLabel>
+    <recordTypeName>NKS_Person_Task</recordTypeName>
+</PathAssistant>

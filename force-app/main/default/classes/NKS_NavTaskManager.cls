@@ -272,6 +272,7 @@ public with sharing class NKS_NavTaskManager {
         private String fristFerdigstillelse; //Datestring
         private String prioritet; // [HOY, NORM, LAV],
         private Integer versjon;
+        private String saksreferanse; //NKS-111 adding support for relating task to existing NAV Cases
 
         public OppgaveRequest() {
         }
@@ -287,7 +288,7 @@ public with sharing class NKS_NavTaskManager {
             aktoerId = taskRequest.actorId;
             oppgavetype = String.valueOf(task.NKS_Task_Type__c);
             aktivDato = Datetime.now().format('yyyy-MM-dd');
-            beskrivelse = task.CRM_Comments__c;
+            beskrivelse = task.NKS_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
             tilordnetRessurs = task.NKS_Assignee__c; //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
@@ -300,6 +301,7 @@ public with sharing class NKS_NavTaskManager {
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
+            saksreferanse = task.NKS_NAV_Case_Reference__c;
         }
     }
 }

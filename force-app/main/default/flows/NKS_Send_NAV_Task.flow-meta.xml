@@ -85,10 +85,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>OUTBOUND_NAV_TASK.CRM_Comments__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_NAV_Task.CRM_Comments__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_Comments__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -117,6 +117,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_NAV_Task.NKS_Assignee__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_NAV_Case_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.NKS_NAV_Case_Reference__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -302,7 +309,7 @@
         <fields>
             <name>Sent_Message</name>
             <fieldText
-            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven er allerede sendt til GoSys&lt;/span&gt;&lt;/p&gt;</fieldText>
+            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven er allerede utsendt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

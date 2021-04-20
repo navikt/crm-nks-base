@@ -6,7 +6,7 @@
     "EmailEncodingKey": "UTF-8",
     "LanguageLocaleKey": "NO",
     "profileName": "Standard User",
-    "permsets": ["NKS_base", "NKS_Knowledge_Viewer", "NKS_Chat_Permissions"],
+    "permsets": ["NKS_base", "NKS_Knowledge_Viewer", "NKS_Chat_Permissions", "Kontaktsenter"],
     "department": "4703",
     "UserPermissionsLiveAgentUser": true,
     "UserPermissionsKnowledgeUser": true,

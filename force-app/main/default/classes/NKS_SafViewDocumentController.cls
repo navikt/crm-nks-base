@@ -18,9 +18,8 @@ public with sharing class NKS_SafViewDocumentController {
     public Boolean initialised { get; set; }
     public Boolean isError { get; set; }
 
-    public string documentData { public get; private set; }
+    public transient String documentData { public get; private set; }
     public string title { get; set; }
-    //public string contentType {get; set;}
     public string errorTitle { get; set; }
     public string errorMessage { get; set; }
 
@@ -40,24 +39,6 @@ public with sharing class NKS_SafViewDocumentController {
                 return 'ARKIV';
             }
             return variantFormat;
-        }
-        private set;
-    }
-    public string width {
-        public get {
-            if (String.isBlank(width)) {
-                return '100%';
-            }
-            return width;
-        }
-        private set;
-    }
-    public string height {
-        public get {
-            if (String.isBlank(height)) {
-                return '900px';
-            }
-            return height;
         }
         private set;
     }
@@ -93,8 +74,6 @@ public with sharing class NKS_SafViewDocumentController {
         variantFormat = getPageParameter('variantFormat');
         fileName = getPageParameter('fileName');
 
-        width = getPageParameter('width');
-        height = getPageParameter('height');
         title = fileName;
 
         setPageHeader('filename', fileName);
@@ -139,7 +118,7 @@ public with sharing class NKS_SafViewDocumentController {
                     contentType +
                     ';base64,' +
                     response.documentString +
-                    '#statusbar=0&messages=0&view=Fit&toolbar=0';
+                    '#toolbar=0&zoom=100';
             } else {
                 setError(
                     'Kunne ikke laste dokumentet [' +

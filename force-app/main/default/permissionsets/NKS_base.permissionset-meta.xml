@@ -37,34 +37,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ActivityTimelineController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineHelperTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineModel</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineModelList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ActivityTimelineModelTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Activity_AddAccount</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -337,6 +309,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_NavSakService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_NavTaskManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -358,6 +334,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_NavUnitsControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_PaymentService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_PaymentListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -745,6 +729,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.INT_PersonIdent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.INT_RegDateEreg__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -871,6 +860,10 @@
         <object>NavUnit__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>NKS_SafViewDocument</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account.Employer</recordType>
         <visible>true</visible>

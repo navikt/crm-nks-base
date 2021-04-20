@@ -11,6 +11,16 @@
     <description>Necessary object permissions needed to give a user access to chat functionality.</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NKS_Conversation_Stored__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NKS_Conversation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LiveChatTranscript.AccountId</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -76,8 +76,7 @@
             <assignToReference>varUserNames</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference
-                >Loop_users.NKS_UserNameDisplayFLOW__c</elementReference>
+                <elementReference>Loop_users.NKS_UserNameDisplayFLOW__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -165,14 +164,7 @@
             <field>DeveloperName</field>
             <operator>StartsWith</operator>
             <value>
-                <stringValue>NKS</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
+                <stringValue>NKS_Skill_</stringValue>
             </value>
         </filters>
         <object>Group</object>
@@ -181,14 +173,13 @@
     <formulas>
         <name>currentItemWithQuotes</name>
         <dataType>String</dataType>
-        <expression
-        >&quot;&apos;&quot;+{!Loop_members.UserOrGroupId}+&quot;&apos;&quot;</expression>
+        <expression>&quot;&apos;&quot;+{!Loop_members.UserOrGroupId}+&quot;&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>URLtoedituser</name>
         <dataType>String</dataType>
         <expression
-        >HYPERLINK(&quot;/flow/NKS_Update_User?recordId=&quot;+{!Loop_users.Id} , &quot;Rediger &quot; , &apos;_blank&apos; )</expression>
+        >&quot;&lt;a href=&apos; /lightning/r/User/&quot; &amp; {!Loop_users.Id} &amp; &quot;/view&apos;&gt;&quot; &amp;&quot;Rediger&quot; &amp; &quot;&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>whereClause</name>
@@ -197,8 +188,6 @@
         >&quot;Id IN &quot; +SUBSTITUTE(SUBSTITUTE({!varUserIds} , &apos;[&apos;, &apos;(&apos;),&quot;]&quot;, &quot;)&quot;)</expression>
     </formulas>
     <interviewLabel>NKS Veiledere {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun
-    >true</isAdditionalPermissionRequiredToRun>
     <label>NKS Veiledere</label>
     <loops>
         <name>Loop_members</name>
@@ -250,10 +239,9 @@
     <recordLookups>
         <name>Get_Group_Members</name>
         <label>Get Group Members</label>
-        <locationX>299</locationX>
+        <locationX>294</locationX>
         <locationY>188</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_members</targetReference>
         </connector>
@@ -273,8 +261,7 @@
         <label>Get Profile</label>
         <locationX>221</locationX>
         <locationY>497</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_profile</targetReference>
         </connector>
@@ -294,8 +281,7 @@
         <label>Get Users</label>
         <locationX>486</locationX>
         <locationY>478</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_users</targetReference>
         </connector>
@@ -338,8 +324,7 @@
         </connector>
         <fields>
             <name>ErrorMessage</name>
-            <fieldText
-            >&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

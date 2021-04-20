@@ -1,6 +1,6 @@
 # crm-nks-base
 
-[![Build](https://github.com/navikt/crm-nks-base/workflows/master/badge.svg)](https://github.com/navikt/crm-nks-base/actions?query=workflow%3ABuild)
+[![Build](https://github.com/navikt/crm-nks-base/workflows/%5BPUSH%5D%20Create%20Package/badge.svg)](https://github.com/navikt/crm-nks-base/actions?query=workflow%3Acreate)
 [![GitHub version](https://badgen.net/github/release/navikt/crm-nks-base/stable)](https://github.com/navikt/crm-nks-base)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/navikt/XXXXXXXXXXXXX/blob/master/LICENSE)
 
@@ -18,6 +18,7 @@ Pakken er avhengig av følgende pakker:
 -   [crm-platform-base](https://github.com/navikt/crm-platform-base)
 -   [crm-platform-access-control](https://github.com/navikt/XXXXXXXXXXXXX)
 -   [crm-arbeidsgiver-base](https://github.com/navikt/crm-arbeidsgiver-base)
+-   [crm-nks-integration](https://github.com/navikt/crm-nks-integration)
 
 ## Funksjonelt oppsett
 
