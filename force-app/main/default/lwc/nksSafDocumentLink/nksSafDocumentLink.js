@@ -185,8 +185,7 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
             '&variantFormat=' +
             variantFormat +
             '&fileName=' +
-            fileName +
-            '&width=100%&height=900px'
+            fileName
         );
     }
 }

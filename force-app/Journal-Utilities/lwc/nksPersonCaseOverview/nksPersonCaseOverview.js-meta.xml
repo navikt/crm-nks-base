@@ -10,12 +10,7 @@
   </targets>
   <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-                <property
-                name="actorId"
-                type="String"
-                label="Actor ID:"
-                role="inputOnly"
-            />
+                <property name="actorId" type="String" label="Actor ID:" role="inputOnly" />
                 <property
                 name="prefilledThemeGroup"
                 type="String"
@@ -26,6 +21,12 @@
                 name="selectedCaseId"
                 type="String"
                 label="NAV Case ID"
+                role="outputOnly"
+            />
+                <property
+                name="selectedCaseLegacySystem"
+                type="String"
+                label="NAV Case Legacy System"
                 role="outputOnly"
             />
                 <property

@@ -9,12 +9,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage">
-            <property
-                name="cardLabel"
-                label="Card title"
-                type="String"
-                default="Title"
-            />
+            <property name="cardLabel" label="Card title" type="String" default="Title" />
             <property
                 name="iconName"
                 label="Icon name"
@@ -22,13 +17,7 @@
                 type="String"
                 default="custom:custom1"
             />
-            <property
-                name="title"
-                label="Title"
-                type="String"
-                required="true"
-                default="Name"
-            />
+            <property name="title" label="Title" type="String" required="true" default="Name" />
             <property
                 name="content"
                 label="Content"
@@ -96,6 +85,13 @@
                 name="showimage"
                 label="Show image?"
                 description="Show the latest related image of the record"
+                type="Boolean"
+                required="false"
+            />
+            <property
+                name="filterbyskills"
+                label="Filter by user skills?"
+                description="Show only posts which are related to user skills"
                 type="Boolean"
                 required="false"
             />

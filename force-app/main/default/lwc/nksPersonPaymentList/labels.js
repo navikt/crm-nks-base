@@ -2,7 +2,7 @@ import NO_PAYMENTS from '@salesforce/label/c.NKS_Payment_List_No_Payments';
 import PERIOD_CUSTOM from '@salesforce/label/c.NKS_Payment_List_Period_Custom';
 import PERIOD_HEADER from '@salesforce/label/c.NKS_Payment_List_Period_Header';
 import PAYMENT_HEADER from '@salesforce/label/c.NKS_Payment_List_Payment_Header';
-import PERIOD_LAST_3_MONTHS from '@salesforce/label/c.NKS_Payment_List_Period_Last_3_Months';
+import PERIOD_LAST_MONTH from '@salesforce/label/c.NKS_Payment_List_Period_Last_Month';
 import PERIOD_PREV_YEAR from '@salesforce/label/c.NKS_Payment_List_Period_Previous_Year';
 import PERIOD_THIS_YEAR from '@salesforce/label/c.NKS_Payment_List_Period_This_Year';
 import YTELSE_HEADER from '@salesforce/label/c.NKS_Payment_List_Ytelse_Header';
@@ -30,7 +30,7 @@ export default {
     PERIOD_CUSTOM,
     PERIOD_HEADER,
     PAYMENT_HEADER,
-    PERIOD_LAST_3_MONTHS,
+    PERIOD_LAST_MONTH,
     PERIOD_PREV_YEAR,
     PERIOD_THIS_YEAR,
     YTELSE_HEADER,

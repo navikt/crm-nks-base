@@ -17,7 +17,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NKS_Task_Type__c</field>
+                <field>NKS_TaskType__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -101,7 +101,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001Z6NG</masterLabel>
+        <masterLabel>00h1j000002FIhM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

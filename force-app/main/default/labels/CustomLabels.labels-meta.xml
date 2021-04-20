@@ -86,6 +86,30 @@
         >Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
+        <fullName>NKS_Journal_Case_List_Col_Case_Id</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List Col Case Id</shortDescription>
+        <value>Saks-id</value>
+    </labels>
+     <labels>
+        <fullName>NKS_Journal_Case_List_No_Cases_Error</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List No Cases Error</shortDescription>
+        <value>Ingen saker registrert på bruker.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal_Case_List_Col_Created_Date</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List Col Created Date</shortDescription>
+        <value>Opprettet dato</value>
+    </labels>
+    <labels>
         <fullName>NKS_Journal_Flow_Complete_Button</fullName>
         <categories>UI, NKS, Journal, Flow</categories>
         <language>en_US</language>
@@ -294,12 +318,12 @@
         <value>Periode</value>
     </labels>
     <labels>
-        <fullName>NKS_Payment_List_Period_Last_3_Months</fullName>
+        <fullName>NKS_Payment_List_Period_Last_Month</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Payment_List_Period_Last_3_Months</shortDescription>
-        <value>Siste 3 måneder</value>
+        <shortDescription>Payment List Period Last Month</shortDescription>
+        <value>Siste måned</value>
     </labels>
     <labels>
         <fullName>NKS_Payment_List_Period_Previous_Year</fullName>

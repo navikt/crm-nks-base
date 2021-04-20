@@ -21,12 +21,16 @@
                     >NKS_Type__c = &apos;Nyhet&apos; AND RecordType.Name = &apos;News&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>custom:custom82</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>limit</name>
-                    <value>5</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
@@ -72,6 +76,10 @@
                     <name>filter</name>
                     <value
                     >CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND OwnerId=:userId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -148,6 +156,10 @@
                     <value>RecordType.Name = &apos;Operational&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>iconName</name>
                     <value>custom:custom82</value>
                 </componentInstanceProperties>
@@ -198,6 +210,10 @@
                 <componentInstanceProperties>
                     <name>filter</name>
                     <value>Title != &apos;&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
