@@ -179,7 +179,7 @@
         <name>URLtoedituser</name>
         <dataType>String</dataType>
         <expression
-        >HYPERLINK(&quot;/flow/NKS_Update_User?recordId=&quot;+{!Loop_users.Id} , &quot;Rediger &quot; , &apos;_blank&apos; )</expression>
+        >&quot;&lt;a href=&apos; /lightning/r/User/&quot; &amp; {!Loop_users.Id} &amp; &quot;/view&apos;&gt;&quot; &amp;&quot;Rediger&quot; &amp; &quot;&lt;/a&gt;&quot;</expression>
     </formulas>
     <formulas>
         <name>whereClause</name>
