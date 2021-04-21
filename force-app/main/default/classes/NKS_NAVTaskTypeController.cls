@@ -7,12 +7,14 @@ public with sharing class NKS_NAVTaskTypeController {
             'VURD_HENV',
             'KONT_BRUK'
         };
-        //TODO: remove if
-        if (String.isBlank(themeCode))
-            themeCode = 'AAP';
-        NKS_NavTaskManager.NavTaskTypeResponse response = NKS_NavTaskManager.getTaskTypes(
-            themeCode
-        );
+
+        NKS_NavTaskManager.NavTaskTypeResponse response = new NKS_NavTaskManager.NavTaskTypeResponse();
+        if (String.isBlank(themeCode)) {
+            response.success = false;
+        } else {
+            response = NKS_NavTaskManager.getTaskTypes(themeCode);
+        }
+
         List<Common_Code__c> tasktypes = [
             SELECT CRM_Code__c, Name
             FROM Common_Code__c
