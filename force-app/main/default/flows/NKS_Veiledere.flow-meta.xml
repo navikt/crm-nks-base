@@ -40,8 +40,8 @@
     <assignments>
         <name>Add_user_ids</name>
         <label>Add user ids</label>
-        <locationX>417</locationX>
-        <locationY>346</locationY>
+        <locationX>418</locationX>
+        <locationY>314</locationY>
         <assignmentItems>
             <assignToReference>varUserIds</assignToReference>
             <operator>Add</operator>
@@ -107,35 +107,10 @@
         </value>
     </choices>
     <decisions>
-        <name>Found_profile</name>
-        <label>Found profile?</label>
-        <locationX>338</locationX>
-        <locationY>498</locationY>
-        <defaultConnector>
-            <targetReference>Error</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Found_profile1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Profile.Id</leftValueReference>
-                <operator>WasSet</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Users_Without_Chat</targetReference>
-            </connector>
-            <label>Found profile</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Users_without_queues</name>
         <label>Users without queues</label>
-        <locationX>168</locationX>
-        <locationY>335</locationY>
+        <locationX>179</locationX>
+        <locationY>374</locationY>
         <defaultConnector>
             <targetReference>Get_Group_Members</targetReference>
         </defaultConnector>
@@ -151,7 +126,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Profile</targetReference>
+                <targetReference>Get_Users_Without_Chat</targetReference>
             </connector>
             <label>Users without queues</label>
         </rules>
@@ -257,30 +232,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Profile</name>
-        <label>Get Profile</label>
-        <locationX>221</locationX>
-        <locationY>497</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Found_profile</targetReference>
-        </connector>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>NAV Kontaktsenter (Sanitized)</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Profile</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Users_Without_Chat</name>
         <label>Get Users</label>
-        <locationX>486</locationX>
-        <locationY>478</locationY>
+        <locationX>525</locationX>
+        <locationY>379</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_users</targetReference>
@@ -299,37 +254,11 @@
                 <stringValue>41</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>ProfileId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Profile.Id</elementReference>
-            </value>
-        </filters>
         <object>User</object>
         <outputReference>users</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>NKS_UserNameDisplayFLOW__c</queriedFields>
     </recordLookups>
-    <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>64</locationX>
-        <locationY>499</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>First_screen</targetReference>
-        </connector>
-        <fields>
-            <name>ErrorMessage</name>
-            <fieldText>&lt;p&gt;Fant ikke profilen som er valgt. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
     <screens>
         <name>First_screen</name>
         <label>Hvilken kø ønsker du å se?</label>
