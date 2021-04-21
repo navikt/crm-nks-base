@@ -56,6 +56,7 @@
                 <template if:false={hasCases}>
                     <!--ERROR OCCURRED-->
                     <c-nks-alert-banner
+                        if:true={casesLoaded}
                         type="Info"
                         message={labels.NO_CASES_ERROR}
                     ></c-nks-alert-banner>
