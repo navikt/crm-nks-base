@@ -21,8 +21,7 @@ export default class FlowCombobox extends LightningElement {
     @track allOptions;
     @track _options = [];
     @track _mergeFields = [];
-    @track dropdownClass =
-        'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+    @track dropdownClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
     @track isDataSelected = false;
     @track _selectedObjectType;
     @track _selectedFieldPath;
@@ -150,9 +149,7 @@ export default class FlowCombobox extends LightningElement {
 
     set builderContext(value) {
         this._builderContext = value;
-        this._mergeFields = this.generateMergeFieldsFromBuilderContext(
-            this._builderContext
-        );
+        this._mergeFields = this.generateMergeFieldsFromBuilderContext(this._builderContext);
         if (!this._selectedObjectType) {
             this.setOptions(this._mergeFields);
             this.determineSelectedType();
@@ -160,10 +157,7 @@ export default class FlowCombobox extends LightningElement {
     }
 
     get displayPill() {
-        return (
-            this.isDataSelected &&
-            this._dataType === flowComboboxDefaults.referenceDataType
-        );
+        return this.isDataSelected && this._dataType === flowComboboxDefaults.referenceDataType;
     }
 
     setOptions(value) {
@@ -177,16 +171,12 @@ export default class FlowCombobox extends LightningElement {
             let parentVar = value.split('.')[0];
             if (parentVar && this._mergeFields && this._mergeFields.length) {
                 for (let i = 0; i < this._mergeFields.length; i++) {
-                    let localOption = this._mergeFields[i].options.find(
-                        (curTypeOption) => {
-                            let result =
-                                curTypeOption.value.toLowerCase() ===
-                                    parentVar.toLowerCase() ||
-                                curTypeOption.value.toLowerCase() ===
-                                    value.toLowerCase();
-                            return result;
-                        }
-                    );
+                    let localOption = this._mergeFields[i].options.find((curTypeOption) => {
+                        let result =
+                            curTypeOption.value.toLowerCase() === parentVar.toLowerCase() ||
+                            curTypeOption.value.toLowerCase() === value.toLowerCase();
+                        return result;
+                    });
                     if (localOption) {
                         return localOption;
                     }
@@ -206,10 +196,7 @@ export default class FlowCombobox extends LightningElement {
             // let localKey = 0;
             Object.keys(data.fields).forEach((curField) => {
                 let curFieldData = data.fields[curField];
-                let curDataType =
-                    curFieldData.dataType === 'Reference'
-                        ? 'SObject'
-                        : curFieldData.dataType;
+                let curDataType = curFieldData.dataType === 'Reference' ? 'SObject' : curFieldData.dataType;
                 let curObjectType = curFieldData.referenceToInfos.length
                     ? curFieldData.referenceToInfos[0].apiName
                     : null;
@@ -227,35 +214,26 @@ export default class FlowCombobox extends LightningElement {
                     )
                 );
             });
-            this.setOptions([
-                { type: data.label + ' Fields', options: tempOptions }
-            ]);
+            this.setOptions([{ type: data.label + ' Fields', options: tempOptions }]);
         }
     }
 
     getTypes() {
-        return this.typeDescriptors.map(
-            (curTypeDescriptor) => curTypeDescriptor.apiName
-        );
+        return this.typeDescriptors.map((curTypeDescriptor) => curTypeDescriptor.apiName);
     }
 
     getTypeDescriptor(typeApiName) {
-        return this.typeDescriptors.find(
-            (curTypeDescriptor) => curTypeDescriptor.apiName === typeApiName
-        );
+        return this.typeDescriptors.find((curTypeDescriptor) => curTypeDescriptor.apiName === typeApiName);
     }
 
     determineSelectedType() {
         if (this._value && this.allOptions) {
-            let valParts = this._value
-                .replace(/[^a-zA-Z0-9._-]/g, '')
-                .split('.');
+            let valParts = this._value.replace(/[^a-zA-Z0-9._-]/g, '').split('.');
             if (valParts.length > 1) {
                 this.allOptions.forEach((curOption) => {
                     let localOptions = curOption.options;
                     let selectedOption = localOptions.find(
-                        (curSelectedOption) =>
-                            curSelectedOption.value === valParts[0]
+                        (curSelectedOption) => curSelectedOption.value === valParts[0]
                     );
                     if (selectedOption) {
                         this._selectedObjectType = selectedOption.displayType;
@@ -280,18 +258,14 @@ export default class FlowCombobox extends LightningElement {
                 let parentNodeLabel = '';
                 typeParts.forEach((curTypePart) => {
                     if (objectToExamine[curTypePart]) {
-                        objectToExamine = objectToExamine[curTypePart].map(
-                            (curItem) => {
-                                parentNodeLabel = curItem.label
-                                    ? curItem.label
-                                    : curItem.name;
-                                return {
-                                    ...curItem,
-                                    varApiName: curItem.name,
-                                    varLabel: parentNodeLabel
-                                };
-                            }
-                        );
+                        objectToExamine = objectToExamine[curTypePart].map((curItem) => {
+                            parentNodeLabel = curItem.label ? curItem.label : curItem.name;
+                            return {
+                                ...curItem,
+                                varApiName: curItem.name,
+                                varLabel: parentNodeLabel
+                            };
+                        });
                     } else {
                         if (Array.isArray(objectToExamine)) {
                             let allObjectToExamine = [];
@@ -305,23 +279,16 @@ export default class FlowCombobox extends LightningElement {
                                 } else {
                                     allObjectToExamine = [
                                         ...allObjectToExamine,
-                                        ...curObjToExam[curTypePart].map(
-                                            (curItem) => {
-                                                return {
-                                                    ...curItem,
-                                                    varApiName:
-                                                        curObjToExam.name +
-                                                        '.' +
-                                                        curItem.name,
-                                                    varLabel:
-                                                        (curObjToExam.label
-                                                            ? curObjToExam.label
-                                                            : parentNodeLabel) +
-                                                        ': ' +
-                                                        curItem.name
-                                                };
-                                            }
-                                        )
+                                        ...curObjToExam[curTypePart].map((curItem) => {
+                                            return {
+                                                ...curItem,
+                                                varApiName: curObjToExam.name + '.' + curItem.name,
+                                                varLabel:
+                                                    (curObjToExam.label ? curObjToExam.label : parentNodeLabel) +
+                                                    ': ' +
+                                                    curItem.name
+                                            };
+                                        })
                                     ];
                                 }
                             });
@@ -336,12 +303,8 @@ export default class FlowCombobox extends LightningElement {
                     'varLabel',
                     'varApiName',
                     'dataType',
-                    localType.isCollectionField
-                        ? localType.isCollectionField
-                        : flowComboboxDefaults.isCollectionField,
-                    localType.objectTypeField
-                        ? localType.objectTypeField
-                        : 'objectType',
+                    localType.isCollectionField ? localType.isCollectionField : flowComboboxDefaults.isCollectionField,
+                    localType.objectTypeField ? localType.objectTypeField : 'objectType',
                     localType
                 );
                 if (curTypeOptions.length) {
@@ -350,10 +313,7 @@ export default class FlowCombobox extends LightningElement {
                 if (typeOptions.length) {
                     // let localType = this.getTypeDescriptor(curType).label;
                     if (optionsByType[localType.label]) {
-                        optionsByType[localType.label] = [
-                            ...optionsByType[localType.label],
-                            ...typeOptions
-                        ];
+                        optionsByType[localType.label] = [...optionsByType[localType.label], ...typeOptions];
                     } else {
                         optionsByType[localType.label] = typeOptions;
                     }
@@ -373,44 +333,24 @@ export default class FlowCombobox extends LightningElement {
         return options;
     }
 
-    getOptionLines(
-        objectArray,
-        labelField,
-        valueField,
-        typeField,
-        isCollectionField,
-        objectTypeField,
-        typeDescriptor
-    ) {
+    getOptionLines(objectArray, labelField, valueField, typeField, isCollectionField, objectTypeField, typeDescriptor) {
         let typeOptions = [];
         objectArray.forEach((curObject) => {
-            let curDataType = this.getTypeByDescriptor(
-                curObject[typeField],
-                typeDescriptor
-            );
-            let curIsCollection = this.isCollection(
-                curObject,
-                isCollectionField
-            );
+            let curDataType = this.getTypeByDescriptor(curObject[typeField], typeDescriptor);
+            let curIsCollection = this.isCollection(curObject, isCollectionField);
             typeOptions.push(
                 this.generateOptionLine(
                     curDataType,
-                    curObject[labelField]
-                        ? curObject[labelField]
-                        : curObject[valueField],
+                    curObject[labelField] ? curObject[labelField] : curObject[valueField],
                     curObject[valueField],
-                    typeDescriptor.apiName ===
-                        flowComboboxDefaults.recordLookupsType
+                    typeDescriptor.apiName === flowComboboxDefaults.recordLookupsType
                         ? !curIsCollection
                         : !!curIsCollection,
                     curObject[objectTypeField],
                     this.getIconNameByType(curDataType),
                     curDataType === flowComboboxDefaults.dataTypeSObject ||
-                        typeDescriptor.apiName ===
-                            flowComboboxDefaults.recordLookupsType,
-                    curDataType === flowComboboxDefaults.dataTypeSObject
-                        ? curObject[objectTypeField]
-                        : curDataType,
+                        typeDescriptor.apiName === flowComboboxDefaults.recordLookupsType,
+                    curDataType === flowComboboxDefaults.dataTypeSObject ? curObject[objectTypeField] : curDataType,
                     flowComboboxDefaults.defaultKeyPrefix + this.key++
                 )
             );
@@ -429,29 +369,14 @@ export default class FlowCombobox extends LightningElement {
     getTypeByDescriptor(curObjectFieldType, typeDescriptor) {
         if (!typeDescriptor) {
             return flowComboboxDefaults.stringDataType;
-        } else if (
-            typeDescriptor.apiName === flowComboboxDefaults.recordLookupsType
-        ) {
+        } else if (typeDescriptor.apiName === flowComboboxDefaults.recordLookupsType) {
             return flowComboboxDefaults.dataTypeSObject;
         } else {
-            return curObjectFieldType
-                ? curObjectFieldType
-                : flowComboboxDefaults.stringDataType;
+            return curObjectFieldType ? curObjectFieldType : flowComboboxDefaults.stringDataType;
         }
     }
 
-    generateOptionLine(
-        type,
-        label,
-        value,
-        isCollection,
-        objectType,
-        optionIcon,
-        isObject,
-        displayType,
-        key,
-        flowType
-    ) {
+    generateOptionLine(type, label, value, isCollection, objectType, optionIcon, isObject, displayType, key, flowType) {
         return {
             type: type,
             label: label,
@@ -462,18 +387,12 @@ export default class FlowCombobox extends LightningElement {
             isObject: isObject,
             displayType: displayType,
             key: key,
-            flowType: flowType
-                ? flowType
-                : flowComboboxDefaults.referenceDataType
+            flowType: flowType ? flowType : flowComboboxDefaults.referenceDataType
         };
     }
 
     handleOpenObject(event) {
-        this.doOpenObject(
-            event,
-            event.currentTarget.dataset.optionValue,
-            event.currentTarget.dataset.objectType
-        );
+        this.doOpenObject(event, event.currentTarget.dataset.optionValue, event.currentTarget.dataset.objectType);
     }
 
     handleSetSelectedRecord(event) {
@@ -483,17 +402,10 @@ export default class FlowCombobox extends LightningElement {
                 this.value.endsWith(event.currentTarget.dataset.value) &&
                 event.currentTarget.dataset.objectType
             ) {
-                this.doOpenObject(
-                    event,
-                    event.currentTarget.dataset.value,
-                    event.currentTarget.dataset.objectType
-                );
+                this.doOpenObject(event, event.currentTarget.dataset.value, event.currentTarget.dataset.objectType);
             } else {
                 this._dataType = event.currentTarget.dataset.flowType;
-                this.value = this.getFullPath(
-                    this._selectedFieldPath,
-                    event.currentTarget.dataset.value
-                );
+                this.value = this.getFullPath(this._selectedFieldPath, event.currentTarget.dataset.value);
                 this.isDataModified = true;
                 this.hasError = false;
                 this.closeOptionDialog();
@@ -503,9 +415,7 @@ export default class FlowCombobox extends LightningElement {
 
     doOpenObject(event, value, objectType) {
         event.stopPropagation();
-        this._selectedFieldPath =
-            (this._selectedFieldPath ? this._selectedFieldPath + '.' : '') +
-            value;
+        this._selectedFieldPath = (this._selectedFieldPath ? this._selectedFieldPath + '.' : '') + value;
         this.value = this._selectedFieldPath + '.';
         this._selectedObjectType = objectType;
     }
@@ -538,8 +448,7 @@ export default class FlowCombobox extends LightningElement {
     openOptionDialog(event) {
         // this.isDataSelected = false;
         this.isMenuOpen = true;
-        this.dropdownClass =
-            'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open';
+        this.dropdownClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open';
     }
 
     closeOptionDialog(setValueInput) {
@@ -547,8 +456,7 @@ export default class FlowCombobox extends LightningElement {
             this.isDataSelected = true;
         }
         this.isMenuOpen = false;
-        this.dropdownClass =
-            'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
+        this.dropdownClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click';
 
         if (setValueInput) {
             this.setValueInput();
@@ -565,10 +473,7 @@ export default class FlowCombobox extends LightningElement {
     }
 
     disconnectedCallback() {
-        document.removeEventListener(
-            'click',
-            this.handleWindowClick.bind(this)
-        );
+        document.removeEventListener('click', this.handleWindowClick.bind(this));
     }
 
     handleWindowClick(event) {
@@ -594,21 +499,14 @@ export default class FlowCombobox extends LightningElement {
                 if (this.builderContextFilterType) {
                     localOptions = localOptions.filter(
                         (opToFilter) =>
-                            opToFilter.displayType ===
-                                this.builderContextFilterType ||
-                            (opToFilter.type === 'SObject' &&
-                                !this.builderContextFilterCollectionBoolean)
+                            opToFilter.displayType === this.builderContextFilterType ||
+                            (opToFilter.type === 'SObject' && !this.builderContextFilterCollectionBoolean)
                     );
                 }
 
-                if (
-                    typeof this.builderContextFilterCollectionBoolean !==
-                    'undefined'
-                ) {
+                if (typeof this.builderContextFilterCollectionBoolean !== 'undefined') {
                     localOptions = localOptions.filter(
-                        (opToFilter) =>
-                            opToFilter.isCollection ===
-                            this.builderContextFilterCollectionBoolean
+                        (opToFilter) => opToFilter.isCollection === this.builderContextFilterCollectionBoolean
                     );
                 }
 
@@ -616,9 +514,7 @@ export default class FlowCombobox extends LightningElement {
                     localOptions = localOptions.filter(
                         (opToFilter) =>
                             opToFilter.label.toLowerCase().includes(searchLC) ||
-                            opToFilter.value
-                                .toLowerCase()
-                                .includes(searchLC.replace(/\W/g, ''))
+                            opToFilter.value.toLowerCase().includes(searchLC.replace(/\W/g, ''))
                     );
                 }
 
@@ -712,10 +608,7 @@ export default class FlowCombobox extends LightningElement {
     }
 
     handleKeyDown(event) {
-        if (
-            this.isMenuOpen &&
-            (event.key === 'Tab' || event.key === 'Escape')
-        ) {
+        if (this.isMenuOpen && (event.key === 'Tab' || event.key === 'Escape')) {
             this.closeOptionDialog(true);
             if (event.key === 'Escape') {
                 event.stopPropagation();

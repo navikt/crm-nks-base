@@ -1,19 +1,10 @@
 <template>
-    <div
-        class="slds-notify_alert slds-theme_alert-texture slds-theme_info slds-grid"
-    >
+    <div class="slds-notify_alert slds-theme_alert-texture slds-theme_info slds-grid">
         <lightning-layout multiple-rows="true" pull-to-boundary="small">
-            <template
-                if:true={badges}
-                for:each={badges}
-                for:item="badge"
-                for:index="index"
-            >
+            <template if:true={badges} for:each={badges} for:item="badge" for:index="index">
                 <lightning-layout-item key={badge} class="slds-col">
                     <div class="slds-var-p-horizontal_x-small">
-                        <span class="slds-badge slds-var-p-around_x-small">
-                            {badge}
-                        </span>
+                        <span class="slds-badge slds-var-p-around_x-small"> {badge} </span>
                     </div>
                 </lightning-layout-item>
             </template>

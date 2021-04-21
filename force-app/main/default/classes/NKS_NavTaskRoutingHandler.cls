@@ -12,9 +12,7 @@ global class NKS_NavTaskRoutingHandler {
         return queueIds;
     }
 
-    private static List<SobjectWrapper> getSobjectWrappers(
-        List<Id> accountIds
-    ) {
+    private static List<SobjectWrapper> getSobjectWrappers(List<Id> accountIds) {
         List<SobjectWrapper> wrappers = new List<SobjectWrapper>();
         Integer recordIndex = 0;
         for (Account acc : [

@@ -5,9 +5,7 @@
                 <ul class="slds-has-dividers_top-space">
                     <template for:each={relations.data} for:item="relation">
                         <li class="slds-item" key={relation.personId}>
-                            <c-person-relation-viewer-entry
-                                relation={relation}
-                            ></c-person-relation-viewer-entry>
+                            <c-person-relation-viewer-entry relation={relation}></c-person-relation-viewer-entry>
                         </li>
                     </template>
                 </ul>

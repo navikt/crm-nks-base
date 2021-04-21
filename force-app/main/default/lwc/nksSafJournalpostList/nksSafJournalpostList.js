@@ -171,18 +171,14 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     setJournalpostTypeCheckBoxes() {
-        Array.from(this.template.querySelectorAll('lightning-input.journalpostType')).forEach(
-            (element) => {
-                this.getJournalposttype(element.name);
-            }
-        );
+        Array.from(this.template.querySelectorAll('lightning-input.journalpostType')).forEach((element) => {
+            this.getJournalposttype(element.name);
+        });
     }
 
     setJournalposttype(value, statusElement) {
         if (value !== this.getJournalposttype(statusElement)) {
-            let statuses = this._selectedJornalpostTypes.filter(
-                (element) => element !== statusElement
-            );
+            let statuses = this._selectedJornalpostTypes.filter((element) => element !== statusElement);
 
             if (value === true) {
                 statuses = statuses.push(statusElement);
@@ -237,9 +233,7 @@ export default class NksSafJournalpostList extends LightningElement {
             if (journalpostData.isSuccess) {
                 this.sideInfo = journalpostData.data.dokumentoversiktBruker.sideInfo;
                 this.journalposts = isQueryMore
-                    ? this.journalposts.concat(
-                          journalpostData.data.dokumentoversiktBruker.journalposter
-                      )
+                    ? this.journalposts.concat(journalpostData.data.dokumentoversiktBruker.journalposter)
                     : journalpostData.data.dokumentoversiktBruker.journalposter;
             } else {
                 this.sideInfo = null;
@@ -255,9 +249,7 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     handleJournalpostTypeCheckboxChange() {
-        const elements = Array.from(
-            this.template.querySelectorAll('lightning-input.journalpostType')
-        );
+        const elements = Array.from(this.template.querySelectorAll('lightning-input.journalpostType'));
 
         let checked = elements.filter((element) => element.checked).map((element) => element.name);
         this._selectedJornalpostTypes = checked;
@@ -296,8 +288,7 @@ export default class NksSafJournalpostList extends LightningElement {
                 (this.availableThemes == null || this.availableThemes.includes(journalpost.tema)) &&
                 (this.selectedCase == null ||
                     this.selectedCase === journalpost.sak.fagsakId ||
-                    (this.selectedCase === 'general' &&
-                        'GENERELL_SAK' == journalpost.sak.sakstype)) &&
+                    (this.selectedCase === 'general' && 'GENERELL_SAK' == journalpost.sak.sakstype)) &&
                 (this.selectedThemeCode == null || this.selectedThemeCode === journalpost.tema) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );

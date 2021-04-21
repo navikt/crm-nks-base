@@ -14,11 +14,7 @@ public without sharing class NKS_AccessErrorController {
     }
 
     private static Person__c getPerson(Id personId) {
-        List<Person__c> personList = [
-            SELECT Id, CRM_Account__r.Name
-            FROM Person__c
-            WHERE Id = :personId
-        ];
+        List<Person__c> personList = [SELECT Id, CRM_Account__r.Name FROM Person__c WHERE Id = :personId];
 
         return personList.isEmpty() ? null : personList[0];
     }
@@ -33,12 +29,7 @@ public without sharing class NKS_AccessErrorController {
      */
     private static Id getPersonId(String field, String parentObject, String parentRecordId) {
         Id personId = null;
-        String queryString =
-            'SELECT ' +
-            field +
-            ' FROM ' +
-            parentObject +
-            ' WHERE Id = :parentRecordId LIMIT 1';
+        String queryString = 'SELECT ' + field + ' FROM ' + parentObject + ' WHERE Id = :parentRecordId LIMIT 1';
         List<SObject> objList = Database.query(String.escapeSingleQuotes(queryString));
 
         if (false == objList.isEmpty()) {
@@ -55,10 +46,7 @@ public without sharing class NKS_AccessErrorController {
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {
-            return getFieldValue(
-                obj.getSObject(fieldNameList.remove(0)),
-                String.join(fieldNameList, '.')
-            );
+            return getFieldValue(obj.getSObject(fieldNameList.remove(0)), String.join(fieldNameList, '.'));
         }
 
         return obj.get(fieldNameList[0]);

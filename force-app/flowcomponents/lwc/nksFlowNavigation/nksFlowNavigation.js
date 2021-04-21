@@ -1,9 +1,5 @@
 import { LightningElement, api } from 'lwc';
-import {
-    FlowNavigationBackEvent,
-    FlowNavigationNextEvent,
-    FlowNavigationFinishEvent
-} from 'lightning/flowSupport';
+import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 
 export default class NksFlowNavigation extends LightningElement {
     @api action;

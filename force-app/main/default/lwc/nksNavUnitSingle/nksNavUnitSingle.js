@@ -50,9 +50,7 @@ export default class NksNavUnitSingle extends LightningElement {
             });
             this.isError = !unitData.success;
             this.navUnit = unitData.unit;
-            errorString += unitData.errorMessage
-                ? ' ' + unitData.errorMessage
-                : '';
+            errorString += unitData.errorMessage ? ' ' + unitData.errorMessage : '';
 
             if (false === this.isError) {
                 try {
@@ -60,11 +58,8 @@ export default class NksNavUnitSingle extends LightningElement {
                         unitNumber: this.navUnit.enhetNr
                     });
                     this.isError = !contactInfoData.success;
-                    this.contactInformation =
-                        contactInfoData.contactInformation;
-                    errorString += contactInfoData.errorMessage
-                        ? ' ' + contactInfoData.errorMessage
-                        : '';
+                    this.contactInformation = contactInfoData.contactInformation;
+                    errorString += contactInfoData.errorMessage ? ' ' + contactInfoData.errorMessage : '';
                 } catch (error) {
                     errorString += error.body.message;
                     this.isError = true;

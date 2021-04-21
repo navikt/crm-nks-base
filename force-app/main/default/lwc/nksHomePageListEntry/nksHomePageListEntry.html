@@ -21,18 +21,12 @@
                 </p>
             </div>
             <p>
-                <lightning-formatted-url
-                    value={recordPageUrl}
-                    label={record.name}
-                    onclick={navigateToSObject}
-                >
+                <lightning-formatted-url value={recordPageUrl} label={record.name} onclick={navigateToSObject}>
                     {record.name}</lightning-formatted-url
                 >
             </p>
             <p>
-                <lightning-formatted-rich-text
-                    value={record.summary}
-                ></lightning-formatted-rich-text>
+                <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
             </p>
         </div>
     </div>

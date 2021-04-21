@@ -208,8 +208,7 @@ export default class NksThemeCategorization extends LightningElement {
             !this.chosenTheme ||
             (this.chosenTheme &&
                 this.subthemeMap &&
-                (Object.keys(this.subthemeMap).length === 0 ||
-                    !(this.chosenTheme in this.subthemeMap)));
+                (Object.keys(this.subthemeMap).length === 0 || !(this.chosenTheme in this.subthemeMap)));
         return disabled;
     }
 

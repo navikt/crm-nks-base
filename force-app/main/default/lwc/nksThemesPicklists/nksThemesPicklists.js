@@ -40,17 +40,13 @@ export default class NksThemesPicklists extends LightningElement {
                     selectedThemeKey = i;
                 }
             }
-            this.subthemes = this.subFieldData.values.filter((opt) =>
-                opt.validFor.includes(selectedThemeKey)
-            );
+            this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(selectedThemeKey));
         }
     }
 
     handleThemeChange(event) {
         let key = this.subFieldData.controllerValues[event.target.value];
-        this.subthemes = this.subFieldData.values.filter((opt) =>
-            opt.validFor.includes(key)
-        );
+        this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(key));
 
         this.selectedTheme = event.detail.value;
 

@@ -14,16 +14,7 @@
     },
 
     //Show Toast Event updated to include a message that contains a link
-    showToastUrl: function (
-        type,
-        title,
-        messageUrl,
-        urlLink,
-        urlLabel,
-        duration,
-        mode,
-        key
-    ) {
+    showToastUrl: function (type, title, messageUrl, urlLink, urlLabel, duration, mode, key) {
         var toastEvent = $A.get('e.force:showToast');
         toastEvent.setParams({
             title: title,

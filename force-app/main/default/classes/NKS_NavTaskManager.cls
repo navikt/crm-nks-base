@@ -134,11 +134,7 @@ public with sharing class NKS_NavTaskManager {
      * @param logger
      * @param task
      **/
-    private static void addXCorrelation(
-        ApiController apiCtrl,
-        LoggerUtility logger,
-        NavTask__c task
-    ) {
+    private static void addXCorrelation(ApiController apiCtrl, LoggerUtility logger, NavTask__c task) {
         logger.info('Delegating task via Oppgave API: \n' + apiCtrl.getRequest().getBody(), task);
         apiCtrl.addHeader('X-Correlation-ID', logger.peek().UUID__c); //Adds the unique app log id to the request
     }
@@ -162,9 +158,7 @@ public with sharing class NKS_NavTaskManager {
             task,
             CRM_ApplicationDomain.Domain.NKS
         );
-        logger.peek().Payload__c = JSON.serializePretty(
-            JSON.deserializeUntyped(apiCtrl.getRequest().getBody())
-        );
+        logger.peek().Payload__c = JSON.serializePretty(JSON.deserializeUntyped(apiCtrl.getRequest().getBody()));
     }
 
     /**
@@ -182,10 +176,7 @@ public with sharing class NKS_NavTaskManager {
     //#################################################
 
     public class NavTaskRequest {
-        @invocableVariable(
-            label='Request type for the NAV task, valid valued are POST or EDIT'
-            required=true
-        )
+        @invocableVariable(label='Request type for the NAV task, valid valued are POST or EDIT' required=true)
         public String requestType;
         @invocableVariable
         public NavTask__c task;
@@ -292,12 +283,8 @@ public with sharing class NKS_NavTaskManager {
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
             tilordnetRessurs = task.NKS_Assignee__c; //NKS -205 support for delegating NAV task to oneself in GoSys
             opprettetAvEnhetsnr = taskRequest.createdByUnitNumber;
-            versjon = taskRequest.requestType == 'EDIT'
-                ? Integer.valueOf(task.NKS_Task_Version__c)
-                : null;
-            id = taskRequest.requestType == 'EDIT'
-                ? Integer.valueOf(task.INT_External_Reference__c)
-                : null;
+            versjon = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.NKS_Task_Version__c) : null;
+            id = taskRequest.requestType == 'EDIT' ? Integer.valueOf(task.INT_External_Reference__c) : null;
             //temagruppe = taskRequest.themeGroupCode; REF: NKS - 53 not sending this value to API as it is currently not being used for any functionality.
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;

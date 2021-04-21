@@ -14,9 +14,7 @@
     </template>
 
     <!-- Date and type -->
-    <div class="slds-text-body_regular slds-p-vertical_xx-small">
-        {journalpostDate} / {fromToType}
-    </div>
+    <div class="slds-text-body_regular slds-p-vertical_xx-small">{journalpostDate} / {fromToType}</div>
 
     <!-- Journalpost attachments -->
     <template if:true={hasAttachments}>
@@ -26,10 +24,7 @@
             <template for:each={attachments} for:item="dokument">
                 <li key={dokument.dokumentInfoId}>
                     <div class="slds-p-top_xx-small">
-                        <c-nks-saf-document-link
-                            dokument-info={dokument}
-                            journalpost-id={journalpost.journalpostId}
-                        >
+                        <c-nks-saf-document-link dokument-info={dokument} journalpost-id={journalpost.journalpostId}>
                         </c-nks-saf-document-link>
                     </div>
                 </li>

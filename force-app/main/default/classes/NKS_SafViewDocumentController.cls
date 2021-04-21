@@ -101,11 +101,7 @@ public with sharing class NKS_SafViewDocumentController {
         NKS_SafService service = new NKS_SafService();
 
         try {
-            NKS_SafGetDocumentResponse response = service.getSafDocument(
-                journalId,
-                documentInfoId,
-                variantFormat
-            );
+            NKS_SafGetDocumentResponse response = service.getSafDocument(journalId, documentInfoId, variantFormat);
 
             if (true == response.isSuccess) {
                 contentType = response.contentType;
@@ -113,19 +109,9 @@ public with sharing class NKS_SafViewDocumentController {
 
                 setPageHeader('content-disposition', contentDisposition);
 
-                documentData =
-                    'data:' +
-                    contentType +
-                    ';base64,' +
-                    response.documentString +
-                    '#toolbar=0&zoom=100';
+                documentData = 'data:' + contentType + ';base64,' + response.documentString + '#toolbar=0&zoom=100';
             } else {
-                setError(
-                    'Kunne ikke laste dokumentet [' +
-                    response.error.error +
-                    '].',
-                    response.error.message
-                );
+                setError('Kunne ikke laste dokumentet [' + response.error.error + '].', response.error.message);
             }
         } catch (Exception ex) {
             setError('Kunne ikke laste dokumentet.', ex.getMessage());
