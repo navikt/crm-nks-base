@@ -3,8 +3,7 @@ public without sharing class FamilyRelationViewerController {
     public static List<Relation> getRelatedPersons(Id recordId, String objectApiName) {
         Id personId;
         if (objectApiName == 'Case')
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]
-            .Account.CRM_Person__c;
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
         else if (objectApiName == 'Account')
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
 
@@ -27,10 +26,7 @@ public without sharing class FamilyRelationViewerController {
 
         Map<String, String> roleByRelatedPersonIdent = new Map<String, String>();
         for (PersonJSONFieldObjects.Familierelasjoner familyRelation : familyRelations) {
-            roleByRelatedPersonIdent.put(
-                familyRelation.relatertPersonsIdent,
-                familyRelation.relatertPersonsRolle
-            );
+            roleByRelatedPersonIdent.put(familyRelation.relatertPersonsIdent, familyRelation.relatertPersonsRolle);
         }
 
         List<Person__c> relatedPersons = getRelatedPersons(roleByRelatedPersonIdent.keySet());
@@ -76,8 +72,7 @@ public without sharing class FamilyRelationViewerController {
             String role = relatedPersonIds.get(person.Name).toLowerCase().capitalize();
             if (person.INT_DateOfBirth__c != null) {
                 Integer age = Integer.valueOf(
-                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00')
-                        .daysBetween(Date.Today()) / 365
+                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
                 );
                 if (age <= 21 && role == 'Barn')
                     withoutChildrenOver21.add(person);
@@ -100,8 +95,7 @@ public without sharing class FamilyRelationViewerController {
                 if (marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig')
                     maritalrelation.disableurl = true;
             }
-            maritalrelation.role =
-                'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize();
+            maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize();
             maritalrelation.child = false;
             return maritalrelation;
         } else
@@ -117,8 +111,7 @@ public without sharing class FamilyRelationViewerController {
             Integer age;
             if (person.INT_DateOfBirth__c != null)
                 age = Integer.valueOf(
-                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00')
-                        .daysBetween(Date.Today()) / 365
+                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
                 );
             String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
 
@@ -167,18 +160,12 @@ public without sharing class FamilyRelationViewerController {
     }
 
     private static String getFamilyRelationJSONString(Id personId) {
-        return [SELECT Id, INT_FamilyRelations__c FROM Person__c WHERE Id = :personId]
-        .INT_FamilyRelations__c;
+        return [SELECT Id, INT_FamilyRelations__c FROM Person__c WHERE Id = :personId].INT_FamilyRelations__c;
     }
 
     private static List<Person__c> getPerson(Id personId) {
         return [
-            SELECT
-                Id,
-                INT_MaritalRelation__c,
-                INT_MaritalStatus__c,
-                INT_ActorId__c,
-                INT_DateOfBirth__c
+            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c
             FROM Person__c
             WHERE Id = :personId
             LIMIT 1

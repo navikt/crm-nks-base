@@ -1,8 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
-import {
-    FlowAttributeChangeEvent,
-    FlowNavigationNextEvent
-} from 'lightning/flowSupport';
+import { FlowAttributeChangeEvent, FlowNavigationNextEvent } from 'lightning/flowSupport';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import Quickchoice_Images from '@salesforce/resourceUrl/fbc_Quickchoice_Images'; //Static Resource containing images for Visual Cards
 
@@ -111,8 +108,7 @@ export default class QuickChoiceFSC extends LightningElement {
             let picklistOptions = [];
             this._allValues = [];
             this._allLabels = [];
-            if (this.allowNoneToBeChosen)
-                picklistOptions.push({ label: '--None--', value: 'None' });
+            if (this.allowNoneToBeChosen) picklistOptions.push({ label: '--None--', value: 'None' });
 
             // Picklist values
             data.values.forEach((key) => {
@@ -125,10 +121,7 @@ export default class QuickChoiceFSC extends LightningElement {
             });
 
             // Sort Picklist Values
-            this.picklistOptionsStorage = this.doSort(
-                picklistOptions,
-                this.sortList
-            );
+            this.picklistOptionsStorage = this.doSort(picklistOptions, this.sortList);
 
             console.log('displayMode is' + this.displayMode);
 
@@ -136,20 +129,12 @@ export default class QuickChoiceFSC extends LightningElement {
                 this.setPicklistOptions();
             }
             if (this._allValues && this._allValues.length) {
-                this.dispatchFlowAttributeChangedEvent(
-                    'allValues',
-                    this._allValues
-                );
-                this.dispatchFlowAttributeChangedEvent(
-                    'allLabels',
-                    this._allLabels
-                );
+                this.dispatchFlowAttributeChangedEvent('allValues', this._allValues);
+                this.dispatchFlowAttributeChangedEvent('allLabels', this._allLabels);
             }
         } else if (error) {
             this.error = JSON.stringify(error);
-            console.log(
-                'getPicklistValues wire service returned error: ' + this.error
-            );
+            console.log('getPicklistValues wire service returned error: ' + this.error);
         }
     }
 
@@ -197,11 +182,7 @@ export default class QuickChoiceFSC extends LightningElement {
         let fieldValue = (row) => row['label'] || '';
         return [
             ...value.sort(
-                (a, b) => (
-                    (a = fieldValue(a).toUpperCase()),
-                    (b = fieldValue(b).toUpperCase()),
-                    (a > b) - (b > a)
-                )
+                (a, b) => ((a = fieldValue(a).toUpperCase()), (b = fieldValue(b).toUpperCase()), (a > b) - (b > a))
             )
         ];
     }
@@ -296,25 +277,16 @@ export default class QuickChoiceFSC extends LightningElement {
             this.options = options;
             this.items = items;
         } else {
-            console.log(
-                "SmartChoiceFSC: Need a valid Input Mode value. Didn't get one"
-            );
-            throw new Error(
-                "SmartChoiceFSC: Need a valid Input Mode value. Didn't get one"
-            );
+            console.log("SmartChoiceFSC: Need a valid Input Mode value. Didn't get one");
+            throw new Error("SmartChoiceFSC: Need a valid Input Mode value. Didn't get one");
         }
     }
 
     //show default visual card as selected
     renderedCallback() {
         if (this.showVisual && this.value != null) {
-            if (
-                this.template.querySelector('[data-id="' + this.value + '"]') !=
-                null
-            ) {
-                this.template.querySelector(
-                    '[data-id="' + this.value + '"]'
-                ).checked = true;
+            if (this.template.querySelector('[data-id="' + this.value + '"]') != null) {
+                this.template.querySelector('[data-id="' + this.value + '"]').checked = true;
             }
         }
     }
@@ -322,16 +294,8 @@ export default class QuickChoiceFSC extends LightningElement {
     @api
     validate() {
         //If the component is invalid, return the isValid parameter as false and return an error message.
-        console.log(
-            'entering validate: required=' +
-                this.required +
-                ' value=' +
-                this.value
-        );
-        let errorMessage =
-            'You must make a selection in: ' +
-            this.masterLabel +
-            ' to continue';
+        console.log('entering validate: required=' + this.required + ' value=' + this.value);
+        let errorMessage = 'You must make a selection in: ' + this.masterLabel + ' to continue';
 
         if (this.required === true && !this.value) {
             return {
@@ -345,15 +309,10 @@ export default class QuickChoiceFSC extends LightningElement {
 
     handleChange(event) {
         console.log('EVENT', event);
-        this.selectedValue = this.showVisual
-            ? event.target.value
-            : event.detail.value;
+        this.selectedValue = this.showVisual ? event.target.value : event.detail.value;
         console.log('selected value is: ' + this.selectedValue);
         this.dispatchFlowAttributeChangedEvent('value', this.selectedValue);
-        if (
-            this.navOnSelect &&
-            this.availableActions.find((action) => action === 'NEXT')
-        ) {
+        if (this.navOnSelect && this.availableActions.find((action) => action === 'NEXT')) {
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
         }
@@ -361,24 +320,16 @@ export default class QuickChoiceFSC extends LightningElement {
 
     setSelectedLabel() {
         if (this.options && this.options.length) {
-            let selectedOption = this.options.find(
-                (curOption) => curOption.value === this.selectedValue
-            );
+            let selectedOption = this.options.find((curOption) => curOption.value === this.selectedValue);
             if (selectedOption && selectedOption.label) {
                 this._selectedLabel = selectedOption.label;
-                this.dispatchFlowAttributeChangedEvent(
-                    'selectedLabel',
-                    this._selectedLabel
-                );
+                this.dispatchFlowAttributeChangedEvent('selectedLabel', this._selectedLabel);
             }
         }
     }
 
     dispatchFlowAttributeChangedEvent(attributeName, attributeValue) {
-        const attributeChangeEvent = new FlowAttributeChangeEvent(
-            attributeName,
-            attributeValue
-        );
+        const attributeChangeEvent = new FlowAttributeChangeEvent(attributeName, attributeValue);
         this.dispatchEvent(attributeChangeEvent);
     }
 

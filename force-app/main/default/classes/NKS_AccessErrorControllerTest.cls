@@ -18,11 +18,7 @@ private without sharing class NKS_AccessErrorControllerTest {
         String result;
 
         Test.startTest();
-        result = NKS_AccessErrorController.checkAccess(
-            'CRM_Person__c',
-            'Account',
-            p.CRM_Account__c
-        );
+        result = NKS_AccessErrorController.checkAccess('CRM_Person__c', 'Account', p.CRM_Account__c);
         Test.stopTest();
 
         System.assertEquals(null, result, 'null');

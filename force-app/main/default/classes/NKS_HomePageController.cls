@@ -42,20 +42,14 @@ public with sharing class NKS_HomePageController {
             for (String u : userskills) {
                 skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
             }
-            query +=
-                ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' +
-                skillstring.removeEnd(',') +
-                '))';
+            query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
                 skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
             }
-            query +=
-                ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
-                skillstring.removeEnd(',') +
-                ')';
+            query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
@@ -113,19 +107,14 @@ public with sharing class NKS_HomePageController {
 
     private static String getImageUrl(Id recordId) {
         String contentversionid = [
-            SELECT
-                Id,
-                ContentDocumentId,
-                ContentDocument.LatestPublishedVersionId,
-                ContentDocument.ContentModifiedDate
+            SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.ContentModifiedDate
             FROM ContentDocumentLink
             WHERE LinkedEntityId = :recordId
             ORDER BY ContentDocument.ContentModifiedDate DESC
             LIMIT 1
         ]
         ?.ContentDocument.LatestPublishedVersionId;
-        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
-            contentversionid;
+        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 
     private static Set<String> getUserSkills(Id userId) {

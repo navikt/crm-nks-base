@@ -3,10 +3,7 @@ import setStatusCompleted from '@salesforce/apex/ChatAuthController.setStatusCom
 
 export default class AuthenticationCompletedHandler extends LightningElement {
     connectedCallback() {
-        const chatTranscriptId = this.getUrlParamValue(
-            window.location.href,
-            'ctid'
-        );
+        const chatTranscriptId = this.getUrlParamValue(window.location.href, 'ctid');
 
         setStatusCompleted({ chatTranscriptId: chatTranscriptId })
             .then((result) => {

@@ -7,10 +7,7 @@
             sub-theme={selectedSubTheme}
         >
         </c-nks-themes-picklists>
-        <c-nks-quick-text
-            oncommentschange={handleConversationNoteChange}
-            conversation-note={conversationNote}
-        >
+        <c-nks-quick-text oncommentschange={handleConversationNoteChange} conversation-note={conversationNote}>
         </c-nks-quick-text>
         <b>Husk å ikke notere personopplysninger</b>
         <br /><br />
@@ -28,13 +25,7 @@
 
             <!--<div data-id="task" class="hide">-->
             <template if:true={createTask}>
-                <lightning-input
-                    type="date"
-                    required=""
-                    value={dueDate}
-                    label="Frist"
-                    onchange={handleDueDateChange}
-                >
+                <lightning-input type="date" required="" value={dueDate} label="Frist" onchange={handleDueDateChange}>
                 </lightning-input>
 
                 <lightning-textarea

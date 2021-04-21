@@ -53,15 +53,9 @@ public class KafkaOppgaveHandler_Test {
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
         );
         UTIL_TestDataFactory.createRecord(
-            new Common_Code__c(
-                CRM_Code__c = 'KONT_BRUK',
-                Name = 'Kontakt Bruker',
-                CRM_Code_Set__c = 'Oppgavetyper'
-            )
+            new Common_Code__c(CRM_Code__c = 'KONT_BRUK', Name = 'Kontakt Bruker', CRM_Code_Set__c = 'Oppgavetyper')
         );
-        UTIL_TestDataFactory.createRecord(
-            new NavTask__c(Name = 'TEST TASK', INT_External_Reference__c = 53339)
-        );
+        UTIL_TestDataFactory.createRecord(new NavTask__c(Name = 'TEST TASK', INT_External_Reference__c = 53339));
     }
 
     @isTest
@@ -90,9 +84,7 @@ public class KafkaOppgaveHandler_Test {
         messages.add(
             new KafkaMessage__c(
                 CRM_Key__c = '53338',
-                CRM_Value__c = EncodingUtil.base64Encode(
-                    Blob.valueOf(JSON.serialize(invalidNavUnitTest))
-                )
+                CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(invalidNavUnitTest)))
             )
         );
         messages.add(

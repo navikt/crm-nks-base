@@ -10,11 +10,7 @@ import USER_ID from '@salesforce/user/Id';
 import USER_NAV_UNIT_FIELD from '@salesforce/schema/User.Department';
 import USER_NAV_IDENT_FIELD from '@salesforce/schema/User.CRM_NAV_Ident__c';
 
-import {
-    subscribe,
-    unsubscribe,
-    MessageContext
-} from 'lightning/messageService';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Nav_Task_Work_Allocation_Validation_Error';
@@ -99,18 +95,14 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     }
 
     get showContent() {
-        return (
-            null != this.personId && null != this.theme && null != this.taskType
-        );
+        return null != this.personId && null != this.theme && null != this.taskType;
     }
 
     //Lightning message service subscribe
     subscribeToMessageChannel() {
         if (!this.subscription) {
-            this.subscription = subscribe(
-                this.messageContext,
-                nksSingleValueUpdate,
-                (message) => this.handleMessage(message)
+            this.subscription = subscribe(this.messageContext, nksSingleValueUpdate, (message) =>
+                this.handleMessage(message)
             );
         }
     }
@@ -184,8 +176,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     delegationChange(event) {
         this.delegateToSelf = event.target.checked;
 
-        this.selectedId =
-            this.delegateToSelf === true ? this.userNavUnitId.data : null;
+        this.selectedId = this.delegateToSelf === true ? this.userNavUnitId.data : null;
     }
 
     @api

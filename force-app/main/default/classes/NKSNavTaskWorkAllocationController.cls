@@ -17,9 +17,7 @@ public with sharing class NKSNavTaskWorkAllocationController {
         String themeSubThemeCode,
         String taskType
     ) {
-        NKS_NavUnitPersonUtility utility = new NKS_NavUnitPersonUtility(
-            service
-        );
+        NKS_NavUnitPersonUtility utility = new NKS_NavUnitPersonUtility(service);
 
         NKS_NorgNavUnitService.WorkAllocationResponse response = utility.getWorkAllocation(
             personId,
@@ -34,9 +32,7 @@ public with sharing class NKSNavTaskWorkAllocationController {
         return response;
     }
 
-    private static void setUnitId(
-        List<NKS_NavUnitWorkAllocation> responseUnits
-    ) {
+    private static void setUnitId(List<NKS_NavUnitWorkAllocation> responseUnits) {
         Map<String, NKS_NavUnitWorkAllocation> unitMap = new Map<String, NKS_NavUnitWorkAllocation>();
 
         for (NKS_NavUnitWorkAllocation unit : responseUnits) {
@@ -48,9 +44,7 @@ public with sharing class NKSNavTaskWorkAllocationController {
             FROM NavUnit__c
             WHERE INT_UnitNumber__c IN :unitMap.keySet()
         ]) {
-            NKS_NavUnitWorkAllocation unit = unitMap.get(
-                sfUnit.INT_UnitNumber__c
-            );
+            NKS_NavUnitWorkAllocation unit = unitMap.get(sfUnit.INT_UnitNumber__c);
 
             unit.sfId = null == unit ? '' : sfUnit.Id;
         }
@@ -58,11 +52,6 @@ public with sharing class NKSNavTaskWorkAllocationController {
 
     @AuraEnabled(cacheable=true)
     public static String getUserNavUnitId(String userUnitNumber) {
-        return [
-            SELECT Id
-            FROM NavUnit__c
-            WHERE INT_UnitNumber__c = :userUnitNumber
-        ]
-        ?.Id;
+        return [SELECT Id FROM NavUnit__c WHERE INT_UnitNumber__c = :userUnitNumber]?.Id;
     }
 }

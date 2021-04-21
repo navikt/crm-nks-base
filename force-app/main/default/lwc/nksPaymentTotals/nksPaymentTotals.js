@@ -31,8 +31,7 @@ export default class NksPaymentTotals extends LightningElement {
                         if (payment.data.ytelseListe) {
                             payment.data.ytelseListe.forEach((ytelse) => {
                                 if (ytelseTotals.hasOwnProperty(ytelse.ytelsestype.value)) {
-                                    ytelseTotals[ytelse.ytelsestype.value].totalNetAmount +=
-                                        ytelse.ytelseNettobeloep;
+                                    ytelseTotals[ytelse.ytelsestype.value].totalNetAmount += ytelse.ytelseNettobeloep;
                                     ytelseTotals[ytelse.ytelsestype.value].totalDeductions +=
                                         ytelse.skattsum + ytelse.trekksum;
                                     ytelseTotals[ytelse.ytelsestype.value].totalGrossAmount +=

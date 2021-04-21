@@ -43,11 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <template
-                                    for:each={listRecords}
-                                    for:item="record"
-                                    for:index="rowIndex"
-                                >
+                                <template for:each={listRecords} for:item="record" for:index="rowIndex">
                                     <template if:true={clickableRows}>
                                         <tr
                                             key={record}
@@ -56,32 +52,18 @@
                                             onclick={handleRowClick}
                                             style="cursor: pointer"
                                         >
-                                            <template
-                                                for:each={record.recordFields}
-                                                for:item="field"
-                                            >
+                                            <template for:each={record.recordFields} for:item="field">
                                                 <th key={field.value} scope="row">
-                                                    <div class="slds-truncate slds-cell-wrap">
-                                                        {field.value}
-                                                    </div>
+                                                    <div class="slds-truncate slds-cell-wrap">{field.value}</div>
                                                 </th>
                                             </template>
                                         </tr>
                                     </template>
                                     <template if:false={clickableRows}>
-                                        <tr
-                                            key={record}
-                                            data-value={rowIndex}
-                                            class="slds-hint-parent"
-                                        >
-                                            <template
-                                                for:each={record.recordFields}
-                                                for:item="field"
-                                            >
+                                        <tr key={record} data-value={rowIndex} class="slds-hint-parent">
+                                            <template for:each={record.recordFields} for:item="field">
                                                 <th key={field.value} scope="row">
-                                                    <div class="slds-truncate slds-cell-wrap">
-                                                        {field.value}
-                                                    </div>
+                                                    <div class="slds-truncate slds-cell-wrap">{field.value}</div>
                                                 </th>
                                             </template>
                                         </tr>

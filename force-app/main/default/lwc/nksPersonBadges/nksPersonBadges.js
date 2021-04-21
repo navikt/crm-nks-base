@@ -36,10 +36,7 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showIntepreterSpokenLanguage() {
-        return (
-            'spokenLanguageIntepreter' === this.infoPanelToShow &&
-            0 < this.interpreterSpokenLanguages.length
-        );
+        return 'spokenLanguageIntepreter' === this.infoPanelToShow && 0 < this.interpreterSpokenLanguages.length;
     }
 
     get showSecurityMeasures() {
@@ -47,10 +44,7 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showGuardianship() {
-        return (
-            'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow &&
-            0 < this.guardianships.length
-        );
+        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow && 0 < this.guardianships.length;
     }
 
     get showPowerOfAttorney() {

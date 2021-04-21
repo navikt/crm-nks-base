@@ -55,9 +55,7 @@ Additional components packaged with this LWC:
     <!-- Display Visual Card Pickers -->
     <template if:true={showVisual}>
         <fieldset class="slds-form-element">
-            <legend class="slds-form-element__legend slds-form-element__label">
-                {masterLabel}
-            </legend>
+            <legend class="slds-form-element__legend slds-form-element__label">{masterLabel}</legend>
             <div class={gridClass} style={gridStyle}>
                 <template for:each={items} for:item="item">
                     <div key={item.name} class={columnClass}>
@@ -92,42 +90,24 @@ Additional components packaged with this LWC:
                                     <div
                                         class="slds-media__body slds-border_left slds-p-left_small slds-p-top_xxx-small"
                                     >
-                                        <span
-                                            class="slds-text-heading_medium slds-m-bottom_x-small"
-                                            >{item.name}</span
-                                        >
-                                        <span class="slds-text-title"
-                                            >{item.description}</span
-                                        >
+                                        <span class="slds-text-heading_medium slds-m-bottom_x-small">{item.name}</span>
+                                        <span class="slds-text-title">{item.description}</span>
                                     </div>
                                 </span>
                             </template>
 
                             <!-- Display Visual Card Pickers without Icons-->
                             <template if:false={includeIcons}>
-                                <span
-                                    class="slds-visual-picker__figure slds-visual-picker__text"
-                                >
+                                <span class="slds-visual-picker__figure slds-visual-picker__text">
                                     <span>
-                                        <span
-                                            class="slds-text-heading_medium slds-m-bottom_x-small"
-                                            >{item.name}</span
-                                        >
-                                        <span class="slds-text-title"
-                                            >{item.description}</span
-                                        >
+                                        <span class="slds-text-heading_medium slds-m-bottom_x-small">{item.name}</span>
+                                        <span class="slds-text-title">{item.description}</span>
                                     </span>
                                 </span>
                             </template>
 
-                            <span
-                                class="icon-container slds-visual-picker__text-check"
-                            >
-                                <lightning-icon
-                                    icon-name="utility:check"
-                                    size="x-small"
-                                    variant="inverse"
-                                >
+                            <span class="icon-container slds-visual-picker__text-check">
+                                <lightning-icon icon-name="utility:check" size="x-small" variant="inverse">
                                 </lightning-icon>
                             </span>
                         </label>

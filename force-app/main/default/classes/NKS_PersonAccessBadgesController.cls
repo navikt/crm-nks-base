@@ -3,11 +3,7 @@ public without sharing class NKS_PersonAccessBadgesController {
      * @description Get an apex type holding all the data we need for showing badges.
      */
     @AuraEnabled(cacheable=true)
-    public static List<AccessBadge> getPersonAccessBadges(
-        String field,
-        String parentObject,
-        String parentRecordId
-    ) {
+    public static List<AccessBadge> getPersonAccessBadges(String field, String parentObject, String parentRecordId) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
         Person__c person = getPerson(personId);
         return createAccessBadgeList(person);
@@ -45,12 +41,7 @@ public without sharing class NKS_PersonAccessBadgesController {
      */
     private static Id getPersonId(String field, String parentObject, String parentRecordId) {
         Id personId = null;
-        String queryString =
-            'SELECT ' +
-            field +
-            ' FROM ' +
-            parentObject +
-            ' WHERE Id = :parentRecordId LIMIT 1';
+        String queryString = 'SELECT ' + field + ' FROM ' + parentObject + ' WHERE Id = :parentRecordId LIMIT 1';
         List<SObject> objList = Database.query(String.escapeSingleQuotes(queryString));
 
         if (false == objList.isEmpty()) {
@@ -67,10 +58,7 @@ public without sharing class NKS_PersonAccessBadgesController {
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {
-            return getFieldValue(
-                obj.getSObject(fieldNameList.remove(0)),
-                String.join(fieldNameList, '.')
-            );
+            return getFieldValue(obj.getSObject(fieldNameList.remove(0)), String.join(fieldNameList, '.'));
         }
 
         return obj.get(fieldNameList[0]);

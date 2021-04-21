@@ -16,30 +16,18 @@ public without sharing class ChatAuthController {
                 lct.NKS_Authentication_Timestamp__c = DateTime.now();
 
                 if (String.isNotBlank(lct.CaseId)) {
-                    Case casy = new Case(
-                        Id = lct.CaseId,
-                        AccountId = accountId,
-                        ContactId = contactId
-                    );
+                    Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
                     recordsToUpdate.add(casy);
                 }
             }
             update recordsToUpdate;
         } catch (Exception ex) {
-            throw new AuraHandledException(
-                ex.getTypeName() +
-                ' : ' +
-                'Failed to update authentication status'
-            );
+            throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Failed to update authentication status');
         }
     }
 
     private static LiveChatTranscript getChatTranscript(Id chatTranscriptId) {
-        return [
-            SELECT Id, CaseId
-            FROM LiveChatTranscript
-            WHERE Id = :chatTranscriptId
-        ];
+        return [SELECT Id, CaseId FROM LiveChatTranscript WHERE Id = :chatTranscriptId];
     }
 
     /**
@@ -49,17 +37,9 @@ public without sharing class ChatAuthController {
      **/
     @AuraEnabled
     public static string getCommunityAuthUrl() {
-        List<Network> community = [
-            SELECT Id, Name, UrlPathPrefix
-            FROM Network
-            WHERE Name = 'nks'
-        ];
-        String communityUrl = community.isEmpty()
-            ? ''
-            : Network.getLoginUrl(community[0].Id);
-        communityUrl = communityUrl.removeEnd(
-            communityUrl.substringAfterLast('/')
-        );
+        List<Network> community = [SELECT Id, Name, UrlPathPrefix FROM Network WHERE Name = 'nks'];
+        String communityUrl = community.isEmpty() ? '' : Network.getLoginUrl(community[0].Id);
+        communityUrl = communityUrl.removeEnd(communityUrl.substringAfterLast('/'));
         communityUrl += 's/identity-verified?ctid=';
 
         return communityUrl;
@@ -93,19 +73,13 @@ public without sharing class ChatAuthController {
                 'ACCOUNTID' => trans.accountId,
                 'CASEID' => trans.CaseId,
                 'PERSONID' => trans.Account.CRM_Person__c,
-                'CHAT_LANGUAGE' => String.isNotBlank(
-                        trans.LiveChatButton.WindowLanguage
-                    )
+                'CHAT_LANGUAGE' => String.isNotBlank(trans.LiveChatButton.WindowLanguage)
                     ? trans.LiveChatButton.WindowLanguage
                     : 'no'
             };
             return chatInfo;
         } catch (Exception ex) {
-            throw new AuraHandledException(
-                ex.getTypeName() +
-                ' : ' +
-                'Could not retrieve authentication status'
-            );
+            throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Could not retrieve authentication status');
         }
     }
 
