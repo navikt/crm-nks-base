@@ -66,7 +66,7 @@ public class NKS_NavSakService {
     private static void handleError(String message, HttpResponse payload) {
         LoggerUtility logger = new LoggerUtility('Journal');
         logger.httpError(message, payload, null, CRM_ApplicationDomain.Domain.NKS);
-        logger.publishSynch();
+        logger.publish();
     }
 
     public static String generateGraphBody(String actorId) {
