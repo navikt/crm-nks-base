@@ -546,7 +546,7 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value
-                    >NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_SpeilURL__c</value>
+                    >NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
