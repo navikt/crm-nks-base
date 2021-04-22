@@ -57,7 +57,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
             }
         }
 
-        logger.publish();
+        logger.publishSynch();
     }
 
     private void processMessage(KafkaMessage__c message) {
@@ -70,10 +70,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
         );
 
         //Call on virtual message to populate the notification
-        buildNotification(
-            KafkaMessageUtils.base64ULSafeDecode(message.CRM_Value__c).toString(),
-            notification
-        );
+        buildNotification(KafkaMessageUtils.base64ULSafeDecode(message.CRM_Value__c).toString(), notification);
 
         notification.INT_LastUpdatedFromKafka__c = message.CreatedDate;
         message.CRM_Status__c = KafkaMessageService.STATUS_PROCESSED;
@@ -87,10 +84,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
     /**
      * Method to be ovveridden with the desired mapping from the kafka value to the UserNotification__c record
      */
-    protected virtual void buildNotification(
-        String decodedValue,
-        UserNotification__c notification
-    ) {
+    protected virtual void buildNotification(String decodedValue, UserNotification__c notification) {
         System.debug('buildNotification');
     }
 
@@ -128,10 +122,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
             if (upsList[index].isSuccess()) {
                 // Successful upsert
             } else {
-                setMessageError(
-                    upsList[index].getErrors(),
-                    messageMap.get(notificationsToUpsert[index].INT_key__c)
-                );
+                setMessageError(upsList[index].getErrors(), messageMap.get(notificationsToUpsert[index].INT_key__c));
             }
         }
     }
@@ -217,13 +208,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
     private void setMessageError(List<Database.Error> errList, KafkaMessage__c message) {
         String errorMsg = '';
         for (Database.Error err : errList) {
-            errorMsg =
-                err.getStatusCode() +
-                ': ' +
-                err.getMessage() +
-                ' - ' +
-                'FIELDS: ' +
-                err.getFields();
+            errorMsg = err.getStatusCode() + ': ' + err.getMessage() + ' - ' + 'FIELDS: ' + err.getFields();
         }
         setMessageError(errorMsg, message);
     }
