@@ -20,10 +20,7 @@ public class NKS_JournalUtilities_Test {
         Test.stopTest();
 
         System.assertNotEquals(stringToEncode, encodedString);
-        System.assertEquals(
-            Blob.toPdf(stringToEncode).size(),
-            EncodingUtil.base64Decode(encodedString).size()
-        );
+        System.assertEquals(Blob.toPdf(stringToEncode).size(), EncodingUtil.base64Decode(encodedString).size());
     }
 
     @isTest
@@ -32,12 +29,7 @@ public class NKS_JournalUtilities_Test {
 
         Test.setMock(
             HttpCalloutMock.class,
-            new SingleRequestMock(
-                200,
-                'OK',
-                '{"journalpostId": "3456787", "journalpostferdigstilt": true}',
-                null
-            )
+            new SingleRequestMock(200, 'OK', '{"journalpostId": "3456787", "journalpostferdigstilt": true}', null)
         );
 
         NKS_JournalUtilities.utilityRequest utilRequest = new NKS_JournalUtilities.utilityRequest(
@@ -53,11 +45,7 @@ public class NKS_JournalUtilities_Test {
             .journalpostId;
         Test.stopTest();
 
-        System.assertEquals(
-            '3456787',
-            journalPostId,
-            'Incorrect Journal post ID'
-        );
+        System.assertEquals('3456787', journalPostId, 'Incorrect Journal post ID');
     }
 
     @isTest
@@ -66,12 +54,7 @@ public class NKS_JournalUtilities_Test {
 
         Test.setMock(
             HttpCalloutMock.class,
-            new SingleRequestMock(
-                401,
-                'Unauthorized',
-                '{"statusCode": 401, "message": ERROR}',
-                null
-            )
+            new SingleRequestMock(401, 'Unauthorized', '{"statusCode": 401, "message": ERROR}', null)
         );
 
         NKS_JournalUtilities.utilityRequest utilRequest = new NKS_JournalUtilities.utilityRequest(

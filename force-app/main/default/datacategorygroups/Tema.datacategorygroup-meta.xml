@@ -43,6 +43,26 @@
             <name>Arbeid</name>
         </dataCategory>
         <dataCategory>
+            <label>Arbeidsgiver og Samhandler</label>
+            <name>ArbeidsgiverSamhandler</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Familie</label>
+            <name>Familie</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Gjeldsrådgivning</label>
+            <name>Gjeldsraadgivning</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Sykefraværsoppfølging</label>
+            <name>Sykefravaersoppfolging</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Permittering og rekruttering</label>
+            <name>Permittering_og_rekruttering</name>
+        </dataCategory>
+        <dataCategory>
             <label>Dialogrutinen</label>
             <name>Dialogrutinen</name>
         </dataCategory>
@@ -92,7 +112,7 @@
         </dataCategory>
         <dataCategory>
             <label>Sosiale tjenester</label>
-            <name>Sosiale_tjenester</name>
+            <name>SosialeTjenester</name>
         </dataCategory>
         <dataCategory>
             <label>Stillingsregistrering</label>
@@ -108,7 +128,7 @@
         </dataCategory>
         <dataCategory>
             <label>Uføretrygd</label>
-            <name>Uf_retrygd</name>
+            <name>Ufoeretrygd</name>
         </dataCategory>
         <dataCategory>
             <label>Økonomi og gjeld</label>

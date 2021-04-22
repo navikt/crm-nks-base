@@ -44,12 +44,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
         List<KafkaOppgave> tasksToConvert = new List<KafkaOppgave>();
 
         for (NavTask__c navTask : [
-            SELECT
-                Id,
-                INT_External_Reference__c,
-                NKS_Comments__c,
-                NKS_Task_Version__c,
-                NKS_Comment_History__c
+            SELECT Id, INT_External_Reference__c, NKS_Comments__c, NKS_Task_Version__c, NKS_Comment_History__c
             FROM NavTask__c
             WHERE INT_External_Reference__c IN :kafkaTaskMap.keySet()
         ]) {
@@ -63,9 +58,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             if (existingTaskMap.containsKey(taskRef)) {
                 newestComment = existingTaskMap.get(taskRef).NKS_Comments__c;
                 commentHistory = existingTaskMap.get(taskRef).NKS_Comment_History__c;
-                existingTaskVersion = Integer.valueOf(
-                    existingTaskMap.get(taskRef).NKS_Task_Version__c
-                );
+                existingTaskVersion = Integer.valueOf(existingTaskMap.get(taskRef).NKS_Task_Version__c);
             }
             KafkaOppgave taskToConvert;
             for (KafkaOppgave kafkaOppgave : kafkaTaskMap.get(taskRef)) {
@@ -151,10 +144,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                         mappedMsgs.add(message);
                         this.messageMap.put(message.CRM_Key__c, mappedMsgs);
                     } else {
-                        this.messageMap.put(
-                            message.CRM_Key__c,
-                            new List<KafkaMessage__c>{ message }
-                        );
+                        this.messageMap.put(message.CRM_Key__c, new List<KafkaMessage__c>{ message });
                     }
                     message.CRM_Status__c = KafkaMessageService.STATUS_PROCESSED;
                 } else {
@@ -194,9 +184,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 convertedTask = convertToNavTask(kafkaOppgave);
             } catch (Exception ex) {
                 //If conversion throws exception, add error to related kafka messages
-                for (
-                    KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))
-                ) {
+                for (KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))) {
                     String errorMsg =
                         'Exception: ' +
                         ex.getTypeName() +
@@ -240,15 +228,11 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.NKS_Comments__c = kafkaOppgave.beskrivelse;
-            navTask.NKS_TaskType__c = this.commonCodeMap.containsKey(
-                    'Oppgavetyper' + kafkaOppgave.oppgavetype
-                )
+            navTask.NKS_TaskType__c = this.commonCodeMap.containsKey('Oppgavetyper' + kafkaOppgave.oppgavetype)
                 ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
                 : null;
             navTask.NKS_Theme__c = this.commonCodeMap.get('Tema' + kafkaOppgave.tema);
-            navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey(
-                    'Behandlingstema' + kafkaOppgave.tema
-                )
+            navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey('Behandlingstema' + kafkaOppgave.tema)
                 ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema)
                 : null;
             navTask.CRM_DueDate__c = String.isNotBlank(kafkaOppgave.fristFerdigstillelse)
@@ -275,13 +259,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             }
 
             if ((!actorExists && kafkaOppgave.getActorId() != null) || !mappedTheme) {
-                String errorMessage = !actorExists
-                    ? 'Actor not found: ' + kafkaOppgave.getActorId()
-                    : '';
+                String errorMessage = !actorExists ? 'Actor not found: ' + kafkaOppgave.getActorId() : '';
                 errorMessage += !mappedTheme ? ' - Theme not mapped: ' + kafkaOppgave.tema : '';
-                for (
-                    KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))
-                ) {
+                for (KafkaMessage__c message : getRelatedMessages(String.valueOf(kafkaOppgave.id))) {
                     setMessageError(errorMessage, message);
                 }
             }
@@ -301,10 +281,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @param upsList
      * @param taskList
      **/
-    private void verifyUpsertResults(
-        List<Database.UpsertResult> upsList,
-        List<NavTask__c> taskList
-    ) {
+    private void verifyUpsertResults(List<Database.UpsertResult> upsList, List<NavTask__c> taskList) {
         for (Integer index = 0; index < upsList.size(); index++) {
             if (upsList[index].isSuccess()) {
                 //Successful upsert
@@ -330,13 +307,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private void setMessageError(List<Database.Error> errList, KafkaMessage__c message) {
         String errorMsg = '';
         for (Database.Error err : errList) {
-            errorMsg =
-                err.getStatusCode() +
-                ': ' +
-                err.getMessage() +
-                ' - ' +
-                'FIELDS: ' +
-                err.getFields();
+            errorMsg = err.getStatusCode() + ': ' + err.getMessage() + ' - ' + 'FIELDS: ' + err.getFields();
         }
         message.CRM_ErrorMessage__c = errorMsg.mid(0, 255); //Handle if the total error message exceeds 255 characters
         message.CRM_Status__c = KafkaMessageService.STATUS_ERROR;

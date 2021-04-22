@@ -16,11 +16,7 @@ private with sharing class NKS_NAvUnitContactInformation_Test {
         System.assertEquals(null, result.dato, 'Expected dato to be NULL');
         System.assertEquals('08:00', result.fra, 'Expected fra to be set');
         System.assertEquals('16:00', result.til, 'Expected til to be set');
-        System.assertEquals(
-            null,
-            result.kommentar,
-            'Expected kommentar to be NULL'
-        );
+        System.assertEquals(null, result.kommentar, 'Expected kommentar to be NULL');
         System.assertEquals(false, result.stengt, 'Expected stengt to be set');
         System.assertEquals(12345, result.id, 'Expected id to be set');
     }
@@ -38,18 +34,10 @@ private with sharing class NKS_NAvUnitContactInformation_Test {
         Test.stopTest();
 
         System.assertEquals(null, result.dag, 'Expected dag to be NULL');
-        System.assertEquals(
-            Date.newInstance(2017, 9, 12),
-            result.dato,
-            'Expected dato to be 2017-09-12'
-        );
+        System.assertEquals(Date.newInstance(2017, 9, 12), result.dato, 'Expected dato to be 2017-09-12');
         System.assertEquals('08:00', result.fra, 'Expected fra to be set');
         System.assertEquals('16:00', result.til, 'Expected til to be set');
-        System.assertEquals(
-            'TEST',
-            result.kommentar,
-            'Expected kommentar to be set'
-        );
+        System.assertEquals('TEST', result.kommentar, 'Expected kommentar to be set');
         System.assertEquals(true, result.stengt, 'Expected stengt to be set');
         System.assertEquals(12345, result.id, 'Expected id to be set');
     }
@@ -58,11 +46,7 @@ private with sharing class NKS_NAvUnitContactInformation_Test {
     static void adresse_TestConcatOnEmpty() {
         Test.startTest();
         NKS_NAvUnitContactInformation.Adresse adresse = new NKS_NAvUnitContactInformation.Adresse();
-        System.assertEquals(
-            '',
-            adresse.concatenatedAddress,
-            'Expected empty string'
-        );
+        System.assertEquals('', adresse.concatenatedAddress, 'Expected empty string');
         Test.stopTest();
     }
 

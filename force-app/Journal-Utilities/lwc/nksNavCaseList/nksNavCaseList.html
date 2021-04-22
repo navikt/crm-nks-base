@@ -10,9 +10,7 @@
                 <lightning-icon icon-name={chevronIcon} size="x-small"></lightning-icon>
             </lightning-layout-item>
             <lightning-layout-item flexibility="auto">
-                <h1 class="slds-text-heading_small slds-var-p-left_small slds-float_left">
-                    {themeName}
-                </h1>
+                <h1 class="slds-text-heading_small slds-var-p-left_small slds-float_left">{themeName}</h1>
             </lightning-layout-item>
         </lightning-layout>
     </div>
@@ -29,11 +27,7 @@
         </lightning-layout>
 
         <template for:each={sortedCases} for:item="navCase">
-            <c-nks-nav-case-item
-                key={navCase.fagsakId}
-                nav-case={navCase}
-                oncaseselected={handleCaseSelected}
-            >
+            <c-nks-nav-case-item key={navCase.fagsakId} nav-case={navCase} oncaseselected={handleCaseSelected}>
             </c-nks-nav-case-item>
         </template>
     </div>

@@ -31,9 +31,7 @@
                             class="slds-list_horizontal slds-has-dividers_right slds-text-body_small slds-p-left_xx-large"
                         >
                             <template iterator:it={dokumentInfo.logiskeVedlegg}>
-                                <li class="slds-item" key={it.value.logiskVedleggId}>
-                                    {it.value.tittel}
-                                </li>
+                                <li class="slds-item" key={it.value.logiskVedleggId}>{it.value.tittel}</li>
                             </template>
                         </ul>
                     </lightning-layout-item>

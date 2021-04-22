@@ -44,26 +44,10 @@ private with sharing class NKS_SafViewDocumentController_Test {
             ApexPages.currentPage().getHeaders().get('filename'),
             'Expected the header filename to be set correct'
         );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorTitle),
-            'Expected to not have an error title'
-        );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorMessage),
-            'Expected to not have an error message'
-        );
-        System.assertEquals(
-            false,
-            ctrl.initialised,
-            'Expected initialised to be set to false in constructor'
-        );
-        System.assertEquals(
-            false,
-            ctrl.isError,
-            'Expected isError to be set to false in constructor'
-        );
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
+        System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
+        System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
+        System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false in constructor');
     }
 
     @IsTest
@@ -98,36 +82,16 @@ private with sharing class NKS_SafViewDocumentController_Test {
             ctrl.fileName,
             'Expected fileName to be set with the correct value in constructor'
         );
-        System.assertEquals(
-            'dokument',
-            ctrl.title,
-            'Expected title to be set with the correct in constructor'
-        );
+        System.assertEquals('dokument', ctrl.title, 'Expected title to be set with the correct in constructor');
         System.assertEquals(
             'dokument',
             ApexPages.currentPage().getHeaders().get('filename'),
             'Expected the header filename to be set correct'
         );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorTitle),
-            'Expected to not have an error title'
-        );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorMessage),
-            'Expected to not have an error message'
-        );
-        System.assertEquals(
-            false,
-            ctrl.initialised,
-            'Expected initialised to be set to false in constructor'
-        );
-        System.assertEquals(
-            false,
-            ctrl.isError,
-            'Expected isError to be set to false in constructor'
-        );
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
+        System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
+        System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
+        System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false in constructor');
     }
 
     @IsTest
@@ -140,26 +104,10 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ctrl = new NKS_SafViewDocumentController();
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(ctrl.errorTitle),
-            'Expected to have an error title'
-        );
-        System.assertEquals(
-            true,
-            String.isNotBlank(ctrl.errorMessage),
-            'Expected to have an error message'
-        );
-        System.assertEquals(
-            false,
-            ctrl.initialised,
-            'Expected initialised to be set to false in constructor'
-        );
-        System.assertEquals(
-            true,
-            ctrl.isError,
-            'Expected isError to be set to false in constructor'
-        );
+        System.assertEquals(true, String.isNotBlank(ctrl.errorTitle), 'Expected to have an error title');
+        System.assertEquals(true, String.isNotBlank(ctrl.errorMessage), 'Expected to have an error message');
+        System.assertEquals(false, ctrl.initialised, 'Expected initialised to be set to false in constructor');
+        System.assertEquals(true, ctrl.isError, 'Expected isError to be set to false in constructor');
     }
 
     @IsTest
@@ -195,21 +143,9 @@ private with sharing class NKS_SafViewDocumentController_Test {
             ApexPages.currentPage().getHeaders().get('content-disposition'),
             'Expected the header content-disposition to be set correct'
         );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorTitle),
-            'Expected to not have an error title'
-        );
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.errorMessage),
-            'Expected to not have an error message'
-        );
-        System.assertEquals(
-            true,
-            ctrl.initialised,
-            'Expected initialised to be set to true after getting document'
-        );
+        System.assertEquals(true, String.isBlank(ctrl.errorTitle), 'Expected to not have an error title');
+        System.assertEquals(true, String.isBlank(ctrl.errorMessage), 'Expected to not have an error message');
+        System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
         System.assertEquals(false, ctrl.isError, 'Expected isError to be set to false');
     }
 
@@ -242,26 +178,14 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ctrl.getDocument();
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.documentData),
-            'Did not expect this to be set'
-        );
+        System.assertEquals(true, String.isBlank(ctrl.documentData), 'Did not expect this to be set');
         System.assertEquals(
             true,
             ctrl.errorTitle.containsIgnoreCase(error.error),
             'Expected to have an error title containing the error type from the response'
         );
-        System.assertEquals(
-            error.message,
-            ctrl.errorMessage,
-            'Expected to have the error message from the response.'
-        );
-        System.assertEquals(
-            true,
-            ctrl.initialised,
-            'Expected initialised to be set to true after getting document'
-        );
+        System.assertEquals(error.message, ctrl.errorMessage, 'Expected to have the error message from the response.');
+        System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
         System.assertEquals(true, ctrl.isError, 'Expected isError to be set to true');
     }
 
@@ -280,26 +204,10 @@ private with sharing class NKS_SafViewDocumentController_Test {
         ctrl.getDocument();
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isBlank(ctrl.documentData),
-            'Did not expect this to be set'
-        );
-        System.assertEquals(
-            true,
-            String.isNotBlank(ctrl.errorTitle),
-            'Expected to have an error title'
-        );
-        System.assertEquals(
-            true,
-            String.isNotBlank(ctrl.errorMessage),
-            'Expected to have an error message'
-        );
-        System.assertEquals(
-            true,
-            ctrl.initialised,
-            'Expected initialised to be set to true after getting document'
-        );
+        System.assertEquals(true, String.isBlank(ctrl.documentData), 'Did not expect this to be set');
+        System.assertEquals(true, String.isNotBlank(ctrl.errorTitle), 'Expected to have an error title');
+        System.assertEquals(true, String.isNotBlank(ctrl.errorMessage), 'Expected to have an error message');
+        System.assertEquals(true, ctrl.initialised, 'Expected initialised to be set to true after getting document');
         System.assertEquals(true, ctrl.isError, 'Expected isError to be set to true');
     }
 }

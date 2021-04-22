@@ -9,16 +9,18 @@ public class NKS_NavSakService {
 
     private static Map<String, String> themeMap {
         get {
-            Map<String, String> returnMap = new Map<String, String>();
-            for (Common_Code__c theme : [
-                SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
-                FROM Common_Code__c
-                WHERE CRM_Code_set__c = 'Tema'
-                ORDER BY Name
-            ]) {
-                returnMap.put(theme.CRM_Code__c, theme.Name);
+            if (themeMap == null) {
+                themeMap = new Map<String, String>();
+                for (Common_Code__c theme : [
+                    SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
+                    FROM Common_Code__c
+                    WHERE CRM_Code_set__c = 'Tema'
+                    ORDER BY Name
+                ]) {
+                    themeMap.put(theme.CRM_Code__c, theme.Name);
+                }
             }
-            return returnMap;
+            return themeMap;
         }
         private set {
         }
@@ -66,7 +68,7 @@ public class NKS_NavSakService {
     private static void handleError(String message, HttpResponse payload) {
         LoggerUtility logger = new LoggerUtility('Journal');
         logger.httpError(message, payload, null, CRM_ApplicationDomain.Domain.NKS);
-        logger.publishSynch();
+        logger.publish();
     }
 
     public static String generateGraphBody(String actorId) {
@@ -93,10 +95,7 @@ public class NKS_NavSakService {
 
     private static void filterCases(List<SafCaseWrapper> navCases) {
         for (Integer i = navCases.size() - 1; i >= 0; i--) {
-            if (
-                navCases[i].sakstype.equalsIgnoreCase('GENERELL_SAK') ||
-                String.isBlank(navCases[i].fagsakId)
-            ) {
+            if (navCases[i].sakstype.equalsIgnoreCase('GENERELL_SAK') || String.isBlank(navCases[i].fagsakId)) {
                 //If the case is GENERELL_SAK or has no id, remove from result
                 navCases.remove(i);
             } else {

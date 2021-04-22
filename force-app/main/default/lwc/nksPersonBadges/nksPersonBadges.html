@@ -10,8 +10,7 @@
                     variant="error"
                 >
                 </lightning-icon>
-                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b
-                ><br />
+                &nbsp;<b>En feil har oppstått, kan ikke vise sikkerhetstiltak eller etiketter:</b><br />
                 {errorMessage}
             </div>
         </div>
@@ -70,9 +69,7 @@
                                         class="slds-var-p-around_xx-small slds-size_1-of-1"
                                     >
                                         <div class="slds-var-p-horizontal_small">
-                                            <p class="slds-text-color_destructive">
-                                                {sm.SecurityMeasure}
-                                            </p>
+                                            <p class="slds-text-color_destructive">{sm.SecurityMeasure}</p>
                                             <p>
                                                 Gyldig:
                                                 <lightning-formatted-date-time
@@ -121,8 +118,7 @@
                                 <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
                                     <li class="slds-item" key={powerOfAttorney.id}>
                                         <div class="slds-text-heading_small">
-                                            {powerOfAttorney.motpartsRolle}
-                                            ({powerOfAttorney.motpartsPersonident})
+                                            {powerOfAttorney.motpartsRolle} ({powerOfAttorney.motpartsPersonident})
                                         </div>
                                         <p>
                                             Gyldig:
@@ -160,10 +156,7 @@
                                         <p>Type: {guardianship.type}</p>
                                         <p>Motpart ident: {guardianship.motpartsPersonident}</p>
                                         <p>Omfang: {guardianship.omfang}</p>
-                                        <p>
-                                            Innen personlig område:
-                                            {omfangetErInnenPersonligOmraadeTxt}
-                                        </p>
+                                        <p>Innen personlig område: {omfangetErInnenPersonligOmraadeTxt}</p>
                                         <p>Embete: {guardianship.embete}</p>
                                     </li>
                                 </template>

@@ -43,9 +43,7 @@ export default class NksPersonAccessBadges extends LightningElement {
     }
 
     get showMessageWhenNoBadges() {
-        return (
-            this.hideNoAccessMessage === false && this.isLoaded === true && this.hasBadges === false
-        );
+        return this.hideNoAccessMessage === false && this.isLoaded === true && this.hasBadges === false;
     }
 
     get containerClasses() {

@@ -82,10 +82,7 @@
                     <div title="Journalpost liste">
                         <!-- SPINNER -->
                         <template if:false={isLoaded}>
-                            <lightning-spinner
-                                alternative-text="Loading"
-                                size="medium"
-                            ></lightning-spinner>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                         </template>
 
                         <template if:true={isLoaded}>
@@ -100,8 +97,7 @@
                                             variant="error"
                                         >
                                         </lightning-icon>
-                                        &nbsp;En feil har oppstått og journalpostene kan ikke
-                                        hentes.
+                                        &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
                                     </p>
                                     <ul class="slds-list_dotted">
                                         <template for:each={errors} for:item="error">
@@ -119,10 +115,7 @@
                             <!-- LIST OF JOURNALPOSTS -->
                             <template if:false={isEmptyResult}>
                                 <ul class="slds-has-dividers_bottom-space">
-                                    <template
-                                        for:each={filteredJournalPosts}
-                                        for:item="journalpost"
-                                    >
+                                    <template for:each={filteredJournalPosts} for:item="journalpost">
                                         <li class="slds-item" key={journalpost.journalpostId}>
                                             <div>
                                                 <c-nks-saf-journalpost
@@ -138,17 +131,11 @@
                 </lightning-layout-item>
 
                 <template if:true={canLoadMore}>
-                    <lightning-layout-item
-                        class="slds-align_absolute-center slds-p-vertical_x-small"
-                        size="12"
-                    >
+                    <lightning-layout-item class="slds-align_absolute-center slds-p-vertical_x-small" size="12">
                         <template if:true={isLoadingMore}>
                             <div class="slds-is-relative">
                                 Last flere
-                                <lightning-spinner
-                                    alternative-text="Loading"
-                                    size="small"
-                                ></lightning-spinner>
+                                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
                             </div>
                         </template>
                         <template if:false={isLoadingMore}>

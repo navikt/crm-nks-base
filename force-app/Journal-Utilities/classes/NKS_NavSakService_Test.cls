@@ -5,9 +5,7 @@ public class NKS_NavSakService_Test {
         ApiMock.setTestMock('POST_SAF_CASE_QUERY', 200, 'OK');
 
         Test.startTest();
-        List<NKS_NavSakService.SafCaseWrapper> returnList = NKS_NavSakService.getSafActorCases(
-            '12345678910'
-        );
+        List<NKS_NavSakService.SafCaseWrapper> returnList = NKS_NavSakService.getSafActorCases('12345678910');
         Test.stopTest();
 
         System.assert(!returnList.isEmpty());
