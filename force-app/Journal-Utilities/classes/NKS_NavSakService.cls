@@ -9,16 +9,18 @@ public class NKS_NavSakService {
 
     private static Map<String, String> themeMap {
         get {
-            Map<String, String> returnMap = new Map<String, String>();
-            for (Common_Code__c theme : [
-                SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
-                FROM Common_Code__c
-                WHERE CRM_Code_set__c = 'Tema'
-                ORDER BY Name
-            ]) {
-                returnMap.put(theme.CRM_Code__c, theme.Name);
+            if (themeMap == null) {
+                themeMap = new Map<String, String>();
+                for (Common_Code__c theme : [
+                    SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
+                    FROM Common_Code__c
+                    WHERE CRM_Code_set__c = 'Tema'
+                    ORDER BY Name
+                ]) {
+                    themeMap.put(theme.CRM_Code__c, theme.Name);
+                }
             }
-            return returnMap;
+            return themeMap;
         }
         private set {
         }
