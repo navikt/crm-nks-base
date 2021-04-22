@@ -3,7 +3,7 @@
     <fullName>DoneEventTime</fullName>
     <active>true</active>
     <description>Check that the DoneEventTime__c is not older than EventTime__c</description>
-    <errorConditionFormula>DoneEventTime__c &lt;  EventTime__c</errorConditionFormula>
+    <errorConditionFormula>INT_DoneEventTime__c &lt;  INT_EventTime__c</errorConditionFormula>
     <errorMessage>Done Event Time cannot be older than Event Time.
 Causal loop warning: An event cannot be done before it actually happened.</errorMessage>
 </ValidationRule>

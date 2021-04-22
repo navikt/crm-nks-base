@@ -1,7 +1,12 @@
-public with sharing class KafkaBrukernotifikasjonDone {
+public with sharing class KafkaBrukernotifikasjonOppgave {
     public Long tidspunkt;
     public String fodselsnummer;
     public String grupperingsId;
+
+    public String tekst;
+    public String link;
+    public Integer sikkerhetsnivaa;
+    public Boolean eksternVarsling;
 
     public DateTime tidspunktFormated {
         get {
@@ -9,7 +14,4 @@ public with sharing class KafkaBrukernotifikasjonDone {
         }
         private set;
     }
-    public KafkaBrukernotifikasjonKey key;
-    public Datetime kafkaCreatedDate;
-    public String kafkaKey;
 }

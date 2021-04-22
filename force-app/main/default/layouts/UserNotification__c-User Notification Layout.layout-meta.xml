@@ -17,39 +17,39 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>SystemUser__c</field>
+                <field>INT_SystemUser__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EventId__c</field>
+                <field>INT_EventId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>EventTime__c</field>
+                <field>INT_EventTime__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>SocialSecurityNumber__c</field>
+                <field>INT_SocialSecurityNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>GroupingId__c</field>
+                <field>INT_GroupingId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>SecurityLevel__c</field>
+                <field>INT_SecurityLevel__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Type__c</field>
+                <field>INT_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Key__c</field>
+                <field>INT_Key__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>AccountId__c</field>
+                <field>CRM_AccountId__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns />

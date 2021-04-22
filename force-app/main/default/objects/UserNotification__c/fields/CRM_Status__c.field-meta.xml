@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+	ISPICKVAL(INT_Type__c, &apos;OPPGAVE&apos;),
+	IF(
+		CRM_Done__c,
+		&apos;Utført&apos;,
+		&apos;Åpen&apos;
+	)
+	,
+	&apos;&apos;
+)
+&amp;
+IF(
+	ISPICKVAL(INT_Type__c, &apos;STATUSOPPDATERING&apos;),
+	TEXT(INT_GlobalStatus__c)
+	,
+	&apos;&apos;
+)
+&amp;
+IF(
+	ISPICKVAL(INT_Type__c, &apos;BESKJED&apos;),
+	IF(
+		CRM_Done__c,
+		&apos;Markert lest&apos;,
+		IF(
+			ISBLANK(INT_VisibleUntil__c),
+			&apos;&apos;,
+			IF(
+				(INT_VisibleUntil__c &lt; NOW()),
+				&apos;Lagt til historikk-visningen&apos;,
+				&apos;&apos;
+				
+			)
+		)
+	)
+	,
+	&apos;&apos;
+)</formula>
+    <label>Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -7,14 +7,14 @@ LastUpdatedFromKafka__c is not set to blank
 LastUpdatedFromKafka__c is not set to an older date</description>
     <errorConditionFormula>IF(
 	ISNEW(),
-	true,
+	false,
 	IF(
-		ISBLANK(PRIORVALUE(LastUpdatedFromKafka__c)),
+		ISBLANK(PRIORVALUE(INT_LastUpdatedFromKafka__c)),
 		false,
 		(
-			ISBLANK(LastUpdatedFromKafka__c)
+			ISBLANK(INT_LastUpdatedFromKafka__c)
 			||
-			LastUpdatedFromKafka__c &lt; PRIORVALUE(LastUpdatedFromKafka__c)
+			INT_LastUpdatedFromKafka__c &lt; PRIORVALUE(INT_LastUpdatedFromKafka__c)
 		)
 	)
 )</errorConditionFormula>
