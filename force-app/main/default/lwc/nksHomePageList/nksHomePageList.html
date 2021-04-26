@@ -1,17 +1,10 @@
 <template>
-    <!--<lightning-card
-        title={cardLabel}
-        icon-name={iconName}
-        tabindex="0"
-        aria-label={cardLabel}
-        role="heading"
-    >-->
-    <div class="slds-box slds-theme_default">
+    <section class="slds-box slds-theme_default" aria-labelledby="nav1">
         <lightning-layout vertical-align="center" class="slds-p-bottom_small">
             <div class="slds-media__figure">
                 <lightning-icon icon-name={iconName} class="slds-icon_container" size="small"></lightning-icon>
             </div>
-            <h2 class="slds-text-heading_small slds-truncate">{cardLabel}</h2>
+            <h2 id="nav1" class="slds-text-heading_small slds-truncate">{cardLabel}</h2>
         </lightning-layout>
         <div>
             <ul class="slds-list_vertical-space-medium">
@@ -26,6 +19,5 @@
             <lightning-formatted-url value={pageUrl} label={linklabel} onclick={navigateToList}>
             </lightning-formatted-url>
         </div>
-    </div>
-    <!-- </lightning-card> -->
+    </section>
 </template>
