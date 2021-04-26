@@ -157,13 +157,6 @@ export default class NksSafVerticalNavigation extends LightningElement {
                         (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
                         ')';
                 }
-                // element.saksId +
-                //     (isOpen
-                //         ? ' (' +
-                //           nmbOfOpenCases +
-                //           (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
-                //           ')'
-                //         : '');
 
                 let caseX = {
                     label: caseLabel,
@@ -243,9 +236,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
             Object.values(this._themeMap).forEach((list) => (listThemes = listThemes.concat(list)));
         } else {
             listThemes =
-                this.selectedThemeGroup &&
-                this._themeMap &&
-                this.selectedThemeGroup in this._themeMap
+                this.selectedThemeGroup && this._themeMap && this.selectedThemeGroup in this._themeMap
                     ? this._themeMap[this.selectedThemeGroup]
                     : [];
         }

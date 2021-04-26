@@ -8,11 +8,7 @@ public class NksRecordInfoController {
      * @return sObject
      **/
     @AuraEnabled
-    public static sObject getRelatedRecord(
-        String parentId,
-        String relationshipField,
-        String objectApiName
-    ) {
+    public static sObject getRelatedRecord(String parentId, String relationshipField, String objectApiName) {
         String query = 'SELECT ' + relationshipField + ' FROM ' + objectApiName;
         query += ' WHERE Id =\'' + parentId + '\'';
 

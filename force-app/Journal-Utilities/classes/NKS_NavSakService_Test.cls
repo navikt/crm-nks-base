@@ -2,12 +2,10 @@
 public class NKS_NavSakService_Test {
     @isTest
     static void testGetSakNavCases() {
-        ApiMock.setTestMock('GET_SAK_NAV_CASES', 200, 'OK');
+        ApiMock.setTestMock('POST_SAF_CASE_QUERY', 200, 'OK');
 
         Test.startTest();
-        List<NKS_NavSakService.SakWrapper> returnList = NKS_NavSakService.getActorCases(
-            '12345678910'
-        );
+        List<NKS_NavSakService.SafCaseWrapper> returnList = NKS_NavSakService.getSafActorCases('12345678910');
         Test.stopTest();
 
         System.assert(!returnList.isEmpty());
@@ -15,12 +13,12 @@ public class NKS_NavSakService_Test {
 
     @isTest
     static void testGetSakNavCasesFail() {
-        ApiMock.setTestMock('GET_SAK_NAV_CASES', 404, 'NOT FOUND');
-        List<NKS_NavSakService.SakWrapper> returnList = new List<NKS_NavSakService.SakWrapper>();
+        ApiMock.setTestMock('POST_SAF_CASE_QUERY', 404, 'NOT FOUND');
+        List<NKS_NavSakService.SafCaseWrapper> returnList = new List<NKS_NavSakService.SafCaseWrapper>();
 
         Test.startTest();
         try {
-            returnList = NKS_NavSakService.getActorCases('12345678910');
+            returnList = NKS_NavSakService.getSafActorCases('12345678910');
         } catch (AuraHandledException ex) {
             //Safely catching the aura handled exception
         }

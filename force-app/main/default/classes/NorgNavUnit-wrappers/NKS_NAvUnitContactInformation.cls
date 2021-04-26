@@ -74,13 +74,7 @@ public with sharing class NKS_NAvUnitContactInformation {
             this.postboksanlegg = null;
         }
 
-        public Adresse(
-            String gatenavn,
-            String husnummer,
-            String husbokstav,
-            String poststed,
-            String postnummer
-        ) {
+        public Adresse(String gatenavn, String husnummer, String husbokstav, String poststed, String postnummer) {
             this.type = 'stedsadresse';
             this.postnummer = postnummer;
             this.poststed = poststed;
@@ -93,12 +87,7 @@ public with sharing class NKS_NAvUnitContactInformation {
             this.postboksanlegg = null;
         }
 
-        public Adresse(
-            String postboksanlegg,
-            String postboksnummer,
-            String poststed,
-            String postnummer
-        ) {
+        public Adresse(String postboksanlegg, String postboksnummer, String poststed, String postnummer) {
             this.type = 'postboksadresse';
             this.postnummer = postnummer;
             this.poststed = poststed;
@@ -116,10 +105,7 @@ public with sharing class NKS_NAvUnitContactInformation {
 
             address += addString(address, adresseTilleggsnavn);
 
-            if (
-                true == String.isNotBlank(type) &&
-                type.equalsIgnoreCase('postboksadresse')
-            ) {
+            if (true == String.isNotBlank(type) && type.equalsIgnoreCase('postboksadresse')) {
                 address += addString(address, 'Postboks');
             }
 
@@ -132,10 +118,7 @@ public with sharing class NKS_NAvUnitContactInformation {
             postalCity += addString(postalCity, postnummer);
             postalCity += addString(postalCity, poststed);
 
-            address += String.isNotBlank(address) &&
-                String.isNotBlank(postalCity)
-                ? ', '
-                : '';
+            address += String.isNotBlank(address) && String.isNotBlank(postalCity) ? ', ' : '';
             address += postalCity;
 
             return address;
@@ -146,9 +129,7 @@ public with sharing class NKS_NAvUnitContactInformation {
                 return '';
             }
 
-            return String.isNotBlank(originalString)
-                ? ' ' + stringToAdd
-                : stringToAdd;
+            return String.isNotBlank(originalString) ? ' ' + stringToAdd : stringToAdd;
         }
     }
 
@@ -178,13 +159,7 @@ public with sharing class NKS_NAvUnitContactInformation {
             this.til = null;
         }
 
-        public Aapningstider(
-            Integer id,
-            Date dato,
-            String fra,
-            String til,
-            String kommentar
-        ) {
+        public Aapningstider(Integer id, Date dato, String fra, String til, String kommentar) {
             this.dag = null;
             this.dato = dato;
             this.fra = fra;
@@ -194,13 +169,7 @@ public with sharing class NKS_NAvUnitContactInformation {
             this.til = til;
         }
 
-        public Aapningstider(
-            Integer id,
-            String dag,
-            String fra,
-            String til,
-            String kommentar
-        ) {
+        public Aapningstider(Integer id, String dag, String fra, String til, String kommentar) {
             this.dag = dag;
             this.dato = null;
             this.fra = fra;

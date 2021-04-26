@@ -79,13 +79,24 @@
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
     </quickActionList>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>NKS_Date_Registered__c</fields>
+        <fields>CRM_DueDate__c</fields>
+        <fields>NKS_TaskType__c</fields>
+        <fields>NKS_Theme__c</fields>
+        <fields>CRM_NavUnit__c</fields>
+        <relatedList>NavTask__c.CRM_AccountRelated__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000001iuf2</masterLabel>
+        <masterLabel>00h1j000002FIhN</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

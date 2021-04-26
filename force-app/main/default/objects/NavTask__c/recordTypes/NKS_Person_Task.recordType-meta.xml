@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Person_Task</fullName>
+    <active>true</active>
+    <description>Record type for NAV tasks related to a person.</description>
+    <label>Person Task</label>
+    <picklistValues>
+        <picklist>CRM_Priority__c</picklist>
+        <values>
+            <fullName>HOY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LAV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NORM</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CRM_Status__c</picklist>
+        <values>
+            <fullName>Fullført</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ny</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Slett</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CRM_SubTheme__c</picklist>
+        <values>
+            <fullName>Forebyggende arbeidsmiljø</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generell sykefraværsoppfølging</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helse i arbeid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informasjon og relasjonsbygging</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inkludering %28med virkemidler%2C inkl%2E oppfølging%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jobbmesser og møteplass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lønnskompensasjon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oppsigelser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permittering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Redusere sykefravær</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rekruttering %28uten virkemidler%2C inkl%2E oppfølging%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiltaksøkonomi</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CRM_Theme__c</picklist>
+        <values>
+            <fullName>Forebygge sykefravær og redusere frafall</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nedbemanne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rekruttere og inkludere</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NKS_Status__c</picklist>
+        <values>
+            <fullName>AAPNET</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FEILREGISTRERT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FERDIGSTILT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OPPRETTET</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>UNDER_BEHANDLING</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NKS_Task_Type__c</picklist>
+        <values>
+            <fullName>KONT_BRUK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VURD_HENV</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>VUR_KONS_YTE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

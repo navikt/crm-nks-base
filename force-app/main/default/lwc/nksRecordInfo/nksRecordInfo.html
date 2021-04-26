@@ -30,10 +30,7 @@
                                         </template>
                                         <template if:false={showLink}>
                                             <template if:false={hideLabels}>
-                                                <lightning-output-field
-                                                    class="fieldStyle"
-                                                    field-name={it.value}
-                                                >
+                                                <lightning-output-field class="fieldStyle" field-name={it.value}>
                                                 </lightning-output-field>
                                             </template>
                                             <template if:true={hideLabels}>
@@ -54,10 +51,7 @@
                                         class="slds-p-right_medium"
                                     >
                                         <template if:false={hideLabels}>
-                                            <lightning-output-field
-                                                class="fieldStyle"
-                                                field-name={it.value}
-                                            >
+                                            <lightning-output-field class="fieldStyle" field-name={it.value}>
                                             </lightning-output-field>
                                         </template>
                                         <template if:true={hideLabels}>

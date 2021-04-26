@@ -2,16 +2,12 @@
     <div>
         <p>
             <b>
-                <lightning-formatted-text
-                    value={relation.role}
-                ></lightning-formatted-text>
+                <lightning-formatted-text value={relation.role}></lightning-formatted-text>
             </b>
         </p>
         <p>
             <template if:true={relation.disableurl}>
-                <lightning-formatted-text
-                    value={relation.personName}
-                ></lightning-formatted-text>
+                <lightning-formatted-text value={relation.personName}></lightning-formatted-text>
             </template>
             <template if:false={relation.disableurl}>
                 <template if:true={relation.child}>

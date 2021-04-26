@@ -43,12 +43,7 @@ private with sharing class NKS_SafService_Test {
             '  }' +
             '}';
 
-        SingleRequestMock mock = new SingleRequestMock(
-            200,
-            'Success',
-            responseBody,
-            new Map<String, String>()
-        );
+        SingleRequestMock mock = new SingleRequestMock(200, 'Success', responseBody, new Map<String, String>());
 
         Test.setMock(HttpCalloutMock.class, mock);
 
@@ -59,11 +54,7 @@ private with sharing class NKS_SafService_Test {
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
-        System.assertEquals(
-            true,
-            result.isSuccess,
-            'result.isSuccess is not set correctly. Expected to get a success'
-        );
+        System.assertEquals(true, result.isSuccess, 'result.isSuccess is not set correctly. Expected to get a success');
         System.assertNotEquals(
             null,
             result.data.dokumentoversiktBruker,
@@ -86,12 +77,7 @@ private with sharing class NKS_SafService_Test {
             DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') +
             '","status":401,"error":"Unauthorized","message":"no valid token found in validation context","path":"/graphql"}';
 
-        SingleRequestMock mock = new SingleRequestMock(
-            401,
-            'Unauthorized',
-            errorBody,
-            new Map<String, String>()
-        );
+        SingleRequestMock mock = new SingleRequestMock(401, 'Unauthorized', errorBody, new Map<String, String>());
 
         Test.setMock(HttpCalloutMock.class, mock);
 
@@ -107,11 +93,7 @@ private with sharing class NKS_SafService_Test {
             result.isSuccess,
             'result.isSuccess is not set correctly. Expected to get a failure'
         );
-        System.assertEquals(
-            null,
-            result.data,
-            'result.data is not set correctly. Expected to get NULL'
-        );
+        System.assertEquals(null, result.data, 'result.data is not set correctly. Expected to get NULL');
         System.assertEquals(1, result.errors.size(), 'Expected to have an error');
     }
 
@@ -132,11 +114,7 @@ private with sharing class NKS_SafService_Test {
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
-        System.assertEquals(
-            true,
-            result.isSuccess,
-            'result.isSuccess is not set correctly. Expected to get a success'
-        );
+        System.assertEquals(true, result.isSuccess, 'result.isSuccess is not set correctly. Expected to get a success');
         System.assertEquals(
             'VEVTVF9CT0RZX1NUUklORw==',
             result.documentString,
@@ -164,12 +142,7 @@ private with sharing class NKS_SafService_Test {
             DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSSXXX') +
             '","status":401,"error":"Unauthorized","message":"no valid token found in validation context","path":"/rest/hentdokument/journalId/documentInfoId/variantFormat"}';
 
-        SingleRequestMock mock = new SingleRequestMock(
-            401,
-            'Unauthorized',
-            errorBody,
-            new Map<String, String>()
-        );
+        SingleRequestMock mock = new SingleRequestMock(401, 'Unauthorized', errorBody, new Map<String, String>());
 
         Test.setMock(HttpCalloutMock.class, mock);
 
@@ -178,47 +151,23 @@ private with sharing class NKS_SafService_Test {
         Test.stopTest();
 
         System.assertNotEquals(null, result, 'Expected something else than null');
-        System.assertEquals(
-            false,
-            result.isSuccess,
-            'result.isSuccess is not set correctly. Expected to get an error'
-        );
+        System.assertEquals(false, result.isSuccess, 'result.isSuccess is not set correctly. Expected to get an error');
         System.assertEquals(
             null,
             result.documentString,
             'result.documentString is not set correctly. Expected to get NULL'
         );
-        System.assertEquals(
-            null,
-            result.contentType,
-            'result.contentType is not set correctly. Expected to get NULL'
-        );
+        System.assertEquals(null, result.contentType, 'result.contentType is not set correctly. Expected to get NULL');
         System.assertEquals(
             null,
             result.contentDisposition,
             'result.contentDisposition is not set correctly. Expected to get NULL'
         );
-        System.assertNotEquals(
-            null,
-            result.error,
-            'result.error is not set corrrectly. Expected a value'
-        );
+        System.assertNotEquals(null, result.error, 'result.error is not set corrrectly. Expected a value');
         System.assertEquals(401, result.error.status, 'Expected to get 401');
         System.assertEquals('Unauthorized', result.error.error, 'Expected to get Unauthorized');
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.error.message),
-            'Expected to get a value in message'
-        );
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.error.path),
-            'Expected to get a value in path'
-        );
-        System.assertNotEquals(
-            null,
-            result.error.timestamp,
-            'Expected to get a value in timestamp'
-        );
+        System.assertEquals(true, String.isNotBlank(result.error.message), 'Expected to get a value in message');
+        System.assertEquals(true, String.isNotBlank(result.error.path), 'Expected to get a value in path');
+        System.assertNotEquals(null, result.error.timestamp, 'Expected to get a value in timestamp');
     }
 }

@@ -1,0 +1,34 @@
+<template>
+    <div
+        class="slds-m-top_x-small slds-p-around_x-small list-tile-bg"
+        role="button"
+        aria-expanded={showCases}
+        onclick={toggleCases}
+    >
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item flexibility="shrink">
+                <lightning-icon icon-name={chevronIcon} size="x-small"></lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto">
+                <h1 class="slds-text-heading_small slds-var-p-left_small slds-float_left">{themeName}</h1>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+    <div if:true={showCases} class="slds-var-m-top_small">
+        <lightning-layout multiple-rows="true" class="slds-border_bottom">
+            <lightning-layout-item size="2"></lightning-layout-item>
+            <lightning-layout-item size="5">
+                <b>{labels.COL_CASE_ID}</b>
+            </lightning-layout-item>
+            <lightning-layout-item size="5">
+                <b>{labels.COL_CREATED_DATE}</b>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <template for:each={sortedCases} for:item="navCase">
+            <c-nks-nav-case-item key={navCase.fagsakId} nav-case={navCase} oncaseselected={handleCaseSelected}>
+            </c-nks-nav-case-item>
+        </template>
+    </div>
+</template>

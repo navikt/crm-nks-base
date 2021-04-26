@@ -18,9 +18,7 @@
                             >
                                 <template if:false={displayPill}>
                                     <div onkeyup={handleSearchKeyUp}>
-                                        <label
-                                            class="slds-form-element__label custom-width-full"
-                                            onclick={toggleMenu}
+                                        <label class="slds-form-element__label custom-width-full" onclick={toggleMenu}
                                             >{label}</label
                                         >
                                         <lightning-input
@@ -44,11 +42,7 @@
                                         onclick={toggleMenu}
                                         >{label}</label
                                     >
-                                    <div
-                                        data-input-name={name}
-                                        class="slds-pill_container"
-                                        onclick={handleOpenOptions}
-                                    >
+                                    <div data-input-name={name} class="slds-pill_container" onclick={handleOpenOptions}>
                                         <lightning-pill
                                             class="slds-pill_bare custom-width-full"
                                             label={_value}
@@ -65,44 +59,23 @@
                                 class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid"
                                 role="listbox"
                             >
-                                <ul
-                                    class="slds-listbox slds-listbox_vertical"
-                                    role="presentation"
-                                >
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                     <template if:false={_options.length}>
-                                        <div class="slds-p-around--small">
-                                            {labels.noDataAvailable}
-                                        </div>
+                                        <div class="slds-p-around--small">{labels.noDataAvailable}</div>
                                     </template>
-                                    <template
-                                        for:each={_options}
-                                        for:item="curOption"
-                                    >
-                                        <li
-                                            role="presentation"
-                                            class="slds-listbox__item"
-                                            key={curOption.type}
-                                        >
-                                            <div
-                                                class="slds-p-around--xx-small custom-text-transform_uppercase"
-                                            >
+                                    <template for:each={_options} for:item="curOption">
+                                        <li role="presentation" class="slds-listbox__item" key={curOption.type}>
+                                            <div class="slds-p-around--xx-small custom-text-transform_uppercase">
                                                 {curOption.type}
                                             </div>
-                                            <template
-                                                for:each={curOption.options}
-                                                for:item="curOptionElement"
-                                            >
+                                            <template for:each={curOption.options} for:item="curOptionElement">
                                                 <div
                                                     key={curOptionElement.key}
                                                     class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
                                                     role="option"
                                                 >
-                                                    <span
-                                                        class="slds-media__figure"
-                                                    >
-                                                        <span
-                                                            class="slds-icon_container"
-                                                        >
+                                                    <span class="slds-media__figure">
+                                                        <span class="slds-icon_container">
                                                             <lightning-icon
                                                                 icon-name={curOptionElement.optionIcon}
                                                                 class="slds-icon slds-icon_small slds-icon-text-default"
@@ -145,9 +118,7 @@
                     </div>
                 </div>
                 <template if:true={hasError}>
-                    <div class="slds-form-element__help">
-                        {labels.invalidReferenceError}
-                    </div>
+                    <div class="slds-form-element__help">{labels.invalidReferenceError}</div>
                 </template>
             </div>
         </div>

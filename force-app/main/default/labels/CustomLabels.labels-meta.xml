@@ -47,8 +47,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Unconfirmed Identity Warning</shortDescription>
-        <value
-        >Vær oppmerksom - brukeren har ikke bekreftet sin identitet</value>
+        <value>Vær oppmerksom - brukeren har ikke bekreftet sin identitet</value>
     </labels>
     <labels>
         <fullName>NAV_Unit_Error_person_location_missing</fullName>
@@ -64,8 +63,7 @@
         <categories>NAV Unit</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >NAV_Unit_Error_person_not_accessible</shortDescription>
+        <shortDescription>NAV_Unit_Error_person_not_accessible</shortDescription>
         <value
         >Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</value>
     </labels>
@@ -88,6 +86,30 @@
         >Du er nå i en innlogget chat med NAV. Vi veileder deg etter forvaltningsloven § 11. Av hensyn til personvern, ber vi deg om å kun gi oss opplysninger som gjelder det du kontakter oss om. Veilederen har allerede tilgang til saken din. Samtalen blir lagret og kan ikke endres senere. Når samtalen er avsluttet, finner du chatloggen på Ditt NAV og den vil være tilgjengelig for NAV i videre saksgang. Du kan lese mer om hvordan NAV behandler dine personopplysninger her: https://www.nav.no/no/nav-og-samfunn/om-nav/personvern-i-arbeids-og-velferdsetaten</value>
     </labels>
     <labels>
+        <fullName>NKS_Journal_Case_List_Col_Case_Id</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List Col Case Id</shortDescription>
+        <value>Saks-id</value>
+    </labels>
+     <labels>
+        <fullName>NKS_Journal_Case_List_No_Cases_Error</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List No Cases Error</shortDescription>
+        <value>Ingen saker registrert på bruker.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal_Case_List_Col_Created_Date</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Journal Case List Col Created Date</shortDescription>
+        <value>Opprettet dato</value>
+    </labels>
+    <labels>
         <fullName>NKS_Journal_Flow_Complete_Button</fullName>
         <categories>UI, NKS, Journal, Flow</categories>
         <language>en_US</language>
@@ -104,33 +126,268 @@
         <value>Ny journalføring</value>
     </labels>
     <labels>
-        <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
-        <categories
-        >NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <fullName>NKS_NAV_Case_Retrieve_Error</fullName>
+        <categories>UI, NKS, NAV Case, nksPersonCaseOverview, Error</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >Nav Task Work Allocation Delegate to Self</shortDescription>
+        <shortDescription>NAV Case Retrieve Error</shortDescription>
+        <value>Det oppsto en feil ved uthenting av brukerens saker.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_NAV_Case_Title</fullName>
+        <categories>UI, NKS, NAV Case, nksPersonCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NAV Case Title</shortDescription>
+        <value>Saker</value>
+    </labels>
+    <labels>
+        <fullName>NKS_NAV_Case_Validation_Error</fullName>
+        <categories>UI, NKS, NAV Case, nksPersonCaseOverview, Validation, Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NAV Case Validation Error</shortDescription>
+        <value>Velg minst en sak for journalføring.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
+        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Nav Task Work Allocation Delegate to Self</shortDescription>
         <value>Send til meg</value>
     </labels>
     <labels>
         <fullName>NKS_Nav_Task_Work_Allocation_Validation_Error</fullName>
-        <categories
-        >NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
+        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >Nav Task Work Allocation Validation Error</shortDescription>
+        <shortDescription>Nav Task Work Allocation Validation Error</shortDescription>
         <value>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_API_Error</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List API Error</shortDescription>
+        <value>Det oppsto en feil ved uthenting av brukerens utbetalinger. Feilkode:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Bank_Account</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Bank Account</shortDescription>
+        <value>Kontonummer:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Amount</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Amount</shortDescription>
+        <value>Antall</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Details</shortDescription>
+        <value>Detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Quantity</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Quantity</shortDescription>
+        <value>Antall</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Col_Rate</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Col Rate</shortDescription>
+        <value>Sats</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Deduction</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Deduction</shortDescription>
+        <value>Trekk</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Gross_Amount</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Gross Amount</shortDescription>
+        <value>Brutto</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Hide_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Hide Details</shortDescription>
+        <value>Skjul detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_No_Access_Error</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List No Access Error</shortDescription>
+        <value>Du har ikke tilgang til å se denne brukerens utbetalinger.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_No_Payments</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List No Payments</shortDescription>
+        <value>Brukeren har ingen utbetalinger</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Payment_Header</shortDescription>
+        <value>Utbetalinger</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Message</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payment Message</shortDescription>
+        <value>Melding:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payment_Recipient</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payment Recipient</shortDescription>
+        <value>Utbetalt til:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Payout</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Payout</shortDescription>
+        <value>Utbetalt</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom</shortDescription>
+        <value>Egendefinert</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom_From</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom From</shortDescription>
+        <value>Fra og med:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Custom_To</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Custom To</shortDescription>
+        <value>Til og med:</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Header</shortDescription>
+        <value>Periode</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Last_Month</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Period Last Month</shortDescription>
+        <value>Siste måned</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_Previous_Year</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Period_Previous_Year</shortDescription>
+        <value>I fjor</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Period_This_Year</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Period_This_Year</shortDescription>
+        <value>I år</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Show_Details</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Show Details</shortDescription>
+        <value>Vis detaljer</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Tax_Deduction</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Tax Deduction</shortDescription>
+        <value>Skattetrekk</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Total_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Total Header</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payment_List_Ytelse_Header</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment_List_Ytelse_Header</shortDescription>
+        <value>Ytelse</value>
     </labels>
     <labels>
         <fullName>NKS_Single_Record_Input_Validation_Error</fullName>
         <categories>UI, nksSingleReecordInputField</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >Single Record Input Validation Error</shortDescription>
+        <shortDescription>Single Record Input Validation Error</shortDescription>
         <value>Vennligst fyll ut feltet.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
+        <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
+        <language>no</language>
+        <protected>false</protected>
+        <shortDescription>Theme Categorization Validation Error</shortDescription>
+        <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
     <labels>
         <fullName>fbc_AccessLevel</fullName>
@@ -195,8 +452,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LackingPermissions</shortDescription>
-        <value
-        >You don\&apos;t have the proper permissions for ths action</value>
+        <value>You don\&apos;t have the proper permissions for ths action</value>
     </labels>
     <labels>
         <fullName>fbc_ManagerEmptyMessage</fullName>
@@ -245,8 +501,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OwnerAdminModify</shortDescription>
-        <value
-        >Only the record owner or administrators can modify permissions</value>
+        <value>Only the record owner or administrators can modify permissions</value>
     </labels>
     <labels>
         <fullName>fbc_PublicGroups</fullName>
@@ -333,8 +588,7 @@
         <categories>messages</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >SupportedAddCapabilitiesEmptyMessage</shortDescription>
+        <shortDescription>SupportedAddCapabilitiesEmptyMessage</shortDescription>
         <value>&quot;Add Capabilities&quot; can not be empty</value>
     </labels>
     <labels>
@@ -350,8 +604,7 @@
         <categories>messages</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription
-        >SupportedEditCapabilitiesEmptyMessage</shortDescription>
+        <shortDescription>SupportedEditCapabilitiesEmptyMessage</shortDescription>
         <value>&quot;Edit Capabilities&quot; can not be empty</value>
     </labels>
     <labels>

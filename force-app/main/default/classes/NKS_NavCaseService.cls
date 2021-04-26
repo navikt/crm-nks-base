@@ -23,24 +23,12 @@ public class NKS_NavCaseService {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static List<NavCaseWrapper> getNavCases(
-        String actorId,
-        Boolean onlyOpenCases
-    ) {
+    public static List<NavCaseWrapper> getNavCases(String actorId, Boolean onlyOpenCases) {
         ApiController apiCtrl = new ApiController();
 
-        Map<String, String> pathParams = new Map<String, String>{
-            'aktoerid' => actorId
-        };
-        apiCtrl.initRequest(
-            'SAK_OG_BEHANDLING_API',
-            'GET_SOGB_NAV_CASES',
-            pathParams
-        );
-        apiCtrl.addUrlParam(
-            'kunAapneBehandlingskjeder',
-            String.valueOf(onlyOpenCases)
-        );
+        Map<String, String> pathParams = new Map<String, String>{ 'aktoerid' => actorId };
+        apiCtrl.initRequest('SAK_OG_BEHANDLING_API', 'GET_SOGB_NAV_CASES', pathParams);
+        apiCtrl.addUrlParam('kunAapneBehandlingskjeder', String.valueOf(onlyOpenCases));
         apiCtrl.addServiceAuthHeader('SakOgBehandling');
         apiCtrl.doCallout();
         Integer statusCode = apiCtrl.getResponse().getStatusCode();
@@ -62,13 +50,9 @@ public class NKS_NavCaseService {
                 apiCtrl.getResponse().getBody(),
                 null
             );
-            logger.peek().Payload__c =
-                'REQUEST: \n\n' +
-                JSON.serializePretty(apiCtrl.getRequest().getBody());
+            logger.peek().Payload__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());
             logger.publish();
-            AuraHandledException ex = new AuraHandledException(
-                'Error retrieving cases'
-            );
+            AuraHandledException ex = new AuraHandledException('Error retrieving cases');
             ex.setMessage('Error retrieving cases');
             throw ex;
         }

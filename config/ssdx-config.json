@@ -17,6 +17,7 @@
         "NKS_Announcement_Operational_Editor",
         "NKS_Announcement_News_Editor",
         "NKS_Secure_Chat_Access",
-        "NKS_NAV_Task"
+        "NKS_NAV_Task",
+        "NKS_Beta_Permission"
     ]
 }

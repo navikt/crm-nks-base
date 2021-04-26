@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
 import getJournalPosts from '@salesforce/apex/NKS_SafJournalpostListController.getJournalPosts';
-import ThreadSize from '@salesforce/schema/SocialPost.ThreadSize';
 
 const QUERY_FIELDS = {
     name: 'journalposter',
@@ -19,7 +18,7 @@ const QUERY_FIELDS = {
         { name: 'kanalnavn' },
         {
             name: 'sak',
-            queryFields: [{ name: 'fagsakId' }, { name: 'fagsaksystem' }]
+            queryFields: [{ name: 'fagsakId' }, { name: 'fagsaksystem' }, { name: 'sakstype' }]
         },
         {
             name: 'avsenderMottaker',
@@ -63,6 +62,7 @@ export default class NksSafJournalpostList extends LightningElement {
     _selectedJornalpostTypes = ['I', 'U', 'N']; //The selected Journalpost types to show
     _viewedObjectApiName; // API name of the object to display information from
     _viewedRecordId; // Id of the record to display information for
+    availableThemes = null;
     selectedCase = null;
     selectedThemeCode = null;
 
@@ -70,7 +70,7 @@ export default class NksSafJournalpostList extends LightningElement {
     @track queryVariables = {
         brukerId: {},
         tema: null,
-        journalstatuser: ['MOTTATT', 'JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
+        journalstatuser: ['JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
         fraDato: null,
         tilDato: null,
         foerste: 10
@@ -171,18 +171,14 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     setJournalpostTypeCheckBoxes() {
-        Array.from(this.template.querySelectorAll('lightning-input.journalpostType')).forEach(
-            (element) => {
-                this.getJournalposttype(element.name);
-            }
-        );
+        Array.from(this.template.querySelectorAll('lightning-input.journalpostType')).forEach((element) => {
+            this.getJournalposttype(element.name);
+        });
     }
 
     setJournalposttype(value, statusElement) {
         if (value !== this.getJournalposttype(statusElement)) {
-            let statuses = this._selectedJornalpostTypes.filter(
-                (element) => element !== statusElement
-            );
+            let statuses = this._selectedJornalpostTypes.filter((element) => element !== statusElement);
 
             if (value === true) {
                 statuses = statuses.push(statusElement);
@@ -192,15 +188,15 @@ export default class NksSafJournalpostList extends LightningElement {
         }
     }
 
-    set selectedTema(value) {
-        if (value === 'all') {
-            this.queryVariables.tema = null;
-        } else if (Array.isArray(value)) {
-            this.queryVariables.tema = [value];
-        } else {
-            this.queryVariables.tema = value;
-        }
-    }
+    // set selectedTema(value) {
+    //     if (value === 'all') {
+    //         this.queryVariables.tema = null;
+    //     } else if (Array.isArray(value)) {
+    //         this.queryVariables.tema = [value];
+    //     } else {
+    //         this.queryVariables.tema = value;
+    //     }
+    // }
 
     connectedCallback() {
         if (this.queryVariables.fraDato == null) {
@@ -208,6 +204,7 @@ export default class NksSafJournalpostList extends LightningElement {
             d.setFullYear(d.getFullYear() - 1);
             this.queryVariables.fraDato = d.toISOString().split('T')[0];
         }
+        this.callGetJournalPosts(false);
     }
 
     /**
@@ -236,9 +233,7 @@ export default class NksSafJournalpostList extends LightningElement {
             if (journalpostData.isSuccess) {
                 this.sideInfo = journalpostData.data.dokumentoversiktBruker.sideInfo;
                 this.journalposts = isQueryMore
-                    ? this.journalposts.concat(
-                          journalpostData.data.dokumentoversiktBruker.journalposter
-                      )
+                    ? this.journalposts.concat(journalpostData.data.dokumentoversiktBruker.journalposter)
                     : journalpostData.data.dokumentoversiktBruker.journalposter;
             } else {
                 this.sideInfo = null;
@@ -254,9 +249,7 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     handleJournalpostTypeCheckboxChange() {
-        const elements = Array.from(
-            this.template.querySelectorAll('lightning-input.journalpostType')
-        );
+        const elements = Array.from(this.template.querySelectorAll('lightning-input.journalpostType'));
 
         let checked = elements.filter((element) => element.checked).map((element) => element.name);
         this._selectedJornalpostTypes = checked;
@@ -264,8 +257,10 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     handleAvailableThemes(event) {
-        this.queryVariables.tema = event.detail;
-        this.callGetJournalPosts(false);
+        // this.queryVariables.tema = event.detail;
+        // this.callGetJournalPosts(false);
+        this.availableThemes = event.detail;
+        this.filterAllJournalposts();
     }
 
     handleSelectCase(event) {
@@ -290,9 +285,10 @@ export default class NksSafJournalpostList extends LightningElement {
     filterAllJournalposts() {
         this.filteredJournalPosts = this.journalposts.filter(
             (journalpost) =>
+                (this.availableThemes == null || this.availableThemes.includes(journalpost.tema)) &&
                 (this.selectedCase == null ||
                     this.selectedCase === journalpost.sak.fagsakId ||
-                    (this.selectedCase === 'general' && 'FS22' == journalpost.sak.fagsaksystem)) &&
+                    (this.selectedCase === 'general' && 'GENERELL_SAK' == journalpost.sak.sakstype)) &&
                 (this.selectedThemeCode == null || this.selectedThemeCode === journalpost.tema) &&
                 this.selectedJornalpostTypes.includes(journalpost.journalposttype)
         );

@@ -2,11 +2,7 @@ public with sharing class NKS_WarningBadgeController {
     @AuraEnabled
     public static List<String> getBadges(String parentId) {
         List<Person__c> person = [
-            SELECT
-                Id,
-                CRM_Account__c,
-                INT_Confidential__c,
-                INT_SpokenLanguageIntepreter__c
+            SELECT Id, CRM_Account__c, INT_Confidential__c, INT_SpokenLanguageIntepreter__c
             FROM Person__c
             WHERE CRM_Account__c = :parentId
         ];

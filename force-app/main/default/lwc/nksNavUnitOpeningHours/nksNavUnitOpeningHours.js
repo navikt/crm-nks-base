@@ -54,9 +54,7 @@ export default class NksNavUnitOpeningHours extends LightningElement {
             weekDay.status = norgOpeningHour.stengt ? 'Stengt' : 'Åpent';
             weekDay.comments = this.cleanStringValue(norgOpeningHour.kommentar);
 
-            weekDay.day = norgOpeningHour.dag
-                ? this.capitalize(norgOpeningHour.dag)
-                : norgOpeningHour.dato;
+            weekDay.day = norgOpeningHour.dag ? this.capitalize(norgOpeningHour.dag) : norgOpeningHour.dato;
             switch (norgOpeningHour.dag) {
                 case 'MANDAG':
                     weekDay.dayOfWeek = 1;

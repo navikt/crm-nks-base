@@ -18,18 +18,10 @@ public with sharing class NKS_NavUnitSingleController {
     ) {
         switch on type {
             when 'PERSON_LOCATION' {
-                return getNavUnitFromPerson(
-                    field,
-                    parentObject,
-                    parentRecordId
-                );
+                return getNavUnitFromPerson(field, parentObject, parentRecordId);
             }
             when 'UNIT_NUMBER' {
-                return getNavUnitFromNavUnitNumbers(
-                    field,
-                    parentObject,
-                    parentRecordId
-                );
+                return getNavUnitFromNavUnitNumbers(field, parentObject, parentRecordId);
             }
         }
 
@@ -37,9 +29,7 @@ public with sharing class NKS_NavUnitSingleController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static NKS_NorgNavUnitService.NavUnitContactInformationResponse getContactInformation(
-        String unitNumber
-    ) {
+    public static NKS_NorgNavUnitService.NavUnitContactInformationResponse getContactInformation(String unitNumber) {
         return service.getNavUnitContactInformation(unitNumber);
     }
 
@@ -48,11 +38,7 @@ public with sharing class NKS_NavUnitSingleController {
         String parentObject,
         String parentRecordId
     ) {
-        List<Object> objectList = getQueryValue(
-            field,
-            parentObject,
-            parentRecordId
-        );
+        List<Object> objectList = getQueryValue(field, parentObject, parentRecordId);
 
         if (true == objectList.isEmpty()) {
             NKS_NorgNavUnitService.NavUnitResponse resp = new NKS_NorgNavUnitService.NavUnitResponse();
@@ -71,11 +57,7 @@ public with sharing class NKS_NavUnitSingleController {
         String parentObject,
         String parentRecordId
     ) {
-        List<Object> objectList = getQueryValue(
-            field,
-            parentObject,
-            parentRecordId
-        );
+        List<Object> objectList = getQueryValue(field, parentObject, parentRecordId);
 
         if (true == objectList.isEmpty()) {
             NKS_NorgNavUnitService.NavUnitResponse resp = new NKS_NorgNavUnitService.NavUnitResponse();
@@ -95,21 +77,10 @@ public with sharing class NKS_NavUnitSingleController {
      * - recordId = '5001X000007xMSuQAM';
      * - relation = 'Id';
      */
-    private static List<Object> getQueryValue(
-        String field,
-        String parentObject,
-        String parentRecordId
-    ) {
+    private static List<Object> getQueryValue(String field, String parentObject, String parentRecordId) {
         List<Object> values = new List<Object>();
-        String queryString =
-            'SELECT ' +
-            field +
-            ' FROM ' +
-            parentObject +
-            ' WHERE Id = :parentRecordId';
-        List<SObject> objList = Database.query(
-            String.escapeSingleQuotes(queryString)
-        );
+        String queryString = 'SELECT ' + field + ' FROM ' + parentObject + ' WHERE Id = :parentRecordId';
+        List<SObject> objList = Database.query(String.escapeSingleQuotes(queryString));
 
         for (SObject obj : objList) {
             Object value = getFieldValue(obj, field);
@@ -125,10 +96,7 @@ public with sharing class NKS_NavUnitSingleController {
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {
-            return getFieldValue(
-                obj.getSObject(fieldNameList.remove(0)),
-                String.join(fieldNameList, '.')
-            );
+            return getFieldValue(obj.getSObject(fieldNameList.remove(0)), String.join(fieldNameList, '.'));
         }
 
         return obj.get(fieldNameList[0]);
