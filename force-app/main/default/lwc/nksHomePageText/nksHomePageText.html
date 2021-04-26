@@ -2,7 +2,12 @@
     <section class="slds-box slds-theme_default">
         <lightning-layout vertical-align="center" class="slds-p-bottom_small">
             <div class="slds-media__figure">
-                <lightning-icon icon-name={iconName} class="slds-icon_container" size="small"></lightning-icon>
+                <lightning-icon
+                    aria-hidden="true"
+                    icon-name={iconName}
+                    class="slds-icon_container"
+                    size="small"
+                ></lightning-icon>
             </div>
             <h2 class="slds-text-heading_small slds-truncate">{cardTitle}</h2>
         </lightning-layout>
