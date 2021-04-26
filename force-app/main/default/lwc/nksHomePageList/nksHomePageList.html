@@ -1,15 +1,23 @@
 <template>
-    <lightning-card title={cardLabel} icon-name={iconName} tabindex="0" aria-label={cardLabel} role="heading">
-        <div class="slds-p-horizontal_small">
-            <ul class="slds-has-dividers_top-space">
+    <section class="slds-box slds-theme_default" aria-labelledby="nav1">
+        <lightning-layout vertical-align="center" class="slds-p-bottom_small">
+            <div class="slds-media__figure">
+                <lightning-icon icon-name={iconName} class="slds-icon_container" size="small"></lightning-icon>
+            </div>
+            <h2 id="nav1" class="slds-text-heading_small slds-truncate">{cardLabel}</h2>
+        </lightning-layout>
+        <div>
+            <ul class="slds-list_vertical-space-medium">
                 <template for:each={records} for:item="record">
                     <li class="slds-item" key={record.personId}>
                         <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
                     </li>
                 </template>
             </ul>
+        </div>
+        <div class="slds-p-top_small">
             <lightning-formatted-url value={pageUrl} label={linklabel} onclick={navigateToList}>
             </lightning-formatted-url>
         </div>
-    </lightning-card>
+    </section>
 </template>
