@@ -10,10 +10,7 @@ public class NKS_ChatTranscriptService {
     public static void storeConversation(String chatId, String jsonConversation) {
         String conversation = '';
         Boolean addedAuthSeparator = false;
-        List<Message> messageList = (List<Message>) JSON.deserialize(
-            jsonConversation,
-            List<Message>.class
-        );
+        List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         DateTime chatStart = DateTime.newInstance(Long.valueOf(messageList[0].timestamp));
         DateTime chatEnd = DateTime.now(); //Method is called when endChat event is received
         LiveChatTranscript chatTranscript = getChatDetails(chatId);
@@ -53,12 +50,7 @@ public class NKS_ChatTranscriptService {
                     ' - ' +
                     authTimestamp.format('HH:mm:ss') +
                     '</b></p>';
-                conversation +=
-                    '<p align="center"><b>NAV-' +
-                    counsellorText +
-                    ': ' +
-                    msg.name +
-                    '</b></p><br>';
+                conversation += '<p align="center"><b>NAV-' + counsellorText + ': ' + msg.name + '</b></p><br>';
                 conversation += '</div><br>';
                 addedAuthSeparator = true;
             }
@@ -91,9 +83,7 @@ public class NKS_ChatTranscriptService {
         DateTime chatStart,
         DateTime chatEnd
     ) {
-        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US'
-            ? 'Conversation'
-            : 'Samtale';
+        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
 
         String heading = '<br><div style="text-align: center">';
         heading +=
@@ -117,9 +107,7 @@ public class NKS_ChatTranscriptService {
      * @return String
      **/
     private static String formatBotConversation(LiveChatTranscript chatTranscript) {
-        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US'
-            ? 'Conversation'
-            : 'Samtale';
+        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
         String returnText = '<div style="text-align: center">';
         returnText += '<p align="center"><b>' + conversationText + ' - Frida</b></p>';
         returnText += '</div><br>';
@@ -128,14 +116,9 @@ public class NKS_ChatTranscriptService {
         String botConversation = chatTranscript.Case.Description;
 
         //For long conversations string.split() has a chance to encounter regex exceptions. Using custom iterator instead
-        BotConversation_Iterator conversationIterator = new BotConversation_Iterator(
-            botConversation
-        );
+        BotConversation_Iterator conversationIterator = new BotConversation_Iterator(botConversation);
         while (conversationIterator.hasNext()) {
-            message =
-                '<p>' +
-                conversationIterator.next().replaceAll('\r', '<br>').replaceAll('\n', '') +
-                '</p>';
+            message = '<p>' + conversationIterator.next().replaceAll('\r', '<br>').replaceAll('\n', '') + '</p>';
             if (!conversationIterator.hasNext()) {
                 message = '<br>' + message;
             }
@@ -189,9 +172,7 @@ public class NKS_ChatTranscriptService {
             if (type.equalsIgnoreCase('OperatorTransferred')) {
                 formattedMessage = '<div style="text-align: center">';
                 DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-                String transferText = language == 'en_US'
-                    ? 'Transferred to {to}'
-                    : 'Overført til {to}';
+                String transferText = language == 'en_US' ? 'Transferred to {to}' : 'Overført til {to}';
                 formattedMessage +=
                     '<p align="center"><b>' +
                     transferText.replace('{to}', name) +

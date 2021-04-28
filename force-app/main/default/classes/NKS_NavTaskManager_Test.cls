@@ -14,23 +14,15 @@ public class NKS_NavTaskManager_Test {
         resp.tildeltEnhetsnr = '4100';
         NavTask__c task = getTask();
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'POST',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('POST', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
@@ -44,23 +36,15 @@ public class NKS_NavTaskManager_Test {
         resp.tildeltEnhetsnr = '4100';
         NavTask__c task = getTask();
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'POST',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('POST', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(403, 'Forbidden', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(403, 'Forbidden', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
@@ -76,23 +60,15 @@ public class NKS_NavTaskManager_Test {
         task.CRM_Priority__c = 'NORM';
         task.INT_External_Reference__c = 123456789;
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'EDIT',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('EDIT', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
@@ -109,23 +85,15 @@ public class NKS_NavTaskManager_Test {
         task.CRM_Priority__c = 'NORM';
         task.INT_External_Reference__c = 123456789;
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'EDIT',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('EDIT', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Error'] == 1);

@@ -53,11 +53,7 @@ private with sharing class NKS_SafJournalPostListControllerTest {
         Test.stopTest();
 
         System.assertEquals(true, result.isSuccess, 'Expected success');
-        System.assertEquals(
-            0,
-            result.data.dokumentoversiktBruker.journalposter.size(),
-            'Expected empty list'
-        );
+        System.assertEquals(0, result.data.dokumentoversiktBruker.journalposter.size(), 'Expected empty list');
     }
 
     @IsTest
@@ -78,12 +74,7 @@ private with sharing class NKS_SafJournalPostListControllerTest {
         String relationshipField = 'Id';
         String viewedRecordId = p.Id;
 
-        SingleRequestMock mock = new SingleRequestMock(
-            200,
-            'Success',
-            '[]',
-            new Map<String, String>()
-        );
+        SingleRequestMock mock = new SingleRequestMock(200, 'Success', '[]', new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
 
         List<NKS_NavCaseService.NavCaseWrapper> result;

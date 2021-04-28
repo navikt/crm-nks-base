@@ -21,16 +21,7 @@
             if (urlLink.toLowerCase().indexOf('http') == -1) {
                 urlLink = 'http://' + urlLink;
             }
-            helper.showToastUrl(
-                type,
-                title,
-                messageUrl,
-                urlLink,
-                urlLabel,
-                duration,
-                mode,
-                key
-            );
+            helper.showToastUrl(type, title, messageUrl, urlLink, urlLabel, duration, mode, key);
         }
     }
 });

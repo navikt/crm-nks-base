@@ -25,9 +25,7 @@ public class NKS_SecurityMeasuresControllerTest {
     static void getSecurityMeasuresRelated() {
         String parentid = [SELECT Id FROM Account LIMIT 1].Id;
 
-        LiveChatTranscript transcript = NKS_TestDataFactory.createLiveChatTranscripts(
-            1
-        )[0];
+        LiveChatTranscript transcript = NKS_TestDataFactory.createLiveChatTranscripts(1)[0];
         transcript.AccountId = parentId;
         update transcript;
 

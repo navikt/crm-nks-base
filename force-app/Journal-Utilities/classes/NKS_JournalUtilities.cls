@@ -13,9 +13,7 @@ public class NKS_JournalUtilities {
                 returnList.add(generateDocument(request[0].documentString));
             }
             when 'BASE_64_ENCODE' {
-                String document = EncodingUtil.base64Encode(
-                    Blob.valueOf(request[0].documentString)
-                );
+                String document = EncodingUtil.base64Encode(Blob.valueOf(request[0].documentString));
                 returnList.add(new UtilityResponse(true, document, null, null, null));
             }
             when 'POST_JOURNAL' {
@@ -33,16 +31,11 @@ public class NKS_JournalUtilities {
      * @param journalRequest
      * @return UtilityResponse
      **/
-    public static UtilityResponse postJournal(
-        NKS_JournalEntryWrapper journalRequest,
-        Id referenceId
-    ) {
+    public static UtilityResponse postJournal(NKS_JournalEntryWrapper journalRequest, Id referenceId) {
         ApiController apiCtrl = new ApiController();
         UtilityResponse resp = new UtilityResponse();
 
-        Map<String, String> httpHeaders = new Map<String, String>{
-            'Content-Type' => 'application/json'
-        };
+        Map<String, String> httpHeaders = new Map<String, String>{ 'Content-Type' => 'application/json' };
 
         apiCtrl.initRequest('Journal_API', 'POST_CREATE_JOURNAL');
         apiCtrl.addServiceAuthHeader('Dokarkiv');
@@ -104,11 +97,7 @@ public class NKS_JournalUtilities {
             this.journalRequest = null;
         }
 
-        public utilityRequest(
-            String requestType,
-            String documentString,
-            NKS_JournalEntryWrapper journalRequest
-        ) {
+        public utilityRequest(String requestType, String documentString, NKS_JournalEntryWrapper journalRequest) {
             this.requestType = requestType;
             this.documentString = documentString;
             this.journalRequest = journalRequest;

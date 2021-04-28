@@ -13,15 +13,11 @@ public with sharing class FlowFindCollectionTest {
 
         system.debug(request);
 
-        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{
-            request
-        };
+        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{ request };
 
         Test.startTest();
 
-        list<FlowFindCollection.Results> responses = FlowFindCollection.execute(
-            requests
-        );
+        list<FlowFindCollection.Results> responses = FlowFindCollection.execute(requests);
 
         Test.stopTest();
 
@@ -41,19 +37,13 @@ public with sharing class FlowFindCollectionTest {
         request.FieldApiINames = 'Name';
         request.WhereClause = 'Name = \'test Account12345\'';
         request.BypassSharing = true;
-        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{
-            request
-        };
+        List<FlowFindCollection.Requests> requests = new List<FlowFindCollection.Requests>{ request };
 
         //No sharing
 
-        List<FlowFindCollection.Requests> requests2 = new List<FlowFindCollection.Requests>{
-            request
-        };
+        List<FlowFindCollection.Requests> requests2 = new List<FlowFindCollection.Requests>{ request };
         Test.startTest();
-        list<FlowFindCollection.Results> responses_withoutsharing = FlowFindCollection.execute(
-            requests2
-        );
+        list<FlowFindCollection.Results> responses_withoutsharing = FlowFindCollection.execute(requests2);
         Test.stopTest();
 
         //Todo - assertions around sharing access. Can still view

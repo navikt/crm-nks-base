@@ -1,9 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class NksHomePageListEntry extends NavigationMixin(
-    LightningElement
-) {
+export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
     @api record;
     recordPageUrl;
 

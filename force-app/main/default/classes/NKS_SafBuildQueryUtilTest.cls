@@ -10,18 +10,10 @@ private with sharing class NKS_SafBuildQueryUtilTest {
         NKS_SafQueryVariables queryVariables = new NKS_SafQueryVariables();
 
         Test.startTest();
-        result = NKS_SafBuildQueryUtil.buildQuery(
-            'dokumentoversiktBruker',
-            queryField,
-            queryVariables
-        );
+        result = NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktBruker', queryField, queryVariables);
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.query),
-            'Expected a query string to be in place'
-        );
+        System.assertEquals(true, String.isNotBlank(result.query), 'Expected a query string to be in place');
         System.assertEquals(
             true,
             result.query.startsWith('query dokumentoversiktBruker('),
@@ -40,18 +32,10 @@ private with sharing class NKS_SafBuildQueryUtilTest {
         NKS_SafQueryVariables queryVariables = new NKS_SafQueryVariables();
 
         Test.startTest();
-        result = NKS_SafBuildQueryUtil.buildQuery(
-            'dokumentoversiktFagsak',
-            queryField,
-            queryVariables
-        );
+        result = NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktFagsak', queryField, queryVariables);
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.query),
-            'Expected a query string to be in place'
-        );
+        System.assertEquals(true, String.isNotBlank(result.query), 'Expected a query string to be in place');
         System.assertEquals(
             true,
             result.query.startsWith('query dokumentoversiktFagsak('),
@@ -73,11 +57,7 @@ private with sharing class NKS_SafBuildQueryUtilTest {
         result = NKS_SafBuildQueryUtil.buildQuery('journalpost', queryField, queryVariables);
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.query),
-            'Expected a query string to be in place'
-        );
+        System.assertEquals(true, String.isNotBlank(result.query), 'Expected a query string to be in place');
         System.assertEquals(
             true,
             result.query.startsWith('query journalpost('),
@@ -96,18 +76,10 @@ private with sharing class NKS_SafBuildQueryUtilTest {
         NKS_SafQueryVariables queryVariables = new NKS_SafQueryVariables();
 
         Test.startTest();
-        result = NKS_SafBuildQueryUtil.buildQuery(
-            'tilknyttedeJournalposter',
-            queryField,
-            queryVariables
-        );
+        result = NKS_SafBuildQueryUtil.buildQuery('tilknyttedeJournalposter', queryField, queryVariables);
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.query),
-            'Expected a query string to be in place'
-        );
+        System.assertEquals(true, String.isNotBlank(result.query), 'Expected a query string to be in place');
         System.assertEquals(
             true,
             result.query.startsWith('query tilknyttedeJournalposter('),
@@ -126,18 +98,10 @@ private with sharing class NKS_SafBuildQueryUtilTest {
         NKS_SafQueryVariables queryVariables = new NKS_SafQueryVariables();
 
         Test.startTest();
-        result = NKS_SafBuildQueryUtil.buildQuery(
-            'dokumentoversiktJournalstatus',
-            queryField,
-            queryVariables
-        );
+        result = NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktJournalstatus', queryField, queryVariables);
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            String.isNotBlank(result.query),
-            'Expected a query string to be in place'
-        );
+        System.assertEquals(true, String.isNotBlank(result.query), 'Expected a query string to be in place');
         System.assertEquals(
             true,
             result.query.startsWith('query dokumentoversiktJournalstatus('),

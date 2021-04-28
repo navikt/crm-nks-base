@@ -24,10 +24,7 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
             '		"orgNrTilKommunaltNavKontor": null' +
             '	}' +
             ']';
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', unitJSON, null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
         Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
             new Person__c(
@@ -60,27 +57,11 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            result.success,
-            'Excpected a successful result'
-        );
-        System.assertEquals(
-            true,
-            String.isBlank(result.errorMessage),
-            'Excpected blank value in error message'
-        );
-        System.assertNotEquals(
-            null,
-            result.units,
-            'Did not eexcpect the result NULL in units.'
-        );
+        System.assertEquals(true, result.success, 'Excpected a successful result');
+        System.assertEquals(true, String.isBlank(result.errorMessage), 'Excpected blank value in error message');
+        System.assertNotEquals(null, result.units, 'Did not eexcpect the result NULL in units.');
         System.assertEquals(1, result.units.size(), 'Expected one unit');
-        System.assertEquals(
-            unit1.Id,
-            result.units[0].sfId,
-            'Expected to the sf id populated with the correct Id'
-        );
+        System.assertEquals(unit1.Id, result.units[0].sfId, 'Expected to the sf id populated with the correct Id');
     }
 
     @isTest
@@ -107,10 +88,7 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
             '		"orgNrTilKommunaltNavKontor": null' +
             '	}' +
             ']';
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', unitJSON, null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
         NavUnit__c unit1 = (NavUnit__c) UTIL_TestDataFactory.createRecord(
             new NavUnit__c(Name = 'Test Unit', INT_UnitNumber__c = '1234'),
@@ -133,39 +111,19 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(
-            true,
-            result.success,
-            'Excpected a successful result'
-        );
-        System.assertEquals(
-            true,
-            String.isBlank(result.errorMessage),
-            'Excpected blank value in error message'
-        );
-        System.assertNotEquals(
-            null,
-            result.units,
-            'Did not eexcpect the result NULL in units.'
-        );
+        System.assertEquals(true, result.success, 'Excpected a successful result');
+        System.assertEquals(true, String.isBlank(result.errorMessage), 'Excpected blank value in error message');
+        System.assertNotEquals(null, result.units, 'Did not eexcpect the result NULL in units.');
         System.assertEquals(1, result.units.size(), 'Expected one unit');
-        System.assertEquals(
-            unit1.Id,
-            result.units[0].sfId,
-            'Expected to the sf id populated with the correct Id'
-        );
+        System.assertEquals(unit1.Id, result.units[0].sfId, 'Expected to the sf id populated with the correct Id');
     }
 
     @isTest
     static void testGetUserNavUnitId() {
-        UTIL_TestDataFactory.createRecord(
-            new NavUnit__c(INT_UnitNumber__c = '0701')
-        );
+        UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '0701'));
 
         Test.startTest();
-        String unitId = NKSNavTaskWorkAllocationController.getUserNavUnitId(
-            '0701'
-        );
+        String unitId = NKSNavTaskWorkAllocationController.getUserNavUnitId('0701');
         Test.stopTest();
 
         System.assert(String.isNotBlank(unitId));

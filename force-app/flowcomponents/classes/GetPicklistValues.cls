@@ -7,16 +7,9 @@ public with sharing class GetPicklistValues {
         System.debug('entering getPicklistVals');
         String objectName = requestList[0].objectName;
         String fieldName = requestList[0].fieldName;
-        System.debug(
-            'object and field are  :' +
-            objectName +
-            'and ' +
-            fieldName
-        );
+        System.debug('object and field are  :' + objectName + 'and ' + fieldName);
 
-        SObjectType objectType = ((SObject) Type.forName(objectName)
-                .newInstance())
-            .getSObjectType(); //courtesy of cropredy and sfdcfox https://salesforce.stackexchange.com/a/250041/24822
+        SObjectType objectType = ((SObject) Type.forName(objectName).newInstance()).getSObjectType(); //courtesy of cropredy and sfdcfox https://salesforce.stackexchange.com/a/250041/24822
 
         //General code below courtesy of sfdcmonkey http://sfdcmonkey.com/2016/12/05/how-to-fetch-picklist-value-from-sobject-and-set-in-uiinputselect/
 
@@ -25,9 +18,7 @@ public with sharing class GetPicklistValues {
         // Get a map of fields for the SObject
         map<String, Schema.SObjectField> fieldMap = objDescribe.fields.getMap();
         // Get the list of picklist values for this field.
-        list<Schema.PicklistEntry> values = fieldMap.get(fieldName)
-            .getDescribe()
-            .getPickListValues();
+        list<Schema.PicklistEntry> values = fieldMap.get(fieldName).getDescribe().getPickListValues();
 
         List<String> picklistStringVals = new List<String>();
 

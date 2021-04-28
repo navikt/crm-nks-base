@@ -19,11 +19,7 @@ public with sharing class NKS_PersonBadgesController {
      * @description Get an apex type holding all the data we need for showing badges.
      */
     @AuraEnabled(cacheable=true)
-    public static PersonBadgeData getPersonBadgesAndInfo(
-        String field,
-        String parentObject,
-        String parentRecordId
-    ) {
+    public static PersonBadgeData getPersonBadgesAndInfo(String field, String parentObject, String parentRecordId) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
         Person__c person = getPerson(personId);
         return new PersonBadgeData(person);
@@ -39,12 +35,7 @@ public with sharing class NKS_PersonBadgesController {
      */
     private static Id getPersonId(String field, String parentObject, String parentRecordId) {
         Id personId = null;
-        String queryString =
-            'SELECT ' +
-            field +
-            ' FROM ' +
-            parentObject +
-            ' WHERE Id = :parentRecordId LIMIT 1';
+        String queryString = 'SELECT ' + field + ' FROM ' + parentObject + ' WHERE Id = :parentRecordId LIMIT 1';
         List<SObject> objList = Database.query(String.escapeSingleQuotes(queryString));
 
         if (false == objList.isEmpty()) {
@@ -61,10 +52,7 @@ public with sharing class NKS_PersonBadgesController {
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {
-            return getFieldValue(
-                obj.getSObject(fieldNameList.remove(0)),
-                String.join(fieldNameList, '.')
-            );
+            return getFieldValue(obj.getSObject(fieldNameList.remove(0)), String.join(fieldNameList, '.'));
         }
 
         return obj.get(fieldNameList[0]);
@@ -262,16 +250,7 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setGuardianshipOrFuturePowerOfAttorney() {
             if (String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
-                badges.add(
-                    new Badge(
-                        'guardianshipOrFuturePowerOfAttorney',
-                        'Vergemål',
-                        'pointer',
-                        '',
-                        '',
-                        true
-                    )
-                );
+                badges.add(new Badge('guardianshipOrFuturePowerOfAttorney', 'Vergemål', 'pointer', '', '', true));
 
                 try {
                     Integer i = 0;
@@ -301,12 +280,7 @@ public with sharing class NKS_PersonBadgesController {
                 );
 
                 if (String.isNotBlank(degreeOfHearingAndVisualImpairment)) {
-                    badges.add(
-                        new Badge(
-                            'degreeOfHearingAndVisualImpairment',
-                            degreeOfHearingAndVisualImpairment
-                        )
-                    );
+                    badges.add(new Badge('degreeOfHearingAndVisualImpairment', degreeOfHearingAndVisualImpairment));
                 }
             }
         }
@@ -318,19 +292,10 @@ public with sharing class NKS_PersonBadgesController {
             if (fieldSet.contains('hot_hasentitlement__c')) {
                 if (true == (Boolean) person.get('HOT_HasEntitlement__c')) {
                     badges.add(
-                        new Badge(
-                            'entitlements',
-                            getFieldLabel('HOT_HasEntitlement__c'),
-                            'pointer',
-                            '',
-                            '',
-                            true
-                        )
+                        new Badge('entitlements', getFieldLabel('HOT_HasEntitlement__c'), 'pointer', '', '', true)
                     );
 
-                    for (
-                        String entitlementField : NKS_PersonBadgesController.HOT_ENTITLEMENT_FIELDS
-                    ) {
+                    for (String entitlementField : NKS_PersonBadgesController.HOT_ENTITLEMENT_FIELDS) {
                         if (true == (Boolean) person.get(entitlementField)) {
                             entitlements.add(getFieldLabel(entitlementField));
                         }

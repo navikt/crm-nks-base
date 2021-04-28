@@ -7,10 +7,7 @@ public with sharing class nksUtilityBackgroundController {
 
             if (objectName == Schema.LiveChatTranscript.getSObjectType()) {
                 tabname = [
-                        SELECT
-                            Name,
-                            LiveChatButton.DeveloperName,
-                            LiveChatButton.MasterLabel
+                        SELECT Name, LiveChatButton.DeveloperName, LiveChatButton.MasterLabel
                         FROM LiveChatTranscript
                         WHERE Id = :recordId
                     ]
@@ -29,11 +26,7 @@ public with sharing class nksUtilityBackgroundController {
     @AuraEnabled
     public static string getOnlineId() {
         String statusId = String.valueOf(
-            [
-                SELECT Id
-                FROM ServicePresenceStatus
-                WHERE DeveloperName = 'Available_for_Chat'
-            ]
+            [SELECT Id FROM ServicePresenceStatus WHERE DeveloperName = 'Available_for_Chat']
             ?.Id
         );
         return statusId.substring(0, 15);

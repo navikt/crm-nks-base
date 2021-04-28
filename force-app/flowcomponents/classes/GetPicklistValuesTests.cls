@@ -11,9 +11,7 @@ public class GetPicklistValuesTests {
         request.objectName = 'Account';
         requestList.add(request);
 
-        List<GetPicklistValues.Results> response = GetPicklistValues.getPicklistVals(
-            requestList
-        );
+        List<GetPicklistValues.Results> response = GetPicklistValues.getPicklistVals(requestList);
         System.assertNotEquals(null, response[0]);
     }
 }

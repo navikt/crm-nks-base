@@ -22,11 +22,7 @@ public with sharing class NKS_SafJournalPostListController {
             );
 
             queryResults = safService.doSafQuery(
-                NKS_SafBuildQueryUtil.buildQuery(
-                    'dokumentoversiktBruker',
-                    queryField,
-                    queryVariables
-                )
+                NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktBruker', queryField, queryVariables)
             );
         } catch (Exception ex) {
             queryResults = new NKS_SafQueryResponse();
@@ -47,9 +43,7 @@ public with sharing class NKS_SafJournalPostListController {
         String relationshipField,
         String viewedRecordId
     ) {
-        String actorId = getPersonActorId(
-            getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
-        );
+        String actorId = getPersonActorId(getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId));
 
         return NKS_NavCaseService.getNavCases(actorId);
     }

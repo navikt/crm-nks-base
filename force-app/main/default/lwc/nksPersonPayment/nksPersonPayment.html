@@ -1,20 +1,8 @@
 <template>
-    <div
-        class="payment-tile-bg slds-var-p-around_small slds-var-m-bottom_x-small"
-        aria-expanded={expanded}
-    >
+    <div class="payment-tile-bg slds-var-p-around_small slds-var-m-bottom_x-small" aria-expanded={expanded}>
         <lightning-layout multiple-rows="true">
-            <lightning-layout-item
-                size="1"
-                padding="horizontal-small"
-                class="slds-align_absolute-center"
-            >
-                <lightning-icon
-                    data-paid={paid}
-                    icon-name={statusIcon}
-                    size="medium"
-                    class="slds-var-p-right_small"
-                >
+            <lightning-layout-item size="1" padding="horizontal-small" class="slds-align_absolute-center">
+                <lightning-icon data-paid={paid} icon-name={statusIcon} size="medium" class="slds-var-p-right_small">
                 </lightning-icon>
             </lightning-layout-item>
             <lightning-layout-item size="11">
@@ -42,11 +30,7 @@
                             </b>
                         </lightning-layout>
                     </lightning-layout-item>
-                    <lightning-layout-item
-                        if:false={multipleYtelser}
-                        size="12"
-                        padding="horizontal-small"
-                    >
+                    <lightning-layout-item if:false={multipleYtelser} size="12" padding="horizontal-small">
                         <template for:each={payment.ytelseListe} for:item="ytelse">
                             <b key={ytelse.ytelsestype}
                                 ><lightning-formatted-date-time

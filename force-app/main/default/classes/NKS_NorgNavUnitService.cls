@@ -23,11 +23,7 @@ public with sharing class NKS_NorgNavUnitService {
      * @param shielded [If the unit should process cases for a shielded NAV Employee]
      * @return NavUnitResponse [Wrapper holding success (true|false), response from Norg2 and error message with reference to application log]
      */
-    public NavUnitResponse getNavUnitFromGeographicLocation(
-        String location,
-        String discretionCode,
-        Boolean screened
-    ) {
+    public NavUnitResponse getNavUnitFromGeographicLocation(String location, String discretionCode, Boolean screened) {
         NavUnitResponse resp = new NavUnitResponse();
 
         Map<String, String> paramMap = new Map<String, String>();
@@ -56,10 +52,7 @@ public with sharing class NKS_NorgNavUnitService {
 
         if (statusCode == 200) {
             resp.success = true;
-            resp.unit = (NKS_NavUnit) JSON.deserialize(
-                bodyString,
-                NKS_NavUnit.class
-            );
+            resp.unit = (NKS_NavUnit) JSON.deserialize(bodyString, NKS_NavUnit.class);
         } else {
             String params =
                 '[geografiskOmraade: ' +
@@ -71,21 +64,14 @@ public with sharing class NKS_NorgNavUnitService {
                 ']';
             String errorRef = logError(
                 apiCtrl.getResponse(),
-                'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation. Parameters: ' +
-                params
+                'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation. Parameters: ' + params
             );
-            resp.errorMessage =
-                'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' +
-                errorRef;
+            resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
 
             if (statusCode == 404) {
-                resp.errorMessage =
-                    'Kunne ikke finne enhet i NORG2. Referanse til feil: ' +
-                    errorRef;
+                resp.errorMessage = 'Kunne ikke finne enhet i NORG2. Referanse til feil: ' + errorRef;
             } else if (statusCode == 500) {
-                resp.errorMessage =
-                    'Noe gikk galt ved henting av enhet fra NORG2. Referanse til feil: ' +
-                    errorRef;
+                resp.errorMessage = 'Noe gikk galt ved henting av enhet fra NORG2. Referanse til feil: ' + errorRef;
             }
         }
 
@@ -94,18 +80,11 @@ public with sharing class NKS_NorgNavUnitService {
 
     public NavUnitResponse getNavUnitFromUnitNumber(String unitNumber) {
         NavUnitResponse response = new NavUnitResponse();
-        NavUnitsResponse resp = getNavUnitFilteredList(
-            null,
-            new List<String>{ unitNumber },
-            null
-        );
+        NavUnitsResponse resp = getNavUnitFilteredList(null, new List<String>{ unitNumber }, null);
 
         response.errorMessage = resp.errorMessage;
         response.success = resp.success;
-        response.unit = (null != resp.units &&
-            false == resp.units.isEmpty())
-            ? resp.units[0]
-            : null;
+        response.unit = (null != resp.units && false == resp.units.isEmpty()) ? resp.units[0] : null;
 
         return response;
     }
@@ -116,20 +95,14 @@ public with sharing class NKS_NorgNavUnitService {
      * @param unitNumber
      * @return NavUnitsResponse [Wrapper holding success (true|false), response from Norg2 (List of units) and error message with reference to application log]
      */
-    public NavUnitContactInformationResponse getNavUnitContactInformation(
-        String unitNumber
-    ) {
+    public NavUnitContactInformationResponse getNavUnitContactInformation(String unitNumber) {
         NavUnitContactInformationResponse resp = new NavUnitContactInformationResponse();
 
         Map<String, String> paramMap = new Map<String, String>();
         paramMap.put('enhetsnummer', unitNumber);
 
         ApiController apiCtrl = new ApiController();
-        apiCtrl.initRequest(
-            API_CONFIG_NAME,
-            'GET_UNIT_CONTACT_INFORMATION',
-            paramMap
-        );
+        apiCtrl.initRequest(API_CONFIG_NAME, 'GET_UNIT_CONTACT_INFORMATION', paramMap);
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
         apiCtrl.doCallout();
 
@@ -157,15 +130,11 @@ public with sharing class NKS_NorgNavUnitService {
                 unitNumber +
                 '.'
             );
-            resp.errorMessage =
-                'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' +
-                errorRef;
+            resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' + errorRef;
             resp.success = false;
 
             if (statusCode == 404) {
-                resp.errorMessage =
-                    'Kunne ikke finne enhets insformasjon i NORG2. Referanse til feil: ' +
-                    errorRef;
+                resp.errorMessage = 'Kunne ikke finne enhets insformasjon i NORG2. Referanse til feil: ' + errorRef;
             }
         }
 
@@ -218,19 +187,14 @@ public with sharing class NKS_NorgNavUnitService {
             resp.success = true;
 
             if (true == String.isNotBlank(bodyString)) {
-                resp.units = (List<NKS_NavUnit>) JSON.deserialize(
-                    bodyString,
-                    List<NKS_NavUnit>.class
-                );
+                resp.units = (List<NKS_NavUnit>) JSON.deserialize(bodyString, List<NKS_NavUnit>.class);
             }
         } else {
             String errorRef = logError(
                 apiCtrl.getResponse(),
                 'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.'
             );
-            resp.errorMessage =
-                'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' +
-                errorRef;
+            resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
             resp.success = false;
         }
 
@@ -243,9 +207,7 @@ public with sharing class NKS_NorgNavUnitService {
      * @param allocationInput
      * @return WorkAllocationResponse [Wrapper holding success (true|false), response from Norg2 and error message with reference to application log]
      */
-    public WorkAllocationResponse getNavUnitWorkAllocation(
-        NKS_NavUnitWorkAllocationInput allocationInput
-    ) {
+    public WorkAllocationResponse getNavUnitWorkAllocation(NKS_NavUnitWorkAllocationInput allocationInput) {
         WorkAllocationResponse resp = new WorkAllocationResponse();
 
         ApiController apiCtrl = new ApiController();
@@ -277,9 +239,7 @@ public with sharing class NKS_NorgNavUnitService {
                 apiCtrl.getResponse(),
                 'Error from NKS_NorgNavUnitService.getNavUnitWorkAllocation.'
             );
-            resp.errorMessage =
-                'Kunne ikke hente arbeidsfordeling fra NORG2. Referanse til feil: ' +
-                errorRef;
+            resp.errorMessage = 'Kunne ikke hente arbeidsfordeling fra NORG2. Referanse til feil: ' + errorRef;
             resp.success = false;
         }
 
@@ -297,16 +257,7 @@ public with sharing class NKS_NorgNavUnitService {
         String errorRef = '';
 
         LoggerUtility logger = new LoggerUtility();
-        logger.error(
-            message +
-            '\n ' +
-            'Status: ' +
-            resp.getStatus() +
-            '\n' +
-            'Body: ' +
-            resp.getBody(),
-            null
-        );
+        logger.error(message + '\n ' + 'Status: ' + resp.getStatus() + '\n' + 'Body: ' + resp.getBody(), null);
         errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
         logger.publish();
 

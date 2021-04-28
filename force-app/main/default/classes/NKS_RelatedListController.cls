@@ -21,11 +21,7 @@ public class NKS_RelatedListController {
         String parentObjectApiName,
         String filterConditions
     ) {
-        Set<String> parentRelationIds = getParentRelation(
-            parentId,
-            parentRelationField,
-            parentObjectApiName
-        );
+        Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
         String query = 'SELECT ';
 
         //Appending fields to query string
@@ -56,12 +52,7 @@ public class NKS_RelatedListController {
         String parentObjectApiName
     ) {
         Set<String> parentRelationIds = new Set<String>();
-        String query =
-            'SELECT ' +
-            parentRelationField +
-            ' FROM ' +
-            parentObjectApiName +
-            ' WHERE Id = :parentId';
+        String query = 'SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = :parentId';
 
         for (SObject sObj : Database.query(query)) {
             parentRelationIds.add(getParentRelationId(sObj, parentRelationField));
@@ -84,10 +75,7 @@ public class NKS_RelatedListController {
         if (relationHierarchy.isEmpty()) {
             return (String) obj.get(fieldApiName);
         } else {
-            return getParentRelationId(
-                obj.getSObject(fieldApiName),
-                String.join(relationHierarchy, '.')
-            );
+            return getParentRelationId(obj.getSObject(fieldApiName), String.join(relationHierarchy, '.'));
         }
     }
 }

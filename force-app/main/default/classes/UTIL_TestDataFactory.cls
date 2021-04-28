@@ -17,9 +17,7 @@ public class UTIL_TestDataFactory {
      * @return       [sObject: the record, inserted and with defualt fields populated]
      */
     public static Id createRecord(String objectName, String recordType) {
-        sObject record = Schema.getGlobalDescribe()
-            .get(ObjectName)
-            .newSObject();
+        sObject record = Schema.getGlobalDescribe().get(ObjectName).newSObject();
         if (String.isNotBlank(recordType)) {
             record.put(
                 'RecordTypeId',
@@ -56,10 +54,7 @@ public class UTIL_TestDataFactory {
      * @param numRecords[Integer: the number of records to create]
      * @return          [List<sObject>: the list of sObjects, with defualt fields populate]
      */
-    public static list<sObject> createRecordList(
-        sObject record,
-        Integer numRecords
-    ) {
+    public static list<sObject> createRecordList(sObject record, Integer numRecords) {
         return createRecordList(record, numRecords, true);
     }
 
@@ -69,11 +64,7 @@ public class UTIL_TestDataFactory {
      * @param doInsert  [Boolean: true if the list is to be inserted, false otherwise]
      * @return          [List<sObject>: the list of sObjects, with defualt fields populate]
      */
-    public static List<sObject> createRecordList(
-        sObject record,
-        Integer numRecords,
-        Boolean doInsert
-    ) {
+    public static List<sObject> createRecordList(sObject record, Integer numRecords, Boolean doInsert) {
         List<sObject> records = new List<sObject>();
         for (Integer i = 0; i < numRecords; i++) {
             records.add(record.clone(false, false, false, false));
@@ -95,10 +86,7 @@ public class UTIL_TestDataFactory {
      * @param doInsert  [Boolean: true if the list is to be inserted, false otherwise]
      * @return          [List<sObject>: the list of sObjects, with defualt fields populated]
      */
-    public static List<sObject> createRecordList(
-        List<sObject> records,
-        Boolean doInsert
-    ) {
+    public static List<sObject> createRecordList(List<sObject> records, Boolean doInsert) {
         String objectName = String.valueOf(records[0].getSObjectType());
         Map<String, List<sObject>> relationListMap = new Map<String, List<sObject>>();
         Type t = getDefaultClassName(records[0]);
@@ -106,10 +94,7 @@ public class UTIL_TestDataFactory {
             FieldDefaults defaults = (FieldDefaults) t.newInstance();
             if (!defaults.getDmlFields().isEmpty()) {
                 //If there are any fielddefaults that require dml we bulkifyify these
-                relationListMap = bulkifyifyRelations(
-                    defaults.getDmlFields(),
-                    records.size()
-                );
+                relationListMap = bulkifyifyRelations(defaults.getDmlFields(), records.size());
             }
             for (Integer i = 0; i < records.size(); i++) {
                 addFieldDefaults(records[i], defaults, i, relationListMap);
@@ -128,18 +113,13 @@ public class UTIL_TestDataFactory {
         return records;
     }
 
-    public static Map<String, List<sObject>> bulkifyifyRelations(
-        Map<String, String> dmlFields,
-        Integer numRecords
-    ) {
+    public static Map<String, List<sObject>> bulkifyifyRelations(Map<String, String> dmlFields, Integer numRecords) {
         //Mapping a list of related records to a dml field
         Map<String, List<sObject>> relationListMap = new Map<String, List<sObject>>();
 
         for (String field : dmlFields.keySet()) {
             String objectName = dmlFields.get(field);
-            sObject record = Schema.getGlobalDescribe()
-                .get(ObjectName)
-                .newSObject();
+            sObject record = Schema.getGlobalDescribe().get(ObjectName).newSObject();
             List<sObject> relationList = createRecordList(record, numRecords);
             relationListMap.put(field, relationList);
         }
@@ -174,10 +154,7 @@ public class UTIL_TestDataFactory {
      * @param record    [sObject: the record]
      * @param defaults  [Map<String,Object>: map between defualt field names and values]
      */
-    public static void addFieldDefaults(
-        sObject record,
-        FieldDefaults defaults
-    ) {
+    public static void addFieldDefaults(sObject record, FieldDefaults defaults) {
         Map<String, Object> fieldDefaults = defaults.getFieldDefaults();
         for (String field : fieldDefaults.keySet()) {
             if (record.get(field) == null) {
@@ -200,10 +177,7 @@ public class UTIL_TestDataFactory {
         Map<String, Object> fieldDefaults = defaults.getFieldDefaults(true);
         for (String field : fieldDefaults.keySet()) {
             if (record.get(field) == null) {
-                if (
-                    defaults.getDmlFields().containsKey(field) &&
-                    relationListMap.containsKey(field)
-                ) {
+                if (defaults.getDmlFields().containsKey(field) && relationListMap.containsKey(field)) {
                     List<sObject> relationList = relationListMap.get(field);
                     record.put(field, (Id) relationList[index].get('Id'));
                 } else {
@@ -227,10 +201,7 @@ public class UTIL_TestDataFactory {
         final String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         String randStr = '';
         while (randStr.length() < len) {
-            Integer idx = Math.mod(
-                Math.abs(Crypto.getRandomInteger()),
-                chars.length()
-            );
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
             randStr += chars.substring(idx, idx + 1);
         }
         return randStr;
@@ -247,10 +218,7 @@ public class UTIL_TestDataFactory {
         final String chars = '0123456789';
         String randStr = '';
         while (randStr.length() < len) {
-            Integer idx = Math.mod(
-                Math.abs(Crypto.getRandomInteger()),
-                chars.length()
-            );
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
             randStr += chars.substring(idx, idx + 1);
         }
         return randStr;
@@ -280,12 +248,7 @@ public class UTIL_TestDataFactory {
                 'LocaleSidKey' => 'no_NO',
                 'EmailEncodingKey' => 'UTF-8',
                 'Department' => '1',
-                'ProfileId' => [
-                    SELECT Id
-                    FROM Profile
-                    WHERE Name = 'Standard User' OR Name = 'Standardbruker'
-                    LIMIT 1
-                ]
+                'ProfileId' => [SELECT Id FROM Profile WHERE Name = 'Standard User' OR Name = 'Standardbruker' LIMIT 1]
                 .Id,
                 'Alias' => generateRandomString(8),
                 'Email' => generateRandomString(8) + '@test.com',
@@ -303,10 +266,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'FirstName' => 'Test',
-                'LastName' => 'Testesen'
-            };
+            return new Map<String, Object>{ 'FirstName' => 'Test', 'LastName' => 'Testesen' };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -319,11 +279,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Name' => 'Test',
-                'Status' => 'Active',
-                'isActive' => true
-            };
+            return new Map<String, Object>{ 'Name' => 'Test', 'Status' => 'Active', 'isActive' => true };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -349,10 +305,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'LastName' => 'Test Testesen',
-                'Company' => 'Test Company'
-            };
+            return new Map<String, Object>{ 'LastName' => 'Test Testesen', 'Company' => 'Test Company' };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -365,10 +318,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Priority' => 'High',
-                'Status' => 'In Progress'
-            };
+            return new Map<String, Object>{ 'Priority' => 'High', 'Status' => 'In Progress' };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -383,9 +333,7 @@ public class UTIL_TestDataFactory {
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
                 'Name' => 'Test Testesen',
-                'AccountId' => bulkify
-                    ? 'Account'
-                    : createRecord('Account', null),
+                'AccountId' => bulkify ? 'Account' : createRecord('Account', null),
                 'EffectiveDate' => Date.today(),
                 'Status' => 'Draft',
                 'PriceBook2Id' => Test.getStandardPricebookId()
@@ -402,19 +350,14 @@ public class UTIL_TestDataFactory {
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
-                'PriceBookEntryId' => bulkify
-                    ? 'PriceBookEntry'
-                    : createRecord('PricebookEntry', null),
+                'PriceBookEntryId' => bulkify ? 'PriceBookEntry' : createRecord('PricebookEntry', null),
                 'OrderId' => bulkify ? 'Order' : createRecord('Order', null),
                 'Quantity' => 1,
                 'UnitPrice' => 100
             };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{
-                'OrderId' => 'Order',
-                'PriceBookEntryId' => 'PriceBookEntry'
-            };
+            return new Map<String, String>{ 'OrderId' => 'Order', 'PriceBookEntryId' => 'PriceBookEntry' };
         }
     }
 
@@ -425,9 +368,7 @@ public class UTIL_TestDataFactory {
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
                 'PriceBook2Id' => Test.getStandardPricebookId(),
-                'Product2Id' => bulkify
-                    ? 'Product2'
-                    : createRecord('Product2', null),
+                'Product2Id' => bulkify ? 'Product2' : createRecord('Product2', null),
                 'isActive' => true,
                 'UnitPrice' => 100
             };
@@ -442,11 +383,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Name' => 'SF Merch',
-                'ProductCode' => '1234',
-                'isActive' => true
-            };
+            return new Map<String, Object>{ 'Name' => 'SF Merch', 'ProductCode' => '1234', 'isActive' => true };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -464,9 +401,7 @@ public class UTIL_TestDataFactory {
                 'CloseDate' => Date.today(),
                 'StageName' => 'Closed Won',
                 'Amount' => 100,
-                'CampaignId' => bulkify
-                    ? 'Campaign'
-                    : createRecord('Campaign', null)
+                'CampaignId' => bulkify ? 'Campaign' : createRecord('Campaign', null)
             };
         }
         public Map<String, String> getDmlFields() {
@@ -480,15 +415,11 @@ public class UTIL_TestDataFactory {
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
             return new Map<String, Object>{
-                'LiveChatVisitorId' => bulkify
-                    ? 'LiveChatVisitor'
-                    : createRecord('LiveChatVisitor', null)
+                'LiveChatVisitorId' => bulkify ? 'LiveChatVisitor' : createRecord('LiveChatVisitor', null)
             };
         }
         public Map<String, String> getDmlFields() {
-            return new Map<String, String>{
-                'LiveChatVisitorId' => 'LiveChatVisitor'
-            };
+            return new Map<String, String>{ 'LiveChatVisitorId' => 'LiveChatVisitor' };
         }
     }
 
@@ -511,9 +442,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Message' => 'Dette er en melding'
-            };
+            return new Map<String, Object>{ 'Message' => 'Dette er en melding' };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -526,9 +455,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Name' => generateRandomNumberString(11)
-            };
+            return new Map<String, Object>{ 'Name' => generateRandomNumberString(11) };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};
@@ -561,9 +488,7 @@ public class UTIL_TestDataFactory {
             return new Map<String, Object>{
                 'CRM_DueDate__c' => Date.today(),
                 'CRM_NoPersonInformation__c' => true,
-                'CRM_Account__c' => bulkify
-                    ? 'Account'
-                    : createRecord('Account', null)
+                'CRM_Account__c' => bulkify ? 'Account' : createRecord('Account', null)
             };
         }
         public Map<String, String> getDmlFields() {
@@ -589,10 +514,7 @@ public class UTIL_TestDataFactory {
             return getFieldDefaults(false);
         }
         public Map<String, Object> getFieldDefaults(Boolean bulkify) {
-            return new Map<String, Object>{
-                'Name' => 'Test Name',
-                'CRM_Active__c' => true
-            };
+            return new Map<String, Object>{ 'Name' => 'Test Name', 'CRM_Active__c' => true };
         }
         public Map<String, String> getDmlFields() {
             return new Map<String, String>{};

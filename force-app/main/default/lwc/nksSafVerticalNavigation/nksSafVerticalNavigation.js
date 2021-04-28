@@ -236,9 +236,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
             Object.values(this._themeMap).forEach((list) => (listThemes = listThemes.concat(list)));
         } else {
             listThemes =
-                this.selectedThemeGroup &&
-                this._themeMap &&
-                this.selectedThemeGroup in this._themeMap
+                this.selectedThemeGroup && this._themeMap && this.selectedThemeGroup in this._themeMap
                     ? this._themeMap[this.selectedThemeGroup]
                     : [];
         }
