@@ -8,11 +8,22 @@ export default class nksQuickText extends LightningElement {
         BLANK_ERROR
     };
 
-    @api comments;
     @api conversationNote;
+    @api conversationNoteRich;
     @track data;
     loadingData = false;
     @api required = false;
+
+    get inputFormats() {
+        return [''];
+    }
+
+    get conversationNote() {
+        let plainText = this.conversationNoteRich ? this.conversationNoteRich : '';
+        plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
+        plainText = plainText.replace(/<[^\s>]+>/g, ''); //Remove remaining html tags
+        return plainText;
+    }
 
     handleKeyUp(evt) {
         const isEnterKey = evt.keyCode === 13;
@@ -46,20 +57,21 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        this.conversationNote = this.conversationNote + event.currentTarget.dataset.message;
+        const editor = this.template.querySelector('lightning-input-rich-text');
+        editor.setRangeText(event.currentTarget.dataset.message, undefined, undefined, 'select');
+        this.conversationNoteRich = editor.value;
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
-        this.template.querySelector('textarea').value = this.conversationNote;
         const attributeChangeEvent = new CustomEvent('commentschange', {
-            detail: this.template.querySelector('textarea').value
+            detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        this.conversationNote = event.target.value;
+        this.conversationNoteRich = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
-            detail: this.template.querySelector('textarea').value
+            detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
     }
