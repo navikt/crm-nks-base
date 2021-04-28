@@ -104,7 +104,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
             throw new KafkaBrukernotifikasjonException('Cannot find account from fodselsnummer');
         }
 
-        notification.CRM_AccountId__c = accountId;
+        notification.CRM_Account__c = accountId;
     }
 
     private void doUpsert(List<UserNotification__c> notificationsToUpsert) {

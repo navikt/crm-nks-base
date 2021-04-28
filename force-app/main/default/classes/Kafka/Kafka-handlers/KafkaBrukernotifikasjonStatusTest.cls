@@ -2,9 +2,7 @@
 private class KafkaBrukernotifikasjonStatusTest {
     @TestSetup
     static void makeData() {
-        UTIL_TestDataFactory.createRecord(
-            new Person__c(INT_ActorId__c = '123456789', Name = '12345678901')
-        );
+        UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789', Name = '12345678901'));
 
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
@@ -38,9 +36,7 @@ private class KafkaBrukernotifikasjonStatusTest {
 
         KafkaMessage__c message = new KafkaMessage__c();
         message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
-        message.CRM_Value__c = EncodingUtil.base64Encode(
-            Blob.valueOf(JSON.serialize(statusoppdatering))
-        );
+        message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(statusoppdatering)));
         message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
         message.CRM_Topic__c = 'aapen-brukernotifikasjon-nyStatusoppdatering-v1';
         insert message;
@@ -83,11 +79,11 @@ private class KafkaBrukernotifikasjonStatusTest {
                 INT_VisibleUntil__c,
                 INT_ExternalNotification__c,
                 INT_Type__c,
-                CRM_AccountId__c,
+                CRM_Account__c,
                 INT_GlobalStatus__c,
                 INT_InternalStatus__c,
                 INT_CaseTheme__c,
-                CRM_CaseThemeId__c,
+                CRM_CaseTheme__c,
                 CRM_Done__c,
                 INT_DoneEventTime__c
             FROM UserNotification__c
@@ -121,7 +117,7 @@ private class KafkaBrukernotifikasjonStatusTest {
         // prettier-ignore
         System.assertEquals('STATUSOPPDATERING', userNotification.INT_Type__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_AccountId__c, 'Expected value to be null');
+        System.assertNotEquals(null, userNotification.CRM_Account__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(statusoppdatering.statusGlobal, userNotification.INT_GlobalStatus__c, 'Expected value to be set');
         // prettier-ignore
@@ -129,7 +125,7 @@ private class KafkaBrukernotifikasjonStatusTest {
         // prettier-ignore
         System.assertEquals(statusoppdatering.sakstema, userNotification.INT_CaseTheme__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_CaseThemeId__c, 'Expected value to be set');
+        System.assertNotEquals(null, userNotification.CRM_CaseTheme__c, 'Expected value to be set');
         // prettier-ignore
         System.assertEquals(false, userNotification.CRM_Done__c, 'Expected value to be false');
         // prettier-ignore
@@ -155,9 +151,7 @@ private class KafkaBrukernotifikasjonStatusTest {
 
         KafkaMessage__c message = new KafkaMessage__c();
         message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
-        message.CRM_Value__c = EncodingUtil.base64Encode(
-            Blob.valueOf(JSON.serialize(statusoppdatering))
-        );
+        message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(statusoppdatering)));
         message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
         message.CRM_Topic__c = 'aapen-brukernotifikasjon-nyStatusoppdatering-v1';
         insert message;
@@ -200,11 +194,11 @@ private class KafkaBrukernotifikasjonStatusTest {
                 INT_VisibleUntil__c,
                 INT_ExternalNotification__c,
                 INT_Type__c,
-                CRM_AccountId__c,
+                CRM_Account__c,
                 INT_GlobalStatus__c,
                 INT_InternalStatus__c,
                 INT_CaseTheme__c,
-                CRM_CaseThemeId__c,
+                CRM_CaseTheme__c,
                 CRM_Done__c,
                 INT_DoneEventTime__c
             FROM UserNotification__c
@@ -238,7 +232,7 @@ private class KafkaBrukernotifikasjonStatusTest {
         // prettier-ignore
         System.assertEquals('STATUSOPPDATERING', userNotification.INT_Type__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_AccountId__c, 'Expected value to be null');
+        System.assertNotEquals(null, userNotification.CRM_Account__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(statusoppdatering.statusGlobal, userNotification.INT_GlobalStatus__c, 'Expected value to be set');
         // prettier-ignore
@@ -246,7 +240,7 @@ private class KafkaBrukernotifikasjonStatusTest {
         // prettier-ignore
         System.assertEquals(statusoppdatering.sakstema, userNotification.INT_CaseTheme__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertEquals(null, userNotification.CRM_CaseThemeId__c, 'Expected value to be null');
+        System.assertEquals(null, userNotification.CRM_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(false, userNotification.CRM_Done__c, 'Expected value to be false');
         // prettier-ignore

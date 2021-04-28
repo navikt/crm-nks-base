@@ -2,9 +2,7 @@
 private class KafkaBrukernotifikasjonDoneTest {
     @TestSetup
     static void makeData() {
-        UTIL_TestDataFactory.createRecord(
-            new Person__c(INT_ActorId__c = '123456789', Name = '12345678901')
-        );
+        UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789', Name = '12345678901'));
 
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
 
@@ -22,11 +20,11 @@ private class KafkaBrukernotifikasjonDoneTest {
                 INT_VisibleUntil__c = Datetime.now().addDays(-3),
                 INT_ExternalNotification__c = false,
                 INT_Type__c = 'BESKJED',
-                CRM_AccountId__c = accountId,
+                CRM_Account__c = accountId,
                 INT_GlobalStatus__c = null,
                 INT_InternalStatus__c = null,
                 INT_CaseTheme__c = null,
-                CRM_CaseThemeId__c = null,
+                CRM_CaseTheme__c = null,
                 CRM_Done__c = false,
                 INT_DoneEventTime__c = null
             )
@@ -46,11 +44,11 @@ private class KafkaBrukernotifikasjonDoneTest {
                 INT_VisibleUntil__c = null,
                 INT_ExternalNotification__c = false,
                 INT_Type__c = 'OPPGAVE',
-                CRM_AccountId__c = accountId,
+                CRM_Account__c = accountId,
                 INT_GlobalStatus__c = null,
                 INT_InternalStatus__c = null,
                 INT_CaseTheme__c = null,
-                CRM_CaseThemeId__c = null,
+                CRM_CaseTheme__c = null,
                 CRM_Done__c = false,
                 INT_DoneEventTime__c = null
             )
@@ -90,11 +88,7 @@ private class KafkaBrukernotifikasjonDoneTest {
             'Expected one async request record that is processed'
         );
 
-        message = [
-            SELECT Id, CRM_Status__c, CRM_ErrorMessage__c
-            FROM KafkaMessage__c
-            WHERE Id = :message.Id
-        ];
+        message = [SELECT Id, CRM_Status__c, CRM_ErrorMessage__c FROM KafkaMessage__c WHERE Id = :message.Id];
 
         System.assertEquals(
             KafkaMessageService.STATUS_PROCESSED,
@@ -116,11 +110,11 @@ private class KafkaBrukernotifikasjonDoneTest {
                 INT_VisibleUntil__c,
                 INT_ExternalNotification__c,
                 INT_Type__c,
-                CRM_AccountId__c,
+                CRM_Account__c,
                 INT_GlobalStatus__c,
                 INT_InternalStatus__c,
                 INT_CaseTheme__c,
-                CRM_CaseThemeId__c,
+                CRM_CaseTheme__c,
                 CRM_Done__c,
                 INT_DoneEventTime__c
             FROM UserNotification__c
@@ -156,7 +150,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         // prettier-ignore
         System.assertEquals('BESKJED', userNotification.INT_Type__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_AccountId__c, 'Expected value to be set');
+        System.assertNotEquals(null, userNotification.CRM_Account__c, 'Expected value to be set');
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_GlobalStatus__c, 'Expected value to be null');
         // prettier-ignore
@@ -164,7 +158,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
-        System.assertEquals(null, userNotification.CRM_CaseThemeId__c, 'Expected value to be null');
+        System.assertEquals(null, userNotification.CRM_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(true, userNotification.CRM_Done__c, 'Expected value to be true');
         // prettier-ignore
@@ -205,11 +199,7 @@ private class KafkaBrukernotifikasjonDoneTest {
             'Expected one async request record that is processed'
         );
 
-        message = [
-            SELECT Id, CRM_Status__c, CRM_ErrorMessage__c
-            FROM KafkaMessage__c
-            WHERE Id = :message.Id
-        ];
+        message = [SELECT Id, CRM_Status__c, CRM_ErrorMessage__c FROM KafkaMessage__c WHERE Id = :message.Id];
 
         System.assertEquals(
             KafkaMessageService.STATUS_PROCESSED,
@@ -231,11 +221,11 @@ private class KafkaBrukernotifikasjonDoneTest {
                 INT_VisibleUntil__c,
                 INT_ExternalNotification__c,
                 INT_Type__c,
-                CRM_AccountId__c,
+                CRM_Account__c,
                 INT_GlobalStatus__c,
                 INT_InternalStatus__c,
                 INT_CaseTheme__c,
-                CRM_CaseThemeId__c,
+                CRM_CaseTheme__c,
                 CRM_Done__c,
                 INT_DoneEventTime__c
             FROM UserNotification__c
@@ -271,7 +261,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         // prettier-ignore
         System.assertEquals('OPPGAVE', userNotification.INT_Type__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_AccountId__c, 'Expected value to be set');
+        System.assertNotEquals(null, userNotification.CRM_Account__c, 'Expected value to be set');
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_GlobalStatus__c, 'Expected value to be null');
         // prettier-ignore
@@ -279,7 +269,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
-        System.assertEquals(null, userNotification.CRM_CaseThemeId__c, 'Expected value to be null');
+        System.assertEquals(null, userNotification.CRM_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(true, userNotification.CRM_Done__c, 'Expected value to be true');
         // prettier-ignore

@@ -2,9 +2,7 @@
 private class KafkaBrukernotifikasjonHandlerTest {
     @TestSetup
     static void makeData() {
-        UTIL_TestDataFactory.createRecord(
-            new Person__c(INT_ActorId__c = '123456789', Name = '12345678901')
-        );
+        UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789', Name = '12345678901'));
 
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(CRM_Code__c = 'BAR', Name = 'Barnebidrag', CRM_Code_Set__c = 'Tema')
@@ -58,11 +56,7 @@ private class KafkaBrukernotifikasjonHandlerTest {
             'Expected one async request record that is processed'
         );
 
-        message = [
-            SELECT Id, CRM_Status__c, CRM_ErrorMessage__c
-            FROM KafkaMessage__c
-            WHERE Id = :message.Id
-        ];
+        message = [SELECT Id, CRM_Status__c, CRM_ErrorMessage__c FROM KafkaMessage__c WHERE Id = :message.Id];
 
         System.assertEquals(
             KafkaMessageService.STATUS_ERROR,
@@ -72,9 +66,7 @@ private class KafkaBrukernotifikasjonHandlerTest {
 
         System.assertEquals(
             true,
-            message.CRM_ErrorMessage__c.containsIgnoreCase(
-                'Cannot find account from fodselsnummer'
-            ),
+            message.CRM_ErrorMessage__c.containsIgnoreCase('Cannot find account from fodselsnummer'),
             'Excpected that the error message pointed to missing fodselsnummer'
         );
 
@@ -98,12 +90,12 @@ private class KafkaBrukernotifikasjonHandlerTest {
                 INT_VisibleUntil__c = null,
                 INT_ExternalNotification__c = false,
                 INT_Type__c = 'OPPGAVE',
-                CRM_AccountId__c = [SELECT Id FROM Account LIMIT 1]
+                CRM_Account__c = [SELECT Id FROM Account LIMIT 1]
                 .Id,
                 INT_GlobalStatus__c = null,
                 INT_InternalStatus__c = null,
                 INT_CaseTheme__c = null,
-                CRM_CaseThemeId__c = null,
+                CRM_CaseTheme__c = null,
                 CRM_Done__c = false,
                 INT_DoneEventTime__c = null,
                 INT_LastUpdatedFromKafka__c = DateTime.now().addDays(1)

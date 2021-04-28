@@ -1,8 +1,5 @@
 public with sharing class KafkaBrukernotifikasjonStatusHandler extends KafkaBrukernotifikasjonHandler {
-    protected override void buildNotification(
-        String decodedValue,
-        UserNotification__c notification
-    ) {
+    protected override void buildNotification(String decodedValue, UserNotification__c notification) {
         KafkaBrukernotifikasjonStatusoppdatering statusoppdatering = (KafkaBrukernotifikasjonStatusoppdatering) JSON.deserialize(
             decodedValue,
             KafkaBrukernotifikasjonStatusoppdatering.class
@@ -21,6 +18,6 @@ public with sharing class KafkaBrukernotifikasjonStatusHandler extends KafkaBruk
         notification.INT_ExternalNotification__c = false;
 
         notification.INT_Type__c = 'STATUSOPPDATERING';
-        notification.CRM_CaseThemeId__c = commonCodeMap.get(statusoppdatering.sakstema);
+        notification.CRM_CaseTheme__c = commonCodeMap.get(statusoppdatering.sakstema);
     }
 }

@@ -2,9 +2,7 @@
 private class KafkaBrukernotifikasjonBeskjedTest {
     @TestSetup
     static void makeData() {
-        UTIL_TestDataFactory.createRecord(
-            new Person__c(INT_ActorId__c = '123456789', Name = '12345678901')
-        );
+        UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789', Name = '12345678901'));
     }
     @IsTest
     static void testCreateBeskjedEvent() {
@@ -67,11 +65,11 @@ private class KafkaBrukernotifikasjonBeskjedTest {
                 INT_VisibleUntil__c,
                 INT_ExternalNotification__c,
                 INT_Type__c,
-                CRM_AccountId__c,
+                CRM_Account__c,
                 INT_GlobalStatus__c,
                 INT_InternalStatus__c,
                 INT_CaseTheme__c,
-                CRM_CaseThemeId__c,
+                CRM_CaseTheme__c,
                 CRM_Done__c,
                 INT_DoneEventTime__c
             FROM UserNotification__c
@@ -105,7 +103,7 @@ private class KafkaBrukernotifikasjonBeskjedTest {
         // prettier-ignore
         System.assertEquals('BESKJED', userNotification.INT_Type__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertNotEquals(null, userNotification.CRM_AccountId__c, 'Expected value to be set');
+        System.assertNotEquals(null, userNotification.CRM_Account__c, 'Expected value to be set');
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_GlobalStatus__c, 'Expected value to be null');
         // prettier-ignore
@@ -113,7 +111,7 @@ private class KafkaBrukernotifikasjonBeskjedTest {
         // prettier-ignore
         System.assertEquals(null, userNotification.INT_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
-        System.assertEquals(null, userNotification.CRM_CaseThemeId__c, 'Expected value to be null');
+        System.assertEquals(null, userNotification.CRM_CaseTheme__c, 'Expected value to be null');
         // prettier-ignore
         System.assertEquals(false, userNotification.CRM_Done__c, 'Expected value to be false');
         // prettier-ignore
