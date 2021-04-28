@@ -1,0 +1,47 @@
+<aura:component>
+    <ltng:require
+        scripts="/support/api/50.0/lightning/opencti_min.js"
+        afterScriptsLoaded="{!c.ctiLoaded}"
+    />
+
+    <aura:attribute name="ctiLoaded" type="Boolean" default="false" />
+    <aura:attribute name="identifier" type="String" />
+    <aura:attribute name="identType" type="String" default="PERSON_IDENT" />
+    <aura:attribute
+        name="identOptions"
+        type="List"
+        default="[
+    {'label': 'Person Ident', 'value': 'PERSON_IDENT'},
+    {'label': 'Organization Ident', 'value': 'ORG_IDENT'},
+    ]"
+    />
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" padding="around-small">
+            <lightning:combobox
+                name="progress"
+                label="Identifier Type"
+                value="{!v.identType}"
+                placeholder="Select Ident Type"
+                options="{! v.identOptions }"
+            />
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" padding="around-small">
+            <lightning:input
+                type="text"
+                label="Identifier"
+                value="{!v.identifier}"
+            ></lightning:input>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" padding="around-small">
+            <lightning:button
+                variant="brand"
+                class="slds-button_stretch"
+                label="Simulate Call"
+                title="Simulate Call"
+                disabled="{!not(v.ctiLoaded)}"
+                onclick="{! c.simulateCall }"
+            />
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
