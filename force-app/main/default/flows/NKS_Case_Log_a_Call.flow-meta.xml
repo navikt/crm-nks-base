@@ -48,7 +48,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case.Comments</assignToReference>
+            <assignToReference>Get_Case.Description</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Dialogue_Summary.conversationNote</elementReference>
@@ -91,17 +91,17 @@
                 <elementReference>Case_Account_Lookup.recordId</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Account_Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.Account.Name</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Update_Case_Account</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>Line_Break</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue />
+        </value>
+    </constants>
     <decisions>
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
@@ -154,14 +154,6 @@
             <label>Create Journal Entry</label>
         </rules>
     </decisions>
-    <formulas>
-        <description>Template text for call summary.</description>
-        <name>Summary_Template</name>
-        <dataType>String</dataType>
-        <expression>&apos;Hei,&apos; &amp; {!Get_Account.Name} &amp; &apos;\n&apos; &amp;
-&apos;Mvh,&apos; &amp; &apos;\n&apos; &amp;
-{!$User.NKS_GreetingName__c}</expression>
-    </formulas>
     <interviewLabel>Case Log a Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Log a Call</label>
     <processMetadataValues>
@@ -266,26 +258,6 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Case_Overview</name>
-            <extensionName>c:nksPersonCaseOverview</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>actorId</name>
-                <value>
-                    <elementReference
-                    >Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>prefilledThemeGroup</name>
-                <value>
-                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
             <name>Dialogue_Summary</name>
             <extensionName>c:nksQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -296,7 +268,7 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>conversationNote</name>
+                <name>conversationNoteRich</name>
                 <value>
                     <elementReference>Summary_Template</elementReference>
                 </value>
@@ -330,6 +302,26 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
+            <name>Case_Overview</name>
+            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference
+                    >Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>prefilledThemeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
             <name>Record_Refresher</name>
             <extensionName>c:nksRecordRefresher</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -342,7 +334,32 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>Complete_BTN</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonAlignment</name>
+                <value>
+                    <stringValue>RIGHT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>action</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -405,6 +422,16 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>Line_Breaker</name>
+        <text>{!Line_Break}
+{!Line_Break}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Summary_Template</name>
+        <text
+        >&lt;p&gt;Hei, {!Get_Account.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mvh,&lt;/p&gt;&lt;p&gt;{!$User.NKS_GreetingName__c}&lt;/p&gt;</text>
+    </textTemplates>
     <variables>
         <name>Account_Name</name>
         <dataType>String</dataType>
