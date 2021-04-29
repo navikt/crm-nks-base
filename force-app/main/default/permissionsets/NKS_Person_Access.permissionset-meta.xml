@@ -216,6 +216,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.NKS_County__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.NKS_GoSysURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
