@@ -115,6 +115,9 @@ public with sharing class NKS_SafViewDocumentController {
             }
         } catch (Exception ex) {
             setError('Kunne ikke laste dokumentet.', ex.getMessage());
+            LoggerUtility logger = new LoggerUtility();
+            logger.exception(ex, CRM_ApplicationDomain.Domain.NKS);
+            logger.publishSynch();
         }
 
         initialised = true;

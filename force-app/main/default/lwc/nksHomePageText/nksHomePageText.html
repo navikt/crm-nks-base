@@ -1,7 +1,18 @@
 <template>
-    <lightning-card icon-name={iconName} title={cardTitle} tabindex="0" aria-label={cardTitle} role="heading">
+    <section class="slds-box slds-theme_default">
+        <lightning-layout vertical-align="center" class="slds-p-bottom_small">
+            <div class="slds-media__figure">
+                <lightning-icon
+                    aria-hidden="true"
+                    icon-name={iconName}
+                    class="slds-icon_container"
+                    size="small"
+                ></lightning-icon>
+            </div>
+            <h2 class="slds-text-heading_small slds-truncate">{cardTitle}</h2>
+        </lightning-layout>
         <p class="slds-var-p-horizontal_medium">
             <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
         </p>
-    </lightning-card>
+    </section>
 </template>

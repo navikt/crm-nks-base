@@ -2,7 +2,7 @@
     <div class="slds-grid slds-gutters">
         <template if:true={record.imageurl}>
             <div class="slds-col slds-size_1-of-3">
-                <img src={record.imageurl} />
+                <img aria-hidden="true" src={record.imageurl} />
             </div>
         </template>
 
@@ -20,14 +20,18 @@
                     ></lightning-formatted-date-time>
                 </p>
             </div>
-            <p>
-                <lightning-formatted-url value={recordPageUrl} label={record.name} onclick={navigateToSObject}>
-                    {record.name}</lightning-formatted-url
-                >
-            </p>
-            <p>
-                <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
-            </p>
+            <div class="slds-p-horizontal_small">
+                <p>
+                    <lightning-formatted-url
+                        value={recordPageUrl}
+                        label={record.name}
+                        onclick={navigateToSObject}
+                    ></lightning-formatted-url>
+                </p>
+                <p>
+                    <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+                </p>
+            </div>
         </div>
     </div>
 </template>
