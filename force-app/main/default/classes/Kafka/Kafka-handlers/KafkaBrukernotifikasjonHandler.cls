@@ -183,8 +183,8 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
             'INT_SocialSecurityNumber__c',
             'INT_Type__c',
             'INT_VisibleUntil__c',
-            'CRM_CaseThemeId__c',
-            'CRM_AccountId__c'
+            'CRM_CaseTheme__c',
+            'CRM_Account__c'
         };
 
         for (String intField : intFields) {

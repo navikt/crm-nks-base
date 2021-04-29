@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -97,7 +97,7 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CRM_AccountId__c</fieldItem>
+                <fieldItem>Record.CRM_Account__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -106,7 +106,7 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CRM_CaseThemeId__c</fieldItem>
+                <fieldItem>Record.CRM_CaseTheme__c</fieldItem>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
