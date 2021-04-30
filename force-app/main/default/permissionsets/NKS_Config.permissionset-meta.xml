@@ -56,6 +56,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NKS_Anonymized__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.NKS_Ready_for_Anonymization__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Common_Code__c.CRM_Active__c</field>
         <readable>true</readable>
@@ -89,6 +99,16 @@
         <editable>false</editable>
         <field>KafkaMessage__c.CRM_Value__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LiveChatTranscript.NKS_Journal_Entry_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LiveChatTranscript.NKS_Ready_for_Anonymization__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -125,6 +145,24 @@
         <object>KafkaMessage__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>LiveChatTranscript</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>LiveChatVisitor</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <tabSettings>
         <tab>KafkaMessage__c</tab>
         <visibility>Visible</visibility>
@@ -132,6 +170,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CustomizeApplication</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageCallCenters</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -148,9 +190,5 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewSetup</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ManageCallCenters</name>
     </userPermissions>
 </PermissionSet>
