@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
+        <editable>false</editable>
+        <field>LiveChatTranscript.NKS_Ready_for_Anonymization__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NavTask__c.CRM_AccountRelated__c</field>
         <readable>true</readable>
@@ -73,7 +78,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NavTask__c.INT_External_Reference__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -104,16 +109,6 @@
         <editable>false</editable>
         <field>NavTask__c.NKS_Gosys_Link__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavTask__c.NKS_Internal_Reference__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavTask__c.NKS_Is_Person_Account__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
