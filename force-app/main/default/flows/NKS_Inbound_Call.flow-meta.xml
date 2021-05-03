@@ -138,6 +138,7 @@
         <outputReference>Related_Account</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Screen to be shown when a call is inbound</description>
         <name>Inbound_Call_Screen</name>

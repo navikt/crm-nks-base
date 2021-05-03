@@ -4,8 +4,8 @@
         <description>Displays a toast on successful log.</description>
         <name>Show_Toast</name>
         <label>Show Toast</label>
-        <locationX>176</locationX>
-        <locationY>1550</locationY>
+        <locationX>402</locationX>
+        <locationY>1910</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -38,20 +38,13 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment</name>
         <label>Case Assignment</label>
-        <locationX>176</locationX>
-        <locationY>1310</locationY>
+        <locationX>402</locationX>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.Description</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Dialogue_Summary.conversationNote</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -80,10 +73,54 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Conversation_Note_Assignment</name>
+        <label>Conversation Note Assignment</label>
+        <locationX>402</locationX>
+        <locationY>1670</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedSubthemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Dialogue_Summary.conversationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Conversation_Note</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>264</locationX>
-        <locationY>518</locationY>
+        <locationX>490</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -106,8 +143,8 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>402</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>No_Account_Screen</targetReference>
         </defaultConnector>
@@ -129,11 +166,38 @@
         </rules>
     </decisions>
     <decisions>
+        <description
+        >Checks the status if the case. If it is closed, the conversation note is already made.</description>
+        <name>Check_Case_Status</name>
+        <label>Check Case Status</label>
+        <locationX>226</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Check_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case Open</defaultConnectorLabel>
+        <rules>
+            <name>Case_Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Closed_Screen</targetReference>
+            </connector>
+            <label>Case Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationX>402</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Case_Assignment</targetReference>
         </defaultConnector>
@@ -175,12 +239,23 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <description>Inserts the conversation note.</description>
+        <name>Create_Conversation_Note</name>
+        <label>Create Conversation Note</label>
+        <locationX>402</locationX>
+        <locationY>1790</locationY>
+        <connector>
+            <targetReference>Show_Toast</targetReference>
+        </connector>
+        <inputReference>Conversation_Note_Record</inputReference>
+    </recordCreates>
     <recordLookups>
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>176</locationX>
-        <locationY>854</locationY>
+        <locationX>402</locationX>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Log_Screen</targetReference>
@@ -202,11 +277,11 @@
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>176</locationX>
+        <locationX>226</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Account</targetReference>
+            <targetReference>Check_Case_Status</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -222,18 +297,18 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>176</locationX>
-        <locationY>1430</locationY>
+        <locationX>402</locationX>
+        <locationY>1550</locationY>
         <connector>
-            <targetReference>Show_Toast</targetReference>
+            <targetReference>Conversation_Note_Assignment</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>264</locationX>
-        <locationY>638</locationY>
+        <locationX>490</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -241,10 +316,27 @@
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
+        <name>Case_Closed_Screen</name>
+        <label>Case Closed Screen</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Case_Closed_Message</name>
+            <fieldText
+            >&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Henvendelsen er ferdigstilt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>176</locationX>
-        <locationY>974</locationY>
+        <locationX>402</locationX>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -366,8 +458,8 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>264</locationX>
-        <locationY>398</locationY>
+        <locationX>490</locationX>
+        <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -415,7 +507,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -438,6 +530,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Conversation Note record to be created.</description>
+        <name>Conversation_Note_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Conversation_Note__c</objectType>
     </variables>
     <variables>
         <description>Id of the record triggering the flow</description>
