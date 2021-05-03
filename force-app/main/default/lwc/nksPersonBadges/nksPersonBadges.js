@@ -123,16 +123,16 @@ export default class NksPersonBadges extends LightningElement {
         } else {
             this.infoPanelToShow = selectedBadge;
         }
-        this.setToggle(selectedBadge);
+        this.setExpanded(selectedBadge);
     }
 
-    setToggle(selectedBadge) {
+    setExpanded(selectedBadge) {
         let badges = this.template.querySelectorAll('.slds-badge');
         badges.forEach((badge) => {
-            if (badge.dataset.id === selectedBadge && badge.ariaPressed === 'false') {
-                badge.setAttribute('aria-pressed', true);
+            if (badge.dataset.id === selectedBadge && badge.ariaExpanded === 'false') {
+                badge.setAttribute('aria-expanded', true);
             } else if (badge.role === 'button') {
-                badge.setAttribute('aria-pressed', false);
+                badge.setAttribute('aria-expanded', false);
             }
         });
     }
