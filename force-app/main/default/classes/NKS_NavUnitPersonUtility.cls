@@ -12,14 +12,10 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @param person
      * @return NKS_NorgNavUnitService.NavUnitResponse
      */
-    public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(
-        Id personId
-    ) {
+    public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Id personId) {
         // If no read access we cannot lookup the user.
         if (false == hasReadAccessToUser(personId)) {
-            return navUnitErrorResponse(
-                Label.NAV_Unit_Error_person_not_accessible
-            );
+            return navUnitErrorResponse(Label.NAV_Unit_Error_person_not_accessible);
         }
 
         Person__c person = getPerson(personId);
@@ -32,9 +28,7 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @param person
      * @return NKS_NorgNavUnitService.NavUnitResponse
      */
-    public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(
-        Person__c person
-    ) {
+    public NKS_NorgNavUnitService.NavUnitResponse getNavUnitFromPerson(Person__c person) {
         NKS_NorgNavUnitService.NavUnitResponse resp;
 
         Boolean isShielded = getIsShielded(person);
@@ -42,16 +36,10 @@ public with sharing class NKS_NavUnitPersonUtility {
         String discretionCode = getDiscretionaryCode(person);
 
         if (String.isBlank(location)) {
-            return navUnitErrorResponse(
-                Label.NAV_Unit_Error_person_location_missing
-            );
+            return navUnitErrorResponse(Label.NAV_Unit_Error_person_location_missing);
         }
 
-        resp = service.getNavUnitFromGeographicLocation(
-            location,
-            discretionCode,
-            isShielded
-        );
+        resp = service.getNavUnitFromGeographicLocation(location, discretionCode, isShielded);
 
         return resp;
     }
@@ -74,13 +62,7 @@ public with sharing class NKS_NavUnitPersonUtility {
         String taskType
     ) {
         Person__c person = getPerson(personId);
-        return getWorkAllocation(
-            person,
-            themeGroupCode,
-            themeCode,
-            themeSubThemeCode,
-            taskType
-        );
+        return getWorkAllocation(person, themeGroupCode, themeCode, themeSubThemeCode, taskType);
     }
 
     /**
@@ -175,12 +157,7 @@ public with sharing class NKS_NavUnitPersonUtility {
      */
     private Person__c getPerson(Id personId) {
         List<Person__c> personResult = [
-            SELECT
-                Id,
-                INT_Confidential__c,
-                INT_DistrictNumber__c,
-                INT_MunicipalityNumber__c,
-                INT_IsNavEmployee__c
+            SELECT Id, INT_Confidential__c, INT_DistrictNumber__c, INT_MunicipalityNumber__c, INT_IsNavEmployee__c
             FROM Person__c
             WHERE Id = :personId
         ];
@@ -198,9 +175,7 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @param errorMesage [String]
      * @return NKS_NorgNavUnitService.NavUnitResponse
      */
-    private NKS_NorgNavUnitService.NavUnitResponse navUnitErrorResponse(
-        String errorMesage
-    ) {
+    private NKS_NorgNavUnitService.NavUnitResponse navUnitErrorResponse(String errorMesage) {
         NKS_NorgNavUnitService.NavUnitResponse resp = new NKS_NorgNavUnitService.NavUnitResponse();
         resp.success = false;
         resp.errorMessage = errorMesage;
@@ -214,9 +189,7 @@ public with sharing class NKS_NavUnitPersonUtility {
      * @param errorMesage [String]
      * @return NKS_NorgNavUnitService.WorkAllocationResponse
      */
-    private NKS_NorgNavUnitService.WorkAllocationResponse workAllocationErrorResponse(
-        String errorMesage
-    ) {
+    private NKS_NorgNavUnitService.WorkAllocationResponse workAllocationErrorResponse(String errorMesage) {
         NKS_NorgNavUnitService.WorkAllocationResponse resp = new NKS_NorgNavUnitService.WorkAllocationResponse();
         resp.success = false;
         resp.errorMessage = errorMesage;

@@ -16,21 +16,13 @@ public without sharing class ChatAuthController {
                 lct.NKS_Authentication_Timestamp__c = DateTime.now();
 
                 if (String.isNotBlank(lct.CaseId)) {
-                    Case casy = new Case(
-                        Id = lct.CaseId,
-                        AccountId = accountId,
-                        ContactId = contactId
-                    );
+                    Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
                     recordsToUpdate.add(casy);
                 }
             }
             update recordsToUpdate;
         } catch (Exception ex) {
-            throw new AuraHandledException(
-                ex.getTypeName() +
-                ' : ' +
-                'Failed to update authentication status'
-            );
+            throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Failed to update authentication status');
         }
     }
 
@@ -93,19 +85,13 @@ public without sharing class ChatAuthController {
             };
             return chatInfo;
         } catch (Exception ex) {
-            throw new AuraHandledException(
-                ex.getTypeName() +
-                ' : ' +
-                'Could not retrieve authentication status'
-            );
+            throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Could not retrieve authentication status');
         }
     }
 
     private static String personIsConfidential(LiveChatTranscript trans) {
         if (String.isNotBlank(trans.AccountId)) {
-            return trans.Account.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT')
-                ? 'false'
-                : 'true';
+            return trans.Account.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT') ? 'false' : 'true';
         }
         return 'false';
     }

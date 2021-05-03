@@ -20,11 +20,9 @@ public with sharing class NKS_SafService {
         }
 
         //Create the result
-        NKS_SafQueryResponse queryResult; //= new NKS_SafQueryResponse();
-        //queryResult.isSuccess = false;
+        NKS_SafQueryResponse queryResult;
 
         String query = JSON.Serialize(queryObj, true);
-        system.debug(query);
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest(API_CONFIG_NAME, 'POST_SAF_QUERY');
         apiCtrl.addServiceAuthHeader(SERVICE_AUTH_HEADER);
@@ -38,10 +36,7 @@ public with sharing class NKS_SafService {
         bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
 
         if (statusCode == 200) {
-            queryResult = (NKS_SafQueryResponse) JSON.deserialize(
-                bodyString,
-                NKS_SafQueryResponse.class
-            ); //.documentOverview = getDokumentoversiktFromSafQueryResponse(bodyString);
+            queryResult = (NKS_SafQueryResponse) JSON.deserialize(bodyString, NKS_SafQueryResponse.class);
             queryResult.isSuccess = true;
         } else {
             if (queryObj.variables != null) {
@@ -69,11 +64,7 @@ public with sharing class NKS_SafService {
     /**
      * Call saf hentdokument and returns the Apex Type SafGetDocumentResponse. Containg the document information.
      */
-    public NKS_SafGetDocumentResponse getSafDocument(
-        String journalId,
-        String documentInfoId,
-        String variantFormat
-    ) {
+    public NKS_SafGetDocumentResponse getSafDocument(String journalId, String documentInfoId, String variantFormat) {
         LoggerUtility logger = new LoggerUtility();
         NKS_SafGetDocumentResponse getDocumentResponse = new NKS_SafGetDocumentResponse();
         getDocumentResponse.isSuccess = false;
@@ -96,8 +87,7 @@ public with sharing class NKS_SafService {
             getDocumentResponse.isSuccess = true;
             getDocumentResponse.documentString = bodyString;
             getDocumentResponse.contentType = apiCtrl.getResponse().getHeader('Content-Type');
-            getDocumentResponse.contentDisposition = apiCtrl.getResponse()
-                .getHeader('Content-Disposition');
+            getDocumentResponse.contentDisposition = apiCtrl.getResponse().getHeader('Content-Disposition');
         } else {
             bodyString = apiCtrl.getResponse().getBody();
             logger.httpError(
@@ -113,10 +103,7 @@ public with sharing class NKS_SafService {
                 CRM_ApplicationDomain.Domain.NKS
             );
 
-            getDocumentResponse.error = (NKS_SafError) JSON.deserialize(
-                bodyString,
-                NKS_SafError.class
-            );
+            getDocumentResponse.error = (NKS_SafError) JSON.deserialize(bodyString, NKS_SafError.class);
             logger.publish();
         }
 

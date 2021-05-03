@@ -37,14 +37,10 @@ export default class NksNavUnitContactInformation extends LightningElement {
     }
 
     get postalAddress() {
-        return this.contactInformation.postadresse
-            ? this.contactInformation.postadresse.concatenatedAddress
-            : '';
+        return this.contactInformation.postadresse ? this.contactInformation.postadresse.concatenatedAddress : '';
     }
 
     get visitingAddress() {
-        return this.contactInformation.besoeksadresse
-            ? this.contactInformation.besoeksadresse.concatenatedAddress
-            : '';
+        return this.contactInformation.besoeksadresse ? this.contactInformation.besoeksadresse.concatenatedAddress : '';
     }
 }

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<QueueRoutingConfig xmlns="http://soap.sforce.com/2006/04/metadata">
-    <capacityWeight>1.0</capacityWeight>
-    <isAttributeBased>false</isAttributeBased>
-    <label>Puzzel Chat Routing</label>
-    <pushTimeout>60</pushTimeout>
-    <routingModel>MOST_AVAILABLE</routingModel>
-    <routingPriority>1</routingPriority>
-</QueueRoutingConfig>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>NKS - Trafikk</label>
     <permissionSets>Arbeidsgiver_arenaActivity</permissionSets>
@@ -6,10 +6,12 @@
     <permissionSets>Arbeidsgiver_contract</permissionSets>
     <permissionSets>Arbeidsgiver_opportunity</permissionSets>
     <permissionSets>Arbeidsgiver_temporaryLayoffs</permissionSets>
+    <permissionSets>CRM_LoginFlow</permissionSets>
     <permissionSets>NKS_Announcement_News_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Operational_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
+    <permissionSets>NKS_Edit_User</permissionSets>
     <permissionSets>NKS_Knowledge_Viewer</permissionSets>
     <permissionSets>NKS_NAV_Task</permissionSets>
     <permissionSets>NKS_Person_Access</permissionSets>

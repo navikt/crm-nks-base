@@ -36,10 +36,7 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showIntepreterSpokenLanguage() {
-        return (
-            'spokenLanguageIntepreter' === this.infoPanelToShow &&
-            0 < this.interpreterSpokenLanguages.length
-        );
+        return 'spokenLanguageIntepreter' === this.infoPanelToShow && 0 < this.interpreterSpokenLanguages.length;
     }
 
     get showSecurityMeasures() {
@@ -47,10 +44,7 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get showGuardianship() {
-        return (
-            'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow &&
-            0 < this.guardianships.length
-        );
+        return 'guardianshipOrFuturePowerOfAttorney' === this.infoPanelToShow && 0 < this.guardianships.length;
     }
 
     get showPowerOfAttorney() {
@@ -129,16 +123,16 @@ export default class NksPersonBadges extends LightningElement {
         } else {
             this.infoPanelToShow = selectedBadge;
         }
-        this.setToggle(selectedBadge);
+        this.setExpanded(selectedBadge);
     }
 
-    setToggle(selectedBadge) {
+    setExpanded(selectedBadge) {
         let badges = this.template.querySelectorAll('.slds-badge');
         badges.forEach((badge) => {
-            if (badge.dataset.id === selectedBadge && badge.ariaPressed === 'false') {
-                badge.setAttribute('aria-pressed', true);
+            if (badge.dataset.id === selectedBadge && badge.ariaExpanded === 'false') {
+                badge.setAttribute('aria-expanded', true);
             } else if (badge.role === 'button') {
-                badge.setAttribute('aria-pressed', false);
+                badge.setAttribute('aria-expanded', false);
             }
         });
     }

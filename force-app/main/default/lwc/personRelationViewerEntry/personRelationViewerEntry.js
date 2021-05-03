@@ -1,9 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class PersonRelationViewerEntry extends NavigationMixin(
-    LightningElement
-) {
+export default class PersonRelationViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
     recordPageUrl;
 

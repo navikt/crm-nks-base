@@ -12,6 +12,12 @@
         "files": ["visitors.json"]
     },
     {
+        "sobject": "Case",
+        "saveRefs": true,
+        "resolveRefs": false,
+        "files": ["cases.json"]
+    },
+    {
         "sobject": "LiveChatTranscript",
         "saveRefs": true,
         "resolveRefs": true,

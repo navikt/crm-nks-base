@@ -85,10 +85,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>OUTBOUND_NAV_TASK.CRM_Comments__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_NAV_Task.CRM_Comments__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_Comments__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -117,6 +117,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_NAV_Task.NKS_Assignee__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_NAV_Case_Reference__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.NKS_NAV_Case_Reference__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

@@ -1,10 +1,4 @@
-export {
-    flowComboboxDefaults,
-    isReference,
-    formattedValue,
-    getDataType,
-    removeFormatting
-};
+export { flowComboboxDefaults, isReference, formattedValue, getDataType, removeFormatting };
 
 const flowComboboxDefaults = {
     stringDataType: 'String',
@@ -19,9 +13,7 @@ const isReference = (value) => {
     if (!value) {
         return false;
     }
-    let isRef =
-        value.indexOf('{!') === 0 &&
-        value.lastIndexOf('}') === value.length - 1;
+    let isRef = value.indexOf('{!') === 0 && value.lastIndexOf('}') === value.length - 1;
     return isRef;
 };
 
@@ -37,9 +29,7 @@ const formattedValue = (value, dataType) => {
     if (isReference(value)) {
         return value;
     } else {
-        return dataType === flowComboboxDefaults.referenceDataType
-            ? '{!' + value + '}'
-            : value;
+        return dataType === flowComboboxDefaults.referenceDataType ? '{!' + value + '}' : value;
     }
 };
 
@@ -48,8 +38,6 @@ const removeFormatting = (value) => {
         return value;
     }
     let isRef = isReference(value);
-    let clearValue = isRef
-        ? value.substring(0, value.lastIndexOf('}')).replace('{!', '')
-        : value;
+    let clearValue = isRef ? value.substring(0, value.lastIndexOf('}')).replace('{!', '') : value;
     return clearValue;
 };

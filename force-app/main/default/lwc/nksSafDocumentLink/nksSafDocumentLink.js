@@ -63,9 +63,9 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     }
 
     get fileName() {
-        return this.dokumentvariant
+        return this.dokumentvariant && this.dokumentvariant.filnavn
             ? this.dokumentvariant.filnavn
-            : this.title + '.' + this.dokumentvariant.filtype;
+            : this.dokumentInfo.tittel + '.' + this.dokumentvariant.filtype;
     }
 
     get fileIcon() {
@@ -144,10 +144,7 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
 
             if (documentResponse.isSuccess === true) {
                 let documentData =
-                    'data:' +
-                    documentResponse.contentType +
-                    ';base64,' +
-                    documentResponse.documentString;
+                    'data:' + documentResponse.contentType + ';base64,' + documentResponse.documentString;
                 let downloadLink = document.createElement('a');
                 downloadLink.href = documentData;
                 downloadLink.download = this.fileName;
@@ -185,8 +182,7 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
             '&variantFormat=' +
             variantFormat +
             '&fileName=' +
-            fileName +
-            '&width=100%&height=900px'
+            fileName
         );
     }
 }

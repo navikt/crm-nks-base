@@ -25,14 +25,9 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
             '    "orgNrTilKommunaltNavKontor": "999999999"' +
             '}';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', unitJSON, null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
             new Person__c(
                 Name = '1234567890',
@@ -49,16 +44,8 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
         Test.stopTest();
 
         System.assertEquals(true, result.success, 'Expected success');
-        System.assertEquals(
-            true,
-            String.isBlank(result.errorMessage),
-            'Expected blank errorMessage'
-        );
-        System.assertEquals(
-            '1234',
-            result.unit.enhetNr,
-            'Expected the same unit number as in the mock'
-        );
+        System.assertEquals(true, String.isBlank(result.errorMessage), 'Expected blank errorMessage');
+        System.assertEquals('1234', result.unit.enhetNr, 'Expected the same unit number as in the mock');
     }
 
     @IsTest
@@ -86,14 +73,9 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
             '    "orgNrTilKommunaltNavKontor": "999999999"' +
             '}';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', unitJSON, null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
             new Person__c(
                 Name = '1234567890',
@@ -120,9 +102,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getIsShielded_true() {
         Boolean result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_IsNavEmployee__c = true);
         Test.startTest();
         result = util.getIsShielded(p);
@@ -134,9 +114,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getIsShielded_false() {
         Boolean result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_IsNavEmployee__c = false);
         Test.startTest();
         result = util.getIsShielded(p);
@@ -148,9 +126,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getIsShielded_nullInput() {
         Boolean result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_IsNavEmployee__c = null);
         Test.startTest();
         result = util.getIsShielded(p);
@@ -162,12 +138,8 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getDiscretionaryCode_STRENGT_FORTROLIG_UTLAND() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
-        Person__c p = new Person__c(
-            INT_Confidential__c = 'STRENGT_FORTROLIG_UTLAND'
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
+        Person__c p = new Person__c(INT_Confidential__c = 'STRENGT_FORTROLIG_UTLAND');
         Test.startTest();
         result = util.getDiscretionaryCode(p);
         Test.stopTest();
@@ -178,9 +150,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getDiscretionaryCode_STRENGT_FORTROLIG() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_Confidential__c = 'STRENGT_FORTROLIG');
         Test.startTest();
         result = util.getDiscretionaryCode(p);
@@ -192,9 +162,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getDiscretionaryCode_FORTROLIG() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_Confidential__c = 'FORTROLIG');
         Test.startTest();
         result = util.getDiscretionaryCode(p);
@@ -206,9 +174,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getDiscretionaryCode_UGRADERT() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_Confidential__c = 'UGRADERT');
         Test.startTest();
         result = util.getDiscretionaryCode(p);
@@ -220,9 +186,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void getDiscretionaryCode_NULL() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c(INT_Confidential__c = null);
         Test.startTest();
         result = util.getDiscretionaryCode(p);
@@ -234,13 +198,8 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void testGetLocation_MunicipalityNumberWithoutDistrictNumber() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
-        Person__c p = new Person__c(
-            INT_MunicipalityNumber__c = '1234',
-            INT_DistrictNumber__c = ''
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
+        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_DistrictNumber__c = '');
         Test.startTest();
         result = util.getLocation(p);
         Test.stopTest();
@@ -251,13 +210,8 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void testGetLocation_MunicipalityNumberWithDistrictNumber() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
-        Person__c p = new Person__c(
-            INT_MunicipalityNumber__c = '1234',
-            INT_DistrictNumber__c = '123456'
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
+        Person__c p = new Person__c(INT_MunicipalityNumber__c = '1234', INT_DistrictNumber__c = '123456');
         Test.startTest();
         result = util.getLocation(p);
         Test.stopTest();
@@ -268,9 +222,7 @@ private with sharing class NKS_NavUnitPersonUtilityTest {
     @IsTest
     static void testGetLocation_Null() {
         String result;
-        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(
-            new NKS_NorgNavUnitService()
-        );
+        NKS_NavUnitPersonUtility util = new NKS_NavUnitPersonUtility(new NKS_NorgNavUnitService());
         Person__c p = new Person__c();
         Test.startTest();
         result = util.getLocation(p);

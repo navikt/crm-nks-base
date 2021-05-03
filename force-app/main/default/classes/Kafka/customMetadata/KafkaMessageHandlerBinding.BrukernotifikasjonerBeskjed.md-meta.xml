@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomMetadata
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+    <label>Brukernotifikasjoner Beskjed</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">KafkaBrukernotifikasjonBeskjedHandler</value>
+    </values>
+    <values>
+        <field>ApexJobType__c</field>
+        <value xsi:type="xsd:string">Batch Apex</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value
+            xsi:type="xsd:string"
+        >Handles kafka messages for Brukernotifikasjon Beskjed-events</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">30.0</value>
+    </values>
+    <values>
+        <field>Topic__c</field>
+        <value xsi:type="xsd:string">aapen-brukernotifikasjon-nyBeskjed-v1</value>
+    </values>
+</CustomMetadata>

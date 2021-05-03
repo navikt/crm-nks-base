@@ -13,8 +13,6 @@
     documentInfoId
     variantFormat
     fileName
-    width
-    height
 -->
 <apex:page
     controller="NKS_SafViewDocumentController"
@@ -26,7 +24,7 @@
     <!-- Import the Design System style sheet -->
     <apex:slds />
     <!-- REQUIRED SLDS WRAPPER -->
-    <div class="slds-scope">
+    <div class="slds-scope" style="height: 100%">
         <apex:form>
             <!-- Action function to trigger loading of the document -->
             <apex:actionFunction name="doInit" action="{!getDocument}" rerender="allPanel" />
@@ -37,14 +35,8 @@
                 <apex:outputPanel rendered="{!isError}">
                     <div class="slds-text-color_error">
                         <div class="slds-text-heading_medium">
-                            <span
-                                class="slds-icon_container slds-icon-utility-error"
-                                title="Feilmelding"
-                            >
-                                <svg
-                                    class="slds-icon slds-icon-text-error slds-icon_x-small"
-                                    aria-hidden="true"
-                                >
+                            <span class="slds-icon_container slds-icon-utility-error" title="Feilmelding">
+                                <svg class="slds-icon slds-icon-text-error slds-icon_x-small" aria-hidden="true">
                                     <use
                                         xmlns="http://www.w3.org/2000/svg"
                                         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -77,14 +69,12 @@
 
                 <!-- Panel AFTER document load -->
                 <apex:outputPanel rendered="{!AND(initialised, NOT(isError))}">
-                    <iframe
-                        src="{!DocumentData}"
-                        width="{!width}"
-                        height="{!height}"
-                        title="Dokument: {!title}"
-                    >
+                    <iframe src="{!DocumentData}" width="100%" title="Dokument: {!title}" id="theFrame">
                         Kan ikke laste dokumentet.
                     </iframe>
+                    <script>
+                        document.getElementById('theFrame').height = window.innerHeight;
+                    </script>
                 </apex:outputPanel>
             </apex:outputPanel>
         </apex:form>

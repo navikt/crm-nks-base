@@ -60,10 +60,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
 
     get authenticationStarted() {
-        return (
-            this.currentAuthenticationStatus === 'In Progress' ||
-            this.currentAuthenticationStatus === 'Completed'
-        );
+        return this.currentAuthenticationStatus === 'In Progress' || this.currentAuthenticationStatus === 'Completed';
     }
 
     get authenticationComplete() {
@@ -71,9 +68,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
 
     get isEmpSubscribed() {
-        return (
-            Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object
-        );
+        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
     //#### /GETTERS ###
@@ -98,11 +93,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.isConfidential = 'true' == data.IS_CONFIDENTIAL;
 
             //If the authentication is not completed, subscribe to the push topic to receive events
-            if (
-                this.currentAuthenticationStatus !== 'Completed' &&
-                !this.isLoading &&
-                !this.isEmpSubscribed
-            ) {
+            if (this.currentAuthenticationStatus !== 'Completed' && !this.isLoading && !this.isEmpSubscribed) {
                 this.handleSubscribe();
             }
         } else {
@@ -131,8 +122,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             //Only overwrite status if the event received belongs to this record
             const eventRecordId = response.data.sobject.Id;
             if (eventRecordId === _this.recordId) {
-                _this.currentAuthenticationStatus =
-                    response.data.sobject.CRM_Authentication_Status__c;
+                _this.currentAuthenticationStatus = response.data.sobject.CRM_Authentication_Status__c;
                 //If authentication now is complete, get the account id
                 if (_this.authenticationComplete) {
                     _this.accountId = response.data.sobject.AccountId;
@@ -145,11 +135,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
         // Invoke subscribe method of empApi. Pass reference to messageCallback
         //Removed subscription to record specific channel as there are issues when loading multiple components and subscribing
         //to record specific channels on initialization. New solution verifies Id in messageCallback
-        subscribe(
-            '/topic/Chat_Auth_Status_Changed' /*?Id=" + this.recordId*/,
-            -1,
-            messageCallback
-        ).then((response) => {
+        subscribe('/topic/Chat_Auth_Status_Changed' /*?Id=" + this.recordId*/, -1, messageCallback).then((response) => {
             // Response contains the subscription information on successful subscribe call
             this.subscription = response;
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
@@ -254,8 +240,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                     ? ' er'
                     : '';
             alertText += this.isConfidential ? isConfidentialText : '';
-            alertText +=
-                (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
+            alertText += (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
             alertText += hasSecurityMeasures ? securityMeasureText : '';
             alertText += '.';
         }

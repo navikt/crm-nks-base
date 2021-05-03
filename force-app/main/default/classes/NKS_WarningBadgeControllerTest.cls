@@ -8,11 +8,7 @@ public with sharing class NKS_WarningBadgeControllerTest {
     @isTest
     static void testGetBadges() {
         Person__c p = [
-            SELECT
-                Id,
-                INT_Confidential__c,
-                INT_SpokenLanguageIntepreter__c,
-                CRM_Account__c
+            SELECT Id, INT_Confidential__c, INT_SpokenLanguageIntepreter__c, CRM_Account__c
             FROM Person__c
             LIMIT 1
         ];
@@ -20,15 +16,9 @@ public with sharing class NKS_WarningBadgeControllerTest {
         p.INT_Confidential__c = 'FORTROLIG';
         update p;
         Test.startTest();
-        List<String> badges = NKS_WarningBadgeController.getBadges(
-            p.CRM_Account__c
-        );
+        List<String> badges = NKS_WarningBadgeController.getBadges(p.CRM_Account__c);
         Test.stopTest();
 
-        System.assertEquals(
-            2,
-            badges.size(),
-            'Number of badges returnes should be 2'
-        );
+        System.assertEquals(2, badges.size(), 'Number of badges returnes should be 2');
     }
 }

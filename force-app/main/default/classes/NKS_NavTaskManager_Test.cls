@@ -3,9 +3,7 @@ public class NKS_NavTaskManager_Test {
     @TestSetup
     static void makeData() {
         UTIL_TestDataFactory.createRecord(new NavTask__c());
-        UTIL_TestDataFactory.createRecord(
-            new NavUnit__c(INT_UnitNumber__c = '4100')
-        );
+        UTIL_TestDataFactory.createRecord(new NavUnit__c(INT_UnitNumber__c = '4100'));
     }
 
     @isTest
@@ -16,32 +14,18 @@ public class NKS_NavTaskManager_Test {
         resp.tildeltEnhetsnr = '4100';
         NavTask__c task = getTask();
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'POST',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('POST', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
-        System.assert(
-            [
-                SELECT COUNT()
-                FROM Application_Log__c
-                WHERE Log_Level__c = 'Info'
-            ] == 1
-        );
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
     }
 
     @isTest
@@ -52,32 +36,18 @@ public class NKS_NavTaskManager_Test {
         resp.tildeltEnhetsnr = '4100';
         NavTask__c task = getTask();
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'POST',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('POST', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(403, 'Forbidden', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(403, 'Forbidden', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
-        System.assert(
-            [
-                SELECT COUNT()
-                FROM Application_Log__c
-                WHERE Log_Level__c = 'Info'
-            ] == 1
-        );
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
     }
 
     @isTest
@@ -90,32 +60,18 @@ public class NKS_NavTaskManager_Test {
         task.CRM_Priority__c = 'NORM';
         task.INT_External_Reference__c = 123456789;
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'EDIT',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('EDIT', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
-        System.assert(
-            [
-                SELECT COUNT()
-                FROM Application_Log__c
-                WHERE Log_Level__c = 'Info'
-            ] == 1
-        );
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
     }
 
     @isTest
@@ -129,32 +85,18 @@ public class NKS_NavTaskManager_Test {
         task.CRM_Priority__c = 'NORM';
         task.INT_External_Reference__c = 123456789;
 
-        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest(
-            'EDIT',
-            task
-        );
+        NKS_NavTaskManager.NavTaskRequest taskRequest = new NKS_NavTaskManager.NavTaskRequest('EDIT', task);
         taskRequest.themeGroupCode = 'ARBD';
         taskRequest.themeCode = 'AAP';
         taskRequest.subthemeCode = 'ab0039';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null));
 
         Test.startTest();
-        NKS_NavTaskManager.handleNavTaskRequests(
-            new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest }
-        );
+        NKS_NavTaskManager.handleNavTaskRequests(new List<NKS_NavTaskManager.NavTaskRequest>{ taskRequest });
         Test.stopTest();
 
-        System.assert(
-            [
-                SELECT COUNT()
-                FROM Application_Log__c
-                WHERE Log_Level__c = 'Error'
-            ] == 1
-        );
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Error'] == 1);
     }
 
     private static NavTask__c getTask() {
@@ -165,9 +107,10 @@ public class NKS_NavTaskManager_Test {
                 CRM_DueDate__c,
                 INT_Journal_Entry_Id__c,
                 CRM_Priority__c,
-                CRM_Comments__c,
+                NKS_Comments__c,
                 NKS_Assignee__c,
-                NKS_Task_Version__c
+                NKS_Task_Version__c,
+                NKS_NAV_Case_Reference__c
             FROM NavTask__c
             LIMIT 1
         ];

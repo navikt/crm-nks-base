@@ -2,10 +2,7 @@
 public class NKS_RelatedListController_Test {
     @TestSetup
     static void makeData() {
-        Person__c person = new Person__c(
-            Name = '12345678911',
-            INT_ActorId__c = '123'
-        );
+        Person__c person = new Person__c(Name = '12345678911', INT_ActorId__c = '123');
         insert person;
     }
 
