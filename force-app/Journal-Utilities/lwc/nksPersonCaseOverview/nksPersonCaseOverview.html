@@ -28,17 +28,11 @@
     <div class="slds-p-top_small slds-p-bottom_small">
         <template if:true={isGeneralCase}>
             <!--IF GENERELL SAK IS CHOSEN, THE CATEGORIZATION IS DONE MANUALLY-->
-            <c-nks-theme-categorization
-                theme-group={prefilledThemeGroup}
-            ></c-nks-theme-categorization>
+            <c-nks-theme-categorization theme-group={prefilledThemeGroup}></c-nks-theme-categorization>
         </template>
         <template if:false={isGeneralCase}>
             <template if:false={dataLoaded}>
-                <lightning-spinner
-                    size="medium"
-                    alternative-text="Loading"
-                    variant="brand"
-                ></lightning-spinner>
+                <lightning-spinner size="medium" alternative-text="Loading" variant="brand"></lightning-spinner>
             </template>
             <template if:true={dataLoaded}>
                 <template if:true={hasCases}>
@@ -56,16 +50,14 @@
                 <template if:false={hasCases}>
                     <!--ERROR OCCURRED-->
                     <c-nks-alert-banner
+                        if:true={casesLoaded}
                         type="Info"
                         message={labels.NO_CASES_ERROR}
                     ></c-nks-alert-banner>
                 </template>
                 <template if:true={error}>
                     <!--ERROR OCCURRED-->
-                    <c-nks-alert-banner
-                        type="Error"
-                        message={labels.NAV_CASE_RETRIEVE_ERROR}
-                    ></c-nks-alert-banner>
+                    <c-nks-alert-banner type="Error" message={labels.NAV_CASE_RETRIEVE_ERROR}></c-nks-alert-banner>
                 </template>
             </template>
         </template>

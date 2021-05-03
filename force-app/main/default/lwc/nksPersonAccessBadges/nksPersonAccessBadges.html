@@ -6,11 +6,7 @@
                 <lightning-layout-item size="12">
                     <template if:true={hasBadges}>
                         <template for:each={badges} for:item="badge">
-                            <lightning-badge
-                                key={badge.name}
-                                data-id={badge.name}
-                                label={badge.label}
-                            >
+                            <lightning-badge key={badge.name} data-id={badge.name} label={badge.label}>
                             </lightning-badge>
                         </template>
                     </template>

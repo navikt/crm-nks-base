@@ -183,23 +183,15 @@ export default class QuickChoiceCpe extends LightningElement {
     }
 
     get isVisualCards() {
-        return (
-            this.inputValues.displayMode.value ===
-            this.settings.displayModeVisualCards
-        );
+        return this.inputValues.displayMode.value === this.settings.displayModeVisualCards;
     }
 
     get isDatasourcePicklist() {
-        return (
-            this.inputValues.inputMode.value === this.settings.inputModePicklist
-        );
+        return this.inputValues.inputMode.value === this.settings.inputModePicklist;
     }
 
     get isDatasourceDualCollection() {
-        return (
-            this.inputValues.inputMode.value ===
-            this.settings.inputModeDualCollection
-        );
+        return this.inputValues.inputMode.value === this.settings.inputModeDualCollection;
     }
 
     get isNavOnSelect() {
@@ -208,24 +200,17 @@ export default class QuickChoiceCpe extends LightningElement {
 
     get isDatasourceSingleOrDualCollection() {
         return (
-            this.inputValues.inputMode.value ===
-                this.settings.inputModeSingleCollection ||
-            this.inputValues.inputMode.value ===
-                this.settings.inputModeDualCollection
+            this.inputValues.inputMode.value === this.settings.inputModeSingleCollection ||
+            this.inputValues.inputMode.value === this.settings.inputModeDualCollection
         );
     }
 
     initializeValues(value) {
         if (this._values && this._values.length) {
             this._values.forEach((curInputParam) => {
-                if (
-                    curInputParam.name &&
-                    this.inputValues[curInputParam.name]
-                ) {
-                    this.inputValues[curInputParam.name].value =
-                        curInputParam.value;
-                    this.inputValues[curInputParam.name].valueDataType =
-                        curInputParam.valueDataType;
+                if (curInputParam.name && this.inputValues[curInputParam.name]) {
+                    this.inputValues[curInputParam.name].value = curInputParam.value;
+                    this.inputValues[curInputParam.name].valueDataType = curInputParam.valueDataType;
                 }
             });
         }
@@ -235,19 +220,15 @@ export default class QuickChoiceCpe extends LightningElement {
 
     setChoiceLabels() {
         if (
-            this.inputValues.displayMode.value ===
-                this.settings.displayModeVisualCards &&
-            this.inputValues.choiceLabels.label !==
-                this.settings.choiceLabelsCardLabelsLabel
+            this.inputValues.displayMode.value === this.settings.displayModeVisualCards &&
+            this.inputValues.choiceLabels.label !== this.settings.choiceLabelsCardLabelsLabel
         ) {
             this.inputValues.choiceLabels.label = this.settings.choiceLabelsCardLabelsLabel;
             this.inputValues.choiceValues.label = this.settings.choiceLabelsCardValuesLabel;
         }
         if (
-            this.inputValues.displayMode.value !==
-                this.settings.displayModeVisualCards &&
-            this.inputValues.choiceLabels.label !==
-                this.settings.choiceLabelsPicklistLabelsLabel
+            this.inputValues.displayMode.value !== this.settings.displayModeVisualCards &&
+            this.inputValues.choiceLabels.label !== this.settings.choiceLabelsPicklistLabelsLabel
         ) {
             this.inputValues.choiceLabels.label = this.settings.choiceLabelsPicklistLabelsLabel;
             this.inputValues.choiceValues.label = this.settings.choiceLabelsPicklistValuesLabel;
@@ -256,10 +237,8 @@ export default class QuickChoiceCpe extends LightningElement {
 
     setInputMode() {
         if (
-            this.inputValues.displayMode.value ===
-                this.settings.displayModeVisualCards &&
-            this.inputValues.inputMode.value !==
-                this.settings.inputModeDualCollection
+            this.inputValues.displayMode.value === this.settings.displayModeVisualCards &&
+            this.inputValues.inputMode.value !== this.settings.inputModeDualCollection
         ) {
             this.dispatchFlowValueChangeEvent(
                 this.settings.attributeInputMode,
@@ -287,10 +266,7 @@ export default class QuickChoiceCpe extends LightningElement {
     handleFlowComboboxValueChange(event) {
         if (event.target && event.detail) {
             this.dispatchFlowValueChangeEvent(
-                event.target.name.replace(
-                    this.settings.inputAttributePrefix,
-                    ''
-                ),
+                event.target.name.replace(this.settings.inputAttributePrefix, ''),
                 event.detail.newValue,
                 event.detail.newValueDataType
             );
@@ -300,15 +276,9 @@ export default class QuickChoiceCpe extends LightningElement {
     handleValueChange(event) {
         if (event.target) {
             let curAttributeName = event.target.name
-                ? event.target.name.replace(
-                      this.settings.inputAttributePrefix,
-                      ''
-                  )
+                ? event.target.name.replace(this.settings.inputAttributePrefix, '')
                 : null;
-            let curAttributeValue =
-                event.target.type === 'checkbox'
-                    ? event.target.checked
-                    : event.detail.value;
+            let curAttributeValue = event.target.type === 'checkbox' ? event.target.checked : event.detail.value;
             let curAttributeType;
             switch (event.target.type) {
                 case 'checkbox':
@@ -320,28 +290,21 @@ export default class QuickChoiceCpe extends LightningElement {
                 default:
                     curAttributeType = 'String';
             }
-            this.dispatchFlowValueChangeEvent(
-                curAttributeName,
-                curAttributeValue,
-                curAttributeType
-            );
+            this.dispatchFlowValueChangeEvent(curAttributeName, curAttributeValue, curAttributeType);
         }
     }
 
     dispatchFlowValueChangeEvent(id, newValue, newValueDataType) {
-        const valueChangedEvent = new CustomEvent(
-            'configuration_editor_input_value_changed',
-            {
-                bubbles: true,
-                cancelable: false,
-                composed: true,
-                detail: {
-                    name: id,
-                    newValue: newValue ? newValue : null,
-                    newValueDataType: newValueDataType
-                }
+        const valueChangedEvent = new CustomEvent('configuration_editor_input_value_changed', {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail: {
+                name: id,
+                newValue: newValue ? newValue : null,
+                newValueDataType: newValueDataType
             }
-        );
+        });
         this.dispatchEvent(valueChangedEvent);
     }
 }

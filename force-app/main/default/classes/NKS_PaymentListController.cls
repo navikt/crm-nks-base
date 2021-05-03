@@ -8,10 +8,7 @@ public class NKS_PaymentListController {
     @AuraEnabled(cacheable=true)
     public static List<NKS_Utbetaling> getRecentPayments(String ident) {
         List<NKS_Utbetaling> returnList = new List<NKS_Utbetaling>();
-        DateTime startDate = DateTime.newInstance(
-            Date.today().addMonths(-1),
-            Time.newInstance(0, 0, 0, 0)
-        );
+        DateTime startDate = DateTime.newInstance(Date.today().addMonths(-1), Time.newInstance(0, 0, 0, 0));
         DateTime endDate = DateTime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
 
         HttpResponse resp = NKS_PaymentService.getPayments(ident, startDate, endDate);
@@ -19,10 +16,7 @@ public class NKS_PaymentListController {
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
             //Success
-            returnList = (List<NKS_Utbetaling>) JSON.deserialize(
-                resp.getBody(),
-                List<NKS_Utbetaling>.class
-            );
+            returnList = (List<NKS_Utbetaling>) JSON.deserialize(resp.getBody(), List<NKS_Utbetaling>.class);
             returnList.sort(); //Sorts the entries by utbetalingsdato
         } else {
             //Error handling
@@ -41,10 +35,7 @@ public class NKS_PaymentListController {
     @AuraEnabled(cacheable=true)
     public static List<NKS_Utbetaling> getPaymentHistory(String ident) {
         List<NKS_Utbetaling> returnList = new List<NKS_Utbetaling>();
-        DateTime startDate = DateTime.newInstance(
-            Date.today().addYears(-3),
-            Time.newInstance(0, 0, 0, 0)
-        );
+        DateTime startDate = DateTime.newInstance(Date.today().addYears(-3), Time.newInstance(0, 0, 0, 0));
         DateTime endDate = DateTime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
 
         HttpResponse resp = NKS_PaymentService.getPayments(ident, startDate, endDate);
@@ -52,10 +43,7 @@ public class NKS_PaymentListController {
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
             //Success
-            returnList = (List<NKS_Utbetaling>) JSON.deserialize(
-                resp.getBody(),
-                List<NKS_Utbetaling>.class
-            );
+            returnList = (List<NKS_Utbetaling>) JSON.deserialize(resp.getBody(), List<NKS_Utbetaling>.class);
             returnList.sort(); //Sorts the entries by utbetalingsdato
         } else {
             //Error handling
@@ -73,12 +61,7 @@ public class NKS_PaymentListController {
     private static void handleError(HttpResponse resp) {
         //Error handling
         LoggerUtility logger = new LoggerUtility('Utbetaling');
-        logger.httpError(
-            'Error retrieving person payments',
-            resp,
-            null,
-            CRM_ApplicationDomain.Domain.NKS
-        );
+        logger.httpError('Error retrieving person payments', resp, null, CRM_ApplicationDomain.Domain.NKS);
         AuraHandledException auraEx = new AuraHandledException(logger.peek().UUID__c);
         auraEx.setMessage(logger.peek().UUID__c);
         logger.publish();

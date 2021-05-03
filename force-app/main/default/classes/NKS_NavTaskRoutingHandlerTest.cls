@@ -16,9 +16,7 @@ private class NKS_NavTaskRoutingHandlerTest {
         update account;
         List<Id> accountIds = new List<Id>{ account.Id };
         Test.startTest();
-        List<String> queueIds = NKS_NavTaskRoutingHandler.getQueueIds(
-            accountIds
-        );
+        List<String> queueIds = NKS_NavTaskRoutingHandler.getQueueIds(accountIds);
         Test.stopTest();
 
         Group queue = [SELECT Id FROM Group WHERE DeveloperName = 'queue_906'];

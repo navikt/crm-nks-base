@@ -15,12 +15,7 @@ public class NKS_KrrInformationController_Test {
 
         System.assertEquals(
             true,
-            [
-                SELECT Id, INT_KRR_Reservation__c
-                FROM Person__c
-                WHERE Name = '01048800153'
-                LIMIT 1
-            ]
+            [SELECT Id, INT_KRR_Reservation__c FROM Person__c WHERE Name = '01048800153' LIMIT 1]
             .INT_KRR_Reservation__c
         );
     }
@@ -30,10 +25,7 @@ public class NKS_KrrInformationController_Test {
         MaskinportenClient__mdt krrClient = [
             SELECT Endpoint__c
             FROM Maskinportenclient__mdt
-            WHERE
-                DeveloperName = :Test.isRunningTest()
-                    ? 'salesforce_krr_test'
-                    : 'salesforce_krr'
+            WHERE DeveloperName = :Test.isRunningTest() ? 'salesforce_krr_test' : 'salesforce_krr'
             LIMIT 1
         ];
 
@@ -54,13 +46,8 @@ public class NKS_KrrInformationController_Test {
         // Map responses to callout endpoints and set mock
         Map<String, HttpCalloutMock> mockResponseByEndpoint = new Map<String, HttpCalloutMock>();
         mockResponseByEndpoint.put(krrClient.Endpoint__c, maskinPortenResponse);
-        mockResponseByEndpoint.put(
-            'https://difiKrrExampleEndpoint.no',
-            krrResponse
-        );
-        HttpCalloutMock multiCalloutMock = new MultiRequestMock(
-            mockResponseByEndpoint
-        );
+        mockResponseByEndpoint.put('https://difiKrrExampleEndpoint.no', krrResponse);
+        HttpCalloutMock multiCalloutMock = new MultiRequestMock(mockResponseByEndpoint);
         Test.setMock(HttpCalloutMock.class, multiCalloutMock);
     }
 }

@@ -45,16 +45,11 @@ public class NKS_ThemeUtils {
 
             for (Common_Code__c subtheme : theme.Child_Codes__r) {
                 if (subthemeMap.containsKey(subtheme.CRM_Parent_Code__r.Id)) {
-                    List<Common_Code__c> mapSubthemes = subthemeMap.get(
-                        subtheme.CRM_Parent_Code__r.Id
-                    );
+                    List<Common_Code__c> mapSubthemes = subthemeMap.get(subtheme.CRM_Parent_Code__r.Id);
                     mapSubthemes.add(subtheme);
                     subthemeMap.put(subtheme.CRM_Parent_Code__r.Id, mapSubthemes);
                 } else {
-                    subthemeMap.put(
-                        subtheme.CRM_Parent_Code__r.Id,
-                        new List<Common_Code__c>{ subtheme }
-                    );
+                    subthemeMap.put(subtheme.CRM_Parent_Code__r.Id, new List<Common_Code__c>{ subtheme });
                 }
             }
         }

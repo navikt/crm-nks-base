@@ -18,11 +18,7 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
         List<NKS_PersonAccessBadgesController.AccessBadge> result;
 
         Test.startTest();
-        result = NKS_PersonAccessBadgesController.getPersonAccessBadges(
-            'CRM_Person__c',
-            'Account',
-            p.CRM_Account__c
-        );
+        result = NKS_PersonAccessBadgesController.getPersonAccessBadges('CRM_Person__c', 'Account', p.CRM_Account__c);
         Test.stopTest();
 
         System.assertEquals(1, result.size(), 'Expected one result');
@@ -46,19 +42,11 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
         List<NKS_PersonAccessBadgesController.AccessBadge> result;
 
         Test.startTest();
-        result = NKS_PersonAccessBadgesController.getPersonAccessBadges(
-            'CRM_Person__c',
-            'Account',
-            p.CRM_Account__c
-        );
+        result = NKS_PersonAccessBadgesController.getPersonAccessBadges('CRM_Person__c', 'Account', p.CRM_Account__c);
         Test.stopTest();
 
         System.assertEquals(1, result.size(), 'Expected one result');
-        System.assertEquals(
-            'Skjermet adresse - fortrolig',
-            result[0].label,
-            'Expected Skjermet adresse - fortrolig'
-        );
+        System.assertEquals('Skjermet adresse - fortrolig', result[0].label, 'Expected Skjermet adresse - fortrolig');
     }
 
     @IsTest
@@ -79,11 +67,7 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
         List<NKS_PersonAccessBadgesController.AccessBadge> result;
 
         Test.startTest();
-        result = NKS_PersonAccessBadgesController.getPersonAccessBadges(
-            'CRM_Person__c',
-            'Account',
-            p.CRM_Account__c
-        );
+        result = NKS_PersonAccessBadgesController.getPersonAccessBadges('CRM_Person__c', 'Account', p.CRM_Account__c);
         Test.stopTest();
 
         System.assertEquals(1, result.size(), 'Expected one result');
@@ -112,11 +96,7 @@ private inherited sharing class NKS_PersonAccessBadgesControllerTest {
         List<NKS_PersonAccessBadgesController.AccessBadge> result;
 
         Test.startTest();
-        result = NKS_PersonAccessBadgesController.getPersonAccessBadges(
-            'CRM_Person__c',
-            'Account',
-            p.CRM_Account__c
-        );
+        result = NKS_PersonAccessBadgesController.getPersonAccessBadges('CRM_Person__c', 'Account', p.CRM_Account__c);
         Test.stopTest();
 
         System.assertEquals(1, result.size(), 'Expected one result');

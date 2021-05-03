@@ -6,12 +6,7 @@ import { standardObjectOptions } from 'c/fbc_pickObjectAndFieldUtils';
 import NonePicklistValueLabel from '@salesforce/label/c.fbc_NonePicklistValueLabel';
 import FieldIsNotSupportedMessage from '@salesforce/label/c.fbc_FieldIsNotSupportedMessage';
 
-import {
-    flowComboboxDefaults,
-    formattedValue,
-    getDataType,
-    isReference
-} from 'c/fbc_flowComboboxUtils';
+import { flowComboboxDefaults, formattedValue, getDataType, isReference } from 'c/fbc_flowComboboxUtils';
 
 export default class fbc_pickObjectAndField extends LightningElement {
     @api name;
@@ -88,11 +83,9 @@ export default class fbc_pickObjectAndField extends LightningElement {
                             updateable: fields[field].updateable,
                             referenceTo:
                                 fields[field].referenceToInfos.length > 0
-                                    ? fields[field].referenceToInfos.map(
-                                          (curRef) => {
-                                              return curRef.apiName;
-                                          }
-                                      )
+                                    ? fields[field].referenceToInfos.map((curRef) => {
+                                          return curRef.apiName;
+                                      })
                                     : []
                         });
                     }
@@ -102,18 +95,14 @@ export default class fbc_pickObjectAndField extends LightningElement {
                     !isReference(this._field) &&
                     !Object.prototype.hasOwnProperty.call(fields, this._field)
                 ) {
-                    this.errors.push(
-                        this.labels.fieldNotSupported + this._field
-                    );
+                    this.errors.push(this.labels.fieldNotSupported + this._field);
                     this._field = null;
                 }
             }
             this.fields = fieldResults;
             if (this.fields) {
                 this.dispatchDataChangedEvent({
-                    ...this.fields.find(
-                        (curField) => curField.value == this._field
-                    ),
+                    ...this.fields.find((curField) => curField.value == this._field),
                     ...{ isInit: true }
                 });
             }
@@ -121,14 +110,8 @@ export default class fbc_pickObjectAndField extends LightningElement {
     }
 
     handleFlowComboboxValueChange(event) {
-        if (
-            event.detail.newValueDataType ===
-            flowComboboxDefaults.referenceDataType
-        ) {
-            this._field = formattedValue(
-                event.detail.newValue,
-                event.detail.newValueDataType
-            );
+        if (event.detail.newValueDataType === flowComboboxDefaults.referenceDataType) {
+            this._field = formattedValue(event.detail.newValue, event.detail.newValueDataType);
         } else {
             this._field = event.detail.newValue;
         }
@@ -147,11 +130,7 @@ export default class fbc_pickObjectAndField extends LightningElement {
         }
         if (!result && field.referenceToInfos.length > 0) {
             field.referenceToInfos.forEach((curRef) => {
-                if (
-                    this.availableFields
-                        .toLowerCase()
-                        .includes(curRef.apiName.toLowerCase())
-                ) {
+                if (this.availableFields.toLowerCase().includes(curRef.apiName.toLowerCase())) {
                     result = true;
                 }
             });
@@ -197,23 +176,15 @@ export default class fbc_pickObjectAndField extends LightningElement {
         this._objectType = event.detail.value;
         this._field = null;
         this.dispatchDataChangedEvent({});
-        const attributeChangeEvent = new FlowAttributeChangeEvent(
-            'objectType',
-            this._objectType
-        );
+        const attributeChangeEvent = new FlowAttributeChangeEvent('objectType', this._objectType);
         this.dispatchEvent(attributeChangeEvent);
         this.errors = [];
     }
 
     handleFieldChange(event) {
         this._field = event.detail.value;
-        this.dispatchDataChangedEvent(
-            this.fields.find((curField) => curField.value == this._field)
-        );
-        const attributeChangeEvent = new FlowAttributeChangeEvent(
-            'field',
-            this._field
-        );
+        this.dispatchDataChangedEvent(this.fields.find((curField) => curField.value == this._field));
+        const attributeChangeEvent = new FlowAttributeChangeEvent('field', this._field);
         this.dispatchEvent(attributeChangeEvent);
     }
 
@@ -241,11 +212,7 @@ export default class fbc_pickObjectAndField extends LightningElement {
     }
 
     get renderFlowCombobox() {
-        return (
-            this.builderContext &&
-            !this.disableMergefieldSelection &&
-            this.builderContext
-        );
+        return this.builderContext && !this.disableMergefieldSelection && this.builderContext;
     }
 
     @api

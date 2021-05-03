@@ -39,21 +39,14 @@
                     <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
                     <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
                     <lightning-layout multiple-rows="true" pull-to-boundary="small">
-                        <template
-                            if:true={data}
-                            for:each={data}
-                            for:item="record"
-                            for:index="index"
-                        >
+                        <template if:true={data} for:each={data} for:item="record" for:index="index">
                             <lightning-layout-item
                                 key={record.RecordId}
                                 class="slds-size_1-of-1 quicktext-item"
                                 onclick={insertText}
                                 data-message={record.Message}
                             >
-                                <div
-                                    class="slds-var-p-horizontal_small slds-var-p-vertical_x-small"
-                                >
+                                <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
                                     <p class="slds-text-link">{record.Name}</p>
                                     <p>{record.Summary}</p>
                                 </div>

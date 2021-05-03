@@ -72,17 +72,11 @@
             </lightning-layout-item>
             <lightning-layout-item if:false={error} size="9">
                 <template if:true={isLoading}>
-                    <lightning-spinner
-                        variant="brand"
-                        alternative-text="Loading"
-                    ></lightning-spinner>
+                    <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
                 </template>
                 <template if:false={isLoading}>
                     <template if:true={hasPayments}>
-                        <c-nks-payment-totals
-                            payment-groups={paymentGroups}
-                            labels={labels}
-                        ></c-nks-payment-totals>
+                        <c-nks-payment-totals payment-groups={paymentGroups} labels={labels}></c-nks-payment-totals>
                         <template for:each={paymentGroups} for:item="paymentGroup">
                             <template iterator:it={paymentGroup}>
                                 <h1
@@ -102,19 +96,12 @@
                                     payment={it.value.data}
                                     labels={labels}
                                 ></c-nks-person-payment>
-                                <div
-                                    if:true={it.last}
-                                    key={it.value.group}
-                                    class="slds-var-m-bottom_xx-large"
-                                ></div>
+                                <div if:true={it.last} key={it.value.group} class="slds-var-m-bottom_xx-large"></div>
                             </template>
                         </template>
                     </template>
                     <template if:false={hasPayments}>
-                        <c-nks-alert-banner
-                            type="Info"
-                            message={noPaymentsMessage}
-                        ></c-nks-alert-banner>
+                        <c-nks-alert-banner type="Info" message={noPaymentsMessage}></c-nks-alert-banner>
                     </template>
                 </template>
             </lightning-layout-item>

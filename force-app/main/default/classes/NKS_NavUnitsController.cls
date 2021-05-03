@@ -3,9 +3,7 @@ public with sharing class NKS_NavUnitsController {
     public static String getUnits() {
         List<PicklistValue> picklistValues = new List<picklistValue>();
         for (NavUnit__c unit : getUnitsFromDatabase()) {
-            picklistValues.add(
-                new PicklistValue(unit.CRM_QueueId__c, unit.NKS_Name_Short__c)
-            );
+            picklistValues.add(new PicklistValue(unit.CRM_QueueId__c, unit.NKS_Name_Short__c));
         }
         String jSONList = JSON.serialize(picklistValues);
         return jSONList;

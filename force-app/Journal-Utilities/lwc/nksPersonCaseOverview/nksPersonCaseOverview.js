@@ -105,8 +105,8 @@ export default class NksPersonCaseOverview extends LightningElement {
         }
         if (error) {
             console.log(JSON.stringify(error, null, 2));
+            this.error = true;
         }
-        this.error = !data && error;
     }
 
     groupCases(cases) {

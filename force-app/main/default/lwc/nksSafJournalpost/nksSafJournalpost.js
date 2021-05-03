@@ -28,10 +28,7 @@ export default class NksSafJournalpost extends LightningElement {
 
     setFromToType() {
         let fromToType;
-        let kanal =
-            this.journalpost.kanal && this.journalpost.kanal != 'UKJENT'
-                ? this.journalpost.kanalnavn
-                : null;
+        let kanal = this.journalpost.kanal && this.journalpost.kanal != 'UKJENT' ? this.journalpost.kanalnavn : null;
         switch (this.journalpost.journalposttype) {
             case 'I':
                 fromToType = 'Fra ' + this.journalpost.avsenderMottaker.navn;

@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.92.0.NEXT",
+            "versionNumber": "0.101.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -13,11 +13,15 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.59.0.LATEST"
+                    "versionNumber": "0.64.0.LATEST"
+                },
+                {
+                    "package": "crm-shared-timeline",
+                    "versionNumber": "1.1.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.74.0.LATEST"
+                    "versionNumber": "1.115.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
@@ -33,6 +37,7 @@
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-platform-access-control": "0Ho2o0000008OR3CAM",
+        "crm-shared-timeline": "0Ho2o000000fxXBCAY",
         "crm-arbeidsgiver-base": "0Ho2o0000008OQtCAM",
         "crm-platform-integration": "0Ho2o0000008ORrCAM"
     }
