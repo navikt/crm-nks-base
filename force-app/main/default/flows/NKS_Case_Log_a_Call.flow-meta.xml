@@ -4,7 +4,7 @@
         <description>Displays a toast on successful log.</description>
         <name>Show_Toast</name>
         <label>Show Toast</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1910</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
@@ -36,10 +36,47 @@
     </actionCalls>
     <assignments>
         <description>Assigns updated values for case</description>
-        <name>Case_Assignment</name>
+        <name>Case_Assignment_Default</name>
         <label>Case Assignment</label>
-        <locationX>402</locationX>
-        <locationY>1430</locationY>
+        <locationX>578</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.theme</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.subtheme</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Case_Assignment_Journal</name>
+        <label>Case Assignment Journal</label>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -75,7 +112,7 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -95,14 +132,14 @@
             <assignToReference>Conversation_Note_Record.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
+                <elementReference>Get_Case.NKS_Theme__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Case_Overview.selectedSubthemeSfId</elementReference>
+                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -119,7 +156,7 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>490</locationX>
+        <locationX>534</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -143,7 +180,7 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>No_Account_Screen</targetReference>
@@ -170,7 +207,7 @@
         >Checks the status if the case. If it is closed, the conversation note is already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
-        <locationX>226</locationX>
+        <locationX>248</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
@@ -196,10 +233,10 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
-            <targetReference>Case_Assignment</targetReference>
+            <targetReference>Case_Assignment_Default</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -213,7 +250,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Case_Assignment</targetReference>
+                <targetReference>Case_Assignment_Journal</targetReference>
             </connector>
             <label>Create Journal Entry</label>
         </rules>
@@ -243,7 +280,7 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1790</locationY>
         <connector>
             <targetReference>Show_Toast</targetReference>
@@ -254,7 +291,7 @@
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -277,7 +314,7 @@
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>226</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -297,7 +334,7 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Conversation_Note_Assignment</targetReference>
@@ -307,7 +344,7 @@
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>490</locationX>
+        <locationX>534</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -335,7 +372,7 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -390,8 +427,37 @@
                     <stringValue>Nei</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Theme_Categorization</name>
+            <extensionName>c:nksThemeCategorization</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Journal_Entry.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Case_Overview</name>
@@ -412,6 +478,16 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Create_Journal_Entry.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Record_Refresher</name>
@@ -458,7 +534,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>490</locationX>
+        <locationX>534</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -507,7 +583,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>100</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
