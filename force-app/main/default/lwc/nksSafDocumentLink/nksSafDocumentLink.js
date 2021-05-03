@@ -63,7 +63,9 @@ export default class NksSafDocumentLink extends NavigationMixin(LightningElement
     }
 
     get fileName() {
-        return this.dokumentvariant ? this.dokumentvariant.filnavn : this.title + '.' + this.dokumentvariant.filtype;
+        return this.dokumentvariant && this.dokumentvariant.filnavn
+            ? this.dokumentvariant.filnavn
+            : this.dokumentInfo.tittel + '.' + this.dokumentvariant.filtype;
     }
 
     get fileIcon() {
