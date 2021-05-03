@@ -1,9 +1,9 @@
 <template>
     <lightning-card title={listTitle} icon-name="utility:moneybag" class="moneybag-color">
-        <lightning-layout>
-            <lightning-layout-item flexibility="shrink">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
                 <lightning-layout multiple-rows="true" alternative-text="Filter">
-                    <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
+                    <lightning-layout-item size="6" class="slds-var-p-bottom_medium">
                         <div class="slds-is-relative">
                             <div>
                                 <h1>{labels.PERIOD_HEADER}</h1>
@@ -25,7 +25,7 @@
                             ></lightning-radio-group>
                         </div>
                         <lightning-layout if:true={customPeriod} multiple-rows="true">
-                            <lightning-layout-item size="12">
+                            <lightning-layout-item size="6">
                                 <lightning-input
                                     type="date"
                                     name="startDate"
@@ -38,7 +38,7 @@
                                     onchange={customDateChanged}
                                 ></lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item size="12">
+                            <lightning-layout-item size="6">
                                 <lightning-input
                                     type="date"
                                     name="endDate"
@@ -53,7 +53,7 @@
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12">
+                    <lightning-layout-item size="6">
                         <div>
                             <h1>{labels.YTELSE_HEADER}</h1>
                         </div>
@@ -70,7 +70,7 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
-            <lightning-layout-item if:false={error} size="9">
+            <lightning-layout-item if:false={error} size="12">
                 <template if:true={isLoading}>
                     <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
                 </template>
