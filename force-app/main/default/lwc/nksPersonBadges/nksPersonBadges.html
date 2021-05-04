@@ -19,10 +19,6 @@
     <!-- BADGES -->
     <template if:true={hasBadges}>
         <div class={backgroundTheme}>
-            <!-- UU SECURITY MESSAGE ALERT -->
-            <template if:true={showSecurityMeasureAlertDialog}>
-                <div class="slds-assistive-text" role="alert">Bruker har sikkerhetstiltak</div>
-            </template>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <template for:each={badges} for:item="badge">
@@ -38,7 +34,7 @@
                                 tabindex={badge.tabindex}
                                 onkeypress={onKeyPressHandler}
                                 onclick={onClickHandler}
-                                aria-pressed="false"
+                                aria-expanded="false"
                                 role="button"
                             >
                             </lightning-badge>
@@ -62,7 +58,12 @@
                 <template if:true={showSecurityMeasures}>
                     <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                            <lightning-layout
+                                multiple-rows="true"
+                                pull-to-boundary="small"
+                                role="list"
+                                aria-label="Sikkerhetstiltak"
+                            >
                                 <template for:each={securityMeasures} for:item="sm">
                                     <lightning-layout-item
                                         key={sm.RecordId}
@@ -100,7 +101,7 @@
                 <template if:true={showIntepreterSpokenLanguage}>
                     <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <ul class="slds-list_dotted">
+                            <ul class="slds-list_dotted" aria-label="Talespråktolk">
                                 <template for:each={interpreterSpokenLanguages} for:item="language">
                                     <li key={language}>{language}</li>
                                 </template>
@@ -113,8 +114,7 @@
                 <template if:true={showPowerOfAttorney}>
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <!-- <div class="slds-var-p-horizontal_small"> -->
-                            <ul class="slds-has-dividers_bottom-space">
+                            <ul class="slds-has-dividers_bottom-space" aria-label="Fullmakt">
                                 <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
                                     <li class="slds-item" key={powerOfAttorney.id}>
                                         <div class="slds-text-heading_small">
@@ -141,7 +141,6 @@
                                     </li>
                                 </template>
                             </ul>
-                            <!-- </div> -->
                         </div>
                     </lightning-layout-item>
                 </template>
@@ -150,7 +149,7 @@
                 <template if:true={showGuardianship}>
                     <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <ul class="slds-has-dividers_bottom-space">
+                            <ul class="slds-has-dividers_bottom-space" aria-label="Vergemål">
                                 <template for:each={guardianships} for:item="guardianship">
                                     <li class="slds-item" key={guardianship.id}>
                                         <p>Type: {guardianship.type}</p>
@@ -169,7 +168,7 @@
                 <template if:true={showEntitlements}>
                     <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <ul class="slds-list_dotted">
+                            <ul class="slds-list_dotted" aria-label="Vedtak">
                                 <template for:each={entitlements} for:item="entitlement">
                                     <li key={entitlement}>{entitlement}</li>
                                 </template>

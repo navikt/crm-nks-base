@@ -1,8 +1,5 @@
 public with sharing class KafkaBrukernotifikasjonOppgaveHandler extends KafkaBrukernotifikasjonHandler {
-    protected override void buildNotification(
-        String decodedValue,
-        UserNotification__c notification
-    ) {
+    protected override void buildNotification(String decodedValue, UserNotification__c notification) {
         KafkaBrukernotifikasjonOppgave oppgave = (KafkaBrukernotifikasjonOppgave) JSON.deserialize(
             decodedValue,
             KafkaBrukernotifikasjonOppgave.class
