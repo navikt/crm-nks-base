@@ -42,6 +42,14 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
                     mapNotificationToAccount(userNotificationMap.get(key));
                 } catch (Exception ex) {
                     //Set message to error and remove from message map, remove notification from notification map
+                    this.logger.error(
+                        'Error creating User Notification, actor not found. ' +
+                        '\n Kafka key reference: ' +
+                        messageMap.get(key).CRM_Key__c,
+                        null,
+                        CRM_ApplicationDomain.domain.NKS
+                    );
+
                     setMessageError(ex, messageMap.get(key));
                     messageMap.remove(key);
                     userNotificationMap.remove(key);
@@ -94,13 +102,6 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
     private void mapNotificationToAccount(UserNotification__c notification) {
         String accountId = actorMap.get(notification.INT_SocialSecurityNumber__c);
         if (String.isBlank(accountId)) {
-            this.logger.error(
-                'Error creating User Notification, actor not found. ' +
-                '\n Kafka key reference: ' +
-                notification.INT_key__c,
-                null,
-                CRM_ApplicationDomain.domain.NKS
-            );
             throw new KafkaBrukernotifikasjonException('Cannot find account from fodselsnummer');
         }
 
