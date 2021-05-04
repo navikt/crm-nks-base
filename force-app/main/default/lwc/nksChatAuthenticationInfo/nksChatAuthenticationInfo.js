@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
 import getCommunityAuthUrl from '@salesforce/apex/ChatAuthController.getCommunityAuthUrl';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 //#### LABEL IMPORTS ####
 import AUTH_REQUESTED from '@salesforce/label/c.CRM_Chat_Authentication_Requested';
@@ -127,6 +128,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                 if (_this.authenticationComplete) {
                     _this.accountId = response.data.sobject.AccountId;
                     if (!_this.loginEvtSent) _this.sendLoginEvent();
+                    getRecordNotifyChange([{ recordId: _this.recordId }]); //Triggers refresh of standard components
                     _this.handleUnsubscribe();
                 }
             }
