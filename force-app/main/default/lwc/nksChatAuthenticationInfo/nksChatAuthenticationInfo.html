@@ -118,23 +118,27 @@
                     <template if:true={authenticationComplete}>
                         <div class="slds-var-p-top_small">
                             <!-- ACCESS BADGES -->
-                            <c-nks-person-access-badges
-                                record-id={accountId}
-                                object-api-name="Account"
-                                person-relation-field="CRM_Person__c"
-                                assistive-header="Skjerming"
-                                add-assistive-header="true"
-                                css-classes="slds-p-bottom_x-small"
-                            >
-                            </c-nks-person-access-badges>
+                            <div class="slds-var-p-left_small">
+                                <c-nks-person-access-badges
+                                    record-id={accountId}
+                                    object-api-name="Account"
+                                    person-relation-field="CRM_Person__c"
+                                    assistive-header="Skjerming"
+                                    add-assistive-header="true"
+                                    css-classes="slds-p-bottom_x-small"
+                                >
+                                </c-nks-person-access-badges>
+                            </div>
 
                             <!-- SECURITY BADGES -->
-                            <c-nks-person-badges
-                                record-id={accountId}
-                                object-api-name="Account"
-                                person-relation-field="CRM_Person__c"
-                                assistive-header="Sikkerhetstiltak og andre etiketter"
-                            ></c-nks-person-badges>
+                            <div class="slds-var-p-left_small">
+                                <c-nks-person-badges
+                                    record-id={accountId}
+                                    object-api-name="Account"
+                                    person-relation-field="CRM_Person__c"
+                                    assistive-header="Sikkerhetstiltak og andre etiketter"
+                                ></c-nks-person-badges>
+                            </div>
 
                             <!-- CASE LINK -->
                             <!--<c-nks-record-info
