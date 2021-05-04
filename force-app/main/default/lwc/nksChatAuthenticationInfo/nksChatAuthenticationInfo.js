@@ -231,7 +231,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
             let isConfidentialText = ' skjermet';
             let securityMeasureText = ' har ' + this.nmbOfSecurityMeasures + ' sikkerhetstiltak';
 
-            alertText += 'Vær oppmerksom. Bruker';
+            alertText += 'Bruker';
             alertText += this.isNavEmployee ? navEmployeeText : '';
             alertText +=
                 this.isNavEmployee && this.isConfidential && hasSecurityMeasures
