@@ -61,6 +61,9 @@ public without sharing class ChatAuthController {
                     CRM_Authentication_Status__c,
                     AccountId,
                     Account.CRM_Person__c,
+                    Account.CRM_Person__r.INT_Confidential__c,
+                    Account.CRM_Person__r.INT_IsNavEmployee__c,
+                    Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c,
                     CaseId,
                     LiveChatButton.WindowLanguage,
                     Status
@@ -73,6 +76,9 @@ public without sharing class ChatAuthController {
                 'ACCOUNTID' => trans.accountId,
                 'CASEID' => trans.CaseId,
                 'PERSONID' => trans.Account.CRM_Person__c,
+                'IS_NAV_EMPLOYEE' => isNavEmployee(trans),
+                'IS_CONFIDENTIAL' => '' + personIsConfidential(trans),
+                'NMB_SECURITY_MEASURES' => numberOfSecurityMeasures(trans),
                 'CHAT_LANGUAGE' => String.isNotBlank(trans.LiveChatButton.WindowLanguage)
                     ? trans.LiveChatButton.WindowLanguage
                     : 'no'
@@ -81,6 +87,28 @@ public without sharing class ChatAuthController {
         } catch (Exception ex) {
             throw new AuraHandledException(ex.getTypeName() + ' : ' + 'Could not retrieve authentication status');
         }
+    }
+
+    private static String personIsConfidential(LiveChatTranscript trans) {
+        if (String.isNotBlank(trans.AccountId)) {
+            return trans.Account.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT') ? 'false' : 'true';
+        }
+        return 'false';
+    }
+
+    private static String isNavEmployee(LiveChatTranscript trans) {
+        if (String.isNotBlank(trans.AccountId)) {
+            return trans.Account.CRM_Person__r.INT_IsNavEmployee__c ? 'true' : 'false';
+        }
+        return 'false';
+    }
+
+    private static String numberOfSecurityMeasures(LiveChatTranscript trans) {
+        if (String.isNotBlank(trans.AccountId)) {
+            return '' + trans.Account.CRM_Person__r.NKS_NumberOfSecurityMeasures__c;
+        }
+
+        return '0';
     }
 
     /**

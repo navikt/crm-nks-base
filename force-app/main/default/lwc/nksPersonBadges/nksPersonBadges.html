@@ -19,10 +19,6 @@
     <!-- BADGES -->
     <template if:true={hasBadges}>
         <div class={backgroundTheme}>
-            <!-- UU SECURITY MESSAGE ALERT -->
-            <template if:true={showSecurityMeasureAlertDialog}>
-                <div class="slds-assistive-text" role="alert">Bruker har sikkerhetstiltak</div>
-            </template>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <template for:each={badges} for:item="badge">
@@ -118,7 +114,6 @@
                 <template if:true={showPowerOfAttorney}>
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <!-- <div class="slds-var-p-horizontal_small"> -->
                             <ul class="slds-has-dividers_bottom-space" aria-label="Fullmakt">
                                 <template for:each={powerOfAttorneys} for:item="powerOfAttorney">
                                     <li class="slds-item" key={powerOfAttorney.id}>
@@ -146,7 +141,6 @@
                                     </li>
                                 </template>
                             </ul>
-                            <!-- </div> -->
                         </div>
                     </lightning-layout-item>
                 </template>

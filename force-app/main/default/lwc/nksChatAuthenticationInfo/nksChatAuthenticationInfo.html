@@ -10,13 +10,14 @@
         <template if:false={isLoading}>
             <div class="slds-var-p-left_medium slds-var-p-right_medium">
                 <template if:true={authenticationComplete}>
-                    <div class="slds-notify_alert slds-theme_success">
+                    <div class="slds-notify_alert slds-theme_success" role="alert">
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
                                 <lightning-icon icon-name="utility:success" size="x-small" variant="inverse">
                                 </lightning-icon>
                             </div>
-                            <h2 role="alert">{labels.IDENTITY_CONFIRMED_DISCLAIMER}</h2>
+                            <h2>{labels.IDENTITY_CONFIRMED_DISCLAIMER}</h2>
+                            <span class="slds-assistive-text">{screenReaderLoginAlertAdditionalText}</span>
                         </lightning-layout>
                     </div>
                 </template>
