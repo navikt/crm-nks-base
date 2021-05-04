@@ -1,8 +1,8 @@
 <template>
     <!-- CARD LAYOUT -->
     <template if:true={cardLayout}>
-        <lightning-card title="Nav kontor" icon-name="custom:custom61">
-            <div class="slds-p-horizontal_small slds-is-relative">
+        <lightning-card title="Nav-kontor" icon-name="custom:custom61">
+            <div class="slds-is-relative">
                 <!-- SPINNER -->
                 <template if:false={isLoaded}>
                     <div>
@@ -27,12 +27,14 @@
 
                     <!-- NAV UNIT -->
                     <template if:true={navUnit}>
-                        <c-nks-nav-unit
-                            nav-unit={navUnit}
-                            contact-information={contactInformation}
-                            all-sections-open-on-load={allSectionsOpenOnLoad}
-                            num-cols={numCols}
-                        ></c-nks-nav-unit>
+                        <div class="slds-p-horizontal_small">
+                            <c-nks-nav-unit
+                                nav-unit={navUnit}
+                                contact-information={contactInformation}
+                                all-sections-open-on-load={allSectionsOpenOnLoad}
+                                num-cols={numCols}
+                            ></c-nks-nav-unit>
+                        </div>
                     </template>
                 </template>
             </div>
