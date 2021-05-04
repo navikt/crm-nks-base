@@ -8,13 +8,6 @@
                     <valueList>
                         <valueListItems>
                             <value>Case.NKS_Case_Create_NAV_Task</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
