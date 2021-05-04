@@ -165,6 +165,10 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
         return notification;
     }
 
+    protected Boolean cleanBoolean(Boolean value) {
+        return value == null ? false : value;
+    }
+
     /**
      * Reset all fields on a record
      */

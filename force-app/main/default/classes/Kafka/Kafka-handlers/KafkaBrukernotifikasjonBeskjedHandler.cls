@@ -14,7 +14,7 @@ public with sharing class KafkaBrukernotifikasjonBeskjedHandler extends KafkaBru
         notification.INT_Link__c = beskjed.link;
         notification.INT_SecurityLevel__c = beskjed.sikkerhetsnivaa;
         notification.INT_VisibleUntil__c = beskjed.synligFremTilFormated;
-        notification.INT_ExternalNotification__c = beskjed.eksternVarsling;
+        notification.INT_ExternalNotification__c = cleanBoolean(beskjed.eksternVarsling);
 
         notification.INT_Type__c = 'BESKJED';
     }
