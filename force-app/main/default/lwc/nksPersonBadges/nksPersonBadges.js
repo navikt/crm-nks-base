@@ -18,8 +18,6 @@ export default class NksPersonBadges extends LightningElement {
     @track errors = [];
 
     infoPanelToShow = '';
-    hasSecurityMeasures = false;
-    hasShownSecurityMeasuresAlert = false;
     errorMessage;
 
     connectedCallback() {
@@ -55,15 +53,6 @@ export default class NksPersonBadges extends LightningElement {
         return 'entitlements' === this.infoPanelToShow && 0 < this.entitlements.length;
     }
 
-    get showSecurityMeasureAlertDialog() {
-        if (this.hasSecurityMeasures === true && this.hasShownSecurityMeasuresAlert === false) {
-            this.hasShownSecurityMeasuresAlert = true;
-            return true;
-        }
-
-        return false;
-    }
-
     get backgroundTheme() {
         if (true === this.addBoxLayout) {
             return 'slds-box slds-box_xx-small slds-theme_alert-texture slds-theme_info';
@@ -90,18 +79,10 @@ export default class NksPersonBadges extends LightningElement {
             this.powerOfAttorneys = data.powerOfAttorneys;
             this.entitlements = data.entitlements;
             this.errors = data.errors;
-
-            // this.setHasSecurityMeasures();
         }
 
         if (error) {
             this.errorMessage = error.body.message;
-        }
-    }
-
-    setHasSecurityMeasures() {
-        if (this.hasSecurityMeasures === false && this.securityMeasures.length > 0) {
-            this.hasSecurityMeasures = true;
         }
     }
 
