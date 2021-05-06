@@ -51,6 +51,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>taskTypeCode</name>
+            <value>
+                <elementReference>tasktype.selectedTaskType</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>themeCode</name>
             <value>
                 <elementReference>Person_NAV_Cases.selectedCaseTheme</elementReference>
@@ -563,7 +569,7 @@
     <assignments>
         <name>NAV_Task_Assignment_0</name>
         <label>NAV Task Assignment</label>
-        <locationX>1662</locationX>
+        <locationX>1661</locationX>
         <locationY>1101</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task.CRM_Account__c</assignToReference>
@@ -2040,7 +2046,7 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
