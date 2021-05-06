@@ -2,11 +2,7 @@ public with sharing class NKS_NAVTaskTypeController {
     @AuraEnabled(cacheable=true)
     public static List<CommonCode> getTaskTypes(String themeCode) {
         List<CommonCode> commoncodes = new List<CommonCode>();
-        List<String> validtasktypecodes = new List<String>{
-            'VUR_KONS_YTE',
-            'VURD_HENV',
-            'KONT_BRUK'
-        };
+        List<String> validtasktypecodes = new List<String>{ 'VUR_KONS_YTE', 'VURD_HENV', 'KONT_BRUK' };
 
         NKS_NavTaskManager.NavTaskTypeResponse response = new NKS_NavTaskManager.NavTaskTypeResponse();
         if (String.isBlank(themeCode)) {
@@ -33,10 +29,7 @@ public with sharing class NKS_NAVTaskTypeController {
         return commoncodes;
     }
 
-    private static List<CommonCode> createCommonCodes(
-        List<Common_Code__c> tasktypes,
-        List<String> validtasktypes
-    ) {
+    private static List<CommonCode> createCommonCodes(List<Common_Code__c> tasktypes, List<String> validtasktypes) {
         List<CommonCode> commoncodes = new List<CommonCode>();
         for (Common_Code__c c : tasktypes) {
             CommonCode cc = new CommonCode();

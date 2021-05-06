@@ -1,16 +1,15 @@
 import { LightningElement, wire, track, api } from 'lwc';
 import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
 import getTaskTypes from '@salesforce/apex/NKS_NAVTaskTypeController.getTaskTypes';
-import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 
 export default class NksTaskTypePicklist extends LightningElement {
+    @api showcomponent;
+    @api theme;
+    @track theme = this.theme;
     @track tasktypes = [];
     tasktype;
     commoncodes;
-    @api showcomponent;
-    @api theme;
-    theme;
-    @track theme = this.theme;
 
     @wire(MessageContext)
     messageContext;
@@ -36,11 +35,11 @@ export default class NksTaskTypePicklist extends LightningElement {
 
     handleTaskTypeChange(event) {
         this.tasktype = event.detail.value;
+        this.publishFieldChange('tasktype', this.tasktype);
     }
 
     connectedCallback() {
         this.subscribeToMessageChannel();
-        console.log('CALLBACK: ');
         this.findTaskTypes();
     }
 
@@ -68,14 +67,11 @@ export default class NksTaskTypePicklist extends LightningElement {
         switch (fieldName) {
             case 'themeCode':
                 this.theme = value;
-                //this.findTaskTypes();
+                this.findTaskTypes();
                 break;
-        }
-
-        let showcomponent = this.showcomponent;
-        if (true == showcomponent) {
-            console.log('showcontent true');
-            this.findTaskTypes();
+            case 'createtask':
+                this.showcomponent = value;
+                break;
         }
     }
 
@@ -84,7 +80,6 @@ export default class NksTaskTypePicklist extends LightningElement {
             themeCode: this.theme
         };
         this.tasktypes = [];
-        console.log('FINDING TASKTYPES with theme code: ' + this.theme);
         try {
             getTaskTypes(input).then((result) => {
                 this.commoncodes = result;
@@ -101,7 +96,8 @@ export default class NksTaskTypePicklist extends LightningElement {
         }
     }
 
-    get showcomponent() {
-        return this.showcomponent;
+    publishFieldChange(field, value) {
+        const payload = { name: field, value: value };
+        publish(this.messageContext, nksSingleValueUpdate, payload);
     }
 }
