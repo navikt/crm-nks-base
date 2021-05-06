@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Brukernotifikasjon Done</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">KafkaBrukernotifikasjonDoneHandler</value>
+    </values>
+    <values>
+        <field>ApexJobType__c</field>
+        <value xsi:type="xsd:string">Batch Apex</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Handles kafka messages for Brukernotifikasjon Done-events</value>
+    </values>
+    <values>
+        <field>Priority__c</field>
+        <value xsi:type="xsd:double">40.0</value>
+    </values>
+    <values>
+        <field>Topic__c</field>
+        <value xsi:type="xsd:string">aapen-brukernotifikasjon-done-v1</value>
+    </values>
+</CustomMetadata>
