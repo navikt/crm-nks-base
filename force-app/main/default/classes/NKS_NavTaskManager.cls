@@ -255,6 +255,8 @@ public with sharing class NKS_NavTaskManager {
         @invocableVariable
         public String subthemeCode;
         @invocableVariable
+        public String taskTypeCode;
+        @invocableVariable
         public String actorId;
         @invocableVariable
         public String assignToUnitNumber;
@@ -360,7 +362,8 @@ public with sharing class NKS_NavTaskManager {
             journalpostId = task.INT_Journal_Entry_Id__c;
             prioritet = String.valueOf(task.CRM_Priority__c); //Using String.valueOf() as there is an issue when this is passed from a flow pickslit: https://trailblazer.salesforce.com/issues_view?id=a1p3A0000003fH1QAI
             aktoerId = taskRequest.actorId;
-            oppgavetype = String.valueOf(task.NKS_Task_Type__c);
+            //oppgavetype = String.valueOf(task.NKS_Task_Type__c);
+            oppgavetype = taskRequest.taskTypeCode;
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.NKS_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
