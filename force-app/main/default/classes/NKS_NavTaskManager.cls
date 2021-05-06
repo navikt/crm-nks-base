@@ -34,6 +34,7 @@ public with sharing class NKS_NavTaskManager {
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
+
         apiCtrl.setHeaders(httpHeaders);
 
         //Creates a log entry used as the unique request X-Correlation-ID
@@ -128,6 +129,72 @@ public with sharing class NKS_NavTaskManager {
     }
 
     /**
+     * @description: Performs callout to oppgave API to perform a GET for valid task types. Throws an OppgaveException if the callout is unsuccessful
+     * @author Celine Tomren | 03-29-2021
+     * @param themeCode
+     **/
+    public static NavTaskTypeResponse getTaskTypes(String themeCode) {
+        NavTaskTypeResponse response = new NavTaskTypeResponse();
+
+        Map<String, String> httpHeaders = new Map<String, String>{
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json'
+        };
+
+        //System.debug(CachedTokensHandler.getServiceToken('Oppgave'));
+
+        ApiController apiCtrl = new ApiController();
+        Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
+        apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
+
+        apiCtrl.addServiceAuthHeader('Oppgave');
+        apiCtrl.setHeaders(httpHeaders);
+        //String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI0MWNhNTBiYS1lNDRmLTRiYzgtOWUzMS1iNzQ1YTAwNDE5MjYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vOTY2YWM1NzItZjViNy00YmJlLWFhODgtYzc2NDE5YzBmODUxL3YyLjAiLCJpYXQiOjE2MjAyODMyNDcsIm5iZiI6MTYyMDI4MzI0NywiZXhwIjoxNjIwMjg3MTQ2LCJhaW8iOiJBVFFBeS84VEFBQUF5T3lZMkgzOHh3U01YV3JnZWtFN2RHc00wSFN0L20rMjVMcFV6MURQK1VqVjNnaVlnVndNbWZEQWNwZkJCUWpDIiwiYXpwIjoiNmQyZDgwMzEtZjE3ZC00ZWQ2LTgzZjUtZTU1NGQ1YzA3ZWNhIiwiYXpwYWNyIjoiMSIsImdyb3VwcyI6WyI5Mjg2MzZmNC1mZDBkLTQxNDktOTc4ZS1hNmZiNjhiYjE5ZGUiXSwibmFtZSI6IkNlbGluZSBUb21yZW4iLCJvaWQiOiJkNTRjNzZjMS1lNDgyLTQ1MTUtOGRlOS0wZWQyMmYzZmI1MDciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJDZWxpbmUuVG9tcmVuQHRyeWdkZWV0YXRlbi5ubyIsInJoIjoiMC5BVWNBY3NWcWxyZjF2a3VxaU1ka0djRDRVVEdBTFcxOThkWk9nX1hsVk5YQWZzcEhBQncuIiwic2NwIjoiZGVmYXVsdGFjY2VzcyIsInN1YiI6IkJ2QVFOSWgxR2g5ZEYwNUc1NThhTjM5c3pISEloZXlha1VZY2lieEdISTQiLCJ0aWQiOiI5NjZhYzU3Mi1mNWI3LTRiYmUtYWE4OC1jNzY0MTljMGY4NTEiLCJ1dGkiOiJSX1cta0Joc1hrLUkyZF9RTm1EUkFRIiwidmVyIjoiMi4wIiwiTkFWaWRlbnQiOiJUMTYwMTYxIn0.bK1t3uyYuKy74YWg4vw2rAMB7GFA6h1rGMhCZl-lMGekjAjV_098dHPijDe5hjOOj2dewdjdK_ickON3qHP4wP17wc3MoSvsKo5htB4YU2g8eX6fGS-U9wt-YKXKyCCVEG8dXQf9yows3q9BMasN-rpQaDLV4HEiptC7kdZoVUmj2itVy8_wAgZExcP0rwxAz6CNeAPWWGmCSRxz8q5PYp6ab7BOHByU43epjxLVozPQUbLf1dxP5P6RH1RzcFd68jx1eoJt8Xat-P_L-yOzCexalmHC3bv-k4L-TkenKJTzC7kWYho3ywvY_VfZILCRD7OeagbaG80nfYmCgWJ4ag';
+        //apiCtrl.addHeader('Authorization', 'Bearer ' + token);
+        //apiCtrl.addHeader('Content-Type', 'application/json');
+        //apiCtrl.addApiGwHeader();
+
+        LoggerUtility logger = new LoggerUtility('Oppgave');
+        addXCorrelation(apiCtrl, logger, null);
+
+        System.debug('CALLOUT ENDPOINT: ' + apiCtrl.getEndpoint());
+
+        try {
+            apiCtrl.doCallout();
+            System.debug(
+                'RESPONSE: ' +
+                apiCtrl.getResponse().getStatusCode() +
+                ' : ' +
+                apiCtrl.getResponse().getBody()
+            );
+            Integer statusCode = apiCtrl.getResponse().getStatusCode();
+            if (statusCode == 200 || statusCode == 201) {
+                response.success = true;
+                String bodyString = apiCtrl.getResponse().getBody();
+                if (String.isNotBlank(bodyString)) {
+                    bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+                }
+                response.tasktypes = (List<OppgaveTypeResponse>) JSON.deserialize(
+                    bodyString,
+                    List<OppgaveTypeResponse>.class
+                );
+            } else {
+                logError(apiCtrl, logger, null);
+                response.success = false;
+                response.errorMessage = logger.peek().UUID__C;
+            }
+        } catch (Exception ex) {
+            logger.exception(ex, null, CRM_ApplicationDomain.Domain.NKS);
+            response.success = false;
+            response.errorMessage = logger.peek().UUID__C;
+        } finally {
+            logger.publish();
+        }
+
+        return response;
+    }
+
+    /**
      * @description: Adds the required X-Correlation header to the API request
      * @author Stian Ruud Schikora | 11-27-2020
      * @param apiCtrl
@@ -137,6 +204,7 @@ public with sharing class NKS_NavTaskManager {
     private static void addXCorrelation(ApiController apiCtrl, LoggerUtility logger, NavTask__c task) {
         logger.info('Delegating task via Oppgave API: \n' + apiCtrl.getRequest().getBody(), task);
         apiCtrl.addHeader('X-Correlation-ID', logger.peek().UUID__c); //Adds the unique app log id to the request
+        System.debug('X: ' + logger.peek().UUID__c);
     }
 
     /**
@@ -231,6 +299,21 @@ public with sharing class NKS_NavTaskManager {
         }
     }
 
+    public class NavTaskTypeResponse {
+        @AuraEnabled
+        public Boolean success;
+        @AuraEnabled
+        public String errorMessage;
+        @AuraEnabled
+        public List<OppgaveTypeResponse> tasktypes;
+
+        public NavTaskTypeResponse() {
+            this.success = false;
+            this.errorMessage = null;
+            this.tasktypes = null;
+        }
+    }
+
     //### API WRAPPERS ###//
 
     @testVisible
@@ -289,6 +372,15 @@ public with sharing class NKS_NavTaskManager {
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
             saksreferanse = task.NKS_NAV_Case_Reference__c;
+        }
+    }
+
+    public class OppgaveTypeResponse {
+        @AuraEnabled
+        public String oppgavetype;
+
+        public OppgaveTypeResponse() {
+            this.oppgavetype = null;
         }
     }
 }
