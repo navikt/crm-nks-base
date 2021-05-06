@@ -3,11 +3,7 @@ public with sharing class NKS_NAVTaskTypeControllerTest {
     @TestSetup
     static void makeData() {
         UTIL_TestDataFactory.createRecord(
-            new Common_Code__c(
-                CRM_Code__c = 'VURD_HENV',
-                Name = 'Vurder henvendelse',
-                CRM_Code_Set__c = 'Oppgavetyper'
-            )
+            new Common_Code__c(CRM_Code__c = 'VURD_HENV', Name = 'Vurder henvendelse', CRM_Code_Set__c = 'Oppgavetyper')
         );
         UTIL_TestDataFactory.createRecord(
             new Common_Code__c(
@@ -17,31 +13,23 @@ public with sharing class NKS_NAVTaskTypeControllerTest {
             )
         );
         UTIL_TestDataFactory.createRecord(
-            new Common_Code__c(
-                CRM_Code__c = 'KONT_BRUK',
-                Name = 'Kontakt bruker',
-                CRM_Code_Set__c = 'Oppgavetyper'
-            )
+            new Common_Code__c(CRM_Code__c = 'KONT_BRUK', Name = 'Kontakt bruker', CRM_Code_Set__c = 'Oppgavetyper')
         );
     }
     @isTest
     static void testGetTaskTypes() {
         Test.startTest();
-        List<NKS_NAVTaskTypeController.CommonCode> tasktypes = NKS_NAVTaskTypeController.getTaskTypes(
-            'AAP'
-        );
+        List<NKS_NAVTaskTypeController.CommonCode> tasktypes = NKS_NAVTaskTypeController.getTaskTypes('AAP');
         Test.stopTest();
 
-        System.assertEquals(1, tasktypes.size());
+        System.assertEquals(3, tasktypes.size());
     }
     @isTest
     static void testGetTaskTypesMissingInput() {
         Test.startTest();
-        List<NKS_NAVTaskTypeController.CommonCode> tasktypes = NKS_NAVTaskTypeController.getTaskTypes(
-            ''
-        );
+        List<NKS_NAVTaskTypeController.CommonCode> tasktypes = NKS_NAVTaskTypeController.getTaskTypes('');
         Test.stopTest();
 
-        System.assertEquals(1, tasktypes.size());
+        System.assertEquals(3, tasktypes.size());
     }
 }
