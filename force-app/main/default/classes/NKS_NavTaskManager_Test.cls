@@ -99,6 +99,40 @@ public class NKS_NavTaskManager_Test {
         System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Error'] == 1);
     }
 
+    @isTest
+    static void testTaskTypeGet() {
+        NKS_NavTaskManager.OppgaveTypeResponse resp = new NKS_NavTaskManager.OppgaveTypeResponse();
+        resp.oppgavetype = 'VURD_HENV';
+
+        Test.setMock(
+            HttpCalloutMock.class,
+            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
+        );
+
+        Test.startTest();
+        NKS_NavTaskManager.getTaskTypes('AAP');
+        Test.stopTest();
+
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Info'] == 1);
+    }
+
+    @isTest
+    static void testTaskTypeGetFail() {
+        NKS_NavTaskManager.OppgaveTypeResponse resp = new NKS_NavTaskManager.OppgaveTypeResponse();
+        resp.oppgavetype = 'VURD_HENV';
+
+        Test.setMock(
+            HttpCalloutMock.class,
+            new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null)
+        );
+
+        Test.startTest();
+        NKS_NavTaskManager.getTaskTypes('AAP');
+        Test.stopTest();
+
+        System.assert([SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'Error'] == 1);
+    }
+
     private static NavTask__c getTask() {
         return [
             SELECT

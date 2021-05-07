@@ -128,7 +128,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
             case 'subThemeCode':
                 this.subTheme = value;
                 break;
-            case 'NKS_Task_Type__c':
+            case 'tasktype':
                 this.taskType = value;
                 break;
         }

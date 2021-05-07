@@ -111,8 +111,9 @@
             "Name": "Oppfølging",
             "CRM_Code__c": "OPP",
             "CRM_Active__c": true,
-            "CRM_Archive_Theme__c": false,
-            "CRM_Code_Set__c": "Tema"
+            "CRM_Archive_Theme__c": true,
+            "CRM_Code_Set__c": "Tema",
+            "CRM_Parent_Code__c": "@ArbeidRef"
         }
     ]
 }
