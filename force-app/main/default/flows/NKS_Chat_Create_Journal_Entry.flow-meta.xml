@@ -69,7 +69,7 @@
         <name>Encode_Original</name>
         <label>Encode Original</label>
         <locationX>1345</locationX>
-        <locationY>857</locationY>
+        <locationY>858</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -118,8 +118,8 @@
         <description>Sends the journal request via Apex.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>1338</locationX>
-        <locationY>1155</locationY>
+        <locationX>1337</locationX>
+        <locationY>1150</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -1108,8 +1108,8 @@
     <decisions>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>1461</locationX>
-        <locationY>1265</locationY>
+        <locationX>1439</locationX>
+        <locationY>1255</locationY>
         <defaultConnector>
             <targetReference>Should_Create_Task_0</targetReference>
         </defaultConnector>
