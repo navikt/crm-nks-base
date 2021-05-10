@@ -1,141 +1,195 @@
 <template>
-    <lightning-layout multiple-rows="true">
-        <!-- INPUT SECTION -->
-        <lightning-layout-item>
-            <lightning-layout multiple-rows="true">
-                <!-- TYPE SELECTION -->
-                <lightning-layout-item size="12">
-                    <lightning-layout>
-                        <lightning-layout-item class="slds-p-right_small">
-                            <lightning-input
-                                type="checkbox"
-                                label="Inngående"
-                                name="I"
-                                class="journalpostType slds-m-top_large"
-                                checked
-                                onchange={handleJournalpostTypeCheckboxChange}
-                            >
-                            </lightning-input>
-                        </lightning-layout-item>
-                        <lightning-layout-item class="slds-p-right_small">
-                            <lightning-input
-                                type="checkbox"
-                                label="Utgående"
-                                name="U"
-                                class="journalpostType slds-m-top_large"
-                                checked
-                                onchange={handleJournalpostTypeCheckboxChange}
-                            >
-                            </lightning-input>
-                        </lightning-layout-item>
-                        <lightning-layout-item class="slds-p-right_small">
-                            <lightning-input
-                                type="checkbox"
-                                label="Notat"
-                                name="N"
-                                class="journalpostType slds-m-top_large"
-                                checked
-                                onchange={handleJournalpostTypeCheckboxChange}
-                            >
-                            </lightning-input>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </lightning-layout-item>
-                <!-- DATE FILTER -->
-                <lightning-layout-item size="12" class="slds-m-top_xxx-small">
-                    <lightning-layout>
-                        <lightning-layout-item class="slds-p-right_small">
-                            <lightning-input
-                                type="date"
-                                label="Fra"
-                                value={fromDate}
-                                onchange={handleJournalpostFromDateChange}
-                            ></lightning-input>
-                        </lightning-layout-item>
-                        <lightning-layout-item>
-                            <lightning-input
-                                type="date"
-                                label="Til"
-                                value={toDate}
-                                onchange={handleJournalpostToDateChange}
-                            ></lightning-input>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </lightning-layout-item>
-                <!-- THEME GROUP -->
-                <lightning-layout-item size="12" class="slds-m-top_xxx-small">
-                    <lightning-layout>
-                        <template for:each={themeGroupArr} for:item="themeGroup">
-                            <lightning-layout-item key={themeGroup.value} size="2">
+    <div class="slds-box slds-theme_default">
+        <lightning-layout multiple-rows="true">
+            <!-- INPUT SECTION -->
+            <lightning-layout-item>
+                <lightning-layout multiple-rows="true">
+                    <!-- TYPE SELECTION -->
+                    <lightning-layout-item size="12">
+                        <lightning-layout>
+                            <lightning-layout-item class="slds-p-right_small">
                                 <lightning-input
                                     type="checkbox"
-                                    label={themeGroup.label}
-                                    name={themeGroup.value}
-                                    class="themeGroupCheckbox"
-                                    onchange={handleThemeGroupCheckboxChange}
+                                    label="Inngående"
+                                    name="I"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Utgående"
+                                    name="U"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Notat"
+                                    name="N"
+                                    class="journalpostType slds-m-top_large"
+                                    checked
+                                    onchange={handleJournalpostTypeCheckboxChange}
+                                >
+                                </lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <!-- DATE FILTER -->
+                    <lightning-layout-item size="12" class="slds-m-top_xxx-small">
+                        <lightning-layout>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-input
+                                    type="date"
+                                    label="Fra"
+                                    value={fromDate}
+                                    onchange={handleJournalpostFromDateChange}
                                 ></lightning-input>
                             </lightning-layout-item>
-                        </template>
-                    </lightning-layout>
-                </lightning-layout-item>
-                <!-- disabled={isThemeFieldsDisabled} -->
-                <!-- THEME -->
-                <lightning-layout-item size="6" class="slds-m-top_xxx-small">
-                    <lightning-combobox
-                        name="themePicklist"
-                        label="Tema"
-                        options={themeArr}
-                        value={selectedTheme}
-                        onchange={handleSetSelectedTheme}
-                        disabled={isThemeFieldsDisabled}
-                    ></lightning-combobox>
-                </lightning-layout-item>
-            </lightning-layout>
-        </lightning-layout-item>
+                            <lightning-layout-item>
+                                <lightning-input
+                                    type="date"
+                                    label="Til"
+                                    value={toDate}
+                                    onchange={handleJournalpostToDateChange}
+                                ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <!-- THEME GROUP -->
+                    <lightning-layout-item size="12" class="slds-m-top_small">
+                        <lightning-layout multiple-rows="true">
+                            <template for:each={themeGroupArr} for:item="themeGroup">
+                                <lightning-layout-item key={themeGroup.value}>
+                                    <lightning-input
+                                        type="checkbox"
+                                        label={themeGroup.label}
+                                        name={themeGroup.value}
+                                        class="themeGroupCheckbox"
+                                        onchange={handleThemeGroupCheckboxChange}
+                                    ></lightning-input>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <!-- disabled={isThemeFieldsDisabled} -->
+                    <!-- THEME -->
+                    <lightning-layout-item size="6" class="slds-m-top_xxx-small">
+                        <lightning-combobox
+                            name="themePicklist"
+                            label="Tema"
+                            options={themeArr}
+                            value={selectedTheme}
+                            onchange={handleSetSelectedTheme}
+                            disabled={isThemeFieldsDisabled}
+                        ></lightning-combobox>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
 
-        <!-- CASE AND JOURNAL POST LIST -->
-        <lightning-layout-item size="12" class="slds-m-top_small">
-            <lightning-layout multiple-rows="true">
-                <lightning-layout-item size="12" class="slds-m-top_xxx-small">
-                    <!-- EMPTY RESULT -->
-                    <template if:true={isEmptyResult}>
-                        <p>Kunne ikke finne noen journalposter.</p>
-                    </template>
-                    <!-- LIST OF JOURNALPOSTS -->
-                    <template if:false={isEmptyResult}>
-                        <lightning-accordion
-                            allow-multiple-sections-open
-                            active-section-name={activeSections}
-                            class=".slds-border_top .slds-border_bottom"
-                        >
-                            <template for:each={filteredJournalPosts} for:item="casex">
-                                <lightning-accordion-section
-                                    key={casex.caseId}
-                                    name={casex.caseId}
-                                    label={casex.caseTitle}
-                                >
-                                    <ul class="slds-has-dividers_bottom-space">
-                                        <template iterator:it={casex.journalpostList}>
-                                            <li if:false={it.last} class="slds-item" key={it.value.journalpostId}>
-                                                <c-nks-saf-journalpost journalpost={it.value}></c-nks-saf-journalpost>
-                                            </li>
-                                            <li if:true={it.last} key={it.value.journalpostId}>
-                                                <c-nks-saf-journalpost journalpost={it.value}></c-nks-saf-journalpost>
-                                            </li>
+            <!-- CASE AND JOURNAL POST LIST -->
+            <lightning-layout-item size="12" class="slds-m-top_small slds-border_top">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" class="slds-m-top_xxx-small">
+                        <!-- SPINNER -->
+                        <template if:false={isLoaded}>
+                            <lightning-spinner alternative-text="Laster" size="medium"></lightning-spinner>
+                        </template>
+                        <template if:true={isLoaded}>
+                            <!-- ERROR MESSAGE -->
+                            <template if:true={hasErrors}>
+                                <div class="slds-text-color_error slds-p-left_x-small">
+                                    <p>
+                                        <lightning-icon
+                                            alternative-text="Feilmelding"
+                                            icon-name="utility:error"
+                                            size="xx-small"
+                                            variant="error"
+                                        >
+                                        </lightning-icon>
+                                        &nbsp;En feil har oppstått og journalpostene kan ikke hentes.
+                                    </p>
+                                    <ul class="slds-list_dotted">
+                                        <template for:each={errors} for:item="error">
+                                            <li key={error}>{error}</li>
                                         </template>
                                     </ul>
-                                </lightning-accordion-section>
+                                </div>
                             </template>
-                        </lightning-accordion>
-                    </template>
-                </lightning-layout-item>
 
-                <lightning-layout-item size="12" class="slds-m-top_xxx-small">
-                    <div class="slds-box slds-theme_shade">
-                        <p>NB: Vi viser kun dokumenter som er opprettet etter 4. juni 2016.</p>
-                    </div>
-                </lightning-layout-item>
-            </lightning-layout>
-        </lightning-layout-item>
-    </lightning-layout>
+                            <!-- EMPTY RESULT -->
+                            <template if:true={isEmptyResult}>
+                                <p>Kunne ikke finne noen journalposter.</p>
+                            </template>
+
+                            <!-- ACCORDION OF CASES AND JOURNALPOSTS -->
+                            <template if:false={isEmptyResult}>
+                                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                                    <template for:each={filteredJournalPosts} for:item="casex">
+                                        <lightning-accordion-section
+                                            key={casex.caseId}
+                                            name={casex.caseId}
+                                            label={casex.caseTitle}
+                                        >
+                                            <ul class="slds-has-dividers_bottom-space">
+                                                <template iterator:it={casex.journalpostList}>
+                                                    <li
+                                                        if:false={it.last}
+                                                        class="slds-item"
+                                                        key={it.value.journalpostId}
+                                                    >
+                                                        <c-nks-saf-journalpost
+                                                            journalpost={it.value}
+                                                        ></c-nks-saf-journalpost>
+                                                    </li>
+                                                    <li
+                                                        if:true={it.last}
+                                                        key={it.value.journalpostId}
+                                                        class="slds-var-p-around_x-small"
+                                                    >
+                                                        <c-nks-saf-journalpost
+                                                            journalpost={it.value}
+                                                        ></c-nks-saf-journalpost>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </lightning-accordion-section>
+                                    </template>
+                                </lightning-accordion>
+                            </template>
+                        </template>
+
+                        <template if:true={canLoadMore}>
+                            <div class="slds-align_absolute-center slds-p-vertical_x-small slds-border_top">
+                                <!-- <lightning-layout-item class="slds-align_absolute-center slds-p-vertical_x-small" size="12"> -->
+                                <template if:true={isLoadingMore}>
+                                    <div class="slds-is-relative">
+                                        Last flere
+                                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                                    </div>
+                                </template>
+                                <template if:false={isLoadingMore}>
+                                    <a onclick={queryMoreJournalPosts}>Last flere</a>
+                                </template>
+                                <!-- </lightning-layout-item> -->
+                            </div>
+                        </template>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" class="slds-m-top_xxx-small">
+                        <div class="slds-box slds-theme_shade">
+                            <p>NB: Vi viser kun dokumenter som er opprettet etter 4. juni 2016.</p>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
 </template>

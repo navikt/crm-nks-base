@@ -2,9 +2,20 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
     <isExposed>true</isExposed>
+    <description>Displays the result of journalpost query based on account in SAF</description>
     <masterLabel>Sak og Journalpost Liste</masterLabel>
 
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="viewedObjectApiName" label="Object API Name" description="Required if displaying information on a record not directly related to the current object" type="String" />
+            <property name="relationshipField" label="Relationship field (API)" description="SELECT  FROM viewedObjectApiName WHERE relationShipField = : brukerIdField" required="true" type="String" default="Id" />
+            <property name="brukerIdField" label="Person Id Reference (API)" description="API" type="String" required="true" default="Name" />
+            <property name="nmbOfJournalPosts" label="Number of Journalposts" description="The maximum number of Journalposts to get per load" type="Integer" default="10" />
+            <property name="themeGroupField" label="Theme group field" description="The field where the theme group can be found. If blank all theme groups are selected" type="String" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

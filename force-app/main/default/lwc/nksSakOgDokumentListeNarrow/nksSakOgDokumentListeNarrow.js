@@ -1,6 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
 import getJournalPosts from '@salesforce/apex/NKS_SafJournalpostListController.getJournalPosts';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
+import getRecordId from '@salesforce/apex/NKS_SafJournalpostListController.getRecordId';
+import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
 
 const QUERY_FIELDS = {
     name: 'journalposter',
@@ -50,6 +52,11 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
 
     @api recordId; // Id from record page (From UiRecordAPI)
     @api objectApiName; // Value from UiRecordAPI
+    @api brukerIdField;
+    @api viewedRecordId;
+    @api viewedObjectApiName;
+    @api relationshipField;
+    @api themeGroupField;
 
     //Query variables
     @track queryVariables = {
@@ -60,6 +67,9 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         tilDato: null,
         foerste: 10
     };
+
+    @track errors = [];
+    caseStatusArray = [];
 
     @track themeGroupArr = [
         { label: '', value: '' },
@@ -80,14 +90,20 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedThemeGroups = '';
     isLoaded = false;
 
-    brukerIdField = 'CRM_Person__c';
-    viewedRecordId = '0011X00000pBl3NQAS';
-    viewedObjectApiName = 'Account';
-    relationshipField = 'Id';
+    @api get nmbOfJournalPosts() {
+        return this.queryVariables.foerste;
+    }
+    set nmbOfJournalPosts(value) {
+        this.queryVariables.foerste = value;
+    }
 
     set selectedTheme(value) {
         this._selectedTheme = value;
         this.filterJournalposts();
+    }
+
+    get hasErrors() {
+        return 1 <= this.errors.length ? true : false;
     }
 
     get isThemeFieldsDisabled() {
@@ -103,7 +119,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     }
 
     set selectedThemeGroups(value) {
-        this._selectedThemeGroups = value;
+        this._selectedThemeGroups = value ? value : [];
         this.filterThemes();
         this.selectedTheme = 'all';
     }
@@ -135,6 +151,18 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this.init();
     }
 
+    setThemeGroupCheckboxes() {
+        let elements = Array.from(this.template.querySelectorAll('lightning-input.themeGroupCheckbox'));
+
+        if (elements && elements.length > 0) {
+            if (this.selectedThemeGroups.length === 0) {
+                this.setThemeGroupCheckbox('all', true);
+            } else {
+                this.selectedThemeGroups.forEach((themeGroup) => this.setThemeGroupCheckbox(themeGroup, true));
+            }
+        }
+    }
+
     async init() {
         if (this.queryVariables.fraDato == null) {
             let d = new Date(Date.now());
@@ -142,11 +170,18 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
             this.queryVariables.fraDato = d.toISOString().split('T')[0];
         }
         this.callGetJournalPosts(false);
-        await this.callGetThemes(); //.then(this.setThemeGroupCheckbox('all', true));
+        await this.callGetSelectedTheme();
+        await this.callGetThemes();
+        this.setThemeGroupCheckboxes();
+        this.callGetCases();
     }
 
     get isEmptyResult() {
         return this.filteredJournalPosts.length === 0 ? true : false;
+    }
+
+    queryMoreJournalPosts() {
+        this.callGetJournalPosts(true);
     }
 
     get canLoadMore() {
@@ -170,9 +205,30 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
 
             this.themeGroupArr = groups;
             this.themeMap = data.themeMap;
-            this.selectedThemeGroups = Array.from(this.themeMap.keys);
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
+        }
+    }
+
+    async callGetSelectedTheme() {
+        if (this.themeGroupField) {
+            const inputParams = {
+                field: this.themeGroupField,
+                objectApiName: this.viewedObjectApiName ? this.viewedObjectApiName : this.objectApiName,
+                relationshipField: this.relationshipField,
+                relationshipValue: this.viewedRecordId ? this.viewedRecordId : this.recordId
+            };
+
+            try {
+                let data = await getRecordId(inputParams);
+                if (data) {
+                    this.selectedThemeGroups = [data];
+                }
+            } catch (err) {
+                this.setErrorMessage(err, 'caughtError');
+            }
+        } else {
+            this.selectedThemeGroups = [];
         }
     }
 
@@ -183,9 +239,9 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this.isLoadingMore = isQueryMore;
         const inputParams = {
             brukerIdField: this.brukerIdField,
-            objectApiName: this.viewedObjectApiName,
+            objectApiName: this.viewedObjectApiName ? this.viewedObjectApiName : this.objectApiName,
             relationshipField: this.relationshipField,
-            viewedRecordId: this.viewedRecordId,
+            viewedRecordId: this.viewedRecordId ? this.viewedRecordId : this.recordId,
             queryVariables: this.queryVariables,
             queryField: QUERY_FIELDS
         };
@@ -208,6 +264,50 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         }
         this.isLoaded = true;
         this.isLoadingMore = false;
+    }
+
+    async callGetCases() {
+        const inputParams = {
+            brukerIdField: this.brukerIdField,
+            objectApiName: this.viewedObjectApiName ? this.viewedObjectApiName : this.objectApiName,
+            relationshipField: this.relationshipField,
+            viewedRecordId: this.viewedRecordId ? this.viewedRecordId : this.recordId
+        };
+
+        try {
+            let data = await getCases(inputParams);
+            this.caseStatusArray = [];
+            data.forEach((element) => {
+                let caseX = this.formatCase(element);
+                this.caseStatusArray.push(caseX);
+
+                let jp = this.filteredJournalPosts.find((jpCase) => jpCase.caseId === caseX.caseId);
+                if (jp) {
+                    jp.caseTitle += ' (' + caseX.status + ')';
+                }
+            });
+        } catch (err) {
+            this.setErrorMessage(err, 'caughtError');
+        }
+    }
+
+    formatCase(element) {
+        let nmbOfOpen = 0;
+        let status = '';
+        let isOpen = false;
+
+        element.behandlingskjede.forEach((behandling) => {
+            if (behandling.slutt == null) {
+                nmbOfOpen++;
+                isOpen = true;
+            }
+        });
+
+        if (isOpen) {
+            status = nmbOfOpen + (nmbOfOpen > 1 ? ' åpne henvendelser' : ' åpen henvendelse');
+        }
+
+        return { caseId: element.saksId, theme: element.sakstema.value, status: status, isOpen: isOpen };
     }
 
     filterThemes() {
@@ -248,20 +348,22 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
             .forEach((journalpost) => {
                 let key = journalpost.sak.sakstype === 'FAGSAK' ? journalpost.sak.fagsakId : journalpost.sak.tema;
                 let caseType = this.saksTypeFormatted(journalpost.sak);
+                let caseStatus = this.caseStatusArray.find((element) => element.caseId === key);
                 let title =
                     this.themeArr.find((theme) => theme.value === journalpost.sak.tema).label +
                     ': ' +
                     caseType +
-                    (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '');
+                    (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '') +
+                    (caseStatus && caseStatus.isOpen ? ' (' + caseStatus.status + ')' : '');
 
                 if (caseMap.has(key)) {
-                    caseMap[key].journalpostList.push(journalpost);
+                    caseMap.get(key).journalpostList.push(journalpost);
                 } else {
                     caseMap.set(key, { caseId: key, caseTitle: title, journalpostList: [journalpost] });
                 }
             });
 
-        this.filteredJournalPosts = caseMap.values();
+        this.filteredJournalPosts = Array.from(caseMap.values());
         this.activeSections = Array.from(caseMap.keys());
     }
 
@@ -330,9 +432,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
 
     setThemeGroupCheckbox(checkboxName, value) {
         let checkbox = Array.from(this.template.querySelectorAll('lightning-input.themeGroupCheckbox')).find(
-            (element) => {
-                element.name === checkboxName;
-            }
+            (element) => element.name === checkboxName
         );
         checkbox.checked = value;
 
