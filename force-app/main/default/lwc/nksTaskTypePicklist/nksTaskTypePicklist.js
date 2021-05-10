@@ -110,7 +110,11 @@ export default class NksTaskTypePicklist extends LightningElement {
 
     @api
     validate() {
-        if (this.showcomponent && this.selectedTaskType != '') {
+        let valid =
+            (this.showcomponent == true && this.selectedTaskType != '') ||
+            this.showcomponent == false ||
+            !this.showcomponent;
+        if (valid) {
             return { ivValid: true };
         } else {
             return {
