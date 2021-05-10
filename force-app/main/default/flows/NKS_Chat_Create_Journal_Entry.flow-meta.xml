@@ -69,7 +69,7 @@
         <name>Encode_Original</name>
         <label>Encode Original</label>
         <locationX>1345</locationX>
-        <locationY>857</locationY>
+        <locationY>858</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -118,8 +118,8 @@
         <description>Sends the journal request via Apex.</description>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>1338</locationX>
-        <locationY>1155</locationY>
+        <locationX>1337</locationX>
+        <locationY>1150</locationY>
         <actionName>NKS_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -1108,8 +1108,8 @@
     <decisions>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>1461</locationX>
-        <locationY>1265</locationY>
+        <locationX>1439</locationX>
+        <locationY>1255</locationY>
         <defaultConnector>
             <targetReference>Should_Create_Task_0</targetReference>
         </defaultConnector>
@@ -1276,12 +1276,12 @@ TODAY())</expression>
         <name>Create_Salesforce_NAV_Task_0</name>
         <label>Create Salesforce NAV Task</label>
         <locationX>1095</locationX>
-        <locationY>1962</locationY>
+        <locationY>1957</locationY>
         <connector>
             <targetReference>Error_Screen_0</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Create_App_Log_0</targetReference>
+            <targetReference>Create_App_Log_0_0_0_0_0_0</targetReference>
         </faultConnector>
         <inputReference>Delegate_NAV_Task.task</inputReference>
     </recordCreates>
@@ -1310,6 +1310,20 @@ TODAY())</expression>
         </connector>
         <faultConnector>
             <targetReference>Store_Application_Log</targetReference>
+        </faultConnector>
+        <inputReference>Journal_Entry</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <description>Stores the generated journal entry data i custom object</description>
+        <name>Store_Journal_Entry_0_0</name>
+        <label>Store Journal Entry</label>
+        <locationX>1559</locationX>
+        <locationY>2014</locationY>
+        <connector>
+            <targetReference>Update_Transcript_0_0</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0</targetReference>
         </faultConnector>
         <inputReference>Journal_Entry</inputReference>
     </recordCreates>
@@ -1529,6 +1543,19 @@ TODAY())</expression>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0</targetReference>
+        </faultConnector>
+        <inputReference>Get_Chat_Transcript</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Transcript_0_0</name>
+        <label>Update Transcript</label>
+        <locationX>1782</locationX>
+        <locationY>2006</locationY>
+        <connector>
+            <targetReference>Error_Screen_0</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Create_App_Log_0</targetReference>
         </faultConnector>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
@@ -2090,8 +2117,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
-        <locationX>2142</locationX>
-        <locationY>1973</locationY>
+        <locationX>2076</locationX>
+        <locationY>2111</locationY>
         <connector>
             <targetReference>Error_Screen_0</targetReference>
         </connector>
@@ -2272,6 +2299,46 @@ TODAY())</expression>
             <name>Log_Message</name>
             <value>
                 <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Reference_Object</name>
+            <value>
+                <stringValue>LiveChatTranscript</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ReferenceID</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_App_Log_0_0_0_0_0_0</name>
+        <label>Create App Log</label>
+        <locationX>1374</locationX>
+        <locationY>2014</locationY>
+        <connector>
+            <targetReference>Store_Journal_Entry_0_0</targetReference>
+        </connector>
+        <flowName>Flow_Create_Application_Log</flowName>
+        <inputAssignments>
+            <name>Error_Payload</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Error_Source</name>
+            <value>
+                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Log_Message</name>
+            <value>
+                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry. Failed to insert NAV Task.</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
