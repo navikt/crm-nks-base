@@ -1,6 +1,7 @@
 <template>
     <!-- ERROR MESSAGES -->
     <template if:true={errorMessage}>
+        <span class="slds-assistive-text"><h2>{assistiveHeader}</h2></span>
         <div class={backgroundTheme}>
             <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
                 <lightning-icon
@@ -18,6 +19,7 @@
 
     <!-- BADGES -->
     <template if:true={hasBadges}>
+        <span class="slds-assistive-text"><h2>{assistiveHeader}</h2></span>
         <div class={backgroundTheme}>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
@@ -28,7 +30,6 @@
                                 data-id={badge.name}
                                 label={badge.label}
                                 icon-name={badge.iconName}
-                                icon-alternative-text={badge.iconAltText}
                                 icon-position="start"
                                 class={badge.styling}
                                 tabindex={badge.tabindex}
@@ -37,6 +38,7 @@
                                 aria-expanded="false"
                                 role="button"
                             >
+                                <!-- icon-alternative-text={badge.iconAltText} -->
                             </lightning-badge>
                         </template>
                         <template if:false={badge.clickable}>
@@ -45,10 +47,10 @@
                                 data-id={badge.name}
                                 label={badge.label}
                                 icon-name={badge.iconName}
-                                icon-alternative-text={badge.iconAltText}
                                 icon-position="start"
                                 class={badge.styling}
                             >
+                                <!-- icon-alternative-text={badge.iconAltText} -->
                             </lightning-badge>
                         </template>
                     </template>
@@ -58,19 +60,23 @@
                 <template if:true={showSecurityMeasures}>
                     <lightning-layout-item size="12" class="slds-m-vertical_x-small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
-                            <lightning-layout
+                            <!-- <lightning-layout
                                 multiple-rows="true"
                                 pull-to-boundary="small"
                                 role="list"
                                 aria-label="Sikkerhetstiltak"
-                            >
+                            > -->
+                            <ul class="slds-has-dividers_bottom-space">
                                 <template for:each={securityMeasures} for:item="sm">
-                                    <lightning-layout-item
+                                    <!-- <lightning-layout-item
                                         key={sm.RecordId}
                                         class="slds-var-p-around_xx-small slds-size_1-of-1"
-                                    >
+                                    > -->
+                                    <li class="slds-item" key={sm.RecordId}>
                                         <div class="slds-var-p-horizontal_small">
-                                            <p class="slds-text-color_destructive">{sm.SecurityMeasure}</p>
+                                            <!-- <p class="slds-text-color_destructive">{sm.SecurityMeasure}</p> -->
+                                            <h4 class="slds-text-color_destructive">{sm.SecurityMeasure}</h4>
+
                                             <p>
                                                 Gyldig:
                                                 <lightning-formatted-date-time
@@ -90,9 +96,11 @@
                                                 </lightning-formatted-date-time>
                                             </p>
                                         </div>
-                                    </lightning-layout-item>
+                                    </li>
+                                    <!-- </lightning-layout-item> -->
                                 </template>
-                            </lightning-layout>
+                            </ul>
+                            <!-- </lightning-layout> -->
                         </div>
                     </lightning-layout-item>
                 </template>

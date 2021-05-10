@@ -1,6 +1,7 @@
 <template>
     <!-- BADGES -->
     <template if:true={showBadges}>
+        <span class="slds-assistive-text"><h2>{assistiveHeaderText}</h2></span>
         <div class={containerClasses}>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
