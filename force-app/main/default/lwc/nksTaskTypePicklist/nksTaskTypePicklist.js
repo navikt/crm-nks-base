@@ -3,7 +3,14 @@ import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdat
 import getTaskTypes from '@salesforce/apex/NKS_NAVTaskTypeController.getTaskTypes';
 import { publish, subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 
+//##LABEL IMPORTS
+import TASK_TYPE_REQUIRED_ERROR from '@salesforce/label/c.NKS_NAV_Task_Type_Validation_Error';
+
 export default class NksTaskTypePicklist extends LightningElement {
+    labels = {
+        TASK_TYPE_REQUIRED_ERROR
+    };
+
     @api showcomponent;
     @api theme;
     @track theme = this.theme;
@@ -99,5 +106,21 @@ export default class NksTaskTypePicklist extends LightningElement {
     publishFieldChange(field, value) {
         const payload = { name: field, value: value };
         publish(this.messageContext, nksSingleValueUpdate, payload);
+    }
+
+    @api
+    validate() {
+        let valid =
+            (this.showcomponent == true && this.selectedTaskType != '') ||
+            this.showcomponent == false ||
+            !this.showcomponent;
+        if (valid) {
+            return { ivValid: true };
+        } else {
+            return {
+                isValid: false,
+                errorMessage: TASK_TYPE_REQUIRED_ERROR
+            };
+        }
     }
 }
