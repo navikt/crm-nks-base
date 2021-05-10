@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Chat Authentication Started</shortDescription>
-        <value>Autentisering påbegynt</value>
+        <value>Venter på at brukeren logger inn</value>
     </labels>
     <labels>
         <fullName>CRM_Chat_Identity_Confirmed</fullName>
