@@ -281,9 +281,11 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                 let caseX = this.formatCase(element);
                 this.caseStatusArray.push(caseX);
 
-                let jp = this.filteredJournalPosts.find((jpCase) => jpCase.caseId === caseX.caseId);
-                if (jp) {
-                    jp.caseTitle += ' (' + caseX.status + ')';
+                if (caseX.isOpen) {
+                    let jp = this.filteredJournalPosts.find((jpCase) => jpCase.caseId === caseX.caseId);
+                    if (jp) {
+                        jp.caseTitle += ' (' + caseX.status + ')';
+                    }
                 }
             });
         } catch (err) {
