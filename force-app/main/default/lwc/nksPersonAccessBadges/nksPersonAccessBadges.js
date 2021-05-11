@@ -30,6 +30,12 @@ export default class NksPersonAccessBadges extends LightningElement {
         }
     }
 
+    get assistiveHeaderText() {
+        if (true === this.addAssistiveHeader && this.badges.length > 0) {
+            return this.assistiveHeader;
+        }
+    }
+
     get showNoBadgesAssistiveMessage() {
         return this.addAssistiveHeader === true && !this.hasBadges;
     }
