@@ -11,9 +11,9 @@
         let orgnr = '';
 
         if (identType == 'PERSON_IDENT') {
-            fnr = identifier;
+            fnr = identifier ? identifier : '';
         } else {
-            orgnr = identifier;
+            orgnr = identifier ? identifier : '';
         }
 
         console.log('IDENT TYPE: ' + identType);
