@@ -11,7 +11,7 @@
             <targetReference>Conversation_Note_Journal_Assignment</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Henvendelse_Journal_Error_Screen</targetReference>
+            <targetReference>Set_Journal_Error</targetReference>
         </faultConnector>
         <inputParameters>
             <name>behandlingskjedeId</name>
@@ -57,7 +57,7 @@
             <targetReference>Create_Journal_Entry_Decision</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Henvendelse_Post_Error_Screen</targetReference>
+            <targetReference>Create_Journal_Entry_Decision_0</targetReference>
         </faultConnector>
         <inputParameters>
             <name>content</name>
@@ -132,7 +132,7 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>968</locationX>
+        <locationX>967</locationX>
         <locationY>1427</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
@@ -176,7 +176,7 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>968</locationX>
+        <locationX>967</locationX>
         <locationY>1723</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -253,8 +253,24 @@
     <assignments>
         <name>Set_Journal_Error</name>
         <label>Set Journal Error</label>
-        <locationX>604</locationX>
+        <locationX>596</locationX>
         <locationY>1435</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Journal_Error_0</name>
+        <label>Set Journal Error</label>
+        <locationX>1345</locationX>
+        <locationY>1427</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -344,6 +360,32 @@
             <label>Create Journal Entry</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Checks if journal entry is to be created.</description>
+        <name>Create_Journal_Entry_Decision_0</name>
+        <label>Create Journal Entry?</label>
+        <locationX>1180</locationX>
+        <locationY>944</locationY>
+        <defaultConnector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_Journal_Entry_True_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Journal_Entry.value</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Journal_Error_0</targetReference>
+            </connector>
+            <label>Create Journal Entry</label>
+        </rules>
+    </decisions>
     <interviewLabel>Case Log a Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Log a Call</label>
     <processMetadataValues>
@@ -424,7 +466,7 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>968</locationX>
+        <locationX>967</locationX>
         <locationY>1577</locationY>
         <connector>
             <targetReference>Conversation_Note_Assignment</targetReference>
@@ -456,41 +498,6 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Henvendelse_Journal_Error_Screen</name>
-        <label>Henvendelse Journal Error Screen</label>
-        <locationX>604</locationX>
-        <locationY>1081</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Set_Journal_Error</targetReference>
-        </connector>
-        <fields>
-            <name>Journal_Error_Msg</name>
-            <fieldText>&lt;p&gt;Journalføring av samtalereferatet feilet. En utvikler tar kontakt.. Referat er lagret og sendt ut til bruker.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Henvendelse_Post_Error_Screen</name>
-        <label>Henvendelse Post Error Screen</label>
-        <locationX>1208</locationX>
-        <locationY>944</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Post_Error_Message</name>
-            <fieldText>&lt;p&gt;Noe gikk galt i utsendelsen av samtalereferatet. Utsendelsen er lagret i Salesforce og du blir kontaktet av en utvikler for å sende referatet på nytt.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -716,7 +723,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>Summary_Template</name>
         <text>&lt;p&gt;Hei, {!Get_Account.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mvh,&lt;/p&gt;&lt;p&gt;{!$User.NKS_GreetingName__c}&lt;/p&gt;</text>

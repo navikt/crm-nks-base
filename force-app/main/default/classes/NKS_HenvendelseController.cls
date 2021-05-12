@@ -1,4 +1,6 @@
-public without sharing class NKS_HenvendelseController {
+public without sharing class NKS_HenvendelseController implements IApiRetry {
+    private List<Conversation_Note__c> notesToRetry = new List<Conversation_Note__c>();
+
     @InvocableMethod(
         label='Henvendelse Request'
         description='Posts the created conversation note to henvendelse'
@@ -67,6 +69,7 @@ public without sharing class NKS_HenvendelseController {
         }
     }
 
+    @AuraEnabled(cacheable=true)
     public static void doHenvendelseSynch(String personIdent) {
         NKS_HenvendelseService service = new NKS_HenvendelseService();
         List<NKS_HenvendelseService.HENVENDELSE_TYPES> henvTypes = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>();
@@ -78,6 +81,88 @@ public without sharing class NKS_HenvendelseController {
             NKS_HenvendelseService.HENVENDELSE_STATUSES.values()
         );
     }
+
+    //#### API RETRY HANDLING #####//
+    public void init() {
+        this.notesToRetry = getFailedConversationNotes();
+    }
+
+    public Boolean hasNext() {
+        return this.notesToRetry != null && this.notesToRetry.size() > 0;
+    }
+
+    public Integer calloutsToConsume() {
+        if (hasNext()) {
+            if (this.notesToRetry[0].NKS_Sent__c == false) {
+                return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 2 : 1;
+            }
+            return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 1 : 0;
+        } else {
+            return 0;
+        }
+    }
+
+    public void performRetry() {
+        performRetry(this.notesToRetry.remove(0));
+    }
+
+    public void performRetry(Conversation_Note__c noteToRetry) {
+        try {
+            if (noteToRetry != null) {
+                if (noteToRetry.NKS_Sent__c == false) {
+                    String behandlingsId = postToHenvendelse(
+                        noteToRetry.CRM_Account__r.INT_PersonIdent__c,
+                        'UNITNUMBER',
+                        noteToRetry.NKS_Theme_Group_Code__c,
+                        noteToRetry.CRM_Conversation_Note__c
+                    );
+                    if (behandlingsId != null) {
+                        upateCaseBehandlingsId(noteToRetry.CRM_Case__c, behandlingsId);
+                    }
+                    if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
+                        henvendelseJournalInit(behandlingsId, 'TBD', 'TBD', noteToRetry.NKS_Theme_Code__c);
+                    }
+                } else {
+                    henvendelseJournalInit(
+                        noteToRetry.CRM_Case__r.NKS_Henvendelse_BehandlingsId__c,
+                        'TBD',
+                        'TBD',
+                        noteToRetry.NKS_Theme_Code__c
+                    );
+                }
+            }
+        } catch (Exception ex) {
+            //Pokémon catch because a failure here should NEVER affect the user
+        }
+    }
+
+    @future
+    private static void upateCaseBehandlingsId(Id caseId, String behandlingsId) {
+        try {
+            update new Case(Id = caseId, NKS_Henvendelse_BehandlingsId__c = behandlingsId);
+        } catch (Exception ex) {
+        }
+    }
+
+    private List<Conversation_Note__c> getFailedConversationNotes() {
+        return [
+            SELECT
+                Id,
+                Name,
+                CRM_Conversation_Note__c,
+                NKS_Theme_Group_Code__c,
+                NKS_Theme_Code__c,
+                NKS_Sent__c,
+                NKS_Journal_Status__c,
+                CRM_Account__r.INT_PersonIdent__c,
+                CRM_Case__r.NKS_Henvendelse_BehandlingsId__c
+            FROM Conversation_Note__c
+            WHERE OwnerId = :UserInfo.getUserId() AND (NKS_Sent__c = FALSE OR NKS_Journal_Status__c = 'Journal Error')
+            ORDER BY Id
+        ];
+    }
+
+    //##### WRAPPER CLASSES ######//
 
     public class HenvendelseRequest {
         @invocableVariable(label='Request Type (SEND or JOURNAL)' required=true)
