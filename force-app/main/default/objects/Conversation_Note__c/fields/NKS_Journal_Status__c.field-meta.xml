@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Journal_Status__c</fullName>
+    <description>Depicts the journal status of the conversation note. By default no journal entry is created.</description>
+    <externalId>false</externalId>
+    <label>Journal Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Journaled</fullName>
+                <default>true</default>
+                <label>Not Journaled</label>
+            </value>
+            <value>
+                <fullName>Journal Error</fullName>
+                <default>false</default>
+                <label>Journal Error</label>
+            </value>
+            <value>
+                <fullName>Journal Completed</fullName>
+                <default>false</default>
+                <label>Journal Completed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

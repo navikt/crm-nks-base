@@ -1,11 +1,105 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Initiate_Journal_Process</name>
+        <label>Initiate Journal Process</label>
+        <locationX>753</locationX>
+        <locationY>1081</locationY>
+        <actionName>NKS_HenvendelseController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Conversation_Note_Journal_Assignment</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Henvendelse_Journal_Error_Screen</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>behandlingskjedeId</name>
+            <value>
+                <elementReference>BEHANDLINGS_ID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>navUnitNumber</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>navCaseId</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>JOURNAL</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeCode</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseTheme</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Posts the conversation note to henvendelse via API</description>
+        <name>Post_to_Henvendelse</name>
+        <label>Post to Henvendelse</label>
+        <locationX>972</locationX>
+        <locationY>943</locationY>
+        <actionName>NKS_HenvendelseController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Journal_Entry_Decision</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Henvendelse_Post_Error_Screen</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>content</name>
+            <value>
+                <elementReference>Dialogue_Summary.conversationNote</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>navUnitNumber</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>personIdent</name>
+            <value>
+                <elementReference>Get_Account.INT_PersonIdent__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>SEND</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeGroupCode</name>
+            <value>
+                <elementReference>Case_Overview.selectedThemeGroup</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>BEHANDLINGS_ID</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <actionCalls>
         <description>Displays a toast on successful log.</description>
         <name>Show_Toast</name>
         <label>Show Toast</label>
-        <locationX>446</locationX>
-        <locationY>1910</locationY>
+        <locationX>965</locationX>
+        <locationY>2048</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -36,10 +130,10 @@
     </actionCalls>
     <assignments>
         <description>Assigns updated values for case</description>
-        <name>Case_Assignment_Default</name>
+        <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>578</locationX>
-        <locationY>1334</locationY>
+        <locationX>968</locationX>
+        <locationY>1427</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -68,41 +162,11 @@
                 <elementReference>Theme_Categorization.subtheme</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Case_Assignment_Journal</name>
-        <label>Case Assignment Journal</label>
-        <locationX>314</locationX>
-        <locationY>1334</locationY>
         <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
+            <assignToReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedThemeGroupSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedSubthemeSfId</elementReference>
+                <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -112,8 +176,8 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>446</locationX>
-        <locationY>1670</locationY>
+        <locationX>968</locationX>
+        <locationY>1723</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -154,10 +218,27 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Tags the conversation note with journal completion</description>
+        <name>Conversation_Note_Journal_Assignment</name>
+        <label>Conversation Note Journal Assignment</label>
+        <locationX>753</locationX>
+        <locationY>1259</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>534</locationX>
-        <locationY>638</locationY>
+        <locationX>1187</locationX>
+        <locationY>502</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -169,19 +250,28 @@
             <targetReference>Update_Case_Account</targetReference>
         </connector>
     </assignments>
-    <constants>
-        <name>Line_Break</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue />
-        </value>
-    </constants>
+    <assignments>
+        <name>Set_Journal_Error</name>
+        <label>Set Journal Error</label>
+        <locationX>604</locationX>
+        <locationY>1435</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationX>964</locationX>
+        <locationY>351</locationY>
         <defaultConnector>
             <targetReference>No_Account_Screen</targetReference>
         </defaultConnector>
@@ -203,12 +293,11 @@
         </rules>
     </decisions>
     <decisions>
-        <description
-        >Checks the status if the case. If it is closed, the conversation note is already made.</description>
+        <description>Checks the status if the case. If it is closed, the conversation note is already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
-        <locationX>248</locationX>
-        <locationY>278</locationY>
+        <locationX>768</locationX>
+        <locationY>348</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
         </defaultConnector>
@@ -233,10 +322,10 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationX>964</locationX>
+        <locationY>1084</locationY>
         <defaultConnector>
-            <targetReference>Case_Assignment_Default</targetReference>
+            <targetReference>Case_Assignment_Default_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -250,7 +339,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Case_Assignment_Journal</targetReference>
+                <targetReference>Initiate_Journal_Process</targetReference>
             </connector>
             <label>Create Journal Entry</label>
         </rules>
@@ -266,7 +355,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -280,8 +369,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>446</locationX>
-        <locationY>1790</locationY>
+        <locationX>966</locationX>
+        <locationY>1885</locationY>
         <connector>
             <targetReference>Show_Toast</targetReference>
         </connector>
@@ -291,8 +380,8 @@
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>446</locationX>
-        <locationY>974</locationY>
+        <locationX>972</locationX>
+        <locationY>653</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Log_Screen</targetReference>
@@ -308,14 +397,15 @@
         <object>Account</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
+        <queriedFields>INT_PersonIdent__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>248</locationX>
-        <locationY>158</locationY>
+        <locationX>776</locationX>
+        <locationY>206</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Case_Status</targetReference>
@@ -334,8 +424,8 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>446</locationX>
-        <locationY>1550</locationY>
+        <locationX>968</locationX>
+        <locationY>1577</locationY>
         <connector>
             <targetReference>Conversation_Note_Assignment</targetReference>
         </connector>
@@ -344,8 +434,8 @@
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>534</locationX>
-        <locationY>758</locationY>
+        <locationX>1188</locationX>
+        <locationY>653</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -355,35 +445,68 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationX>556</locationX>
+        <locationY>346</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Case_Closed_Message</name>
-            <fieldText
-            >&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Henvendelsen er ferdigstilt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Henvendelsen er ferdigstilt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Henvendelse_Journal_Error_Screen</name>
+        <label>Henvendelse Journal Error Screen</label>
+        <locationX>604</locationX>
+        <locationY>1081</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Set_Journal_Error</targetReference>
+        </connector>
+        <fields>
+            <name>Journal_Error_Msg</name>
+            <fieldText>&lt;p&gt;Journalføring av samtalereferatet feilet. En utvikler tar kontakt.. Referat er lagret og sendt ut til bruker.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Henvendelse_Post_Error_Screen</name>
+        <label>Henvendelse Post Error Screen</label>
+        <locationX>1208</locationX>
+        <locationY>944</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Post_Error_Message</name>
+            <fieldText>&lt;p&gt;Noe gikk galt i utsendelsen av samtalereferatet. Utsendelsen er lagret i Salesforce og du blir kontaktet av en utvikler for å sende referatet på nytt.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>446</locationX>
-        <locationY>1094</locationY>
+        <locationX>972</locationX>
+        <locationY>799</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Create_Journal_Entry_Decision</targetReference>
+            <targetReference>Post_to_Henvendelse</targetReference>
         </connector>
         <fields>
             <name>Conversation_Note_Header</name>
-            <fieldText
-            >&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;{!$Label.NKS_Create_Conversation_Note}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;{!$Label.NKS_Create_Conversation_Note}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -466,14 +589,19 @@
             <inputParameters>
                 <name>actorId</name>
                 <value>
-                    <elementReference
-                    >Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                    <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>prefilledThemeGroup</name>
                 <value>
                     <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>FAGSAK_ONLY</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -534,8 +662,8 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>534</locationX>
-        <locationY>518</locationY>
+        <locationX>1189</locationX>
+        <locationY>349</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -544,8 +672,7 @@
         </connector>
         <fields>
             <name>Update_Account_Text</name>
-            <fieldText
-            >&lt;p&gt;Henvendelsen er ikke tilknyttet en bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Henvendelsen er ikke tilknyttet en bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -583,25 +710,26 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>122</locationX>
-        <locationY>0</locationY>
+        <locationX>650</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <textTemplates>
-        <name>Line_Breaker</name>
-        <text>{!Line_Break}
-{!Line_Break}</text>
-    </textTemplates>
-    <textTemplates>
         <name>Summary_Template</name>
-        <text
-        >&lt;p&gt;Hei, {!Get_Account.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mvh,&lt;/p&gt;&lt;p&gt;{!$User.NKS_GreetingName__c}&lt;/p&gt;</text>
+        <text>&lt;p&gt;Hei, {!Get_Account.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mvh,&lt;/p&gt;&lt;p&gt;{!$User.NKS_GreetingName__c}&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>BEHANDLINGS_ID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
