@@ -19,6 +19,7 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     @api actorId;
     @api prefilledThemeGroup; //Give the theme categorization child component a prefilled value
+    @api FAGSAK_ONLY = false;
     caseList = []; //Contains all NAV cases returned from the API
     displayedCaseGroups = []; //Holds the list of case groups to be displayed
     groupedCases = [];
@@ -60,7 +61,8 @@ export default class NksPersonCaseOverview extends LightningElement {
                     groupThemes.themes = data.themeMap[themeGroup.Id].map((theme) => {
                         return {
                             themeCode: theme.CRM_Code__c,
-                            themeSfId: theme.Id
+                            themeSfId: theme.Id,
+                            themeGroupCode: themeGroup.CRM_Code__c
                         };
                     });
                 }
@@ -181,6 +183,11 @@ export default class NksPersonCaseOverview extends LightningElement {
     }
 
     @api
+    get selectedCaseLegacyId() {
+        return this.selectedCase ? this.selectedCase.arkivsaksnummer : null;
+    }
+
+    @api
     get selectedCaseTheme() {
         if (this.isGeneralCase === true) {
             let themeCmp = this.template.querySelector('c-nks-theme-categorization');
@@ -219,6 +226,26 @@ export default class NksPersonCaseOverview extends LightningElement {
             }
         }
         return themeGroupSfId;
+    }
+
+    @api
+    get selectedThemeGroup() {
+        let themeGroupCode;
+
+        if (this.isGeneralCase === true) {
+            let themeCmp = this.template.querySelector('c-nks-theme-categorization');
+            themeGroupCode = themeCmp.themeGroup;
+        } else {
+            if (this.themeMap) {
+                Object.keys(this.themeMap).forEach((themeGroupId) => {
+                    if (this.themeMap[themeGroupId].hasOwnProperty('hasTheme')) {
+                        if (this.themeMap[themeGroupId].hasTheme(this.selectedCaseTheme) !== null)
+                            themeGroupCode = this.themeMap[themeGroupId].themeGroupCode;
+                    }
+                });
+            }
+        }
+        return themeGroupCode;
     }
 
     @api

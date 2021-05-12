@@ -2,6 +2,7 @@
     <lightning-layout class="slds-p-top_small" multiple-rows="true" vertical-align="center">
         <lightning-layout-item size="12">
             <lightning-radio-group
+                if:false={FAGSAK_ONLY}
                 name="caseType"
                 class="slds-float_left"
                 options={caseTypeOptions}

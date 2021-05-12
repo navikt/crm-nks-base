@@ -17,16 +17,36 @@
                 label="Preselected theme group:"
                 role="inputOnly"
             />
+            <property
+                name="FAGSAK_ONLY"
+                type="Boolean"
+                label="Fagsak Only"
+                description="Disables the Generell Sak option"
+                default="false"
+                role="inputOnly"
+            />
                 <property
                 name="selectedCaseId"
                 type="String"
                 label="NAV Case ID"
                 role="outputOnly"
             />
+            <property
+                name="selectedCaseLegacyId"
+                type="String"
+                label="NAV Case Arkivsaksnummer"
+                role="outputOnly"
+            />
                 <property
                 name="selectedCaseLegacySystem"
                 type="String"
                 label="NAV Case Legacy System"
+                role="outputOnly"
+            />
+            <property
+                name="selectedThemeGroup"
+                type="String"
+                label="NAV Case Theme Group"
                 role="outputOnly"
             />
                 <property
