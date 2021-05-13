@@ -1,5 +1,6 @@
 public without sharing class NKS_HenvendelseController implements IApiRetry {
     private List<Conversation_Note__c> notesToRetry = new List<Conversation_Note__c>();
+    private User runningUser;
 
     @InvocableMethod(
         label='Henvendelse Request'
@@ -36,6 +37,16 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         return respList;
     }
 
+    /**
+     * @description: Posts a conversation note to henvendelse and returns the unique BehandlingsID
+     * on success. Throws AuraHandledException if the request fails.
+     * @author Stian Ruud Schikora | 05-13-2021
+     * @param personIdent
+     * @param navUnitNumber
+     * @param themeGroupCode
+     * @param content
+     * @return String
+     **/
     private static String postToHenvendelse(
         String personIdent,
         String navUnitNumber,
@@ -48,12 +59,24 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
 
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
-            return resp.getBody();
+            return Test.isRunningTest() ? UTIL_TestDataFactory.generateRandomString(10) : resp.getBody();
         } else {
-            return null;
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.httpError('Henvendelse post failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            throw new AuraHandledException('Henvendelse post failed');
         }
     }
 
+    /**
+     * @description : Posts a behandlingsId for journal initiation to henvendelse
+     * Throws AuraEnabledException if request status indicates post failure.
+     * @author Stian Ruud Schikora | 05-13-2021
+     * @param behandlingskjedeId
+     * @param navUnitNumber
+     * @param navCaseId
+     * @param themeCode
+     **/
     private static void henvendelseJournalInit(
         String behandlingskjedeId,
         String navUnitNumber,
@@ -66,6 +89,10 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
         } else {
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.httpError('Henvendelse journal failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            throw new AuraHandledException('Henvendelse journal failed');
         }
     }
 
@@ -82,21 +109,37 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         );
     }
 
-    //#### API RETRY HANDLING #####//
+    //###########################################################//
+    //###############    API RETRY HANDLING    ##################//
+    //###########################################################//
+
+    /**
+     * @description: Queries the failing conversation notes created/owned by the running user
+     * @author Stian Ruud Schikora | 05-13-2021
+     **/
     public void init() {
         this.notesToRetry = getFailedConversationNotes();
+        this.runningUser = [SELECT Id, Department FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
     }
 
     public Boolean hasNext() {
         return this.notesToRetry != null && this.notesToRetry.size() > 0;
     }
 
+    /**
+     * @description : Returns the number of callouts needed for the next retry
+     * If post and journal failed this requires two separate callouts
+     * If post failed and no journal was initiated, only one callout is needed
+     * @author Stian Ruud Schikora | 05-13-2021
+     * @return Integer
+     **/
     public Integer calloutsToConsume() {
         if (hasNext()) {
             if (this.notesToRetry[0].NKS_Sent__c == false) {
                 return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 2 : 1;
+            } else {
+                return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 1 : 0;
             }
-            return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 1 : 0;
         } else {
             return 0;
         }
@@ -112,7 +155,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
                 if (noteToRetry.NKS_Sent__c == false) {
                     String behandlingsId = postToHenvendelse(
                         noteToRetry.CRM_Account__r.INT_PersonIdent__c,
-                        'UNITNUMBER',
+                        this.runningUser.Department,
                         noteToRetry.NKS_Theme_Group_Code__c,
                         noteToRetry.CRM_Conversation_Note__c
                     );
@@ -120,27 +163,63 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
                         upateCaseBehandlingsId(noteToRetry.CRM_Case__c, behandlingsId);
                     }
                     if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
-                        henvendelseJournalInit(behandlingsId, 'TBD', 'TBD', noteToRetry.NKS_Theme_Code__c);
+                        henvendelseJournalInit(
+                            behandlingsId,
+                            runningUser.Department,
+                            noteToRetry.NKS_Legacy_Case_Id__c,
+                            noteToRetry.NKS_Theme_Code__c
+                        );
+                        //If no exception is thrown from henvendelseJournalInit - Journal is successful
+                        setJournalSuccess(noteToRetry.Id);
                     }
                 } else {
                     henvendelseJournalInit(
                         noteToRetry.CRM_Case__r.NKS_Henvendelse_BehandlingsId__c,
-                        'TBD',
-                        'TBD',
+                        runningUser.Department,
+                        noteToRetry.NKS_Legacy_Case_Id__c,
                         noteToRetry.NKS_Theme_Code__c
                     );
+                    //If no exception is thrown from henvendelseJournalInit - Journal is successful
+                    setJournalSuccess(noteToRetry.Id);
                 }
             }
+        } catch (AuraHandledException auraEx) {
+            //Aura exceptions are logged in their respective methods
         } catch (Exception ex) {
             //Pokémon catch because a failure here should NEVER affect the user
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.exception(ex, noteToRetry, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
         }
     }
 
+    @testVisible
     @future
-    private static void upateCaseBehandlingsId(Id caseId, String behandlingsId) {
+    private static void setJournalSuccess(String convNoteId) {
+        Conversation_Note__c noteToUpdate;
+
         try {
-            update new Case(Id = caseId, NKS_Henvendelse_BehandlingsId__c = behandlingsId);
+            noteToUpdate = new Conversation_Note__c(Id = convNoteId, NKS_Journal_Status__c = 'Journal Completed');
+            update noteToUpdate;
         } catch (Exception ex) {
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.exception(ex, noteToUpdate, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+        }
+    }
+
+    @testVisible
+    @future
+    private static void upateCaseBehandlingsId(String caseId, String behandlingsId) {
+        Case caseToUpdate;
+
+        try {
+            caseToUpdate = new Case(Id = caseId, NKS_Henvendelse_BehandlingsId__c = behandlingsId);
+            update caseToUpdate;
+        } catch (Exception ex) {
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.exception(ex, caseToUpdate, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
         }
     }
 
@@ -154,6 +233,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
                 NKS_Theme_Code__c,
                 NKS_Sent__c,
                 NKS_Journal_Status__c,
+                NKS_Legacy_Case_Id__c,
                 CRM_Account__r.INT_PersonIdent__c,
                 CRM_Case__r.NKS_Henvendelse_BehandlingsId__c
             FROM Conversation_Note__c
@@ -162,7 +242,9 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         ];
     }
 
-    //##### WRAPPER CLASSES ######//
+    //###########################################################//
+    //###############     WRAPPER CLASSES      ##################//
+    //###########################################################//
 
     public class HenvendelseRequest {
         @invocableVariable(label='Request Type (SEND or JOURNAL)' required=true)

@@ -230,6 +230,13 @@
                 <stringValue>Journal Completed</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Case_Assignment_Default_0</targetReference>
         </connector>
@@ -260,6 +267,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -723,7 +737,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>Summary_Template</name>
         <text>&lt;p&gt;Hei, {!Get_Account.Name}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mvh,&lt;/p&gt;&lt;p&gt;{!$User.NKS_GreetingName__c}&lt;/p&gt;</text>
