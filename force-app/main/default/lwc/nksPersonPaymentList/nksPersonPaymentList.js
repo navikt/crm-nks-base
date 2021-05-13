@@ -24,6 +24,7 @@ export default class NksPersonPaymentList extends LightningElement {
     groupedPayments;
     selectedPeriod;
     selectedYtelser = [];
+    wireFields = [this.objectApiName + '.Id'];
 
     startDateFilter;
     endDateFilter;
@@ -54,8 +55,6 @@ export default class NksPersonPaymentList extends LightningElement {
         startDate.setMonth(startDate.getMonth() - 1, 1);
         this.startDateFilter = startDate;
         this.endDateFilter = new Date();
-
-        this.getRelatedRecordId(this.relationshipField, this.objectApiName);
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -160,6 +159,16 @@ export default class NksPersonPaymentList extends LightningElement {
         if (error) {
             this.error = true;
             this.errorMessage = labels.NO_ACCESS;
+        }
+    }
+
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: '$wireFields'
+    })
+    wiredRecordInfo({ error, data }) {
+        if (this.relationshipField && this.objectApiName) {
+            this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
     }
 
