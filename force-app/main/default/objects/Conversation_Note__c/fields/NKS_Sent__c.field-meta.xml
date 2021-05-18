@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Sent__c</fullName>
-    <description>Resolves to true if the conversation note has successfully been sent to Henvendelse.</description>
+    <description>Resolves to true if the conversation note has successfully been sent to Henvendelse. If the note has no case attached it is synched from henvendelse and should resolve to true.</description>
     <externalId>false</externalId>
-    <formula>NOT(ISBLANK(CRM_Case__r.NKS_Henvendelse_BehandlingsId__c))</formula>
+    <formula>OR(NOT(ISBLANK(CRM_Case__r.NKS_Henvendelse_BehandlingsId__c)),
+				ISBLANK(CRM_Case__c)
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Sent</label>
     <trackTrending>false</trackTrending>

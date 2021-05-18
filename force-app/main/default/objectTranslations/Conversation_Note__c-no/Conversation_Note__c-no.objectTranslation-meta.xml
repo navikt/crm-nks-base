@@ -31,16 +31,5 @@
         <value>Samtalenotater</value>
     </caseValues>
     <gender>Neuter</gender>
-    <layouts>
-        <layout>NKS Conversation Note Layout</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Journal --></label>
-            <section>Journal</section>
-        </sections>
-    </layouts>
     <nameFieldLabel>Notatnummer</nameFieldLabel>
 </CustomObjectTranslation>
