@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -129,12 +129,38 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>EditDraftKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CreateDraftFromOnlineKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PublishKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>ArchiveKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>DeleteArchiveKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>DeleteDraftKnowledgeArticleVersion</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Knowledge__kav.Give_feedback</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
