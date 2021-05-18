@@ -45,7 +45,6 @@ public class NKS_NavSakService {
                 apiCtrl.getResponse().getBody(),
                 SafApiResponse.class
             );
-            System.debug('CASE LIST: ' + JSON.serializePretty(safResp.data.saker));
             if (safResp.errors != null && !safResp.errors.isEmpty()) {
                 //Request went through but query returned errors
                 handleError('Graph QL query error', apiCtrl.getResponse());
