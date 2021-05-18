@@ -228,7 +228,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
                         noteToRetry.CRM_Conversation_Note__c
                     );
                     if (behandlingsId != null) {
-                        upateCaseBehandlingsId(noteToRetry.CRM_Case__c, behandlingsId);
+                        updateCaseBehandlingsId(noteToRetry.CRM_Case__c, behandlingsId);
                     }
                     if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
                         henvendelseJournalInit(
@@ -278,7 +278,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
 
     @testVisible
     @future
-    private static void upateCaseBehandlingsId(String caseId, String behandlingsId) {
+    private static void updateCaseBehandlingsId(String caseId, String behandlingsId) {
         Case caseToUpdate;
 
         try {

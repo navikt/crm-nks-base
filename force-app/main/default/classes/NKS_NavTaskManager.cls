@@ -42,7 +42,6 @@ public with sharing class NKS_NavTaskManager {
 
         try {
             apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
-            System.debug('REQUEST: ' + apiCtrl.getRequest().getBody());
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
             if (statusCode == 200 || statusCode == 201) {
