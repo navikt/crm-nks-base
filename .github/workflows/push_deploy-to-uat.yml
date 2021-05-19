@@ -81,23 +81,6 @@ jobs:
           sfdx auth:sfdxurl:store -f ./UAT_SFDX_URL.txt -a uat -s
           rm -f ./UAT_SFDX_URL.txt
           
-      # Install sfpowerkit plugin used to install multiple packages only by version number
-      - name: Install sfpowerkit plugin
-        run: echo y | sfdx plugins:install sfpowerkit@2.0.1
-
-      # Get package keys
-      - name: Get package keys
-        id: install-keys
-        run: |
-          keys=""
-          for p in $(jq '.result | .[].Name' -r <<< "$(sfdx force:package:list --json)"); do
-              keys+=$p":${{ secrets.PACKAGE_KEY }} "
-          done
-          echo "::set-output name=keys::$(echo $keys)"
-      # Install packages this repo is dependant on
-      - name: Install dependant packages
-        run: sfdx sfpowerkit:package:dependencies:install -u uat -r -a -w 60 -k '${{ steps.install-keys.outputs.keys }}'
-          
       # Install new package version into UAT
       - name: Install new package version into UAT
         id: uat-installation
