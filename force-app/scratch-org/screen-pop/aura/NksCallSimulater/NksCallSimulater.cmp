@@ -1,37 +1,12 @@
 <aura:component>
-    <ltng:require
-        scripts="/support/api/50.0/lightning/opencti_min.js"
-        afterScriptsLoaded="{!c.ctiLoaded}"
-    />
+    <ltng:require scripts="/support/api/50.0/lightning/opencti_min.js" afterScriptsLoaded="{!c.ctiLoaded}" />
 
     <aura:attribute name="ctiLoaded" type="Boolean" default="false" />
-    <aura:attribute name="identifier" type="String" />
-    <aura:attribute name="identType" type="String" default="PERSON_IDENT" />
-    <aura:attribute
-        name="identOptions"
-        type="List"
-        default="[
-    {'label': 'Person Ident', 'value': 'PERSON_IDENT'},
-    {'label': 'Organization Ident', 'value': 'ORG_IDENT'},
-    ]"
-    />
+    <aura:attribute name="identifier" type="String" default="" />
 
     <lightning:layout multipleRows="true">
         <lightning:layoutItem size="12" padding="around-small">
-            <lightning:combobox
-                name="progress"
-                label="Identifier Type"
-                value="{!v.identType}"
-                placeholder="Select Ident Type"
-                options="{! v.identOptions }"
-            />
-        </lightning:layoutItem>
-        <lightning:layoutItem size="12" padding="around-small">
-            <lightning:input
-                type="text"
-                label="Identifier"
-                value="{!v.identifier}"
-            ></lightning:input>
+            <lightning:input type="text" label="Identifier" value="{!v.identifier}"></lightning:input>
         </lightning:layoutItem>
         <lightning:layoutItem size="12" padding="around-small">
             <lightning:button

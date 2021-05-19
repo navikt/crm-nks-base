@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <decisions>
         <name>Check_Identifier</name>
@@ -8,15 +8,15 @@
         <defaultConnector>
             <targetReference>Create_Case</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Identifier</defaultConnectorLabel>
+        <defaultConnectorLabel>Phone Number</defaultConnectorLabel>
         <rules>
             <name>Person_Identifier</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>fnr</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>INPUT_TYPE</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>PERSON_IDENT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -28,10 +28,10 @@
             <name>Organization_Identifier</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>orgnr</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>INPUT_TYPE</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>ORG_IDENT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -40,6 +40,16 @@
             <label>Organization Identifier</label>
         </rules>
     </decisions>
+    <formulas>
+        <description>Formula to determine the type of input from the IVR. Either, PHONE_NUMBER, PERSON_IDENT or ORG_IDENT.</description>
+        <name>INPUT_TYPE</name>
+        <dataType>String</dataType>
+        <expression>CASE(LEN({!sfdc_case_id}),
+11, &apos;PERSON_IDENT&apos;,
+9, &apos;ORG_IDENT&apos;,
+&apos;PHONE_NUMBER&apos;
+)</expression>
+    </formulas>
     <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Inbound Call</label>
     <processMetadataValues>
@@ -111,7 +121,7 @@
             <field>INT_OrganizationNumber__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>orgnr</elementReference>
+                <elementReference>sfdc_case_id</elementReference>
             </value>
         </filters>
         <object>Account</object>
@@ -131,7 +141,7 @@
             <field>INT_PersonIdent__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>fnr</elementReference>
+                <elementReference>sfdc_case_id</elementReference>
             </value>
         </filters>
         <object>Account</object>
@@ -184,22 +194,6 @@
     </start>
     <status>Active</status>
     <variables>
-        <description>Person identificator if provided to the call.</description>
-        <name>fnr</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>Organization identifier if prrovided to the call.</description>
-        <name>orgnr</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <description>Sets the related account to the organization account.</description>
         <name>Related_Account</name>
         <dataType>SObject</dataType>
@@ -207,5 +201,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>Input parameter from the IVR</description>
+        <name>sfdc_case_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
