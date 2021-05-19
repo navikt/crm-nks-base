@@ -34,6 +34,7 @@ public with sharing class NKS_NavTaskManager {
         ApiController apiCtrl = new ApiController();
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
+
         apiCtrl.setHeaders(httpHeaders);
 
         //Creates a log entry used as the unique request X-Correlation-ID
@@ -128,6 +129,77 @@ public with sharing class NKS_NavTaskManager {
     }
 
     /**
+     * @description: Performs callout to oppgave API to perform a GET for valid task types. Throws an OppgaveException if the callout is unsuccessful
+     * @author Celine Tomren | 03-29-2021
+     * @param themeCode
+     **/
+    public static NavTaskTypeResponse getTaskTypes(String themeCode) {
+        NavTaskTypeResponse response = new NavTaskTypeResponse();
+
+        Map<String, String> httpHeaders = new Map<String, String>{
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json'
+        };
+
+        ApiController apiCtrl = new ApiController();
+        Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
+        apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
+        apiCtrl.addServiceAuthHeader('Oppgave');
+        apiCtrl.setHeaders(httpHeaders);
+
+        LoggerUtility logger = new LoggerUtility('Oppgave');
+        logger.info(
+            'Getting task types from Oppgave API for theme: ' +
+            themeCode +
+            '\n' +
+            apiCtrl.getEndpoint() +
+            '\n' +
+            apiCtrl.getRequest().getBody(),
+            null
+        );
+        apiCtrl.addHeader('X-Correlation-ID', logger.peek().UUID__c); //Adds the unique app log id to the request
+
+        try {
+            apiCtrl.doCallout();
+            Integer statusCode = apiCtrl.getResponse().getStatusCode();
+            if (statusCode == 200 || statusCode == 201) {
+                response.success = true;
+                String bodyString = apiCtrl.getResponse().getBody();
+                if (String.isNotBlank(bodyString)) {
+                    bodyString = bodyString.replaceAll('\n', '\\\\r\\\\n');
+                }
+                response.tasktypes = (List<OppgaveTypeResponse>) JSON.deserialize(
+                    bodyString,
+                    List<OppgaveTypeResponse>.class
+                );
+            } else {
+                logger.error(
+                    'Error retrieving task types from API: \n ' +
+                    'Status: ' +
+                    String.valueOf(apiCtrl.getResponse().getStatusCode()) +
+                    '- ' +
+                    apiCtrl.getResponse().getStatus() +
+                    '\n' +
+                    'Body: ' +
+                    apiCtrl.getResponse().getBody(),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
+                response.success = false;
+                response.errorMessage = logger.peek().UUID__C;
+            }
+        } catch (Exception ex) {
+            logger.exception(ex, null, CRM_ApplicationDomain.Domain.NKS);
+            response.success = false;
+            response.errorMessage = logger.peek().UUID__C;
+        } finally {
+            logger.publish();
+        }
+
+        return response;
+    }
+
+    /**
      * @description: Adds the required X-Correlation header to the API request
      * @author Stian Ruud Schikora | 11-27-2020
      * @param apiCtrl
@@ -187,6 +259,8 @@ public with sharing class NKS_NavTaskManager {
         @invocableVariable
         public String subthemeCode;
         @invocableVariable
+        public String taskTypeCode;
+        @invocableVariable
         public String actorId;
         @invocableVariable
         public String assignToUnitNumber;
@@ -228,6 +302,21 @@ public with sharing class NKS_NavTaskManager {
             this.success = success;
             this.errorMessage = errorMessage;
             this.task = task;
+        }
+    }
+
+    public class NavTaskTypeResponse {
+        @AuraEnabled
+        public Boolean success;
+        @AuraEnabled
+        public String errorMessage;
+        @AuraEnabled
+        public List<OppgaveTypeResponse> tasktypes;
+
+        public NavTaskTypeResponse() {
+            this.success = false;
+            this.errorMessage = null;
+            this.tasktypes = null;
         }
     }
 
@@ -286,7 +375,8 @@ public with sharing class NKS_NavTaskManager {
             journalpostId = task.INT_Journal_Entry_Id__c;
             prioritet = String.valueOf(task.CRM_Priority__c); //Using String.valueOf() as there is an issue when this is passed from a flow pickslit: https://trailblazer.salesforce.com/issues_view?id=a1p3A0000003fH1QAI
             aktoerId = taskRequest.actorId;
-            oppgavetype = String.valueOf(task.NKS_Task_Type__c);
+            //oppgavetype = String.valueOf(task.NKS_Task_Type__c);
+            oppgavetype = taskRequest.taskTypeCode;
             aktivDato = Datetime.now().format('yyyy-MM-dd');
             beskrivelse = task.NKS_Comments__c;
             tildeltEnhetsnr = taskRequest.assignToUnitNumber;
@@ -301,6 +391,15 @@ public with sharing class NKS_NavTaskManager {
             if (String.isNotBlank(task.NKS_Henvendelse_BehandlingsId__c)) {
                 metadata = new OppgaveMetadata(task.NKS_Henvendelse_BehandlingsId__c);
             }
+        }
+    }
+
+    public class OppgaveTypeResponse {
+        @AuraEnabled
+        public String oppgavetype;
+
+        public OppgaveTypeResponse() {
+            this.oppgavetype = null;
         }
     }
 }

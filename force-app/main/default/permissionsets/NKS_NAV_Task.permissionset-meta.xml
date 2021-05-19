@@ -173,6 +173,6 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>NavTask__c.NKS_Person_Task</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
 </PermissionSet>

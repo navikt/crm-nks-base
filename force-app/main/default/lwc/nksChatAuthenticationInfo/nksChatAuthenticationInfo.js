@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
 import getCommunityAuthUrl from '@salesforce/apex/ChatAuthController.getCommunityAuthUrl';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 //#### LABEL IMPORTS ####
 import AUTH_REQUESTED from '@salesforce/label/c.CRM_Chat_Authentication_Requested';
@@ -40,6 +41,10 @@ export default class ChatAuthenticationOverview extends LightningElement {
     chatAuthUrl;
     subscription = {}; //Unique empAPI subscription for the component instance
     loginEvtSent = false;
+
+    nmbOfSecurityMeasures = 0;
+    isNavEmployee = false;
+    isConfidential = false;
 
     //#### GETTERS ####
 
@@ -83,6 +88,11 @@ export default class ChatAuthenticationOverview extends LightningElement {
             this.caseId = data.CASEID;
             this.personId = data.PERSONID;
             this.chatLanguage = data.CHAT_LANGUAGE;
+
+            this.nmbOfSecurityMeasures = parseInt(data.NMB_SECURITY_MEASURES);
+            this.isNavEmployee = 'true' == data.IS_NAV_EMPLOYEE;
+            this.isConfidential = 'true' == data.IS_CONFIDENTIAL;
+
             //If the authentication is not completed, subscribe to the push topic to receive events
             if (this.currentAuthenticationStatus !== 'Completed' && !this.isLoading && !this.isEmpSubscribed) {
                 this.handleSubscribe();
@@ -118,6 +128,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
                 if (_this.authenticationComplete) {
                     _this.accountId = response.data.sobject.AccountId;
                     if (!_this.loginEvtSent) _this.sendLoginEvent();
+                    getRecordNotifyChange([{ recordId: _this.recordId }]); //Triggers refresh of standard components
                     _this.handleUnsubscribe();
                 }
             }
@@ -209,5 +220,32 @@ export default class ChatAuthenticationOverview extends LightningElement {
     //Logger function
     log(loggable) {
         if (this.loggingEnabled) console.log(loggable);
+    }
+
+    get screenReaderLoginAlertAdditionalText() {
+        let alertText = '';
+
+        if (this.isNavEmployee || this.isConfidential || this.nmbOfSecurityMeasures > 0) {
+            let hasSecurityMeasures = this.nmbOfSecurityMeasures > 0;
+            let navEmployeeText = ' er egen ansatt';
+            let isConfidentialText = ' skjermet';
+            let securityMeasureText = ' har ' + this.nmbOfSecurityMeasures + ' sikkerhetstiltak';
+
+            alertText += 'Bruker';
+            alertText += this.isNavEmployee ? navEmployeeText : '';
+            alertText +=
+                this.isNavEmployee && this.isConfidential && hasSecurityMeasures
+                    ? ', '
+                    : this.isNavEmployee && this.isConfidential
+                    ? ' og'
+                    : this.isConfidential
+                    ? ' er'
+                    : '';
+            alertText += this.isConfidential ? isConfidentialText : '';
+            alertText += (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
+            alertText += hasSecurityMeasures ? securityMeasureText : '';
+            alertText += '.';
+        }
+        return alertText;
     }
 }

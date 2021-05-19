@@ -51,6 +51,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>taskTypeCode</name>
+            <value>
+                <elementReference>tasktype.selectedTaskType</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>themeCode</name>
             <value>
                 <elementReference>Theme_Categorization.themeCode</elementReference>
@@ -121,10 +127,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NavTask.NKS_Task_Type__c</assignToReference>
+            <assignToReference>NavTask.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>taskTypeInput.value</elementReference>
+                <elementReference>tasktype.selectedTaskTypeId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -414,31 +420,13 @@ TODAY())</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>taskTypeInput</name>
-            <extensionName>c:nksSingleRecordInputField</extensionName>
+            <name>tasktype</name>
+            <extensionName>c:nksTaskTypePicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>fieldName</name>
-                <value>
-                    <stringValue>NKS_Task_Type__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
+                <name>showcomponent</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>label-stacked</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>NavTask__c</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

@@ -69,7 +69,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
         message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(doneEvent)));
         message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
-        message.CRM_Topic__c = 'aapen-brukernotifikasjon-nyDone-v1';
+        message.CRM_Topic__c = 'aapen-brukernotifikasjon-done-v1';
         insert message;
 
         System.assertEquals(
@@ -180,7 +180,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
         message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(doneEvent)));
         message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
-        message.CRM_Topic__c = 'aapen-brukernotifikasjon-nyDone-v1';
+        message.CRM_Topic__c = 'aapen-brukernotifikasjon-done-v1';
         insert message;
 
         System.assertEquals(
@@ -291,7 +291,7 @@ private class KafkaBrukernotifikasjonDoneTest {
         message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
         message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(doneEvent)));
         message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
-        message.CRM_Topic__c = 'aapen-brukernotifikasjon-nyDone-v1';
+        message.CRM_Topic__c = 'aapen-brukernotifikasjon-done-v1';
         insert message;
 
         System.assertEquals(
