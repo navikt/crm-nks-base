@@ -7,7 +7,7 @@ on:
     paths:
       - "force-app/**"
 jobs:
-  Create-package:
+  create-package:
     name: Create new package
     runs-on: ubuntu-latest
     steps:
@@ -55,8 +55,9 @@ jobs:
     outputs:
       packageId: ${{ steps.package-version-create.outputs.packageId }}
           
-  Install-package:
+  install-package:
     name: Install package
+    needs: [create-package]
     runs-on: ubuntu-latest
     steps:
        # Checkout source code
