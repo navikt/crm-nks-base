@@ -586,11 +586,6 @@
                 <componentName>nksRecordInfo</componentName>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>nksSakOgDokumentListeNarrow</componentName>
-            </componentInstance>
-        </itemInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
