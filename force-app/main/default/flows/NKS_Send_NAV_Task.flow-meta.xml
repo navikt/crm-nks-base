@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <description>Calls apex with the desired action.</description>
@@ -126,13 +126,19 @@
                 <elementReference>Get_NAV_Task.NKS_NAV_Case_Reference__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_NAV_Task.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description
-        >Need to update the ID assignment on the NAV task to be updated to prevent flow failure.</description>
+        <description>Need to update the ID assignment on the NAV task to be updated to prevent flow failure.</description>
         <name>Update_Assignment</name>
         <label>Update Assignment</label>
         <locationX>175</locationX>
@@ -204,8 +210,7 @@
         <description>Formula to handle a subtheme not being set.</description>
         <name>subthemeCode</name>
         <dataType>String</dataType>
-        <expression
-        >IF(ISBLANK({!Get_NAV_Task.NKS_Subtheme__c}), {!Get_NAV_Task.NKS_Subtheme__c}, {!Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c})</expression>
+        <expression>IF(ISBLANK({!Get_NAV_Task.NKS_Subtheme__c}), {!Get_NAV_Task.NKS_Subtheme__c}, {!Get_NAV_Task.NKS_Subtheme__r.CRM_Code__c})</expression>
     </formulas>
     <interviewLabel>Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
@@ -233,7 +238,7 @@
         <description>Queries the NAV task information if this is an edit action.</description>
         <name>Get_NAV_Task</name>
         <label>Get NAV Task</label>
-        <locationX>176</locationX>
+        <locationX>175</locationX>
         <locationY>213</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -254,8 +259,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <description
-        >Updates the Salesforce task with information received from the Apex action.</description>
+        <description>Updates the Salesforce task with information received from the Apex action.</description>
         <name>Update_Salesforce_Task</name>
         <label>Update Salesforce Task</label>
         <locationX>171</locationX>
@@ -280,14 +284,12 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText
-            >&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved utsendelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved utsendelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Error_Screen_Message</name>
-            <fieldText
-            >&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få sendt oppgaven på riktig måte.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få sendt oppgaven på riktig måte.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -308,8 +310,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Sent_Message</name>
-            <fieldText
-            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven er allerede utsendt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven er allerede utsendt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -326,8 +327,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Success_Screen_Text</name>
-            <fieldText
-            >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
@@ -428,8 +428,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference
-            >Get_NAV_Task.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+            <elementReference>Get_NAV_Task.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
         </value>
     </variables>
     <variables>
@@ -441,8 +440,7 @@
         <objectType>NavTask__c</objectType>
     </variables>
     <variables>
-        <description
-        >Record ID if the flow is called with a reference to an existing NAV task.</description>
+        <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

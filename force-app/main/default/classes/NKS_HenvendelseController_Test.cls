@@ -178,7 +178,7 @@ public class NKS_HenvendelseController_Test {
     static void testExceptions() {
         Test.startTest();
         NKS_HenvendelseController.setJournalSuccess('12345678');
-        NKS_HenvendelseController.upateCaseBehandlingsId('12345678', '1234567CHGB');
+        NKS_HenvendelseController.updateCaseBehandlingsId('12345678', '1234567CHGB');
         Test.stopTest();
 
         System.assert(
