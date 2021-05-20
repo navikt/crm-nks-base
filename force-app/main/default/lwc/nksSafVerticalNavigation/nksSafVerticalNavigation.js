@@ -1,24 +1,25 @@
 import { LightningElement, api, track } from 'lwc';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
-import getRecordId from '@salesforce/apex/NKS_SafJournalpostListController.getRecordId';
-
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 export default class NksSafVerticalNavigation extends LightningElement {
     @api objectApiName;
     @api recordId;
+    wireFields;
+    personId;
+    _actorId;
+
+    @api get actorId() {
+        return this._actorId;
+    }
+
+    set actorId(value) {
+        this._actorId = value;
+        this.callGetCases();
+    }
 
     @api get themeGroupField() {
         return this._themeGroupField;
-    }
-
-    @api get viewedObjectApiName() {
-        return this._viewedObjectApiName ? this._viewedObjectApiName : this.objectApiName;
-    }
-    @api get viewedRecordId() {
-        return this._viewedRecordId ? this._viewedRecordId : this.recordId;
-    }
-    @api get brukerIdField() {
-        return this._brukerIdField;
     }
     @api get relationshipField() {
         return this._relationshipField;
@@ -27,23 +28,12 @@ export default class NksSafVerticalNavigation extends LightningElement {
     set themeGroupField(value) {
         this._themeGroupField = value ? value : null;
     }
-    set viewedObjectApiName(value) {
-        this._viewedObjectApiName = value ? value : this.objectApiName;
-    }
-    set viewedRecordId(value) {
-        this._viewedRecordId = value ? value : this.recordId;
-    }
-    set brukerIdField(value) {
-        this._brukerIdField = value;
-    }
     set relationshipField(value) {
         this._relationshipField = value;
     }
 
     _themeGroupField;
-    _viewedObjectApiName;
-    _viewedRecordId;
-    _brukerIdField;
+    @api brukerIdField;
     _relationshipField;
 
     @track isLoading;
@@ -56,7 +46,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
     @track caseMap = new Map();
     @track caseMapArray = [];
 
-    _selectedThemeGroup = '';
+    _selectedThemeGroup = 'all';
     _selectedTheme = '';
     _selectedCase = '';
     _themeMap;
@@ -91,31 +81,73 @@ export default class NksSafVerticalNavigation extends LightningElement {
     }
 
     async loadThemeAndCase() {
+        this.wireFields = [this.objectApiName + '.Id'];
+
         this.isLoading = true;
         this.error = null;
-        await this.callGetCases();
         await this.callGetThemes();
         await this.callGetSelectedTheme();
         this.isLoading = false;
+
+        // this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
     }
+
+    // @wire(getRecord, {
+    //     recordId: '$viewedRecordId',
+    //     fields: '$wireFields'
+    // })
+    // wiredRecordInfo({ error, data }) {
+    //     if (data) {
+    //         if (this.brukerIdField && this.objectApiName) {
+    //             this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
+    //         }
+    //     }
+    // }
+
+    // @wire(getRecord, {
+    //     recordId: '$personId',
+    //     fields: [PERSON_ACTOR_FIELD]
+    // })
+    // wiredPersonInfo({ error, data }) {
+    //     if (data) {
+    //         this.actorId = getFieldValue(data, PERSON_ACTOR_FIELD);
+    //         this.callGetCases();
+    //     }
+    // }
+
+    // getRelatedRecordId(relationshipField, objectApiName) {
+    //     getRelatedRecord({
+    //         parentId: this.recordId,
+    //         relationshipField: relationshipField,
+    //         objectApiName: objectApiName
+    //     })
+    //         .then((record) => {
+    //             this.personId = this.resolve(relationshipField, record);
+    //             if (null == this.personId) {
+    //                 this.actorId = null;
+    //                 this.caseMapArray = [];
+    //                 this.selectedCase = null;
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }
 
     async callGetSelectedTheme() {
         if (this.themeGroupField) {
-            const inputParams = {
-                field: this.themeGroupField,
-                objectApiName: this.viewedObjectApiName,
-                relationshipField: 'Id',
-                relationshipValue: this.viewedRecordId
-            };
-
-            this.error = null;
-
-            try {
-                let data = await getRecordId(inputParams);
-                this.selectedThemeGroup = data;
-            } catch (err) {
-                this.setErrorMessage(err, 'caughtError');
-            }
+            await getRelatedRecord({
+                parentId: this.recordId,
+                relationshipField: this.themeGroupField,
+                objectApiName: this.objectApiName
+            })
+                .then((record) => {
+                    let themeGroup = this.resolve(this.themeGroupField, record);
+                    this.selectedThemeGroup = themeGroup ? themeGroup : 'all';
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         } else {
             this.selectedThemeGroup = 'all';
         }
@@ -123,10 +155,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
     async callGetCases() {
         const inputParams = {
-            brukerIdField: this.brukerIdField,
-            objectApiName: this.viewedObjectApiName,
-            relationshipField: this.relationshipField,
-            viewedRecordId: this.viewedRecordId
+            actorId: this.actorId
         };
 
         try {
@@ -192,6 +221,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
                 this.caseMap.get(caseX.themeCode).push(caseX);
             });
+            this.filterCases();
         } catch (err) {
             this.setErrorMessage(err, 'caughtError');
         }
@@ -261,7 +291,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
             this.getCaseMapArrayFromCaseMap(themeCode, caseMapArr);
         });
         this.caseMapArray = caseMapArr;
-        this.selectedCase = caseMapArr[0].value[0].caseId;
+        this.selectedCase = caseMapArr.length > 0 ? caseMapArr[0].value[0].caseId : null;
     }
 
     getCaseMapArrayFromCaseMap(themeCode, arr) {
@@ -329,5 +359,10 @@ export default class NksSafVerticalNavigation extends LightningElement {
                 this.errors.push('Ukjent feil: ' + err);
                 break;
         }
+    }
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || self);
     }
 }
