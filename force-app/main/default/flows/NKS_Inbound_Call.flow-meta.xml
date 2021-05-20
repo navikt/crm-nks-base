@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <decisions>
+        <name>Check_Identifier</name>
+        <label>Check Identifier</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Create_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Phone Number</defaultConnectorLabel>
+        <rules>
+            <name>Person_Identifier</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>INPUT_TYPE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PERSON_IDENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Person_Account</targetReference>
+            </connector>
+            <label>Person Identifier</label>
+        </rules>
+        <rules>
+            <name>Organization_Identifier</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>INPUT_TYPE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ORG_IDENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Organization_Account</targetReference>
+            </connector>
+            <label>Organization Identifier</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <description>Formula to determine the type of input from the IVR. Either, PHONE_NUMBER, PERSON_IDENT or ORG_IDENT.</description>
+        <name>INPUT_TYPE</name>
+        <dataType>String</dataType>
+        <expression>CASE(LEN({!sfdc_case_id}),
+11, &apos;PERSON_IDENT&apos;,
+9, &apos;ORG_IDENT&apos;,
+&apos;PHONE_NUMBER&apos;
+)</expression>
+    </formulas>
+    <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Inbound Call</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <description>Creates a case for the incoming phone call.</description>
+        <name>Create_Case</name>
+        <label>Create Case</label>
+        <locationX>314</locationX>
+        <locationY>494</locationY>
+        <connector>
+            <targetReference>Inbound_Call_Screen</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Related_Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Default subject?</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Queries the organization account.</description>
+        <name>Get_Organization_Account</name>
+        <label>Get Organization Account</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+        <filters>
+            <field>INT_OrganizationNumber__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sfdc_case_id</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>Related_Account</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Account</name>
+        <label>Get Person Account</label>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+        <filters>
+            <field>INT_PersonIdent__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sfdc_case_id</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>Related_Account</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <description>Screen to be shown when a call is inbound</description>
+        <name>Inbound_Call_Screen</name>
+        <label>Inbound Call Screen</label>
+        <locationX>314</locationX>
+        <locationY>614</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Inbound_Call_Text</name>
+            <fieldText>&lt;p&gt;Innkommende samtale&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Navigate_to_Case</name>
+            <extensionName>c:nksFlowRecordNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Create_Case</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_Identifier</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Sets the related account to the organization account.</description>
+        <name>Related_Account</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>Input parameter from the IVR</description>
+        <name>sfdc_case_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
