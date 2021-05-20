@@ -20,10 +20,10 @@ export default class NksPersonBadges extends LightningElement {
     infoPanelToShow = '';
     errorMessage;
 
-    connectedCallback() {
-        this.setAttribute('title', this.assistiveHeader);
-        this.template.ariaLabel = this.assistiveHeader;
-    }
+    // connectedCallback() {
+    //     this.setAttribute('ariaLabel', this.assistiveHeader);
+    //     this.setAttribute('role', 'region');
+    // }
 
     get hasErrors() {
         return this.errors && 0 < this.errors.length ? true : false;

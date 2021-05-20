@@ -1,4 +1,4 @@
-public class NKS_KrrInformationController {
+public without sharing class NKS_KrrInformationController {
     static LoggerUtility logger = new LoggerUtility();
 
     @AuraEnabled

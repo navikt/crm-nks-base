@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -181,6 +181,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>headertag</name>
+                    <value>h4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>input</name>
+                    <value>Sammendrag</value>
+                </componentInstanceProperties>
+                <componentName>nksHeader</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -189,7 +202,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -206,6 +219,19 @@
                     <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>headertag</name>
+                    <value>h4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>input</name>
+                    <value>Mer informasjon</value>
+                </componentInstanceProperties>
+                <componentName>nksHeader</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -698,16 +724,10 @@
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.PublishStatus}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Online</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

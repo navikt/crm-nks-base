@@ -281,10 +281,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_KrrInformationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_ChatTranscriptService_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -294,6 +290,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_JournalUtilities_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_KrrInformationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_NAVTaskTypeController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -325,11 +329,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_PaymentService</apexClass>
+        <apexClass>NKS_PaymentListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_PaymentListController</apexClass>
+        <apexClass>NKS_PaymentService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
