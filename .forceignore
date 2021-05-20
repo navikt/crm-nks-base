@@ -42,6 +42,7 @@
 # ----------------------------------------------------------------------------------------
 **/AppSwitcher.appMenu*
 **/navigationMenus/*
+**/objects/Knowledge__kav/listViews/Arbeid.listView-meta.xml
 
 
 # LWC
