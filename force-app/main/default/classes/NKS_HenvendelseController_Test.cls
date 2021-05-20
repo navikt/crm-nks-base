@@ -124,8 +124,7 @@ public class NKS_HenvendelseController_Test {
         ApiMock.setTestMock('POST_HENVENDELSE', 200, 'OK');
         Test.startTest();
         System.runAs(usr) {
-            ApiRetryMaster retryMaster = new ApiRetryMaster();
-            retryMaster.initiateRetry();
+            ApiRetryMaster.initiateRetry();
         }
         Test.stopTest();
 
@@ -158,8 +157,7 @@ public class NKS_HenvendelseController_Test {
         ApiMock.setTestMock('POST_HENVENDELSE_JOURNAL', 200, 'OK');
         Test.startTest();
         System.runAs(usr) {
-            ApiRetryMaster retryMaster = new ApiRetryMaster();
-            retryMaster.initiateRetry();
+            ApiRetryMaster.initiateRetry();
         }
         Test.stopTest();
 
