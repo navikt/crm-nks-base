@@ -1,15 +1,15 @@
 <template>
     <lightning-layout multiple-rows="true">
-        <lightning-layout-item size={columnWidth} padding="horizontal-small">
+        <lightning-layout-item size={columnWidth} class="slds-var-p-right_medium">
             <div class="slds-form-element slds-form-element_readonly">
-                <span class="slds-form-element__label">Nav kontor</span>
+                <span class="slds-form-element__label">Nav-kontor</span>
                 <div class="slds-form-element__control">
                     <div class="slds-form-element__static">{navUnit.navn}</div>
                 </div>
             </div>
         </lightning-layout-item>
 
-        <lightning-layout-item size={columnWidth} padding="horizontal-small">
+        <lightning-layout-item size={columnWidth} class="slds-var-p-right_medium">
             <div class="slds-form-element slds-form-element_readonly">
                 <span class="slds-form-element__label">Kontornummer</span>
                 <div class="slds-form-element__control">
@@ -18,7 +18,7 @@
             </div>
         </lightning-layout-item>
 
-        <lightning-layout-item size="12">
+        <lightning-layout-item size="12" class="slds-var-p-right_medium">
             <lightning-accordion active-section-name={activeSections} allow-multiple-sections-open>
                 <lightning-accordion-section name="UNIT_SERVICES" label="Sosiale tjenester">
                     <p style="white-space: pre-line">{navUnit.sosialeTjenester}</p>
