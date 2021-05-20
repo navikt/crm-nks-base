@@ -1,35 +1,51 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <active>true</active>
     <dataCategory>
+        <dataCategory>
+            <label>Lege og Behandler</label>
+            <name>Lege_og_Behandler</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Sikkerhet</label>
+                <name>Sikkerhet</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Skatt</label>
+                <name>Skatt</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Taushetsplikt</label>
+                <name>Taushetsplikt</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Dialog</label>
+                <name>Dialog</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Generell</label>
+                <name>Generell</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Klage og Anke</label>
+                <name>KlageogAnke</name>
+            </dataCategory>
+            <label>Felles</label>
+            <name>Felles</name>
+        </dataCategory>
         <dataCategory>
             <dataCategory>
                 <label>Arbeidsavklaringspenger</label>
                 <name>Arbeidsavklaringspenger</name>
             </dataCategory>
             <dataCategory>
-                <dataCategory>
-                    <label>Meldekort</label>
-                    <name>Meldekort</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Registrering som arbeidssøker</label>
-                    <name>Registrering_som_arbeidss_ker</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Tiltak</label>
-                    <name>Tiltak</name>
-                </dataCategory>
                 <label>Arbeidssøker</label>
                 <name>Arbeidss_ker</name>
             </dataCategory>
             <dataCategory>
                 <label>Dagpenger</label>
                 <name>Dagpenger</name>
-            </dataCategory>
-            <dataCategory>
-                <label>Inkluderende arbeidsliv</label>
-                <name>Inkluderende_arbeidsliv</name>
             </dataCategory>
             <dataCategory>
                 <label>Tilleggsstønader</label>
@@ -43,10 +59,58 @@
             <name>Arbeid</name>
         </dataCategory>
         <dataCategory>
+            <dataCategory>
+                <label>Arbeidsgiver</label>
+                <name>Arbeidsgiver</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Arbeidsgiverperiode</label>
+                <name>Arbeidsgiverperiode</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Arbeidsgiver og tiltaksarrangør</label>
+                <name>Arbeidsgiver_og_tiltaksarrang_r</name>
+            </dataCategory>
             <label>Arbeidsgiver og Samhandler</label>
             <name>ArbeidsgiverSamhandler</name>
         </dataCategory>
         <dataCategory>
+            <dataCategory>
+                <label>Familie og Foreldrepenger</label>
+                <name>Familie_ogForeldrepenger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Farskap</label>
+                <name>Farskap</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Foreldrepenger, engangsstønad og svanger</label>
+                <name>Foreldrepenger_engangsst_nad_og_svanger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Kontantstøtte</label>
+                <name>Kontantst_tte</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Pleiepenger sykt barn</label>
+                <name>Pleiepenger_sykt_barn</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Ytelser ved nærstående og barns sykdom</label>
+                <name>Ytelser_ved_n_rst_ende_og_barns_sykdom</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Barnebidrag</label>
+                <name>Barnebidrag</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Barnetrygd</label>
+                <name>Barnetrygd</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Enslig forsørger</label>
+                <name>Enslig_fors_rger</name>
+            </dataCategory>
             <label>Familie</label>
             <name>Familie</name>
         </dataCategory>
@@ -55,30 +119,82 @@
             <name>Gjeldsraadgivning</name>
         </dataCategory>
         <dataCategory>
+            <dataCategory>
+                <label>Tiltak og virkemidler</label>
+                <name>Tiltak_og_virkemidler</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Sykdom i familien</label>
+                <name>Sykdom_i_familien</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Oppfølging AAP</label>
+                <name>Oppf_lging_AAP</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Yrkesskade</label>
+                <name>Yrkesskade</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Inkluderende arbeidsliv</label>
+                <name>Inkluderendearbeidsliv</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Sykefraværsoppfølging</label>
+                <name>Sykefrav_rsoppf_lging</name>
+            </dataCategory>
             <label>Sykefraværsoppfølging</label>
             <name>Sykefravaersoppfolging</name>
         </dataCategory>
         <dataCategory>
+            <dataCategory>
+                <label>Rekruttering</label>
+                <name>Rekruttering</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Permittering</label>
+                <name>Permittering</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Omstilling</label>
+                <name>Omstilling</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Arbeidsrettede tiltak</label>
+                <name>Arbeidsrettede_tiltak</name>
+            </dataCategory>
             <label>Permittering og rekruttering</label>
             <name>Permittering_og_rekruttering</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Dialogrutinen</label>
-            <name>Dialogrutinen</name>
         </dataCategory>
         <dataCategory>
             <label>Eures</label>
             <name>Eures</name>
         </dataCategory>
         <dataCategory>
-            <label>Familie og Foreldrepenger</label>
-            <name>Familie_og_Foreldrepenger</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Generell servicerutine</label>
-            <name>Generell_servicerutine</name>
-        </dataCategory>
-        <dataCategory>
+            <dataCategory>
+                <label>Sykepenger</label>
+                <name>Sykepenger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Gravferdsstønad</label>
+                <name>Gravferdsst_nad</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Grunn- og hjelpestønad</label>
+                <name>Grunn_og_hjelpest_nad</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Hjelpemidler i Hjemmet</label>
+                <name>Hjelpemidler_i_Hjemmet</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Inkluderende Arbeidsliv</label>
+                <name>Inkluderende_Arbeidsliv2</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Ménerstatning og yrkesskade</label>
+                <name>M_nerstatning_og_yrkesskade</name>
+            </dataCategory>
             <label>Helse</label>
             <name>Helse</name>
         </dataCategory>
@@ -87,40 +203,60 @@
             <name>Internasjonalt</name>
         </dataCategory>
         <dataCategory>
-            <label>Klage og anke</label>
-            <name>Klage_og_anke</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Korona</label>
-            <name>Korona</name>
-        </dataCategory>
-        <dataCategory>
+            <dataCategory>
+                <label>Alderspensjon</label>
+                <name>Alderspensjon</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Alderspensjon kapittel 19</label>
+                <name>Alderspensjon_kapittel_19</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Alderspensjon kapittel 20</label>
+                <name>Alderspensjon_kapittel_20</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Barnepensjon</label>
+                <name>Barnepensjon</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Gjenlevendepensjon</label>
+                <name>Gjenlevendepensjon</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Krigspensjon og gammel yrkesskade</label>
+                <name>Krigspensjon_og_gammel_yrkesskade</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Omsorgsopptjening</label>
+                <name>Omsorgsopptjening</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Supplerende stønad</label>
+                <name>Supplerende_st_nad</name>
+            </dataCategory>
+            <dataCategory>
+                <label>AFP Offentlig</label>
+                <name>AFP_Offentlig</name>
+            </dataCategory>
+            <dataCategory>
+                <label>AFP Privat</label>
+                <name>AFP_Privat</name>
+            </dataCategory>
             <label>Pensjon</label>
             <name>Pensjon</name>
         </dataCategory>
         <dataCategory>
-            <label>Sentralbord</label>
-            <name>Sentralbord</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Sikkerhetsrutinen</label>
-            <name>Sikkerhetsrutinen</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Skatt og trekkrutine</label>
-            <name>Skatt_og_trekkrutine</name>
-        </dataCategory>
-        <dataCategory>
+            <dataCategory>
+                <label>Husbanken</label>
+                <name>Husbanken</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Økonomisk sosialhjelp</label>
+                <name>konomisk_sosialhjelp</name>
+            </dataCategory>
             <label>Sosiale tjenester</label>
             <name>SosialeTjenester</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Stillingsregistrering</label>
-            <name>Stillingsregistrering</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Taushetspliktsrutinen</label>
-            <name>Taushetspliktsrutinen</name>
         </dataCategory>
         <dataCategory>
             <label>Teknisk brukerstøtte</label>
@@ -129,10 +265,6 @@
         <dataCategory>
             <label>Uføretrygd</label>
             <name>Ufoeretrygd</name>
-        </dataCategory>
-        <dataCategory>
-            <label>Økonomi og gjeld</label>
-            <name>konomi_og_gjeld</name>
         </dataCategory>
         <label>All</label>
         <name>All</name>
