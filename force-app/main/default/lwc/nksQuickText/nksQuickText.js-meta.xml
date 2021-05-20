@@ -25,6 +25,8 @@
                 default="false"
                 role="inputOnly"
             />
+
+            <property name="comments" type="String" label="Comments" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

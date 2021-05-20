@@ -10,6 +10,7 @@ export default class nksQuickText extends LightningElement {
 
     @api conversationNote;
     @api conversationNoteRich;
+    @api comments;
     @track data;
     loadingData = false;
     @api required = false;
