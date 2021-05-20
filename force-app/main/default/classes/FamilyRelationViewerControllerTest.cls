@@ -42,7 +42,7 @@ public with sharing class FamilyRelationViewerControllerTest {
             relations.size(),
             'Mom has 3 children under 21, and 1 over, 1 is confidential. Add 1 for marital status. 4 should be returned'
         );
-        System.assertEquals('IKKE TILGJENGELIG', a.Name, 'Child is confidential. Name should be "IKKE TILGJENGELIG"');
+        System.assertEquals('SKJERMET', a.Name, 'Child is confidential. Name should be "IKKE TILGJENGELIG"');
     }
 
     @isTest

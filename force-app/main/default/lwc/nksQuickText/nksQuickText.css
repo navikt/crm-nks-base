@@ -1,8 +1,8 @@
 .quicktext-button {
     position: absolute;
     z-index: 1;
-    right: 0;
-    margin-top: 115px;
+    right: -0.5em;
+    top: calc(50%-10px);
 }
 
 .quicktext-item div:hover {

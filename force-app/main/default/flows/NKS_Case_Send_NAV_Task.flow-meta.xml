@@ -154,6 +154,20 @@
                 <elementReference>Task_Name</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>
@@ -345,6 +359,9 @@ TODAY())</expression>
                 <conditions>
                     <leftValueReference>No_Account</leftValueReference>
                     <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>

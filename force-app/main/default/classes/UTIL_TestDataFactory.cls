@@ -496,6 +496,21 @@ public class UTIL_TestDataFactory {
         }
     }
 
+    public class ConversationNoteDefaults implements FieldDefaults {
+        public Map<String, Object> getFieldDefaults() {
+            return getFieldDefaults(false);
+        }
+        public Map<String, Object> getFieldDefaults(Boolean bulkify) {
+            return new Map<String, Object>{
+                'CRM_Case__c' => bulkify ? 'Case' : createRecord('Case', null),
+                'CRM_Account__c' => bulkify ? 'Account' : createRecord('Account', null)
+            };
+        }
+        public Map<String, String> getDmlFields() {
+            return new Map<String, String>{ 'CRM_Account__c' => 'Account', 'CRM_Case__c' => 'Case' };
+        }
+    }
+
     public class NavUnitDefaults implements FieldDefaults {
         public Map<String, Object> getFieldDefaults() {
             return getFieldDefaults(false);

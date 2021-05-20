@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Theme__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Reference to common code theme.</description>
+    <externalId>false</externalId>
+    <label>Theme</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Common_Code__c.CRM_Code_Set__c</field>
+            <operation>equals</operation>
+            <value>Tema</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Common_Code__c</referenceTo>
+    <relationshipLabel>Conversation Notes</relationshipLabel>
+    <relationshipName>Conversation_Notes_Theme</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

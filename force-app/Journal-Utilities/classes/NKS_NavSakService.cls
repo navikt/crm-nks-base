@@ -4,7 +4,8 @@ public class NKS_NavSakService {
         'sakstype',
         'datoOpprettet',
         'tema',
-        'fagsaksystem'
+        'fagsaksystem',
+        'arkivsaksnummer' //Needed for journal creation using henvendelse API
     };
 
     private static Map<String, String> themeMap {
@@ -126,6 +127,8 @@ public class NKS_NavSakService {
         public String tema;
         @AuraEnabled
         public String fagsaksystem;
+        @AuraEnabled
+        public String arkivsaksnummer;
         @AuraEnabled
         public String themeName;
 

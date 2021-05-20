@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Navigate to Record</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="recordId"
+                type="String"
+                label="Record ID"
+                role="InputOnly"
+                required="true"
+            />
+            <property
+                name="objectApiName"
+                type="String"
+                label="Object API Name"
+                role="InputOnly"
+                required="true"
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

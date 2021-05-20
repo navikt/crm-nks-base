@@ -1,12 +1,4 @@
 <template>
-    <lightning-button-icon
-        class="quicktext-button"
-        icon-name="utility:quick_text"
-        variant="border-filled"
-        onclick={showModal}
-        alternative-text="Legg til hurtigtekst"
-        title="Hurtigtekst"
-    ></lightning-button-icon>
     <div data-id="modal" class="modalHide">
         <section
             role="dialog"
@@ -41,9 +33,10 @@
                 </header>
 
                 <div
-                    class="slds-modal__content slds-var-p-horizontal_small slds-var-p-vertical_x-small"
+                    class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
                 >
+                    <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
                     <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
                     <lightning-layout multiple-rows="true" pull-to-boundary="small">
                         <template if:true={data} for:each={data} for:item="record" for:index="index">
@@ -68,9 +61,21 @@
     <div class="slds-form-element">
         <label class="slds-form-element__label" for="textarea-id-01">Samtalenotat</label>
         <div class="slds-form-element__control">
-            <textarea id="comments" class="slds-textarea" required="" rows="10" onchange={handleChange}>
-{conversationNote}</textarea
+            <lightning-button-icon
+                class="quicktext-button"
+                icon-name="utility:quick_text"
+                variant="border-filled"
+                onclick={showModal}
+                alternative-text="Legg til hurtigtekst"
+                title="Hurtigtekst"
+            ></lightning-button-icon>
+            <lightning-input-rich-text
+                value={conversationNoteRich}
+                onchange={handleChange}
+                formats={inputFormats}
+                class="slds-var-m-bottom_small slds-is-relative"
             >
+            </lightning-input-rich-text>
         </div>
     </div>
 </template>

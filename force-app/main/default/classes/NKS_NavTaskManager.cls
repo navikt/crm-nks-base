@@ -332,6 +332,14 @@ public with sharing class NKS_NavTaskManager {
         private Integer versjon; //Version number of the task needed for the patch/edit callout
     }
 
+    private class OppgaveMetadata {
+        private String EKSTERN_HENVENDELSE_ID;
+
+        public OppgaveMetadata(String EKSTERN_HENVENDELSE_ID) {
+            this.EKSTERN_HENVENDELSE_ID = EKSTERN_HENVENDELSE_ID;
+        }
+    }
+
     private class OppgaveRequest {
         private Integer id;
         private String tildeltEnhetsnr; //Enheten oppgaven er tildelt. Dersom enhet ikke er angitt, så vil oppgaven automatisk fordeles iht. standard arbeidsfordelingsregler (se norg2)
@@ -353,6 +361,7 @@ public with sharing class NKS_NavTaskManager {
         private String prioritet; // [HOY, NORM, LAV],
         private Integer versjon;
         private String saksreferanse; //NKS-111 adding support for relating task to existing NAV Cases
+        private OppgaveMetadata metadata;
 
         public OppgaveRequest() {
         }
@@ -379,6 +388,9 @@ public with sharing class NKS_NavTaskManager {
             tema = taskRequest.themeCode;
             behandlingstema = taskRequest.subthemeCode;
             saksreferanse = task.NKS_NAV_Case_Reference__c;
+            if (String.isNotBlank(task.NKS_Henvendelse_BehandlingsId__c)) {
+                metadata = new OppgaveMetadata(task.NKS_Henvendelse_BehandlingsId__c);
+            }
         }
     }
 
