@@ -37,10 +37,6 @@
     <picklistValues>
         <picklist>CRM_SubTheme__c</picklist>
         <values>
-            <fullName>Forebyggende arbeidsmiljø</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Generell sykefraværsoppfølging</fullName>
             <default>false</default>
         </values>
