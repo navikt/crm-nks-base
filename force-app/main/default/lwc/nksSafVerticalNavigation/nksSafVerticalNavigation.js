@@ -88,51 +88,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
         await this.callGetThemes();
         await this.callGetSelectedTheme();
         this.isLoading = false;
-
-        // this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
     }
-
-    // @wire(getRecord, {
-    //     recordId: '$viewedRecordId',
-    //     fields: '$wireFields'
-    // })
-    // wiredRecordInfo({ error, data }) {
-    //     if (data) {
-    //         if (this.brukerIdField && this.objectApiName) {
-    //             this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
-    //         }
-    //     }
-    // }
-
-    // @wire(getRecord, {
-    //     recordId: '$personId',
-    //     fields: [PERSON_ACTOR_FIELD]
-    // })
-    // wiredPersonInfo({ error, data }) {
-    //     if (data) {
-    //         this.actorId = getFieldValue(data, PERSON_ACTOR_FIELD);
-    //         this.callGetCases();
-    //     }
-    // }
-
-    // getRelatedRecordId(relationshipField, objectApiName) {
-    //     getRelatedRecord({
-    //         parentId: this.recordId,
-    //         relationshipField: relationshipField,
-    //         objectApiName: objectApiName
-    //     })
-    //         .then((record) => {
-    //             this.personId = this.resolve(relationshipField, record);
-    //             if (null == this.personId) {
-    //                 this.actorId = null;
-    //                 this.caseMapArray = [];
-    //                 this.selectedCase = null;
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
 
     async callGetSelectedTheme() {
         if (this.themeGroupField) {
@@ -157,73 +113,74 @@ export default class NksSafVerticalNavigation extends LightningElement {
         const inputParams = {
             actorId: this.actorId
         };
+        if (this.actorId) {
+            try {
+                let data = await getCases(inputParams);
+                this.caseMap = new Map();
 
-        try {
-            let data = await getCases(inputParams);
-            this.caseMap = new Map();
-
-            this.caseMap.set('all', [
-                {
-                    label: 'Alle',
-                    caseId: 'all',
-                    themeCodeCaseId: 'all_all',
-                    themeCode: 'all',
-                    themeName: '',
-                    isOpen: 'all'
-                }
-            ]);
-
-            data.forEach((element) => {
-                let nmbOfOpenCases = this.nmbOfOpenCases(element);
-                let isOpen = nmbOfOpenCases > 0 ? true : false;
-
-                let caseLabel = element.saksId;
-
-                if (isOpen) {
-                    caseLabel +=
-                        ' - (' +
-                        nmbOfOpenCases +
-                        (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
-                        ')';
-                }
-
-                let caseX = {
-                    label: caseLabel,
-                    caseId: element.saksId,
-                    themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
-                    themeName: element.themeName,
-                    themeCode: element.sakstema.value,
-                    isOpen: isOpen,
-                    openDate: element.opprettet,
-                    closeDate: element.lukket
-                };
-
-                if (false === this.caseMap.has(caseX.themeCode)) {
-                    let caseAlle = {
+                this.caseMap.set('all', [
+                    {
                         label: 'Alle',
                         caseId: 'all',
-                        themeCodeCaseId: element.sakstema.value + '_all',
+                        themeCodeCaseId: 'all_all',
+                        themeCode: 'all',
+                        themeName: '',
+                        isOpen: 'all'
+                    }
+                ]);
+
+                data.forEach((element) => {
+                    let nmbOfOpenCases = this.nmbOfOpenCases(element);
+                    let isOpen = nmbOfOpenCases > 0 ? true : false;
+
+                    let caseLabel = element.saksId;
+
+                    if (isOpen) {
+                        caseLabel +=
+                            ' - (' +
+                            nmbOfOpenCases +
+                            (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
+                            ')';
+                    }
+
+                    let caseX = {
+                        label: caseLabel,
+                        caseId: element.saksId,
+                        themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
                         themeName: element.themeName,
                         themeCode: element.sakstema.value,
-                        isOpen: true
+                        isOpen: isOpen,
+                        openDate: element.opprettet,
+                        closeDate: element.lukket
                     };
 
-                    let caseGenerell = {
-                        label: 'Generell',
-                        caseId: 'general',
-                        themeCodeCaseId: element.sakstema.value + '_general',
-                        themeName: element.themeName,
-                        themeCode: element.sakstema.value,
-                        isOpen: true
-                    };
-                    this.caseMap.set(caseX.themeCode, [caseAlle, caseGenerell]);
-                }
+                    if (false === this.caseMap.has(caseX.themeCode)) {
+                        let caseAlle = {
+                            label: 'Alle',
+                            caseId: 'all',
+                            themeCodeCaseId: element.sakstema.value + '_all',
+                            themeName: element.themeName,
+                            themeCode: element.sakstema.value,
+                            isOpen: true
+                        };
 
-                this.caseMap.get(caseX.themeCode).push(caseX);
-            });
-            this.filterCases();
-        } catch (err) {
-            this.setErrorMessage(err, 'caughtError');
+                        let caseGenerell = {
+                            label: 'Generell',
+                            caseId: 'general',
+                            themeCodeCaseId: element.sakstema.value + '_general',
+                            themeName: element.themeName,
+                            themeCode: element.sakstema.value,
+                            isOpen: true
+                        };
+                        this.caseMap.set(caseX.themeCode, [caseAlle, caseGenerell]);
+                    }
+
+                    this.caseMap.get(caseX.themeCode).push(caseX);
+                });
+                this.filterCases();
+            } catch (err) {
+                this.setErrorMessage(err, 'caughtError');
+            }
         }
     }
 
