@@ -36,65 +36,9 @@
     </picklistValues>
     <picklistValues>
         <picklist>CRM_SubTheme__c</picklist>
-        <values>
-            <fullName>Generell sykefraværsoppfølging</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Helse i arbeid</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Informasjon og relasjonsbygging</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inkludering %28med virkemidler%2C inkl%2E oppfølging%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Jobbmesser og møteplass</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lønnskompensasjon</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Oppsigelser</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Permittering</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Redusere sykefravær</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rekruttering %28uten virkemidler%2C inkl%2E oppfølging%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Tiltaksøkonomi</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CRM_Theme__c</picklist>
-        <values>
-            <fullName>Forebygge sykefravær og redusere frafall</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nedbemanne</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rekruttere og inkludere</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NKS_Status__c</picklist>
