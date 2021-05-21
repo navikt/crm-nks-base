@@ -50,11 +50,11 @@
         <name>Post_to_Henvendelse</name>
         <label>Post to Henvendelse</label>
         <locationX>972</locationX>
-        <locationY>943</locationY>
+        <locationY>863</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Create_Journal_Entry_Decision</targetReference>
+            <targetReference>Set_Registration_Date</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_Journal_Entry_Decision_0</targetReference>
@@ -296,6 +296,23 @@
             <targetReference>Case_Assignment_Default_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Sets the registration date for the conversation note after a successful post.</description>
+        <name>Set_Registration_Date</name>
+        <label>Set Registration Date</label>
+        <locationX>972</locationX>
+        <locationY>1013</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Journal_Entry_Decision</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
@@ -353,7 +370,7 @@
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
         <locationX>964</locationX>
-        <locationY>1084</locationY>
+        <locationY>1149</locationY>
         <defaultConnector>
             <targetReference>Case_Assignment_Default_0</targetReference>
         </defaultConnector>
@@ -437,7 +454,7 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>972</locationX>
-        <locationY>653</locationY>
+        <locationY>569</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Log_Screen</targetReference>
@@ -508,7 +525,7 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Case_Closed_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Henvendelsen er ferdigstilt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Henvendelsen er ferdigstilt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
@@ -518,7 +535,7 @@
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>972</locationX>
-        <locationY>799</locationY>
+        <locationY>719</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -528,6 +545,11 @@
         <fields>
             <name>Conversation_Note_Header</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;{!$Label.NKS_Create_Conversation_Note}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Disclaimer_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(144, 133, 133);&quot;&gt;Samtalereferatet blir delt med bruker når det opprettes.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -683,7 +705,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1189</locationX>
+        <locationX>1187</locationX>
         <locationY>349</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>

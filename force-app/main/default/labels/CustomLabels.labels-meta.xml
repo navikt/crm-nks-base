@@ -94,7 +94,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Create Conversation Note</shortDescription>
-        <value>Opprett samtalenotat</value>
+        <value>Opprett samtalereferat</value>
     </labels>
     <labels>
         <fullName>NKS_Journal_Case_List_Col_Case_Id</fullName>

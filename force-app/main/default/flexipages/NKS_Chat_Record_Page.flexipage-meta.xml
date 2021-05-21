@@ -49,7 +49,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>buttonIcon</name>
-                    <value>standard:task</value>
+                    <value>utility:task</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>buttonLabel</name>
@@ -71,6 +71,10 @@
                 <componentInstanceProperties>
                     <name>loggingEnabled</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>personFields</name>
+                    <value>NKS_Full_Name__c, Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentName>nksChatAuthenticationInfoContainer</componentName>
             </componentInstance>
