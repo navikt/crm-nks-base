@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Phone_Case</fullName>
+    <fullName>NKS_Phone_Case</fullName>
     <active>true</active>
     <businessProcess>Case Process</businessProcess>
     <label>Phone Case</label>
