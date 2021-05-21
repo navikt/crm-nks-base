@@ -34,6 +34,7 @@ export default class NksKrrInformation extends LightningElement {
             })
             .catch((error) => {
                 //Update failed
+                console.log(JSON.stringify(error, null, 2));
             })
             .finally(() => {
                 this.isLoading = false;
