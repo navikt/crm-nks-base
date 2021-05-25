@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>published_articles</fullName>
     <columns>TITLE</columns>
@@ -10,5 +10,5 @@
         <operation>equals</operation>
         <value>2</value>
     </filters>
-    <label>Publiserte Kunnskapsartikler</label>
+    <label>Alle Kunnskapsartikler</label>
 </ListView>

@@ -7,6 +7,25 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property
+                name="conversationNote"
+                type="String"
+                label="Conversation Note"
+                role="OutputOnly"
+            />
+            <property
+                name="conversationNoteRich"
+                type="String"
+                label="Conversation Note (With formatting)"
+            />
+            <property
+                name="required"
+                type="Boolean"
+                label="Required"
+                default="false"
+                role="inputOnly"
+            />
+
             <property name="comments" type="String" label="Comments" />
         </targetConfig>
     </targetConfigs>

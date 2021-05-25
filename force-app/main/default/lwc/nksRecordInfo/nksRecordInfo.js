@@ -4,6 +4,9 @@ import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelate
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 
+import nksRefreshRecord from '@salesforce/messageChannel/nksRefreshRecord__c';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+
 export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api recordId; // Id from record page (From UiRecordAPI)
     @api viewedRecordId; // Id of the record to display information for
@@ -17,8 +20,40 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api hideLabels = false; // Boolean to determine if labels is to be displayed
     _showLink = false; // Boolean to determine if action slot is to be displayed
     @api wireFields;
+    subscription;
+
+    @wire(MessageContext)
+    messageContext;
+
+    disconnectedCallback() {
+        this.unsubscribeToMessageChannel();
+    }
+
+    //Lightning message service subscribe
+    subscribeToMessageChannel() {
+        if (!this.subscription) {
+            this.subscription = subscribe(this.messageContext, nksRefreshRecord, (message) => {
+                let recordId = message.recordId;
+                if (this.recordId == recordId) {
+                    //If component is showing information in context of the updated record, update the related record id as it might have been changed
+                    this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+                } else if (this.viewedRecordId == recordId) {
+                    //If displaying information from the updated record -> refresh Apex
+                    this.refreshRecord();
+                }
+            });
+        }
+    }
+
+    //Lightning message service unsubsubscribe
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
 
     connectedCallback() {
+        this.subscribeToMessageChannel();
+
         this.viewedObjectApiName = this.viewedObjectApiName == null ? this.objectApiName : this.viewedObjectApiName;
         if (this.relationshipField != null && this.relationshipField != '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);

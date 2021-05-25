@@ -1,16 +1,29 @@
 import { LightningElement, track, api } from 'lwc';
 import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
 
+//LABEL IMPORTS
+import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
 export default class nksQuickText extends LightningElement {
-    @api comments;
-    @api conversationNote;
-    @track data;
-    myVal;
-    @track comments = '';
-    @track loadingData = false;
+    labels = {
+        BLANK_ERROR
+    };
 
-    get myVal() {
-        return;
+    @api conversationNote;
+    @api conversationNoteRich;
+    @api comments;
+    @track data;
+    loadingData = false;
+    @api required = false;
+
+    get inputFormats() {
+        return [''];
+    }
+
+    get conversationNote() {
+        let plainText = this.conversationNoteRich ? this.conversationNoteRich : '';
+        plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
+        plainText = plainText.replace(/<[^\s>]+>/g, ''); //Remove remaining html tags
+        return plainText;
     }
 
     handleKeyUp(evt) {
@@ -25,10 +38,12 @@ export default class nksQuickText extends LightningElement {
                 .then((result) => {
                     this.numberOfRows = result.length;
                     this.data = result;
-                    this.loadingData = false;
                 })
                 .catch((error) => {
                     console.log(error);
+                })
+                .finally(() => {
+                    this.loadingData = false;
                 });
         }
     }
@@ -43,20 +58,33 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        this.myVal = this.comments + event.currentTarget.dataset.message;
+        const editor = this.template.querySelector('lightning-input-rich-text');
+        editor.setRangeText(event.currentTarget.dataset.message, undefined, undefined, 'select');
+        this.conversationNoteRich = editor.value;
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
-        this.template.querySelector('textarea ').value = this.myVal;
         const attributeChangeEvent = new CustomEvent('commentschange', {
-            detail: this.template.querySelector('textarea').value
+            detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
+        this.conversationNoteRich = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
-            detail: this.template.querySelector('textarea').value
+            detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    @api
+    validate() {
+        if (this.required === true) {
+            return this.conversationNote && this.conversationNote.length > 0
+                ? { isValid: true }
+                : { isValid: false, errorMessage: this.labels.BLANK_ERROR }; //CUSTOM LABEL HERE
+        } else {
+            return { isValid: true };
+        }
     }
 }

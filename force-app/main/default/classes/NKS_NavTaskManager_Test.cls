@@ -104,10 +104,7 @@ public class NKS_NavTaskManager_Test {
         NKS_NavTaskManager.OppgaveTypeResponse resp = new NKS_NavTaskManager.OppgaveTypeResponse();
         resp.oppgavetype = 'VURD_HENV';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(200, 'OK', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', JSON.serialize(resp), null));
 
         Test.startTest();
         NKS_NavTaskManager.getTaskTypes('AAP');
@@ -121,10 +118,7 @@ public class NKS_NavTaskManager_Test {
         NKS_NavTaskManager.OppgaveTypeResponse resp = new NKS_NavTaskManager.OppgaveTypeResponse();
         resp.oppgavetype = 'VURD_HENV';
 
-        Test.setMock(
-            HttpCalloutMock.class,
-            new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null)
-        );
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(404, 'Not found', JSON.serialize(resp), null));
 
         Test.startTest();
         NKS_NavTaskManager.getTaskTypes('AAP');
@@ -144,7 +138,8 @@ public class NKS_NavTaskManager_Test {
                 NKS_Comments__c,
                 NKS_Assignee__c,
                 NKS_Task_Version__c,
-                NKS_NAV_Case_Reference__c
+                NKS_NAV_Case_Reference__c,
+                NKS_Henvendelse_BehandlingsId__c
             FROM NavTask__c
             LIMIT 1
         ];

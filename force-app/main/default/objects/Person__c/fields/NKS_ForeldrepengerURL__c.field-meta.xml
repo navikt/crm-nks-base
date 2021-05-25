@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_ForeldrepengerURL__c</fullName>
     <externalId>false</externalId>
-    <formula>HYPERLINK(&quot;https://app.adeo.no/fpsak/aktoer/ INT_ActorId__c&quot; , &quot;Foreldrepenger&quot;, &quot;_self&quot;)</formula>
+    <formula>HYPERLINK(&quot;https://app.adeo.no/fpsak/aktoer/&quot;&amp;INT_ActorId__c , &quot;Foreldrepenger&quot;, &quot;_self&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Foreldrepenger</label>
     <required>false</required>
