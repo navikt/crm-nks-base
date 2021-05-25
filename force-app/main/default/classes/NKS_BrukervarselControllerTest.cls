@@ -16,7 +16,7 @@ private with sharing class NKS_BrukervarselControllerTest {
         ApiMock.setTestMock('GET_VARSEL_FROM_BRUKER_ID', 200, 'OK');
 
         Test.startTest();
-        NKS_BrukervarselController.importBrukervarselNotifications(p.Id);
+        NKS_BrukervarselController.doBrukervarselSynch(p.Id);
         Test.stopTest();
 
         System.assertEquals(4, [SELECT Id FROM UserNotification__c].size(), 'Excpected three records');
@@ -39,7 +39,7 @@ private with sharing class NKS_BrukervarselControllerTest {
 
         Test.startTest();
         try {
-            NKS_BrukervarselController.importBrukervarselNotifications(p.Id);
+            NKS_BrukervarselController.doBrukervarselSynch(p.Id);
         } catch (AuraHandledException ex) {
             System.assert(true, 'Correct exception');
         } catch (Exception ex) {

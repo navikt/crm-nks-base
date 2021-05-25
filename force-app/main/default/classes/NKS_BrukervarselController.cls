@@ -1,5 +1,5 @@
 public with sharing class NKS_BrukervarselController {
-    public static void importBrukervarselNotifications(String personId) {
+    public static void doBrukervarselSynch(String personId) {
         List<UserNotification__c> unList = new List<UserNotification__c>();
         Person__c person = [SELECT Id, CRM_Account__c, INT_ActorId__c FROM Person__c WHERE Id = :personId LIMIT 1];
 
@@ -13,6 +13,13 @@ public with sharing class NKS_BrukervarselController {
             if (unList.size() > 0) {
                 Database.upsert(unList, UserNotification__c.INT_Key__c);
             }
+        } else {
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Error retrieving brukervarsel \n ' + 'no person found with id ' + personId, null);
+            logger.publish();
+            AuraHandledException ex = new AuraHandledException('Error retrieving brukervarsel');
+            ex.setMessage('Error retrieving brukervarsel');
+            throw ex;
         }
     }
 
