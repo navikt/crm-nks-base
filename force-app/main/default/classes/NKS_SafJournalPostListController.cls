@@ -31,6 +31,16 @@ public with sharing class NKS_SafJournalPostListController {
         return NKS_NavCaseService.getNavCases(actorId);
     }
 
+    @AuraEnabled(cacheable=true)
+    public static NKS_SafGetDocumentResponse getDocument(
+        String journalpostId,
+        String documentId,
+        String variantFormat
+    ) {
+        NKS_SafService service = new NKS_SafService();
+        return service.getSafDocument(journalpostId, documentId, variantFormat);
+    }
+
     private static String getQuery(Object queryVariables) {
         GraphQLFactory qlFactory = new GraphQLFactory('query', 'dokumentoversiktBruker', queryVariables)
             .addArgument('$brukerId', 'BrukerIdInput! ')

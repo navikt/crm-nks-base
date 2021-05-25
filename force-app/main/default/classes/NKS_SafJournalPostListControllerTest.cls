@@ -44,4 +44,27 @@ private with sharing class NKS_SafJournalPostListControllerTest {
 
         System.assertEquals(0, result.size(), 'expected empty list');
     }
+
+    @IsTest
+    static void getDocument() {
+        NKS_SafGetDocumentResponse result;
+
+        Map<String, String> headers = new Map<String, String>{
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="myTestFile.pdf"'
+        };
+
+        SingleRequestMock mock = new SingleRequestMock(200, 'Success', 'TEST_STRING', headers);
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+        result = NKS_SafJournalPostListController.getDocument('12345', '54321', 'ARKIV');
+        Test.stopTest();
+
+        System.assertEquals(
+            'VEVTVF9TVFJJTkc=',
+            result.documentString,
+            'Did not manage to set the correct string, got ' + result
+        );
+    }
 }
