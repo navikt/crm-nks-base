@@ -1,0 +1,18 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item size="2">
+            <p class="slds-text-heading_small">{message.kanal}</p>
+            <p>{sendtDate}</p>
+        </lightning-layout-item>
+        <lightning-layout-item size="10">
+            <p if:true={showMessageTitle} class="slds-text-heading_small">{message.varseltittel}</p>
+            <p>{message.varseltekst}</p>
+            <template if:true={showReceiverInfo}>
+                <p>{receiverInfo}</p>
+            </template>
+            <template if:true={showLink}>
+                <p>Lenke: {message.varselURL}</p>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
