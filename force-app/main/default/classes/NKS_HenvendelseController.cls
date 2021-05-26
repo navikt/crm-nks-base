@@ -19,11 +19,13 @@ global without sharing class NKS_HenvendelseController {
                     );
                 }
                 when 'JOURNAL' {
-                    henvendelseJournalInit(
-                        henvReq.behandlingskjedeId,
-                        henvReq.navUnitNumber,
-                        henvReq.navCaseId,
-                        henvReq.themeCode
+                    respList.add(
+                        henvendelseJournalInit(
+                            henvReq.behandlingskjedeId,
+                            henvReq.navUnitNumber,
+                            henvReq.navCaseId,
+                            henvReq.themeCode
+                        )
                     );
                 }
                 when else {
@@ -61,7 +63,7 @@ global without sharing class NKS_HenvendelseController {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
             logger.httpError('Henvendelse post failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
-            throw new AuraHandledException('Henvendelse post failed');
+            return '';
         }
     }
 
@@ -74,7 +76,7 @@ global without sharing class NKS_HenvendelseController {
      * @param navCaseId
      * @param themeCode
      **/
-    private static void henvendelseJournalInit(
+    private static String henvendelseJournalInit(
         String behandlingskjedeId,
         String navUnitNumber,
         String navCaseId,
@@ -85,11 +87,12 @@ global without sharing class NKS_HenvendelseController {
         HttpResponse resp = service.createHenvendelseJournal(behandlingskjedeId, navUnitNumber, navCaseId, themeCode);
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
+            return 'OK';
         } else {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
             logger.httpError('Henvendelse journal failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
-            throw new AuraHandledException('Henvendelse journal failed');
+            return 'ERROR';
         }
     }
 
