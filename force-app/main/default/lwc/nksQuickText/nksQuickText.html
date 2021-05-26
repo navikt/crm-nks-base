@@ -70,6 +70,7 @@
                 title="Hurtigtekst"
             ></lightning-button-icon>
             <lightning-input-rich-text
+                onkeyup={insertquicktext}
                 value={conversationNoteRich}
                 onchange={handleChange}
                 formats={inputFormats}
