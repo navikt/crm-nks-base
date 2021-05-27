@@ -1,6 +1,6 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
-
+import getQuicktexts from '@salesforce/apex/NKS_QuickTextSearchController.getQuicktexts';
 //LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
 export default class nksQuickText extends LightningElement {
@@ -14,9 +14,18 @@ export default class nksQuickText extends LightningElement {
     @track data;
     loadingData = false;
     @api required = false;
-
+    quicktexts;
+    qmap;
     get inputFormats() {
         return [''];
+    }
+
+    @wire(getQuicktexts, {})
+    wiredQuicktexts(value) {
+        if (value.data) {
+            this.quicktexts = value.data;
+            this.qmap = new Map(value.data.map(key => [key.nksAbbreviationKey__c, key.Message]));
+        }
     }
 
     get conversationNote() {
@@ -25,6 +34,7 @@ export default class nksQuickText extends LightningElement {
         plainText = plainText.replace(/<[^\s>]+>/g, ''); //Remove remaining html tags
         return plainText;
     }
+
 
     handleKeyUp(evt) {
         const isEnterKey = evt.keyCode === 13;
@@ -75,6 +85,21 @@ export default class nksQuickText extends LightningElement {
             detail: this.conversationNote
         });
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    insertquicktext(event) {
+        const isSpaceKey = event.keyCode === 32;
+        if (isSpaceKey) {
+            var textval = this.conversationNote.replace(/(\r\n|\n|\r)/gm, "")
+            var stringarray = textval.trim().split(' ');
+            const lastItem = stringarray[stringarray.length - 1]
+            if (this.qmap.has(lastItem)) {
+                const inserttext = this.qmap.get(lastItem);
+                const editor = this.template.querySelector('lightning-input-rich-text');
+                const startindex = this.conversationNote.length - lastItem.length - 2;
+                editor.setRangeText(inserttext + ' ', startindex, startindex + inserttext.length, 'end');
+            }
+        }
     }
 
     @api
