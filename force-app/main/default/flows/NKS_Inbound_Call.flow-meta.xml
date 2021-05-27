@@ -83,7 +83,7 @@
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>Related_Account.Id</elementReference>
+                <elementReference>RELATED_ACCOUNT_ID</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -125,8 +125,10 @@
             </value>
         </filters>
         <object>Account</object>
-        <outputReference>Related_Account</outputReference>
-        <queriedFields>Id</queriedFields>
+        <outputAssignments>
+            <assignToReference>RELATED_ACCOUNT_ID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <name>Get_Person_Account</name>
@@ -145,8 +147,10 @@
             </value>
         </filters>
         <object>Account</object>
-        <outputReference>Related_Account</outputReference>
-        <queriedFields>Id</queriedFields>
+        <outputAssignments>
+            <assignToReference>RELATED_ACCOUNT_ID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
@@ -194,13 +198,11 @@
     </start>
     <status>Active</status>
     <variables>
-        <description>Sets the related account to the organization account.</description>
-        <name>Related_Account</name>
-        <dataType>SObject</dataType>
+        <name>RELATED_ACCOUNT_ID</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Account</objectType>
     </variables>
     <variables>
         <description>Input parameter from the IVR</description>
