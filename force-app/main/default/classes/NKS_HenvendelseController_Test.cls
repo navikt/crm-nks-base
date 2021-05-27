@@ -36,16 +36,12 @@ public class NKS_HenvendelseController_Test {
         ApiMock.setTestMock('POST_HENVENDELSE', 500, 'Internal Server Error');
 
         Test.startTest();
-        try {
-            NKS_HenvendelseController.handleHenvendelseRequest(
-                new List<NKS_HenvendelseController.HenvendelseRequest>{ req }
-            );
-        } catch (AuraHandledException auraEx) {
-            successfulTest = true;
-        }
+        List<String> henvResponse = NKS_HenvendelseController.handleHenvendelseRequest(
+            new List<NKS_HenvendelseController.HenvendelseRequest>{ req }
+        );
         Test.stopTest();
 
-        System.assert(successfulTest);
+        System.assert(String.isBlank(henvResponse[0]));
     }
 
     @isTest
@@ -79,16 +75,12 @@ public class NKS_HenvendelseController_Test {
         Boolean successfulTest = false;
 
         Test.startTest();
-        try {
-            NKS_HenvendelseController.handleHenvendelseRequest(
-                new List<NKS_HenvendelseController.HenvendelseRequest>{ req }
-            );
-        } catch (AuraHandledException auraEx) {
-            successfulTest = true;
-        }
+        List<String> henvResp = NKS_HenvendelseController.handleHenvendelseRequest(
+            new List<NKS_HenvendelseController.HenvendelseRequest>{ req }
+        );
         Test.stopTest();
 
-        System.assert(successfulTest);
+        System.assert(henvResp[0].equalsIgnoreCase('ERROR'));
     }
 
     @isTest
