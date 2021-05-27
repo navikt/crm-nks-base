@@ -4,6 +4,7 @@
             <lightning-radio-group
                 if:false={FAGSAK_ONLY}
                 name="caseType"
+                aria-label="Sakstype"
                 class="slds-float_left"
                 options={caseTypeOptions}
                 value={selectedCaseType}
@@ -17,6 +18,7 @@
             <lightning-combobox
                 if:false={isGeneralCase}
                 name="themeGroup"
+                aria-label="Temagruppe"
                 value={value}
                 placeholder="Temagruppe"
                 options={themeGroupOptions}
