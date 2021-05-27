@@ -899,11 +899,6 @@
         <field>UserNotification__c.INT_VisibleUntil__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>UserNotification__c.NotificationType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Base Permissions</label>
     <license>Salesforce</license>

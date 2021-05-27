@@ -135,22 +135,6 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NotificationType__c</fieldItem>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>VARSEL</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-c9e9a0b8-4161-4008-a669-38589beaa730</name>
         <type>Facet</type>
     </flexiPageRegions>
