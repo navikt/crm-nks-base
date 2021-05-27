@@ -34,4 +34,18 @@ public with sharing class NKS_QuickTextSearchController {
             }
         }
     }
+    /**
+     * WIll extract a all quicktexts that are marked as type=Abbreviation
+     * @Author Lars Petter Johnsen
+     * @Date 26.05.2021
+     */
+    @AuraEnabled(cacheable=true)
+    public static List<QuickText> getQuicktexts(){
+        try {
+            List<QuickText> qTextList = [SELECT Message, nksAbbreviationKey__c FROM QuickText WHERE nksType__c =:'Abbreviation'];  
+            return qTextList;
+        } catch (Exception e) {
+           return null;
+        }
+    }
 }
