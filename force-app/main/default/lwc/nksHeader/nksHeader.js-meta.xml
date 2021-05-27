@@ -5,11 +5,17 @@
     <masterLabel>Header</masterLabel>
     <targets>
         <target>lightning__RecordPage</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <property name="input" label="Text" type="String" default="This is a header" />
             <property name="headertag" label="Header" type="String" datasource="h1, h2, h3, h4, h5, h6" default="h1" />
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="input" label="Text" type="String" default="This is a header" />
+            <property name="headertag" label="Header" type="String" default="h1" />
+            <property name="center" label="Center" type="Boolean" default="false" description="Set to true to center header in its container" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
