@@ -1,24 +1,25 @@
 import { LightningElement, api, track } from 'lwc';
 import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization';
 import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
-import getRecordId from '@salesforce/apex/NKS_SafJournalpostListController.getRecordId';
-
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 export default class NksSafVerticalNavigation extends LightningElement {
     @api objectApiName;
     @api recordId;
+    wireFields;
+    personId;
+    _actorId;
+
+    @api get actorId() {
+        return this._actorId;
+    }
+
+    set actorId(value) {
+        this._actorId = value;
+        this.callGetCases();
+    }
 
     @api get themeGroupField() {
         return this._themeGroupField;
-    }
-
-    @api get viewedObjectApiName() {
-        return this._viewedObjectApiName ? this._viewedObjectApiName : this.objectApiName;
-    }
-    @api get viewedRecordId() {
-        return this._viewedRecordId ? this._viewedRecordId : this.recordId;
-    }
-    @api get brukerIdField() {
-        return this._brukerIdField;
     }
     @api get relationshipField() {
         return this._relationshipField;
@@ -27,23 +28,12 @@ export default class NksSafVerticalNavigation extends LightningElement {
     set themeGroupField(value) {
         this._themeGroupField = value ? value : null;
     }
-    set viewedObjectApiName(value) {
-        this._viewedObjectApiName = value ? value : this.objectApiName;
-    }
-    set viewedRecordId(value) {
-        this._viewedRecordId = value ? value : this.recordId;
-    }
-    set brukerIdField(value) {
-        this._brukerIdField = value;
-    }
     set relationshipField(value) {
         this._relationshipField = value;
     }
 
     _themeGroupField;
-    _viewedObjectApiName;
-    _viewedRecordId;
-    _brukerIdField;
+    @api brukerIdField;
     _relationshipField;
 
     @track isLoading;
@@ -56,7 +46,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
     @track caseMap = new Map();
     @track caseMapArray = [];
 
-    _selectedThemeGroup = '';
+    _selectedThemeGroup = 'all';
     _selectedTheme = '';
     _selectedCase = '';
     _themeMap;
@@ -91,9 +81,10 @@ export default class NksSafVerticalNavigation extends LightningElement {
     }
 
     async loadThemeAndCase() {
+        this.wireFields = [this.objectApiName + '.Id'];
+
         this.isLoading = true;
         this.error = null;
-        await this.callGetCases();
         await this.callGetThemes();
         await this.callGetSelectedTheme();
         this.isLoading = false;
@@ -101,21 +92,18 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
     async callGetSelectedTheme() {
         if (this.themeGroupField) {
-            const inputParams = {
-                field: this.themeGroupField,
-                objectApiName: this.viewedObjectApiName,
-                relationshipField: 'Id',
-                relationshipValue: this.viewedRecordId
-            };
-
-            this.error = null;
-
-            try {
-                let data = await getRecordId(inputParams);
-                this.selectedThemeGroup = data;
-            } catch (err) {
-                this.setErrorMessage(err, 'caughtError');
-            }
+            await getRelatedRecord({
+                parentId: this.recordId,
+                relationshipField: this.themeGroupField,
+                objectApiName: this.objectApiName
+            })
+                .then((record) => {
+                    let themeGroup = this.resolve(this.themeGroupField, record);
+                    this.selectedThemeGroup = themeGroup ? themeGroup : 'all';
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         } else {
             this.selectedThemeGroup = 'all';
         }
@@ -123,77 +111,76 @@ export default class NksSafVerticalNavigation extends LightningElement {
 
     async callGetCases() {
         const inputParams = {
-            brukerIdField: this.brukerIdField,
-            objectApiName: this.viewedObjectApiName,
-            relationshipField: this.relationshipField,
-            viewedRecordId: this.viewedRecordId
+            actorId: this.actorId
         };
+        if (this.actorId) {
+            try {
+                let data = await getCases(inputParams);
+                this.caseMap = new Map();
 
-        try {
-            let data = await getCases(inputParams);
-            this.caseMap = new Map();
-
-            this.caseMap.set('all', [
-                {
-                    label: 'Alle',
-                    caseId: 'all',
-                    themeCodeCaseId: 'all_all',
-                    themeCode: 'all',
-                    themeName: '',
-                    isOpen: 'all'
-                }
-            ]);
-
-            data.forEach((element) => {
-                let nmbOfOpenCases = this.nmbOfOpenCases(element);
-                let isOpen = nmbOfOpenCases > 0 ? true : false;
-
-                let caseLabel = element.saksId;
-
-                if (isOpen) {
-                    caseLabel +=
-                        ' - (' +
-                        nmbOfOpenCases +
-                        (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
-                        ')';
-                }
-
-                let caseX = {
-                    label: caseLabel,
-                    caseId: element.saksId,
-                    themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
-                    themeName: element.themeName,
-                    themeCode: element.sakstema.value,
-                    isOpen: isOpen,
-                    openDate: element.opprettet,
-                    closeDate: element.lukket
-                };
-
-                if (false === this.caseMap.has(caseX.themeCode)) {
-                    let caseAlle = {
+                this.caseMap.set('all', [
+                    {
                         label: 'Alle',
                         caseId: 'all',
-                        themeCodeCaseId: element.sakstema.value + '_all',
+                        themeCodeCaseId: 'all_all',
+                        themeCode: 'all',
+                        themeName: '',
+                        isOpen: 'all'
+                    }
+                ]);
+
+                data.forEach((element) => {
+                    let nmbOfOpenCases = this.nmbOfOpenCases(element);
+                    let isOpen = nmbOfOpenCases > 0 ? true : false;
+
+                    let caseLabel = element.saksId;
+
+                    if (isOpen) {
+                        caseLabel +=
+                            ' - (' +
+                            nmbOfOpenCases +
+                            (nmbOfOpenCases > 1 ? ' åpne henvendelser' : ' åpen henvendelse') +
+                            ')';
+                    }
+
+                    let caseX = {
+                        label: caseLabel,
+                        caseId: element.saksId,
+                        themeCodeCaseId: element.sakstema.value + '_' + element.saksId,
                         themeName: element.themeName,
                         themeCode: element.sakstema.value,
-                        isOpen: true
+                        isOpen: isOpen,
+                        openDate: element.opprettet,
+                        closeDate: element.lukket
                     };
 
-                    let caseGenerell = {
-                        label: 'Generell',
-                        caseId: 'general',
-                        themeCodeCaseId: element.sakstema.value + '_general',
-                        themeName: element.themeName,
-                        themeCode: element.sakstema.value,
-                        isOpen: true
-                    };
-                    this.caseMap.set(caseX.themeCode, [caseAlle, caseGenerell]);
-                }
+                    if (false === this.caseMap.has(caseX.themeCode)) {
+                        let caseAlle = {
+                            label: 'Alle',
+                            caseId: 'all',
+                            themeCodeCaseId: element.sakstema.value + '_all',
+                            themeName: element.themeName,
+                            themeCode: element.sakstema.value,
+                            isOpen: true
+                        };
 
-                this.caseMap.get(caseX.themeCode).push(caseX);
-            });
-        } catch (err) {
-            this.setErrorMessage(err, 'caughtError');
+                        let caseGenerell = {
+                            label: 'Generell',
+                            caseId: 'general',
+                            themeCodeCaseId: element.sakstema.value + '_general',
+                            themeName: element.themeName,
+                            themeCode: element.sakstema.value,
+                            isOpen: true
+                        };
+                        this.caseMap.set(caseX.themeCode, [caseAlle, caseGenerell]);
+                    }
+
+                    this.caseMap.get(caseX.themeCode).push(caseX);
+                });
+                this.filterCases();
+            } catch (err) {
+                this.setErrorMessage(err, 'caughtError');
+            }
         }
     }
 
@@ -261,7 +248,7 @@ export default class NksSafVerticalNavigation extends LightningElement {
             this.getCaseMapArrayFromCaseMap(themeCode, caseMapArr);
         });
         this.caseMapArray = caseMapArr;
-        this.selectedCase = caseMapArr[0].value[0].caseId;
+        this.selectedCase = caseMapArr.length > 0 ? caseMapArr[0].value[0].caseId : null;
     }
 
     getCaseMapArrayFromCaseMap(themeCode, arr) {
@@ -329,5 +316,10 @@ export default class NksSafVerticalNavigation extends LightningElement {
                 this.errors.push('Ukjent feil: ' + err);
                 break;
         }
+    }
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || self);
     }
 }

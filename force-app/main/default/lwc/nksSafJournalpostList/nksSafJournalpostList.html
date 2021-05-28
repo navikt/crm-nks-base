@@ -4,13 +4,25 @@
     <lightning-layout multiple-rows="true">
         <!-- SAF Available theme vertical navigation list -->
         <lightning-layout-item size="3">
-            <c-nks-saf-vertical-navigation
+            <!-- <c-nks-saf-vertical-navigation
+                actor-id={brukerId}
                 onnewselection={handleNewSelection}
-                viewed-object-api-name={viewedObjectApiName}
-                viewed-record-id={viewedRecordId}
+                object-api-name={viewedObjectApiName}
+                record-id={viewedRecordId}
                 bruker-id-field={brukerIdField}
                 theme-group-field={themeGroupField}
                 relationship-field={relationshipField}
+                onsetavailablethemes={handleAvailableThemes}
+                onselectcase={handleSelectCase}
+            >
+            </c-nks-saf-vertical-navigation> -->
+            <c-nks-saf-vertical-navigation
+                actor-id={brukerId}
+                object-api-name={viewedObjectApiName}
+                record-id={viewedRecordId}
+                theme-group-field={themeGroupField}
+                relationship-field={relationshipField}
+                onnewselection={handleNewSelection}
                 onsetavailablethemes={handleAvailableThemes}
                 onselectcase={handleSelectCase}
             >
