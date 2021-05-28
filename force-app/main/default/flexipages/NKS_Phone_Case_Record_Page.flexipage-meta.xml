@@ -273,15 +273,19 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>brukerIdField</name>
-                    <value>Name</value>
+                    <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>nmbOfJournalPosts</name>
-                    <value>10</value>
+                    <value>50</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
                     <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>themeGroupField</name>
+                    <value>NKS_Theme_Group__c</value>
                 </componentInstanceProperties>
                 <componentName>nksSakOgDokumentListeNarrow</componentName>
             </componentInstance>
