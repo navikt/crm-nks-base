@@ -117,13 +117,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     connectedCallback() {
         this.init();
     }
-    rendered = false;
-    // renderedCallback() {
-    //     if (false === this.rendered) {
-    //         this.setThemeGroupCheckboxes();
-    //         this.rendered = true;
-    //     }
-    // }
 
     setThemeGroupCheckboxes() {
         let elements = Array.from(this.template.querySelectorAll('lightning-input.themeGroupCheckbox'));
@@ -180,6 +173,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         }
         if (error) {
             this.error = true;
+            this.setErrorMessage(error, 'caughtError');
         }
     }
 
@@ -196,7 +190,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                this.setErrorMessage(error, 'caughtError');
             });
     }
 
