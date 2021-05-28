@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Apex_Class__c</field>
-        <value xsi:type="xsd:string">NKS_HenvendelseController</value>
+        <value xsi:type="xsd:string">NKS_HenvendelseRetry</value>
     </values>
 </CustomMetadata>
