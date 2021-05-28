@@ -10,7 +10,6 @@ public with sharing class NKS_SafJournalPostListController {
         );
         NKS_SafService safService = new NKS_SafService();
         NKS_SafQueryResponse queryResults;
-        System.debug(getQuery(queryVariables));
         NKS_SafQuery query = (NKS_SafQuery) JSON.deserialize(getQuery(queryVariables), NKS_SafQuery.class);
         try {
             queryResults = safService.doSafQuery(query);
