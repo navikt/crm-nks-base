@@ -220,7 +220,7 @@ private class KafkaBrukernotifikasjonStatusTest {
         // prettier-ignore
         System.assertEquals(statusoppdatering.grupperingsId, userNotification.INT_GroupingId__c, 'Expected value to be set');
         // prettier-ignore
-        System.assertEquals(statusoppdatering.tekst, userNotification.INT_Description__c, 'Expected value to be set');
+        System.assertEquals(statusoppdatering.statusIntern, userNotification.INT_Description__c, 'Expected value to be set');
         // prettier-ignore
         System.assertEquals(statusoppdatering.link, userNotification.INT_Link__c, 'Expected value to be set');
         // prettier-ignore
