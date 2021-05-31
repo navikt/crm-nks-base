@@ -9,12 +9,14 @@ import { publish, MessageContext } from 'lightning/messageService';
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_NAV_Case_Validation_Error';
 import NAV_CASE_RETRIEVE_ERROR from '@salesforce/label/c.NKS_NAV_Case_Retrieve_Error';
 import NO_CASES_ERROR from '@salesforce/label/c.NKS_Journal_Case_List_No_Cases_Error';
+import NO_CASES_FOR_THEME_GROUP from '@salesforce/label/c.NKS_No_Cases_for_Selected_Theme_Group';
 
 export default class NksPersonCaseOverview extends LightningElement {
     @api labels = {
         VALIDATION_ERROR,
         NAV_CASE_RETRIEVE_ERROR,
-        NO_CASES_ERROR
+        NO_CASES_ERROR,
+        NO_CASES_FOR_THEME_GROUP
     };
 
     @api actorId;
@@ -288,6 +290,10 @@ export default class NksPersonCaseOverview extends LightningElement {
 
     get dataLoaded() {
         return (this.error === true || this.casesLoaded === true) && this.themeMap;
+    }
+
+    get hasThemeGroupCases() {
+        return this.displayedCaseGroups.length > 0;
     }
 
     @api

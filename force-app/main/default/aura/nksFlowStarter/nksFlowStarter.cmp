@@ -24,7 +24,7 @@
     </div>
 
     <aura:renderIf isTrue="{!v.showFlow}">
-        <div class="slds-p-top_small">
+        <div class="slds-p-top_small" tabindex="0">
             <lightning:card>
                 <lightning:flow aura:id="flowData" onstatuschange="{!c.flowStatusChange}" />
             </lightning:card>
