@@ -236,6 +236,23 @@
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.AccountId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>User_Notifications__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-f591607a-fda9-45b1-bcea-1811f217e888</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -273,15 +290,19 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>brukerIdField</name>
-                    <value>Name</value>
+                    <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>nmbOfJournalPosts</name>
-                    <value>10</value>
+                    <value>50</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
                     <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>themeGroupField</name>
+                    <value>NKS_Theme_Group__c</value>
                 </componentInstanceProperties>
                 <componentName>nksSakOgDokumentListeNarrow</componentName>
             </componentInstance>
