@@ -7,6 +7,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.KnowledgeArticle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Knowledge__kav.AdvisorInformationInternal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -84,10 +89,10 @@
     <label>NKS - Knowledge Editor</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Case</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

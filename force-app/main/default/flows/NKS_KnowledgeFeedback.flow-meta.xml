@@ -46,6 +46,13 @@
                 <elementReference>FeedbackRecordTypeId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseFeedback.KnowledgeArticle__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_feedback</targetReference>
         </connector>

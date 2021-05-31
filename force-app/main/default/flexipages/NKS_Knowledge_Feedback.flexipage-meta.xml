@@ -4,19 +4,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>hideUpdateButton</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>variant</name>
-                    <value>non-linear</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
@@ -54,16 +41,28 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>force:detailPanel</componentName>
+                <componentInstanceProperties>
+                    <name>hideUpdateButton</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>non-linear</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
             </componentInstance>
         </itemInstances>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -136,6 +135,35 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.KnowledgeArticle__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Feedbacks__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>rightsidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
             </componentInstance>
         </itemInstances>
@@ -145,7 +173,7 @@
     <masterLabel>NKS Knowledge Feedback</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
-        <name>flexipage:recordHomePinnedLeftSidebarTwoColTemplateDesktop</name>
+        <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>
