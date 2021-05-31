@@ -8,14 +8,26 @@ export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
-    showHeader = false;
-    personId; //Salesforce ID to the person record
+    showAll = false;
+    personId;
     personIdent;
     wireFields = [this.objectApiName + '.Id'];
     @track notifications = [];
 
     get showNotifications() {
-        return notifications.length > 0;
+        return this.notifications.length > 0;
+    }
+
+    get filteredNotificationList() {
+        if (this.notifications.length < 1) {
+            return [];
+        }
+
+        return this.showAll ? this.notifications : this.notifications.slice(0, 1);
+    }
+
+    get numberOfNotifications() {
+        return this.notifications ? this.notifications.length : 0;
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -59,6 +71,10 @@ export default class NksBrukervarselList extends LightningElement {
         if (data) {
             this.notifications = data;
         }
+    }
+
+    showAllNotifications() {
+        this.showAll = true;
     }
 
     /**

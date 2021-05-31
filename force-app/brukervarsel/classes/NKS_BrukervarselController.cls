@@ -1,4 +1,25 @@
 public with sharing class NKS_BrukervarselController {
+    @AuraEnabled(cacheable=true)
+    public static List<BrukervarslingBestilling> getBrukerVarselFromActorId(String actorId) {
+        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(actorId);
+
+        Integer statusCode = response.getStatusCode();
+
+        if (statusCode == 200) {
+            return (List<BrukervarslingBestilling>) JSON.deserialize(
+                response.getBody(),
+                List<BrukervarslingBestilling>.class
+            );
+        } else {
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Error retrieving brukervarsel \n ' + 'Status: ' + response.getStatus(), null);
+            logger.publish();
+            AuraHandledException ex = new AuraHandledException('Error retrieving brukervarsel');
+            ex.setMessage('Error retrieving brukervarsel');
+            throw ex;
+        }
+    }
+
     // public static void doBrukervarselSynch(String personId) {
     //     List<UserNotification__c> unList = new List<UserNotification__c>();
     //     Person__c person = [SELECT Id, CRM_Account__c, INT_ActorId__c FROM Person__c WHERE Id = :personId LIMIT 1];
@@ -22,27 +43,6 @@ public with sharing class NKS_BrukervarselController {
     //         throw ex;
     //     }
     // }
-
-    @AuraEnabled(cacheable=true)
-    public static List<BrukervarslingBestilling> getBrukerVarselFromActorId(String actorId) {
-        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(actorId);
-
-        Integer statusCode = response.getStatusCode();
-
-        if (statusCode == 200) {
-            return (List<BrukervarslingBestilling>) JSON.deserialize(
-                response.getBody(),
-                List<BrukervarslingBestilling>.class
-            );
-        } else {
-            LoggerUtility logger = new LoggerUtility();
-            logger.error('Error retrieving brukervarsel \n ' + 'Status: ' + response.getStatus(), null);
-            logger.publish();
-            AuraHandledException ex = new AuraHandledException('Error retrieving brukervarsel');
-            ex.setMessage('Error retrieving brukervarsel');
-            throw ex;
-        }
-    }
 
     // private static UserNotification__c transformVarselIntoNotification(
     //     BrukervarslingBestilling bestilling,
