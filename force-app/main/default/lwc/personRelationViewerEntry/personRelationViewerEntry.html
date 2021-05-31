@@ -17,7 +17,7 @@
                         onclick={navigateToSObject}
                     >
                     </lightning-formatted-url>
-                    &nbsp;{relation.sex} {relation.age} år
+                    &nbsp;{relation.sex} {relation.age} år. Født {relation.birthdate}.
                 </template>
                 <template if:false={relation.child}>
                     <lightning-formatted-url
