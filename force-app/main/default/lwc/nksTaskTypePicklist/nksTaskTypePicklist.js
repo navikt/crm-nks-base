@@ -86,17 +86,18 @@ export default class NksTaskTypePicklist extends LightningElement {
         const input = {
             themeCode: this.theme
         };
-        this.tasktypes = [];
         try {
             getTaskTypes(input).then((result) => {
                 this.commoncodes = result;
+                let availableTypes = [];
                 result.forEach((tasktype) => {
                     const option = {
                         value: tasktype.id,
                         label: tasktype.name
                     };
-                    this.tasktypes = [...this.tasktypes, option];
+                    availableTypes.push(option);
                 });
+                this.tasktypes = availableTypes;
             });
         } catch (error) {
             this.errorMessage = error.body.message;

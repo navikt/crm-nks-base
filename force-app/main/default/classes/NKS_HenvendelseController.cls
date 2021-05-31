@@ -1,7 +1,4 @@
-public without sharing class NKS_HenvendelseController implements IApiRetry {
-    private List<Conversation_Note__c> notesToRetry = new List<Conversation_Note__c>();
-    private User runningUser;
-
+global without sharing class NKS_HenvendelseController {
     @InvocableMethod(
         label='Henvendelse Request'
         description='Posts the created conversation note to henvendelse'
@@ -22,11 +19,13 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
                     );
                 }
                 when 'JOURNAL' {
-                    henvendelseJournalInit(
-                        henvReq.behandlingskjedeId,
-                        henvReq.navUnitNumber,
-                        henvReq.navCaseId,
-                        henvReq.themeCode
+                    respList.add(
+                        henvendelseJournalInit(
+                            henvReq.behandlingskjedeId,
+                            henvReq.navUnitNumber,
+                            henvReq.navCaseId,
+                            henvReq.themeCode
+                        )
                     );
                 }
                 when else {
@@ -64,7 +63,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
             logger.httpError('Henvendelse post failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
-            throw new AuraHandledException('Henvendelse post failed');
+            return '';
         }
     }
 
@@ -77,7 +76,7 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
      * @param navCaseId
      * @param themeCode
      **/
-    private static void henvendelseJournalInit(
+    private static String henvendelseJournalInit(
         String behandlingskjedeId,
         String navUnitNumber,
         String navCaseId,
@@ -88,11 +87,12 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         HttpResponse resp = service.createHenvendelseJournal(behandlingskjedeId, navUnitNumber, navCaseId, themeCode);
         Integer statusCode = resp.getStatusCode();
         if (statusCode == 200 || statusCode == 201) {
+            return 'OK';
         } else {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
             logger.httpError('Henvendelse journal failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
-            throw new AuraHandledException('Henvendelse journal failed');
+            return 'ERROR';
         }
     }
 
@@ -175,139 +175,6 @@ public without sharing class NKS_HenvendelseController implements IApiRetry {
         }
 
         return convNote;
-    }
-
-    //###########################################################//
-    //###############    API RETRY HANDLING    ##################//
-    //###########################################################//
-
-    /**
-     * @description: Queries the failing conversation notes created/owned by the running user
-     * @author Stian Ruud Schikora | 05-13-2021
-     **/
-    public void init() {
-        this.notesToRetry = getFailedConversationNotes();
-        this.runningUser = [SELECT Id, Department FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-    }
-
-    public Boolean hasNext() {
-        return this.notesToRetry != null && this.notesToRetry.size() > 0;
-    }
-
-    /**
-     * @description : Returns the number of callouts needed for the next retry
-     * If post and journal failed this requires two separate callouts
-     * If post failed and no journal was initiated, only one callout is needed
-     * @author Stian Ruud Schikora | 05-13-2021
-     * @return Integer
-     **/
-    public Integer calloutsToConsume() {
-        if (hasNext()) {
-            if (this.notesToRetry[0].NKS_Sent__c == false) {
-                return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 2 : 1;
-            } else {
-                return this.notesToRetry[0].NKS_Journal_Status__c == 'Journal Error' ? 1 : 0;
-            }
-        } else {
-            return 0;
-        }
-    }
-
-    public void performRetry() {
-        performRetry(this.notesToRetry.remove(0));
-    }
-
-    public void performRetry(Conversation_Note__c noteToRetry) {
-        try {
-            if (noteToRetry != null) {
-                if (noteToRetry.NKS_Sent__c == false) {
-                    String behandlingsId = postToHenvendelse(
-                        noteToRetry.CRM_Account__r.INT_PersonIdent__c,
-                        this.runningUser.Department,
-                        noteToRetry.NKS_Theme_Group_Code__c,
-                        noteToRetry.CRM_Conversation_Note__c
-                    );
-                    if (behandlingsId != null) {
-                        updateCaseBehandlingsId(noteToRetry.CRM_Case__c, behandlingsId);
-                    }
-                    if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
-                        henvendelseJournalInit(
-                            behandlingsId,
-                            this.runningUser.Department,
-                            noteToRetry.NKS_Legacy_Case_Id__c,
-                            noteToRetry.NKS_Theme_Code__c
-                        );
-                        //If no exception is thrown from henvendelseJournalInit - Journal is successful
-                        setJournalSuccess(noteToRetry.Id);
-                    }
-                } else {
-                    henvendelseJournalInit(
-                        noteToRetry.CRM_Case__r.NKS_Henvendelse_BehandlingsId__c,
-                        this.runningUser.Department,
-                        noteToRetry.NKS_Legacy_Case_Id__c,
-                        noteToRetry.NKS_Theme_Code__c
-                    );
-                    //If no exception is thrown from henvendelseJournalInit - Journal is successful
-                    setJournalSuccess(noteToRetry.Id);
-                }
-            }
-        } catch (AuraHandledException auraEx) {
-            //Aura exceptions are logged in their respective methods
-        } catch (Exception ex) {
-            //Pokémon catch because a failure here should NEVER affect the user
-            LoggerUtility logger = new LoggerUtility('Henvendelse');
-            logger.exception(ex, noteToRetry, CRM_ApplicationDomain.Domain.NKS);
-            logger.publish();
-        }
-    }
-
-    @testVisible
-    @future
-    private static void setJournalSuccess(String convNoteId) {
-        Conversation_Note__c noteToUpdate;
-
-        try {
-            noteToUpdate = new Conversation_Note__c(Id = convNoteId, NKS_Journal_Status__c = 'Journal Completed');
-            update noteToUpdate;
-        } catch (Exception ex) {
-            LoggerUtility logger = new LoggerUtility('Henvendelse');
-            logger.exception(ex, noteToUpdate, CRM_ApplicationDomain.Domain.NKS);
-            logger.publish();
-        }
-    }
-
-    @testVisible
-    @future
-    private static void updateCaseBehandlingsId(String caseId, String behandlingsId) {
-        Case caseToUpdate;
-
-        try {
-            caseToUpdate = new Case(Id = caseId, NKS_Henvendelse_BehandlingsId__c = behandlingsId);
-            update caseToUpdate;
-        } catch (Exception ex) {
-            LoggerUtility logger = new LoggerUtility('Henvendelse');
-            logger.exception(ex, caseToUpdate, CRM_ApplicationDomain.Domain.NKS);
-            logger.publish();
-        }
-    }
-
-    private List<Conversation_Note__c> getFailedConversationNotes() {
-        return [
-            SELECT
-                Id,
-                Name,
-                CRM_Conversation_Note__c,
-                NKS_Theme_Group_Code__c,
-                NKS_Theme_Code__c,
-                NKS_Sent__c,
-                NKS_Journal_Status__c,
-                NKS_Legacy_Case_Id__c,
-                CRM_Account__r.INT_PersonIdent__c,
-                CRM_Case__r.NKS_Henvendelse_BehandlingsId__c
-            FROM Conversation_Note__c
-            WHERE OwnerId = :UserInfo.getUserId() AND (NKS_Sent__c = FALSE OR NKS_Journal_Status__c = 'Journal Error')
-            ORDER BY Id
-        ];
     }
 
     //###########################################################//

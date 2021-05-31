@@ -1,52 +1,12 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getJournalPosts from '@salesforce/apex/NKS_SafJournalpostListController.getJournalPosts';
-
-const QUERY_FIELDS = {
-    name: 'journalposter',
-    queryFields: [
-        { name: 'journalpostId' },
-        { name: 'tittel' },
-        { name: 'journalposttype' },
-        { name: 'journalstatus' },
-        { name: 'tema' },
-        { name: 'temanavn' },
-        { name: 'behandlingstema' },
-        { name: 'behandlingstemanavn' },
-        { name: 'datoOpprettet' },
-        { name: 'antallRetur' },
-        { name: 'kanal' },
-        { name: 'kanalnavn' },
-        {
-            name: 'sak',
-            queryFields: [{ name: 'fagsakId' }, { name: 'fagsaksystem' }, { name: 'sakstype' }]
-        },
-        {
-            name: 'avsenderMottaker',
-            queryFields: [{ name: 'navn' }]
-        },
-        {
-            name: 'dokumenter',
-            queryFields: [
-                { name: 'dokumentInfoId' },
-                { name: 'tittel' },
-                {
-                    name: 'dokumentvarianter',
-                    queryFields: [
-                        { name: 'variantformat' },
-                        { name: 'filnavn' },
-                        { name: 'filtype' },
-                        { name: 'saksbehandlerHarTilgang' },
-                        { name: 'skjerming' }
-                    ]
-                }
-            ]
-        }
-    ]
-};
-
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 export default class NksSafJournalpostList extends LightningElement {
     @api recordId; // Id from record page (From UiRecordAPI)
     @api objectApiName; // Value from UiRecordAPI
+    wireFields;
 
     // tracked resources
     @track journalposts = [];
@@ -65,10 +25,11 @@ export default class NksSafJournalpostList extends LightningElement {
     availableThemes = null;
     selectedCase = null;
     selectedThemeCode = null;
+    personId;
 
     //Query variables
     @track queryVariables = {
-        brukerId: {},
+        brukerId: { id: null, type: 'AKTOERID' },
         tema: null,
         journalstatuser: ['JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
         fraDato: null,
@@ -128,6 +89,15 @@ export default class NksSafJournalpostList extends LightningElement {
         this._relationshipField = value;
     }
 
+    set brukerId(value) {
+        this.queryVariables.brukerId.id = value;
+        this.callGetJournalPosts(false);
+    }
+
+    get brukerId() {
+        return this.queryVariables.brukerId.id;
+    }
+
     get hasErrors() {
         return 1 <= this.errors.length ? true : false;
     }
@@ -166,6 +136,48 @@ export default class NksSafJournalpostList extends LightningElement {
         this.callGetJournalPosts(false);
     }
 
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: '$wireFields'
+    })
+    wiredRecordInfo({ error, data }) {
+        if (data) {
+            if (this.brukerIdField && this.objectApiName) {
+                this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
+            }
+        }
+    }
+
+    @wire(getRecord, {
+        recordId: '$personId',
+        fields: [PERSON_ACTOR_FIELD]
+    })
+    wiredPersonInfo({ error, data }) {
+        if (data) {
+            this.brukerId = getFieldValue(data, PERSON_ACTOR_FIELD);
+        }
+        if (error) {
+            this.error = true;
+        }
+    }
+
+    getRelatedRecordId(relationshipField, objectApiName) {
+        getRelatedRecord({
+            parentId: this.recordId,
+            relationshipField: relationshipField,
+            objectApiName: objectApiName
+        })
+            .then((record) => {
+                this.personId = this.resolve(relationshipField, record);
+                if (null == this.personId) {
+                    this.brukerId = null;
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     getHasJournalposttype(statusElement) {
         return this._selectedJornalpostTypes.includes(statusElement);
     }
@@ -188,23 +200,15 @@ export default class NksSafJournalpostList extends LightningElement {
         }
     }
 
-    // set selectedTema(value) {
-    //     if (value === 'all') {
-    //         this.queryVariables.tema = null;
-    //     } else if (Array.isArray(value)) {
-    //         this.queryVariables.tema = [value];
-    //     } else {
-    //         this.queryVariables.tema = value;
-    //     }
-    // }
-
     connectedCallback() {
         if (this.queryVariables.fraDato == null) {
             let d = new Date(Date.now());
             d.setFullYear(d.getFullYear() - 1);
             this.queryVariables.fraDato = d.toISOString().split('T')[0];
         }
-        this.callGetJournalPosts(false);
+        this.isLoaded = true;
+        this.wireFields = [this.objectApiName + '.Id', this.objectApiName + '.' + this.relationshipField];
+        this.getRelatedRecordId(this.brukerIdField, this.objectApiName);
     }
 
     /**
@@ -220,29 +224,31 @@ export default class NksSafJournalpostList extends LightningElement {
         this.queryVariables.etter = isQueryMore ? this.sideInfo.sluttpeker : null;
         this.isLoadingMore = isQueryMore;
         const inputParams = {
-            brukerIdField: this.brukerIdField,
-            objectApiName: this.viewedObjectApiName,
-            relationshipField: this.relationshipField,
-            viewedRecordId: this.viewedRecordId,
-            queryVariables: this.queryVariables,
-            queryField: QUERY_FIELDS
+            queryString: JSON.stringify(this.queryVariables)
         };
         this.errors = [];
-        try {
-            const journalpostData = await getJournalPosts(inputParams);
-            if (journalpostData.isSuccess) {
-                this.sideInfo = journalpostData.data.dokumentoversiktBruker.sideInfo;
-                this.journalposts = isQueryMore
-                    ? this.journalposts.concat(journalpostData.data.dokumentoversiktBruker.journalposter)
-                    : journalpostData.data.dokumentoversiktBruker.journalposter;
-            } else {
-                this.sideInfo = null;
-                this.journalposts = [];
-                this.setErrorMessage(journalpostData.errors[0], 'journalpostError');
+
+        if (this.queryVariables.brukerId.id) {
+            try {
+                const journalpostData = await getJournalPosts(inputParams);
+                if (journalpostData.isSuccess) {
+                    this.sideInfo = journalpostData.data.dokumentoversiktBruker.sideInfo;
+                    this.journalposts = isQueryMore
+                        ? this.journalposts.concat(journalpostData.data.dokumentoversiktBruker.journalposter)
+                        : journalpostData.data.dokumentoversiktBruker.journalposter;
+                } else {
+                    this.sideInfo = null;
+                    this.journalposts = [];
+                    this.setErrorMessage(journalpostData.errors[0], 'journalpostError');
+                }
+                this.filterAllJournalposts();
+            } catch (err) {
+                this.setErrorMessage(err, 'caughtError');
             }
+        } else {
+            this.sideInfo = null;
+            this.journalposts = [];
             this.filterAllJournalposts();
-        } catch (err) {
-            this.setErrorMessage(err, 'caughtError');
         }
         this.isLoaded = true;
         this.isLoadingMore = false;
@@ -257,8 +263,6 @@ export default class NksSafJournalpostList extends LightningElement {
     }
 
     handleAvailableThemes(event) {
-        // this.queryVariables.tema = event.detail;
-        // this.callGetJournalPosts(false);
         this.availableThemes = event.detail;
         this.filterAllJournalposts();
     }
@@ -305,9 +309,9 @@ export default class NksSafJournalpostList extends LightningElement {
         type = err.body && type === 'caughtError' ? 'fetchResponseError' : type;
         switch (type) {
             case 'fetchResponseError':
-                if (Array.isArray(error.body)) {
+                if (Array.isArray(err.body)) {
                     this.errors = this.errors.concat(err.body.map((e) => e.message));
-                } else if (typeof error.body.message === 'string') {
+                } else if (typeof err.body.message === 'string') {
                     this.errors.push(err.body.message);
                 }
                 break;
@@ -326,5 +330,11 @@ export default class NksSafJournalpostList extends LightningElement {
                 this.errors.push('Ukjent feil: ' + err);
                 break;
         }
+    }
+
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || self);
     }
 }

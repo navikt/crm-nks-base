@@ -185,6 +185,14 @@
         <value>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</value>
     </labels>
     <labels>
+        <fullName>NKS_No_Cases_for_Selected_Theme_Group</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Cases for Selected Theme Group</shortDescription>
+        <value>Ingen saker for valgt temagruppe.</value>
+    </labels>
+    <labels>
         <fullName>NKS_Payment_List_API_Error</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>
