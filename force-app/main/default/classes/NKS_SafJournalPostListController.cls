@@ -3,27 +3,16 @@
  */
 public with sharing class NKS_SafJournalPostListController {
     @AuraEnabled(cacheable=true)
-    public static NKS_SafQueryResponse getJournalPosts(
-        String brukerIdField,
-        String objectApiName,
-        String relationshipField,
-        String viewedRecordId,
-        NKS_SafQueryVariables queryVariables,
-        NKS_SafQueryField queryField
-    ) {
+    public static NKS_SafQueryResponse getJournalPosts(String queryString) {
+        NKS_SafQueryVariables queryVariables = (NKS_SafQueryVariables) JSON.deserialize(
+            queryString,
+            NKS_SafQueryVariables.class
+        );
         NKS_SafService safService = new NKS_SafService();
         NKS_SafQueryResponse queryResults;
-
-        System.debug(queryVariables);
-
+        NKS_SafQuery query = (NKS_SafQuery) JSON.deserialize(getQuery(queryVariables), NKS_SafQuery.class);
         try {
-            queryVariables.brukerId = getBrukerIdFromPerson(
-                getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId)
-            );
-
-            queryResults = safService.doSafQuery(
-                NKS_SafBuildQueryUtil.buildQuery('dokumentoversiktBruker', queryField, queryVariables)
-            );
+            queryResults = safService.doSafQuery(query);
         } catch (Exception ex) {
             queryResults = new NKS_SafQueryResponse();
             queryResults.isSuccess = false;
@@ -37,34 +26,8 @@ public with sharing class NKS_SafJournalPostListController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<NKS_NavCaseService.NavCaseWrapper> getNavCases(
-        String brukerIdField,
-        String objectApiName,
-        String relationshipField,
-        String viewedRecordId
-    ) {
-        String actorId = getPersonActorId(getRecordId(brukerIdField, objectApiName, relationshipField, viewedRecordId));
-
+    public static List<NKS_NavCaseService.NavCaseWrapper> getNavCases(String actorId) {
         return NKS_NavCaseService.getNavCases(actorId);
-    }
-
-    @AuraEnabled(cacheable=true)
-    public static Id getRecordId(
-        String field,
-        String objectApiName,
-        String relationshipField,
-        String relationshipValue
-    ) {
-        String query =
-            'SELECT ' +
-            field +
-            ' FROM ' +
-            objectApiName +
-            ' WHERE ' +
-            relationshipField +
-            ' = :relationshipValue';
-        sObject returnObject = Database.query(String.escapeSingleQuotes(query))[0];
-        return (Id) getFieldValue(returnObject, field);
     }
 
     @AuraEnabled(cacheable=true)
@@ -77,30 +40,48 @@ public with sharing class NKS_SafJournalPostListController {
         return service.getSafDocument(journalpostId, documentId, variantFormat);
     }
 
-    private static NKS_SafBrukerIdInput getBrukerIdFromPerson(Id personId) {
-        NKS_SafBrukerIdInput brukerId = new NKS_SafBrukerIdInput();
+    private static String getQuery(Object queryVariables) {
+        GraphQLFactory qlFactory = new GraphQLFactory('query', 'dokumentoversiktBruker', queryVariables)
+            .addArgument('$brukerId', 'BrukerIdInput! ')
+            .addArgument('$tema', '[Tema] ')
+            .addArgument('$journalstatuser', '[Journalstatus] ')
+            .addArgument('$fraDato', 'Date ')
+            .addArgument('$tilDato', 'Date ')
+            .addArgument('$foerste', 'Int!');
 
-        Person__c person = [SELECT Id, Name, INT_ActorId__c FROM Person__c WHERE Id = :personId];
+        GraphQLNode dokumentoversiktBruker = qlFactory.addNode('dokumentoversiktBruker')
+            .addArgument('brukerId', '$brukerId ')
+            .addArgument('tema', '$tema ')
+            .addArgument('journalstatuser', '$journalstatuser ')
+            .addArgument('fraDato', '$fraDato ')
+            .addArgument('tilDato', '$tilDato ')
+            .addArgument('foerste', '$foerste ');
 
-        brukerId.id = person.INT_ActorId__c;
-        brukerId.type = 'AKTOERID';
+        GraphQLNode journalposter = dokumentoversiktBruker.addNode('journalposter');
+        journalposter.addFields(
+            new List<String>{
+                'tittel',
+                'journalposttype',
+                'journalstatus',
+                'tema',
+                'temanavn',
+                'behandlingstema',
+                'behandlingstemanavn',
+                'datoOpprettet',
+                'antallRetur',
+                'kanal',
+                'kanalnavn'
+            }
+        );
+        journalposter.addNode('sak').addFields(new List<String>{ 'fagsakId', 'fagsaksystem', 'sakstype', 'tema' });
+        journalposter.addNode('avsenderMottaker').addField('navn');
+        journalposter.addNode('dokumenter')
+            .addFields(new List<String>{ 'dokumentInfoId', 'tittel' })
+            .addNode('dokumentvarianter')
+            .addFields(
+                new List<String>{ 'variantformat', 'filnavn', 'filtype', 'saksbehandlerHarTilgang', 'skjerming' }
+            );
 
-        return brukerId;
-    }
-
-    private static String getPersonActorId(Id personId) {
-        Person__c person = [SELECT INT_ActorId__c FROM Person__c WHERE Id = :personId];
-        return person.INT_ActorId__c;
-    }
-
-    private static String getFieldValue(Sobject obj, String parentRelationField) {
-        List<String> relationHierarchy = parentRelationField.split('\\.');
-        String fieldApiName = relationHierarchy.remove(0);
-
-        if (relationHierarchy.isEmpty()) {
-            return (String) obj.get(fieldApiName);
-        } else {
-            return getFieldValue(obj.getSObject(fieldApiName), String.join(relationHierarchy, '.'));
-        }
+        return qlFactory.build();
     }
 }
