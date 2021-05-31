@@ -54,6 +54,8 @@ public without sharing class FamilyRelationViewerController {
         @AuraEnabled
         public Integer age;
         @AuraEnabled
+        public String birthdate;
+        @AuraEnabled
         public Boolean disableurl;
         @AuraEnabled
         public Boolean child;
@@ -109,10 +111,14 @@ public without sharing class FamilyRelationViewerController {
         List<Relation> relations = new List<Relation>();
         for (Person__c person : relatedPersons) {
             Integer age;
-            if (person.INT_DateOfBirth__c != null)
+            String birthdate;
+            if (person.INT_DateOfBirth__c != null) {
+                DateTime d = Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00');
+                birthdate = d.format('dd.MM.YYYY');
                 age = Integer.valueOf(
                     Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
                 );
+            }
             String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
 
             Relation r = new Relation();
@@ -127,6 +133,7 @@ public without sharing class FamilyRelationViewerController {
                 else if (person.INT_Sex__c == 'Mann')
                     r.sex = 'Gutt';
                 r.age = age;
+                r.birthdate = birthdate;
                 r.child = true;
             } else {
                 r.sex = person.INT_Sex__c;
