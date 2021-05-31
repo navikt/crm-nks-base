@@ -40,13 +40,19 @@
             <template if:true={dataLoaded}>
                 <template if:true={hasCases}>
                     <template if:true={showCases}>
-                        <template for:each={displayedCaseGroups} for:item="caseGroup">
+                        <template if:true={hasThemeGroupCases} for:each={displayedCaseGroups} for:item="caseGroup">
                             <c-nks-nav-case-list
                                 key={caseGroup.theme}
                                 theme-name={caseGroup.themeName}
                                 cases={caseGroup.cases}
                                 oncaseselected={handleCaseSelected}
                             ></c-nks-nav-case-list>
+                        </template>
+                        <template if:false={hasThemeGroupCases}>
+                            <c-nks-alert-banner
+                                type="info"
+                                message={labels.NO_CASES_FOR_THEME_GROUP}
+                            ></c-nks-alert-banner>
                         </template>
                     </template>
                 </template>
