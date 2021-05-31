@@ -16,9 +16,8 @@
                         label={relation.personName}
                         onclick={navigateToSObject}
                     >
-                        {relation.personName}</lightning-formatted-url
-                    >
-                    {relation.sex} {relation.age} år
+                    </lightning-formatted-url>
+                    &nbsp;{relation.sex} {relation.age} år
                 </template>
                 <template if:false={relation.child}>
                     <lightning-formatted-url
