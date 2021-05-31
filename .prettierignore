@@ -12,6 +12,8 @@ jsconfig.json
 
 **/*.apex
 **/staticresources/*
+#Prettier ignore to increase code coverage
+**/NKS_CallFlowController.cls 
 
 # flows in permsets will break the xml
 **/permissionsets/*

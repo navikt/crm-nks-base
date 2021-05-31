@@ -64,6 +64,45 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Task_Created_Toast</name>
+        <label>Task Created Toast</label>
+        <locationX>173</locationX>
+        <locationY>1218</locationY>
+        <actionName>c:ShowToast_Flow</actionName>
+        <actionType>component</actionType>
+        <inputParameters>
+            <name>mode</name>
+            <value>
+                <stringValue>dismissible</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>5</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Oppgave opprettet.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Vellykket</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
@@ -290,7 +329,7 @@ TODAY())</expression>
         <locationX>174</locationX>
         <locationY>1040</locationY>
         <connector>
-            <targetReference>Success_Screen</targetReference>
+            <targetReference>Task_Created_Toast</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
@@ -436,7 +475,7 @@ TODAY())</expression>
             <name>Task_Priority</name>
             <choiceReferences>Priority_Picklist</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Priroritet</fieldText>
+            <fieldText>Prioritet</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -471,23 +510,6 @@ TODAY())</expression>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <description>Screen for telling user that the task was successfully sent.</description>
-        <name>Success_Screen</name>
-        <label>Success Screen</label>
-        <locationX>174</locationX>
-        <locationY>1206</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Success_Screen_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>

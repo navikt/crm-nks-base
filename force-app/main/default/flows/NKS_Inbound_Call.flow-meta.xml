@@ -1,12 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Call_Queue_Info</name>
+        <label>Get Call Queue Info</label>
+        <locationX>446</locationX>
+        <locationY>158</locationY>
+        <actionName>NKS_CallFlowController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Theme_Group</targetReference>
+        </connector>
+        <inputParameters>
+            <name>sessionIds</name>
+            <value>
+                <elementReference>sessionId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>CALLER_CONTEXT</assignToReference>
+            <name>callerContext</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>THEME_GROUP_CODE</assignToReference>
+            <name>themeGroup</name>
+        </outputParameters>
+    </actionCalls>
+    <assignments>
+        <name>Case_Assignment</name>
+        <label>Case Assignment</label>
+        <locationX>50</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>Call_Case.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RELATED_ACCOUNT_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Subject</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>THEME_GROUP_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Case_Assignment_0</name>
+        <label>Case Assignment</label>
+        <locationX>578</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>Call_Case.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RELATED_ACCOUNT_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.Subject</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.ContactPhone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sfdc_case_id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>THEME_GROUP_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Call_Queue_0</name>
+        <label>Check Call Queue</label>
+        <locationX>842</locationX>
+        <locationY>734</locationY>
+        <defaultConnector>
+            <targetReference>something</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Personbruker_0</name>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>CALLER_CONTEXT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PERSON</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PERSON</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Case_Assignment_0</targetReference>
+            </connector>
+            <label>Personbruker</label>
+        </rules>
+        <rules>
+            <name>Arbeidsgiver_0</name>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>CALLER_CONTEXT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ARBEIDSGIVER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ARBEIDSGIVER</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Arbeidsgiver</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
-        <locationX>314</locationX>
-        <locationY>158</locationY>
+        <locationX>446</locationX>
+        <locationY>614</locationY>
         <defaultConnector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Check_Call_Queue_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Phone Number</defaultConnectorLabel>
         <rules>
@@ -38,6 +217,32 @@
                 <targetReference>Get_Organization_Account</targetReference>
             </connector>
             <label>Organization Identifier</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the call queue had a theme group mapped</description>
+        <name>Check_Theme_Group</name>
+        <label>Check Theme Group</label>
+        <locationX>446</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Check_Identifier</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Theme Group</defaultConnectorLabel>
+        <rules>
+            <name>Theme_Group_Mapped</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>THEME_GROUP_CODE</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Theme_Group</targetReference>
+            </connector>
+            <label>Theme Group Mapped</label>
         </rules>
     </decisions>
     <formulas>
@@ -75,47 +280,33 @@
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>314</locationX>
-        <locationY>494</locationY>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
         <connector>
-            <targetReference>Inbound_Call_Screen</targetReference>
+            <targetReference>Person_Inbound_Call_Screen</targetReference>
         </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>RELATED_ACCOUNT_ID</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>New</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <stringValue>Default subject?</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <inputReference>Call_Case</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <description>Creates a case for the incoming phone call.</description>
+        <name>Create_Case_0</name>
+        <label>Create Case</label>
+        <locationX>578</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>Person_Inbound_Call_Screen_0</targetReference>
+        </connector>
+        <inputReference>Call_Case</inputReference>
     </recordCreates>
     <recordLookups>
         <description>Queries the organization account.</description>
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
         <locationX>314</locationX>
-        <locationY>278</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Person_Inbound_Call_Screen_0_0</targetReference>
         </connector>
         <filters>
             <field>INT_OrganizationNumber__c</field>
@@ -134,10 +325,10 @@
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
         <locationX>50</locationX>
-        <locationY>278</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Case</targetReference>
+            <targetReference>Case_Assignment</targetReference>
         </connector>
         <filters>
             <field>INT_PersonIdent__c</field>
@@ -152,18 +343,48 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <recordLookups>
+        <description>Queries the theme group that was mapped to the queue.</description>
+        <name>Get_Theme_Group</name>
+        <label>Get Theme Group</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Identifier</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Temagrupper</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>THEME_GROUP_CODE</elementReference>
+            </value>
+        </filters>
+        <object>Common_Code__c</object>
+        <outputAssignments>
+            <assignToReference>THEME_GROUP_ID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Screen to be shown when a call is inbound</description>
-        <name>Inbound_Call_Screen</name>
-        <label>Inbound Call Screen</label>
-        <locationX>314</locationX>
-        <locationY>614</locationY>
+        <name>Person_Inbound_Call_Screen</name>
+        <label>Person Inbound Call Screen</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Inbound_Call_Text</name>
+            <name>Inbound_Call_Text_0</name>
             <fieldText>&lt;p&gt;Innkommende samtale&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -180,7 +401,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Create_Case</elementReference>
+                    <elementReference>Call_Case.Id</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -189,14 +410,122 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <description>Screen to be shown when a call is inbound</description>
+        <name>Person_Inbound_Call_Screen_0</name>
+        <label>Person Inbound Call Screen</label>
+        <locationX>578</locationX>
+        <locationY>1094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Inbound_Call_Text_0_0</name>
+            <fieldText>&lt;p&gt;Innkommende samtale&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Navigate_to_Case_0_0</name>
+            <extensionName>c:nksFlowRecordNavigator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Call_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Screen to be shown when a call is inbound</description>
+        <name>Person_Inbound_Call_Screen_0_0</name>
+        <label>Person Inbound Call Screen</label>
+        <locationX>314</locationX>
+        <locationY>854</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Org_No_Caller_Match_Screen</name>
+            <extensionName>lbpm:flowScript</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>script</name>
+                <value>
+                    <elementReference>ORG_NO_MATCH_TEXT</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>something</name>
+        <label>something</label>
+        <locationX>1106</locationX>
+        <locationY>854</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Identifier</targetReference>
+            <targetReference>Get_Call_Queue_Info</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>ORG_NO_MATCH_TEXT</name>
+        <text>Ingen virksomhet funnet for virksomhetsnummer: {!sfdc_case_id}</text>
+    </textTemplates>
+    <variables>
+        <description>Case to be created for person phone queues.</description>
+        <name>Call_Case</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>Defines what kind of user type is making the incoming call.
+PERSON, ARBEIDSGIVER, OTHER</description>
+        <name>CALLER_CONTEXT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>OTHER</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>For testing purpose. Used as input to simulate context in sandboxes.</description>
+        <name>CONTEXT_OVERRIDE</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue/>
+        </value>
+    </variables>
     <variables>
         <name>RELATED_ACCOUNT_ID</name>
         <dataType>String</dataType>
@@ -205,11 +534,37 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <description>Unique puzzel session ID to match enquiry log</description>
+        <name>sessionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Input parameter from the IVR</description>
         <name>sfdc_case_id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>If set, automatically related a created case to a theme group.</description>
+        <name>THEME_GROUP_CODE</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue/>
+        </value>
+    </variables>
+    <variables>
+        <name>THEME_GROUP_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

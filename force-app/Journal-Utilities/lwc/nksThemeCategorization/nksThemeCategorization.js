@@ -34,7 +34,11 @@ export default class NksThemeCategorization extends LightningElement {
             this.subthemeMap = data.subthemeMap;
             this.themeMap = data.themeMap;
 
-            if (this.chosenThemeGroup || this.chosenTheme) this.filterThemes();
+            if (this.chosenThemeGroup || this.chosenTheme) {
+                if (this.themeGroupCode != '') this.publishFieldChange('themeGroupCode', this.themeGroupCode);
+                if (this.themeCode != '') this.publishFieldChange('themeCode', this.themeCode);
+                this.filterThemes();
+            }
             if (this.chosenTheme) this.filterSubthemes();
         }
     }
