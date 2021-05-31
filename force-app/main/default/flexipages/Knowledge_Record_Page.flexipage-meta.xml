@@ -132,6 +132,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Knowledge__kav.Gi_tilbakemelding</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>EditDraftKnowledgeArticleVersion</value>
                         </valueListItems>
                         <valueListItems>
@@ -148,9 +151,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>DeleteDraftKnowledgeArticleVersion</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Knowledge__kav.Give_feedback</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -1124,6 +1124,11 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>

@@ -43,6 +43,10 @@
                 <behavior>Edit</behavior>
                 <field>KnowledgeArticle__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Data_Categories__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
