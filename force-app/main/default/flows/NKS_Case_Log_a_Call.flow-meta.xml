@@ -132,6 +132,36 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
+        <name>Assign_Task_Defaults</name>
+        <label>Assign Task Defaults</label>
+        <locationX>453</locationX>
+        <locationY>489</locationY>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_NAV_Task_Flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
@@ -412,7 +442,7 @@
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
         <locationX>768</locationX>
-        <locationY>348</locationY>
+        <locationY>357</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
         </defaultConnector>
@@ -428,7 +458,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Case_Closed_Screen</targetReference>
+                <targetReference>Get_Conversation_Note</targetReference>
             </connector>
             <label>Case Closed</label>
         </rules>
@@ -619,6 +649,29 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Queries the conversation note created for this case.</description>
+        <name>Get_Conversation_Note</name>
+        <label>Get Conversation Note</label>
+        <locationX>596</locationX>
+        <locationY>350</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_Closed_Screen</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Conversation_Note__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CRM_Conversation_Note__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
@@ -643,11 +696,14 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>556</locationX>
-        <locationY>346</locationY>
-        <allowBack>true</allowBack>
+        <locationX>453</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_Task_Defaults</targetReference>
+        </connector>
         <fields>
             <name>Case_Closed_Header</name>
             <extensionName>c:nksHeader</extensionName>
@@ -667,7 +723,51 @@
             <inputParameters>
                 <name>center</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Conversation_Summary</name>
+            <extensionName>lbpm:flowScript</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>script</name>
+                <value>
+                    <elementReference>Get_Conversation_Note.CRM_Conversation_Note__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>color</name>
+                <value>
+                    <stringValue>rgb(61,151,221)</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>size</name>
+                <value>
+                    <stringValue>small</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Create_Case_Button</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Opprett Oppgave</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>action</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -956,6 +1056,25 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_NAV_Task_Flow</name>
+        <label>Create NAV Task Flow</label>
+        <locationX>454</locationX>
+        <locationY>629</locationY>
+        <flowName>NKS_Case_Send_NAV_Task</flowName>
+        <inputAssignments>
+            <name>NavTask</name>
+            <value>
+                <elementReference>Task_to_Create</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <textTemplates>
         <name>Summary_Template</name>
         <text>&lt;p&gt;{!Get_Account.Name}&lt;/p&gt;</text>
@@ -1001,5 +1120,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Task_to_Create</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NavTask__c</objectType>
     </variables>
 </Flow>
