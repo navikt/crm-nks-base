@@ -860,6 +860,15 @@
         <object>NavUnit__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>QuickText</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <pageAccesses>
         <apexPage>NKS_SafViewDocument</apexPage>
         <enabled>true</enabled>
@@ -870,6 +879,10 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-QuickText</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
