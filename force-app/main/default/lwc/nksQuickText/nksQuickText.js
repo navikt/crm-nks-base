@@ -19,12 +19,22 @@ export default class nksQuickText extends LightningElement {
     get inputFormats() {
         return [''];
     }
+    initialRender = true;
+
+    //Screen reader does not detect component as as input field until after the first focus
+    renderedCallback() {
+        if (this.initialRender === true) {
+            let inputField = this.template.querySelector('lightning-input-rich-text');
+            inputField.focus();
+            this.initialRender = false;
+        }
+    }
 
     @wire(getQuicktexts, {})
     wiredQuicktexts(value) {
         if (value.data) {
             this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map(key => [key.nksAbbreviationKey__c, key.Message]));
+            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c, key.Message]));
         }
     }
 
@@ -34,7 +44,6 @@ export default class nksQuickText extends LightningElement {
         plainText = plainText.replace(/<[^\s>]+>/g, ''); //Remove remaining html tags
         return plainText;
     }
-
 
     handleKeyUp(evt) {
         const isEnterKey = evt.keyCode === 13;
@@ -90,9 +99,9 @@ export default class nksQuickText extends LightningElement {
     insertquicktext(event) {
         const isSpaceKey = event.keyCode === 32;
         if (isSpaceKey) {
-            var textval = this.conversationNote.replace(/(\r\n|\n|\r)/gm, "")
+            var textval = this.conversationNote.replace(/(\r\n|\n|\r)/gm, '');
             var stringarray = textval.trim().split(' ');
-            const lastItem = stringarray[stringarray.length - 1]
+            const lastItem = stringarray[stringarray.length - 1];
             if (this.qmap.has(lastItem)) {
                 const inserttext = this.qmap.get(lastItem);
                 const editor = this.template.querySelector('lightning-input-rich-text');
