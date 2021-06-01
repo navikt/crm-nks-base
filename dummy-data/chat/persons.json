@@ -17,7 +17,9 @@
             "INT_Confidential__c": "UGRADERT",
             "INT_MaritalStatus__c": "GIFT",
             "INT_MaritalRelation__c": "12345678902",
-            "INT_ActorId__c": "12345678910"
+            "INT_ActorId__c": "12345678910",
+            "INT_FamilyRelations__c": "[{'relatertPersonsRolle':'MOR','relatertPersonsIdent':'30016012345','minRolleForPerson':'BARN'},{'relatertPersonsRolle':'FAR','relatertPersonsIdent':'27036012345','minRolleForPerson':'BARN'}]",
+            "INT_DateOfBirth__c": "2002-11-08"
         },
         {
             "attributes": {
@@ -32,7 +34,9 @@
             "INT_RegionNumber__c": "03",
             "INT_Sex__c": "Kvinne",
             "INT_Confidential__c": "UGRADERT",
-            "INT_ActorId__c": "12345678911"
+            "INT_ActorId__c": "12345678911",
+            "INT_FamilyRelations__c": "[{'relatertPersonsRolle':'MOR','relatertPersonsIdent':'30016012345','minRolleForPerson':'BARN'},{'relatertPersonsRolle':'FAR','relatertPersonsIdent':'27036012345','minRolleForPerson':'BARN'}]",
+            "INT_DateOfBirth__c": "2010-11-08"
         },
         {
             "attributes": {
@@ -47,7 +51,9 @@
             "INT_RegionNumber__c": "03",
             "INT_Sex__c": "Mann",
             "INT_Confidential__c": "UGRADERT",
-            "INT_ActorId__c": "12345678912"
+            "INT_ActorId__c": "12345678912",
+            "INT_FamilyRelations__c": "[{'relatertPersonsRolle':'MOR','relatertPersonsIdent':'30016012345','minRolleForPerson':'BARN'},{'relatertPersonsRolle':'FAR','relatertPersonsIdent':'27036012345','minRolleForPerson':'BARN'}]",
+            "INT_DateOfBirth__c": "2006-11-08"
         },
         {
             "attributes": {
@@ -64,7 +70,9 @@
             "INT_ResidentialZipCode__c": "1001",
             "INT_Sex__c": "Mann",
             "INT_Confidential__c": "UGRADERT",
-            "INT_ActorId__c": "12345678913"
+            "INT_ActorId__c": "12345678913",
+            "INT_FamilyRelations__c": "[{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678901','minRolleForPerson':'FAR'},{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678902','minRolleForPerson':'FAR'},{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678903','minRolleForPerson”:'FAR'}]",
+            "INT_DateOfBirth__c": "1990-11-08"
         },
         {
             "attributes": {
@@ -80,7 +88,9 @@
             "INT_ResidentialZipCode__c": "1001",
             "INT_Sex__c": "Kvinne",
             "INT_Confidential__c": "UGRADERT",
-            "INT_ActorId__c": "12345678914"
+            "INT_ActorId__c": "12345678914",
+            "INT_FamilyRelations__c": "[{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678901','minRolleForPerson':'MOR'},{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678902','minRolleForPerson':'MOR'},{'relatertPersonsRolle':'BARN','relatertPersonsIdent':'12345678903','minRolleForPerson”:'MOR'}]",
+            "INT_DateOfBirth__c": "1988-11-08"
         }
     ]
 }
