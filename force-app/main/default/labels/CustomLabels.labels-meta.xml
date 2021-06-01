@@ -89,6 +89,14 @@
         <value>Samtalereferatet kan ikke være tomt!</value>
     </labels>
     <labels>
+        <fullName>NKS_Conversation_Note_Share_With_User</fullName>
+        <categories>UI, NKS, Conversation Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Conversation Note Share With User</shortDescription>
+        <value>Del med bruker</value>
+    </labels>
+    <labels>
         <fullName>NKS_Create_Conversation_Note</fullName>
         <categories>UI, NKS, Call, Flow, Case</categories>
         <language>en_US</language>

@@ -945,7 +945,7 @@
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                    <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1077,7 +1077,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;{!Get_Account.Name}&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Forklaring i punkter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Lenke til aktuell side på nav.no&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
