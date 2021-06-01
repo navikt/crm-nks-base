@@ -718,6 +718,23 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Sets the journal status to completed.</description>
+        <name>Set_Journal_Completed</name>
+        <label>Set Journal Completed</label>
+        <locationX>728</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_Create_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Assigns field values for the journal entry record to be created.</description>
         <name>Set_Journal_Entry_Data</name>
         <label>Set Journal Entry Data</label>
@@ -772,8 +789,8 @@
     <assignments>
         <name>Set_Journal_Social</name>
         <label>Set Journal Social</label>
-        <locationX>877</locationX>
-        <locationY>1062</locationY>
+        <locationX>859</locationX>
+        <locationY>1064</locationY>
         <assignmentItems>
             <assignToReference>Get_Chat_Transcript.NKS_Social_Service_Information__c</assignToReference>
             <operator>Assign</operator>
@@ -949,6 +966,21 @@
             </connector>
             <label>Conversation Storage Failed</label>
         </rules>
+        <rules>
+            <name>Completed_Without_Journal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Chat_Transcript.NKS_Journal_Entry_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chat_Completed_No_Journal</targetReference>
+            </connector>
+            <label>Completed Without Journal</label>
+        </rules>
     </decisions>
     <decisions>
         <description>Verify that the user attempting to create a journal entry for the chat is indeed the owner of the chat transcript</description>
@@ -997,17 +1029,43 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_Social_Information</targetReference>
+                <targetReference>Check_Security_Incident</targetReference>
             </connector>
             <label>Is Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the security incident flag was checked.</description>
+        <name>Check_Security_Incident</name>
+        <label>Check Security Incident</label>
+        <locationX>653</locationX>
+        <locationY>490</locationY>
+        <defaultConnector>
+            <targetReference>Check_Social_Information</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Incident</defaultConnectorLabel>
+        <rules>
+            <name>Is_Security_Incident</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Security_Incident</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Journal_Completed</targetReference>
+            </connector>
+            <label>Is Security Incident</label>
         </rules>
     </decisions>
     <decisions>
         <description>Check if the chat has set the social information flag set to true.</description>
         <name>Check_Social_Information</name>
         <label>Check Social Information</label>
-        <locationX>869</locationX>
-        <locationY>735</locationY>
+        <locationX>856</locationX>
+        <locationY>680</locationY>
         <defaultConnector>
             <targetReference>Conversation_stored_On_Chat_Transcript</targetReference>
         </defaultConnector>
@@ -1561,6 +1619,43 @@ TODAY())</expression>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
+        <description>Success screen shown if the chat was completed without journal entry creation.</description>
+        <name>Chat_Completed_No_Journal</name>
+        <label>Chat Journal Completed</label>
+        <locationX>1936</locationX>
+        <locationY>717</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Completed_Text</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>center</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h2</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <stringValue>Henvendelsen er ferdigstilt.</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <description>Success screen shown if the chat was logged with social information.</description>
         <name>Chat_Journal_Social_Screen</name>
         <label>Chat Journal Social Screen</label>
@@ -1848,7 +1943,7 @@ TODAY())</expression>
         <name>Input_Screen</name>
         <label>Input Screen</label>
         <locationX>1175</locationX>
-        <locationY>522</locationY>
+        <locationY>521</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1872,6 +1967,17 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Security_Incident</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Sikkerhetshendelse</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Huk av denne i tilfeller hvor bruker har vært truende, ved ytringer om selvmord, eller ved bruk av en annen persons elektroniske ID. Se sikkerhetsrutinen for mer informasjon.&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
             <name>Person_NAV_Cases</name>
             <extensionName>c:nksPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -1889,6 +1995,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>createtasktoggle</name>
@@ -1902,6 +2018,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>tasktype</name>
@@ -1915,6 +2041,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Task_Priority</name>
@@ -1930,6 +2066,13 @@ TODAY())</expression>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1952,6 +2095,13 @@ TODAY())</expression>
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1968,6 +2118,13 @@ TODAY())</expression>
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -1982,6 +2139,16 @@ TODAY())</expression>
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Security_Incident</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Finish_BTN</name>
