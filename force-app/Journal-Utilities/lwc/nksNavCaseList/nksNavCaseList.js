@@ -18,6 +18,10 @@ export default class NksNavCaseList extends LightningElement {
         this.showCases = !this.showCases;
     }
 
+    checkKeyPress(event) {
+        if (event.key === 'Enter') this.toggleCases(event);
+    }
+
     handleCaseSelected(event) {
         let selectedCase = event.detail.selectedCase;
         //Passing event on to the parent
