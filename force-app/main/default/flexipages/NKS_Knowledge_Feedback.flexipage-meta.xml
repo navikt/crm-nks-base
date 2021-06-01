@@ -13,13 +13,13 @@
                             <value>Case.Assign_to_user</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Set_Status</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.Set_to_in_progress</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Case.Close_Case</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.Set_Status</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

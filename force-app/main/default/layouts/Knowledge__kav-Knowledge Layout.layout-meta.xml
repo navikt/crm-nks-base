@@ -173,9 +173,11 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.STATUS</fields>
         <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.LAST_UPDATE</fields>
+        <fields>OWNER_NAME</fields>
+        <fields>CREATEDBY_USER.ALIAS</fields>
         <relatedList>Case.KnowledgeArticle__c</relatedList>
     </relatedLists>
 </Layout>
