@@ -17,16 +17,31 @@
                                         class="slds-p-right_medium"
                                     >
                                         <template if:true={showLink}>
-                                            <lightning-output-field
-                                                class="fieldStyle"
-                                                style="cursor: pointer"
-                                                field-class="slds-text-link"
-                                                field-name={it.value}
-                                                onclick={navigateToRecord}
-                                                tabindex="0"
-                                                role="link"
-                                            >
-                                            </lightning-output-field>
+                                            <template if:false={hideLabels}>
+                                                <lightning-output-field
+                                                    class="fieldStyle"
+                                                    style="cursor: pointer"
+                                                    field-class="slds-text-link"
+                                                    field-name={it.value}
+                                                    onclick={navigateToRecord}
+                                                    tabindex="0"
+                                                    role="link"
+                                                >
+                                                </lightning-output-field>
+                                            </template>
+                                            <template if:true={hideLabels}>
+                                                <lightning-output-field
+                                                    class="fieldStyle"
+                                                    style="cursor: pointer"
+                                                    field-class="slds-text-link"
+                                                    field-name={it.value}
+                                                    onclick={navigateToRecord}
+                                                    tabindex="0"
+                                                    role="link"
+                                                    variant="label-hidden"
+                                                >
+                                                </lightning-output-field>
+                                            </template>
                                         </template>
                                         <template if:false={showLink}>
                                             <template if:false={hideLabels}>
