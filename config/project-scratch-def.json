@@ -64,6 +64,14 @@
         },
         "userManagementSettings": {
             "enableNewProfileUI": true
+        },
+        "chatterSettings": {
+            "enableChatter": true,
+            "enableChatterEmoticons": true,
+            "enableFeedsRichText": true
+        },
+        "pathAssistantSettings": {
+            "pathAssistantEnabled": true
         }
     }
 }

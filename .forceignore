@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------------------------
 **/profiles/*
 
+Topic.datacategorygroup
 
 # NOTE!! Do NOT use **/ before
 !unpackagable/profiles/*
