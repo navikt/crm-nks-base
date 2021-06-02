@@ -21,6 +21,10 @@
             <name>callerContext</name>
         </outputParameters>
         <outputParameters>
+            <assignToReference>PUZZEL_QUEUE_NAME</assignToReference>
+            <name>queueName</name>
+        </outputParameters>
+        <outputParameters>
             <assignToReference>THEME_GROUP_CODE</assignToReference>
             <name>themeGroup</name>
         </outputParameters>
@@ -110,6 +114,13 @@
                 <elementReference>THEME_GROUP_ID</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.NKS_Puzzel_Queue_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PUZZEL_QUEUE_NAME</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Case</targetReference>
         </connector>
@@ -156,6 +167,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>THEME_GROUP_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.NKS_Puzzel_Queue_Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>PUZZEL_QUEUE_NAME</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -462,6 +480,14 @@ PERSON, ARBEIDSGIVER, OTHER</description>
         <value>
             <stringValue/>
         </value>
+    </variables>
+    <variables>
+        <description>Name of the incoming call queue.</description>
+        <name>PUZZEL_QUEUE_NAME</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>RELATED_ACCOUNT_ID</name>
