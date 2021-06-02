@@ -1,32 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <layouts>
-        <layout>Case Feed Layout</layout>
-        <layoutType>CaseInteraction</layoutType>
-        <sections>
-            <label><!-- Fields --></label>
-            <section>Fields</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>Knowledge Feedback</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Fields --></label>
-            <section>Fields</section>
-        </sections>
-    </layouts>
-    <quickActions>
-        <label>Videresend</label>
-        <name>Assign_to_user</name>
-    </quickActions>
-    <quickActions>
-        <label>Lukk henvendelse</label>
-        <name>Close_Case</name>
-    </quickActions>
     <quickActions>
         <label><!-- Opprett NAV-oppgave --></label>
         <name>NKS_Case_Create_NAV_Task</name>
@@ -43,26 +16,4 @@
         <label><!-- SendEmail --></label>
         <name>SendEmail</name>
     </quickActions>
-    <quickActions>
-        <label>Sett status</label>
-        <name>Set_Status</name>
-    </quickActions>
-    <quickActions>
-        <label>Under arbeid</label>
-        <name>Set_to_in_progress</name>
-    </quickActions>
-    <recordTypes>
-        <description><!-- Used for internal cases for feedback on knowledge articles --></description>
-        <label><!-- Feedback --></label>
-        <name>Feedback</name>
-    </recordTypes>
-    <recordTypes>
-        <description><!-- Used for phone and chat cases --></description>
-        <label><!-- Inquiry --></label>
-        <name>Inquiry</name>
-    </recordTypes>
-    <recordTypes>
-        <label><!-- Phone Case --></label>
-        <name>NKS_Phone_Case</name>
-    </recordTypes>
 </CustomObjectTranslation>

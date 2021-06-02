@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <article>Definite</article>
@@ -73,6 +73,26 @@
             <section>Til høyre</section>
         </sections>
     </layouts>
+    <quickActions>
+        <label>Engelsk</label>
+        <name>NKS_English</name>
+    </quickActions>
+    <quickActions>
+        <label>Lovverk</label>
+        <name>NKS_Legislation</name>
+    </quickActions>
+    <quickActions>
+        <label>nav.no</label>
+        <name>NKS_Nav_no</name>
+    </quickActions>
+    <quickActions>
+        <label>Nynorsk</label>
+        <name>NKS_Nynorsk</name>
+    </quickActions>
+    <quickActions>
+        <label>Ressurser</label>
+        <name>NKS_Resources</name>
+    </quickActions>
     <recordTypes>
         <label>Faglig avklaring</label>
         <name>Clarifications</name>
