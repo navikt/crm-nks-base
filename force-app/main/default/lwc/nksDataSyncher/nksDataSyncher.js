@@ -4,6 +4,7 @@ import synchConversationNotes from '@salesforce/apex/NKS_HenvendelseController.d
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
+import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
 
 export default class NksDataSyncher extends LightningElement {
     @api recordId;
@@ -12,7 +13,7 @@ export default class NksDataSyncher extends LightningElement {
     wireFields = [this.objectApiName + '.Id'];
     personId;
     synchFinished = false;
-    personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD];
+    personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
 
     @wire(getRecord, {
         recordId: '$recordId',
@@ -34,21 +35,30 @@ export default class NksDataSyncher extends LightningElement {
         if (data) {
             let personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
             let personActorId = getFieldValue(data, PERSON_ACTORID_FIELD);
+            let personAccountId = getFieldValue(data, PERSON_ACCOUNT_FIELD);
 
-            synchConversationNotes({ personIdent: personIdent, accountId: '0011x00001HB0ZoAAL' })
-                .then(() => {
-                    //HURRAY!
-                })
-                .catch((error) => {
-                    console.log(JSON.stringify(error, null, 2));
-                })
-                .finally(() => {
-                    this.synchFinished = true;
-                });
+            this.doSynch(personIdent, personActorId, personAccountId);
         }
         if (error) {
             console.log(JSON.stringify(error, null, 2));
         }
+    }
+
+    doSynch(personIdent, personActorId, personAccountId) {
+        this.conversationNoteSynch(personIdent, personAccountId);
+    }
+
+    conversationNoteSynch(personIdent, personAccountId) {
+        synchConversationNotes({ personIdent: personIdent, accountId: personAccountId })
+            .then(() => {
+                //HURRAY!
+            })
+            .catch((error) => {
+                console.log(JSON.stringify(error, null, 2));
+            })
+            .finally(() => {
+                this.synchFinished = true;
+            });
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
