@@ -60,6 +60,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
                 <visibilityRule>
                     <criteria>
@@ -104,11 +109,6 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

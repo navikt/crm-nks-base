@@ -3,16 +3,6 @@
     <description>Grants permission to view published knowledge articles</description>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Description</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.KnowledgeArticle__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Knowledge__kav.AdvisorInformationInternal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -89,15 +79,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Knowledge Viewer</label>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Case</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
@@ -106,10 +87,6 @@
         <object>Knowledge__kav</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>Case.Feedback</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Knowledge__kav.Clarifications</recordType>
         <visible>true</visible>

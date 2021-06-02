@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <layoutSections>
         <customLabel>true</customLabel>
@@ -165,14 +165,5 @@
     <relatedLists>
         <fields>Query</fields>
         <relatedList>KavSearchPromotionRuleRelatedList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.STATUS</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>CASES.LAST_UPDATE</fields>
-        <fields>OWNER_NAME</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
-        <relatedList>Case.KnowledgeArticle__c</relatedList>
     </relatedLists>
 </Layout>
