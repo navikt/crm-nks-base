@@ -14,7 +14,7 @@ export default class NksBrukervarselMelding extends LightningElement {
     }
 
     get showReceiverInfo() {
-        if (this.message.mottakerInformasjon) {
+        if (this.message.kontaktinfo) {
             switch (this.message.kanal) {
                 case 'EPOST':
                     return true;
@@ -32,11 +32,20 @@ export default class NksBrukervarselMelding extends LightningElement {
     }
 
     get showLink() {
-        return this.message.varselURL && this.message.varselURL.lenth > 0 ? true : false;
+        return this.message.varselURL && this.message.varselURL.length > 0 ? true : false;
+    }
+
+    get channelLabel() {
+        switch (this.message.kanal) {
+            case 'DITT_NAV':
+                return 'NAV.NO';
+            default:
+                return this.message.kanal;
+        }
     }
 
     get receiverInfo() {
-        let receiverInfo = this.message.mottakerInformasjon ? this.message.mottakerInformasjon : '';
+        let receiverInfo = this.message.kontaktinfo ? this.message.kontaktinfo : '';
         switch (this.message.kanal) {
             case 'EPOST':
                 return 'Epost: ' + receiverInfo;

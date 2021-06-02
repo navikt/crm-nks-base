@@ -1,5 +1,5 @@
 <template>
-    <article class="slds-card slds-card_boundary">
+    <article class="slds-card slds-card_boundary slds-theme_shade">
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -10,10 +10,10 @@
                 </div>
             </header>
         </div>
-        <div class="slds-card__body slds-card__body_inner">
+        <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
-                    <div class="slds-box slds-text-heading_medium">
+                    <div class="slds-box slds-text-heading_small slds-theme_default">
                         <lightning-layout>
                             <lightning-layout-item size="2"><p>Dato</p></lightning-layout-item>
                             <lightning-layout-item size="6"><p>Type</p></lightning-layout-item>
@@ -22,17 +22,18 @@
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="12" class="slds-p-top_x-small">
-                    <ol class="slds-has-dividers_around-space">
-                        <template
-                            if:true={filteredNotificationList}
-                            for:each={filteredNotificationList}
-                            for:item="notification"
-                        >
-                            <li class="slds-item" key={notification.bestilt}>
-                                <c-nks-brukervarsel
-                                    key={notification.bestilt}
-                                    brukervarsel={notification}
-                                ></c-nks-brukervarsel>
+                    <div if:true={showErrors} class="slds-text-color_error">
+                        Noe har gått feil i innlastingen av varsler:
+                        <ul class="slds-list_dotted">
+                            <template for:each={errorMessages} for:item="error">
+                                <li key={error}>{error}</li>
+                            </template>
+                        </ul>
+                    </div>
+                    <ol if:true={filteredNotificationList} class="slds-has-dividers_around-space">
+                        <template for:each={filteredNotificationList} for:item="notification">
+                            <li class="slds-item slds-theme_default" key={notification.bestilt}>
+                                <c-nks-brukervarsel brukervarsel={notification}></c-nks-brukervarsel>
                             </li>
                         </template>
                     </ol>
@@ -41,7 +42,7 @@
         </div>
         <footer class="slds-card__footer">
             <lightning-button
-                if:false={showAll}
+                if:true={showFooter}
                 variant="base"
                 label="Vis alle"
                 aria-label="Vis alle varsler"

@@ -13,6 +13,7 @@ export default class NksBrukervarselList extends LightningElement {
     personIdent;
     wireFields = [this.objectApiName + '.Id'];
     @track notifications = [];
+    @track errorMessages = [];
 
     get showNotifications() {
         return this.notifications.length > 0;
@@ -30,6 +31,14 @@ export default class NksBrukervarselList extends LightningElement {
         return this.notifications ? this.notifications.length : 0;
     }
 
+    get showErrors() {
+        return this.errorMessages.length > 0;
+    }
+
+    get showFooter() {
+        return this.showAll === false && this.notifications.length > 1;
+    }
+
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({
             parentId: this.recordId,
@@ -40,7 +49,7 @@ export default class NksBrukervarselList extends LightningElement {
                 this.personId = this.resolve(relationshipField, record);
             })
             .catch((error) => {
-                console.log(error);
+                this.addError(error);
             });
     }
 
@@ -52,6 +61,10 @@ export default class NksBrukervarselList extends LightningElement {
         if (data) {
             this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
         }
+
+        if (error) {
+            this.addError(error);
+        }
     }
 
     @wire(getRecord, {
@@ -62,6 +75,10 @@ export default class NksBrukervarselList extends LightningElement {
         if (this.relationshipField && this.objectApiName) {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
+
+        if (error) {
+            this.addError(error);
+        }
     }
 
     @wire(getBrukerVarsel, {
@@ -69,12 +86,27 @@ export default class NksBrukervarselList extends LightningElement {
     })
     wiredVarsel({ error, data }) {
         if (data) {
+            this.errorMessages = [];
             this.notifications = data;
+        }
+
+        if (error) {
+            this.addError(error);
         }
     }
 
     showAllNotifications() {
         this.showAll = true;
+    }
+
+    addError(error) {
+        if (Array.isArray(error.body)) {
+            this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
+        } else if (error.body && typeof error.body.message === 'string') {
+            this.errorMessages.push(error.body.message);
+        } else {
+            this.errorMessages.push(error.body);
+        }
     }
 
     /**

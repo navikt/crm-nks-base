@@ -1,4 +1,4 @@
-public with sharing class BrukervarslingBestilling {
+public with sharing class NKS_BrukervarslingBestilling {
     @AuraEnabled
     public String aktoerId;
     @AuraEnabled
@@ -10,7 +10,7 @@ public with sharing class BrukervarslingBestilling {
     @AuraEnabled
     public DateTime sisteVarselutsendelse;
     @AuraEnabled
-    public List<Brukervarsel> varselListe;
+    public List<NKS_Brukervarsel> varselListe;
     @AuraEnabled
     public String varseltypeId;
 }

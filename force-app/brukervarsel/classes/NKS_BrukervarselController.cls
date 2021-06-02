@@ -1,22 +1,42 @@
 public with sharing class NKS_BrukervarselController {
     @AuraEnabled(cacheable=true)
-    public static List<BrukervarslingBestilling> getBrukerVarselFromActorId(String actorId) {
-        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(actorId);
+    public static List<NKS_BrukervarslingBestilling> getBrukerVarselFromActorId(String actorId) {
+        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(
+            actorId,
+            Date.today().addMonths(-1),
+            Date.today()
+        );
 
         Integer statusCode = response.getStatusCode();
 
         if (statusCode == 200) {
-            return (List<BrukervarslingBestilling>) JSON.deserialize(
+            return (List<NKS_BrukervarslingBestilling>) JSON.deserialize(
                 response.getBody(),
-                List<BrukervarslingBestilling>.class
+                List<NKS_BrukervarslingBestilling>.class
             );
         } else {
             LoggerUtility logger = new LoggerUtility();
             logger.error('Error retrieving brukervarsel \n ' + 'Status: ' + response.getStatus(), null);
             logger.publish();
-            AuraHandledException ex = new AuraHandledException('Error retrieving brukervarsel');
-            ex.setMessage('Error retrieving brukervarsel');
-            throw ex;
+
+            if (statusCode == 401) {
+                throw new AuraHandledException('Feil med tilganger mot baksystem');
+            } else if (statusCode == 500) {
+                throw new AuraHandledException(
+                    'Feil ved henting av brukervarsel (' +
+                    'Status: ' +
+                    response.getStatus() +
+                    ' Melding: ' +
+                    response.getBody() +
+                    ')'
+                );
+            } else {
+                throw new AuraHandledException(
+                    'Feil ved henting av brukervarsel \n ' +
+                    'Status: ' +
+                    response.getStatus()
+                );
+            }
         }
     }
 

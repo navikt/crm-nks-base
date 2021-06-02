@@ -3,12 +3,12 @@ private with sharing class NKS_BrukervarselControllerTest {
     @IsTest
     static void importBrukervarselNotificationsSuccess() {
         ApiMock.setTestMock('GET_VARSEL_FROM_BRUKER_ID', 200, 'OK');
-        List<BrukervarslingBestilling> result;
+        List<NKS_BrukervarslingBestilling> result;
         Test.startTest();
         result = NKS_BrukervarselController.getBrukerVarselFromActorId('100003000120');
         Test.stopTest();
 
-        System.assertEquals(3, result.size(), 'Excpected three items in list');
+        System.assertEquals(6, result.size(), 'Excpected three items in list');
     }
 
     @IsTest

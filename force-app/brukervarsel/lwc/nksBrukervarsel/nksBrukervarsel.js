@@ -157,7 +157,7 @@ export default class NksBrukervarsel extends LightningElement {
 
     getChannelLabel(value) {
         switch (value) {
-            case 'NAVNO':
+            case 'DITT_NAV':
                 return 'NAV.NO';
             default:
                 return value;

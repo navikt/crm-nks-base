@@ -1,4 +1,4 @@
-public with sharing class Brukervarsel {
+public with sharing class NKS_Brukervarsel {
     @AuraEnabled
     public Datetime distribuert;
     @AuraEnabled
