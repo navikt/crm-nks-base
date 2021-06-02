@@ -16,7 +16,7 @@
             params: {
                 flowDevName: 'NKS_Inbound_Call',
                 flowArgs: [
-                    { name: 'sfdc_case_id', type: 'String', value: identifier },
+                    { name: 'Search', type: 'String', value: identifier },
                     { name: 'CONTEXT_OVERRIDE', type: 'String', value: contextOverride }
                 ]
             },

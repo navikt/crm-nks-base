@@ -101,8 +101,8 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
-        <fields>INT_EventTime__c</fields>
         <fields>NAME</fields>
+        <fields>INT_EventTime__c</fields>
         <fields>INT_Description__c</fields>
         <relatedList>UserNotification__c.CRM_Account__c</relatedList>
         <sortField>INT_EventTime__c</sortField>

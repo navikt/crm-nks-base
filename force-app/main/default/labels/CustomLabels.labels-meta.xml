@@ -89,6 +89,14 @@
         <value>Samtalereferatet kan ikke være tomt!</value>
     </labels>
     <labels>
+        <fullName>NKS_Conversation_Note_Share_With_User</fullName>
+        <categories>UI, NKS, Conversation Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Conversation Note Share With User</shortDescription>
+        <value>Del med bruker</value>
+    </labels>
+    <labels>
         <fullName>NKS_Create_Conversation_Note</fullName>
         <categories>UI, NKS, Call, Flow, Case</categories>
         <language>en_US</language>
@@ -183,6 +191,14 @@
         <protected>false</protected>
         <shortDescription>Nav Task Work Allocation Validation Error</shortDescription>
         <value>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_No_Cases_for_Selected_Theme_Group</fullName>
+        <categories>UI, NKS, Journal, nksCaseOverview</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Cases for Selected Theme Group</shortDescription>
+        <value>Ingen saker for valgt temagruppe.</value>
     </labels>
     <labels>
         <fullName>NKS_Payment_List_API_Error</fullName>

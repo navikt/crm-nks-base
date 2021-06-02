@@ -13,6 +13,10 @@ export default class NksNavCaseItem extends LightningElement {
         this.dispatchEvent(caseSelectedEvent);
     }
 
+    checkKeyPress(event) {
+        if (event.key === 'Enter') this.caseSelected(event);
+    }
+
     get isClosed() {
         return this.navCase ? (this.navCase.lukket ? true : false) : false;
     }

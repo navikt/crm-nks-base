@@ -301,6 +301,11 @@ TODAY())</expression>
         <dataType>String</dataType>
         <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
     </formulas>
+    <formulas>
+        <name>Task_Theme_Code</name>
+        <dataType>String</dataType>
+        <expression>{!NavTask.NKS_Theme__r.CRM_Code__c}</expression>
+    </formulas>
     <interviewLabel>Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Case Send NAV Task</label>
@@ -468,6 +473,12 @@ TODAY())</expression>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Task_Theme_Code</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -504,6 +515,12 @@ TODAY())</expression>
                 <name>personId</name>
                 <value>
                     <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Task_Theme_Code</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

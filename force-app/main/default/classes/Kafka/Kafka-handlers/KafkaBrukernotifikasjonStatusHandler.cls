@@ -10,6 +10,7 @@ public with sharing class KafkaBrukernotifikasjonStatusHandler extends KafkaBruk
         notification.INT_EventTime__c = statusoppdatering.tidspunktFormated;
         notification.INT_SocialSecurityNumber__c = statusoppdatering.fodselsnummer;
         notification.INT_GroupingId__c = statusoppdatering.grupperingsId;
+        notification.INT_Description__c = statusoppdatering.statusIntern;
         notification.INT_Link__c = statusoppdatering.link;
         notification.INT_SecurityLevel__c = statusoppdatering.sikkerhetsnivaa;
         notification.INT_GlobalStatus__c = statusoppdatering.statusGlobal;

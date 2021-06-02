@@ -2,9 +2,11 @@
     <div
         class="slds-m-top_x-small case-tile-bg"
         onclick={caseSelected}
+        onkeypress={checkKeyPress}
         role="button"
         aria-selected={selected}
         data-selected={selected}
+        tabindex="0"
     >
         <lightning-layout vertical-align="center">
             <lightning-layout-item size="2" class="slds-align_absolute-center">
