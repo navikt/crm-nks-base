@@ -21,7 +21,7 @@ public without sharing class NKS_CallFlowController {
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String puzSessionId : sessionIds) {
-                respList.add(new CallQueueResponse('', 'PERSON')); //Person is fallback when there is no match
+                respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE')); //Person is fallback when there is no match
             }
         } else {
             List<Object> enqLogs = getEnquiryLogs(sessionIds);
@@ -33,7 +33,7 @@ public without sharing class NKS_CallFlowController {
             }
 
             for (Puzzel_Queue_Mapping__mdt queueMapping : getQueueMappings(queueNames)) {
-                respList.add(new CallQueueResponse(queueMapping.Theme_Group_Code__c, queueMapping.Caller_Context__c));
+                respList.add(new CallQueueResponse(queueMapping.Theme_Group_Code__c, queueMapping.Caller_Context__c, queueMapping.Puzzel_Queue_Name__c));
             }
         }
         return respList;
@@ -72,10 +72,13 @@ public without sharing class NKS_CallFlowController {
         public String themeGroup;
         @invocableVariable
         public String callerContext;
+        @invocableVariable
+        public String queueName;
 
-        public CallQueueResponse(String themeGroup, String callerContext) {
+        public CallQueueResponse(String themeGroup, String callerContext, String queueName) {
             this.themeGroup = themeGroup;
             this.callerContext = callerContext;
+            this.queueName = queueName;
         }
     }
 }

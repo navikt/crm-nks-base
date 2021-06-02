@@ -19,5 +19,6 @@ public class NKS_CallFlowController_Test {
         Test.stopTest();
 
         System.assertEquals(resp[0].themeGroup, 'ARBD');
+        System.assertEquals(resp[0].queueName, TEST_QUEUE);
     }
 }
