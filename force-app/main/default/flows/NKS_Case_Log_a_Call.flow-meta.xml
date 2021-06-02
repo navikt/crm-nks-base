@@ -270,21 +270,21 @@
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Conversation_Theme_Categorization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.theme</elementReference>
+                <elementReference>Conversation_Theme_Categorization.theme</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.subtheme</elementReference>
+                <elementReference>Conversation_Theme_Categorization.subtheme</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -731,28 +731,8 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <extensionName>lbpm:flowScript</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>script</name>
-                <value>
-                    <elementReference>Get_Conversation_Note.CRM_Conversation_Note__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>color</name>
-                <value>
-                    <stringValue>rgb(61,151,221)</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>size</name>
-                <value>
-                    <stringValue>small</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Referat:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Get_Conversation_Note.CRM_Conversation_Note__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Create_Case_Button</name>
@@ -862,7 +842,7 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Theme_Categorization</name>
+            <name>Conversation_Theme_Categorization</name>
             <extensionName>c:nksThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -945,7 +925,7 @@
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
+                    <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1077,7 +1057,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;{!Get_Account.Name}&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Forklaring i punkter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Lenke til aktuell side på nav.no&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
