@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Arbeidsgiver</label>
+    <protected>false</protected>
+    <values>
+        <field>Caller_Context__c</field>
+        <value xsi:type="xsd:string">ARBEIDSGIVER</value>
+    </values>
+    <values>
+        <field>Puzzel_Queue_Name__c</field>
+        <value xsi:type="xsd:string">Arbeidsgiver</value>
+    </values>
+    <values>
+        <field>Theme_Group_Code__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
