@@ -80,6 +80,11 @@
             <targetReference>Loop_DataCategories</targetReference>
         </connector>
     </assignments>
+    <formulas>
+        <name>SOQLFilter</name>
+        <dataType>String</dataType>
+        <expression>&quot;KnowledgeArticle__c =&apos;&quot; +{!recordId} + &quot;&apos;&quot;</expression>
+    </formulas>
     <interviewLabel>Give Feedback {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Knowledge Feedback</label>
     <loops>
@@ -185,7 +190,93 @@
             <name>Feedback</name>
             <fieldText>Tilbakemelding</fieldText>
             <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Her kan du skrive inn din tilbakemelding til denne kunnskapsartikkelen. &lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>FeedbackList</name>
+            <extensionName>c:nksHomePageList</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>listviewname</name>
+                <value>
+                    <stringValue>Tilbakemeldinger</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>CaseNumber</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cardLabel</name>
+                <value>
+                    <stringValue>Tidligere tilbakemeldinger</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>content</name>
+                <value>
+                    <stringValue>Description</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>filterbyskills</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>iconName</name>
+                <value>
+                    <stringValue>standard:case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>limit</name>
+                <value>
+                    <stringValue>10</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>linklabel</name>
+                <value>
+                    <stringValue>Vis alle tilbakemeldinger</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>orderby</name>
+                <value>
+                    <stringValue>CreatedDate DESC</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showimage</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>filter</name>
+                <value>
+                    <elementReference>SOQLFilter</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>datefield</name>
+                <value>
+                    <stringValue>CreatedDate</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
