@@ -103,30 +103,22 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardLabel</name>
+                    <name>createQuickActionName</name>
+                    <value>NewCase</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>lookupFieldName</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>titleFieldName</name>
                     <value>Detaljer</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>Description, Data_Categories__c</value>
+                    <name>updateQuickActionName</name>
+                    <value>Case.UpdateFeedback</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideLabels</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:case</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
+                <componentName>console:relatedRecord</componentName>
             </componentInstance>
         </itemInstances>
         <name>main</name>
