@@ -28,6 +28,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.NKS_Puzzel_Queue_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.NKS_Subtheme__c</field>
         <readable>true</readable>
     </fieldPermissions>
