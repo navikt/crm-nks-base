@@ -1,0 +1,30 @@
+<template>
+    <article>
+        <div class="slds-text-heading_small">
+            <h4>{message.tittel}</h4>
+            <lightning-badge if:true={message.erDelsvar} label="Delsvar"></lightning-badge>
+            <lightning-badge if:true={message.erLest} label="Lest" class="slds-theme_success"></lightning-badge>
+            <lightning-badge if:true={message.erUlest} label="Ulest" class="slds-badge_inverse"></lightning-badge>
+        </div>
+        <div>{message.opprettetDatoFormatted}</div>
+        <p if:true={message.erLest}>Melding lest: {message.lestDato}</p>
+
+        <div if:true={message.erJournalfort}>
+            <lightning-button
+                variant="base"
+                label="Meldingen er journalført"
+                onclick={showJournalpostInfo}
+            ></lightning-button>
+            <div>{message.journalfortText}</div>
+        </div>
+
+        <div if:false={message.erJournalfort}>
+            <lightning-button
+                variant="base"
+                label="Meldingen er journalført"
+                onclick={showJournalpostInfo}
+            ></lightning-button>
+            <div>Ikke journalført</div>
+        </div>
+    </article>
+</template>

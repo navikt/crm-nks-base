@@ -1,0 +1,46 @@
+<template>
+    <article class="slds-card slds-card_boundary">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="custom:custom53" size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">Meldinger ({numberOfThreads})</h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <div class="slds-box slds-text-heading_medium">
+                        <lightning-layout>
+                            <lightning-layout-item size="2"><p>Dato</p></lightning-layout-item>
+                            <lightning-layout-item size="3"><p>Tittel</p></lightning-layout-item>
+                            <lightning-layout-item size="6"><p>Innhold</p></lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" class="slds-p-top_x-small">
+                    <ol class="slds-has-dividers_around-space">
+                        <template if:true={filteredThreadList} for:each={filteredThreadList} for:item="thread">
+                            <li class="slds-item" key={thread.threadId}>
+                                <c-nks-person-henvendelse thread={thread}></c-nks-person-henvendelse>
+                            </li>
+                        </template>
+                    </ol>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+        <footer class="slds-card__footer">
+            <lightning-button
+                if:false={showAll}
+                variant="base"
+                label="Vis alle"
+                aria-label="Vis alle meldinger"
+                onclick={showAllThreads}
+                class="slds-card__footer-action"
+            ></lightning-button>
+        </footer>
+    </article>
+</template>
