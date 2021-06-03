@@ -1,4 +1,4 @@
-global without sharing class NKS_HenvendelseRetry extends ApiRetryScheduler implements Queueable {
+global without sharing class NKS_HenvendelseRetry implements Queueable, Database.AllowsCallouts {
     private Map<String, List<Conversation_Note__c>> retryMap = new Map<String, List<Conversation_Note__c>>();
     private List<Conversation_Note__c> processedNotes = new List<Conversation_Note__c>();
     private LoggerUtility logger = new LoggerUtility();
@@ -7,6 +7,13 @@ global without sharing class NKS_HenvendelseRetry extends ApiRetryScheduler impl
 
     public NKS_HenvendelseRetry(Map<String, List<Conversation_Note__c>> retryMap) {
         this.retryMap = retryMap;
+    }
+
+    public NKS_HenvendelseRetry() {
+    }
+
+    global Boolean calloutLimitDanger() {
+        return Limits.getLimitCallouts() - Limits.getCallouts() < 5;
     }
 
     //###########################################################//
@@ -31,6 +38,8 @@ global without sharing class NKS_HenvendelseRetry extends ApiRetryScheduler impl
 
         if (!this.retryMap.isEmpty())
             enqueueSelf();
+
+        logger.publish();
     }
 
     private void processRetries() {
@@ -136,7 +145,8 @@ global without sharing class NKS_HenvendelseRetry extends ApiRetryScheduler impl
         );
 
         this.apiCtrl.doCallout();
-        return apiCtrl.getResponse().getBody();
+        Integer statusCode = this.apiCtrl.getResponse().getStatusCode();
+        return statusCode == 200 || statusCode == 201 ? apiCtrl.getResponse().getBody() : null;
     }
 
     private Boolean henvendelseJournalInit(
@@ -150,7 +160,7 @@ global without sharing class NKS_HenvendelseRetry extends ApiRetryScheduler impl
             'accept' => 'application/json'
         };
 
-        this.apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE');
+        this.apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE_JOURNAL');
         this.apiCtrl.setHeaders(httpHeaders);
         addXCorrelationId('X-Correlation created for henvendelse journal initiation', this.apiCtrl, this.logger);
         this.apiCtrl.setBody(
