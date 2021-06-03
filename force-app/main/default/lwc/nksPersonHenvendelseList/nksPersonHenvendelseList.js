@@ -28,14 +28,14 @@ export default class NksPersonHenvendelseList extends LightningElement {
             return [];
         }
 
-        return this.showAll ? this.ThreadList : this.threadList.slice(0, 1);
+        return this.showAll ? this.threadList : this.threadList.slice(0, 1);
     }
 
     get numberOfThreads() {
         return this.threadList ? this.threadList.length : 0;
     }
 
-    showAllThreads() {
+    setShowAllThreads() {
         this.showAll = true;
     }
 

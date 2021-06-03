@@ -22,6 +22,16 @@ public with sharing class NKS_HenvendelseUtil {
         return commonCode == null ? 'Ukjent tema: ' + tema : commonCode.Name;
     }
 
+    public static String getTemaGruppeLabel(String tema) {
+        if (commonCodeMap == null) {
+            loadCommonCodeMap();
+        }
+
+        Common_Code__c commonCode = commonCodeMap.get(tema);
+
+        return commonCode == null ? 'Ukjent temagruppe: ' + tema : commonCode.Name;
+    }
+
     public static Common_Code__c getTemagruppe(String tema) {
         if (commonCodeMap == null) {
             loadCommonCodeMap();
@@ -100,7 +110,7 @@ public with sharing class NKS_HenvendelseUtil {
         );
     }
 
-    public static Boolean isPartialyAnswared(String messageType) {
+    public static Boolean isPartialyAnswered(String messageType) {
         return hasEnum(new List<NKS_HenvendelseType>{ NKS_HenvendelseType.DELVIS_SVAR_SKRIFTLIG }, messageType);
     }
 
@@ -123,7 +133,7 @@ public with sharing class NKS_HenvendelseUtil {
 
         return getMessageTypeText(getHenvendelseEnumFromString(message.henvendelseType)) +
             ' - ' +
-            getTemagruppe(message.gjeldendeTemagruppe).Name;
+            getTemaGruppeLabel(message.gjeldendeTemagruppe);
     }
 
     public static DateTime stringToDateTime(String dateString) {
@@ -132,7 +142,7 @@ public with sharing class NKS_HenvendelseUtil {
         }
 
         try {
-            return Datetime.parse(dateString);
+            return Datetime.valueOf(dateString.replace('T', ' '));
         } catch (Exception e) {
         }
 
@@ -191,5 +201,21 @@ public with sharing class NKS_HenvendelseUtil {
                 return 'Ukjent meldingstype: ' + henvendelseType.name();
             }
         }
+    }
+
+    public static String getTextFromMetadata(NKS_HenvendelseMetadataListe metadataListe) {
+        if (null == metadataListe || metadataListe.metadata.isEmpty()) {
+            return null;
+        }
+
+        return metadataListe.metadata[0].fritekst;
+    }
+
+    public static String getWrittenByFromMetadata(NKS_HenvendelseMetadataListe metadataListe) {
+        if (null == metadataListe || metadataListe.metadata.isEmpty()) {
+            return null;
+        }
+
+        return 'Melding skrevet av ' + metadataListe.metadata[0].navident;
     }
 }

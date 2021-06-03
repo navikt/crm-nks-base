@@ -1,30 +1,79 @@
 <template>
     <article>
-        <div class="slds-text-heading_small">
-            <h4>{message.tittel}</h4>
-            <lightning-badge if:true={message.erDelsvar} label="Delsvar"></lightning-badge>
-            <lightning-badge if:true={message.erLest} label="Lest" class="slds-theme_success"></lightning-badge>
-            <lightning-badge if:true={message.erUlest} label="Ulest" class="slds-badge_inverse"></lightning-badge>
-        </div>
-        <div>{message.opprettetDatoFormatted}</div>
-        <p if:true={message.erLest}>Melding lest: {message.lestDato}</p>
+        <lightning-layout multiple-rows="true" class={alignment}>
+            <lightning-layout-item class="slds-grid_vertical-stretch slds-p-right_xx-small">
+                <lightning-icon
+                    icon-name="standard:user"
+                    alternative-text="Fra bruker"
+                    title="Fra bruker"
+                    if:true={message.erMeldingFraBruker}
+                ></lightning-icon>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" class="slds-box">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12">
+                        <lightning-layout>
+                            <lightning-layout-item class="slds-text-heading_small" alignment-bump="right"
+                                ><h4>{message.tittel}</h4>
+                            </lightning-layout-item>
+                            <lightning-layout-item>
+                                <lightning-badge if:true={message.erDelsvar} label="Delsvar"></lightning-badge>
+                                <lightning-badge
+                                    if:true={message.erLest}
+                                    label="Lest"
+                                    class="slds-theme_success"
+                                ></lightning-badge>
+                                <lightning-badge
+                                    if:true={message.erUlest}
+                                    label="Ulest"
+                                    class="slds-badge_inverse"
+                                ></lightning-badge>
+                                <lightning-badge if:true={message.delSvar} label="Delsvar"></lightning-badge>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
 
-        <div if:true={message.erJournalfort}>
-            <lightning-button
-                variant="base"
-                label="Meldingen er journalført"
-                onclick={showJournalpostInfo}
-            ></lightning-button>
-            <div>{message.journalfortText}</div>
-        </div>
-
-        <div if:false={message.erJournalfort}>
-            <lightning-button
-                variant="base"
-                label="Meldingen er journalført"
-                onclick={showJournalpostInfo}
-            ></lightning-button>
-            <div>Ikke journalført</div>
-        </div>
+                    <lightning-layout-item size="12">
+                        <p>{getDate}</p>
+                        <p if:true={message.erLest}>Melding lest: {lestDato}</p>
+                        <p if:true={message.erMeldingFraNav}>{message.skrevetAv}</p>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" class="slds-p-vertical_x-small slds-border_top slds-border_bottom">
+                        <p>
+                            <lightning-formatted-text value={message.tekst}></lightning-formatted-text>
+                        </p>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" if:true={message.erJournalfort}>
+                        <lightning-button
+                            variant="base"
+                            label="Meldingen er journalført"
+                            onclick={setShowJournalpostInfo}
+                            icon-name="utility:chevrondown"
+                            icon-position="right"
+                            if:false={showJournalpostInfo}
+                            class="slds-text-heading_small"
+                        ></lightning-button>
+                        <lightning-button
+                            variant="base"
+                            label="Meldingen er journalført"
+                            onclick={setShowJournalpostInfo}
+                            icon-name="utility:chevronup"
+                            icon-position="right"
+                            if:true={showJournalpostInfo}
+                            class="slds-text-heading_small"
+                        ></lightning-button>
+                        <div if:true={showJournalpostInfo}>{message.journalfortTekst}</div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-grid_vertical-stretch slds-p-left_xx-small">
+                <lightning-icon
+                    if:true={message.erMeldingFraNav}
+                    icon-name="standard:user"
+                    alternative-text="Fra bruker"
+                    title="Fra bruker"
+                ></lightning-icon>
+            </lightning-layout-item>
+        </lightning-layout>
     </article>
 </template>

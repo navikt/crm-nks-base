@@ -1,23 +1,33 @@
 <template>
-    <lightning-layout multiple-rows="true">
+    <lightning-layout multiple-rows="true" class="slds-p-horizontal_xx-small">
         <lightning-layout-item size="12">
             <lightning-layout>
                 <lightning-layout-item size="2">
                     <p>{getDate}</p>
                 </lightning-layout-item>
-                <lightning-layout-item size="3">
+                <lightning-layout-item size="4">
                     <h4 class="slds-text-heading_small">{thread.lastMessageTitle}</h4>
                 </lightning-layout-item>
-                <lightning-layout-item size="6">
-                    <h4 class="slds-text-heading_small">{thread.lastMessageSummary}</h4>
+                <lightning-layout-item size="4" alignment-bump="right" class="slds-has-flexi-truncate">
+                    <h4 class="slds-text-heading_small slds-truncate">{thread.lastMessageSummary}</h4>
                 </lightning-layout-item>
-                <!-- <lightning-layout-item size="3" alignment-bump="right">
-                    <ul class="slds-list_horizontal slds-has-dividers_left">
-                        <template if:true={channelList} for:each={channelList} for:item="channel">
-                            <li class="slds-item" key={channel}>{channel}</li>
-                        </template>
-                    </ul>
-                </lightning-layout-item> -->
+                <lightning-layout-item>
+                    <lightning-badge
+                        if:true={thread.isIncorrectlySent}
+                        label="Feilsendt"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                    <lightning-badge
+                        if:true={thread.isDeleted}
+                        label="Feilsendt"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                    <lightning-badge
+                        if:true={thread.isPartiallyAnswered}
+                        label="Delvis besvart"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                </lightning-layout-item>
                 <lightning-layout-item>
                     <lightning-button-icon
                         if:false={showDetails}
@@ -40,20 +50,19 @@
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
-        <lightning-layout-item size="12" if:true={showMessageList} class="slds-box slds-theme_shade">
-            <ol class="slds-has-dividers_bottom-space" aria-label="Dialog">
+        <lightning-layout-item size="12" if:true={showMessageList}>
+            <ol aria-label="Dialog">
                 <template iterator:it={thread.henvendelseList}>
-                    <li if:false={it.last} class="slds-item" key={it.value.behandlingsId}>
-                        <!-- <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding> -->
-                        <!-- Innhold -->
+                    <li key={it.value.behandlingsId} class="slds-p-vertical_small">
+                        <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
+                    </li>
+                    <!-- <li if:false={it.last} class="slds-item" key={it.value.behandlingsId}>
                         <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
                     </li>
 
                     <li if:true={it.last} class="slds-p-left_x-small slds-p-top_x-small" key={it.value.behandlingsId}>
-                        <!-- <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding> -->
-                        <!-- Innhold -->
                         <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
-                    </li>
+                    </li> -->
                 </template>
             </ol>
         </lightning-layout-item>

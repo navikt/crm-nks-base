@@ -94,7 +94,7 @@ public class NKS_Henvendelse {
     @AuraEnabled
     public Boolean erDelsvar {
         get {
-            return NKS_HenvendelseUtil.isPartialyAnswared(henvendelseType);
+            return NKS_HenvendelseUtil.isPartialyAnswered(henvendelseType);
         }
     }
 
@@ -109,6 +109,13 @@ public class NKS_Henvendelse {
     public Boolean erUlest {
         get {
             return erMeldingFraBruker ? false : String.isBlank(lestDato);
+        }
+    }
+
+    @AuraEnabled
+    public Boolean erSlettet {
+        get {
+            return String.isBlank(gjeldendeTemagruppe);
         }
     }
 
@@ -134,7 +141,7 @@ public class NKS_Henvendelse {
     }
 
     @AuraEnabled
-    public String journalfortText {
+    public String journalfortTekst {
         get {
             if (false == erJournalfort) {
                 return null;
@@ -144,13 +151,26 @@ public class NKS_Henvendelse {
                 ? journalfortInformasjon.journalforerNavIdent
                 : 'ukjent';
             String journalpostDate = String.isNotBlank(journalfortInformasjon.journalfortDato)
-                ? journalfortInformasjon.journalfortDato
+                ? NKS_HenvendelseUtil.stringToDateTime(journalfortInformasjon.journalfortDato).format()
                 : 'ukjent dato';
             String themeLabel = String.isNotBlank(journalfortInformasjon.journalforerNavIdent)
                 ? NKS_HenvendelseUtil.getTemaLabel(journalfortInformasjon.journalfortTema)
                 : 'ukjent tema';
 
             return 'Journalført av ' + navIdent + ' ' + journalpostDate + ' på tema ' + themeLabel;
+        }
+    }
+    @AuraEnabled
+    public String tekst {
+        get {
+            return NKS_HenvendelseUtil.getTextFromMetadata(metadataListe);
+        }
+    }
+
+    @AuraEnabled
+    public String skrevetAv {
+        get {
+            return NKS_HenvendelseUtil.getWrittenByFromMetadata(metadataListe);
         }
     }
 }

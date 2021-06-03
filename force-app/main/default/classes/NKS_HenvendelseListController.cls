@@ -52,15 +52,10 @@ public with sharing class NKS_HenvendelseListController {
     public class MessageThread {
         @AuraEnabled
         public String threadId;
-        // String iconName {
-        //     get {
-        //         return getIconName();
-        //     }
-        // }
-        // String iconAltText;
-        // String messageType;
         @AuraEnabled
         public DateTime lastMessageTime;
+        @AuraEnabled
+        public DateTime firstMessageTime;
         @AuraEnabled
         public String lastMessageSummary;
         @AuraEnabled
@@ -68,12 +63,18 @@ public with sharing class NKS_HenvendelseListController {
         @AuraEnabled
         public String status;
         @AuraEnabled
+        public Boolean isIncorrectlySent = false;
+        @AuraEnabled
+        public Boolean isDeleted = false;
+        @AuraEnabled
+        public Boolean isPartiallyAnswered = false;
+        @AuraEnabled
         public List<NKS_Henvendelse> henvendelseList;
 
         public MessageThread(NKS_Henvendelse henvendelse) {
             henvendelseList = new List<NKS_Henvendelse>{ henvendelse };
             threadId = henvendelse.behandlingskjedeId;
-            // setIcon();
+            setFirstMessage(henvendelse);
             setLastMessage(henvendelse);
         }
 
@@ -81,46 +82,25 @@ public with sharing class NKS_HenvendelseListController {
             if (henvendelse.opprettetDatoFormatted > lastMessageTime) {
                 setLastMessage(henvendelse);
             }
+
+            if (henvendelse.opprettetDatoFormatted < firstMessageTime) {
+                setFirstMessage(henvendelse);
+            }
             henvendelseList.add(henvendelse);
         }
 
         private void setLastMessage(NKS_Henvendelse henvendelse) {
-            lastMessageTime = DateTime.now(); // henvendelse.opprettetDatoFormatted;
+            lastMessageTime = henvendelse.opprettetDatoFormatted;
             lastMessageTitle = henvendelse.tittel;
             status = '';
+            lastMessageSummary = henvendelse.tekst;
+            isDeleted = henvendelse.erSlettet;
+            isPartiallyAnswered = henvendelse.erDelsvar;
         }
 
-        // private String getIconName() {
-        //     switch on messageType {
-        //         when 'SAMTALEREFERAT_OPPMOTE' {
-        //             return 'utility:task';
-        //         }
-        //         when 'SAMTALEREFERAT_TELEFON' {
-        //             return 'utility:call';
-        //         }
-        //         when 'OPPGAVE_VARSEL' {
-        //             return 'utility:task';
-        //         }
-        //         when 'DOKUMENT_VARSEL' {
-        //             return 'utility:display_text';
-        //         }
-        //         when else {
-        //             return '';
-        //         }
-        //         // comments
-        //         // anywhere_chat
-        //     }
-        // }
-
-        // private boolean isUnanswared() {
-        //     // if(henvendelseList.size() > 1) {
-        //     //     return false;
-        //     // }
-
-        //     // if(!isMessageFromUser) {
-        //     //     return false;
-        //     // }
-        //     return false;
-        // }
+        private void setFirstMessage(NKS_Henvendelse henvendelse) {
+            isIncorrectlySent = henvendelse.erMeldingFeilsendt;
+            firstMessageTime = henvendelse.opprettetDatoFormatted;
+        }
     }
 }
