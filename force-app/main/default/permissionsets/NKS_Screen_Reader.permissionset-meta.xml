@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>ScreenReader</name>
+    </customPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.ModiaURL__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>NKS - Screen Reader</label>
+</PermissionSet>

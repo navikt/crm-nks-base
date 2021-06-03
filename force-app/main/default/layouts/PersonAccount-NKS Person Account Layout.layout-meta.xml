@@ -83,6 +83,7 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>NKS_Status__c</fields>
         <fields>NKS_Date_Registered__c</fields>
         <fields>CRM_DueDate__c</fields>
         <fields>NKS_TaskType__c</fields>
@@ -114,7 +115,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000002YwVg</masterLabel>
+        <masterLabel>00h1x000002X5vC</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -1,0 +1,12 @@
+<template>
+    <div if:false={synchFinished} class="slds-box slds-theme_shade">
+        <lightning-layout>
+            <lightning-layout-item class="slds-align_absolute-center" size="8">
+                <h1 class="slds-text-heading_large">Henter informasjon fra fagsystemer</h1>
+            </lightning-layout-item>
+            <lightning-layout-item size="4" class="slds-align_absolute-center">
+                <c-einstein-spinner></c-einstein-spinner>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

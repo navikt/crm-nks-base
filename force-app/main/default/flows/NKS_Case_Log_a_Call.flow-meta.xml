@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Initiate_Journal_Process</name>
         <label>Initiate Journal Process</label>
-        <locationX>530</locationX>
-        <locationY>1316</locationY>
+        <locationX>534</locationX>
+        <locationY>1430</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -52,8 +52,8 @@
         <description>Posts the conversation note to henvendelse via API</description>
         <name>Post_to_Henvendelse</name>
         <label>Post to Henvendelse</label>
-        <locationX>972</locationX>
-        <locationY>863</locationY>
+        <locationX>973</locationX>
+        <locationY>878</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -89,7 +89,7 @@
         <inputParameters>
             <name>themeGroupCode</name>
             <value>
-                <elementReference>Case_Overview.selectedThemeGroup</elementReference>
+                <elementReference>CONV_NOTE_THEME_GROUP_CODDE</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -101,8 +101,8 @@
         <description>Displays a toast on successful log.</description>
         <name>Show_Toast</name>
         <label>Show Toast</label>
-        <locationX>977</locationX>
-        <locationY>2315</locationY>
+        <locationX>981</locationX>
+        <locationY>2302</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -165,8 +165,8 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>979</locationX>
-        <locationY>1694</locationY>
+        <locationX>982</locationX>
+        <locationY>1709</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -188,8 +188,8 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>979</locationX>
-        <locationY>1990</locationY>
+        <locationX>982</locationX>
+        <locationY>2005</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -241,7 +241,7 @@
         <name>Conversation_Note_Journal_Assignment</name>
         <label>Conversation Note Journal Assignment</label>
         <locationX>747</locationX>
-        <locationY>1595</locationY>
+        <locationY>1610</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -264,8 +264,8 @@
         <description>Assigns updated values for case and conversation note</description>
         <name>Default_Theme_Categorization_Assignment</name>
         <label>Default Theme Categorization Assignment</label>
-        <locationX>979</locationX>
-        <locationY>1510</locationY>
+        <locationX>982</locationX>
+        <locationY>1525</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -295,8 +295,8 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Journal_Theme_Categorization_Assignment</name>
         <label>Journal Theme Categorization Assignment</label>
-        <locationX>531</locationX>
-        <locationY>1142</locationY>
+        <locationX>534</locationX>
+        <locationY>1157</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -312,7 +312,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Initiate_Journal_Process</targetReference>
+            <targetReference>Set_Legacy_Case_ID_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -320,7 +320,7 @@
         <name>Journal_Theme_Categorization_Assignment_0</name>
         <label>Journal Theme Categorization Assignment</label>
         <locationX>1357</locationX>
-        <locationY>1498</locationY>
+        <locationY>1513</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -358,8 +358,8 @@
     <assignments>
         <name>Set_Journal_Error</name>
         <label>Set Journal Error</label>
-        <locationX>532</locationX>
-        <locationY>1702</locationY>
+        <locationX>535</locationX>
+        <locationY>1717</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -382,7 +382,7 @@
         <name>Set_Journal_Error_0</name>
         <label>Set Journal Error</label>
         <locationX>1357</locationX>
-        <locationY>1694</locationY>
+        <locationY>1709</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -395,11 +395,45 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Sets the legacy case ID for journal initiation</description>
+        <name>Set_Legacy_Case_ID</name>
+        <label>Set Legacy Case ID</label>
+        <locationX>1357</locationX>
+        <locationY>1351</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Journal_Theme_Categorization_Assignment_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the legacy case ID for journal initiation</description>
+        <name>Set_Legacy_Case_ID_0</name>
+        <label>Set Legacy Case ID</label>
+        <locationX>534</locationX>
+        <locationY>1305</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Initiate_Journal_Process</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Sets the registration date for the conversation note after a successful post.</description>
         <name>Set_Registration_Date</name>
         <label>Set Registration Date</label>
-        <locationX>768</locationX>
-        <locationY>994</locationY>
+        <locationX>774</locationX>
+        <locationY>1009</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
             <operator>Assign</operator>
@@ -467,8 +501,8 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>763</locationX>
-        <locationY>1151</locationY>
+        <locationX>765</locationX>
+        <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -493,8 +527,8 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision_0</name>
         <label>Create Journal Entry?</label>
-        <locationX>1185</locationX>
-        <locationY>990</locationY>
+        <locationX>1186</locationX>
+        <locationY>1004</locationY>
         <defaultConnector>
             <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -510,7 +544,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Journal_Theme_Categorization_Assignment_0</targetReference>
+                <targetReference>Set_Legacy_Case_ID</targetReference>
             </connector>
             <label>Create Journal Entry</label>
         </rules>
@@ -518,8 +552,8 @@
     <decisions>
         <name>Verify_Henvendelse_Post</name>
         <label>Verify Henvendelse Post</label>
-        <locationX>965</locationX>
-        <locationY>996</locationY>
+        <locationX>966</locationX>
+        <locationY>1011</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry_Decision_0</targetReference>
         </defaultConnector>
@@ -550,8 +584,8 @@
     <decisions>
         <name>Verify_Journal_Initiation</name>
         <label>Verify Journal Initiation</label>
-        <locationX>655</locationX>
-        <locationY>1318</locationY>
+        <locationX>656</locationX>
+        <locationY>1431</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </defaultConnector>
@@ -572,6 +606,14 @@
             <label>Journal Success</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>CONV_NOTE_THEME_GROUP_CODDE</name>
+        <dataType>String</dataType>
+        <expression>IF({!Create_Journal_Entry.value},
+{!Case_Overview.selectedThemeGroup},
+{!Conversation_Theme_Categorization.themeGroupCode}
+)</expression>
+    </formulas>
     <interviewLabel>Case Log a Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Log a Call</label>
     <processMetadataValues>
@@ -597,8 +639,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>978</locationX>
-        <locationY>2152</locationY>
+        <locationX>982</locationX>
+        <locationY>2160</locationY>
         <connector>
             <targetReference>Show_Toast</targetReference>
         </connector>
@@ -675,8 +717,8 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>979</locationX>
-        <locationY>1844</locationY>
+        <locationX>982</locationX>
+        <locationY>1859</locationY>
         <connector>
             <targetReference>Conversation_Note_Assignment</targetReference>
         </connector>
@@ -685,8 +727,8 @@
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1188</locationX>
-        <locationY>653</locationY>
+        <locationX>1186</locationX>
+        <locationY>655</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -760,7 +802,7 @@
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>972</locationX>
-        <locationY>719</locationY>
+        <locationY>724</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
