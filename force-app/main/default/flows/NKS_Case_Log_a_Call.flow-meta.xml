@@ -89,7 +89,7 @@
         <inputParameters>
             <name>themeGroupCode</name>
             <value>
-                <elementReference>Case_Overview.selectedThemeGroup</elementReference>
+                <elementReference>CONV_NOTE_THEME_GROUP_CODE</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -572,6 +572,15 @@
             <label>Journal Success</label>
         </rules>
     </decisions>
+    <formulas>
+        <description>Chosen theme group code for the conversation note</description>
+        <name>CONV_NOTE_THEME_GROUP_CODE</name>
+        <dataType>String</dataType>
+        <expression>IF({!Create_Journal_Entry.value} == true,
+{!Case_Overview.selectedThemeGroup},
+{!Conversation_Theme_Categorization.themeGroupCode}
+)</expression>
+    </formulas>
     <interviewLabel>Case Log a Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Log a Call</label>
     <processMetadataValues>
