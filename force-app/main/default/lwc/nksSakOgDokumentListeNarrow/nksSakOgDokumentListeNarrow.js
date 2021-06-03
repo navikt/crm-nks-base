@@ -172,7 +172,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
             this.brukerId = getFieldValue(data, PERSON_ACTOR_FIELD);
         }
         if (error) {
-            this.error = true;
             this.setErrorMessage(error, 'caughtError');
         }
     }
