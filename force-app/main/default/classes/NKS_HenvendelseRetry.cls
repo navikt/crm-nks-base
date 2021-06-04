@@ -95,6 +95,7 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                         this.casesToUpdate.add(
                             new Case(Id = noteToRetry.CRM_Case__c, NKS_Henvendelse_BehandlingsId__c = behandlingsId)
                         );
+                        noteToRetry.NKS_Henvendelse_BehandlingsId__c = behandlingsId;
                     }
                     if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
                         Boolean journalSuccess = henvendelseJournalInit(
