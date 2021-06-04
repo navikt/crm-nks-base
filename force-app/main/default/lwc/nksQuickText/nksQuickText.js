@@ -26,6 +26,7 @@ export default class nksQuickText extends LightningElement {
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('lightning-input-rich-text');
             inputField.focus();
+            inputField.blur();
             this.initialRender = false;
         }
     }
