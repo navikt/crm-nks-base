@@ -35,7 +35,7 @@ export default class nksQuickText extends LightningElement {
     wiredQuicktexts(value) {
         if (value.data) {
             this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c, key.Message]));
+            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
         }
     }
 
@@ -102,7 +102,7 @@ export default class nksQuickText extends LightningElement {
         if (isSpaceKey) {
             var textval = this.conversationNote.replace(/(\r\n|\n|\r)/gm, '');
             var stringarray = textval.trim().split(' ');
-            const lastItem = stringarray[stringarray.length - 1];
+            const lastItem = stringarray[stringarray.length - 1].toUpperCase();
             if (this.qmap.has(lastItem)) {
                 const inserttext = this.qmap.get(lastItem);
                 const editor = this.template.querySelector('lightning-input-rich-text');
