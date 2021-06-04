@@ -239,12 +239,8 @@ export default class NksPersonCaseOverview extends LightningElement {
             themeGroupCode = themeCmp.themeGroup;
         } else {
             if (this.themeMap) {
-                Object.keys(this.themeMap).forEach((themeGroupId) => {
-                    if (this.themeMap[themeGroupId].hasOwnProperty('hasTheme')) {
-                        if (this.themeMap[themeGroupId].hasTheme(this.selectedCaseTheme) !== null)
-                            themeGroupCode = this.themeMap[themeGroupId].themeGroupCode;
-                    }
-                });
+                let mappedTheme = this.themeMap.getTheme(this.selectedCaseTheme);
+                if (mappedTheme) themeGroupCode = this.themeMap.getTheme(this.selectedCaseTheme).themeGroupCode;
             }
         }
         return themeGroupCode;

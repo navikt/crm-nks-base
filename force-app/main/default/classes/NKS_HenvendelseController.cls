@@ -164,6 +164,7 @@ global without sharing class NKS_HenvendelseController {
         if (henv.metadataListe.metadata == null || henv.metadataListe.metadata.isEmpty())
             return null;
         convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
+        convNote.NKS_Date_Registered__c = Date.valueOf(henv.opprettetDato);
         convNote.NKS_Henvendelse_BehandlingsId__c = henv.behandlingsId;
         if (henv.journalfortInformasjon != null && String.isNotBlank(henv.journalfortInformasjon.journalpostId)) {
             convNote.NKS_Journal_Status__c = 'Journal Completed';
