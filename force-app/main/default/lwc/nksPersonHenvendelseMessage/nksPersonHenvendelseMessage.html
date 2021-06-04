@@ -1,15 +1,20 @@
 <template>
     <article>
-        <lightning-layout multiple-rows="true" class={alignment}>
-            <lightning-layout-item class="slds-grid_vertical-stretch slds-p-right_xx-small">
+        <lightning-layout>
+            <lightning-layout-item class="slds-grid_vertical-stretch slds-p-right_xx-small" size="1">
                 <lightning-icon
                     icon-name="standard:user"
                     alternative-text="Fra bruker"
                     title="Fra bruker"
                     if:true={message.erMeldingFraBruker}
                 ></lightning-icon>
+                <c-nks-nav-logo-icon
+                    if:true={message.erMeldingFraNav}
+                    size="large"
+                    alt-text="Fra NAV"
+                ></c-nks-nav-logo-icon>
             </lightning-layout-item>
-            <lightning-layout-item size="6" class="slds-box">
+            <lightning-layout-item size="11" class="slds-box">
                 <lightning-layout multiple-rows="true">
                     <lightning-layout-item size="12">
                         <lightning-layout>
@@ -36,15 +41,16 @@
                     <lightning-layout-item size="12">
                         <p>{getDate}</p>
                         <p if:true={message.erLest}>Melding lest: {lestDato}</p>
-                        <p if:true={message.erMeldingFraNav}>{message.skrevetAv}</p>
+                        <p if:true={message.erMeldingFraNav}>Skrevet av: {message.skrevetAv}</p>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" class="slds-p-vertical_x-small slds-border_top slds-border_bottom">
                         <p>
-                            <lightning-formatted-text value={message.tekst}></lightning-formatted-text>
+                            <lightning-formatted-text value={message.fritekst}></lightning-formatted-text>
                         </p>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" if:true={message.erJournalfort}>
-                        <lightning-button
+                    <lightning-layout-item size="12" if:true={message.erJournalfort} class="slds-p-top_x-small">
+                        <p>{message.journalfortTekst}</p>
+                        <!-- <lightning-button
                             variant="base"
                             label="Meldingen er journalført"
                             onclick={setShowJournalpostInfo}
@@ -62,17 +68,9 @@
                             if:true={showJournalpostInfo}
                             class="slds-text-heading_small"
                         ></lightning-button>
-                        <div if:true={showJournalpostInfo}>{message.journalfortTekst}</div>
+                        <div if:true={showJournalpostInfo}>{message.journalfortTekst}</div> -->
                     </lightning-layout-item>
                 </lightning-layout>
-            </lightning-layout-item>
-            <lightning-layout-item class="slds-grid_vertical-stretch slds-p-left_xx-small">
-                <lightning-icon
-                    if:true={message.erMeldingFraNav}
-                    icon-name="standard:user"
-                    alternative-text="Fra bruker"
-                    title="Fra bruker"
-                ></lightning-icon>
             </lightning-layout-item>
         </lightning-layout>
     </article>

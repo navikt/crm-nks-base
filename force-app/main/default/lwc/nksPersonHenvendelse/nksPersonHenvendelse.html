@@ -52,17 +52,10 @@
         </lightning-layout-item>
         <lightning-layout-item size="12" if:true={showMessageList}>
             <ol aria-label="Dialog">
-                <template iterator:it={thread.henvendelseList}>
+                <template iterator:it={thread.messageList}>
                     <li key={it.value.behandlingsId} class="slds-p-vertical_small">
                         <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
                     </li>
-                    <!-- <li if:false={it.last} class="slds-item" key={it.value.behandlingsId}>
-                        <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
-                    </li>
-
-                    <li if:true={it.last} class="slds-p-left_x-small slds-p-top_x-small" key={it.value.behandlingsId}>
-                        <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
-                    </li> -->
                 </template>
             </ol>
         </lightning-layout-item>

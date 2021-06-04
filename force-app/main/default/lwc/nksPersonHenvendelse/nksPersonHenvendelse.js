@@ -10,7 +10,7 @@ export default class NksPersonHenvendelse extends LightningElement {
     }
 
     get hasMessageList() {
-        return this.thread.henvendelseList && this.thread.henvendelseList.length > 0 ? true : false;
+        return this.thread.messageList && this.thread.messageList.length > 0 ? true : false;
     }
 
     get getDate() {

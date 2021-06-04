@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import navLogoIcon from '@salesforce/resourceUrl/NKS_nav_logo_rod';
 
 export default class NksPersonHenvendelseMessage extends LightningElement {
     @api message;
@@ -10,15 +11,15 @@ export default class NksPersonHenvendelseMessage extends LightningElement {
     }
 
     get getDate() {
-        return this.formateDate(this.message.opprettetDatoFormatted);
+        return this.formateDate(this.message.opprettetDato);
     }
 
     get lestDato() {
-        return this.formateDate(this.message.opprettetDatoFormatted);
+        return this.formateDate(this.message.lestDato);
     }
 
-    get alignment() {
-        return this.message.erMeldingFraBruker ? '' : 'slds-grid_align-end';
+    get navLogo() {
+        return navLogoIcon + '#rodLogo';
     }
 
     formateDate(d) {
