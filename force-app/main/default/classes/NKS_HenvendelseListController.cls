@@ -7,6 +7,12 @@ public with sharing class NKS_HenvendelseListController {
             List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
                 NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_TELEFON,
                 NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG
+                // NKS_HenvendelseService.SPORSMAL_SKRIFTLIG,
+                // NKS_HenvendelseService.SPORSMAL_SKRIFTLIG_DIREKTE,
+                // NKS_HenvendelseService.SVAR_SKRIFTLIG,
+                // NKS_HenvendelseService.DELVIS_SVAR_SKRIFTLIG,
+                // NKS_HenvendelseService.SPORSMAL_MODIA_UTGAAENDE,
+                // NKS_HenvendelseService.SVAR_SBL_INNGAAENDE
             };
 
             HttpResponse resp = service.getPersonHenvendelser(
@@ -22,7 +28,7 @@ public with sharing class NKS_HenvendelseListController {
                     NKS_HenvendelseList.class
                 );
 
-                return buildMessageThreads(henvList.henvendelser); //henvList.henvendelser;
+                return buildMessageThreads(henvList.henvendelser);
             } else {
                 LoggerUtility logger = new LoggerUtility('Henvendelse');
                 logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
