@@ -119,11 +119,21 @@ global without sharing class NKS_HenvendelseController {
                 resp.getBody(),
                 NKS_HenvendelseList.class
             );
+            filterLastYear(henvList.henvendelser);
             upserConversationNotes(convertToConversationNotes(henvList.henvendelser, accountId));
         } else {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
             logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
+        }
+    }
+
+    private static void filterLastYear(List<NKS_Henvendelse> henvList) {
+        Date today = Date.today();
+        for (Integer i = henvList.size() - 1; i >= 0; i--) {
+            if (Date.valueOf(henvList[i].opprettetDato) < today.addYears(-1)) {
+                henvList.remove(i);
+            }
         }
     }
 
