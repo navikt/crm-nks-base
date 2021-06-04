@@ -44,21 +44,25 @@ export default class NksDataSyncher extends LightningElement {
         }
     }
 
-    doSynch(personIdent, personActorId, personAccountId) {
-        this.conversationNoteSynch(personIdent, personAccountId);
+    async doSynch(personIdent, personActorId, personAccountId) {
+        await this.conversationNoteSynch(personIdent, personAccountId);
+        this.synchFinished = true;
+        eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
     }
 
     conversationNoteSynch(personIdent, personAccountId) {
-        synchConversationNotes({ personIdent: personIdent, accountId: personAccountId })
-            .then(() => {
-                //HURRAY!
-            })
-            .catch((error) => {
-                console.log(JSON.stringify(error, null, 2));
-            })
-            .finally(() => {
-                this.synchFinished = true;
-            });
+        return new Promise(async (resolve, reject) => {
+            synchConversationNotes({ personIdent: personIdent, accountId: personAccountId })
+                .then(() => {
+                    //HURRAY!
+                })
+                .catch((error) => {
+                    console.log(JSON.stringify(error, null, 2));
+                })
+                .finally(() => {
+                    resolve();
+                });
+        });
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {

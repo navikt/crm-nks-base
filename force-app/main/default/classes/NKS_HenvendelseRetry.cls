@@ -2,7 +2,6 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
     private Map<String, List<Conversation_Note__c>> retryMap = new Map<String, List<Conversation_Note__c>>();
     private List<Conversation_Note__c> processedNotes = new List<Conversation_Note__c>();
     private LoggerUtility logger = new LoggerUtility();
-    private ApiController apiCtrl = new ApiController();
     List<Case> casesToUpdate = new List<Case>();
 
     public NKS_HenvendelseRetry(Map<String, List<Conversation_Note__c>> retryMap) {
@@ -34,18 +33,19 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
             init();
 
         processRetries();
-        initDml();
 
         if (!this.retryMap.isEmpty())
             enqueueSelf();
 
+        initDml();
         logger.publish();
     }
 
     private void processRetries() {
+        ApiController apiCtrl = new ApiController();
         for (String ownerId : this.retryMap.keySet()) {
             List<Conversation_Note__c> notesToRetry = this.retryMap.remove(ownerId);
-            this.apiCtrl.addServiceAuthHeader('Henvendelse', ownerId); //Sets the authorization header for the owner
+            apiCtrl.addServiceAuthHeader('Henvendelse', ownerId); //Sets the authorization header for the owner
             while (!notesToRetry.isEmpty()) {
                 if (calloutLimitDanger()) {
                     //If callout limit is close, add remaining notes to scope and re-enqueue
@@ -53,7 +53,8 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                     return;
                 }
                 //Processing
-                performRetry(notesToRetry.remove(0));
+                //performRetry(notesToRetry.remove(0));
+                performRetry(notesToRetry.remove(0), apiCtrl);
             }
         }
     }
@@ -85,22 +86,24 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
         System.enqueueJob(this);
     }
 
-    private void performRetry(Conversation_Note__c noteToRetry) {
+    private void performRetry(Conversation_Note__c noteToRetry, ApiController apiCtrl) {
         try {
             if (noteToRetry != null) {
                 if (noteToRetry.NKS_Sent__c == false) {
-                    String behandlingsId = postToHenvendelse(noteToRetry);
+                    String behandlingsId = postToHenvendelse(noteToRetry, apiCtrl);
                     if (behandlingsId != null) {
                         this.casesToUpdate.add(
                             new Case(Id = noteToRetry.CRM_Case__c, NKS_Henvendelse_BehandlingsId__c = behandlingsId)
                         );
+                        noteToRetry.NKS_Henvendelse_BehandlingsId__c = behandlingsId;
                     }
                     if (noteToRetry.NKS_Journal_Status__c == 'Journal Error') {
                         Boolean journalSuccess = henvendelseJournalInit(
                             behandlingsId,
                             noteToRetry.NKS_Owner_Department__c,
                             noteToRetry.NKS_Legacy_Case_Id__c,
-                            noteToRetry.NKS_Theme_Code__c
+                            noteToRetry.NKS_Theme_Code__c,
+                            apiCtrl
                         );
                         if (journalSuccess)
                             setJournalSuccess(noteToRetry);
@@ -110,7 +113,8 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                         noteToRetry.CRM_Case__r.NKS_Henvendelse_BehandlingsId__c,
                         noteToRetry.NKS_Owner_Department__c,
                         noteToRetry.NKS_Legacy_Case_Id__c,
-                        noteToRetry.NKS_Theme_Code__c
+                        noteToRetry.NKS_Theme_Code__c,
+                        apiCtrl
                     );
                     if (journalSuccess)
                         setJournalSuccess(noteToRetry);
@@ -124,16 +128,16 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
         }
     }
 
-    private String postToHenvendelse(Conversation_Note__c convNote) {
+    private String postToHenvendelse(Conversation_Note__c convNote, ApiController apiCtrl) {
         Map<String, String> httpHeaders = new Map<String, String>{
             'Content-Type' => 'application/json',
             'accept' => 'application/json'
         };
 
-        this.apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE');
-        this.apiCtrl.setHeaders(httpHeaders);
-        addXCorrelationId('X-Correlation created for henvendelse POST', this.apiCtrl, this.logger);
-        this.apiCtrl.setBody(
+        apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE');
+        apiCtrl.setHeaders(httpHeaders);
+        addXCorrelationId('X-Correlation created for henvendelse POST', apiCtrl, this.logger);
+        apiCtrl.setBody(
             JSON.serialize(
                 new SendHenvendelseRequest(
                     convNote.CRM_Account__r.INT_PersonIdent__c,
@@ -144,8 +148,8 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
             )
         );
 
-        this.apiCtrl.doCallout();
-        Integer statusCode = this.apiCtrl.getResponse().getStatusCode();
+        apiCtrl.doCallout();
+        Integer statusCode = apiCtrl.getResponse().getStatusCode();
         return statusCode == 200 || statusCode == 201 ? apiCtrl.getResponse().getBody() : null;
     }
 
@@ -153,22 +157,23 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
         String behandlingskjedeId,
         String journalNavUnit,
         String navCaseId,
-        String themeCode
+        String themeCode,
+        ApiController apiCtrl
     ) {
         Map<String, String> httpHeaders = new Map<String, String>{
             'Content-Type' => 'application/json',
             'accept' => 'application/json'
         };
 
-        this.apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE_JOURNAL');
-        this.apiCtrl.setHeaders(httpHeaders);
-        addXCorrelationId('X-Correlation created for henvendelse journal initiation', this.apiCtrl, this.logger);
-        this.apiCtrl.setBody(
+        apiCtrl.initRequest('HENVENDELSE_API', 'POST_HENVENDELSE_JOURNAL');
+        apiCtrl.setHeaders(httpHeaders);
+        addXCorrelationId('X-Correlation created for henvendelse journal initiation', apiCtrl, this.logger);
+        apiCtrl.setBody(
             JSON.serialize(new JournalHenvendelseRequest(behandlingskjedeId, journalNavUnit, navCaseId, themeCode))
         );
 
-        this.apiCtrl.doCallout();
-        Integer statusCode = this.apiCtrl.getResponse().getStatusCode();
+        apiCtrl.doCallout();
+        Integer statusCode = apiCtrl.getResponse().getStatusCode();
         return statusCode == 200 || statusCode == 201;
     }
 
