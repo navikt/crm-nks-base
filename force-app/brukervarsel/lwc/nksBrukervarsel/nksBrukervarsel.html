@@ -1,0 +1,60 @@
+<template>
+    <article aria-label={varselType}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12">
+                <lightning-layout>
+                    <lightning-layout-item size="2">
+                        <p>{getDate}</p>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6">
+                        <h4>{varselType}</h4>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" alignment-bump="right">
+                        <ul class="slds-list_horizontal slds-has-dividers_left">
+                            <template if:true={channelList} for:each={channelList} for:item="channel">
+                                <li class="slds-item" key={channel}>{channel}</li>
+                            </template>
+                        </ul>
+                    </lightning-layout-item>
+                    <lightning-layout-item>
+                        <lightning-button-icon
+                            if:false={showDetails}
+                            icon-name="utility:chevrondown"
+                            variant="bare"
+                            alternative-text="Vis detaljer"
+                            title="Vis detaljer"
+                            aria-label="Vis detaljer"
+                            aria-expanded="false"
+                            size="large"
+                            onclick={onShowHide}
+                        ></lightning-button-icon>
+                        <lightning-button-icon
+                            if:true={showDetails}
+                            icon-name="utility:chevronup"
+                            variant="bare"
+                            alternative-text="Skjul detaljer"
+                            title="Skjul detaljer"
+                            aria-label="Skjul detaljer"
+                            aria-expanded="true"
+                            size="large"
+                            onclick={onShowHide}
+                        ></lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" if:true={showVarselListe} class="slds-box">
+                <ol class="slds-has-dividers_bottom-space">
+                    <template iterator:it={brukervarsel.varselListe}>
+                        <li if:false={it.last} class="slds-item" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+
+                        <li if:true={it.last} class="slds-p-left_x-small slds-p-top_x-small" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+                    </template>
+                </ol>
+            </lightning-layout-item>
+        </lightning-layout>
+    </article>
+</template>
