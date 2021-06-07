@@ -3,6 +3,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.INT_EventTime__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -40,7 +44,18 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.INT_SecurityLevel__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>VARSEL</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -58,6 +73,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.INT_Type__c</fieldItem>
             </fieldInstance>
         </itemInstances>
@@ -150,7 +169,7 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_Description__c</fieldItem>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -160,6 +179,11 @@
                         <leftValue>{!Record.INT_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>OPPGAVE</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>VARSEL</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
