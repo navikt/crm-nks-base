@@ -15,6 +15,16 @@ public without sharing class ChatAuthController {
                 lct.ContactId = contactId;
                 lct.NKS_Authentication_Timestamp__c = DateTime.now();
 
+                if (String.isNotBlank(accountId)) {
+                    Account personAcc = getPersonAccount(accountId);
+                    if (
+                        !personAcc.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT') ||
+                        personAcc.CRM_Person__r.INT_IsNavEmployee__c
+                    )
+                        //Persons tagged as confidential or is NAV employees cannot be journaled - NKS-430
+                        lct.NKS_Journal_Entry_Status__c = 'Completed';
+                }
+
                 if (String.isNotBlank(lct.CaseId)) {
                     Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
                     recordsToUpdate.add(casy);
@@ -138,6 +148,16 @@ public without sharing class ChatAuthController {
         ]
         ?.AccountId;
     }
+
+    private static Account getPersonAccount(String accountId) {
+        return [
+            SELECT Id, CRM_Person__c, CRM_Person__r.INT_Confidential__c, CRM_Person__r.INT_IsNavEmployee__c
+            FROM Account
+            WHERE Id = :accountId
+            LIMIT 1
+        ];
+    }
+
     private static Id getPersonContactId() {
         return [
             SELECT ContactId
