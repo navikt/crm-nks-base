@@ -97,40 +97,6 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <actionCalls>
-        <description>Displays a toast on successful log.</description>
-        <name>Show_Toast</name>
-        <label>Show Toast</label>
-        <locationX>981</locationX>
-        <locationY>2302</locationY>
-        <actionName>c:ShowToast_Flow</actionName>
-        <actionType>component</actionType>
-        <inputParameters>
-            <name>duration</name>
-            <value>
-                <stringValue>5</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>message</name>
-            <value>
-                <elementReference>Get_Case.NKS_Theme__r.Name</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Samtalereferat opprettet</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>type</name>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <assignments>
         <name>Assign_Task_Defaults</name>
         <label>Assign Task Defaults</label>
@@ -641,9 +607,6 @@
         <label>Create Conversation Note</label>
         <locationX>982</locationX>
         <locationY>2160</locationY>
-        <connector>
-            <targetReference>Show_Toast</targetReference>
-        </connector>
         <inputReference>Conversation_Note_Record</inputReference>
     </recordCreates>
     <recordLookups>
