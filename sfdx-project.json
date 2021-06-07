@@ -9,11 +9,11 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.94.0.LATEST"
+                    "versionNumber": "0.97.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.64.0.LATEST"
+                    "versionNumber": "0.68.0.LATEST"
                 },
                 {
                     "package": "crm-shared-timeline",
@@ -29,7 +29,7 @@
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.7.0.LATEST"
+                    "versionNumber": "0.8.0.LATEST"
                 }
             ]
         }

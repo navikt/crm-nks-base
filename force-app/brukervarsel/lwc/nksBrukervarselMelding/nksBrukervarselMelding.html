@@ -1,0 +1,14 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item size="2">
+            <p>{channelLabel}</p>
+            <p>{sendtDate}</p>
+        </lightning-layout-item>
+        <lightning-layout-item size="10">
+            <p if:true={showMessageTitle} class="slds-p-bottom_xxx-small">{message.varseltittel}</p>
+            <p><lightning-formatted-text value={message.varseltekst}></lightning-formatted-text></p>
+            <p if:true={showReceiverInfo} class="slds-p-top_xx-small">{receiverInfo}</p>
+            <p if:true={showLink} class="slds-p-top_xx-small">Lenke: {message.varselURL}</p>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
