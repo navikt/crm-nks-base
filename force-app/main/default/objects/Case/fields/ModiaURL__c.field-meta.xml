@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ModiaURL__c</fullName>
     <externalId>false</externalId>
-    <formula>HYPERLINK(&quot;https://app.adeo.no/modiapersonoversikt/person/&quot;&amp; Account.CRM_Person__r.Name , &quot;Modia&quot;, &quot;_self&quot;)</formula>
+    <formula>HYPERLINK(&quot;https://app.adeo.no/modiapersonoversikt/person/&quot;&amp; Account.CRM_Person__r.Name , &quot;Åpne Modia&quot;, &quot;_self&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Modia</label>
     <required>false</required>
