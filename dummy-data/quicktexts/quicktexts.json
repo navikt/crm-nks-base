@@ -255,6 +255,17 @@
             "Name": "Sykefravær - Oppfølging",
             "Channel": "Phone",
             "Message": "Arbeidsgiver tar kontakt om oppfølging av sykmeldte. \r\n\r\nArbeidsgiver har fått informasjon om: \r\n• siden «Slik følger du opp sykmeldte» på nav.no https://www.nav.no/no/bedrift/oppfolging/sykmeldt-arbeidstaker \r\n• hvem gjør hva?\r\n• avtalepunkter og frister i sykefraværsoppfølgingen\r\n• oppfølgingsplan \r\n• dialogmøter\r\n• tilrettelegging"
+        },
+        {
+            "attributes": {
+                "type": "QuickText",
+                "referenceId": "QuickTextRef29"
+            },
+            "Name": "AAP",
+            "Channel": "Phone",
+            "Message": "Arbeidsavklaringspenger",
+            "nksAbbreviationKey__c": "AAP",
+            "nksType__c": "Abbreviation"
         }
     ]
 }
