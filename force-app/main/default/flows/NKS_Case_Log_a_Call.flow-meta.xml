@@ -686,7 +686,7 @@
         <label>Get Conversation Note</label>
         <locationX>596</locationX>
         <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
@@ -697,11 +697,11 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Conversation_Note__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CRM_Conversation_Note__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>Conversation_Note_Summary</assignToReference>
+            <field>CRM_Conversation_Note__c</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <name>Get_Person_Access</name>
@@ -739,8 +739,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>714</locationX>
-        <locationY>786</locationY>
+        <locationX>691</locationX>
+        <locationY>787</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -780,7 +780,7 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>453</locationX>
+        <locationX>452</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -815,8 +815,18 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Referat:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Get_Conversation_Note.CRM_Conversation_Note__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Referat:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Summary}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Conversation_Note_Summary</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Create_Case_Button</name>
@@ -1165,6 +1175,13 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
+        <name>Conversation_Note_Summary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>HAS_PERSON_READ</name>
