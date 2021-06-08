@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Arbeid</fullName>
+    <fullName>draft_articles</fullName>
     <columns>TITLE</columns>
-    <columns>NKS_Summary__c</columns>
+    <columns>ABSTRACT</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>Topics</field>
-        <operation>includes</operation>
-        <value>Arbeid</value>
+        <field>PUBLISH_STATUS</field>
+        <operation>equals</operation>
+        <value>1</value>
     </filters>
-    <label>Arbeid</label>
+    <label>Utkast</label>
 </ListView>
