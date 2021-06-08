@@ -7,7 +7,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.ModiaURL__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Screen Reader</label>
