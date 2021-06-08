@@ -15,5 +15,6 @@ public class NKS_DataSynchController_Test {
         Test.stopTest();
 
         System.assert([SELECT COUNT() FROM Conversation_Note__c] > 0);
+        System.assert([SELECT COUNT() FROM Conversation_Note__c WHERE NKS_Incorrectly_Sent__c = TRUE] > 0);
     }
 }

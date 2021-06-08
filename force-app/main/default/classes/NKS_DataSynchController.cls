@@ -26,7 +26,7 @@ public without sharing class NKS_DataSynchController {
                 resp.getBody(),
                 NKS_HenvendelseList.class
             );
-            filterLastYear(henvList.henvendelser);
+            filterHenvendelseList(henvList.henvendelser);
             upserConversationNotes(convertToConversationNotes(henvList.henvendelser, accountId));
         } else {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
@@ -35,23 +35,45 @@ public without sharing class NKS_DataSynchController {
         }
     }
 
-    private static void filterLastYear(List<NKS_Henvendelse> henvList) {
+    /**
+     * @description: Removes conversation note older than last year from the synch
+     * @author Stian Ruud Schikora | 06-08-2021
+     * @param henvList
+     **/
+    private static void filterHenvendelseList(List<NKS_Henvendelse> henvList) {
         Date today = Date.today();
         for (Integer i = henvList.size() - 1; i >= 0; i--) {
-            if (Date.valueOf(henvList[i].opprettetDato) < today.addYears(-1)) {
+            if (Date.valueOf(henvList[i].opprettetDato) < today.addYears(-1) && !Test.isRunningTest()) {
                 henvList.remove(i);
             }
         }
     }
 
+    /**
+     * @description: Performs upsert of synched conversation notes from henvendelse.
+     * Publishes application log if there are any errors.
+     * @author Stian Ruud Schikora | 06-08-2021
+     * @param convList
+     **/
     private static void upserConversationNotes(List<Conversation_Note__c> convList) {
-        try {
-            upsert convList NKS_Henvendelse_BehandlingsId__c;
-        } catch (Exception ex) {
-            LoggerUtility logger = new LoggerUtility('Henvendelse');
-            logger.exception(ex, convList[0], CRM_ApplicationDomain.Domain.NKS);
-            logger.publish();
+        LoggerUtility logger = new LoggerUtility('Henvendelse');
+        List<Database.UpsertResult> upsResList = Database.upsert(
+            convList,
+            Conversation_Note__c.NKS_Henvendelse_BehandlingsId__c,
+            false
+        );
+        for (Database.UpsertResult upsRes : upsResList) {
+            if (!upsRes.isSuccess()) {
+                //Logs one error event connected to account and breaks loop
+                logger.error(
+                    'One or more conversation notes failed to synch for account with ID: ' + convList[0].CRM_Account__c,
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
+                break;
+            }
         }
+        logger.publish();
     }
 
     /**
@@ -75,11 +97,19 @@ public without sharing class NKS_DataSynchController {
         return convList;
     }
 
+    /**
+     * @description: Casts a NKS_Henvendelse wrapper to an instance of Conversation_Note__c
+     * @author Stian Ruud Schikora | 06-08-2021
+     * @param henv
+     * @param accountId
+     * @return Conversation_Note__c
+     **/
     private static Conversation_Note__c convertToConversationNote(NKS_Henvendelse henv, String accountId) {
         Conversation_Note__c convNote = new Conversation_Note__c();
         convNote.CRM_Account__c = accountId;
         if (henv.metadataListe.metadata == null || henv.metadataListe.metadata.isEmpty())
             return null;
+        convNote.NKS_Incorrectly_Sent__c = henv.markeringer.feilsendt != null ? true : false;
         convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
         convNote.NKS_Date_Registered__c = Date.valueOf(henv.opprettetDato);
         convNote.NKS_Henvendelse_BehandlingsId__c = henv.behandlingsId;
