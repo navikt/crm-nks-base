@@ -295,7 +295,7 @@ TODAY())</expression>
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <runInMode>SystemModeWithSharing</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>

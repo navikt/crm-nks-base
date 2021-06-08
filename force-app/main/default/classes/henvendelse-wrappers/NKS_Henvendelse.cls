@@ -17,7 +17,7 @@ public class NKS_Henvendelse {
     public String kontorsperreEnhet;
     public String korrelasjonsId;
     public String lestDato;
-    //public Markeringer markeringer;
+    public NKS_Markeringer markeringer;
     public NKS_HenvendelseMetadataListe metadataListe;
     public String markertSomFeilsendtAv;
     public String oppgaveIdGsak;
