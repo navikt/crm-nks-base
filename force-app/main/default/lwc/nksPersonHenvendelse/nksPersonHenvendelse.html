@@ -1,0 +1,63 @@
+<template>
+    <lightning-layout multiple-rows="true" class="slds-p-horizontal_xx-small">
+        <lightning-layout-item size="12">
+            <lightning-layout>
+                <lightning-layout-item size="2">
+                    <p>{getDate}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <h4 class="slds-text-heading_small">{thread.lastMessageTitle}</h4>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" alignment-bump="right" class="slds-has-flexi-truncate">
+                    <h4 class="slds-text-heading_small slds-truncate">{thread.lastMessageSummary}</h4>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-badge
+                        if:true={thread.isIncorrectlySent}
+                        label="Feilsendt"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                    <lightning-badge
+                        if:true={thread.isDeleted}
+                        label="Feilsendt"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                    <lightning-badge
+                        if:true={thread.isPartiallyAnswered}
+                        label="Delvis besvart"
+                        class="slds-theme_error"
+                    ></lightning-badge>
+                </lightning-layout-item>
+                <lightning-layout-item>
+                    <lightning-button-icon
+                        if:false={showDetails}
+                        icon-name="utility:chevrondown"
+                        variant="bare"
+                        alternative-text="Vis detaljer"
+                        title="Vis detaljer"
+                        size="large"
+                        onclick={onShowHide}
+                    ></lightning-button-icon>
+                    <lightning-button-icon
+                        if:true={showDetails}
+                        icon-name="utility:chevronup"
+                        variant="bare"
+                        alternative-text="Skjul detaljer"
+                        title="Skjul detaljer"
+                        size="large"
+                        onclick={onShowHide}
+                    ></lightning-button-icon>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" if:true={showMessageList}>
+            <ol aria-label="Dialog">
+                <template iterator:it={thread.messageList}>
+                    <li key={it.value.behandlingsId} class="slds-p-vertical_small">
+                        <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
+                    </li>
+                </template>
+            </ol>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
