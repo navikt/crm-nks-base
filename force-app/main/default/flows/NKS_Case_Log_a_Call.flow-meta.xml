@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Initiate_Journal_Process</name>
         <label>Initiate Journal Process</label>
-        <locationX>534</locationX>
-        <locationY>1430</locationY>
+        <locationX>537</locationX>
+        <locationY>1685</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -52,8 +52,8 @@
         <description>Posts the conversation note to henvendelse via API</description>
         <name>Post_to_Henvendelse</name>
         <label>Post to Henvendelse</label>
-        <locationX>973</locationX>
-        <locationY>878</locationY>
+        <locationX>976</locationX>
+        <locationY>1133</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -131,8 +131,8 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>982</locationX>
-        <locationY>1709</locationY>
+        <locationX>985</locationX>
+        <locationY>1964</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -154,8 +154,8 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>982</locationX>
-        <locationY>2005</locationY>
+        <locationX>985</locationX>
+        <locationY>2260</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -206,8 +206,8 @@
         <description>Tags the conversation note with journal completion</description>
         <name>Conversation_Note_Journal_Assignment</name>
         <label>Conversation Note Journal Assignment</label>
-        <locationX>747</locationX>
-        <locationY>1610</locationY>
+        <locationX>750</locationX>
+        <locationY>1865</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -230,8 +230,8 @@
         <description>Assigns updated values for case and conversation note</description>
         <name>Default_Theme_Categorization_Assignment</name>
         <label>Default Theme Categorization Assignment</label>
-        <locationX>982</locationX>
-        <locationY>1525</locationY>
+        <locationX>985</locationX>
+        <locationY>1780</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -261,8 +261,8 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Journal_Theme_Categorization_Assignment</name>
         <label>Journal Theme Categorization Assignment</label>
-        <locationX>534</locationX>
-        <locationY>1157</locationY>
+        <locationX>537</locationX>
+        <locationY>1412</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -285,8 +285,8 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Journal_Theme_Categorization_Assignment_0</name>
         <label>Journal Theme Categorization Assignment</label>
-        <locationX>1357</locationX>
-        <locationY>1513</locationY>
+        <locationX>1360</locationX>
+        <locationY>1768</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -324,8 +324,8 @@
     <assignments>
         <name>Set_Journal_Error</name>
         <label>Set Journal Error</label>
-        <locationX>535</locationX>
-        <locationY>1717</locationY>
+        <locationX>538</locationX>
+        <locationY>1972</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -347,8 +347,8 @@
     <assignments>
         <name>Set_Journal_Error_0</name>
         <label>Set Journal Error</label>
-        <locationX>1357</locationX>
-        <locationY>1709</locationY>
+        <locationX>1360</locationX>
+        <locationY>1964</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -364,8 +364,8 @@
         <description>Sets the legacy case ID for journal initiation</description>
         <name>Set_Legacy_Case_ID</name>
         <label>Set Legacy Case ID</label>
-        <locationX>1357</locationX>
-        <locationY>1351</locationY>
+        <locationX>1360</locationX>
+        <locationY>1606</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
             <operator>Assign</operator>
@@ -381,8 +381,8 @@
         <description>Sets the legacy case ID for journal initiation</description>
         <name>Set_Legacy_Case_ID_0</name>
         <label>Set Legacy Case ID</label>
-        <locationX>534</locationX>
-        <locationY>1305</locationY>
+        <locationX>537</locationX>
+        <locationY>1560</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
             <operator>Assign</operator>
@@ -398,8 +398,8 @@
         <description>Sets the registration date for the conversation note after a successful post.</description>
         <name>Set_Registration_Date</name>
         <label>Set Registration Date</label>
-        <locationX>774</locationX>
-        <locationY>1009</locationY>
+        <locationX>777</locationX>
+        <locationY>1264</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
             <operator>Assign</operator>
@@ -415,8 +415,8 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>964</locationX>
-        <locationY>351</locationY>
+        <locationX>965</locationX>
+        <locationY>357</locationY>
         <defaultConnector>
             <targetReference>No_Account_Screen</targetReference>
         </defaultConnector>
@@ -464,11 +464,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Person_Access</name>
+        <label>Check Person Access</label>
+        <locationX>965</locationX>
+        <locationY>786</locationY>
+        <defaultConnector>
+            <targetReference>Log_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Has Person Access</defaultConnectorLabel>
+        <rules>
+            <name>No_Person_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HAS_PERSON_READ</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Case_Closed</targetReference>
+            </connector>
+            <label>No Person Access</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>765</locationX>
-        <locationY>1166</locationY>
+        <locationX>768</locationX>
+        <locationY>1421</locationY>
         <defaultConnector>
             <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -493,8 +518,8 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision_0</name>
         <label>Create Journal Entry?</label>
-        <locationX>1186</locationX>
-        <locationY>1004</locationY>
+        <locationX>1189</locationX>
+        <locationY>1259</locationY>
         <defaultConnector>
             <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -518,8 +543,8 @@
     <decisions>
         <name>Verify_Henvendelse_Post</name>
         <label>Verify Henvendelse Post</label>
-        <locationX>966</locationX>
-        <locationY>1011</locationY>
+        <locationX>969</locationX>
+        <locationY>1266</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry_Decision_0</targetReference>
         </defaultConnector>
@@ -550,8 +575,8 @@
     <decisions>
         <name>Verify_Journal_Initiation</name>
         <label>Verify Journal Initiation</label>
-        <locationX>656</locationX>
-        <locationY>1431</locationY>
+        <locationX>659</locationX>
+        <locationY>1686</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </defaultConnector>
@@ -605,8 +630,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>982</locationX>
-        <locationY>2160</locationY>
+        <locationX>985</locationX>
+        <locationY>2415</locationY>
         <inputReference>Conversation_Note_Record</inputReference>
     </recordCreates>
     <recordLookups>
@@ -614,10 +639,10 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>972</locationX>
-        <locationY>569</locationY>
+        <locationY>515</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Log_Screen</targetReference>
+            <targetReference>Get_Person_Access</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -631,6 +656,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>INT_PersonIdent__c</queriedFields>
+        <queriedFields>CRM_Person__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -677,11 +703,64 @@
         <queriedFields>CRM_Conversation_Note__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Access</name>
+        <label>Get Person Access</label>
+        <locationX>972</locationX>
+        <locationY>652</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Person_Access</targetReference>
+        </connector>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>HAS_PERSON_READ</assignToReference>
+            <field>HasReadAccess</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>PERSON_ID</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Set_Case_Closed</name>
+        <label>Set Case Closed</label>
+        <locationX>714</locationX>
+        <locationY>786</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>982</locationX>
-        <locationY>1859</locationY>
+        <locationX>985</locationX>
+        <locationY>2114</locationY>
         <connector>
             <targetReference>Conversation_Note_Assignment</targetReference>
         </connector>
@@ -697,7 +776,7 @@
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
-    <runInMode>SystemModeWithSharing</runInMode>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
@@ -764,8 +843,8 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>972</locationX>
-        <locationY>724</locationY>
+        <locationX>975</locationX>
+        <locationY>979</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -950,7 +1029,7 @@
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
         <locationX>1187</locationX>
-        <locationY>349</locationY>
+        <locationY>352</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1088,6 +1167,16 @@
         <objectType>Conversation_Note__c</objectType>
     </variables>
     <variables>
+        <name>HAS_PERSON_READ</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <description>Response from a henvendelse journal post.</description>
         <name>JOURNAL_POST_RESPONSE</name>
         <dataType>String</dataType>
@@ -1097,6 +1186,13 @@
         <value>
             <stringValue/>
         </value>
+    </variables>
+    <variables>
+        <name>PERSON_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>Id of the record triggering the flow</description>
