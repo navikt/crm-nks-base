@@ -10,7 +10,7 @@
                 </div>
             </header>
         </div>
-        <div class="slds-card__body slds-card__body_inner">
+        <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <div class="slds-box slds-text-heading_medium slds-theme_default">
@@ -22,7 +22,14 @@
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="12" class="slds-p-top_x-small">
-                    <!-- <ol class="slds-has-dividers_around-space"> -->
+                    <div if:true={showErrors} class="slds-text-color_error">
+                        Noe har gått feil i innlastingen av varsler:
+                        <ul class="slds-list_dotted">
+                            <template for:each={errorMessages} for:item="error">
+                                <li key={error}>{error}</li>
+                            </template>
+                        </ul>
+                    </div>
                     <ol class="slds-has-dividers_around-space">
                         <template if:true={filteredThreadList} for:each={filteredThreadList} for:item="thread">
                             <li class="slds-item slds-theme_default" key={thread.threadId}>
@@ -35,7 +42,7 @@
         </div>
         <footer class="slds-card__footer">
             <lightning-button
-                if:false={showAll}
+                if:true={showFooter}
                 variant="base"
                 label="Vis alle"
                 aria-label="Vis alle meldinger"

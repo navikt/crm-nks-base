@@ -13,6 +13,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
     showAll = false;
     wireFields;
     @track threadList = [];
+    @track errorMessages = [];
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -35,6 +36,14 @@ export default class NksPersonHenvendelseList extends LightningElement {
         return this.threadList ? this.threadList.length : 0;
     }
 
+    get showErrors() {
+        return this.errorMessages.length > 0;
+    }
+
+    get showFooter() {
+        return this.showAll === false && this.threadList && this.threadList.length > 1;
+    }
+
     setShowAllThreads() {
         this.showAll = true;
     }
@@ -49,6 +58,9 @@ export default class NksPersonHenvendelseList extends LightningElement {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
         }
+        if (error) {
+            this.addError(error);
+        }
     }
 
     @wire(getRecord, {
@@ -60,8 +72,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
             this.personIdent = getFieldValue(data, PERSON_ACTOR_FIELD);
         }
         if (error) {
-            //this.error = true;
-            //this.setErrorMessage(error, 'caughtError');
+            this.addError(error);
         }
     }
 
@@ -70,7 +81,11 @@ export default class NksPersonHenvendelseList extends LightningElement {
     })
     wiredPersonHenvendelser({ error, data }) {
         if (data) {
+            this.errorMessages = [];
             this.threadList = data;
+        }
+        if (error) {
+            this.addError(error);
         }
     }
 
@@ -87,8 +102,18 @@ export default class NksPersonHenvendelseList extends LightningElement {
                 }
             })
             .catch((error) => {
-                this.setErrorMessage(error, 'caughtError');
+                this.addError(error, 'caughtError');
             });
+    }
+
+    addError(error) {
+        if (Array.isArray(error.body)) {
+            this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
+        } else if (error.body && typeof error.body.message === 'string') {
+            this.errorMessages.push(error.body.message);
+        } else {
+            this.errorMessages.push(error.body);
+        }
     }
 
     resolve(path, obj) {

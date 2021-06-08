@@ -1,10 +1,12 @@
 public with sharing class NKS_HenvendelseUtil {
     private static Map<String, Common_Code__c> commonCodeMap;
 
-    public static Map<String, NKS_HenvendelseType> henvendelseEnumTypeMap {
+    public static Map<String, NKS_HenvendelseService.HENVENDELSE_TYPES> henvendelseEnumTypeMap {
         get {
-            Map<String, NKS_HenvendelseType> enumMap = new Map<String, NKS_HenvendelseType>();
-            for (NKS_HenvendelseType henvendelsesType : NKS_HenvendelseType.values()) {
+            Map<String, NKS_HenvendelseService.HENVENDELSE_TYPES> enumMap = new Map<String, NKS_HenvendelseService.HENVENDELSE_TYPES>();
+            for (
+                NKS_HenvendelseService.HENVENDELSE_TYPES henvendelsesType : NKS_HenvendelseService.HENVENDELSE_TYPES.values()
+            ) {
                 enumMap.put(henvendelsesType.name(), henvendelsesType);
             }
 
@@ -51,87 +53,95 @@ public with sharing class NKS_HenvendelseUtil {
         }
     }
 
-    public static NKS_HenvendelseType getHenvendelseEnumFromString(String typeName) {
+    public static NKS_HenvendelseService.HENVENDELSE_TYPES getHenvendelseEnumFromString(String typeName) {
         return henvendelseEnumTypeMap.get(typeName);
     }
 
-    public static Boolean isMessageFromUser(String messageType) {
+    public static Boolean isMessageFromUser(String henvendelseType) {
         return hasEnum(
-            new List<NKS_HenvendelseType>{
-                NKS_HenvendelseType.SPORSMAL_SKRIFTLIG,
-                NKS_HenvendelseType.SVAR_SBL_INNGAAENDE
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE
             },
-            messageType
+            henvendelseType
         );
     }
 
-    public static Boolean isMessageFromNav(String messageType) {
+    public static Boolean isMessageFromNav(String henvendelseType) {
         return hasEnum(
-            new List<NKS_HenvendelseType>{
-                NKS_HenvendelseType.SVAR_SKRIFTLIG,
-                NKS_HenvendelseType.SVAR_OPPMOTE,
-                NKS_HenvendelseType.SVAR_TELEFON,
-                NKS_HenvendelseType.SAMTALEREFERAT_TELEFON,
-                NKS_HenvendelseType.SAMTALEREFERAT_OPPMOTE,
-                NKS_HenvendelseType.SPORSMAL_MODIA_UTGAAENDE,
-                NKS_HenvendelseType.DOKUMENT_VARSEL,
-                NKS_HenvendelseType.OPPGAVE_VARSEL,
-                NKS_HenvendelseType.DELVIS_SVAR_SKRIFTLIG,
-                NKS_HenvendelseType.INFOMELDING_MODIA_UTGAAENDE
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_OPPMOTE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_TELEFON,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SAMTALEREFERAT_TELEFON,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SAMTALEREFERAT_OPPMOTE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.DOKUMENT_VARSEL,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.OPPGAVE_VARSEL,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.INFOMELDING_MODIA_UTGAAENDE
             },
-            messageType
+            henvendelseType
         );
     }
 
-    public static Boolean isNotificationMessage(String messageType) {
+    public static Boolean isNotificationMessage(String henvendelseType) {
         return hasEnum(
-            new List<NKS_HenvendelseType>{ NKS_HenvendelseType.OPPGAVE_VARSEL, NKS_HenvendelseType.DOKUMENT_VARSEL },
-            messageType
-        );
-    }
-
-    public static Boolean isQuestionMessage(String messageType) {
-        return hasEnum(
-            new List<NKS_HenvendelseType>{
-                NKS_HenvendelseType.SPORSMAL_MODIA_UTGAAENDE,
-                NKS_HenvendelseType.SPORSMAL_SKRIFTLIG
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.OPPGAVE_VARSEL,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.DOKUMENT_VARSEL
             },
-            messageType
+            henvendelseType
         );
     }
 
-    public static Boolean isConversationNotes(String messageType) {
+    public static Boolean isQuestionMessage(String henvendelseType) {
         return hasEnum(
-            new List<NKS_HenvendelseType>{
-                NKS_HenvendelseType.SAMTALEREFERAT_OPPMOTE,
-                NKS_HenvendelseType.SAMTALEREFERAT_TELEFON
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG
             },
-            messageType
+            henvendelseType
         );
     }
 
-    public static Boolean isPartialyAnswered(String messageType) {
-        return hasEnum(new List<NKS_HenvendelseType>{ NKS_HenvendelseType.DELVIS_SVAR_SKRIFTLIG }, messageType);
+    public static Boolean isConversationNotes(String henvendelseType) {
+        return hasEnum(
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SAMTALEREFERAT_OPPMOTE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SAMTALEREFERAT_TELEFON
+            },
+            henvendelseType
+        );
+    }
+
+    public static Boolean isPartialyAnswered(String henvendelseType) {
+        return hasEnum(
+            new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG
+            },
+            henvendelseType
+        );
     }
 
     public static String getMessageTitle(NKS_Henvendelse message) {
         if (
             hasEnum(
-                new List<NKS_HenvendelseType>{
-                    NKS_HenvendelseType.DOKUMENT_VARSEL,
-                    NKS_HenvendelseType.OPPGAVE_VARSEL
+                new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+                    NKS_HenvendelseService.HENVENDELSE_TYPES.DOKUMENT_VARSEL,
+                    NKS_HenvendelseService.HENVENDELSE_TYPES.OPPGAVE_VARSEL
                 },
                 message.henvendelseType
             )
         ) {
-            return getMessageTypeText(getHenvendelseEnumFromString(message.henvendelseType));
+            return gethenvendelseTypeText(getHenvendelseEnumFromString(message.henvendelseType));
         }
 
         if (String.isBlank(message.gjeldendeTemagruppe)) {
-            return getMessageTypeText(getHenvendelseEnumFromString(message.henvendelseType));
+            return gethenvendelseTypeText(getHenvendelseEnumFromString(message.henvendelseType));
         }
 
-        return getMessageTypeText(getHenvendelseEnumFromString(message.henvendelseType)) +
+        return gethenvendelseTypeText(getHenvendelseEnumFromString(message.henvendelseType)) +
             ' - ' +
             getTemaGruppeLabel(message.gjeldendeTemagruppe);
     }
@@ -144,22 +154,26 @@ public with sharing class NKS_HenvendelseUtil {
         try {
             return Datetime.valueOf(dateString.replace('T', ' '));
         } catch (Exception e) {
+            return null;
         }
-
-        return null;
     }
 
-    private static Boolean hasEnum(List<NKS_HenvendelseType> toCompareTo, String messageType) {
-        return hasEnum(toCompareTo, getHenvendelseEnumFromString(messageType));
+    private static Boolean hasEnum(List<NKS_HenvendelseService.HENVENDELSE_TYPES> toCompareTo, String henvendelseType) {
+        return hasEnum(toCompareTo, getHenvendelseEnumFromString(henvendelseType));
     }
 
-    private static Boolean hasEnum(List<NKS_HenvendelseType> toCompareTo, NKS_HenvendelseType messageType) {
-        Set<NKS_HenvendelseType> toCompareToSet = new Set<NKS_HenvendelseType>(toCompareTo);
+    private static Boolean hasEnum(
+        List<NKS_HenvendelseService.HENVENDELSE_TYPES> toCompareTo,
+        NKS_HenvendelseService.HENVENDELSE_TYPES henvendelseType
+    ) {
+        Set<NKS_HenvendelseService.HENVENDELSE_TYPES> toCompareToSet = new Set<NKS_HenvendelseService.HENVENDELSE_TYPES>(
+            toCompareTo
+        );
 
-        return toCompareToSet.contains(messageType);
+        return toCompareToSet.contains(henvendelseType);
     }
 
-    private static String getMessageTypeText(NKS_HenvendelseType henvendelseType) {
+    private static String gethenvendelseTypeText(NKS_HenvendelseService.HENVENDELSE_TYPES henvendelseType) {
         switch on henvendelseType {
             when SVAR_TELEFON {
                 return 'Svar telefon';
@@ -201,21 +215,5 @@ public with sharing class NKS_HenvendelseUtil {
                 return 'Ukjent meldingstype: ' + henvendelseType.name();
             }
         }
-    }
-
-    public static String getTextFromMetadata(NKS_HenvendelseMetadataListe metadataListe) {
-        if (null == metadataListe || metadataListe.metadata.isEmpty()) {
-            return null;
-        }
-
-        return metadataListe.metadata[0].fritekst;
-    }
-
-    public static String getWrittenByFromMetadata(NKS_HenvendelseMetadataListe metadataListe) {
-        if (null == metadataListe || metadataListe.metadata.isEmpty()) {
-            return null;
-        }
-
-        return 'Melding skrevet av ' + metadataListe.metadata[0].navident;
     }
 }

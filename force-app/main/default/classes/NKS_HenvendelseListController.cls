@@ -5,14 +5,12 @@ public with sharing class NKS_HenvendelseListController {
             NKS_HenvendelseService service = new NKS_HenvendelseService();
 
             List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_TELEFON,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG
-                // NKS_HenvendelseService.SPORSMAL_SKRIFTLIG,
-                // NKS_HenvendelseService.SPORSMAL_SKRIFTLIG_DIREKTE,
-                // NKS_HenvendelseService.SVAR_SKRIFTLIG,
-                // NKS_HenvendelseService.DELVIS_SVAR_SKRIFTLIG,
-                // NKS_HenvendelseService.SPORSMAL_MODIA_UTGAAENDE,
-                // NKS_HenvendelseService.SVAR_SBL_INNGAAENDE
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
+                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE
             };
 
             HttpResponse resp = service.getPersonHenvendelser(
@@ -32,7 +30,7 @@ public with sharing class NKS_HenvendelseListController {
             } else {
                 LoggerUtility logger = new LoggerUtility('Henvendelse');
                 logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
-                logger.publish();
+                //logger.publish();
             }
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
@@ -99,7 +97,7 @@ public with sharing class NKS_HenvendelseListController {
         private void setLastMessage(Message msg) {
             lastMessageTime = msg.opprettetDato;
             lastMessageTitle = msg.tittel;
-            lastMessageSummary = msg.tekst;
+            lastMessageSummary = msg.fritekst;
             isDeleted = msg.erSlettet;
             isPartiallyAnswered = msg.erDelsvar;
         }
@@ -195,8 +193,8 @@ public with sharing class NKS_HenvendelseListController {
         public DateTime opprettetDatoFormatted;
         @AuraEnabled
         public String journalfortTekst;
-        @AuraEnabled
-        public String tekst;
+        // @AuraEnabled
+        // public String tekst;
         @AuraEnabled
         public Datetime meldingsDato;
 

@@ -14,7 +14,7 @@
                     alt-text="Fra NAV"
                 ></c-nks-nav-logo-icon>
             </lightning-layout-item>
-            <lightning-layout-item size="11" class="slds-box">
+            <lightning-layout-item class="slds-box" flexibility="auto">
                 <lightning-layout multiple-rows="true">
                     <lightning-layout-item size="12">
                         <lightning-layout>
@@ -50,25 +50,6 @@
                     </lightning-layout-item>
                     <lightning-layout-item size="12" if:true={message.erJournalfort} class="slds-p-top_x-small">
                         <p>{message.journalfortTekst}</p>
-                        <!-- <lightning-button
-                            variant="base"
-                            label="Meldingen er journalført"
-                            onclick={setShowJournalpostInfo}
-                            icon-name="utility:chevrondown"
-                            icon-position="right"
-                            if:false={showJournalpostInfo}
-                            class="slds-text-heading_small"
-                        ></lightning-button>
-                        <lightning-button
-                            variant="base"
-                            label="Meldingen er journalført"
-                            onclick={setShowJournalpostInfo}
-                            icon-name="utility:chevronup"
-                            icon-position="right"
-                            if:true={showJournalpostInfo}
-                            class="slds-text-heading_small"
-                        ></lightning-button>
-                        <div if:true={showJournalpostInfo}>{message.journalfortTekst}</div> -->
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
