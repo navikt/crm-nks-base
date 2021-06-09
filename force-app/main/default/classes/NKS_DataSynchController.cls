@@ -107,7 +107,7 @@ public without sharing class NKS_DataSynchController {
     private static Conversation_Note__c convertToConversationNote(NKS_Henvendelse henv, String accountId) {
         Conversation_Note__c convNote = new Conversation_Note__c();
         convNote.CRM_Account__c = accountId;
-        if (henv.metadataListe.metadata == null || henv.metadataListe.metadata.isEmpty())
+        if (henv.metadataListe == null || henv.metadataListe.metadata == null || henv.metadataListe.metadata.isEmpty())
             return null;
         convNote.NKS_Incorrectly_Sent__c = henv.markeringer.feilsendt != null ? true : false;
         convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
