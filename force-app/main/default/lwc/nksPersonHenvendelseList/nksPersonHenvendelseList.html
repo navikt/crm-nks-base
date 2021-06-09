@@ -3,7 +3,7 @@
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
-                    <lightning-icon icon-name="custom:custom53" size="small"></lightning-icon>
+                    <lightning-icon icon-name="custom:custom112" size="small"></lightning-icon>
                 </div>
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">Meldinger ({numberOfThreads})</h2>
@@ -23,7 +23,7 @@
                 </lightning-layout-item>
                 <lightning-layout-item size="12" class="slds-p-top_x-small">
                     <div if:true={showErrors} class="slds-text-color_error">
-                        Noe har gått feil i innlastingen av varsler:
+                        Noe har gått feil i innlastingen av meldinger:
                         <ul class="slds-list_dotted">
                             <template for:each={errorMessages} for:item="error">
                                 <li key={error}>{error}</li>
