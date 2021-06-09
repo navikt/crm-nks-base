@@ -39,9 +39,16 @@ global class NKS_Utbetaling implements Comparable {
     global Integer compareTo(Object compareTo) {
         NKS_Utbetaling compareToUtb = (NKS_Utbetaling) compareTo;
         Integer returnValue = 0;
-        if (utbetalingsdato > compareToUtb.utbetalingsdato) {
+        Datetime thisDate, compareDate;
+        //Primarily sorting by the payment date, but future payment will only have a due date and/or postdate
+        thisDate = utbetalingsdato != null ? utbetalingsdato : forfallsdato != null ? forfallsdato : posteringsdato;
+        compareDate = compareToUtb.utbetalingsdato != null
+            ? compareToUtb.utbetalingsdato
+            : compareToUtb.forfallsdato != null ? compareToUtb.forfallsdato : compareToUtb.posteringsdato;
+
+        if (thisDate > compareDate) {
             returnValue = -1;
-        } else if (utbetalingsdato < compareToUtb.utbetalingsdato) {
+        } else if (thisDate < compareDate) {
             returnValue = 1;
         }
         return returnValue;
