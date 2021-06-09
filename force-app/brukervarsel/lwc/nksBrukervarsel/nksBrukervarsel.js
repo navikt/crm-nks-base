@@ -41,7 +41,7 @@ export default class NksBrukervarsel extends LightningElement {
     get varselType() {
         switch (this.brukervarsel.varseltypeId) {
             case 'tilbakemelding.EPOST':
-                return 'Epost = ';
+                return 'E-post = ';
             case 'tilbakemelding.NAV.NO':
                 return 'Sendt til Ditt NAV';
             case 'tilbakemelding.SMS':
@@ -157,6 +157,8 @@ export default class NksBrukervarsel extends LightningElement {
 
     getChannelLabel(value) {
         switch (value) {
+            case 'EPOST':
+                return 'E-POST';
             case 'DITT_NAV':
                 return 'NAV.NO';
             default:

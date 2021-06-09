@@ -290,6 +290,15 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonHenvendelseList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>Case.AccountId</value>
                 </componentInstanceProperties>
@@ -302,6 +311,15 @@
                     <value>GRID</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksBrukervarselList</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-f591607a-fda9-45b1-bcea-1811f217e888</name>

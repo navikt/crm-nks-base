@@ -301,6 +301,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_HenvendelseListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_JournalUtilities</apexClass>
         <enabled>true</enabled>
     </classAccesses>

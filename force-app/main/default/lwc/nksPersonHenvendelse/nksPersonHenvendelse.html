@@ -28,13 +28,15 @@
                         class="slds-theme_error"
                     ></lightning-badge>
                 </lightning-layout-item>
-                <lightning-layout-item>
+                <lightning-layout-item class="slds-p-left_x-small">
                     <lightning-button-icon
                         if:false={showDetails}
                         icon-name="utility:chevrondown"
                         variant="bare"
                         alternative-text="Vis detaljer"
                         title="Vis detaljer"
+                        aria-label="Vis detaljer"
+                        aria-expanded="false"
                         size="large"
                         onclick={onShowHide}
                     ></lightning-button-icon>
@@ -44,6 +46,8 @@
                         variant="bare"
                         alternative-text="Skjul detaljer"
                         title="Skjul detaljer"
+                        aria-label="Skjul detaljer"
+                        aria-expanded="true"
                         size="large"
                         onclick={onShowHide}
                     ></lightning-button-icon>

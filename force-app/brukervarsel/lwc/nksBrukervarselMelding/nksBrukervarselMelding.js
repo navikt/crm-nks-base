@@ -37,6 +37,8 @@ export default class NksBrukervarselMelding extends LightningElement {
 
     get channelLabel() {
         switch (this.message.kanal) {
+            case 'EPOST':
+                return 'E-POST';
             case 'DITT_NAV':
                 return 'NAV.NO';
             default:
@@ -48,7 +50,7 @@ export default class NksBrukervarselMelding extends LightningElement {
         let receiverInfo = this.message.kontaktinfo ? this.message.kontaktinfo : '';
         switch (this.message.kanal) {
             case 'EPOST':
-                return 'Epost: ' + receiverInfo;
+                return 'E-post: ' + receiverInfo;
             case 'SMS':
                 return 'Tlf: ' + receiverInfo;
             default:
