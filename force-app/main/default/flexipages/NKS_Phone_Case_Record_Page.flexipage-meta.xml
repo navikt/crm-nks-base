@@ -7,9 +7,6 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Case.NKS_Case_Create_NAV_Task</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.NKS_Change_Account</value>
                         </valueListItems>
                     </valueList>
@@ -41,6 +38,43 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Brukerinfo</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>Name, INT_Sex__c, INT_Citizenships__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:avatar</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                    <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

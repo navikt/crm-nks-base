@@ -257,6 +257,14 @@
         <value>Trekk</value>
     </labels>
     <labels>
+        <fullName>NKS_Payment_List_Due_Date</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment List Due Date</shortDescription>
+        <value>Forfallsdato</value>
+    </labels>
+    <labels>
         <fullName>NKS_Payment_List_Gross_Amount</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>
