@@ -12,6 +12,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
     personIdent;
     showAll = false;
     wireFields;
+    isLoaded = false;
     @track threadList = [];
     @track errorMessages = [];
 
@@ -83,6 +84,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
         if (data) {
             this.errorMessages = [];
             this.threadList = data;
+            this.isLoaded = true;
         }
         if (error) {
             this.addError(error);
@@ -107,6 +109,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
     }
 
     addError(error) {
+        this.isLoaded = true;
         if (Array.isArray(error.body)) {
             this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
         } else if (error.body && typeof error.body.message === 'string') {

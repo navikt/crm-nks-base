@@ -11,6 +11,11 @@
             </header>
         </div>
         <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
+            <lightning-spinner
+                if:false={isLoaded}
+                alternative-text="Laster brukervarsler"
+                size="medium"
+            ></lightning-spinner>
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <div class="slds-box slds-text-heading_small slds-theme_default">
