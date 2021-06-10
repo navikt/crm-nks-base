@@ -12,6 +12,7 @@ export default class NksBrukervarselList extends LightningElement {
     personId;
     personIdent;
     wireFields = [this.objectApiName + '.Id'];
+    isLoaded = false;
     @track notifications = [];
     @track errorMessages = [];
 
@@ -88,6 +89,7 @@ export default class NksBrukervarselList extends LightningElement {
         if (data) {
             this.errorMessages = [];
             this.notifications = data;
+            this.isLoaded = true;
         }
 
         if (error) {
@@ -100,6 +102,7 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     addError(error) {
+        this.isLoaded = true;
         if (Array.isArray(error.body)) {
             this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
         } else if (error.body && typeof error.body.message === 'string') {
