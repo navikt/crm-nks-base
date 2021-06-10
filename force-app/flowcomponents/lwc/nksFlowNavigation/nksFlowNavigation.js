@@ -5,6 +5,7 @@ export default class NksFlowNavigation extends LightningElement {
     @api action = 'NEXT';
     @api buttonLabel;
     @api buttonAlignment;
+    @api stretched = false;
 
     handleButtonClick(event) {
         let flowEvent;
@@ -37,5 +38,9 @@ export default class NksFlowNavigation extends LightningElement {
             default:
                 return 'end';
         }
+    }
+
+    get buttonStyle() {
+        return this.stretched === true ? 'display: grid; width: 100%;' : '';
     }
 }
