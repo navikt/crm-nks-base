@@ -79,13 +79,6 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.CREATED_DATE</fields>
-        <fields>OWNER_NAME</fields>
-        <fields>CREATEDBY_USER.ALIAS</fields>
-        <relatedList>Case.KnowledgeArticle__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>Query</fields>
         <relatedList>KavSearchPromotionRuleRelatedList</relatedList>
     </relatedLists>
