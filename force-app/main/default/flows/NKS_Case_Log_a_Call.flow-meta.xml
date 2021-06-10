@@ -1037,7 +1037,7 @@
             <inputParameters>
                 <name>stretched</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
