@@ -4,5 +4,6 @@
     <fields>Name</fields>
     <fields>NKS_Theme__c</fields>
     <fields>NKS_Journal_Status_Formula__c</fields>
+    <fields>NKS_Is_Read__c</fields>
     <label>NKS Conversation Note Compact</label>
 </CompactLayout>
