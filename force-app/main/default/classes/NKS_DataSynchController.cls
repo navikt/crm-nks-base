@@ -112,6 +112,7 @@ public without sharing class NKS_DataSynchController {
         if (henv.markeringer != null) {
             convNote.NKS_Incorrectly_Sent__c = henv.markeringer.feilsendt != null ? true : false;
         }
+        convNote.NKS_Is_Read__c = String.isNotBlank(henv.lestDato) ? true : false;
         convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
         convNote.NKS_Date_Registered__c = Date.valueOf(henv.opprettetDato);
         convNote.NKS_Henvendelse_BehandlingsId__c = henv.behandlingsId;

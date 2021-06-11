@@ -844,6 +844,12 @@
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>stretched</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1026,6 +1032,12 @@
                 <name>action</name>
                 <value>
                     <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>stretched</name>
+                <value>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

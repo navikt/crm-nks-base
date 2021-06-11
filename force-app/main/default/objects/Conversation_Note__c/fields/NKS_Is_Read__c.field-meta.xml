@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Is_Read__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>True if the conversation note has been read by end user.</description>
+    <externalId>false</externalId>
+    <label>Is Read</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
