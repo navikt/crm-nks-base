@@ -60,6 +60,7 @@ public with sharing class NKS_SafJournalPostListController {
         GraphQLNode journalposter = dokumentoversiktBruker.addNode('journalposter');
         journalposter.addFields(
             new List<String>{
+                'journalpostId',
                 'tittel',
                 'journalposttype',
                 'journalstatus',
