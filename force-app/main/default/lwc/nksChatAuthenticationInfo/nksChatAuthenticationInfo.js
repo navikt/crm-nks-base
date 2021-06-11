@@ -221,31 +221,4 @@ export default class ChatAuthenticationOverview extends LightningElement {
     log(loggable) {
         if (this.loggingEnabled) console.log(loggable);
     }
-
-    get screenReaderLoginAlertAdditionalText() {
-        let alertText = '';
-
-        if (this.isNavEmployee || this.isConfidential || this.nmbOfSecurityMeasures > 0) {
-            let hasSecurityMeasures = this.nmbOfSecurityMeasures > 0;
-            let navEmployeeText = ' er egen ansatt';
-            let isConfidentialText = ' skjermet';
-            let securityMeasureText = ' har ' + this.nmbOfSecurityMeasures + ' sikkerhetstiltak';
-
-            alertText += 'Bruker';
-            alertText += this.isNavEmployee ? navEmployeeText : '';
-            alertText +=
-                this.isNavEmployee && this.isConfidential && hasSecurityMeasures
-                    ? ', '
-                    : this.isNavEmployee && this.isConfidential
-                    ? ' og'
-                    : this.isConfidential
-                    ? ' er'
-                    : '';
-            alertText += this.isConfidential ? isConfidentialText : '';
-            alertText += (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
-            alertText += hasSecurityMeasures ? securityMeasureText : '';
-            alertText += '.';
-        }
-        return alertText;
-    }
 }

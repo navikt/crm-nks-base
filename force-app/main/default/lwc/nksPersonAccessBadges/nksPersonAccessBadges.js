@@ -34,6 +34,7 @@ export default class NksPersonAccessBadges extends LightningElement {
         if (true === this.addAssistiveHeader && this.badges.length > 0) {
             return this.assistiveHeader;
         }
+        return '';
     }
 
     get showNoBadgesAssistiveMessage() {
@@ -75,19 +76,11 @@ export default class NksPersonAccessBadges extends LightningElement {
 
         if (data) {
             this.badges = data;
-            this.setAssistiveHeader();
             this.isLoaded = true;
         }
 
         if (error) {
             this.errorMessage = error.body.message;
-        }
-    }
-
-    setAssistiveHeader() {
-        if (true === this.addAssistiveHeader && this.badges.length > 0) {
-            this.setAttribute('title', this.assistiveHeader);
-            this.template.ariaLabel = this.assistiveHeader;
         }
     }
 }
