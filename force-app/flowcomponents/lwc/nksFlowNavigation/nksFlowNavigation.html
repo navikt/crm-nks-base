@@ -2,6 +2,7 @@
     <footer class="slds-card__footer" style="width: 100%">
         <lightning-layout horizontal-align={alignment}>
             <lightning-button
+                if:true={validAction}
                 style={buttonStyle}
                 variant="brand"
                 label={buttonLabel}

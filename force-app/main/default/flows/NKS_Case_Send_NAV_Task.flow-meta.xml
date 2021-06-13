@@ -200,13 +200,6 @@
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
         </connector>
@@ -432,7 +425,7 @@ TODAY())</expression>
         <label>NAV Task Input Screen</label>
         <locationX>176</locationX>
         <locationY>408</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>

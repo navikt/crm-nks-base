@@ -52,7 +52,7 @@
         <description>Posts the conversation note to henvendelse via API</description>
         <name>Post_to_Henvendelse</name>
         <label>Post to Henvendelse</label>
-        <locationX>976</locationX>
+        <locationX>975</locationX>
         <locationY>1133</locationY>
         <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
@@ -100,8 +100,8 @@
     <assignments>
         <name>Assign_Task_Defaults</name>
         <label>Assign Task Defaults</label>
-        <locationX>453</locationX>
-        <locationY>489</locationY>
+        <locationX>116</locationX>
+        <locationY>976</locationY>
         <assignmentItems>
             <assignToReference>Task_to_Create.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
@@ -121,6 +121,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -196,6 +203,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -411,6 +425,22 @@
             <targetReference>Create_Journal_Entry_Decision</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Create_Nav_Task_Action</name>
+        <choiceText>Opprett oppgave</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CREATE_NAV_TASK</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>New_Conversation_Note_Action</name>
+        <choiceText>Nytt samtalereferat</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NEW_CONVERSATION_NOTE</stringValue>
+        </value>
+    </choices>
     <decisions>
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
@@ -461,6 +491,31 @@
                 <targetReference>Get_Conversation_Note</targetReference>
             </connector>
             <label>Case Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Next_Action</name>
+        <label>Check Next Action</label>
+        <locationX>338</locationX>
+        <locationY>975</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Task_Defaults</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create NAV Task</defaultConnectorLabel>
+        <rules>
+            <name>New_Conversation_Note</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Next_Action</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>New_Conversation_Note_Action</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Log_Screen</targetReference>
+            </connector>
+            <label>New Conversation Note</label>
         </rules>
     </decisions>
     <decisions>
@@ -576,7 +631,7 @@
         <name>Verify_Journal_Initiation</name>
         <label>Verify Journal Initiation</label>
         <locationX>659</locationX>
-        <locationY>1686</locationY>
+        <locationY>1687</locationY>
         <defaultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </defaultConnector>
@@ -639,10 +694,35 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>972</locationX>
-        <locationY>515</locationY>
+        <locationY>513</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>INT_PersonIdent__c</queriedFields>
+        <queriedFields>CRM_Person__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Queries the account</description>
+        <name>Get_Account_Case_Closed</name>
+        <label>Get Account</label>
+        <locationX>476</locationX>
+        <locationY>351</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Person_Access_Case_Closed</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -684,11 +764,11 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>596</locationX>
-        <locationY>350</locationY>
+        <locationX>594</locationX>
+        <locationY>351</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Closed_Screen</targetReference>
+            <targetReference>Get_Account_Case_Closed</targetReference>
         </connector>
         <filters>
             <field>CRM_Case__c</field>
@@ -702,6 +782,12 @@
             <assignToReference>Conversation_Note_Summary</assignToReference>
             <field>CRM_Conversation_Note__c</field>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>BEHANDLINGS_ID</assignToReference>
+            <field>NKS_Henvendelse_BehandlingsId__c</field>
+        </outputAssignments>
+        <sortField>Id</sortField>
+        <sortOrder>Desc</sortOrder>
     </recordLookups>
     <recordLookups>
         <name>Get_Person_Access</name>
@@ -711,6 +797,39 @@
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access</targetReference>
+        </connector>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>HAS_PERSON_READ</assignToReference>
+            <field>HasReadAccess</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>PERSON_ID</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Access_Case_Closed</name>
+        <label>Get Person Access</label>
+        <locationX>346</locationX>
+        <locationY>351</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Case_Closed_Screen</targetReference>
         </connector>
         <filters>
             <field>UserId</field>
@@ -780,13 +899,13 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>452</locationX>
-        <locationY>350</locationY>
+        <locationX>346</locationX>
+        <locationY>604</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Assign_Task_Defaults</targetReference>
+            <targetReference>Check_Next_Action</targetReference>
         </connector>
         <fields>
             <name>Case_Closed_Header</name>
@@ -829,13 +948,33 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Next_Action</name>
+            <choiceReferences>Create_Nav_Task_Action</choiceReferences>
+            <choiceReferences>New_Conversation_Note_Action</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Create_Nav_Task_Action</defaultSelectedChoiceReference>
+            <fieldText>Velg handling:</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HAS_PERSON_READ</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Create_Case_Button</name>
             <extensionName>c:nksFlowNavigation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Opprett Oppgave</stringValue>
+                    <stringValue>Opprett oppgave</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -852,6 +991,45 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HAS_PERSON_READ</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Next_Button</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>stretched</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Neste</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>HAS_PERSON_READ</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -951,6 +1129,12 @@
                     <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1013,35 +1197,87 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Complete_BTN</name>
-            <extensionName>c:nksFlowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>buttonAlignment</name>
-                <value>
-                    <stringValue>RIGHT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>buttonLabel</name>
-                <value>
-                    <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>action</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>stretched</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <name>Log_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Log_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>back_button</name>
+                    <extensionName>c:nksFlowNavigation</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>action</name>
+                        <value>
+                            <stringValue>BACK</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value>
+                            <stringValue>Tilbake</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonAlignment</name>
+                        <value>
+                            <stringValue>LEFT</stringValue>
+                        </value>
+                    </inputParameters>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Log_Screen_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Complete_BTN</name>
+                    <extensionName>c:nksFlowNavigation</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>buttonAlignment</name>
+                        <value>
+                            <stringValue>RIGHT</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value>
+                            <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>action</name>
+                        <value>
+                            <stringValue>NEXT</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>stretched</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1145,8 +1381,8 @@
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
-        <locationX>454</locationX>
-        <locationY>629</locationY>
+        <locationX>116</locationX>
+        <locationY>1132</locationY>
         <flowName>NKS_Case_Send_NAV_Task</flowName>
         <inputAssignments>
             <name>NavTask</name>
