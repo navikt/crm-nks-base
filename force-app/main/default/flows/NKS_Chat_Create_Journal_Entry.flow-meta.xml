@@ -2056,9 +2056,6 @@ TODAY())</expression>
             <name>Task_Priority</name>
             <choiceReferences>Priority_Picklist</choiceReferences>
             <dataType>String</dataType>
-            <defaultValue>
-                <stringValue>NORM</stringValue>
-            </defaultValue>
             <fieldText>Oppgaveprioritet:</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
