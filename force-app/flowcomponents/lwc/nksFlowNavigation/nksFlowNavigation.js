@@ -6,6 +6,7 @@ export default class NksFlowNavigation extends LightningElement {
     @api buttonLabel;
     @api buttonAlignment;
     @api stretched = false;
+    @api availableActions = [];
 
     handleButtonClick(event) {
         let flowEvent;
@@ -38,6 +39,10 @@ export default class NksFlowNavigation extends LightningElement {
             default:
                 return 'end';
         }
+    }
+
+    get validAction() {
+        return this.availableActions.find((action) => action === this.action);
     }
 
     get buttonStyle() {

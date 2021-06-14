@@ -46,7 +46,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>Name, INT_Sex__c, INT_Citizenships__c</value>
+                    <value>Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -488,21 +488,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksDataSyncher</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.INT_PersonIdent__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -650,6 +635,21 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksDataSyncher</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.INT_PersonIdent__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>
