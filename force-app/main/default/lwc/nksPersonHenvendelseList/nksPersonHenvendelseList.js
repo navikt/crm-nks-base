@@ -2,7 +2,7 @@ import { LightningElement, api, track, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getHenvendelsesListe from '@salesforce/apex/NKS_HenvendelseListController.getPersonHenvendelser';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
+import PERSON_NAME_FIELD from '@salesforce/schema/Person__c.Name';
 
 export default class NksPersonHenvendelseList extends LightningElement {
     @api recordId; // Id from record page (From UiRecordAPI)
@@ -18,7 +18,6 @@ export default class NksPersonHenvendelseList extends LightningElement {
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
-        this.getRelatedRecordId(this.relationshipField, this.objectApiName);
     }
 
     get showThreadList() {
@@ -66,11 +65,11 @@ export default class NksPersonHenvendelseList extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$personId',
-        fields: [PERSON_ACTOR_FIELD]
+        fields: [PERSON_NAME_FIELD]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {
-            this.personIdent = getFieldValue(data, PERSON_ACTOR_FIELD);
+            this.personIdent = getFieldValue(data, PERSON_NAME_FIELD);
         }
         if (error) {
             this.addError(error);
