@@ -2,16 +2,16 @@
     <lightning-layout multiple-rows="true" class="slds-p-horizontal_xx-small">
         <lightning-layout-item size="12">
             <lightning-layout>
-                <lightning-layout-item size="2">
+                <lightning-layout-item size="3">
                     <p>{getDate}</p>
                 </lightning-layout-item>
-                <lightning-layout-item size="4">
+                <lightning-layout-item size="3">
                     <h4 class="slds-text-heading_small">{thread.lastMessageTitle}</h4>
                 </lightning-layout-item>
-                <lightning-layout-item size="4" alignment-bump="right" class="slds-has-flexi-truncate">
+                <lightning-layout-item size="3" alignment-bump="right" class="slds-has-flexi-truncate">
                     <h4 class="slds-text-heading_small slds-truncate">{thread.lastMessageSummary}</h4>
                 </lightning-layout-item>
-                <lightning-layout-item>
+                <lightning-layout-item size="2">
                     <lightning-badge
                         if:true={thread.isIncorrectlySent}
                         label="Feilsendt"
@@ -28,7 +28,7 @@
                         class="slds-theme_error"
                     ></lightning-badge>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-p-left_x-small">
+                <lightning-layout-item size="1" class="slds-p-left_x-small">
                     <lightning-button-icon
                         if:false={showDetails}
                         icon-name="utility:chevrondown"
