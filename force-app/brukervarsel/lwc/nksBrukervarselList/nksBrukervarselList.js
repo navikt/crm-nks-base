@@ -11,7 +11,7 @@ export default class NksBrukervarselList extends LightningElement {
     showAll = false;
     personId;
     personIdent;
-    wireFields = [this.objectApiName + '.Id'];
+    wireFields;
     isLoaded = false;
     @track notifications = [];
     @track errorMessages = [];

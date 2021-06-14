@@ -10,13 +10,13 @@
                         <h4>{varselType}</h4>
                     </lightning-layout-item>
                     <lightning-layout-item size="3" alignment-bump="right">
-                        <ul class="slds-list_horizontal slds-has-dividers_left">
+                        <ul class="slds-list_horizontal slds-has-dividers_left slds-wrap">
                             <template if:true={channelList} for:each={channelList} for:item="channel">
                                 <li class="slds-item" key={channel}>{channel}</li>
                             </template>
                         </ul>
                     </lightning-layout-item>
-                    <lightning-layout-item>
+                    <lightning-layout-item size="1">
                         <lightning-button-icon
                             if:false={showDetails}
                             icon-name="utility:chevrondown"
