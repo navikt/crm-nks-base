@@ -46,6 +46,70 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
+                    <value>Conversation_Notes__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonHenvendelseList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.AccountId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>User_Notifications__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksBrukervarselList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a5028807-9379-4886-a651-ef7d502fae07</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.AccountId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
                     <value>NAV_Tasks__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -64,6 +128,44 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-52235465-65aa-4ae8-b167-38f79a7567dc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>brukerIdField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nmbOfJournalPosts</name>
+                    <value>50</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>themeGroupField</name>
+                    <value>NKS_Theme_Group__c</value>
+                </componentInstanceProperties>
+                <componentName>nksSafJournalpostList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-8a77a1e9-2943-4a11-af46-55c01977e2ba</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonPaymentList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-839d458c-12ec-4381-9381-dc01d62cc6e1</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -288,50 +390,12 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>nmbOfJournalPosts</name>
-                    <value>50</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>themeGroupField</name>
-                    <value>NKS_Theme_Group__c</value>
-                </componentInstanceProperties>
-                <componentName>nksSafJournalpostList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-8a77a1e9-2943-4a11-af46-55c01977e2ba</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Account.CRM_Person__c</value>
-                </componentInstanceProperties>
-                <componentName>nksPersonPaymentList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-839d458c-12ec-4381-9381-dc01d62cc6e1</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-52235465-65aa-4ae8-b167-38f79a7567dc</value>
+                    <value>Facet-a5028807-9379-4886-a651-ef7d502fae07</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Oversikt</value>
+                    <value>Kommunikasjon</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -340,11 +404,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</value>
+                    <value>Facet-52235465-65aa-4ae8-b167-38f79a7567dc</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.detail</value>
+                    <value>Oppgaver</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -371,6 +435,19 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.rebateMemberPayout</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -593,6 +670,21 @@
                         <leftValue>{!Record.Origin}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Phone</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksDataSyncher</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
