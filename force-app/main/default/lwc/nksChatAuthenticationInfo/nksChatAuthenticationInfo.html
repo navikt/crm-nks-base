@@ -10,14 +10,13 @@
         <template if:false={isLoading}>
             <div class="slds-var-p-left_medium slds-var-p-right_medium">
                 <template if:true={authenticationComplete}>
-                    <div class="slds-notify_alert slds-theme_success" role="alert">
+                    <div class="slds-notify_alert slds-theme_success">
                         <lightning-layout>
                             <div class="slds-var-p-right_small">
                                 <lightning-icon icon-name="utility:success" size="x-small" variant="inverse">
                                 </lightning-icon>
                             </div>
-                            <h2>{labels.IDENTITY_CONFIRMED_DISCLAIMER}</h2>
-                            <span class="slds-assistive-text">{screenReaderLoginAlertAdditionalText}</span>
+                            <h2 role="alert">{labels.IDENTITY_CONFIRMED_DISCLAIMER}</h2>
                         </lightning-layout>
                     </div>
                 </template>
@@ -131,7 +130,7 @@
                     <template if:true={authenticationComplete}>
                         <div class="slds-var-p-top_small">
                             <!-- ACCESS BADGES -->
-                            <div class="slds-var-p-left_small">
+                            <!-- <div class="slds-var-p-left_small">
                                 <c-nks-person-access-badges
                                     record-id={accountId}
                                     object-api-name="Account"
@@ -141,9 +140,9 @@
                                     css-classes="slds-p-bottom_x-small"
                                 >
                                 </c-nks-person-access-badges>
-                            </div>
+                            </div> -->
 
-                            <!-- SECURITY BADGES -->
+                            <!-- SECURITY AND ACCESS BADGES -->
                             <div class="slds-var-p-left_small">
                                 <c-nks-person-badges
                                     record-id={accountId}
