@@ -8,6 +8,13 @@
                     <valueList>
                         <valueListItems>
                             <value>Case.NKS_Change_Account</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.IsClosed}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
