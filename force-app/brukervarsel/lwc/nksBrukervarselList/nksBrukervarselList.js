@@ -77,8 +77,10 @@ export default class NksBrukervarselList extends LightningElement {
         fields: '$wireFields'
     })
     wiredRecordInfo({ error, data }) {
-        if (this.relationshipField && this.objectApiName) {
-            this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+        if (data) {
+            if (this.relationshipField && this.objectApiName) {
+                this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+            }
         }
 
         if (error) {
