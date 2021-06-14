@@ -1,5 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getPersonBadgesAndInfo from '@salesforce/apex/NKS_PersonBadgesController.getPersonBadgesAndInfo';
+import getPersonAccessBadges from '@salesforce/apex/NKS_PersonAccessBadgesController.getPersonAccessBadges';
 
 export default class NksPersonBadges extends LightningElement {
     @api recordId;
@@ -9,28 +10,40 @@ export default class NksPersonBadges extends LightningElement {
     @api assistiveHeader;
 
     @track wiredBadge;
+    @track wiredPersonAccessBadge;
     @track badges = [];
+    @track personAccessBadges = [];
     @track securityMeasures = [];
     @track interpreterSpokenLanguages = [];
     @track guardianships = [];
     @track powerOfAttorneys = [];
     @track entitlements = [];
-    @track errors = [];
+    @track errorMessages = [];
 
     infoPanelToShow = '';
-    errorMessage;
 
-    // connectedCallback() {
-    //     this.setAttribute('ariaLabel', this.assistiveHeader);
-    //     this.setAttribute('role', 'region');
-    // }
+    isNavEmployee = false;
+    isConfidential = false;
+    uuAlertText = '';
+
+    get isLoaded() {
+        return this.wiredBadge &&
+            (this.wiredBadge.data || this.wiredBadge.error) &&
+            this.wiredPersonAccessBadge &&
+            (this.wiredPersonAccessBadge.data || this.wiredPersonAccessBadge.error)
+            ? true
+            : false;
+    }
 
     get hasErrors() {
-        return this.errors && 0 < this.errors.length ? true : false;
+        return this.errorMessages && 0 < this.errorMessages.length ? true : false;
     }
 
     get hasBadges() {
-        return this.badges && 0 < this.badges.length ? true : false;
+        return (this.badges && 0 < this.badges.length) ||
+            (this.personAccessBadges && 0 < this.personAccessBadges.length)
+            ? true
+            : false;
     }
 
     get showIntepreterSpokenLanguage() {
@@ -55,9 +68,9 @@ export default class NksPersonBadges extends LightningElement {
 
     get backgroundTheme() {
         if (true === this.addBoxLayout) {
-            return 'slds-box slds-box_xx-small slds-theme_alert-texture slds-theme_info';
+            return 'slds-box slds-box_x-small slds-theme_default';
         }
-        return '';
+        return 'slds-p-around_x-small';
     }
 
     @wire(getPersonBadgesAndInfo, {
@@ -69,7 +82,6 @@ export default class NksPersonBadges extends LightningElement {
         this.wiredBadge = value;
 
         const { data, error } = value;
-        this.errorMessage = undefined;
 
         if (data) {
             this.badges = data.badges;
@@ -78,11 +90,48 @@ export default class NksPersonBadges extends LightningElement {
             this.guardianships = data.guardianships;
             this.powerOfAttorneys = data.powerOfAttorneys;
             this.entitlements = data.entitlements;
-            this.errors = data.errors;
+            this.errorMessages = data.errors;
+
+            if (this.isLoaded) {
+                this.setUuAlertText();
+            }
         }
 
         if (error) {
-            this.errorMessage = error.body.message;
+            this.addError(error);
+
+            if (this.isLoaded) {
+                this.setUuAlertText();
+            }
+        }
+    }
+
+    @wire(getPersonAccessBadges, {
+        field: '$personRelationField',
+        parentObject: '$objectApiName',
+        parentRecordId: '$recordId'
+    })
+    wiredPersonBadgeInfo(value) {
+        this.wiredPersonAccessBadge = value;
+
+        const { data, error } = value;
+
+        if (data) {
+            this.isNavEmployee = data.some((element) => element.name === 'isNavEmployee');
+            this.isConfidential = data.some((element) => element.name === 'isConfidential');
+            this.personAccessBadges = data;
+
+            if (this.isLoaded) {
+                this.setUuAlertText();
+            }
+        }
+
+        if (error) {
+            this.addError(error);
+
+            if (this.isLoaded) {
+                this.setUuAlertText();
+            }
         }
     }
 
@@ -116,5 +165,42 @@ export default class NksPersonBadges extends LightningElement {
                 badge.setAttribute('aria-expanded', false);
             }
         });
+    }
+
+    addError(error) {
+        this.isLoaded = true;
+        if (Array.isArray(error.body)) {
+            this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
+        } else if (error.body && typeof error.body.message === 'string') {
+            this.errorMessages.push(error.body.message);
+        } else {
+            this.errorMessages.push(error.body);
+        }
+    }
+
+    setUuAlertText() {
+        let alertText = '';
+
+        let hasSecurityMeasures = this.securityMeasures.length > 0;
+        let navEmployeeText = ' er egen ansatt';
+        let isConfidentialText = ' skjermet';
+        let securityMeasureText = ' har ' + this.securityMeasures.length + ' sikkerhetstiltak';
+
+        alertText += 'Bruker';
+        alertText += this.isNavEmployee ? navEmployeeText : '';
+        alertText +=
+            this.isNavEmployee && this.isConfidential && hasSecurityMeasures
+                ? ', '
+                : this.isNavEmployee && this.isConfidential
+                ? ' og'
+                : this.isConfidential
+                ? ' er'
+                : '';
+        alertText += this.isConfidential ? isConfidentialText : '';
+        alertText += (this.isNavEmployee || this.isConfidential) && hasSecurityMeasures ? ' og' : '';
+        alertText += hasSecurityMeasures ? securityMeasureText : '';
+        alertText += '.';
+
+        this.uuAlertText = alertText;
     }
 }

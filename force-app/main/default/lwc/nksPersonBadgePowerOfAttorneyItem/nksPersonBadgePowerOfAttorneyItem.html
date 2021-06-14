@@ -1,0 +1,21 @@
+<template>
+    <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle} ({powerOfAttorney.motpartsPersonident})</div>
+    <p>
+        Gyldig:
+        <lightning-formatted-date-time
+            value={powerOfAttorney.gyldigFraOgMed}
+            year="numeric"
+            month="numeric"
+            day="numeric"
+        >
+        </lightning-formatted-date-time>
+        -
+        <lightning-formatted-date-time
+            value={powerOfAttorney.gyldigTilOgMed}
+            year="numeric"
+            month="numeric"
+            day="numeric"
+        ></lightning-formatted-date-time>
+    </p>
+    <p>{powerOfAttorney.omraade}</p>
+</template>
