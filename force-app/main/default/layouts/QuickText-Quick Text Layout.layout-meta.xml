@@ -34,6 +34,10 @@
                 <behavior>Edit</behavior>
                 <field>IsInsertable</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FolderId</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
