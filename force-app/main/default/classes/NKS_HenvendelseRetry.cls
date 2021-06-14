@@ -98,9 +98,7 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
         try {
             if (noteToRetry != null) {
                 if (noteToRetry.NKS_Sent__c == false) {
-                    System.debug('RETRY POST');
                     String behandlingsId = postToHenvendelse(noteToRetry, apiCtrl);
-                    System.debug('BEH ID: ' + behandlingsId);
                     if (behandlingsId != null) {
                         this.casesToUpdate.add(
                             new Case(Id = noteToRetry.CRM_Case__c, NKS_Henvendelse_BehandlingsId__c = behandlingsId)
@@ -134,7 +132,6 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                 processedNotes.add(noteToRetry);
             }
         } catch (Exception ex) {
-            System.debug('EXCEPTION OCCURRED? ' + ex);
             LoggerUtility logger = new LoggerUtility('Henvendelse_Retry');
             logger.exception(ex, noteToRetry, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
