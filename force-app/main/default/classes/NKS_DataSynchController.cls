@@ -65,8 +65,16 @@ public without sharing class NKS_DataSynchController {
         for (Database.UpsertResult upsRes : upsResList) {
             if (!upsRes.isSuccess()) {
                 //Logs one error event connected to account and breaks loop
+                String errorMessage = '';
+                for (Database.Error error : upsRes.getErrors()) {
+                    errorMessage = error.getMessage();
+                }
                 logger.error(
-                    'One or more conversation notes failed to synch for account with ID: ' + convList[0].CRM_Account__c,
+                    'One or more conversation notes failed to synch for account with ID: ' +
+                    convList[0].CRM_Account__c +
+                    '\n' +
+                    'Excample error: ' +
+                    errorMessage,
                     null,
                     CRM_ApplicationDomain.Domain.NKS
                 );

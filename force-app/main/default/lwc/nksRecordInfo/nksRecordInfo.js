@@ -20,6 +20,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     @api hideLabels = false; // Boolean to determine if labels is to be displayed
     _showLink = false; // Boolean to determine if action slot is to be displayed
     @api wireFields;
+    @api parentWireFields;
     subscription;
 
     @wire(MessageContext)
@@ -61,6 +62,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
         this.viewedRecordId = this.viewedRecordId ? this.viewedRecordId : this.recordId;
 
         this.wireFields = [this.viewedObjectApiName + '.Id'];
+        this.parentWireFields = [this.objectApiName + '.Id'];
     }
 
     @api
@@ -116,6 +118,17 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
         fields: '$wireFields'
     })
     wireRecord;
+
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: '$parentWireFields'
+    })
+    dewireParent(data, error) {
+        //If the parent is updated, the relation might have changed and component is reinitialized
+        if (this.relationshipField) {
+            this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+        }
+    }
 
     //Supports refreshing the record
     @api

@@ -73,7 +73,6 @@ export default class NksDataSyncher extends LightningElement {
         })
             .then((record) => {
                 this.personId = this.resolve(relationshipField, record);
-                console.log('PERSON ID: ' + this.personId);
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));

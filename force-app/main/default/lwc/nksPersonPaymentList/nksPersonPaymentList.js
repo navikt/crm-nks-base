@@ -170,6 +170,8 @@ export default class NksPersonPaymentList extends LightningElement {
     })
     wiredRecordInfo({ error, data }) {
         if (this.relationshipField && this.objectApiName) {
+            this.error = false; //Resets to false if by any chance an error was previously thrown
+            this.historyLoaded = false;
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
     }
