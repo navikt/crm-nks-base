@@ -1224,6 +1224,12 @@
                             <stringValue>LEFT</stringValue>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>buttonVariant</name>
+                        <value>
+                            <stringValue>neutral</stringValue>
+                        </value>
+                    </inputParameters>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
