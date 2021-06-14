@@ -40,7 +40,10 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     get hasBadges() {
-        return (this.badges && 0 < this.badges.length) || (this.badges && 0 < this.badges.length) ? true : false;
+        return (this.badges && 0 < this.badges.length) ||
+            (this.personAccessBadges && 0 < this.personAccessBadges.length)
+            ? true
+            : false;
     }
 
     get showIntepreterSpokenLanguage() {
