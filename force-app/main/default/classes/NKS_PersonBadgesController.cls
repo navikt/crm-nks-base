@@ -150,9 +150,7 @@ public with sharing class NKS_PersonBadgesController {
             //Get field set for use later in the class
             fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
 
-            if (null == person) {
-                errors.add('Kunne ikke finne bruker.');
-            } else {
+            if (null != person) {
                 setBadgeData();
             }
         }
