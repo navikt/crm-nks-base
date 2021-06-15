@@ -27,6 +27,7 @@ export default class NksPersonBadges extends LightningElement {
     isNavEmployee = false;
     isConfidential = false;
     uuAlertText = '';
+    wireFields;
 
     get isLoaded() {
         return this.wiredBadge &&

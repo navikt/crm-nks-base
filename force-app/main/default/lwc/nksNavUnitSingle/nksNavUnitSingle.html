@@ -12,7 +12,7 @@
 
                 <template if:true={isLoaded}>
                     <!-- ERROR MESSAGE -->
-                    <template if:true={errorMessage}>
+                    <template if:true={isError}>
                         <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
                             <lightning-icon
                                 alternative-text="Feilmelding"
@@ -53,7 +53,7 @@
 
             <template if:true={isLoaded}>
                 <!-- ERROR MESSAGE -->
-                <template if:true={errorMessage}>
+                <template if:true={isError}>
                     <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
                         <lightning-icon
                             alternative-text="Feilmelding"
@@ -90,7 +90,7 @@
 
             <template if:true={isLoaded}>
                 <!-- ERROR MESSAGE -->
-                <template if:true={errorMessage}>
+                <template if:true={isError}>
                     <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
                         <lightning-icon
                             alternative-text="Feilmelding"
