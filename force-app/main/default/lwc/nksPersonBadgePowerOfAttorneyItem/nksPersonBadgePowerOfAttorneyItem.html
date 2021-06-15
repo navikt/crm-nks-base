@@ -1,7 +1,9 @@
 <template>
-    <div class="slds-text-heading_small">{powerOfAttorney.motpartsRolle} ({powerOfAttorney.motpartsPersonident})</div>
+    <div class="slds-text-heading_small">
+        {powerOfAttorney.motpartsRolle} : {powerOfAttorney.motpartsNavn} ({powerOfAttorney.motpartsPersonident})
+    </div>
     <p>
-        Gyldig:
+        Gyldig&nbsp;
         <lightning-formatted-date-time
             value={powerOfAttorney.gyldigFraOgMed}
             year="numeric"
@@ -9,7 +11,7 @@
             day="numeric"
         >
         </lightning-formatted-date-time>
-        -
+        &nbsp;-&nbsp;
         <lightning-formatted-date-time
             value={powerOfAttorney.gyldigTilOgMed}
             year="numeric"
@@ -17,5 +19,9 @@
             day="numeric"
         ></lightning-formatted-date-time>
     </p>
-    <p>{powerOfAttorney.omraade}</p>
+    <ul class="slds-list_horizontal slds-has-dividers_right slds-wrap slds-p-top_x-small">
+        <template iterator:it={powerOfAttorney.omraader}>
+            <li class="slds-item" key={it.value}>{it.value}</li>
+        </template>
+    </ul>
 </template>
