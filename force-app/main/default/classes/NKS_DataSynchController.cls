@@ -36,14 +36,14 @@ public without sharing class NKS_DataSynchController {
     }
 
     /**
-     * @description: Removes conversation note older than last year from the synch
+     * @description: Removes conversation note older than 2 last years from the synch
      * @author Stian Ruud Schikora | 06-08-2021
      * @param henvList
      **/
     private static void filterHenvendelseList(List<NKS_Henvendelse> henvList) {
         Date today = Date.today();
         for (Integer i = henvList.size() - 1; i >= 0; i--) {
-            if (Date.valueOf(henvList[i].opprettetDato) < today.addYears(-1) && !Test.isRunningTest()) {
+            if (Date.valueOf(henvList[i].opprettetDato) < today.addYears(-2) && !Test.isRunningTest()) {
                 henvList.remove(i);
             }
         }
