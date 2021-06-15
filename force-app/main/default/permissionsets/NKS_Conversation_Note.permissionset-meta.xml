@@ -51,6 +51,11 @@
         <field>Conversation_Note__c.NKS_Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Conversation_Note__c.NKS_Timeline_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Conversation Note</label>
     <objectPermissions>

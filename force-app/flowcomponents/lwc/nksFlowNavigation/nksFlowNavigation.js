@@ -7,6 +7,7 @@ export default class NksFlowNavigation extends LightningElement {
     @api buttonAlignment;
     @api stretched = false;
     @api availableActions = [];
+    @api buttonVariant = 'brand';
 
     handleButtonClick(event) {
         let flowEvent;

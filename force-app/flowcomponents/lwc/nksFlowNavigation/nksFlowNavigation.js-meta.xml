@@ -31,6 +31,12 @@
                 description="Alignment of the flow button"
             />
             <property
+                name="buttonVariant"
+                type="String"
+                label="Button variant (Valid values are: base, neutral, brand, destructive, inverse and success"
+                default="brand"
+            />
+            <property
                 name="stretched"
                 type="Boolean"
                 label="Stretch button to full width?"
