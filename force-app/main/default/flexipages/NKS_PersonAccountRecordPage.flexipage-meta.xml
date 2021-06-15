@@ -8,35 +8,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Account.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>NAV_Tasks__r</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>6</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-64554126-722e-4e8c-8c74-a69278277ffc</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>cardLabel</name>
                     <value>Brukeren er registrert død</value>
                 </componentInstanceProperties>
@@ -313,6 +284,98 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>amountOfMonths</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>amountOfMonthsToLoad</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>amountOfRecords</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>amountOfRecordsToLoad</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>configId</name>
+                    <value>NKS_PERSON</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerIcon</name>
+                    <value>standard:all</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerTitleEnglish</name>
+                    <value>Activities</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerTitleNorwegian</name>
+                    <value>Aktiviteter</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineParentField</name>
+                    <value>Id</value>
+                </componentInstanceProperties>
+                <componentName>timeline</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksPersonHenvendelseList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksBrukervarselList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-9744652f-92bd-4ad7-a2b0-b3a6705c9075</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>NAV_Tasks__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-64554126-722e-4e8c-8c74-a69278277ffc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>brukerIdField</name>
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
@@ -348,11 +411,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-64554126-722e-4e8c-8c74-a69278277ffc</value>
+                    <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Oversikt</value>
+                    <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -361,11 +424,24 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</value>
+                    <value>Facet-9744652f-92bd-4ad7-a2b0-b3a6705c9075</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.detail</value>
+                    <value>Kommunikasjon</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-64554126-722e-4e8c-8c74-a69278277ffc</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.tasks</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>
@@ -536,6 +612,15 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksDataSyncher</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
