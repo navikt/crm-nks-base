@@ -271,14 +271,6 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
-            <fullName>Chatter Answers</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
