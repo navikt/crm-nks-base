@@ -2,7 +2,7 @@ import { LightningElement, api, track, wire } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import getBrukerVarsel from '@salesforce/apex/NKS_BrukervarselController.getBrukerVarselFromActorId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
+import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
@@ -11,9 +11,14 @@ export default class NksBrukervarselList extends LightningElement {
     showAll = false;
     personId;
     personIdent;
-    wireFields = [this.objectApiName + '.Id'];
+    wireFields;
+    isLoaded = false;
     @track notifications = [];
     @track errorMessages = [];
+
+    connectedCallback() {
+        this.wireFields = [this.objectApiName + '.Id'];
+    }
 
     get showNotifications() {
         return this.notifications.length > 0;
@@ -72,8 +77,10 @@ export default class NksBrukervarselList extends LightningElement {
         fields: '$wireFields'
     })
     wiredRecordInfo({ error, data }) {
-        if (this.relationshipField && this.objectApiName) {
-            this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+        if (data) {
+            if (this.relationshipField && this.objectApiName) {
+                this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+            }
         }
 
         if (error) {
@@ -88,6 +95,7 @@ export default class NksBrukervarselList extends LightningElement {
         if (data) {
             this.errorMessages = [];
             this.notifications = data;
+            this.isLoaded = true;
         }
 
         if (error) {
@@ -100,6 +108,7 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     addError(error) {
+        this.isLoaded = true;
         if (Array.isArray(error.body)) {
             this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
         } else if (error.body && typeof error.body.message === 'string') {

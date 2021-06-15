@@ -54,7 +54,7 @@
                         </lightning-layout>
                     </lightning-layout-item>
                     <lightning-layout-item size="6">
-                        <div>
+                        <div if:true={hasPayments}>
                             <h1>{labels.YTELSE_HEADER}</h1>
                         </div>
                         <lightning-checkbox-group
@@ -85,11 +85,28 @@
                                     style="font-weight: bold; font-size: 1.1em"
                                     key={it.value.group}
                                 >
-                                    <lightning-formatted-date-time
-                                        year="numeric"
-                                        month="long"
-                                        value={it.value.data.utbetalingsdato}
-                                    ></lightning-formatted-date-time>
+                                    <div if:true={it.value.data.utbetalingsdato}>
+                                        <lightning-formatted-date-time
+                                            year="numeric"
+                                            month="long"
+                                            value={it.value.data.utbetalingsdato}
+                                        ></lightning-formatted-date-time>
+                                    </div>
+                                    <div if:false={it.value.data.utbetalingsdato}>
+                                        <lightning-formatted-date-time
+                                            if:true={it.value.data.forfallsdato}
+                                            year="numeric"
+                                            month="long"
+                                            value={it.value.data.forfallsdato}
+                                        ></lightning-formatted-date-time>
+                                        <lightning-formatted-date-time
+                                            if:false={it.value.data.forfallsdato}
+                                            if:true={it.value.data.posteringsdato}
+                                            year="numeric"
+                                            month="long"
+                                            value={it.value.data.posteringsdato}
+                                        ></lightning-formatted-date-time>
+                                    </div>
                                 </h1>
                                 <c-nks-person-payment
                                     key={it.value.data.posteringsdato}

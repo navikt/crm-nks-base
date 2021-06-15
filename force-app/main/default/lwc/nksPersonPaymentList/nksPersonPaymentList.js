@@ -52,9 +52,11 @@ export default class NksPersonPaymentList extends LightningElement {
     connectedCallback() {
         this.selectedPeriod = 'LAST_MONTH';
         let startDate = new Date();
+        let endDate = new Date();
         startDate.setMonth(startDate.getMonth() - 1, 1);
+        endDate.setMonth(endDate.getMonth() + 1);
         this.startDateFilter = startDate;
-        this.endDateFilter = new Date();
+        this.endDateFilter = endDate;
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -168,6 +170,8 @@ export default class NksPersonPaymentList extends LightningElement {
     })
     wiredRecordInfo({ error, data }) {
         if (this.relationshipField && this.objectApiName) {
+            this.error = false; //Resets to false if by any chance an error was previously thrown
+            this.historyLoaded = false;
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
     }
@@ -236,16 +240,20 @@ export default class NksPersonPaymentList extends LightningElement {
     periodChanged(event) {
         let periodFilter = event.detail.value;
         this.selectedPeriod = periodFilter;
+
+        let startDate = new Date();
+        let endDate = new Date();
         switch (periodFilter) {
             case 'LAST_MONTH':
-                let startDate = new Date();
                 startDate.setMonth(startDate.getMonth() - 1, 1);
+                endDate.setMonth(endDate.getMonth() + 1);
                 this.startDateFilter = startDate;
-                this.endDateFilter = new Date();
+                this.endDateFilter = endDate;
                 break;
             case 'THIS_YEAR':
+                endDate.setMonth(endDate.getMonth() + 1);
                 this.startDateFilter = new Date(new Date().getFullYear(), 0, 1);
-                this.endDateFilter = new Date();
+                this.endDateFilter = endDate;
                 break;
             case 'PREVIOUS_YEAR':
                 this.startDateFilter = new Date(new Date().getFullYear() - 1, 0, 1);
@@ -270,7 +278,11 @@ export default class NksPersonPaymentList extends LightningElement {
     //Returns true if the payment is in the defined filter period
     inFilterPeriod(payment) {
         let paymentDate = Date.parse(payment.utbetalingsdato);
-        return paymentDate >= this.startDateFilter && paymentDate <= this.endDateFilter;
+        let dueDate = Date.parse(payment.forfallsdato);
+        let postDate = Date.parse(payment.posteringsdato);
+
+        let filterDate = paymentDate ? paymentDate : dueDate ? dueDate : postDate;
+        return filterDate >= this.startDateFilter && filterDate <= this.endDateFilter;
     }
 
     //Returns true if a payment includes one of the selected ytelser
@@ -307,7 +319,13 @@ export default class NksPersonPaymentList extends LightningElement {
         let paymentMap = {};
         paymentList.forEach((payment) => {
             let pmtDate = new Date(payment.utbetalingsdato);
-            var pmtKey = pmtDate.getFullYear() + '-' + pmtDate.getMonth();
+            let dueDate = new Date(payment.forfallsdato);
+            let postDate = new Date(payment.posteringsdato);
+            var pmtKey = pmtDate
+                ? pmtDate.getFullYear() + '-' + pmtDate.getMonth()
+                : dueDate
+                ? dueDate.getFullYear() + '-' + dueDate.getMonth()
+                : postDate.getFullYear() + '-' + postDate.getMonth();
 
             if (paymentMap[pmtKey] !== undefined) {
                 paymentMap[pmtKey].push({ group: pmtKey, data: payment });

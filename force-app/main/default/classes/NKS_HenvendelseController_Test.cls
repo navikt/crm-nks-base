@@ -82,23 +82,4 @@ public class NKS_HenvendelseController_Test {
 
         System.assert(henvResp[0].equalsIgnoreCase('ERROR'));
     }
-
-    @isTest
-    static void testHenvendelseSynch() {
-        UTIL_TestDataFactory.createRecord(new Person__c());
-        UTIL_TestDataFactory.createRecord(
-            new Common_Code__c(CRM_Code_Set__c = 'Tema', CRM_Code__c = 'DAG', Name = 'Dagpenger')
-        );
-
-        ApiMock.setTestMock('GET_HENVENDELSER', 200, 'OK');
-
-        Test.startTest();
-        Account acc = [SELECT Id FROM Account WHERE IsPersonAccount = TRUE LIMIT 1];
-        NKS_HenvendelseController.doHenvendelseSynch('123456789', acc.Id);
-        Test.stopTest();
-
-        System.debug([SELECT Log_Message__c, Pay_Load__c FROM Application_Log__c]);
-
-        System.assert([SELECT COUNT() FROM Conversation_Note__c] > 0);
-    }
 }

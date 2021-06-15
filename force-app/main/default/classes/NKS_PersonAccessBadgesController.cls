@@ -20,13 +20,13 @@ public without sharing class NKS_PersonAccessBadgesController {
         // Add INT_Confidential__c
         // prettier-ignore
         if (true == person.INT_Confidential__c.equalsIgnoreCase('FORTROLIG')) {
-            accessBadgeList.add(new AccessBadge('FORTROLIG', 'Skjermet adresse - fortrolig'));
+            accessBadgeList.add(new AccessBadge('isConfidential', 'Skjermet adresse - fortrolig'));
         } else if (true == person.INT_Confidential__c.equalsIgnoreCase('STRENGT_FORTROLIG')) {
-            accessBadgeList.add(new AccessBadge('STRENGT_FORTROLIG', 'Skjermet adresse - strengt fortrolig'));
+            accessBadgeList.add(new AccessBadge('isConfidential', 'Skjermet adresse - strengt fortrolig'));
         } else if (
             true == person.INT_Confidential__c.equalsIgnoreCase('STRENGT_FORTROLIG_UTLAND')
         ) {
-            accessBadgeList.add(new AccessBadge('STRENGT_FORTROLIG_UTLAND', 'Skjermet adresse - strengt fortrolig'));
+            accessBadgeList.add(new AccessBadge('isConfidential', 'Skjermet adresse - strengt fortrolig'));
         }
         return accessBadgeList;
     }

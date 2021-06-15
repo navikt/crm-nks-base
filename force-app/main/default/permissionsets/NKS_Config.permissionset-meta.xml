@@ -81,6 +81,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Conversation_Note__c.NKS_Henvendelse_BehandlingsId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>KafkaMessage__c.CRM_ErrorMessage__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -107,6 +112,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NavTask__c.INT_External_Reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Henvendelse_BehandlingsId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

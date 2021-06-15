@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import synchConversationNotes from '@salesforce/apex/NKS_HenvendelseController.doHenvendelseSynch';
+import synchConversationNotes from '@salesforce/apex/NKS_DataSynchController.doHenvendelseSynch';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
@@ -73,7 +73,6 @@ export default class NksDataSyncher extends LightningElement {
         })
             .then((record) => {
                 this.personId = this.resolve(relationshipField, record);
-                console.log('PERSON ID: ' + this.personId);
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));

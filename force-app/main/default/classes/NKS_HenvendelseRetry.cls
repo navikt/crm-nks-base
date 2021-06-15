@@ -53,7 +53,6 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                     return;
                 }
                 //Processing
-                //performRetry(notesToRetry.remove(0));
                 performRetry(notesToRetry.remove(0), apiCtrl);
             }
         }
@@ -72,8 +71,17 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
             if (saveRes.isSuccess()) {
                 //Successful update
             } else {
+                String exampleError = '';
                 for (Database.Error err : saveRes.getErrors()) {
+                    exampleError = err.getMessage();
                 }
+                //Most likely the same error will occur for multiple records. One entry is logged and loop is broken
+                logger.error(
+                    'API retry failed to update one or more records. \n Example error: ' + exampleError,
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
+                break;
             }
         }
     }
@@ -119,6 +127,8 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                     if (journalSuccess)
                         setJournalSuccess(noteToRetry);
                 }
+                //Increment the number of retries performed on this record
+                noteToRetry.NKS_Number_of_API_Retries__c++;
                 processedNotes.add(noteToRetry);
             }
         } catch (Exception ex) {
@@ -212,9 +222,10 @@ global without sharing class NKS_HenvendelseRetry implements Queueable, Database
                 NKS_Journal_Status__c,
                 NKS_Legacy_Case_Id__c,
                 CRM_Account__r.INT_PersonIdent__c,
-                CRM_Case__r.NKS_Henvendelse_BehandlingsId__c
+                CRM_Case__r.NKS_Henvendelse_BehandlingsId__c,
+                NKS_Number_of_API_Retries__c
             FROM Conversation_Note__c
-            WHERE NKS_Sent__c = FALSE OR NKS_Journal_Status__c = 'Journal Error'
+            WHERE (NKS_Sent__c = FALSE OR NKS_Journal_Status__c = 'Journal Error') AND NKS_Number_of_API_Retries__c < 2
             ORDER BY OwnerId
             LIMIT 10000
         ];
