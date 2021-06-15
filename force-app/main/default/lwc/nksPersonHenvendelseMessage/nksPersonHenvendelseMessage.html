@@ -26,14 +26,18 @@
                                 <lightning-badge
                                     if:true={message.erLest}
                                     label="Lest"
-                                    class="slds-theme_success"
+                                    class="nav-badge-success"
                                 ></lightning-badge>
                                 <lightning-badge
                                     if:true={message.erUlest}
                                     label="Ulest"
-                                    class="slds-badge_inverse"
+                                    class="nav-badge-error"
                                 ></lightning-badge>
-                                <lightning-badge if:true={message.delSvar} label="Delsvar"></lightning-badge>
+                                <lightning-badge
+                                    if:true={message.delSvar}
+                                    label="Delsvar"
+                                    class="nav-badge-info"
+                                ></lightning-badge>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-layout-item>

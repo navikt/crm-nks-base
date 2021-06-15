@@ -212,6 +212,13 @@
                 <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Conversation_Note</targetReference>
         </connector>
@@ -408,23 +415,6 @@
             <targetReference>Initiate_Journal_Process</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <description>Sets the registration date for the conversation note after a successful post.</description>
-        <name>Set_Registration_Date</name>
-        <label>Set Registration Date</label>
-        <locationX>777</locationX>
-        <locationY>1264</locationY>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Journal_Entry_Decision</targetReference>
-        </connector>
-    </assignments>
     <choices>
         <name>Create_Nav_Task_Action</name>
         <choiceText>Opprett oppgave</choiceText>
@@ -547,8 +537,8 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>768</locationX>
-        <locationY>1421</locationY>
+        <locationX>769</locationX>
+        <locationY>1267</locationY>
         <defaultConnector>
             <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -622,7 +612,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Registration_Date</targetReference>
+                <targetReference>Create_Journal_Entry_Decision</targetReference>
             </connector>
             <label>Successful Post</label>
         </rules>
@@ -948,6 +938,11 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Case_Closed_Disclaimer</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Samtalen er ferdigbehandlet og du kan lukke denne fanen. Om du har behov for å opprette oppgave eller registrere et nytt referat velger du ønsket handling og klikker &lt;i&gt;neste&lt;/i&gt;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Next_Action</name>
             <choiceReferences>Create_Nav_Task_Action</choiceReferences>
             <choiceReferences>New_Conversation_Note_Action</choiceReferences>
@@ -955,7 +950,7 @@
             <defaultSelectedChoiceReference>Create_Nav_Task_Action</defaultSelectedChoiceReference>
             <fieldText>Velg handling:</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -1222,6 +1217,12 @@
                         <name>buttonAlignment</name>
                         <value>
                             <stringValue>LEFT</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonVariant</name>
+                        <value>
+                            <stringValue>neutral</stringValue>
                         </value>
                     </inputParameters>
                     <isRequired>true</isRequired>
