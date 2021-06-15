@@ -107,10 +107,6 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Case.Feedback</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>Knowledge__kav.Clarifications</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

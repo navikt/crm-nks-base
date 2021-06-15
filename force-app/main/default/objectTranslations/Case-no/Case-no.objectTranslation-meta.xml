@@ -58,15 +58,6 @@
         <name>Feedback</name>
     </recordTypes>
     <recordTypes>
-        <description>
-            <!-- Used for phone and chat cases -->
-        </description>
-        <label>
-            <!-- Inquiry -->
-        </label>
-        <name>Inquiry</name>
-    </recordTypes>
-    <recordTypes>
         <label>
             <!-- Phone Case -->
         </label>
