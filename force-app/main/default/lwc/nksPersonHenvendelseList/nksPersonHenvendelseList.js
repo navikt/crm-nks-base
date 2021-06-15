@@ -1,5 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import getHenvendelsesListe from '@salesforce/apex/NKS_HenvendelseListController.getPersonHenvendelser';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import PERSON_NAME_FIELD from '@salesforce/schema/Person__c.Name';
@@ -15,6 +16,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
     isLoaded = false;
     @track threadList = [];
     @track errorMessages = [];
+    wiredPersonHenvendelser;
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -79,7 +81,14 @@ export default class NksPersonHenvendelseList extends LightningElement {
     @wire(getHenvendelsesListe, {
         personIdent: '$personIdent'
     })
-    wiredPersonHenvendelser({ error, data }) {
+    wiredGetHenvendelsesListe(value) {
+        this.wiredPersonHenvendelser = value;
+        this.setWiredPersonHenvendelser();
+    }
+
+    setWiredPersonHenvendelser() {
+        const { error, data } = this.wiredPersonHenvendelser;
+
         if (data) {
             this.errorMessages = [];
             this.threadList = data;
@@ -105,6 +114,13 @@ export default class NksPersonHenvendelseList extends LightningElement {
             .catch((error) => {
                 this.addError(error, 'caughtError');
             });
+    }
+
+    refreshThreadList() {
+        this.isLoaded = false;
+        return refreshApex(this.wiredPersonHenvendelser).then(() => {
+            this.setWiredPersonHenvendelser();
+        });
     }
 
     addError(error) {

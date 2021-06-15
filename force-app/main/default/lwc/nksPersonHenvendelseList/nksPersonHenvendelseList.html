@@ -8,6 +8,16 @@
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">Meldinger ({numberOfThreads})</h2>
                 </div>
+                <div class="slds-no-flex">
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        variant="border-filled"
+                        alternative-text="Hent meldinger på nytt"
+                        title="Hent meldinger på nytt"
+                        aria-label="Hent meldinger på nytt"
+                        onclick={refreshThreadList}
+                    ></lightning-button-icon>
+                </div>
             </header>
         </div>
         <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
