@@ -5,7 +5,7 @@
         <name>NKS_Case_Create_NAV_Task</name>
     </quickActions>
     <quickActions>
-        <label>Endre Bruker</label>
+        <label>Bytt Bruker</label>
         <name>NKS_Change_Account</name>
     </quickActions>
     <quickActions>
