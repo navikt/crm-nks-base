@@ -1,4 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 import getPersonBadgesAndInfo from '@salesforce/apex/NKS_PersonBadgesController.getPersonBadgesAndInfo';
 import getPersonAccessBadges from '@salesforce/apex/NKS_PersonAccessBadgesController.getPersonAccessBadges';
 
@@ -73,6 +75,31 @@ export default class NksPersonBadges extends LightningElement {
         return 'slds-p-around_x-small';
     }
 
+    connectedCallback() {
+        this.wireFields = [this.objectApiName + '.Id'];
+    }
+
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: '$wireFields'
+    })
+    wiredRecordInfo({ error, data }) {
+        if (data) {
+            if (this.isLoaded) {
+                refreshApex(this.wiredBadge).then(() => {
+                    this.setWiredBadge();
+                });
+                refreshApex(this.wiredPersonAccessBadge).then(() => {
+                    this.setWiredPersonAccessBadge();
+                });
+            }
+        }
+
+        if (error) {
+            this.addError(error);
+        }
+    }
+
     @wire(getPersonBadgesAndInfo, {
         field: '$personRelationField',
         parentObject: '$objectApiName',
@@ -80,8 +107,11 @@ export default class NksPersonBadges extends LightningElement {
     })
     wiredBadgeInfo(value) {
         this.wiredBadge = value;
+        this.setWiredBadge();
+    }
 
-        const { data, error } = value;
+    setWiredBadge() {
+        const { data, error } = this.wiredBadge;
 
         if (data) {
             this.badges = data.badges;
@@ -113,8 +143,10 @@ export default class NksPersonBadges extends LightningElement {
     })
     wiredPersonBadgeInfo(value) {
         this.wiredPersonAccessBadge = value;
-
-        const { data, error } = value;
+        this.setWiredPersonAccessBadge();
+    }
+    setWiredPersonAccessBadge() {
+        const { data, error } = this.wiredPersonAccessBadge;
 
         if (data) {
             this.isNavEmployee = data.some((element) => element.name === 'isNavEmployee');
