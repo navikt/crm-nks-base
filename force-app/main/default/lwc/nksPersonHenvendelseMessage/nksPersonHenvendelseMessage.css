@@ -1,0 +1,17 @@
+.nav-badge-error {
+    --sds-c-badge-color-background: #f9d2cc;
+    --sds-c-badge-color-border: 1px solid #ba3a26;
+    --sds-c-badge-radius-border: 4px;
+}
+
+.nav-badge-success {
+    --sds-c-badge-color-background: #ccf1d6;
+    --sds-c-badge-color-border: 1px solid #06893a;
+    --sds-c-badge-radius-border: 4px;
+}
+
+.nav-badge-info {
+    --sds-c-badge-color-background: #d8f9ff;
+    --sds-c-badge-color-border: 1px solid #368da8;
+    --sds-c-badge-radius-border: 4px;
+}
