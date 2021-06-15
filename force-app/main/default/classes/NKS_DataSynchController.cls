@@ -129,8 +129,6 @@ public without sharing class NKS_DataSynchController {
             convNote.NKS_Theme__r = new Common_Code__c(
                 CRM_UniqueKey__c = 'Tema' + henv.journalfortInformasjon.journalfortTema
             );
-        } else {
-            convNote.NKS_Theme__r = new Common_Code__c(CRM_UniqueKey__c = 'Tema' + henv.tema);
         }
 
         return convNote;
