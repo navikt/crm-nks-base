@@ -106,7 +106,7 @@
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case_0.AccountId</elementReference>
+                <elementReference>Get_Case_Verify.AccountId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -451,7 +451,7 @@
         <name>Changed_Account</name>
         <label>Changed Account</label>
         <locationX>1235</locationX>
-        <locationY>990</locationY>
+        <locationY>988</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_to_Case</targetReference>
         </defaultConnector>
@@ -463,7 +463,7 @@
                 <leftValueReference>Get_Case.AccountId</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Case_0.AccountId</elementReference>
+                    <elementReference>Get_Case_Verify.AccountId</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -782,7 +782,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Case_0.AccountId</elementReference>
+                <elementReference>Get_Case_Verify.AccountId</elementReference>
             </value>
         </filters>
         <object>Account</object>
@@ -808,13 +808,11 @@
                 <elementReference>Get_Case.AccountId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>INT_PersonIdent__c</queriedFields>
-        <queriedFields>CRM_Person__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>personIdent</assignToReference>
+            <field>INT_PersonIdent__c</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <description>Queries information from the case record</description>
@@ -839,10 +837,10 @@
     </recordLookups>
     <recordLookups>
         <description>Queries information from the case record</description>
-        <name>Get_Case_0</name>
+        <name>Get_Case_Verify</name>
         <label>Get Case</label>
         <locationX>1070</locationX>
-        <locationY>980</locationY>
+        <locationY>979</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Changed_Account</targetReference>
@@ -879,6 +877,10 @@
         <outputAssignments>
             <assignToReference>Conversation_Note_Summary</assignToReference>
             <field>CRM_Conversation_Note__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Conversation_Note_Created_Date</assignToReference>
+            <field>CreatedDate</field>
         </outputAssignments>
         <outputAssignments>
             <assignToReference>BEHANDLINGS_ID</assignToReference>
@@ -940,7 +942,7 @@
             <field>RecordId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Case_0.Account.CRM_Person__c</elementReference>
+                <elementReference>Get_Case_Verify.Account.CRM_Person__c</elementReference>
             </value>
         </filters>
         <object>UserRecordAccess</object>
@@ -1051,7 +1053,7 @@
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
         <locationX>346</locationX>
-        <locationY>604</locationY>
+        <locationY>605</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1085,7 +1087,7 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Referat:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Summary}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Samtalereferatet&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Created_Date}&lt;/p&gt;&lt;p&gt;------------------------&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Summary}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;------------------------&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Flere handlinger&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1097,11 +1099,6 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <fields>
-            <name>Case_Closed_Disclaimer</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Samtalen er ferdigbehandlet og du kan lukke denne fanen. Om du har behov for å opprette oppgave eller registrere et nytt referat velger du ønsket handling og klikker &lt;i&gt;neste&lt;/i&gt;.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Next_Action</name>
@@ -1174,6 +1171,12 @@
                     <stringValue>Neste</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>buttonVariant</name>
+                <value>
+                    <stringValue>neutral</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1199,7 +1202,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Case_0</targetReference>
+            <targetReference>Get_Case_Verify</targetReference>
         </connector>
         <fields>
             <name>Create_Note_Header</name>
@@ -1573,6 +1576,13 @@
     <variables>
         <name>BEHANDLINGS_ID</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Conversation_Note_Created_Date</name>
+        <dataType>DateTime</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
