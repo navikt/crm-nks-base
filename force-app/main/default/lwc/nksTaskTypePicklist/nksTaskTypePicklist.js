@@ -13,7 +13,6 @@ export default class NksTaskTypePicklist extends LightningElement {
 
     @api showcomponent;
     @api theme;
-    @track theme = this.theme;
     @track tasktypes = [];
     tasktype;
     commoncodes;
