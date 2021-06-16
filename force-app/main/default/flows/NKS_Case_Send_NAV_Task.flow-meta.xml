@@ -65,6 +65,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Set_Due_Date</name>
+        <label>Set Due Date</label>
+        <locationX>4</locationX>
+        <locationY>728</locationY>
+        <actionName>nksDueDateUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Process_NAV_task</targetReference>
+        </connector>
+        <inputParameters>
+            <name>taskList</name>
+            <value>
+                <elementReference>NavTask</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Task_Created_Toast</name>
         <label>Task Created Toast</label>
         <locationX>173</locationX>
@@ -109,13 +130,6 @@
         <label>NAV Task Assignment</label>
         <locationX>176</locationX>
         <locationY>555</locationY>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Task_Due_Date</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +215,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Process_NAV_task</targetReference>
+            <targetReference>Set_Due_Date</targetReference>
         </connector>
     </assignments>
     <decisions>

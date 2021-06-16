@@ -16,6 +16,16 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.Close_Case</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

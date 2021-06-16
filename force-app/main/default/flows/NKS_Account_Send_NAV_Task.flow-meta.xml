@@ -64,19 +64,33 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Set_Due_date</name>
+        <label>Set Due date</label>
+        <locationX>37</locationX>
+        <locationY>630</locationY>
+        <actionName>nksDueDateUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Process_NAV_task</targetReference>
+        </connector>
+        <inputParameters>
+            <name>taskList</name>
+            <value>
+                <elementReference>NavTask</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>177</locationX>
         <locationY>457</locationY>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Task_Due_Date</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -155,7 +169,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Process_NAV_task</targetReference>
+            <targetReference>Set_Due_date</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -376,16 +390,6 @@ TODAY())</expression>
             </defaultValue>
             <fieldText>Priroritet</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Task_Due_Date</name>
-            <dataType>Date</dataType>
-            <defaultValue>
-                <elementReference>Default_Due_Date</elementReference>
-            </defaultValue>
-            <fieldText>Frist:</fieldText>
-            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
