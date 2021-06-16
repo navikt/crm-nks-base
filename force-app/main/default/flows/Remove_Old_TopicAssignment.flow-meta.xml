@@ -110,7 +110,7 @@
             <targetReference>EmptyCollection</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>emptyRecordCollection</name>
         <dataType>SObject</dataType>
