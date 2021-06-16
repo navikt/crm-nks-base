@@ -5,13 +5,17 @@ public without sharing class NKS_PersonAccessBadgesController {
     @AuraEnabled(cacheable=true)
     public static List<AccessBadge> getPersonAccessBadges(String field, String parentObject, String parentRecordId) {
         Id personId = getPersonId(field, parentObject, parentRecordId);
+
+        if (String.isBlank(personId)) {
+            return new List<AccessBadge>();
+        }
+
         Person__c person = getPerson(personId);
         return createAccessBadgeList(person);
     }
 
     private static List<AccessBadge> createAccessBadgeList(Person__c person) {
         List<AccessBadge> accessBadgeList = new List<AccessBadge>();
-
         // Add INT_IsNavEmployee__c
         if (person.INT_IsNavEmployee__c) {
             accessBadgeList.add(new AccessBadge('isNavEmployee', 'Skjermet person (NAV Ansatt)'));
@@ -55,6 +59,9 @@ public without sharing class NKS_PersonAccessBadgesController {
      * @description recursive method for collecting the value of a field on a sObject
      */
     private static Object getFieldValue(SObject obj, String fieldName) {
+        if (obj == null) {
+            return null;
+        }
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {

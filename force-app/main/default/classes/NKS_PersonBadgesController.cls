@@ -49,6 +49,9 @@ public with sharing class NKS_PersonBadgesController {
      * @description recursive method for collecting the value of a field on a sObject
      */
     private static Object getFieldValue(SObject obj, String fieldName) {
+        if (obj == null) {
+            return null;
+        }
         List<String> fieldNameList = fieldName.split('\\.');
 
         if (1 < fieldNameList.size()) {
@@ -147,12 +150,10 @@ public with sharing class NKS_PersonBadgesController {
             entitlements = new List<String>();
             errors = new List<String>();
 
-            this.person = person;
-
-            //Get field set for use later in the class
-            fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
-
             if (null != person) {
+                this.person = person;
+                //Get field set for use later in the class
+                fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
                 loadCommonCodes();
                 setBadgeData();
             }
@@ -271,6 +272,7 @@ public with sharing class NKS_PersonBadgesController {
                         i++;
                     }
 
+                    //if (powerOfAttorneys.size() > 0) {
                     for (Person__c p : [
                         SELECT Id, Name, CRM_Account__c, CRM_Account__r.Name
                         FROM Person__c
@@ -286,6 +288,7 @@ public with sharing class NKS_PersonBadgesController {
                                 : relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__r.Name;
                         }
                     }
+                    //}
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av fullmakts detaljer');
                 }
