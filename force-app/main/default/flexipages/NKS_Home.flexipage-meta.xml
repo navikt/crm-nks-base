@@ -129,7 +129,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>IsClosed = false AND Origin = &apos;Phone&apos;</value>
+                    <value>IsClosed = false AND Origin = &apos;Phone&apos; AND OwnerId=:userId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>
