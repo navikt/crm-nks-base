@@ -136,6 +136,8 @@ public with sharing class NKS_PersonBadgesController {
         private Person__c person;
         private Set<String> fieldSet;
 
+        private Map<String, Common_Code__c> themeMap;
+
         public PersonBadgeData(Person__c person) {
             badges = new List<Badge>();
             securityMeasures = new List<SecurityMeasure>();
@@ -151,7 +153,22 @@ public with sharing class NKS_PersonBadgesController {
             fieldSet = Schema.SObjectType.Person__c.fields.getMap().keySet();
 
             if (null != person) {
+                loadCommonCodes();
                 setBadgeData();
+            }
+        }
+
+        private void loadCommonCodes() {
+            themeMap = new Map<String, Common_Code__c>();
+
+            for (Common_Code__c cc : [
+                SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
+                FROM Common_Code__c
+                WHERE CRM_Code_Set__c = 'Tema'
+            ]) {
+                if (cc.CRM_Code_Set__c == 'Tema') {
+                    themeMap.put(cc.CRM_Code__c, cc);
+                }
             }
         }
 
@@ -227,7 +244,7 @@ public with sharing class NKS_PersonBadgesController {
         private void setPowerOfAttorney() {
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
                 badges.add(new Badge('powerOfAttorney', 'Fullmakt', 'pointer', '', '', true));
-
+                Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
                     Integer i = 0;
                     for (
@@ -237,8 +254,37 @@ public with sharing class NKS_PersonBadgesController {
                         )
                     ) {
                         poa.id = '' + i;
+                        relatedPersonMap.put(poa.motpartsPersonident, null);
+                        if (poa.omraader != null && poa.omraader.size() > 0) {
+                            if (poa.omraader.size() == 1 && poa.omraader[0] == '*') {
+                                poa.omraader[0] = 'Gjelder alle ytelser';
+                            } else {
+                                for (Integer x = 0; x < poa.omraader.size(); x++) {
+                                    if (themeMap.containsKey(poa.omraader[x])) {
+                                        poa.omraader[x] = themeMap.get(poa.omraader[x]).Name;
+                                    }
+                                }
+                            }
+                        }
+
                         powerOfAttorneys.add(poa);
                         i++;
+                    }
+
+                    for (Person__c p : [
+                        SELECT Id, Name, CRM_Account__c, CRM_Account__r.Name
+                        FROM Person__c
+                        WHERE Name IN :relatedPersonMap.keySet()
+                    ]) {
+                        relatedPersonMap.put(p.Name, p);
+                    }
+
+                    for (PowerOfAttorney poa : powerOfAttorneys) {
+                        if (null != relatedPersonMap.get(poa.motpartsPersonident)) {
+                            poa.motpartsNavn = relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__c == null
+                                ? null
+                                : relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__r.Name;
+                        }
                     }
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av fullmakts detaljer');
@@ -372,6 +418,8 @@ public with sharing class NKS_PersonBadgesController {
         }
         @AuraEnabled
         public String motpartsPersonident;
+        @AuraEnabled
+        public String motpartsNavn;
         @AuraEnabled
         public List<String> omraader;
         @AuraEnabled
