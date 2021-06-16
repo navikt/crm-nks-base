@@ -27,6 +27,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     @api themeGroup;
     @api theme;
     @api subTheme;
+    alwaysShow = false;
     @track result;
     isSearching;
     errorMessage;
@@ -34,6 +35,17 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     runningUserUnitNumber;
     runningUserIdent;
     delegateToSelf = false;
+
+    set disableConditionalRendering(value) {
+        if (value && (value === true || value.toLowerCase() === 'true')) {
+            this.alwaysShow = true;
+        }
+    }
+
+    @api
+    get disableConditionalRendering() {
+        return this.alwaysShow;
+    }
 
     @api
     get selectedUnitName() {
@@ -66,6 +78,10 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         return this.isSearching || this.delegateToSelf === true;
     }
 
+    get canSearch() {
+        return this.showContent && null != this.theme && null != this.taskType && this.delegateToSelf === false;
+    }
+
     @wire(MessageContext)
     messageContext;
 
@@ -95,7 +111,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     }
 
     get showContent() {
-        return null != this.personId && null != this.theme && null != this.taskType;
+        return null != this.personId && ((null != this.theme && null != this.taskType) || this.alwaysShow === true);
     }
 
     //Lightning message service subscribe
@@ -121,9 +137,12 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
         switch (fieldName) {
             case 'themeGroupCode':
                 this.themeGroup = value;
+                this.theme = null;
+                this.subTheme = null;
                 break;
             case 'themeCode':
                 this.theme = value;
+                this.subTheme = null;
                 break;
             case 'subThemeCode':
                 this.subTheme = value;
@@ -133,8 +152,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
                 break;
         }
 
-        let showContent = this.showContent;
-        if (true == showContent) {
+        if (this.canSearch) {
             this.findAllocation();
         }
     }
