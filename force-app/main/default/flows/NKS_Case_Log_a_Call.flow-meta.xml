@@ -98,6 +98,22 @@
         </outputParameters>
     </actionCalls>
     <assignments>
+        <name>Assign_Account_to_Case</name>
+        <label>Assign Account to Case</label>
+        <locationX>1241</locationX>
+        <locationY>846</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_0.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Account_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Task_Defaults</name>
         <label>Assign Task Defaults</label>
         <locationX>116</locationX>
@@ -138,7 +154,7 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>985</locationX>
+        <locationX>986</locationX>
         <locationY>1964</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
@@ -434,10 +450,10 @@
     <decisions>
         <name>Changed_Account</name>
         <label>Changed Account</label>
-        <locationX>1250</locationX>
-        <locationY>989</locationY>
+        <locationX>1235</locationX>
+        <locationY>990</locationY>
         <defaultConnector>
-            <targetReference>Get_Account_0</targetReference>
+            <targetReference>Assign_Account_to_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -446,6 +462,9 @@
             <conditions>
                 <leftValueReference>Get_Case.AccountId</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Case_0.AccountId</elementReference>
+                </rightValue>
             </conditions>
             <connector>
                 <targetReference>Post_to_Henvendelse</targetReference>
@@ -753,8 +772,8 @@
         <description>Queries the account</description>
         <name>Get_Account_0</name>
         <label>Get Account</label>
-        <locationX>1262</locationX>
-        <locationY>837</locationY>
+        <locationX>1362</locationX>
+        <locationY>846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access_0</targetReference>
@@ -904,8 +923,8 @@
     <recordLookups>
         <name>Get_Person_Access_0</name>
         <label>Get Person Access</label>
-        <locationX>1475</locationX>
-        <locationY>837</locationY>
+        <locationX>1476</locationX>
+        <locationY>846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access_0</targetReference>
