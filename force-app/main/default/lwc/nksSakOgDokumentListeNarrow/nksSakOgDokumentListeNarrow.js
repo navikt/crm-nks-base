@@ -51,6 +51,13 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     isLoaded = false;
     personId;
 
+    showAsList = false;
+
+    handleShowAsList() {
+        this.showAsList = !this.showAsList;
+        this.filterJournalposts();
+    }
+
     set brukerId(value) {
         this.queryVariables.brukerId.id = value;
         this.callGetJournalPosts(false);
@@ -112,6 +119,10 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     set toDate(value) {
         this.queryVariables.tilDato = value;
         this.callGetJournalPosts(false);
+    }
+
+    get journalpostList() {
+        filteredJournalPosts.forEach;
     }
 
     connectedCallback() {
@@ -335,6 +346,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         }
 
         let caseMap = new Map();
+        let journalpostOrderedList = [];
         this.journalposts
             .filter(
                 (journalpost) =>
@@ -343,25 +355,48 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                     this._selectedJornalpostTypes.includes(journalpost.journalposttype)
             )
             .forEach((journalpost) => {
-                let key = journalpost.sak.sakstype === 'FAGSAK' ? journalpost.sak.fagsakId : journalpost.sak.tema;
-                let caseType = this.saksTypeFormatted(journalpost.sak);
-                let caseStatus = this.caseStatusArray.find((element) => element.caseId === key);
-                let title =
-                    this.themeArr.find((theme) => theme.value === journalpost.sak.tema).label +
-                    ': ' +
-                    caseType +
-                    (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '') +
-                    (caseStatus && caseStatus.isOpen ? ' (' + caseStatus.status + ')' : '');
-
-                if (caseMap.has(key)) {
-                    caseMap.get(key).journalpostList.push(journalpost);
+                if (this.showAsList === true) {
+                    journalpostOrderedList.push(journalpost);
                 } else {
-                    caseMap.set(key, { caseId: key, caseTitle: title, journalpostList: [journalpost] });
+                    this.addJournalpostToMap(caseMap, journalpost);
                 }
+                // let key = journalpost.sak.sakstype === 'FAGSAK' ? journalpost.sak.fagsakId : journalpost.sak.tema;
+                // let caseType = this.saksTypeFormatted(journalpost.sak);
+                // let caseStatus = this.caseStatusArray.find((element) => element.caseId === key);
+                // let title =
+                //     this.themeArr.find((theme) => theme.value === journalpost.sak.tema).label +
+                //     ': ' +
+                //     caseType +
+                //     (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '') +
+                //     (caseStatus && caseStatus.isOpen ? ' (' + caseStatus.status + ')' : '');
+
+                // if (caseMap.has(key)) {
+                //     caseMap.get(key).journalpostList.push(journalpost);
+                // } else {
+                //     caseMap.set(key, { caseId: key, caseTitle: title, journalpostList: [journalpost] });
+                // }
             });
 
-        this.filteredJournalPosts = Array.from(caseMap.values());
-        this.activeSections = Array.from(caseMap.keys());
+        this.filteredJournalPosts = this.showAsList ? journalpostOrderedList : Array.from(caseMap.values());
+        this.activeSections = this.showAsList ? null : Array.from(caseMap.keys());
+    }
+
+    addJournalpostToMap(caseMap, journalpost) {
+        let key = journalpost.sak.sakstype === 'FAGSAK' ? journalpost.sak.fagsakId : journalpost.sak.tema;
+        let caseType = this.saksTypeFormatted(journalpost.sak);
+        let caseStatus = this.caseStatusArray.find((element) => element.caseId === key);
+        let title =
+            this.themeArr.find((theme) => theme.value === journalpost.sak.tema).label +
+            ': ' +
+            caseType +
+            (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '') +
+            (caseStatus && caseStatus.isOpen ? ' (' + caseStatus.status + ')' : '');
+
+        if (caseMap.has(key)) {
+            caseMap.get(key).journalpostList.push(journalpost);
+        } else {
+            caseMap.set(key, { caseId: key, caseTitle: title, journalpostList: [journalpost] });
+        }
     }
 
     themeCodeInThemeArr(themeCode) {

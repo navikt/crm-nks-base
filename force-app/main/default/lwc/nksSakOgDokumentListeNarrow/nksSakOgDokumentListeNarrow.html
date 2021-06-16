@@ -29,7 +29,7 @@
                                 >
                                 </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item class="slds-p-right_small">
+                            <lightning-layout-item class="slds-p-right_small" alignment-bump="right">
                                 <lightning-input
                                     type="checkbox"
                                     label="Notat"
@@ -39,6 +39,16 @@
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
                                 </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-button-icon-stateful
+                                    icon-name="utility:rows"
+                                    selected={showAsList}
+                                    onclick={handleShowAsList}
+                                    alternative-text="Vis som liste"
+                                    size="small"
+                                    variant="border-filled"
+                                ></lightning-button-icon-stateful>
                             </lightning-layout-item>
                         </lightning-layout>
                     </lightning-layout-item>
@@ -131,7 +141,26 @@
 
                             <!-- ACCORDION OF CASES AND JOURNALPOSTS -->
                             <template if:false={isEmptyResult}>
-                                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                                <ul if:true={showAsList} class="slds-has-dividers_bottom-space">
+                                    <template iterator:it={filteredJournalPosts}>
+                                        <li if:false={it.last} class="slds-item" key={it.value.journalpostId}>
+                                            <c-nks-saf-journalpost journalpost={it.value}></c-nks-saf-journalpost>
+                                        </li>
+                                        <li
+                                            if:true={it.last}
+                                            key={it.value.journalpostId}
+                                            class="slds-var-p-around_x-small"
+                                        >
+                                            <c-nks-saf-journalpost journalpost={it.value}></c-nks-saf-journalpost>
+                                        </li>
+                                    </template>
+                                </ul>
+
+                                <lightning-accordion
+                                    if:false={showAsList}
+                                    allow-multiple-sections-open
+                                    active-section-name={activeSections}
+                                >
                                     <template for:each={filteredJournalPosts} for:item="casex">
                                         <lightning-accordion-section
                                             key={casex.caseId}
