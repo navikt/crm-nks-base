@@ -13,10 +13,16 @@ public with sharing class nksUtilityBackgroundController {
                     ]
                     ?.LiveChatButton
                     ?.MasterLabel.replace('_', ' ');
+            } else if (objectName == Schema.Case.getSObjectType()) {
+                Case c = [SELECT NKS_Puzzel_Queue_Name__c, Id, Origin FROM Case WHERE Id = :recordId LIMIT 1];
+                if (c.Origin == 'Phone') {
+                    tabname = c.NKS_Puzzel_Queue_Name__c;
+                }
             }
+            //if c.Origin = web / nav.no
             /*else if(objectName == Schema.Case.getSObjectType()) {
                 tabname = [SELECT Name, LiveChatButton.DeveloperName, CaseId FROM LiveChatTranscript WHERE CaseId =: recordId]?.LiveChatButton?.DeveloperName.replace('_',' ');
-                //TODO: Finn ut hva case tab name skal være 
+                //TODO: Finn ut hva case tab name skal være med en chat case
             }*/
             return tabname;
         } catch (Exception e) {
