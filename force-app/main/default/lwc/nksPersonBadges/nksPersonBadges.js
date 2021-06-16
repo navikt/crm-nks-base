@@ -201,7 +201,6 @@ export default class NksPersonBadges extends LightningElement {
     }
 
     addError(error) {
-        this.isLoaded = true;
         if (Array.isArray(error.body)) {
             this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
         } else if (error.body && typeof error.body.message === 'string') {
