@@ -13,7 +13,7 @@
                 </lightning-icon>
                 &nbsp;Følgende feil har oppstått ved henting av sikkerhetstiltak og etiketter:
                 <ul class="slds-list_dotted">
-                    <template iterator:error={errors}>
+                    <template iterator:error={errorMessages}>
                         <li key={error.value}>{error.value}</li>
                     </template>
                 </ul>
