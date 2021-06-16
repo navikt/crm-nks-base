@@ -149,6 +149,48 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Set_Due_Date</name>
+        <label>Set Due Date</label>
+        <locationX>535</locationX>
+        <locationY>1636</locationY>
+        <actionName>nksDueDateUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Delegate_NAV_Task</targetReference>
+        </connector>
+        <inputParameters>
+            <name>taskList</name>
+            <value>
+                <elementReference>NAV_Task</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Set_Due_Date_0</name>
+        <label>Set Due Date</label>
+        <locationX>1666</locationX>
+        <locationY>966</locationY>
+        <actionName>nksDueDateUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Placeholder_Task</targetReference>
+        </connector>
+        <inputParameters>
+            <name>taskList</name>
+            <value>
+                <elementReference>NAV_Task</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <description>Passes the reference sObject to the logger utility to be stored in app logs.</description>
         <name>Store_Application_Log</name>
         <label>Store Application Log</label>
@@ -472,13 +514,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Task_due_date</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>NAV_Task.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -563,7 +598,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Delegate_NAV_Task</targetReference>
+            <targetReference>Set_Due_Date</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -576,13 +611,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Chat_Transcript.AccountId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Task_due_date</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -663,7 +691,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Placeholder_Task</targetReference>
+            <targetReference>Set_Due_Date_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2078,33 +2106,6 @@ TODAY())</expression>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Task_due_date</name>
-            <dataType>Date</dataType>
-            <defaultValue>
-                <elementReference>Default_Due_Date</elementReference>
-            </defaultValue>
-            <fieldText>Frist:</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>createtasktoggle.togglechecked</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Security_Incident</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Task_Description</name>
             <fieldText>Oppgave til NAV-enhet:</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -2240,7 +2241,7 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
