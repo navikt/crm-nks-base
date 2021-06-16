@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Screen to manually trigger topic assignment deletion</description>
+    <interviewLabel>ScreenDeleteTopicAssignments {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>ScreenDeleteTopicAssignments</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>DeleteTopicAssignmentsScreen</name>
+        <label>DeleteTopicAssignmentsScreen</label>
+        <locationX>168</locationX>
+        <locationY>206</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Delete_TopicAssignments</targetReference>
+        </connector>
+        <fields>
+            <name>Info</name>
+            <fieldText>&lt;p&gt;Klikker du neste vil du slette alle TopicAssignments til alle gamle versjoner av knowledge artikler. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>41</locationX>
+        <locationY>68</locationY>
+        <connector>
+            <targetReference>DeleteTopicAssignmentsScreen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Delete_TopicAssignments</name>
+        <label>Delete TopicAssignments</label>
+        <locationX>302</locationX>
+        <locationY>206</locationY>
+        <flowName>Remove_Old_TopicAssignment</flowName>
+    </subflows>
+</Flow>

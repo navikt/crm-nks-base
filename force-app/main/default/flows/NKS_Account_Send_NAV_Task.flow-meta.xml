@@ -409,6 +409,12 @@ TODAY())</expression>
                     <elementReference>Get_Account.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>disableConditionalRendering</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
