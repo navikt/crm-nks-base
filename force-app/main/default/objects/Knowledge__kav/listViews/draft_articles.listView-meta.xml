@@ -2,7 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>draft_articles</fullName>
     <columns>TITLE</columns>
-    <columns>ABSTRACT</columns>
+    <columns>NKS_Summary__c</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
