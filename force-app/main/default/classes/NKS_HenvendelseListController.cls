@@ -1,41 +1,51 @@
 public with sharing class NKS_HenvendelseListController {
     @AuraEnabled(cacheable=true)
     public static List<MessageThread> getPersonHenvendelser(String personIdent) {
-        try {
-            NKS_HenvendelseService service = new NKS_HenvendelseService();
+        NKS_HenvendelseService service = new NKS_HenvendelseService();
 
-            List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE
-            };
+        List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE
+        };
 
-            HttpResponse resp = service.getPersonHenvendelser(
-                personIdent,
-                types,
-                NKS_HenvendelseService.HENVENDELSE_STATUSES.values()
+        HttpResponse resp = service.getPersonHenvendelser(
+            personIdent,
+            types,
+            NKS_HenvendelseService.HENVENDELSE_STATUSES.values()
+        );
+
+        Integer statusCode = resp.getStatusCode();
+        if (statusCode == 200 || statusCode == 201) {
+            NKS_HenvendelseList henvList = (NKS_HenvendelseList) JSON.deserialize(
+                resp.getBody(),
+                NKS_HenvendelseList.class
             );
 
-            Integer statusCode = resp.getStatusCode();
-            if (statusCode == 200 || statusCode == 201) {
-                NKS_HenvendelseList henvList = (NKS_HenvendelseList) JSON.deserialize(
-                    resp.getBody(),
-                    NKS_HenvendelseList.class
-                );
+            return buildMessageThreads(henvList.henvendelser);
+        } else {
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
 
-                return buildMessageThreads(henvList.henvendelser);
+            if (statusCode == 401) {
+                throw new AuraHandledException('Feil med tilganger mot baksystem');
+            } else if (statusCode == 500) {
+                throw new AuraHandledException(
+                    'Feil ved henting av meldinger (' +
+                    'Status: ' +
+                    resp.getStatus() +
+                    ' Melding: ' +
+                    resp.getBody() +
+                    ')'
+                );
             } else {
-                LoggerUtility logger = new LoggerUtility('Henvendelse');
-                logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
-                //logger.publish();
+                throw new AuraHandledException('Feil ved henting av meldinger \n ' + 'Status: ' + resp.getStatus());
             }
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     private static List<MessageThread> buildMessageThreads(List<NKS_Henvendelse> henvList) {
