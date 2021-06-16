@@ -87,6 +87,7 @@ export default class NksPersonBadges extends LightningElement {
     wiredRecordInfo({ error, data }) {
         if (data) {
             if (this.isLoaded) {
+                this.errorMessages = [];
                 refreshApex(this.wiredBadge).then(() => {
                     this.setWiredBadge();
                 });
