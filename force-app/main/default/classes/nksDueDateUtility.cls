@@ -47,7 +47,7 @@ public with sharing class nksDueDateUtility {
                 Date monday = startDate.toStartOfWeek();
                 Integer dayNo = monday.daysBetween(startDate);
 
-                if (dayNo == 6 || dayNo == 7 || holidayDateList.contains(startDate)) {
+                if (dayNo == 5 || dayNo == 6 || holidayDateList.contains(startDate)) {
                     startdate = startDate.addDays(1);
                 } else {
                     valid = true;
