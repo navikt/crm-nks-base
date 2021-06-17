@@ -69,7 +69,7 @@ public without sharing class NKS_DataSynchController {
                 for (Database.Error error : upsRes.getErrors()) {
                     errorMessage = error.getMessage();
                 }
-                logger.error(
+                logger.warning(
                     'One or more conversation notes failed to synch for account with ID: ' +
                     convList[0].CRM_Account__c +
                     '\n' +
