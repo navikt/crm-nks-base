@@ -72,7 +72,11 @@ export default class NksDataSyncher extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
-                this.personId = this.resolve(relationshipField, record);
+                let resolvedPersonId = this.resolve(relationshipField, record);
+                //Only update the wired attribute if it is indeed changed
+                if (this.personId !== resolvedPersonId) {
+                    this.personId = resolvedPersonId;
+                }
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
