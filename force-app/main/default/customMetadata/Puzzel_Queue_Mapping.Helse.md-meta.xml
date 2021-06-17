@@ -8,10 +8,10 @@
     </values>
     <values>
         <field>Puzzel_Queue_Name__c</field>
-        <value xsi:type="xsd:string">HLSE</value>
+        <value xsi:type="xsd:string">Helse</value>
     </values>
     <values>
         <field>Theme_Group_Code__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HELSE</value>
     </values>
 </CustomMetadata>

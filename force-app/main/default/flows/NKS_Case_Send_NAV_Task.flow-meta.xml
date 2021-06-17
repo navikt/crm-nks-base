@@ -438,7 +438,7 @@ TODAY())</expression>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>176</locationX>
-        <locationY>408</locationY>
+        <locationY>409</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -498,16 +498,6 @@ TODAY())</expression>
             </defaultValue>
             <fieldText>Prioritet</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Task_Due_Date</name>
-            <dataType>Date</dataType>
-            <defaultValue>
-                <elementReference>Default_Due_Date</elementReference>
-            </defaultValue>
-            <fieldText>Frist:</fieldText>
-            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
