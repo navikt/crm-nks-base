@@ -10,7 +10,6 @@ public without sharing class NKS_KrrInformationController {
             );
             if (!personer.isEmpty()) {
                 Id personId = [SELECT Id FROM Person__c WHERE Name = :personIdent]?.Id;
-                System.debug('PERSON ID: ' + personId);
                 personToUpdate = new Person__c(
                     Id = personId,
                     INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
