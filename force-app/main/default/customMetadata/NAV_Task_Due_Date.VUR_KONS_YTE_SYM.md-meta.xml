@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>VUR_KONS_YTE_SYM</label>
+    <protected>false</protected>
+    <values>
+        <field>nksBusiness_Days__c</field>
+        <value xsi:type="xsd:int">0</value>
+    </values>
+    <values>
+        <field>nksTask_Type__c</field>
+        <value xsi:type="xsd:string">VUR_KONS_YTE</value>
+    </values>
+    <values>
+        <field>nksTheme_Code__c</field>
+        <value xsi:type="xsd:string">SYM</value>
+    </values>
+</CustomMetadata>
