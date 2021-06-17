@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_AAregisterURL__c</fullName>
     <externalId>false</externalId>
-    <formula
-    >HYPERLINK(&quot;https://modapp.adeo.no/aareg-web/?1&amp;rolle=arbeidstaker&amp;ident=+&quot;&amp;Name&amp;&quot;#!arbeidsforhold&quot; , &quot;AA-register&quot;, &quot;_self&quot;)</formula>
+    <formula>HYPERLINK(&quot;https://modapp.adeo.no/aareg-web/?rolle=arbeidstaker&amp;ident=&quot;&amp;Name , &quot;AA-register&quot;, &quot;_self&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>AA-register</label>
     <required>false</required>
