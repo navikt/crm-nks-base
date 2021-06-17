@@ -42,7 +42,7 @@ export default class nksQuickText extends LightningElement {
     get conversationNote() {
         let plainText = this.conversationNoteRich ? this.conversationNoteRich : '';
         plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
-        plainText = plainText.replace(/<[^\s>]+>/g, ''); //Remove remaining html tags
+        plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
         plainText = plainText.replace(/&nbsp;/g, ' '); //Removes &nbsp; from the html that can arise from copy-paste
         return plainText;
     }
