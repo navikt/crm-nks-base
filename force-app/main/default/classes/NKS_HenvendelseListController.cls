@@ -50,10 +50,12 @@ public with sharing class NKS_HenvendelseListController {
             }
         }
 
-        return threadMap.values();
+        List<MessageThread> threadList = threadMap.values();
+        threadList.sort();
+        return threadList;
     }
 
-    public class MessageThread {
+    public class MessageThread implements Comparable {
         @AuraEnabled
         public String threadId;
         @AuraEnabled
@@ -89,12 +91,13 @@ public with sharing class NKS_HenvendelseListController {
         private void sortMessageList() {
             if (messageList.size() > 0) {
                 messageList.sort();
-                setFirstMessage(messageList[0]);
-                setLastMessage(messageList[messageList.size() - 1]);
+
+                setNewestMessage(messageList[0]);
+                setOldestMessage(messageList[messageList.size() - 1]);
             }
         }
 
-        private void setLastMessage(Message msg) {
+        private void setNewestMessage(Message msg) {
             lastMessageTime = msg.opprettetDato;
             lastMessageTitle = msg.tittel;
             lastMessageSummary = msg.fritekst;
@@ -102,9 +105,31 @@ public with sharing class NKS_HenvendelseListController {
             isPartiallyAnswered = msg.erDelsvar;
         }
 
-        private void setFirstMessage(Message msg) {
+        private void setOldestMessage(Message msg) {
             isIncorrectlySent = msg.erMeldingFeilsendt;
             firstMessageTime = msg.opprettetDato;
+        }
+
+        public Integer compareTo(Object compareTo) {
+            // Cast argument to OpportunityWrapper
+            MessageThread compareToThread = (MessageThread) compareTo;
+
+            // The return value of 0 indicates that both elements are equal.
+            Integer returnValue = 0;
+            if (lastMessageTime < compareToThread.lastMessageTime) {
+                // Set return value to a positive value.
+                returnValue = 1;
+            } else if (lastMessageTime > compareToThread.lastMessageTime) {
+                // Set return value to a negative value.
+                returnValue = -1;
+            } else if ((lastMessageTime == null) && (compareToThread.lastMessageTime != null)) {
+                // nulls-first implementation
+                returnValue = -1;
+            } else if ((lastMessageTime != null) && (compareToThread.lastMessageTime == null)) {
+                // nulls-first implementation
+                returnValue = 1;
+            }
+            return returnValue;
         }
     }
 
