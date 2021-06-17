@@ -18,7 +18,7 @@ export default class NksKrrInformation extends LightningElement {
 
     handleDataLoaded(event) {
         let personIdent = event.detail.Name.value;
-        if (this.updated === false) {
+        if (this.updated === false && personIdent && personIdent != '') {
             this.initiateKrrUpdate(personIdent);
         }
     }
@@ -30,7 +30,6 @@ export default class NksKrrInformation extends LightningElement {
             .then((result) => {
                 //Successful update
                 this.refreshRecord();
-                this.updated = true; //Preventing loop when child fires another event after refresh
             })
             .catch((error) => {
                 //Update failed
@@ -38,6 +37,7 @@ export default class NksKrrInformation extends LightningElement {
             })
             .finally(() => {
                 this.isLoading = false;
+                this.updated = true; //Preventing loop when child fires another event after refresh
             });
     }
 

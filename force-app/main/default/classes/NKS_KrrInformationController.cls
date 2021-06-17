@@ -8,7 +8,7 @@ public without sharing class NKS_KrrInformationController {
             List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
                 new List<String>{ personIdent }
             );
-            if (!personer.isEmpty()) {
+            if (personer != null && !personer.isEmpty()) {
                 Id personId = [SELECT Id FROM Person__c WHERE Name = :personIdent]?.Id;
                 personToUpdate = new Person__c(
                     Id = personId,
