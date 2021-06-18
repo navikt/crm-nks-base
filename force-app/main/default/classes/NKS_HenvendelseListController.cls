@@ -12,8 +12,7 @@ public with sharing class NKS_HenvendelseListController {
             NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE,
             NKS_HenvendelseService.HENVENDELSE_TYPES.INFOMELDING_MODIA_UTGAAENDE,
             NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
-            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
-            NKS_HenvendelseService.HENVENDELSE_TYPES.SAMTALEREFERAT_OPPMOTE
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE
         };
 
         HttpResponse resp = service.getPersonHenvendelser(
