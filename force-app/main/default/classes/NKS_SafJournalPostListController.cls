@@ -47,7 +47,8 @@ public with sharing class NKS_SafJournalPostListController {
             .addArgument('$journalstatuser', '[Journalstatus] ')
             .addArgument('$fraDato', 'Date ')
             .addArgument('$tilDato', 'Date ')
-            .addArgument('$foerste', 'Int!');
+            .addArgument('$foerste', 'Int!')
+            .addArgument('$etter', 'String');
 
         GraphQLNode dokumentoversiktBruker = qlFactory.addNode('dokumentoversiktBruker')
             .addArgument('brukerId', '$brukerId ')
@@ -55,7 +56,9 @@ public with sharing class NKS_SafJournalPostListController {
             .addArgument('journalstatuser', '$journalstatuser ')
             .addArgument('fraDato', '$fraDato ')
             .addArgument('tilDato', '$tilDato ')
-            .addArgument('foerste', '$foerste ');
+            .addArgument('foerste', '$foerste ')
+            .addArgument('etter', '$etter ');
+        dokumentoversiktBruker.addNode('sideInfo').addFields(new List<String>{ 'sluttpeker', 'finnesNesteSide' });
 
         GraphQLNode journalposter = dokumentoversiktBruker.addNode('journalposter');
         journalposter.addFields(
