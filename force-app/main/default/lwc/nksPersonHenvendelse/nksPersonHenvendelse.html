@@ -23,6 +23,11 @@
                         class="nav-badge-error slds-float_right"
                     ></lightning-badge>
                     <lightning-badge
+                        if:true={thread.isUnanswered}
+                        label="Ubesvart"
+                        class="nav-badge-info slds-float_right"
+                    ></lightning-badge>
+                    <lightning-badge
                         if:true={thread.isPartiallyAnswered}
                         label="Delvis besvart"
                         class="nav-badge-info slds-float_right"
@@ -56,6 +61,14 @@
         </lightning-layout-item>
         <lightning-layout-item size="12" if:true={showMessageList}>
             <ol aria-label="Dialog">
+                <li if:true={thread.isClosedWithoutAnswer} class="slds-p-vertical_small">
+                    <lightning-badge label={thread.closedWithoutAnswerText} class="nav-badge-info"></lightning-badge>
+                </li>
+
+                <li if:true={thread.isIncorrectlySent} class="slds-p-vertical_small">
+                    <lightning-badge label={thread.incorrectlySentText} class="nav-badge-info"></lightning-badge>
+                </li>
+
                 <template iterator:it={thread.messageList}>
                     <li key={it.value.behandlingsId} class="slds-p-vertical_small">
                         <c-nks-person-henvendelse-message message={it.value}></c-nks-person-henvendelse-message>
