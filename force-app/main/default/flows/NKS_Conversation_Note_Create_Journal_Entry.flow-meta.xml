@@ -183,6 +183,7 @@
         <locationY>1022</locationY>
         <inputReference>Get_Conversation_Note</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
