@@ -28,12 +28,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Conversation_Note__c.NKS_Date_Time_Registered__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Conversation_Note__c.NKS_Is_Read__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Journal_Status_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Conversation_Note__c.NKS_Journal_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

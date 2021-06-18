@@ -2,6 +2,7 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Conversation_Note_Compact</fullName>
     <fields>Name</fields>
+    <fields>NKS_Created_By__c</fields>
     <fields>NKS_Theme__c</fields>
     <fields>NKS_Journal_Status_Formula__c</fields>
     <fields>NKS_Is_Read__c</fields>
