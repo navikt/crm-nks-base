@@ -178,7 +178,7 @@
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
         <locationX>985</locationX>
-        <locationY>2260</locationY>
+        <locationY>2259</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -229,10 +229,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Date_Time_Registered__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
         <connector>

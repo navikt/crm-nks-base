@@ -3,8 +3,10 @@
     <fullName>NKS_Timeline_Name__c</fullName>
     <description>Friendly name displayed in timeline component for the conversation notes.</description>
     <externalId>false</externalId>
-    <formula>IF(NOT(ISBLANK(NKS_Theme__c)), NKS_Theme_Group__r.Name + &apos;, &apos; + NKS_Theme__r.Name,
+    <formula>IF(ISBLANK(NKS_Theme_Group__c), &apos;Øvrige&apos;,
+IF(NOT(ISBLANK(NKS_Theme__c)), NKS_Theme_Group__r.Name + &apos;, &apos; + NKS_Theme__r.Name,
 NKS_Theme_Group__r.Name
+			)
 			)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Timeline Name</label>
