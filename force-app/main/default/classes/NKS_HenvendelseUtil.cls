@@ -158,6 +158,10 @@ public with sharing class NKS_HenvendelseUtil {
         }
     }
 
+    public static String getDateString(Datetime dt) {
+        return null == dt ? '' : dt.format('dd.MM.yyyy');
+    }
+
     private static Boolean hasEnum(List<NKS_HenvendelseService.HENVENDELSE_TYPES> toCompareTo, String henvendelseType) {
         return hasEnum(toCompareTo, getHenvendelseEnumFromString(henvendelseType));
     }
