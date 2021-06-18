@@ -28,6 +28,7 @@ public with sharing class nksDueDateUtility {
                 ];
             } catch (QueryException e) {
                 LoggerUtility logger = new LoggerUtility('Oppgave');
+                logger.warning('Error retrieving duedate rule themecode = '+ theme + 'TaskType = ' + taskType , null);
                 logger.exception(e);
                 logger.publish();
             }
