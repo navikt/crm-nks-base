@@ -1564,7 +1564,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Forklaring i punkter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Lenke til aktuell side på nav.no&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- &lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
