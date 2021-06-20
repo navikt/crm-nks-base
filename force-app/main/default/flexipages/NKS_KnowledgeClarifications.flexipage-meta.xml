@@ -60,7 +60,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+                <componentName>forceKnowledge:articleVersionHistory</componentName>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -80,23 +80,6 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>numberOfTopicsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>searchHint</name>
-                    <value>Skriv inn et emne navn og trykk Enter...</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Emner</value>
-                </componentInstanceProperties>
-                <componentName>forceChatter:topicsOnRecordWrapper</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -132,7 +115,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Faglige avklaringer</masterLabel>
+    <masterLabel>Knowledge: Faglige avklaringer</masterLabel>
     <parentFlexiPage>sfa__KnowledgeArticleVersion_rec_L</parentFlexiPage>
     <sobjectType>Knowledge__kav</sobjectType>
     <template>
