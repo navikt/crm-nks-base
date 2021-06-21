@@ -175,10 +175,6 @@
                     <fieldText>Prioritet:</fieldText>
                     <name>Task_Priority</name>
                 </fields>
-                <fields>
-                    <fieldText>Frist:</fieldText>
-                    <name>Task_due_date</name>
-                </fields>
                 <name>Input_Screen</name>
             </screens>
             <screens>
