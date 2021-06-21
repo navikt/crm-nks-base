@@ -17,7 +17,7 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.Close_Case</value>
+                            <value>Case.Close_Case_and_Tab</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>

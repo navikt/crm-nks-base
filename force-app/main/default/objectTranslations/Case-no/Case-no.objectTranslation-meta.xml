@@ -4,9 +4,7 @@
         <layout>Case Feed Layout</layout>
         <layoutType>CaseInteraction</layoutType>
         <sections>
-            <label>
-                <!-- Fields -->
-            </label>
+            <label><!-- Fields --></label>
             <section>Fields</section>
         </sections>
     </layouts>
@@ -19,9 +17,11 @@
         <name>Close_Case</name>
     </quickActions>
     <quickActions>
-        <label>
-            <!-- Opprett NAV-oppgave -->
-        </label>
+        <label>Lukk henvendelse</label>
+        <name>Close_Case_and_Tab</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Opprett NAV-oppgave --></label>
         <name>NKS_Case_Create_NAV_Task</name>
     </quickActions>
     <quickActions>
@@ -29,15 +29,11 @@
         <name>NKS_Change_Account</name>
     </quickActions>
     <quickActions>
-        <label>
-            <!-- NewChildCase -->
-        </label>
+        <label><!-- NewChildCase --></label>
         <name>NewChildCase</name>
     </quickActions>
     <quickActions>
-        <label>
-            <!-- SendEmail -->
-        </label>
+        <label><!-- SendEmail --></label>
         <name>SendEmail</name>
     </quickActions>
     <quickActions>
@@ -48,19 +44,17 @@
         <label>Under arbeid</label>
         <name>Set_to_in_progress</name>
     </quickActions>
+    <quickActions>
+        <label><!-- Update Case --></label>
+        <name>UpdateFeedback</name>
+    </quickActions>
     <recordTypes>
-        <description>
-            <!-- Used for internal cases for feedback on knowledge articles -->
-        </description>
-        <label>
-            <!-- Feedback -->
-        </label>
+        <description><!-- Used for internal cases for feedback on knowledge articles --></description>
+        <label><!-- Feedback --></label>
         <name>Feedback</name>
     </recordTypes>
     <recordTypes>
-        <label>
-            <!-- Phone Case -->
-        </label>
+        <label><!-- Phone Case --></label>
         <name>NKS_Phone_Case</name>
     </recordTypes>
 </CustomObjectTranslation>
