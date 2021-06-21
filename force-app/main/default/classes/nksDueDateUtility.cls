@@ -34,27 +34,36 @@ public with sharing class nksDueDateUtility {
             }
 
             Date today = Date.today();
-            Date startDate;
+            Integer numberofBusinessdays;
             if (duedateRecord != null) {
-                startDate = today.addDays(Integer.valueOf(duedateRecord.nksBusiness_Days__c));
+                numberofBusinessdays = Integer.valueOf(duedateRecord.nksBusiness_Days__c);
             } else {
-                startDate = today.addDays(2); // If no valid configuration default to 2 days
+                numberofBusinessdays = 2;// If no valid configuration default to 2 days
             }
 
             Boolean valid = false;
-
-            while (valid == false) {
-                Date monday = startDate.toStartOfWeek();
-                Integer dayNo = monday.daysBetween(startDate);
-
-                if (dayNo == 5 || dayNo == 6 || holidayDateList.contains(startDate)) {
-                    startdate = startDate.addDays(1);
-                } else {
-                    valid = true;
-                    break;
-                }
+            Integer businessdaysbetween = 0;
+            Date newDueDate = today;
+            while (valid == false){
+             DateTime dt = (DateTime) newDueDate;
+             String day = dt.format('EEE');
+             
+             if (day == 'Sat' || day == 'Sun' || holidayDateList.contains(newDueDate)) {
+                 newDueDate = newDueDate.addDays(1);
+             }
+             else{
+              
+                 if(businessdaysbetween >= numberofBusinessdays){
+                     valid = true;
+                     System.debug(newDueDate);
+                     break;
+                     
+                 }
+                   businessdaysbetween++;
+                  newDueDate = newDueDate.addDays(1);
+             }
             }
-            return new List<Date>{ startDate };
+            return new List<Date>{ newDueDate };
         }
         return null;
     }
