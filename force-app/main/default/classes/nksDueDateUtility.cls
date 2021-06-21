@@ -46,7 +46,7 @@ public with sharing class nksDueDateUtility {
             Date newDueDate = today;
             while (valid == false){
              DateTime dt = (DateTime) newDueDate;
-             String day = dt.format('E');
+             String day = dt.format('EEE');
              
              if (day == 'Sat' || day == 'Sun' || holidayDateList.contains(newDueDate)) {
                  newDueDate = newDueDate.addDays(1);
