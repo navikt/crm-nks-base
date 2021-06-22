@@ -132,7 +132,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     // Handler for message received by component
     handleMessage(message) {
         let fieldName = message.name;
-        let value = message.value;
+        let value = message.value ? message.value : null;
 
         switch (fieldName) {
             case 'themeGroupCode':
