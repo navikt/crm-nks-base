@@ -12,8 +12,13 @@ export default class NksDataSyncher extends LightningElement {
     @api relationshipField;
     wireFields = [this.objectApiName + '.Id'];
     personId;
-    synchFinished = false;
     personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
+    initialized = false;
+
+    connectedCallback() {
+        //Initial synch performed in connected callback to prevent boxcaring due to many events triggered at the same time.
+        this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+    }
 
     @wire(getRecord, {
         recordId: '$recordId',
@@ -21,7 +26,8 @@ export default class NksDataSyncher extends LightningElement {
     })
     wiredRecordInfo({ error, data }) {
         if (data) {
-            if (this.relationshipField && this.objectApiName) {
+            //Not called in wire context before initial synch has been done through connectedCallback
+            if (this.initialized === true && this.relationshipField && this.objectApiName) {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
         }
@@ -37,7 +43,9 @@ export default class NksDataSyncher extends LightningElement {
             let personActorId = getFieldValue(data, PERSON_ACTORID_FIELD);
             let personAccountId = getFieldValue(data, PERSON_ACCOUNT_FIELD);
 
-            this.doSynch(personIdent, personActorId, personAccountId);
+            if (personIdent) {
+                this.doSynch(personIdent, personActorId, personAccountId);
+            }
         }
         if (error) {
             console.log(JSON.stringify(error, null, 2));
@@ -46,7 +54,7 @@ export default class NksDataSyncher extends LightningElement {
 
     async doSynch(personIdent, personActorId, personAccountId) {
         await this.conversationNoteSynch(personIdent, personAccountId);
-        this.synchFinished = true;
+        this.initialized = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
     }
 
