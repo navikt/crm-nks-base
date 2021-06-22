@@ -187,7 +187,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'securityMeasures',
                         person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak',
-                        'slds-theme_error pointer',
+                        'slds-theme_error slds-m-left_x-small slds-m-vertical_xx-small pointer',
                         '',
                         '',
                         true
@@ -217,7 +217,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'spokenLanguageIntepreter',
                         getFieldLabel('INT_SpokenLanguageIntepreter__c'),
-                        'slds-theme_warning pointer',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
                         '',
                         '',
                         true
@@ -242,7 +242,16 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setPowerOfAttorney() {
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-                badges.add(new Badge('powerOfAttorney', 'Fullmakt', 'slds-theme_warning pointer', '', '', true));
+                badges.add(
+                    new Badge(
+                        'powerOfAttorney',
+                        'Fullmakt',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        '',
+                        '',
+                        true
+                    )
+                );
                 Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
                     Integer i = 0;
@@ -299,7 +308,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'guardianshipOrFuturePowerOfAttorney',
                         'Vergemål',
-                        'slds-theme_warning pointer',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
                         '',
                         '',
                         true
@@ -371,7 +380,7 @@ public with sharing class NKS_PersonBadgesController {
                         new Badge(
                             'entitlements',
                             getFieldLabel('HOT_HasEntitlement__c'),
-                            'slds-theme_warning pointer',
+                            'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
                             '',
                             '',
                             true
@@ -417,7 +426,7 @@ public with sharing class NKS_PersonBadgesController {
          *
          */
         public Badge(String name, String label) {
-            this(name, label, 'slds-theme_warning', '', '', false);
+            this(name, label, 'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small', '', '', false);
         }
 
         /**
