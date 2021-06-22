@@ -29,6 +29,15 @@ public with sharing class NKS_NorgNavUnitService {
         Map<String, String> paramMap = new Map<String, String>();
         paramMap.put('geografiskOmraade', location);
 
+        if (String.isBlank(location) || location.length() < 4) {
+            resp.success = false;
+            resp.errorMessage = 'Kunne ikke hente enhet basert på geografisk lokasjon.';
+
+            logError('Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation from location ' + location);
+
+            return resp;
+        }
+
         Map<String, String> urlParamMap = new Map<String, String>();
         //Optional parameters
         if (String.isNotBlank(discretionCode)) {
@@ -126,15 +135,15 @@ public with sharing class NKS_NorgNavUnitService {
         } else {
             String errorRef = logError(
                 apiCtrl.getResponse(),
-                'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation for unit: ' +
+                'Error from NKS_NorgNavUnitService.getNavUnitContactInformation for unit: ' +
                 unitNumber +
                 '.'
             );
-            resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer fra NORG2. Referanse til feil: ' + errorRef;
+            resp.errorMessage = 'Kunne ikke hente enhetens kontaktdetaljer. Referanse til feil: ' + errorRef;
             resp.success = false;
 
             if (statusCode == 404) {
-                resp.errorMessage = 'Kunne ikke finne enhets insformasjon i NORG2. Referanse til feil: ' + errorRef;
+                resp.errorMessage = 'Kunne ikke finne enhets insformasjon. Referanse til feil: ' + errorRef;
             }
         }
 
@@ -192,9 +201,9 @@ public with sharing class NKS_NorgNavUnitService {
         } else {
             String errorRef = logError(
                 apiCtrl.getResponse(),
-                'Error from NKS_NorgNavUnitService.getNavUnitFromGeographicLocation.'
+                'Error from NKS_NorgNavUnitService.getNavUnitFilteredList. Params: ' + urlParamMap
             );
-            resp.errorMessage = 'Kunne ikke hente enhets informasjon fra NORG2. Referanse til feil: ' + errorRef;
+            resp.errorMessage = 'Kunne ikke hente enheten. Referanse til feil: ' + errorRef;
             resp.success = false;
         }
 
@@ -239,25 +248,29 @@ public with sharing class NKS_NorgNavUnitService {
                 apiCtrl.getResponse(),
                 'Error from NKS_NorgNavUnitService.getNavUnitWorkAllocation.'
             );
-            resp.errorMessage = 'Kunne ikke hente arbeidsfordeling fra NORG2. Referanse til feil: ' + errorRef;
+            resp.errorMessage = 'Kunne ikke hente arbeidsfordeling. Referanse til feil: ' + errorRef;
             resp.success = false;
         }
 
         return resp;
     }
 
-    /**
-     * @description Create a log entry for troubleshooting
-     * @author Tor Håkon Sigurdsen | 26-11-2020
-     * @param resp
-     * @param message [Message to add to the log]
-     * @return String [UUID of the log]
-     */
     private String logError(HttpResponse resp, String message) {
         String errorRef = '';
 
         LoggerUtility logger = new LoggerUtility();
-        logger.error(message + '\n ' + 'Status: ' + resp.getStatus() + '\n' + 'Body: ' + resp.getBody(), null);
+        logger.httpError(message, resp, null, CRM_ApplicationDomain.Domain.NKS);
+        errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
+        logger.publish();
+
+        return errorRef;
+    }
+
+    private String logError(String message) {
+        String errorRef = '';
+
+        LoggerUtility logger = new LoggerUtility();
+        logger.error(message, null, CRM_ApplicationDomain.Domain.NKS);
         errorRef = logger.peek().UUID__c; //Unique error reference for troubleshooting
         logger.publish();
 
