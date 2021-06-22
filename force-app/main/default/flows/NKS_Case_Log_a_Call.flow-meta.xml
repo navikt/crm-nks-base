@@ -235,6 +235,13 @@
                 <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Created_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Conversation_Note</targetReference>
         </connector>
