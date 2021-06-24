@@ -6,6 +6,7 @@ export default class NksCustomSvg extends LightningElement {
     @api src;
 
     get iconClasses() {
+        console.log(this.src);
         let styleClasses = 'slds-icon slds-icon-text-default';
         switch (this.size) {
             case 'xx-small':
