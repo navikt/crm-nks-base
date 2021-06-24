@@ -9,10 +9,6 @@
     <aura:attribute name="sObjectName" type="String" />
     <aura:attribute name="relationshipField" type="String" default="Id" />
 
-    <!-- <aura:attribute name="personId" type="String" />
-    <aura:attribute name="personRecord" type="Object" />
-    <aura:attribute name="personRecordLoadError" type="String" /> -->
-
     <aura:attribute name="accountId" type="String" />
     <aura:attribute name="accountRecord" type="Object" />
     <aura:attribute name="accountRecordLoadError" type="String" />
@@ -20,19 +16,13 @@
     <aura:attribute name="personAge" type="Integer" />
     <aura:attribute name="genderIcon" type="String" />
 
-    <aura:attribute name="quickActionsInput" type="List" default="['NKS_New_Case','NKS_Account_Create_NAV_Task']" />
-    <aura:attribute name="quickActions" type="List" />
+    <aura:attribute name="flowActionString" type="String" />
+    <aura:attribute name="flowActions" type="List" />
+
+    <aura:attribute name="isLoaded" type="boolean" default="false" />
+    <aura:attribute name="showPersonBadges" type="boolean" />
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-
-    <!-- <force:recordData
-        aura:id="personRecordLoader"
-        recordId="{!v.personId}"
-        fields="Name,INT_Sex__c,NKS_Full_Name__c,CRM_Account__c,INT_DateOfBirth__c, CRM_Account__r.Name"
-        targetFields="{!v.personRecord}"
-        targetError="{!v.personRecordLoadError}"
-        recordUpdated="{!c.onPersonRecordUpdated}"
-    /> -->
 
     <force:recordData
         aura:id="accountRecordLoader"
@@ -43,40 +33,20 @@
         recordUpdated="{!c.onAccountRecordUpdated}"
     />
 
+    <c:nksFlowModal aura:id="flowModal" recordId="{! v.recordId}"></c:nksFlowModal>
+
     <div class="slds-page-header slds-page-header_record-home">
         <div class="slds-page-header__row">
             <div class="slds-page-header__col-title">
                 <div class="slds-media">
                     <div class="slds-media__figure">
-                        <aura:if isTrue="{! !empty(v.accountRecord.CRM_Person__c) &amp;&amp; !empty(v.genderIcon)}">
-                            <!-- <lightning:icon
-                                title="{! v.accountRecord.CRM_Person__r.INT_Sex__c}"
-                                alternativeText="{! v.accountRecord.CRM_Person__r.INT_Sex__c}"
-                                src="{! $Resource.NKS_navIcons + '/' + v.genderIcon + '.svg#' + v.genderIcon}"
-                            /> -->
-                            <!-- {! $Resource.NKS_navIcons + '/' + v.genderIcon + '.svg#' + v.genderIcon} -->
-                            <!-- {! $Resource.NKS_navIcons+'/male.svg#' +v.genderIcon} -->
-                            <!-- <c:nksCustomSvg
-                                scr="/resource/1624461220000/NKS_navIcons/male#male"
+                        <aura:if isTrue="{! !empty(v.genderIcon)}">
+                            <c:nksCustomSvg
+                                src="{! $Resource.NKS_navIcons+'/'+ v.genderIcon +'.svg#'+ v.genderIcon}"
                                 altText="{! v.accountRecord.CRM_Person__r.INT_Sex__c}"
-                                size="small"
-                            ></c:nksCustomSvg> -->
-                            <!-- <lightning:icon src="{! $Resource.NKS_navIcons+'/male.svg#male'}" size="large" /> -->
-                            <!-- <c:nksNavLogoIcon size="large"></c:nksNavLogoIcon> -->
-                            <span class="slds-icon_container" title="{! v.accountRecord.CRM_Person__r.INT_Sex__c}">
-                                <!-- <svg class="" aria-hidden="true" viewBox="0 0 24 24">
-                                    <use xlink:href=""></use>
-                                </svg> -->
-                                <span class="slds-assistive-text">{! v.accountRecord.CRM_Person__r.INT_Sex__c}</span>
-                            </span>
-
-                            <aura:set attribute="else">
-                                <lightning:icon
-                                    iconName="standard:person_account"
-                                    alternativeText="Account"
-                                    title="Account"
-                                />
-                            </aura:set>
+                                classes="{! v.genderIcon + ' slds-p-around_xx-small'}"
+                                viewBox="0 0 24 24"
+                            ></c:nksCustomSvg>
                         </aura:if>
                     </div>
                     <div class="slds-media__body">
@@ -84,7 +54,6 @@
                             <div class="slds-page-header__name-title">
                                 <aura:if isTrue="{! !empty(v.accountRecord.CRM_Person__c)}">
                                     <h1>
-                                        <span>Person Account</span>
                                         <span
                                             class="slds-page-header__title slds-truncate"
                                             title="{! v.accountRecord.CRM_Person__r.NKS_Full_Name__c}"
@@ -92,20 +61,20 @@
                                             {! v.accountRecord.CRM_Person__r.NKS_Full_Name__c}
                                             <aura:if isTrue="{! !empty(v.personAge)}">&nbsp;({!v.personAge})</aura:if>
                                         </span>
+                                        <span
+                                            ><div title="{!v.accountRecord.CRM_Person__r.Name}">
+                                                {!v.accountRecord.CRM_Person__r.Name}&nbsp;
+                                                <lightning:buttonIcon
+                                                    iconName="utility:copy"
+                                                    variant="bare"
+                                                    onclick="{! c.handleCopyIdent }"
+                                                    alternativeText="kopier bruker ident"
+                                                    title="kopier bruker ident"
+                                                /></div
+                                        ></span>
                                     </h1>
-                                    <div title="{!v.accountRecord.CRM_Person__r.Name}">
-                                        {!v.accountRecord.CRM_Person__r.Name}
-                                        <lightning:buttonIcon
-                                            iconName="utility:copy"
-                                            variant="bare"
-                                            onclick="{! c.handleCopyIdent }"
-                                            alternativeText="kopier bruker ident"
-                                            title="kopier bruker ident"
-                                        />
-                                    </div>
                                     <aura:set attribute="else">
                                         <h1>
-                                            <span>Person Account</span>
                                             <span
                                                 class="slds-page-header__title slds-truncate"
                                                 title="{! v.accountRecord.Name }"
@@ -120,66 +89,32 @@
                     </div>
                 </div>
             </div>
-            <aura:if isTrue="{! !empty(v.quickActions) }">
+            <aura:if isTrue="{! !empty(v.flowActions) }">
                 <div class="slds-page-header__col-actions">
                     <div class="slds-page-header__controls">
                         <div class="slds-page-header__control">
                             <lightning:buttonGroup>
-                                <lightning:button label="Opprett NAV-oppgave" />
-                                <lightning:button label="Ny Henvendelse" />
-                                <!-- <aura:iteration items="{!v.quickActions}" var="quickAction">
+                                <aura:iteration items="{!v.flowActions}" var="flowAction">
                                     <lightning:button
-                                        label="{!quickAction.actionName}"
-                                        name="{!quickAction.actionName}"
-                                        onclick="{!c.handleQuickActionOnClick}"
+                                        label="{!flowAction.label}"
+                                        name="{!flowAction.flow}"
+                                        onclick="{!c.handleFlowActionOnClick}"
+                                        disabled="{! !v.isLoaded }"
                                     />
-                                </aura:iteration> -->
+                                </aura:iteration>
                             </lightning:buttonGroup>
                         </div>
                     </div>
                 </div>
             </aura:if>
         </div>
-        <!-- <div class="slds-page-header__row slds-page-header__row_gutters">
-            <div class="slds-page-header__col-details">
-                <ul class="slds-page-header__detail-row">
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Alder">Alder</div>
-                        <div class="slds-truncate" title="{!v.personAge}">{!v.personAge}</div>
-                    </li>
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Kjønn">Kjønn</div>
-                        <div class="slds-truncate" title="{! v.personRecord.INT_Sex__c}">
-                            <aura:if isTrue="{! !empty(v.genderIcon)}">
-                                <lightning:icon
-                                    title="{! v.personRecord.INT_Sex__c}"
-                                    alternativeText="{! v.personRecord.INT_Sex__c}"
-                                    src="{! $Resource.NKS_navIcons + '/' + v.genderIcon + '.svg#' + v.genderIcon}"
-                                />
-                            </aura:if>
-                        </div>
-                    </li>
-                    <li class="slds-page-header__detail-block">
-                        <div class="slds-text-title slds-truncate" title="Id">Ident</div>
-                        <div class="slds-truncate" title="{!v.personRecord.Name}">
-                            {!v.personRecord.Name}
-                            <lightning:buttonIcon
-                                iconName="utility:copy"
-                                variant="bare"
-                                onclick="{! c.handleCopyIdent }"
-                                alternativeText="kopier bruker ident"
-                                title="kopier bruker ident"
-                            />
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
     </div>
-    <c:nksPersonBadges
-        recordId="{!v.recordId}"
-        objectApiName="{!v.sObjectName}"
-        personRelationField="CRM_Person__c"
-        addBoxLayout="true"
-    ></c:nksPersonBadges>
+    <aura:if isTrue="{! v.showPersonBadges &amp;&amp; !empty(v.accountId) }">
+        <c:nksPersonBadges
+            recordId="{!v.accountId}"
+            objectApiName="Account"
+            personRelationField="CRM_Person__c"
+            addBoxLayout="true"
+        ></c:nksPersonBadges>
+    </aura:if>
 </aura:component>

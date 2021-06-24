@@ -1,3 +1,21 @@
-<design:component >
-
+<design:component>
+    <design:attribute
+        name="relationshipField"
+        label="Account Id"
+        description="The account id. Example from case: AccountId."
+        required="true"
+    />
+    <design:attribute
+        name="flowActionString"
+        label="Flow actions"
+        description='Array listing flow API name and button
+    labels. Example: [{"label":"Ny Henvendelse","flow":"NKS_Account_Create_New_Case"},{"label":"Ny
+    NAV-Oppgave","flow":"NKS_Account_Send_NAV_Task"}]'
+    />
+    <design:attribute
+        name="showPersonBadges"
+        label="Show Person badges"
+        description="If true the person badges, if any, will be displayed beneath the header."
+        default="true"
+    />
 </design:component>
