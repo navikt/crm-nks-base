@@ -73,12 +73,6 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -138,11 +132,6 @@
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
                         <operator>NE</operator>
@@ -233,23 +222,11 @@
                     <value>PERSON_LOCATION</value>
                 </componentInstanceProperties>
                 <componentName>nksNavUnitSingle</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>personRelationViewer</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</name>
@@ -473,7 +450,7 @@
                 <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -581,7 +558,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -595,7 +572,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c, NKS_ForeldrepengerURL__c</value>
+                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c, NKS_ForeldrepengerURL__c, NKS_K9URL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -624,7 +601,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>

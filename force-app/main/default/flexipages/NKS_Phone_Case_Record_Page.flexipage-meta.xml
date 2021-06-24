@@ -63,7 +63,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_Full_Name__c,Name, INT_Sex__c, INT_Citizenships__c</value>
+                    <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -491,7 +491,7 @@
                 <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -607,7 +607,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c, NKS_ForeldrepengerURL__c</value>
+                    <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c, NKS_ForeldrepengerURL__c, NKS_K9URL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -636,7 +636,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -656,7 +656,7 @@
                 <componentName>nksDataSyncher</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.INT_PersonIdent__c}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
