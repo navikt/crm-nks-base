@@ -1000,6 +1000,9 @@
         <label>Set Case Closed</label>
         <locationX>692</locationX>
         <locationY>788</locationY>
+        <connector>
+            <targetReference>Case_Closed_Screen</targetReference>
+        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
