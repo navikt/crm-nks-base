@@ -524,6 +524,12 @@
                     <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CRM_Person__r.INT_ActorId__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -596,6 +602,12 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksDataSyncher</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CRM_Person__r.INT_ActorId__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
