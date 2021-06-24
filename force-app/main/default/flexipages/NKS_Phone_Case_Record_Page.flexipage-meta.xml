@@ -491,7 +491,7 @@
                 <componentName>flexipage:tabset</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -636,7 +636,7 @@
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -656,7 +656,7 @@
                 <componentName>nksDataSyncher</componentName>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.Account.INT_PersonIdent__c}</leftValue>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
