@@ -1,0 +1,42 @@
+<aura:component>
+    <aura:attribute name="isModalOpen" type="boolean" default="false" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="modalAriaLabel" type="String" />
+
+    <aura:method name="openModal" action="{!c.openModel}" access="public">
+        <aura:attribute name="modalAriaLabel" type="String" />
+        <aura:attribute name="flowToOpen" type="String" />
+    </aura:method>
+    <aura:method name="closeModel" action="{!c.closeModel}" access="public"></aura:method>
+
+    <aura:if isTrue="{!v.isModalOpen}">
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-label="{! v.modalAriaLabel }"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+        >
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header slds-modal__header_empty">
+                    <lightning:buttonIcon
+                        variant="bare-inverse"
+                        title="Lukk"
+                        iconName="utility:close"
+                        alternativeText="Lukk vinduet"
+                        size="large"
+                        class="slds-modal__close"
+                        onclick="{! c.closeModel }"
+                    />
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:flow aura:id="flowData" onstatuschange="{!c.flowStatusChange}" />
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
