@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>52.0</apiVersion>
-    <description>A Lightning Component Bundle</description>
+    <description>A Lightning Component used to display a custom person header containing flow actions. It will show a persons name, age and id. A user can copy the id through a button.</description>
 </AuraDefinitionBundle>

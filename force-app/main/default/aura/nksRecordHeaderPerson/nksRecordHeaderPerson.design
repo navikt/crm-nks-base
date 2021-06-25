@@ -1,4 +1,4 @@
-<design:component>
+<design:component label="NKS Person Header">
     <design:attribute
         name="relationshipField"
         label="Account Id"

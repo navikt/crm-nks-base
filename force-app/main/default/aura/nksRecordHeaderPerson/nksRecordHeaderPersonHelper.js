@@ -1,22 +1,20 @@
 ({
     setFlowButtons: function (cmp) {
-        const flowButtonString = cmp.get('v.flowActionString');
-
-        if (flowButtonString) {
-            cmp.set('v.flowActions', JSON.parse(flowButtonString));
+        if (cmp.get('v.flowActionString')) {
+            cmp.set('v.flowActions', JSON.parse(cmp.get('v.flowActionString')));
         }
     },
 
-    setAge: function (cmp) {
-        if (cmp.get('v.accountRecord.CRM_Person__r.INT_DateOfBirth__c')) {
-            const dateOfBirth = new Date(cmp.get('v.accountRecord.CRM_Person__r.INT_DateOfBirth__c'));
+    getAge: function (dateOfBirth) {
+        if (dateOfBirth) {
             let today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-            const age =
+            return (
                 today.getFullYear() -
-                dateOfBirth.getFullYear() -
-                (this.dayOfYear(today) >= this.dayOfYear(dateOfBirth) ? 0 : 1);
-            cmp.set('v.personAge', age);
+                new Date(dateOfBirth).getFullYear() -
+                (this.dayOfYear(today) >= this.dayOfYear(new Date(dateOfBirth)) ? 0 : 1)
+            );
         }
+        return null;
     },
 
     setGenderIcon: function (cmp) {
@@ -33,50 +31,32 @@
         cmp.set('v.genderIcon', gender);
     },
 
+    setBrukerName: function (cmp) {
+        let brukerName = 'Ukjent bruker';
+        let age = null;
+        if (cmp.get('v.accountRecord.CRM_Person__r.Name')) {
+            brukerName = cmp.get('v.accountRecord.CRM_Person__r.NKS_Full_Name__c');
+            age = this.getAge(cmp.get('v.accountRecord.CRM_Person__r.INT_DateOfBirth__c'));
+        } else if (cmp.get('v.accountRecord.Name')) {
+            brukerName = cmp.get('v.accountRecord.Name');
+        }
+
+        brukerName += age ? ' (' + age + ')' : '';
+
+        cmp.set('v.nameLabel', brukerName);
+    },
+
     dayOfYear: function dayOfYear(d) {
         return Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
     },
 
-    copyTextHelper: function (cmp, event, text) {
+    copyTextHelper: function (text) {
         var hiddenInput = document.createElement('input');
         hiddenInput.setAttribute('value', text);
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         document.execCommand('copy');
         document.body.removeChild(hiddenInput);
-    },
-
-    getAccountId: function (cmp) {
-        let action = cmp.get('c.getRelatedRecord');
-        cmp.set('v.isLoaded', false);
-        action.setParams({
-            parentId: cmp.get('v.recordId'),
-            relationshipField: cmp.get('v.relationshipField'),
-            objectApiName: cmp.get('v.sObjectName')
-        });
-        action.setCallback(this, function (response) {
-            let state = response.getState();
-            if (state === 'SUCCESS') {
-                let accountId = this.resolve(cmp.get('v.relationshipField'), response.getReturnValue());
-                cmp.set('v.accountId', accountId);
-                cmp.find('accountRecordLoader').reloadRecord(true, function () {
-                    cmp.set('v.isLoaded', true);
-                });
-            } else if (state === 'INCOMPLETE') {
-                // do something
-            } else if (state === 'ERROR') {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        // log the error passed in to AuraHandledException
-                        console.log('Error message: ' + errors[0].message);
-                    }
-                } else {
-                    console.log('Unknown error');
-                }
-            }
-        });
-        $A.enqueueAction(action);
     },
 
     resolve: function (path, obj) {
