@@ -29,6 +29,7 @@
         let flowStatus = event.getParam('status');
         if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
             component.set('v.isModalOpen', false);
+            $A.enqueueAction(component.get('v.flowIsFinisedAction'));
         }
     }
 });

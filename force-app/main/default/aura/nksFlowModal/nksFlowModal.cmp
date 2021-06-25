@@ -3,6 +3,8 @@
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="modalAriaLabel" type="String" />
 
+    <aura:attribute name="flowIsFinisedAction" type="Aura.action" />
+
     <aura:method name="openModal" action="{!c.openModel}" access="public">
         <aura:attribute name="modalAriaLabel" type="String" />
         <aura:attribute name="flowToOpen" type="String" />
