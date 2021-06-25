@@ -178,7 +178,7 @@
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
         <locationX>985</locationX>
-        <locationY>2260</locationY>
+        <locationY>2259</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -229,10 +229,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.NKS_Date_Registered__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Date_Time_Registered__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Created_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -993,6 +1000,9 @@
         <label>Set Case Closed</label>
         <locationX>692</locationX>
         <locationY>788</locationY>
+        <connector>
+            <targetReference>Case_Closed_Screen</targetReference>
+        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1564,7 +1574,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Forklaring i punkter&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- Lenke til aktuell side på nav.no&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Takk for at du tok kontakt om TEMA&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du har fått informasjon om &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;Du kan finne mer informasjon på nav.no&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 11pt;&quot;&gt;- &lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>

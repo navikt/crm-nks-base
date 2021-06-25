@@ -1,41 +1,54 @@
 public with sharing class NKS_HenvendelseListController {
     @AuraEnabled(cacheable=true)
     public static List<MessageThread> getPersonHenvendelser(String personIdent) {
-        try {
-            NKS_HenvendelseService service = new NKS_HenvendelseService();
+        NKS_HenvendelseService service = new NKS_HenvendelseService();
 
-            List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
-                NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE
-            };
+        List<NKS_HenvendelseService.HENVENDELSE_TYPES> types = new List<NKS_HenvendelseService.HENVENDELSE_TYPES>{
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.DELVIS_SVAR_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_MODIA_UTGAAENDE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SVAR_SBL_INNGAAENDE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.INFOMELDING_MODIA_UTGAAENDE,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG,
+            NKS_HenvendelseService.HENVENDELSE_TYPES.SPORSMAL_SKRIFTLIG_DIREKTE
+        };
 
-            HttpResponse resp = service.getPersonHenvendelser(
-                personIdent,
-                types,
-                NKS_HenvendelseService.HENVENDELSE_STATUSES.values()
+        HttpResponse resp = service.getPersonHenvendelser(
+            personIdent,
+            types,
+            NKS_HenvendelseService.HENVENDELSE_STATUSES.values()
+        );
+
+        Integer statusCode = resp.getStatusCode();
+        if (statusCode == 200 || statusCode == 201) {
+            NKS_HenvendelseList henvList = (NKS_HenvendelseList) JSON.deserialize(
+                resp.getBody(),
+                NKS_HenvendelseList.class
             );
 
-            Integer statusCode = resp.getStatusCode();
-            if (statusCode == 200 || statusCode == 201) {
-                NKS_HenvendelseList henvList = (NKS_HenvendelseList) JSON.deserialize(
-                    resp.getBody(),
-                    NKS_HenvendelseList.class
-                );
+            return buildMessageThreads(henvList.henvendelser);
+        } else {
+            LoggerUtility logger = new LoggerUtility('Henvendelse');
+            logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
 
-                return buildMessageThreads(henvList.henvendelser);
+            if (statusCode == 401) {
+                throw new AuraHandledException('Feil med tilganger mot baksystem');
+            } else if (statusCode == 500) {
+                throw new AuraHandledException(
+                    'Feil ved henting av meldinger (' +
+                    'Status: ' +
+                    resp.getStatus() +
+                    ' Melding: ' +
+                    resp.getBody() +
+                    ')'
+                );
             } else {
-                LoggerUtility logger = new LoggerUtility('Henvendelse');
-                logger.httpError('Get henvendelse list failed', resp, null, CRM_ApplicationDomain.Domain.NKS);
-                //logger.publish();
+                throw new AuraHandledException('Feil ved henting av meldinger \n ' + 'Status: ' + resp.getStatus());
             }
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
         }
-        return null;
     }
 
     private static List<MessageThread> buildMessageThreads(List<NKS_Henvendelse> henvList) {
@@ -50,10 +63,12 @@ public with sharing class NKS_HenvendelseListController {
             }
         }
 
-        return threadMap.values();
+        List<MessageThread> threadList = threadMap.values();
+        threadList.sort();
+        return threadList;
     }
 
-    public class MessageThread {
+    public class MessageThread implements Comparable {
         @AuraEnabled
         public String threadId;
         @AuraEnabled
@@ -69,9 +84,17 @@ public with sharing class NKS_HenvendelseListController {
         @AuraEnabled
         public Boolean isIncorrectlySent = false;
         @AuraEnabled
+        public String incorrectlySentText;
+        @AuraEnabled
         public Boolean isDeleted = false;
         @AuraEnabled
         public Boolean isPartiallyAnswered = false;
+        @AuraEnabled
+        public Boolean isUnanswered = false;
+        @AuraEnabled
+        public Boolean isClosedWithoutAnswer = false;
+        @AuraEnabled
+        public String closedWithoutAnswerText;
         @AuraEnabled
         public List<Message> messageList;
 
@@ -89,22 +112,72 @@ public with sharing class NKS_HenvendelseListController {
         private void sortMessageList() {
             if (messageList.size() > 0) {
                 messageList.sort();
-                setFirstMessage(messageList[0]);
-                setLastMessage(messageList[messageList.size() - 1]);
+
+                setNewestMessage(messageList[0]);
+                setOldestMessage(messageList[messageList.size() - 1]);
             }
         }
 
-        private void setLastMessage(Message msg) {
+        private void setNewestMessage(Message msg) {
             lastMessageTime = msg.opprettetDato;
             lastMessageTitle = msg.tittel;
             lastMessageSummary = msg.fritekst;
             isDeleted = msg.erSlettet;
             isPartiallyAnswered = msg.erDelsvar;
+            isUnanswered = setIsUnanswared(msg);
         }
 
-        private void setFirstMessage(Message msg) {
+        private void setOldestMessage(Message msg) {
             isIncorrectlySent = msg.erMeldingFeilsendt;
+            isClosedWithoutAnswer = msg.ferdigstiltUtenSvar;
             firstMessageTime = msg.opprettetDato;
+
+            if (true == isClosedWithoutAnswer) {
+                closedWithoutAnswerText =
+                    'Henvendelsen er avsluttet uten å svare bruker ' +
+                    NKS_HenvendelseUtil.getDateString(msg.ferdigstiltUtenSvarDato);
+            }
+            if (true == isIncorrectlySent) {
+                incorrectlySentText =
+                    'Markert som feilsendt av ' +
+                    msg.markertSomFeilsendtAv +
+                    ' ' +
+                    NKS_HenvendelseUtil.getDateString(msg.markertSomFeilsendtDato);
+            }
+        }
+
+        private Boolean setIsUnanswared(Message msg) {
+            if (messageList.size() > 1) {
+                return null;
+            }
+
+            if (false == msg.erMeldingFraBruker) {
+                return false;
+            }
+
+            return !msg.ferdigstiltUtenSvar;
+        }
+
+        public Integer compareTo(Object compareTo) {
+            // Cast argument to OpportunityWrapper
+            MessageThread compareToThread = (MessageThread) compareTo;
+
+            // The return value of 0 indicates that both elements are equal.
+            Integer returnValue = 0;
+            if (lastMessageTime < compareToThread.lastMessageTime) {
+                // Set return value to a positive value.
+                returnValue = 1;
+            } else if (lastMessageTime > compareToThread.lastMessageTime) {
+                // Set return value to a negative value.
+                returnValue = -1;
+            } else if ((lastMessageTime == null) && (compareToThread.lastMessageTime != null)) {
+                // nulls-first implementation
+                returnValue = -1;
+            } else if ((lastMessageTime != null) && (compareToThread.lastMessageTime == null)) {
+                // nulls-first implementation
+                returnValue = 1;
+            }
+            return returnValue;
         }
     }
 
@@ -126,9 +199,11 @@ public with sharing class NKS_HenvendelseListController {
         @AuraEnabled
         public String eksternAktor;
         @AuraEnabled
-        public Boolean erTilknyttetAnsatt;
+        public Boolean erTilknyttetAnsatt = false;
         @AuraEnabled
-        public Boolean ferdigstiltUtenSvar;
+        public Boolean ferdigstiltUtenSvar = false;
+        @AuraEnabled
+        public DateTime ferdigstiltUtenSvarDato;
         @AuraEnabled
         public String fnr;
         @AuraEnabled
@@ -158,6 +233,8 @@ public with sharing class NKS_HenvendelseListController {
         @AuraEnabled
         public String markertSomFeilsendtAv;
         @AuraEnabled
+        public Datetime markertSomFeilsendtDato;
+        @AuraEnabled
         public String oppgaveIdGsak;
         @AuraEnabled
         public Datetime opprettetDato;
@@ -166,35 +243,33 @@ public with sharing class NKS_HenvendelseListController {
         @AuraEnabled
         public String tilknyttetEnhet;
         @AuraEnabled
-        public Boolean erMeldingFraBruker;
+        public Boolean erMeldingFraBruker = false;
         @AuraEnabled
-        public Boolean erMeldingFraNav;
+        public Boolean erMeldingFraNav = false;
         @AuraEnabled
-        public Boolean erVarselMelding;
+        public Boolean erVarselMelding = false;
         @AuraEnabled
-        public Boolean erMeldingSporsmal;
+        public Boolean erMeldingSporsmal = false;
         @AuraEnabled
-        public Boolean erJournalfort;
+        public Boolean erJournalfort = false;
         @AuraEnabled
-        public Boolean erMeldingFeilsendt;
+        public Boolean erMeldingFeilsendt = false;
         @AuraEnabled
-        public Boolean erDelsvar;
+        public Boolean erDelsvar = false;
         @AuraEnabled
-        public Boolean erLest;
+        public Boolean erLest = false;
         @AuraEnabled
-        public Boolean erUlest;
+        public Boolean erUlest = false;
         @AuraEnabled
-        public Boolean erSlettet;
+        public Boolean erSlettet = false;
         @AuraEnabled
-        public Boolean erMeldingstypeSamtalereferat;
+        public Boolean erMeldingstypeSamtalereferat = false;
         @AuraEnabled
         public String tittel;
         @AuraEnabled
         public DateTime opprettetDatoFormatted;
         @AuraEnabled
         public String journalfortTekst;
-        // @AuraEnabled
-        // public String tekst;
         @AuraEnabled
         public Datetime meldingsDato;
 
@@ -209,6 +284,11 @@ public with sharing class NKS_HenvendelseListController {
             this.eksternAktor = henvendelse.eksternAktor;
             this.erTilknyttetAnsatt = henvendelse.erTilknyttetAnsatt;
             this.ferdigstiltUtenSvar = henvendelse.ferdigstiltUtenSvar;
+            if (true == this.ferdigstiltUtenSvar && null != henvendelse.markeringer.ferdigstiltUtenSvar) {
+                this.ferdigstiltUtenSvarDato = NKS_HenvendelseUtil.stringToDateTime(
+                    henvendelse.markeringer.ferdigstiltUtenSvar.dato
+                );
+            }
             this.fnr = henvendelse.fnr;
             this.gjeldendeTemagruppe = henvendelse.gjeldendeTemagruppe;
             this.henvendelseIdGsak = henvendelse.henvendelseIdGsak;
@@ -244,6 +324,13 @@ public with sharing class NKS_HenvendelseListController {
             this.erMeldingSporsmal = NKS_HenvendelseUtil.isQuestionMessage(henvendelse.henvendelseType);
             this.erJournalfort = this.journalfortDato == null ? false : true;
             this.erMeldingFeilsendt = String.isNotBlank(henvendelse.markertSomFeilsendtAv);
+
+            if (true == this.erMeldingFeilsendt && null != henvendelse.markeringer.feilsendt) {
+                this.markertSomFeilsendtDato = NKS_HenvendelseUtil.stringToDateTime(
+                    henvendelse.markeringer.feilsendt.dato
+                );
+            }
+
             this.erDelsvar = NKS_HenvendelseUtil.isPartialyAnswered(henvendelse.henvendelseType);
             this.erLest = erMeldingFraBruker ? false : String.isNotBlank(henvendelse.lestDato);
             this.erUlest = erMeldingFraBruker ? false : String.isBlank(henvendelse.lestDato);

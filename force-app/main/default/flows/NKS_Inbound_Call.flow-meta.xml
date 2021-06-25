@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Get_Call_Queue_Info</name>
         <label>Get Call Queue Info</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>158</locationY>
         <actionName>NKS_CallFlowController</actionName>
         <actionType>apex</actionType>
@@ -31,10 +31,10 @@
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the organization account</description>
-        <name>Recirect_to_Account</name>
+        <name>Recirect_to_Account_0</name>
         <label>Recirect to Account</label>
         <locationX>314</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -65,7 +65,7 @@
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1094</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
@@ -128,7 +128,7 @@
     <assignments>
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
@@ -183,7 +183,7 @@
     <decisions>
         <name>Check_Call_Queue_0</name>
         <label>Check Call Queue</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>734</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
@@ -245,7 +245,7 @@
     <decisions>
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>614</locationY>
         <defaultConnector>
             <targetReference>Check_Call_Queue_0</targetReference>
@@ -286,7 +286,7 @@
         <description>Checks if the call queue had a theme group mapped</description>
         <name>Check_Theme_Group</name>
         <label>Check Theme Group</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Check_Identifier</targetReference>
@@ -306,6 +306,36 @@
                 <targetReference>Get_Theme_Group</targetReference>
             </connector>
             <label>Theme Group Mapped</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the input resulted in an account match</description>
+        <name>Verify_Account</name>
+        <label>Verify Account</label>
+        <locationX>446</locationX>
+        <locationY>854</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Found_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RELATED_ACCOUNT_ID</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RELATED_ACCOUNT_ID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Recirect_to_Account_0</targetReference>
+            </connector>
+            <label>Found Account</label>
         </rules>
     </decisions>
     <formulas>
@@ -354,7 +384,7 @@
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case_0</name>
         <label>Create Case</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>974</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
@@ -365,11 +395,11 @@
         <description>Queries the organization account.</description>
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Recirect_to_Account</targetReference>
+            <targetReference>Verify_Account</targetReference>
         </connector>
         <filters>
             <field>INT_OrganizationNumber__c</field>
@@ -410,7 +440,7 @@
         <description>Queries the theme group that was mapped to the queue.</description>
         <name>Get_Theme_Group</name>
         <label>Get Theme Group</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -438,7 +468,7 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Call_Queue_Info</targetReference>

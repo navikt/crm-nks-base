@@ -5,15 +5,15 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.124.0.NEXT",
+            "versionNumber": "0.135.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.98.0.LATEST"
+                    "versionNumber": "0.102.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.68.0.LATEST"
+                    "versionNumber": "0.70.0.LATEST"
                 },
                 {
                     "package": "crm-shared-timeline",

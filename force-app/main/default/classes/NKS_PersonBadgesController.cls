@@ -72,10 +72,8 @@ public with sharing class NKS_PersonBadgesController {
         String queryString = 'SELECT ';
 
         fields.add('Id');
-        //fieldsToLabel.add('INT_Confidential__c');
         fields.add('INT_GuardianshipOrFuturePowerOfAttorney__c');
         fields.add('INT_IsDeceased__c');
-        //fields.add('INT_IsNavEmployee__c');
         fields.add('INT_PowerOfAttorney__c');
         fields.add('INT_SpokenLanguageIntepreter__c');
         fields.add('NKS_NumberOfSecurityMeasures__c');
@@ -189,9 +187,9 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'securityMeasures',
                         person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak',
-                        'slds-theme_warning pointer',
-                        'utility:warning',
-                        'Vær oppmerksom',
+                        'slds-theme_error slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        '',
+                        '',
                         true
                     )
                 );
@@ -219,7 +217,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'spokenLanguageIntepreter',
                         getFieldLabel('INT_SpokenLanguageIntepreter__c'),
-                        'pointer',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
                         '',
                         '',
                         true
@@ -244,7 +242,16 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setPowerOfAttorney() {
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-                badges.add(new Badge('powerOfAttorney', 'Fullmakt', 'pointer', '', '', true));
+                badges.add(
+                    new Badge(
+                        'powerOfAttorney',
+                        'Fullmakt',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        '',
+                        '',
+                        true
+                    )
+                );
                 Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
                     Integer i = 0;
@@ -272,23 +279,23 @@ public with sharing class NKS_PersonBadgesController {
                         i++;
                     }
 
-                    //if (powerOfAttorneys.size() > 0) {
-                    for (Person__c p : [
-                        SELECT Id, Name, CRM_Account__c, CRM_Account__r.Name
-                        FROM Person__c
-                        WHERE Name IN :relatedPersonMap.keySet()
-                    ]) {
-                        relatedPersonMap.put(p.Name, p);
-                    }
+                    if (powerOfAttorneys.size() > 0) {
+                        for (Person__c p : [
+                            SELECT Id, Name, CRM_Account__c, CRM_Account__r.Name
+                            FROM Person__c
+                            WHERE Name IN :relatedPersonMap.keySet()
+                        ]) {
+                            relatedPersonMap.put(p.Name, p);
+                        }
 
-                    for (PowerOfAttorney poa : powerOfAttorneys) {
-                        if (null != relatedPersonMap.get(poa.motpartsPersonident)) {
-                            poa.motpartsNavn = relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__c == null
-                                ? null
-                                : relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__r.Name;
+                        for (PowerOfAttorney poa : powerOfAttorneys) {
+                            if (null != relatedPersonMap.get(poa.motpartsPersonident)) {
+                                poa.motpartsNavn = relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__c == null
+                                    ? null
+                                    : relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__r.Name;
+                            }
                         }
                     }
-                    //}
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av fullmakts detaljer');
                 }
@@ -297,8 +304,17 @@ public with sharing class NKS_PersonBadgesController {
 
         private void setGuardianshipOrFuturePowerOfAttorney() {
             if (String.isNotBlank(person.INT_GuardianshipOrFuturePowerOfAttorney__c)) {
-                badges.add(new Badge('guardianshipOrFuturePowerOfAttorney', 'Vergemål', 'pointer', '', '', true));
-
+                badges.add(
+                    new Badge(
+                        'guardianshipOrFuturePowerOfAttorney',
+                        'Vergemål',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        '',
+                        '',
+                        true
+                    )
+                );
+                Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
                     Integer i = 0;
                     for (
@@ -308,11 +324,33 @@ public with sharing class NKS_PersonBadgesController {
                         )
                     ) {
                         guardienship.id = '' + i;
+                        if (String.isNotBlank(guardienship.motpartsPersonident)) {
+                            relatedPersonMap.put(guardienship.motpartsPersonident, null);
+                        }
                         guardianships.add(guardienship);
                         i++;
                     }
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av vergemål detaljer');
+                }
+
+                if (relatedPersonMap.size() > 0) {
+                    for (Person__c p : [
+                        SELECT Id, Name, CRM_Account__c, CRM_Account__r.Name
+                        FROM Person__c
+                        WHERE Name IN :relatedPersonMap.keySet()
+                    ]) {
+                        relatedPersonMap.put(p.Name, p);
+                    }
+
+                    for (GuardianshipOrFuturePowerOfAttorney guardienship : guardianships) {
+                        if (null != relatedPersonMap.get(guardienship.motpartsPersonident)) {
+                            guardienship.navn = relatedPersonMap.get(guardienship.motpartsPersonident).CRM_Account__c ==
+                                null
+                                ? guardienship.navn
+                                : relatedPersonMap.get(guardienship.motpartsPersonident).CRM_Account__r.Name;
+                        }
+                    }
                 }
             }
         }
@@ -339,7 +377,14 @@ public with sharing class NKS_PersonBadgesController {
             if (fieldSet.contains('hot_hasentitlement__c')) {
                 if (true == (Boolean) person.get('HOT_HasEntitlement__c')) {
                     badges.add(
-                        new Badge('entitlements', getFieldLabel('HOT_HasEntitlement__c'), 'pointer', '', '', true)
+                        new Badge(
+                            'entitlements',
+                            getFieldLabel('HOT_HasEntitlement__c'),
+                            'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                            '',
+                            '',
+                            true
+                        )
                     );
 
                     for (String entitlementField : NKS_PersonBadgesController.HOT_ENTITLEMENT_FIELDS) {
@@ -381,7 +426,7 @@ public with sharing class NKS_PersonBadgesController {
          *
          */
         public Badge(String name, String label) {
-            this(name, label, '', '', '', false);
+            this(name, label, 'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small', '', '', false);
         }
 
         /**
@@ -472,6 +517,64 @@ public with sharing class NKS_PersonBadgesController {
         }
         @AuraEnabled
         public String id;
+
+        @AuraEnabled
+        public String omfangLabel {
+            get {
+                switch on omfang {
+                    when 'utlendingssakerPersonligeOgOekonomiskeInteresser' {
+                        return 'Ivareta personens interesser innenfor det personlige og økonomiske området herunder utlendingssaken (kun for EMA)';
+                    }
+                    when 'personligeOgOekonomiskeInteresser' {
+                        return 'Ivareta personens interesser innenfor det personlige og økonomiske området';
+                    }
+                    when 'oekonomiskeInteresser' {
+                        return 'Ivareta personens interesser innenfor det økonomiske området';
+                    }
+                    when 'personligeInteresser' {
+                        return 'Ivareta personens interesser innenfor det personlige området';
+                    }
+                    when else {
+                        return omfang;
+                    }
+                }
+            }
+        }
+
+        @AuraEnabled
+        public String typeLabel {
+            get {
+                switch on type {
+                    when 'ensligMindreaarigAsylsoeker' {
+                        return 'Enslig mindreårig asylsøker';
+                    }
+                    when 'ensligMindreaarigFlyktning' {
+                        return 'Enslig mindreårig flyktning inklusive midlertidige saker for denne gruppen';
+                    }
+                    when 'voksen' {
+                        return 'Voksen';
+                    }
+                    when 'midlertidigForVoksen' {
+                        return 'Voksen midlertidig';
+                    }
+                    when 'mindreaarig' {
+                        return 'Mindreårig (unntatt EMF)';
+                    }
+                    when 'midlertidigForMindreaarig' {
+                        return 'Mindreårig midlertidig (unntatt EMF)';
+                    }
+                    when 'forvaltningUtenforVergemaal' {
+                        return 'Forvaltning utenfor vergemål';
+                    }
+                    when 'stadfestetFremtidsfullmakt' {
+                        return 'Fremtidsfullmakt';
+                    }
+                    when else {
+                        return type;
+                    }
+                }
+            }
+        }
     }
 
     public class SecurityMeasure {

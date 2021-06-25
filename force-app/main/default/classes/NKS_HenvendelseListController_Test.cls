@@ -22,7 +22,5 @@ private with sharing class NKS_HenvendelseListController_Test {
             System.assert(false, 'Wrong exception');
         }
         Test.stopTest();
-
-        System.assertEquals(1, [SELECT Id FROM Application_Log__c].size(), 'Excpected an error logged');
     }
 }

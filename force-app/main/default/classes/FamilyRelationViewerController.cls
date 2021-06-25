@@ -59,6 +59,8 @@ public without sharing class FamilyRelationViewerController {
         public Boolean disableurl;
         @AuraEnabled
         public Boolean child;
+        @AuraEnabled
+        public String color; 
     }
 
     private static List<Person__c> removeChildrenUnder21(
@@ -94,6 +96,15 @@ public without sharing class FamilyRelationViewerController {
                 maritalrelation.accountId = marriedto.CRM_Account__c;
                 maritalrelation.personIdent = marriedto.Name;
                 maritalrelation.personName = marriedto.CRM_Account__r.Name;
+                String birthdate;
+                if (marriedto.INT_DateOfBirth__c != null) {
+                    DateTime d = Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00');
+                    birthdate = d.format('dd.MM.YYYY');
+                    maritalrelation.age = Integer.valueOf(Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365);
+                }
+                maritalrelation.birthdate = birthdate;  
+                if(marriedto.INT_Sex__c == 'Kvinne') maritalrelation.color = 'pink';
+                else if (marriedto.INT_Sex__c == 'Mann') maritalrelation.color = 'blue'; 
                 if (marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig')
                     maritalrelation.disableurl = true;
             }
@@ -127,23 +138,22 @@ public without sharing class FamilyRelationViewerController {
             r.personIdent = person.Name;
             r.personName = person.CRM_Account__r.Name;
             r.role = role;
-            if (role == 'Barn') {
-                if (person.INT_Sex__c == 'Kvinne')
-                    r.sex = 'Jente';
-                else if (person.INT_Sex__c == 'Mann')
-                    r.sex = 'Gutt';
-                r.age = age;
-                r.birthdate = birthdate;
-                r.child = true;
-            } else {
-                r.sex = person.INT_Sex__c;
-                r.child = false;
-                r.age = age;
+            r.age = age; 
+            r.birthdate = birthdate;
+            r.sex = person.INT_Sex__c;
+            r.child = false;
+            r.disableurl = false;
+            if (person.INT_Sex__c == 'Kvinne'){
+                r.color = 'pink'; 
+                if (role == 'Barn') r.sex = 'Jente';
             }
+            else if (person.INT_Sex__c == 'Mann'){
+                r.color = 'blue'; 
+                if (role == 'Barn') r.sex = 'Gutt';
+            }
+            if (role == 'Barn') r.child = true;
             if (person.CRM_Account__r.Name == 'Ikke tilgjengelig')
                 r.disableurl = true;
-            else
-                r.disableurl = false;
             relations.add(r);
         }
         return relations;
@@ -162,7 +172,7 @@ public without sharing class FamilyRelationViewerController {
                 CRM_Account__c,
                 CRM_Account__r.Name
             FROM Person__c
-            WHERE Name IN :relatedPersonIds
+            WHERE Name IN :relatedPersonIds ORDER BY INT_DateOfBirth__c DESC
         ];
     }
 
@@ -181,7 +191,7 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getMaritalPerson(String personId) {
         return [
-            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name
+            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c
             FROM Person__c
             WHERE Name = :personId
             LIMIT 1

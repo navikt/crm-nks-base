@@ -3,6 +3,24 @@ public without sharing class NKS_DataSynchController {
     //###############     HENVENDELSE SYNCH    ##################//
     //###########################################################//
 
+    private static Map<String, Id> themeGroupMap {
+        get {
+            if (themeGroupMap == null) {
+                themeGroupMap = new Map<String, Id>();
+                for (Common_Code__c themeGroup : [
+                    SELECT Id, CRM_Code__c
+                    FROM Common_Code__c
+                    WHERE CRM_Code_Set__c = 'Temagrupper'
+                ]) {
+                    themeGroupMap.put(themeGroup.CRM_Code__c, themeGroup.Id);
+                }
+            }
+            return themeGroupMap;
+        }
+        set {
+        }
+    }
+
     /**
      * @description: Performs callout to henvendelse to synch conversation note data
      * @author Stian Ruud Schikora | 05-14-2021
@@ -69,7 +87,7 @@ public without sharing class NKS_DataSynchController {
                 for (Database.Error error : upsRes.getErrors()) {
                     errorMessage = error.getMessage();
                 }
-                logger.error(
+                logger.warning(
                     'One or more conversation notes failed to synch for account with ID: ' +
                     convList[0].CRM_Account__c +
                     '\n' +
@@ -120,9 +138,15 @@ public without sharing class NKS_DataSynchController {
         if (henv.markeringer != null) {
             convNote.NKS_Incorrectly_Sent__c = henv.markeringer.feilsendt != null ? true : false;
         }
+        convNote.NKS_Theme_Group__c = themeGroupMap.containsKey(henv.gjeldendeTemagruppe)
+            ? themeGroupMap.get(henv.gjeldendeTemagruppe)
+            : null;
         convNote.NKS_Is_Read__c = String.isNotBlank(henv.lestDato) ? true : false;
         convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
-        convNote.NKS_Date_Registered__c = Date.valueOf(henv.opprettetDato);
+        convNote.NKS_Created_By__c = henv.metadataListe.metadata[0].navident;
+        convNote.NKS_Date_Time_Registered__c = String.isNotBlank(henv.opprettetDato)
+            ? Datetime.valueOf(henv.opprettetDato.replace('T', ' '))
+            : null;
         convNote.NKS_Henvendelse_BehandlingsId__c = henv.behandlingsId;
         if (henv.journalfortInformasjon != null && String.isNotBlank(henv.journalfortInformasjon.journalpostId)) {
             convNote.NKS_Journal_Status__c = 'Journal Completed';
