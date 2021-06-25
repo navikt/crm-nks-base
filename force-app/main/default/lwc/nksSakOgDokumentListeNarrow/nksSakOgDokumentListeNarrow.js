@@ -25,7 +25,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         journalstatuser: ['JOURNALFOERT', 'FERDIGSTILT', 'EKSPEDERT'],
         fraDato: null,
         tilDato: null,
-        foerste: 10
+        foerste: null
     };
 
     @track errors = [];
@@ -41,6 +41,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         { label: '', value: '' }
     ];
     @track themeArr = [];
+    @track availableThemes = [];
     @track filteredJournalPosts = [];
     @track journalposts = [];
     @track sideInfo;
@@ -50,13 +51,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedThemeGroups = '';
     isLoaded = false;
     personId;
-
-    showAsList = false;
-
-    handleShowAsList() {
-        this.showAsList = !this.showAsList;
-        this.filterJournalposts();
-    }
 
     set brukerId(value) {
         this.queryVariables.brukerId.id = value;
@@ -81,7 +75,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     }
 
     get isThemeFieldsDisabled() {
-        return Array.isArray(this.themeArr) && this.themeArr.length === 0;
+        return Array.isArray(this.availableThemes) && this.availableThemes.length <= 1;
     }
 
     get selectedTheme() {
@@ -96,6 +90,10 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this._selectedThemeGroups = value ? value : [];
         this.filterThemes();
         this.selectedTheme = 'all';
+    }
+
+    get showAsList() {
+        return this.selectedThemeGroups.length === this.themeGroupArr.length - 1 ? true : false;
     }
 
     get fromDate() {
@@ -143,9 +141,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
 
     async init() {
         if (this.queryVariables.fraDato == null) {
-            let d = new Date(Date.now());
-            d.setFullYear(d.getFullYear() - 1);
-            this.queryVariables.fraDato = d.toISOString().split('T')[0];
+            this.queryVariables.fraDato = new Date().getFullYear() - 1 + '-01-01';
         }
         await this.callGetThemes();
 
@@ -206,6 +202,10 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
 
     get isEmptyResult() {
         return this.filteredJournalPosts.length === 0 ? true : false;
+    }
+
+    refresh() {
+        this.callGetJournalPosts(false);
     }
 
     queryMoreJournalPosts() {
@@ -321,32 +321,46 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     filterThemes() {
         let listThemes = [];
         let returnThemes = [];
-        let returnCodes = [];
 
         if (this.themeMap && Array.isArray(this.selectedThemeGroups) && this.selectedThemeGroups.length > 0) {
             this.selectedThemeGroups.forEach(
                 (selectedThemeGroup) => (listThemes = listThemes.concat(this.themeMap[selectedThemeGroup]))
             );
         }
+        listThemes.sort(this.compareListThemes);
 
         returnThemes.push({ label: 'Alle', value: 'all' });
         listThemes.forEach((theme) => {
             returnThemes.push({ label: theme.Name, value: theme.CRM_Code__c });
-            returnCodes.push(theme.CRM_Code__c);
         });
 
         this.themeArr = returnThemes;
     }
 
+    compareListThemes(a, b) {
+        const nameA = a.Name.toUpperCase();
+        const nameB = b.Name.toUpperCase();
+
+        if (nameA > nameB) {
+            return 1;
+        }
+
+        if (nameA < nameB) {
+            return -1;
+        }
+
+        return 0;
+    }
+
     filterJournalposts() {
         if (Array.isArray(this.themeArr) && this.themeArr.length <= 0) {
             this.filteredJournalPosts = [];
-            this.activeSections = [];
             return;
         }
 
         let caseMap = new Map();
         let journalpostOrderedList = [];
+        let journalpostThemes = new Set();
         this.journalposts
             .filter(
                 (journalpost) =>
@@ -355,30 +369,18 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                     this._selectedJornalpostTypes.includes(journalpost.journalposttype)
             )
             .forEach((journalpost) => {
+                journalpostThemes.add(journalpost.sak.tema);
                 if (this.showAsList === true) {
                     journalpostOrderedList.push(journalpost);
                 } else {
                     this.addJournalpostToMap(caseMap, journalpost);
                 }
-                // let key = journalpost.sak.sakstype === 'FAGSAK' ? journalpost.sak.fagsakId : journalpost.sak.tema;
-                // let caseType = this.saksTypeFormatted(journalpost.sak);
-                // let caseStatus = this.caseStatusArray.find((element) => element.caseId === key);
-                // let title =
-                //     this.themeArr.find((theme) => theme.value === journalpost.sak.tema).label +
-                //     ': ' +
-                //     caseType +
-                //     (journalpost.sak.fagsakId ? ' ' + journalpost.sak.fagsakId : '') +
-                //     (caseStatus && caseStatus.isOpen ? ' (' + caseStatus.status + ')' : '');
-
-                // if (caseMap.has(key)) {
-                //     caseMap.get(key).journalpostList.push(journalpost);
-                // } else {
-                //     caseMap.set(key, { caseId: key, caseTitle: title, journalpostList: [journalpost] });
-                // }
             });
 
-        this.filteredJournalPosts = this.showAsList ? journalpostOrderedList : Array.from(caseMap.values());
-        this.activeSections = this.showAsList ? null : Array.from(caseMap.keys());
+        this.availableThemes = this.themeArr.filter(
+            (theme) => true === journalpostThemes.has(theme.value) || theme.value === 'all'
+        );
+        this.filteredJournalPosts = this.showAsList === true ? journalpostOrderedList : Array.from(caseMap.values());
     }
 
     addJournalpostToMap(caseMap, journalpost) {

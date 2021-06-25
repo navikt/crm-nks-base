@@ -40,12 +40,21 @@
                                 >
                                 </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item class="slds-p-right_small">
+                            <!-- <lightning-layout-item class="slds-p-right_small">
                                 <lightning-button-icon-stateful
                                     icon-name="utility:rows"
                                     selected={showAsList}
                                     onclick={handleShowAsList}
                                     alternative-text="Vis som liste"
+                                    size="small"
+                                    variant="border-filled"
+                                ></lightning-button-icon-stateful>
+                            </lightning-layout-item> -->
+                            <lightning-layout-item class="slds-p-right_small">
+                                <lightning-button-icon-stateful
+                                    icon-name="utility:refresh"
+                                    onclick={refresh}
+                                    alternative-text="Last på nytt"
                                     size="small"
                                     variant="border-filled"
                                 ></lightning-button-icon-stateful>
@@ -95,7 +104,7 @@
                         <lightning-combobox
                             name="themePicklist"
                             label="Tema"
-                            options={themeArr}
+                            options={availableThemes}
                             value={selectedTheme}
                             onchange={handleSetSelectedTheme}
                             disabled={isThemeFieldsDisabled}
@@ -197,7 +206,6 @@
 
                         <template if:true={canLoadMore}>
                             <div class="slds-align_absolute-center slds-p-vertical_x-small slds-border_top">
-                                <!-- <lightning-layout-item class="slds-align_absolute-center slds-p-vertical_x-small" size="12"> -->
                                 <template if:true={isLoadingMore}>
                                     <div class="slds-is-relative">
                                         Last flere
@@ -207,7 +215,6 @@
                                 <template if:false={isLoadingMore}>
                                     <a onclick={queryMoreJournalPosts}>Last flere</a>
                                 </template>
-                                <!-- </lightning-layout-item> -->
                             </div>
                         </template>
                     </lightning-layout-item>
