@@ -4,6 +4,7 @@ import { refreshApex } from '@salesforce/apex';
 import getHenvendelsesListe from '@salesforce/apex/NKS_HenvendelseListController.getPersonHenvendelser';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import PERSON_NAME_FIELD from '@salesforce/schema/Person__c.Name';
+import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 
 export default class NksPersonHenvendelseList extends LightningElement {
     @api recordId; // Id from record page (From UiRecordAPI)
@@ -67,7 +68,7 @@ export default class NksPersonHenvendelseList extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$personId',
-        fields: [PERSON_NAME_FIELD]
+        fields: [PERSON_NAME_FIELD, PERSON_IDENT_FIELD]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {

@@ -231,6 +231,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.NKS_K9URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.NKS_Full_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
