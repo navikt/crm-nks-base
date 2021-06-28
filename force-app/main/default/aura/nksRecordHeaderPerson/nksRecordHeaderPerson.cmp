@@ -1,0 +1,114 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasSObjectName,force:hasRecordId">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="relationshipField" type="String" default="Id" />
+    <aura:attribute name="record" type="Object" access="private" />
+    <aura:attribute name="recordFields" type="List" access="private" default="['Id']" />
+
+    <aura:attribute name="accountId" type="String" access="private" />
+    <aura:attribute name="accountRecord" type="Object" access="private" />
+
+    <aura:attribute name="genderIcon" type="String" access="private" />
+    <aura:attribute name="nameLabel" type="String" access="private" default="Laster bruker..." />
+
+    <aura:attribute name="flowActionString" type="String" />
+    <aura:attribute name="flowActions" type="List" access="private" />
+
+    <aura:attribute name="loadRecord" type="boolean" default="false" access="private" />
+    <aura:attribute name="isLoaded" type="boolean" default="false" access="private" />
+    <aura:attribute name="showPersonBadges" type="boolean" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <force:recordData
+        aura:id="accountRecordLoader"
+        recordId="{!v.accountId}"
+        fields="Name, CRM_Person__c, CRM_Person__r.Name,CRM_Person__r.INT_Sex__c,CRM_Person__r.NKS_Full_Name__c,CRM_Person__r.INT_DateOfBirth__c"
+        targetFields="{!v.accountRecord}"
+        recordUpdated="{!c.onAccountRecordUpdated}"
+    />
+
+    <aura:if isTrue="{! v.loadRecord }">
+        <force:recordData
+            aura:id="recordLoader"
+            recordId="{!v.recordId}"
+            fields="{! v.recordFields }"
+            targetFields="{!v.record}"
+            recordUpdated="{!c.onRecordUpdated}"
+        />
+    </aura:if>
+
+    <c:nksFlowModal
+        aura:id="flowModal"
+        recordId="{! v.recordId}"
+        flowIsFinisedAction="{! c.reloadRecord }"
+    ></c:nksFlowModal>
+    <div class="slds-page-header slds-page-header_record-home">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <aura:if isTrue="{! !empty(v.genderIcon)}">
+                            <c:nksCustomSvg
+                                src="{! $Resource.NKS_navIcons+'/'+ v.genderIcon +'.svg#'+ v.genderIcon}"
+                                altText="{! v.accountRecord.CRM_Person__r.INT_Sex__c}"
+                                classes="{! v.genderIcon + ' slds-p-around_xx-small'}"
+                                viewBox="0 0 24 24"
+                            ></c:nksCustomSvg>
+                        </aura:if>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span class="slds-page-header__title slds-truncate" title="{! v.nameLabel}">
+                                        {! v.nameLabel}
+                                    </span>
+                                    <aura:if isTrue="{! !empty(v.accountRecord.CRM_Person__r.Name)}">
+                                        <span
+                                            ><div title="{!v.accountRecord.CRM_Person__r.Name}">
+                                                {!v.accountRecord.CRM_Person__r.Name}&nbsp;
+                                                <lightning:buttonIcon
+                                                    iconName="utility:copy"
+                                                    variant="bare"
+                                                    onclick="{! c.handleCopyIdent }"
+                                                    alternativeText="kopier bruker ident"
+                                                    title="kopier bruker ident"
+                                                /></div
+                                        ></span>
+                                    </aura:if>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{! !empty(v.flowActions) }">
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning:buttonGroup>
+                                <aura:iteration items="{!v.flowActions}" var="flowAction">
+                                    <lightning:button
+                                        label="{!flowAction.label}"
+                                        name="{!flowAction.flow}"
+                                        onclick="{!c.handleFlowActionOnClick}"
+                                        disabled="{! !v.isLoaded }"
+                                    />
+                                </aura:iteration>
+                            </lightning:buttonGroup>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+        </div>
+    </div>
+    <aura:if isTrue="{! v.showPersonBadges &amp;&amp; !empty(v.accountId) }">
+        <c:nksPersonBadges
+            recordId="{!v.accountId}"
+            objectApiName="Account"
+            personRelationField="CRM_Person__c"
+            addBoxLayout="true"
+        ></c:nksPersonBadges>
+    </aura:if>
+</aura:component>
