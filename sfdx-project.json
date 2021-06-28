@@ -36,7 +36,7 @@
                     "versionNumber": "0.1.0.LATEST"
                 },
                 {
-                    "package": "crm-platform-henvendelse",
+                    "package": "crm-henvendelse",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -54,6 +54,6 @@
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
         "crm-nks-integration": "0Ho2o000000fxX6CAI",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
-        "crm-platform-henvendelse": "0Ho2o000000fxXfCAI"
+        "crm-henvendelse": "0Ho2o000000fxXfCAI"
     }
 }
