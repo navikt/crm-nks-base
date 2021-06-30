@@ -306,7 +306,7 @@ TODAY())</expression>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression>&quot;Oppgave til &quot; &amp; {!workAllocation.selectedUnitName}</expression>
+        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
     </formulas>
     <formulas>
         <name>Task_Theme_Code</name>

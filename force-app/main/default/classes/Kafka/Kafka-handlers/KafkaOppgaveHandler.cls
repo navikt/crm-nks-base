@@ -223,9 +223,9 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
             navTask.CRM_NavUnit__c = this.navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
                 ? this.navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Id
                 : null;
-            navTask.Name = this.navUnitMap.containsKey(kafkaOppgave.tildeltEnhetsnr)
-                ? 'Oppgave til ' + this.navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Name
-                : 'Oppgave';
+            navTask.Name = this.commonCodeMap.containsKey('Oppgavetyper' + kafkaOppgave.oppgavetype)
+            ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
+            : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.NKS_Comments__c = kafkaOppgave.beskrivelse;
             navTask.NKS_TaskType__c = this.commonCodeMap.containsKey('Oppgavetyper' + kafkaOppgave.oppgavetype)
