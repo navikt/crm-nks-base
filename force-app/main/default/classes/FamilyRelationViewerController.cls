@@ -105,7 +105,7 @@ public without sharing class FamilyRelationViewerController {
                 maritalrelation.birthdate = birthdate;  
                 if(marriedto.INT_Sex__c == 'Kvinne') maritalrelation.color = 'pink';
                 else if (marriedto.INT_Sex__c == 'Mann') maritalrelation.color = 'blue'; 
-                if (marriedto.INT_Confidental__c != 'UGRADERT' || marriedto.INT_IsNAvEmployee__c==true)
+                if (marriedto.INT_Confidential__c != 'UGRADERT' || marriedto.INT_IsNAvEmployee__c==true)
                     maritalrelation.disableurl = true;
             }
             maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize();
@@ -152,7 +152,7 @@ public without sharing class FamilyRelationViewerController {
                 if (role == 'Barn') r.sex = 'Gutt';
             }
             if (role == 'Barn') r.child = true;
-            if (person.INT_Confidental__c != 'UGRADERT' || person.INT_IsNAvEmployee__c==true)
+            if (person.INT_Confidential__c != 'UGRADERT' || person.INT_IsNAvEmployee__c==true)
                 r.disableurl = true;
             relations.add(r);
         }
