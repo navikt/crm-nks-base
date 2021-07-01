@@ -63,6 +63,6 @@ public without sharing class NKS_AccessErrorController {
     }
 
     private static Boolean accountNameSetToNotAvailable(Person__c person) {
-        return person.CRM_Account__r.Name.equalsIgnoreCase('ikke tilgjengelig');
+        return person.CRM_Account__r.Name.equalsIgnoreCase('skjermet');
     }
 }
