@@ -174,7 +174,9 @@ public without sharing class FamilyRelationViewerController {
                 INT_DateOfBirth__c,
                 INT_Sex__c,
                 CRM_Account__c,
-                CRM_Account__r.Name
+                CRM_Account__r.Name,
+                INT_Confidential__c, 
+                INT_IsNavEmployee__c
             FROM Person__c
             WHERE Name IN :relatedPersonIds ORDER BY INT_DateOfBirth__c DESC
         ];
@@ -186,7 +188,7 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getPerson(Id personId) {
         return [
-            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c
+            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
             FROM Person__c
             WHERE Id = :personId
             LIMIT 1
@@ -195,7 +197,7 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getMaritalPerson(String personId) {
         return [
-            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c
+            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
             FROM Person__c
             WHERE Name = :personId
             LIMIT 1
