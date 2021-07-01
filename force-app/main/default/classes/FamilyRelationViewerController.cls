@@ -154,10 +154,6 @@ public without sharing class FamilyRelationViewerController {
             if (role == 'Barn') r.child = true;
             if (person.INT_Confidential__c != 'UGRADERT' || person.INT_IsNAvEmployee__c==true)
                 r.disableurl = true;
-                r.personIdent='';
-                r.age=0;
-                r.birthdate='';
-                r.sex='';
             relations.add(r);
         }
         return relations;
