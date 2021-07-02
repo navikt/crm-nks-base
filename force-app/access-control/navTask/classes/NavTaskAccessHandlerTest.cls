@@ -112,6 +112,7 @@ private class NavTaskAccessHandlerTest {
 
     @IsTest
     private static void grantAccess_whenThmeIsServiceklager() {
+       
         Person__c person = TestDataFactory.getPersons(1, false)[0];
         person.INT_Confidential__c = 'UGRADERT';
         person.INT_IsNavEmployee__c = false;
@@ -119,8 +120,14 @@ private class NavTaskAccessHandlerTest {
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
         Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
 
+        Common_Code__c code=new Common_Code__c();
+        code.Name='SERVICEKLAGER';
+        code.CRM_Code__c='SER';
+        code.CRM_Code_Set__c='Tema';
+        insert code;
+
         Test.startTest();
-        NavTask__c task = new NavTask__c(CRM_Account__c = accountId);
+        NavTask__c task = new NavTask__c(CRM_Account__c = accountId, NKS_Theme__c=code.Id);
         insert task;
         Test.stopTest();
 
