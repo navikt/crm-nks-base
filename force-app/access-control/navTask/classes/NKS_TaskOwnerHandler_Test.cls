@@ -11,10 +11,7 @@
         //we don't want person trigger access handlers to be run on test data insert
         myTriggers.disable(PersonAccessHandler.class);
 
-        Person__c person = TestDataFactory.getPersons(1, false)[0];
-        person.INT_Confidential__c = 'UGRADERT';
-        person.INT_IsNavEmployee__c = false;
-        insert person;
+       
 
         User user=[SELECT Id, ProfileId FROM User WHERE isActive=TRUE LIMIT 1];
         Group queue=TestDataFactory.getQueue('Oslo', 'queue_391', 'NavTask__c');
@@ -24,10 +21,16 @@
             SetupOwnerId= user.ProfileId,
             UserOrQueueId__c=queue.Id
         );
-
-        Account acc=[SELECT Id FROM Account LIMIT 1];
+       
         Test.startTest();
         System.runAs(user) {
+            Person__c person = TestDataFactory.getPersons(1, false)[0];
+            person.INT_Confidential__c = 'UGRADERT';
+            person.INT_IsNavEmployee__c = false;
+            insert person;
+
+            Account acc=[SELECT Id FROM Account LIMIT 1];
+
             NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
             insert task;
         }
@@ -40,21 +43,21 @@
     }
 
     @IsTest
-    private static void testInseertNewTask_whenDefaultOwnerIsSet(){
+    private static void testInseertNewTask_whenDefaultOwnerIsNotSet(){
                 
         //we don't want person trigger access handlers to be run on test data insert
         myTriggers.disable(PersonAccessHandler.class);
 
-        Person__c person = TestDataFactory.getPersons(1, false)[0];
-        person.INT_Confidential__c = 'UGRADERT';
-        person.INT_IsNavEmployee__c = false;
-        insert person;
-
         User user=[SELECT Id, ProfileId FROM User WHERE isActive=TRUE LIMIT 1];
     
-        Account acc=[SELECT Id FROM Account LIMIT 1];
         Test.startTest();
         System.runAs(user) {
+            Person__c person = TestDataFactory.getPersons(1, false)[0];
+            person.INT_Confidential__c = 'UGRADERT';
+            person.INT_IsNavEmployee__c = false;
+            insert person;
+
+            Account acc=[SELECT Id FROM Account LIMIT 1];
             NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
             insert task;
         }
