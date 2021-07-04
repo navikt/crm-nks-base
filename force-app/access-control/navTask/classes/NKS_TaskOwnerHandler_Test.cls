@@ -11,31 +11,24 @@
                 
         //we don't want person trigger access handlers to be run on test data insert
         myTriggers.disable(PersonAccessHandler.class);
-
-       
-
-        User user=[SELECT Id, ProfileId FROM User WHERE isActive=TRUE LIMIT 1];
         Group queue=TestDataFactory.getQueue('Oslo', 'queue_391', 'NavTask__c');
 
         //mock custom settings for default owner
         insert new DefaultRecordOwner__c(
-            SetupOwnerId= user.ProfileId,
+            SetupOwnerId= UserInfo.getProfileId(),
             UserOrQueueId__c=queue.Id
         );
        
+        Person__c person = TestDataFactory.getPersons(1, false)[0];
+        person.INT_Confidential__c = 'UGRADERT';
+        person.INT_IsNavEmployee__c = false;
+        insert person;
+
+        Account acc=[SELECT Id FROM Account LIMIT 1];
         Test.startTest();
-        System.runAs(user) {
-            Person__c person = TestDataFactory.getPersons(1, false)[0];
-            person.INT_Confidential__c = 'UGRADERT';
-            person.INT_IsNavEmployee__c = false;
-            insert person;
-
-            Account acc=[SELECT Id FROM Account LIMIT 1];
-
-            NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
-            insert task;
-        }
        
+        NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
+        insert task;  
         Test.stopTest();
         
         NavTask__c newTask=[SELECT OwnerId FROM NavTask__c LIMIT 1];
@@ -48,28 +41,22 @@
                 
         //we don't want person trigger access handlers to be run on test data insert
         myTriggers.disable(PersonAccessHandler.class);
-
-        User user=[SELECT Id, ProfileId FROM User WHERE isActive=TRUE LIMIT 1];
     
-        Test.startTest();
-        System.runAs(user) {
-            Person__c person = TestDataFactory.getPersons(1, false)[0];
-            person.INT_Confidential__c = 'UGRADERT';
-            person.INT_IsNavEmployee__c = false;
-            insert person;
+        Person__c person = TestDataFactory.getPersons(1, false)[0];
+        person.INT_Confidential__c = 'UGRADERT';
+        person.INT_IsNavEmployee__c = false;
+        insert person;
 
-            Account acc=[SELECT Id FROM Account LIMIT 1];
-            NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
-            insert task;
-        }
-       
+        Account acc=[SELECT Id FROM Account LIMIT 1];
+
+        Test.startTest();         
+        NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
+        insert task;
         Test.stopTest();
         
         NavTask__c newTask=[SELECT OwnerId FROM NavTask__c LIMIT 1];
-        System.assertEquals(user.Id, newTask.OwnerId);
-
+        System.assertEquals(UserInfo.getUserId(), newTask.OwnerId);
     }
-
 }
 
 
