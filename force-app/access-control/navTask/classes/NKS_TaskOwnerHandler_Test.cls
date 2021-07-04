@@ -3,6 +3,7 @@
     @TestSetup
     private static void setupTestData() {
         TestDataFactory.getQueue('Oslo', 'queue_391', 'NavTask__c');
+        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
     }
 
     @IsTest
