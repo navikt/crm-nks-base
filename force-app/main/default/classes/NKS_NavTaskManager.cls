@@ -32,6 +32,7 @@ public with sharing class NKS_NavTaskManager {
         };
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
+        apiCtrl.setSystemContext();
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
 
@@ -90,6 +91,7 @@ public with sharing class NKS_NavTaskManager {
 
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
+        apiCtrl.setSystemContext();
         //External reference for the specific task as a URL path paramter
         //When field is queried by flow a zero decimal is added even though the field is without decimals. Workaround by converting to INT before converting to String.
         Map<String, String> paramMap = new Map<String, String>{
@@ -142,6 +144,7 @@ public with sharing class NKS_NavTaskManager {
         };
 
         ApiController apiCtrl = new ApiController();
+        apiCtrl.setSystemContext();
         Map<String, String> paramMap = new Map<String, String>{ 'tema' => themeCode };
         apiCtrl.initRequest('Oppgave_API', 'GET_OPPGAVETYPE', paramMap);
         apiCtrl.addServiceAuthHeader('Oppgave');

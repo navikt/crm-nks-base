@@ -99,10 +99,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>OUTBOUND_NAV_TASK.NKS_Task_Type__c</assignToReference>
+            <assignToReference>OUTBOUND_NAV_TASK.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_NAV_Task.NKS_Task_Type__c</elementReference>
+                <elementReference>Get_NAV_Task.NKS_TaskType__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>

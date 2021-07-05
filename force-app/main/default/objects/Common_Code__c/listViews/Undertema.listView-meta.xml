@@ -12,5 +12,5 @@
         <operation>equals</operation>
         <value>Behandlingstema</value>
     </filters>
-    <label>Undertema</label>
+    <label>Gjelder</label>
 </ListView>

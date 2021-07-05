@@ -1,0 +1,21 @@
+.THIS .MaleFilled,
+.THIS .male {
+    fill: #ffffff;
+    background-color: #3385d1;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}
+
+.THIS .female {
+    fill: #ffffff;
+    background-color: #c86151;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}
+
+.THIS .neutral {
+    fill: #ffffff;
+    background-color: #000000;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}

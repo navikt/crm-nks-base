@@ -105,7 +105,7 @@ public without sharing class FamilyRelationViewerController {
                 maritalrelation.birthdate = birthdate;  
                 if(marriedto.INT_Sex__c == 'Kvinne') maritalrelation.color = 'pink';
                 else if (marriedto.INT_Sex__c == 'Mann') maritalrelation.color = 'blue'; 
-                if (marriedto.CRM_Account__r.Name == 'Ikke tilgjengelig')
+                if (marriedto.INT_Confidential__c != 'UGRADERT' || marriedto.INT_IsNAvEmployee__c==true)
                     maritalrelation.disableurl = true;
             }
             maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize();
@@ -152,7 +152,7 @@ public without sharing class FamilyRelationViewerController {
                 if (role == 'Barn') r.sex = 'Gutt';
             }
             if (role == 'Barn') r.child = true;
-            if (person.CRM_Account__r.Name == 'Ikke tilgjengelig')
+            if (person.INT_Confidential__c != 'UGRADERT' || person.INT_IsNAvEmployee__c==true)
                 r.disableurl = true;
             relations.add(r);
         }
@@ -170,7 +170,9 @@ public without sharing class FamilyRelationViewerController {
                 INT_DateOfBirth__c,
                 INT_Sex__c,
                 CRM_Account__c,
-                CRM_Account__r.Name
+                CRM_Account__r.Name,
+                INT_Confidential__c, 
+                INT_IsNavEmployee__c
             FROM Person__c
             WHERE Name IN :relatedPersonIds ORDER BY INT_DateOfBirth__c DESC
         ];
@@ -182,7 +184,7 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getPerson(Id personId) {
         return [
-            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c
+            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
             FROM Person__c
             WHERE Id = :personId
             LIMIT 1
@@ -191,7 +193,7 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getMaritalPerson(String personId) {
         return [
-            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c
+            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
             FROM Person__c
             WHERE Name = :personId
             LIMIT 1

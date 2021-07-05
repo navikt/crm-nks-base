@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -50,6 +50,25 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.NKS_Comment_History__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NKS_Task_Version__c}</leftValue>
+                        <operator>GT</operator>
+                        <rightValue>1</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NKS_Comments__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NKS_Task_Version__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>1</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6fe406e7-434d-4765-ab67-549ee78a5706</name>

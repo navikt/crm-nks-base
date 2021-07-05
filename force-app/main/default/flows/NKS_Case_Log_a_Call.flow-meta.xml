@@ -516,6 +516,28 @@
         </defaultConnector>
         <defaultConnectorLabel>Case Open</defaultConnectorLabel>
         <rules>
+            <name>Case_Closed_Without_Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Without_Account_Screen</targetReference>
+            </connector>
+            <label>Case Closed Without Account</label>
+        </rules>
+        <rules>
             <name>Case_Closed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -1199,6 +1221,43 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>Screen shown when case was closed without account connection</description>
+        <name>Closed_Without_Account_Screen</name>
+        <label>Closed Without Account Screen</label>
+        <locationX>778</locationX>
+        <locationY>558</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Closed_WO_Account_Text</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h3</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>center</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <stringValue>Henvendelsen ble lukket uten tilknytning til bruker</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
