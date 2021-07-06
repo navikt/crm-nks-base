@@ -1,34 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <caseValues>
         <article>Definite</article>
         <plural>false</plural>
-        <value>Beskjeden</value>
+        <value>Nyheten</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>false</plural>
-        <value>Beskjed</value>
+        <value>Nyhet</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>false</plural>
-        <value>Beskjed</value>
+        <value>Nyhet</value>
     </caseValues>
     <caseValues>
         <article>Definite</article>
         <plural>true</plural>
-        <value>Beskjedene</value>
+        <value>Nyhetene</value>
     </caseValues>
     <caseValues>
         <article>Indefinite</article>
         <plural>true</plural>
-        <value>Beskjeder</value>
+        <value>Nyheter</value>
     </caseValues>
     <caseValues>
         <article>None</article>
         <plural>true</plural>
-        <value>Beskjeder</value>
+        <value>Nyheter</value>
     </caseValues>
     <gender>Neuter</gender>
     <layouts>
@@ -38,7 +38,7 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <nameFieldLabel><!-- Title --></nameFieldLabel>
+    <nameFieldLabel>Tittel</nameFieldLabel>
     <recordTypes>
         <label>Nyheter</label>
         <name>News</name>
