@@ -27,7 +27,8 @@ public with sharing class NKS_HenvendelseListController {
                 resp.getBody(),
                 NKS_HenvendelseList.class
             );
-
+            //Filters out henvendelse with theme SER
+            applyThemeFilter(henvList.henvendelser);
             return buildMessageThreads(henvList.henvendelser);
         } else {
             LoggerUtility logger = new LoggerUtility('Henvendelse');
@@ -47,6 +48,24 @@ public with sharing class NKS_HenvendelseListController {
                 );
             } else {
                 throw new AuraHandledException('Feil ved henting av meldinger \n ' + 'Status: ' + resp.getStatus());
+            }
+        }
+    }
+
+    /**
+     * @description: NKS-616 filterins out theme SER as full access implementation is not yet implemented
+     * @author Stian Ruud Schikora | 07-06-2021
+     * @param henvList
+     **/
+    private static void applyThemeFilter(List<NKS_Henvendelse> henvList) {
+        for (Integer i = henvList.size() - 1; i >= 0; i--) {
+            //Soft implementation of access control related to SER theme, as not all NKS users should have access to this
+            if (
+                henvList[i].tema == 'SER' ||
+                (henvList[i].journalfortInformasjon != null &&
+                henvList[i].journalfortInformasjon.journalfortTema == 'SER')
+            ) {
+                henvList.remove(i);
             }
         }
     }
