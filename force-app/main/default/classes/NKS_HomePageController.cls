@@ -95,8 +95,8 @@ public with sharing class NKS_HomePageController {
                 record.imageurl = getImageUrl(r.Id);
             if (content != null) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
-                if (record.content.length() > 200) {
-                    record.summary = record.content.mid(0, 200) + '...';
+                if (record.content.length() > 600) {
+                    record.summary = record.content.mid(0, 600) + '...';
                 } else
                     record.summary = record.content;
             }

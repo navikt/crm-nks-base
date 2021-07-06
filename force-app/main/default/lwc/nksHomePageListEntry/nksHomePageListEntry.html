@@ -1,8 +1,8 @@
 <template>
     <div class="slds-grid slds-gutters">
         <template if:true={record.imageurl}>
-            <div class="slds-col slds-size_1-of-3">
-                <img aria-hidden="true" src={record.imageurl} />
+            <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
+                <img aria-hidden="true" src={record.imageurl} style="max-height:180px;"/>
             </div>
         </template>
 
