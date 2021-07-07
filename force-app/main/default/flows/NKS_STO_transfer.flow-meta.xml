@@ -1,31 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Query all queues that handles STO</description>
+        <name>Get_STO_Queues</name>
+        <label>Get STO Queues</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <actionName>FlowFindCollection</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Picklist_Loop</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>U__outputCollection</typeName>
+            <typeValue>Group</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>BypassSharing</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>FieldApiINames</name>
+            <value>
+                <stringValue>Id, Name</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectName</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhereClause</name>
+            <value>
+                <stringValue>Type = &apos;Queue&apos; AND Id IN (SELECT QueueId from QueueSobject where SobjectType = &apos;Thread__c&apos;) </stringValue>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>STO_QUEUES</assignToReference>
+            <name>outputCollection</name>
+        </outputParameters>
+    </actionCalls>
+    <assignments>
+        <description>Add STO queue ID to the collection</description>
+        <name>Add_Queue_ID</name>
+        <label>Add Queue ID</label>
+        <locationX>264</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Queue_IDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Picklist_Loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Queue_Name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Queue_Name</name>
+        <label>Add Queue Name</label>
+        <locationX>264</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>Queue_Names</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Picklist_Loop.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Picklist_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_NAV_Task_Values</name>
+        <label>Assign NAV Task Values</label>
+        <locationX>264</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.CRM_NavUnit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NAV_Unit_Lookup.recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.NKS_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>DEFAULT COMMENTS?</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Insert_NAV_Task</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Transfer_to_NAV_Unit</name>
         <choiceText>NAV-kontor</choiceText>
         <dataType>String</dataType>
+        <value>
+            <stringValue>NAV_UNIT_TRANSFER</stringValue>
+        </value>
     </choices>
     <choices>
         <name>Transfer_to_Queue</name>
         <choiceText>Annen kø</choiceText>
         <dataType>String</dataType>
+        <value>
+            <stringValue>QUEUE_TRANSFER</stringValue>
+        </value>
     </choices>
-    <dynamicChoiceSets>
-        <name>STO_QUEUES</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filters>
-            <field>Type</field>
-            <operator>Contains</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <object>Group</object>
-        <valueField>Id</valueField>
-    </dynamicChoiceSets>
+    <decisions>
+        <description>Check if the inquiry should be transferred to a Salesforce queue or to another NAV unit (via NAV Task)</description>
+        <name>Transfer_Decision</name>
+        <label>Transfer Decision</label>
+        <locationX>176</locationX>
+        <locationY>854</locationY>
+        <defaultConnector>
+            <targetReference>Assign_NAV_Task_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Transfer to NAV Unit</defaultConnectorLabel>
+        <rules>
+            <name>Queue_Transfer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Transfer_to</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Transfer_to_Queue</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Queue Transfer</label>
+        </rules>
+    </decisions>
     <interviewLabel>STO transfer {!$Flow.CurrentDateTime}</interviewLabel>
     <label>STO transfer</label>
+    <loops>
+        <description>Loop to generate choice values for queue selection</description>
+        <name>Picklist_Loop</name>
+        <label>Picklist Loop</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <collectionReference>STO_QUEUES</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Queue_ID</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Transfer_Screen</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -45,16 +175,29 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Insert_NAV_Task</name>
+        <label>Insert NAV Task</label>
+        <locationX>264</locationX>
+        <locationY>1094</locationY>
+        <connector>
+            <targetReference>Send_NAV_Task</targetReference>
+        </connector>
+        <inputReference>STO_NAV_TASK</inputReference>
+    </recordCreates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Screen including transfer options.</description>
         <name>Transfer_Screen</name>
         <label>Transfer Screen</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>734</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Transfer_Decision</targetReference>
+        </connector>
         <fields>
             <name>Transfer_to</name>
             <choiceReferences>Transfer_to_Queue</choiceReferences>
@@ -66,29 +209,160 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Queue_Picklist</name>
-            <choiceReferences>STO_QUEUES</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Kø:</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <name>STO_Queue_Picklist</name>
+            <extensionName>c:fbc_quickChoiceFSC</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>displayMode</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputMode</name>
+                <value>
+                    <stringValue>Dual String Collections</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>choiceLabels</name>
+                <value>
+                    <elementReference>Queue_Names</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>choiceValues</name>
+                <value>
+                    <elementReference>Queue_IDs</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>masterLabel</name>
+                <value>
+                    <stringValue>Kø:</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Transfer_to</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Transfer_to_Queue</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NAV_Unit_Lookup</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>CRM_NavUnit__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>NAV-enhet</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>NavTask__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Transfer_to</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Transfer_to_NAV_Unit</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
+        <showHeader>true</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Transfer_Screen</targetReference>
+            <targetReference>Get_STO_Queues</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Send_NAV_Task</name>
+        <label>Send NAV Task</label>
+        <locationX>264</locationX>
+        <locationY>1214</locationY>
+        <flowName>NKS_Send_NAV_Task</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>STO_NAV_TASK.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>Queue_IDs</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>STO queue names</description>
+        <name>Queue_Names</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>NAV task to be generated when transferring STO to another NAV Unit</description>
+        <name>STO_NAV_TASK</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
+        <name>STO_QUEUES</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Group</objectType>
     </variables>
 </Flow>
