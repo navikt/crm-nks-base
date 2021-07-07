@@ -241,17 +241,8 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         private void setPowerOfAttorney() {
+            Boolean activeAttorney = false;
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
-                badges.add(
-                    new Badge(
-                        'powerOfAttorney',
-                        'Fullmakt',
-                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
-                        '',
-                        '',
-                        true
-                    )
-                );
                 Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
                     Integer i = 0;
@@ -261,6 +252,7 @@ public with sharing class NKS_PersonBadgesController {
                             List<PowerOfAttorney>.class
                         )
                     ) {
+                        activeAttorney = poa.gyldigTilOgMed >= Date.today();
                         poa.id = '' + i;
                         relatedPersonMap.put(poa.motpartsPersonident, null);
                         if (poa.omraader != null && poa.omraader.size() > 0) {
@@ -299,6 +291,20 @@ public with sharing class NKS_PersonBadgesController {
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av fullmakts detaljer');
                 }
+            }
+
+            //Only add the badge if there is at least one active power of attorney
+            if (activeAttorney) {
+                badges.add(
+                    new Badge(
+                        'powerOfAttorney',
+                        'Fullmakt',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        '',
+                        '',
+                        true
+                    )
+                );
             }
         }
 
