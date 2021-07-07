@@ -33,11 +33,11 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.2.0.LATEST"
+                    "versionNumber": "0.1.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.2.0.LATEST"
+                    "versionNumber": "0.1.0.LATEST"
                 }
             ]
         }
