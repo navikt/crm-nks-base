@@ -99,7 +99,7 @@ public without sharing class FamilyRelationViewerController {
                 String birthdate;
                 if (marriedto.INT_DateOfBirth__c != null) {
                     DateTime d = Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00');
-                    birthdate = d.format('dd.MM.YYYY');
+                    birthdate = d.format('dd.MM.yyyy');
                     maritalrelation.age = Integer.valueOf(Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365);
                 }
                 maritalrelation.birthdate = birthdate;  
@@ -125,7 +125,7 @@ public without sharing class FamilyRelationViewerController {
             String birthdate;
             if (person.INT_DateOfBirth__c != null) {
                 DateTime d = Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00');
-                birthdate = d.format('dd.MM.YYYY');
+                birthdate = d.format('dd.MM.yyyy');
                 age = Integer.valueOf(
                     Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
                 );
