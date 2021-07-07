@@ -19,7 +19,6 @@ export default class PersonRelationViewer extends LightningElement {
     wiredRecordInfo({ data }) {
         if (data) {
             refreshApex(this.relations);
-            console.log('DONEEEE');
         }
     }
 
