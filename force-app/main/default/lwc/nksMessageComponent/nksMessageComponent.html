@@ -1,0 +1,11 @@
+<template>
+    <c-crm-messaging-message-component record-id={recordId} single-thread={singleThread}>
+        <lightning-button-icon-stateful
+            slot="toolbar"
+            icon-name="utility:change_owner"
+            alternative-text="Overfør"
+            onclick={startTransferFlow}
+        >
+        </lightning-button-icon-stateful>
+    </c-crm-messaging-message-component>
+</template>

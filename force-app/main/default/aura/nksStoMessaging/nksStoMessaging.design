@@ -1,0 +1,3 @@
+<design:component label="NKS STO Messaging">
+    <design:attribute name="singleThread" label="Single Thread Mode enabled" default="true" />
+</design:component>
