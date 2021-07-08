@@ -4,7 +4,7 @@
         <description>Query all queues that handles STO</description>
         <name>Get_STO_Queues</name>
         <label>Get STO Queues</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
@@ -48,7 +48,7 @@
         <description>Add STO queue ID to the collection</description>
         <name>Add_Queue_ID</name>
         <label>Add Queue ID</label>
-        <locationX>264</locationX>
+        <locationX>270</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>Queue_IDs</assignToReference>
@@ -64,7 +64,7 @@
     <assignments>
         <name>Add_Queue_Name</name>
         <label>Add Queue Name</label>
-        <locationX>264</locationX>
+        <locationX>270</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Queue_Names</assignToReference>
@@ -80,7 +80,7 @@
     <assignments>
         <name>Assign_NAV_Task_Values</name>
         <label>Assign NAV Task Values</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>STO_NAV_TASK.CRM_NavUnit__c</assignToReference>
@@ -120,7 +120,7 @@
         <description>Check if the inquiry should be transferred to a Salesforce queue or to another NAV unit (via NAV Task)</description>
         <name>Transfer_Decision</name>
         <label>Transfer Decision</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Assign_NAV_Task_Values</targetReference>
@@ -136,6 +136,9 @@
                     <elementReference>Transfer_to_Queue</elementReference>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Assign_Case_to_Queue</targetReference>
+            </connector>
             <label>Queue Transfer</label>
         </rules>
     </decisions>
@@ -145,7 +148,7 @@
         <description>Loop to generate choice values for queue selection</description>
         <name>Picklist_Loop</name>
         <label>Picklist Loop</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <collectionReference>STO_QUEUES</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -178,19 +181,39 @@
     <recordCreates>
         <name>Insert_NAV_Task</name>
         <label>Insert NAV Task</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>1094</locationY>
         <connector>
             <targetReference>Send_NAV_Task</targetReference>
         </connector>
         <inputReference>STO_NAV_TASK</inputReference>
     </recordCreates>
+    <recordUpdates>
+        <name>Assign_Case_to_Queue</name>
+        <label>Assign Case to Queue</label>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>STO_Queue_Picklist.value</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Screen including transfer options.</description>
         <name>Transfer_Screen</name>
         <label>Transfer Screen</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>734</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -306,7 +329,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_STO_Queues</targetReference>
@@ -316,7 +339,7 @@
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>264</locationX>
+        <locationX>314</locationX>
         <locationY>1214</locationY>
         <flowName>NKS_Send_NAV_Task</flowName>
         <inputAssignments>
