@@ -252,7 +252,7 @@ public with sharing class NKS_PersonBadgesController {
                             List<PowerOfAttorney>.class
                         )
                     ) {
-                        activeAttorney = poa.gyldigTilOgMed >= Date.today();
+                        activeAttorney = poa.gyldigFraOgMed <= Date.today() && poa.gyldigTilOgMed >= Date.today();
                         poa.id = '' + i;
                         relatedPersonMap.put(poa.motpartsPersonident, null);
                         if (poa.omraader != null && poa.omraader.size() > 0) {
