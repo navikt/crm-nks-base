@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Close_Case_Tab</name>
+        <label>Close Case Tab</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <actionName>c:nksTabCloser</actionName>
+        <actionType>component</actionType>
+    </actionCalls>
+    <actionCalls>
         <description>Query all queues that handles STO</description>
         <name>Get_STO_Queues</name>
         <label>Get STO Queues</label>
@@ -193,6 +201,9 @@
         <label>Assign Case to Queue</label>
         <locationX>50</locationX>
         <locationY>974</locationY>
+        <connector>
+            <targetReference>Close_Case_Tab</targetReference>
+        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
