@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class NksMessageComponent extends LightningElement {
     @api recordId;
+    @api objectApiName;
     @api singleThread;
 
     startTransferFlow() {
@@ -15,5 +16,9 @@ export default class NksMessageComponent extends LightningElement {
         });
 
         this.dispatchEvent(toolbarActionEvent);
+    }
+
+    get isCase() {
+        return this.objectApiName === 'Case';
     }
 }

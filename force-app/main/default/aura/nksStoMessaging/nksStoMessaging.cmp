@@ -1,9 +1,10 @@
-<aura:component implements="force:hasRecordId, flexipage:availableForAllPageTypes">
+<aura:component implements="force:hasRecordId, force:hasSObjectName, flexipage:availableForAllPageTypes">
     <aura:attribute name="showPanel" type="Boolean" default="false"></aura:attribute>
     <aura:attribute name="singleThread" type="Boolean" default="true"></aura:attribute>
 
     <c:nksMessageComponent
         recordId="{!v.recordId}"
+        objectApiName="{!v.sObjectName}"
         singleThread="{!v.singleThread}"
         ontoolbaraction="{!c.handleToolbarAction}"
     ></c:nksMessageComponent>
