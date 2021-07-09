@@ -109,9 +109,18 @@ private with sharing class NKS_PersonBadgesController_Test {
 
     @IsTest
     static void setBadgeData_PowerOfAttorneyAllAreas() {
-        String jsonString = '[{"motpartsRolle": "FULLMEKTIG","motpartsPersonident": "40000000000","omraader": ["*"],"gyldigFraOgMed": "2020-02-05","gyldigTilOgMed": "2021-02-05"}]';
+        NKS_PersonBadgesController.PowerOfAttorney poa = new NKS_PersonBadgesController.PowerOfAttorney();
+        poa.motpartsRolle = 'FULLMEKTIG';
+        poa.motpartsPersonident = '40000000000';
+        poa.omraader = new List<String>{ '*' };
+        poa.gyldigFraOgMed = Date.today();
+        poa.gyldigTilOgMed = Date.today().addDays(1);
 
-        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(INT_PowerOfAttorney__c = jsonString));
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(
+                INT_PowerOfAttorney__c = JSON.serialize(new List<NKS_PersonBadgesController.PowerOfAttorney>{ poa })
+            )
+        );
 
         NKS_PersonBadgesController.PersonBadgeData result;
         Test.startTest();
@@ -132,9 +141,18 @@ private with sharing class NKS_PersonBadgesController_Test {
 
     @IsTest
     static void setBadgeData_PowerOfAttorneySomeAreas() {
-        String jsonString = '[{"motpartsRolle": "FULLMEKTIG","motpartsPersonident": "40000000000","omraader": ["ARB"],"gyldigFraOgMed": "2020-02-05","gyldigTilOgMed": "2021-02-05"}]';
+        NKS_PersonBadgesController.PowerOfAttorney poa = new NKS_PersonBadgesController.PowerOfAttorney();
+        poa.motpartsRolle = 'FULLMEKTIG';
+        poa.motpartsPersonident = '40000000000';
+        poa.omraader = new List<String>{ 'ARB' };
+        poa.gyldigFraOgMed = Date.today();
+        poa.gyldigTilOgMed = Date.today().addDays(1);
 
-        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(INT_PowerOfAttorney__c = jsonString));
+        Person__c p = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(
+                INT_PowerOfAttorney__c = JSON.serialize(new List<NKS_PersonBadgesController.PowerOfAttorney>{ poa })
+            )
+        );
 
         NKS_PersonBadgesController.PersonBadgeData result;
         Test.startTest();
@@ -163,6 +181,6 @@ private with sharing class NKS_PersonBadgesController_Test {
         System.assertEquals(0, result.powerOfAttorneys.size(), 'Expected no guardianships');
         System.assertEquals(1, result.errors.size(), 'Expected one error');
 
-        System.assertEquals(1, result.badges.size(), 'Expected one guardianship badge');
+        System.assertEquals(0, result.badges.size(), 'Expected no guardianship badges');
     }
 }
