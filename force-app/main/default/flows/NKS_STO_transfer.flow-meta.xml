@@ -4,7 +4,7 @@
         <name>Close_Case_Tab</name>
         <label>Close Case Tab</label>
         <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationY>1454</locationY>
         <actionName>c:nksTabCloser</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -12,8 +12,8 @@
         <description>Query all queues that handles STO</description>
         <name>Get_STO_Queues</name>
         <label>Get STO Queues</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>358</locationX>
+        <locationY>398</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -52,12 +52,34 @@
             <name>outputCollection</name>
         </outputParameters>
     </actionCalls>
+    <actionCalls>
+        <description>Call apex to calculate the due date for the NAV task</description>
+        <name>Get_Task_due_date</name>
+        <label>Get Task due date</label>
+        <locationX>666</locationX>
+        <locationY>2006</locationY>
+        <actionName>nksDueDateUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Insert_NAV_Task</targetReference>
+        </connector>
+        <inputParameters>
+            <name>taskList</name>
+            <value>
+                <elementReference>STO_NAV_TASK</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>STO_NAV_TASK.CRM_DueDate__c</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <assignments>
         <description>Add STO queue ID to the collection</description>
         <name>Add_Queue_ID</name>
         <label>Add Queue ID</label>
-        <locationX>270</locationX>
-        <locationY>518</locationY>
+        <locationX>446</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Queue_IDs</assignToReference>
             <operator>Add</operator>
@@ -72,8 +94,8 @@
     <assignments>
         <name>Add_Queue_Name</name>
         <label>Add Queue Name</label>
-        <locationX>270</locationX>
-        <locationY>638</locationY>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Queue_Names</assignToReference>
             <operator>Add</operator>
@@ -86,10 +108,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_NAV_Task_Task_Type</name>
+        <label>Assign NAV Task Task Type</label>
+        <locationX>1018</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.NKS_TaskType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Common_Code_Loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Common_Code_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_NAV_Task_Theme_Code</name>
+        <label>Assign NAV Task Theme Code</label>
+        <locationX>754</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Common_Code_Loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Common_Code_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_NAV_Task_Values</name>
         <label>Assign NAV Task Values</label>
-        <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationX>666</locationX>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>STO_NAV_TASK.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -104,8 +158,29 @@
                 <elementReference>Task_Description</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.CRM_NoPersonInformation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>STO_NAV_TASK.CRM_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NORM</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Insert_NAV_Task</targetReference>
+            <targetReference>Get_Task_due_date</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -125,13 +200,38 @@
         </value>
     </choices>
     <decisions>
+        <name>Check_Common_Code_Type</name>
+        <label>Check Common Code Type</label>
+        <locationX>886</locationX>
+        <locationY>1454</locationY>
+        <defaultConnector>
+            <targetReference>Assign_NAV_Task_Task_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Is Task Type Code</defaultConnectorLabel>
+        <rules>
+            <name>Is_Theme_Code</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Common_Code_Loop.CRM_Code_Set__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tema</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_NAV_Task_Theme_Code</targetReference>
+            </connector>
+            <label>Is Theme Code</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Check if the inquiry should be transferred to a Salesforce queue or to another NAV unit (via NAV Task)</description>
         <name>Transfer_Decision</name>
         <label>Transfer Decision</label>
-        <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationX>358</locationX>
+        <locationY>1094</locationY>
         <defaultConnector>
-            <targetReference>Assign_NAV_Task_Values</targetReference>
+            <targetReference>Get_Theme_Common_Code</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Transfer to NAV Unit</defaultConnectorLabel>
         <rules>
@@ -150,14 +250,38 @@
             <label>Queue Transfer</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>NAV_Unit_Transfer_Text</name>
+        <dataType>String</dataType>
+        <expression>&apos;Samtalen ble overført til &apos; + {!NAV_Unit_Allocator.selectedUnitName}</expression>
+    </formulas>
+    <formulas>
+        <name>Queue_Transfer_Text</name>
+        <dataType>String</dataType>
+        <expression>&apos;Samtalen ble overført til &apos; + {!STO_Queue_Picklist.selectedLabel}</expression>
+    </formulas>
     <interviewLabel>STO transfer {!$Flow.CurrentDateTime}</interviewLabel>
     <label>STO transfer</label>
+    <loops>
+        <name>Common_Code_Loop</name>
+        <label>Common Code Loop</label>
+        <locationX>666</locationX>
+        <locationY>1334</locationY>
+        <collectionReference>Get_Theme_Common_Code</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Check_Common_Code_Type</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Assign_NAV_Task_Values</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <description>Loop to generate choice values for queue selection</description>
         <name>Picklist_Loop</name>
         <label>Picklist Loop</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>358</locationX>
+        <locationY>518</locationY>
         <collectionReference>STO_QUEUES</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -189,8 +313,8 @@
     <recordCreates>
         <name>Insert_NAV_Task</name>
         <label>Insert NAV Task</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>666</locationX>
+        <locationY>2126</locationY>
         <connector>
             <targetReference>Send_NAV_Task</targetReference>
         </connector>
@@ -200,11 +324,11 @@
         <description>Query the case information</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>182</locationX>
+        <locationX>358</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_STO_Queues</targetReference>
+            <targetReference>Get_Thread</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -217,13 +341,76 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Queries the correct theme and task type common codes for the NAV Task</description>
+        <name>Get_Theme_Common_Code</name>
+        <label>Get NAV Task Common Codes</label>
+        <locationX>666</locationX>
+        <locationY>1214</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Common_Code_Loop</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>KNA</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>KONT_BRUK</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Oppgavetyper</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tema</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get the STO Thread information</description>
+        <name>Get_Thread</name>
+        <label>Get Thread</label>
+        <locationX>358</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_STO_Queues</targetReference>
+        </connector>
+        <filters>
+            <field>CRM_Related_Object__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Thread__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Assign_Case_to_Queue</name>
         <label>Assign Case to Queue</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <connector>
-            <targetReference>Close_Case_Tab</targetReference>
+            <targetReference>Submit_Transfer_Event</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -245,8 +432,8 @@
         <description>Screen including transfer options.</description>
         <name>Transfer_Screen</name>
         <label>Transfer Screen</label>
-        <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationX>358</locationX>
+        <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -377,7 +564,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>232</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -387,13 +574,59 @@
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationX>666</locationX>
+        <locationY>2246</locationY>
+        <connector>
+            <targetReference>Submit_Transfer_Event_0</targetReference>
+        </connector>
         <flowName>NKS_Send_NAV_Task</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>STO_NAV_TASK.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Add a transfer event message to the thread</description>
+        <name>Submit_Transfer_Event</name>
+        <label>Submit Transfer Event</label>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
+        <connector>
+            <targetReference>Close_Case_Tab</targetReference>
+        </connector>
+        <flowName>CRM_Create_Thread_Event</flowName>
+        <inputAssignments>
+            <name>Event_Message</name>
+            <value>
+                <elementReference>Queue_Transfer_Text</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Thread_ID</name>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Add a transfer event message to the thread</description>
+        <name>Submit_Transfer_Event_0</name>
+        <label>Submit Transfer Event</label>
+        <locationX>666</locationX>
+        <locationY>2366</locationY>
+        <flowName>CRM_Create_Thread_Event</flowName>
+        <inputAssignments>
+            <name>Event_Message</name>
+            <value>
+                <elementReference>Queue_Transfer_Text</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Thread_ID</name>
+            <value>
+                <elementReference>Get_Thread.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
