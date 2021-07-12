@@ -11,11 +11,19 @@
             </template>
             <template if:false={relation.disableurl}>
                 <lightning-formatted-url
-                        value={recordPageUrl}
-                        label={relation.personName}
-                        onclick={navigateToSObject}
-                    ></lightning-formatted-url>&nbsp;
-                <lightning-icon icon-name="utility:user" size="x-small" alternative-text={relation.sex} class={relation.color}></lightning-icon> {relation.age} år. <br/>{relation.birthdate} • {relation.personIdent}    
+                    value={recordPageUrl}
+                    label={relation.personName}
+                    onclick={navigateToSObject}
+                ></lightning-formatted-url
+                >&nbsp;
+                <lightning-icon
+                    icon-name="utility:user"
+                    size="x-small"
+                    alternative-text={relation.sex}
+                    class={relation.color}
+                ></lightning-icon>
+                {relation.age} år. <b if:true={relation.deceased}>(DØD)</b> <br />{relation.birthdate} •
+                {relation.personIdent}
             </template>
         </p>
     </div>
