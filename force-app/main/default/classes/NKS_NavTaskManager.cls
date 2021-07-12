@@ -32,7 +32,10 @@ public with sharing class NKS_NavTaskManager {
         };
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
-        apiCtrl.setSystemContext();
+        //If no person access, callout is performed in system mode
+        if (!hasPersonAccess(task)) {
+            apiCtrl.setSystemContext();
+        }
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
 
@@ -74,6 +77,24 @@ public with sharing class NKS_NavTaskManager {
         }
 
         return resp;
+    }
+
+    /**
+     * @description: Checks if the running user has access to the person record. Determines context of API callout
+     * @author Stian Ruud Schikora | 07-12-2021
+     * @param task
+     * @return Boolean
+     **/
+    private static Boolean hasPersonAccess(NavTask__c task) {
+        Id userId = UserInfo.getUserId();
+        Id personId = [SELECT Id, CRM_Person__c FROM Account WHERE Id = :task.CRM_Account__c]?.CRM_Person__c;
+
+        Boolean access = personId != null
+            ? [SELECT RecordId, HasReadAccess FROM UserRecordAccess WHERE UserId = :userId AND RecordId = :personId]
+              .HasReadAccess
+            : false;
+
+        return access;
     }
 
     /**

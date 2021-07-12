@@ -52,6 +52,8 @@ public without sharing class FamilyRelationViewerController {
         @AuraEnabled
         public String sex;
         @AuraEnabled
+        public Boolean deceased;
+        @AuraEnabled
         public Integer age;
         @AuraEnabled
         public String birthdate;
@@ -60,7 +62,7 @@ public without sharing class FamilyRelationViewerController {
         @AuraEnabled
         public Boolean child;
         @AuraEnabled
-        public String color; 
+        public String color;
     }
 
     private static List<Person__c> removeChildrenUnder21(
@@ -100,12 +102,16 @@ public without sharing class FamilyRelationViewerController {
                 if (marriedto.INT_DateOfBirth__c != null) {
                     DateTime d = Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00');
                     birthdate = d.format('dd.MM.yyyy');
-                    maritalrelation.age = Integer.valueOf(Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365);
+                    maritalrelation.age = Integer.valueOf(
+                        Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
+                    );
                 }
-                maritalrelation.birthdate = birthdate;  
-                if(marriedto.INT_Sex__c == 'Kvinne') maritalrelation.color = 'pink';
-                else if (marriedto.INT_Sex__c == 'Mann') maritalrelation.color = 'blue'; 
-                if (marriedto.INT_Confidential__c != 'UGRADERT' || marriedto.INT_IsNAvEmployee__c==true)
+                maritalrelation.birthdate = birthdate;
+                if (marriedto.INT_Sex__c == 'Kvinne')
+                    maritalrelation.color = 'pink';
+                else if (marriedto.INT_Sex__c == 'Mann')
+                    maritalrelation.color = 'blue';
+                if (marriedto.INT_Confidential__c != 'UGRADERT' || marriedto.INT_IsNAvEmployee__c == true)
                     maritalrelation.disableurl = true;
             }
             maritalrelation.role = 'Sivilstatus: ' + p.INT_MaritalStatus__c.toLowerCase().capitalize();
@@ -138,21 +144,24 @@ public without sharing class FamilyRelationViewerController {
             r.personIdent = person.Name;
             r.personName = person.CRM_Account__r.Name;
             r.role = role;
-            r.age = age; 
+            r.age = age;
             r.birthdate = birthdate;
             r.sex = person.INT_Sex__c;
+            r.deceased = person.INT_IsDeceased__c;
             r.child = false;
             r.disableurl = false;
-            if (person.INT_Sex__c == 'Kvinne'){
-                r.color = 'pink'; 
-                if (role == 'Barn') r.sex = 'Jente';
+            if (person.INT_Sex__c == 'Kvinne') {
+                r.color = 'pink';
+                if (role == 'Barn')
+                    r.sex = 'Jente';
+            } else if (person.INT_Sex__c == 'Mann') {
+                r.color = 'blue';
+                if (role == 'Barn')
+                    r.sex = 'Gutt';
             }
-            else if (person.INT_Sex__c == 'Mann'){
-                r.color = 'blue'; 
-                if (role == 'Barn') r.sex = 'Gutt';
-            }
-            if (role == 'Barn') r.child = true;
-            if (person.INT_Confidential__c != 'UGRADERT' || person.INT_IsNAvEmployee__c==true)
+            if (role == 'Barn')
+                r.child = true;
+            if (person.INT_Confidential__c != 'UGRADERT' || person.INT_IsNAvEmployee__c == true)
                 r.disableurl = true;
             relations.add(r);
         }
@@ -171,10 +180,12 @@ public without sharing class FamilyRelationViewerController {
                 INT_Sex__c,
                 CRM_Account__c,
                 CRM_Account__r.Name,
-                INT_Confidential__c, 
-                INT_IsNavEmployee__c
+                INT_Confidential__c,
+                INT_IsNavEmployee__c,
+                INT_IsDeceased__c
             FROM Person__c
-            WHERE Name IN :relatedPersonIds ORDER BY INT_DateOfBirth__c DESC
+            WHERE Name IN :relatedPersonIds
+            ORDER BY INT_DateOfBirth__c DESC
         ];
     }
 
@@ -184,7 +195,14 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getPerson(Id personId) {
         return [
-            SELECT Id, INT_MaritalRelation__c, INT_MaritalStatus__c, INT_ActorId__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
+            SELECT
+                Id,
+                INT_MaritalRelation__c,
+                INT_MaritalStatus__c,
+                INT_ActorId__c,
+                INT_DateOfBirth__c,
+                INT_Confidential__c,
+                INT_IsNavEmployee__c
             FROM Person__c
             WHERE Id = :personId
             LIMIT 1
@@ -193,7 +211,16 @@ public without sharing class FamilyRelationViewerController {
 
     private static List<Person__c> getMaritalPerson(String personId) {
         return [
-            SELECT Id, Name, INT_ActorId__c, CRM_Account__c, CRM_Account__r.Name, INT_Sex__c, INT_DateOfBirth__c, INT_Confidential__c, INT_IsNavEmployee__c
+            SELECT
+                Id,
+                Name,
+                INT_ActorId__c,
+                CRM_Account__c,
+                CRM_Account__r.Name,
+                INT_Sex__c,
+                INT_DateOfBirth__c,
+                INT_Confidential__c,
+                INT_IsNavEmployee__c
             FROM Person__c
             WHERE Name = :personId
             LIMIT 1
