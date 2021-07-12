@@ -4,7 +4,7 @@
         <name>Close_Case_Tab</name>
         <label>Close Case Tab</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <actionName>c:nksTabCloser</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -13,7 +13,7 @@
         <name>Get_STO_Queues</name>
         <label>Get STO Queues</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -57,7 +57,7 @@
         <name>Add_Queue_ID</name>
         <label>Add Queue ID</label>
         <locationX>270</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Queue_IDs</assignToReference>
             <operator>Add</operator>
@@ -73,7 +73,7 @@
         <name>Add_Queue_Name</name>
         <label>Add Queue Name</label>
         <locationX>270</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Queue_Names</assignToReference>
             <operator>Add</operator>
@@ -89,19 +89,19 @@
         <name>Assign_NAV_Task_Values</name>
         <label>Assign NAV Task Values</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>STO_NAV_TASK.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NAV_Unit_Lookup.recordId</elementReference>
+                <elementReference>NAV_Unit_Allocator.selectedUnitId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>STO_NAV_TASK.NKS_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>DEFAULT COMMENTS?</stringValue>
+                <elementReference>Task_Description</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -110,7 +110,7 @@
     </assignments>
     <choices>
         <name>Transfer_to_NAV_Unit</name>
-        <choiceText>NAV-kontor</choiceText>
+        <choiceText>NAV-enhet</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>NAV_UNIT_TRANSFER</stringValue>
@@ -129,7 +129,7 @@
         <name>Transfer_Decision</name>
         <label>Transfer Decision</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Assign_NAV_Task_Values</targetReference>
         </defaultConnector>
@@ -157,7 +157,7 @@
         <name>Picklist_Loop</name>
         <label>Picklist Loop</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <collectionReference>STO_QUEUES</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -190,17 +190,38 @@
         <name>Insert_NAV_Task</name>
         <label>Insert NAV Task</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Send_NAV_Task</targetReference>
         </connector>
         <inputReference>STO_NAV_TASK</inputReference>
     </recordCreates>
+    <recordLookups>
+        <description>Query the case information</description>
+        <name>Get_Case</name>
+        <label>Get Case</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_STO_Queues</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Assign_Case_to_Queue</name>
         <label>Assign Case to Queue</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Close_Case_Tab</targetReference>
         </connector>
@@ -225,7 +246,7 @@
         <name>Transfer_Screen</name>
         <label>Transfer Screen</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>854</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -296,29 +317,45 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>NAV_Unit_Lookup</name>
-            <extensionName>flowruntime:lookup</extensionName>
+            <name>Task_Description</name>
+            <fieldText>Oppgavebeskrivelse</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Transfer_to</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Transfer_to_NAV_Unit</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NAV_Unit_Allocator</name>
+            <extensionName>c:nksNavTaskWorkAllocation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>fieldApiName</name>
+                <name>taskType</name>
                 <value>
-                    <stringValue>CRM_NavUnit__c</stringValue>
+                    <stringValue>KNA</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>label</name>
+                <name>theme</name>
                 <value>
-                    <stringValue>NAV-enhet</stringValue>
+                    <stringValue>KNA</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>objectApiName</name>
+                <name>personId</name>
                 <value>
-                    <stringValue>NavTask__c</stringValue>
+                    <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>required</name>
+                <name>hideDelegateToSelf</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -343,7 +380,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_STO_Queues</targetReference>
+            <targetReference>Get_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -351,7 +388,7 @@
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <flowName>NKS_Send_NAV_Task</flowName>
         <inputAssignments>
             <name>recordId</name>
