@@ -19,6 +19,7 @@
             <property name="selectedUnitId" label="Selected Unit Id" type="String" />
             <property name="selectedUnitNumber" label="Selected Unit Number" type="String" role="outputOnly" />
             <property name="assignedResource" label="Assigned Resource" type="String" role="outputOnly" />
+            <property name="hideDelegateToSelf" label="Hide delegate to self option" type="Boolean" role="inputOnly" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

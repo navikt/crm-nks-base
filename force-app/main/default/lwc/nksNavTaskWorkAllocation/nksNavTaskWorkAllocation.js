@@ -35,6 +35,7 @@ export default class NksNavTaskWorkAllocation extends LightningElement {
     runningUserUnitNumber;
     runningUserIdent;
     delegateToSelf = false;
+    @api hideDelegateToSelf = false;
 
     set disableConditionalRendering(value) {
         if (value && (value === true || value.toLowerCase() === 'true')) {

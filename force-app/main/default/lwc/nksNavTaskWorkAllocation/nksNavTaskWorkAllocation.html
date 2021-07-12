@@ -1,6 +1,7 @@
 <template>
     <template if:true={showContent}>
         <lightning-input
+            if:false={hideDelegateToSelf}
             type="checkbox"
             label={labels.DELEGATE_TO_SELF_LABEL}
             name="delegateInput"
