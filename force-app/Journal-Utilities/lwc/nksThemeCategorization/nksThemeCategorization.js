@@ -197,7 +197,7 @@ export default class NksThemeCategorization extends LightningElement {
         let placeholder = '(Ikke valgt)';
         if (this.chosenTheme && this.subthemeMap) {
             let themeInMap = this.chosenTheme in this.subthemeMap;
-            placeholder = this.subthemeMap && themeInMap ? '(Ikke valgt)' : '(Ingen undertema)';
+            placeholder = this.subthemeMap && themeInMap ? '(Ikke valgt)' : '(Ingen gjelder)';
         }
 
         return placeholder;

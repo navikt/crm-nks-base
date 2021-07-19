@@ -32,7 +32,10 @@ public with sharing class NKS_NavTaskManager {
         };
         //Static context requires own instance of the API controller
         ApiController apiCtrl = new ApiController();
-        apiCtrl.setSystemContext();
+        //If no person access, callout is performed in system mode
+        if (!hasPersonAccess(task)) {
+            apiCtrl.setSystemContext();
+        }
         apiCtrl.initRequest('Oppgave_API', 'POST_CREATE_OPPGAVE');
         apiCtrl.addServiceAuthHeader('Oppgave');
 
@@ -43,6 +46,7 @@ public with sharing class NKS_NavTaskManager {
         addXCorrelation(apiCtrl, logger, task);
 
         try {
+            formatComment(taskRequest);
             apiCtrl.setBody(createOppgaveJsonRequest(taskRequest));
             apiCtrl.doCallout();
             Integer statusCode = apiCtrl.getResponse().getStatusCode();
@@ -73,6 +77,45 @@ public with sharing class NKS_NavTaskManager {
         }
 
         return resp;
+    }
+
+    /**
+     * @description: Checks if the running user has access to the person record. Determines context of API callout
+     * @author Stian Ruud Schikora | 07-12-2021
+     * @param task
+     * @return Boolean
+     **/
+    private static Boolean hasPersonAccess(NavTask__c task) {
+        Id userId = UserInfo.getUserId();
+        Id personId = [SELECT Id, CRM_Person__c FROM Account WHERE Id = :task.CRM_Account__c]?.CRM_Person__c;
+
+        Boolean access = personId != null
+            ? [SELECT RecordId, HasReadAccess FROM UserRecordAccess WHERE UserId = :userId AND RecordId = :personId]
+              .HasReadAccess
+            : false;
+
+        return access;
+    }
+
+    /**
+     * @description: Introduce default comment formating equal to other NAV systems
+     * @author Stian Ruud Schikora | 07-06-2021
+     * @param taskRequest
+     **/
+    private static void formatComment(NavTaskRequest taskRequest) {
+        String navIdent = [SELECT Id, CRM_NAV_Ident__c FROM User WHERE Id = :UserInfo.getUserId()]?.CRM_NAV_Ident__c;
+
+        String commentHeader =
+            '--- ' +
+            Datetime.now().format('dd.MM.yyyy HH:mm') +
+            ' ' +
+            UserInfo.getName() +
+            ' (' +
+            navIdent +
+            ', ' +
+            taskRequest.createdByUnitNumber +
+            ') ---';
+        taskRequest.task.NKS_Comments__c = commentHeader + '\n' + taskRequest.task.NKS_Comments__c;
     }
 
     /**

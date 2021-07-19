@@ -11,6 +11,11 @@
     <description>Permission set granting read access to person fields</description>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.CRM_PersonAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.CRM_Person__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -231,17 +236,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.NKS_K9URL__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Person__c.NKS_Full_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.NKS_GoSysURL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.NKS_K9URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
