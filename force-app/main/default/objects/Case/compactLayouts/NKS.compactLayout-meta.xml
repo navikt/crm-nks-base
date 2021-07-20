@@ -2,5 +2,7 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS</fullName>
     <fields>AccountId</fields>
+    <fields>NKS_AccountGenderIcon__c</fields>
+    <fields>NKS_AccountAge__c</fields>
     <label>NKS</label>
 </CompactLayout>
