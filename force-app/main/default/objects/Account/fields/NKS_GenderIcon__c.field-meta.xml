@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_GenderIcon__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(CRM_Person__c) || ISBLANK(TEXT(CRM_Person__r.INT_Sex__c)),
+	&quot;&quot;,
+	(
+		IF(ISPICKVAL(CRM_Person__r.INT_Sex__c, &quot;Mann&quot;),
+			IMAGE(&quot;/resource/NAV_ikonpakke_png/128/MaleFilled.png&quot;, &quot;&quot;, 24, 24),
+			&quot;&quot;
+		)
+		+
+		IF(ISPICKVAL(CRM_Person__r.INT_Sex__c, &quot;Kvinne&quot;),
+			IMAGE(&quot;/resource/NAV_ikonpakke_png/128/FemaleFilled.png&quot;, &quot;&quot;, 24, 24),
+			&quot;&quot;
+		)
++ &quot; &quot; + TEXT(CRM_Person__r.INT_Sex__c)
+	)
+)</formula>
+    <label>Gender Icon</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
