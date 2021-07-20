@@ -8,6 +8,7 @@ export default class NksSafJournalpost extends LightningElement {
 
     numberOfAttachments = 0;
     fromToType = null;
+    journalpostDate = null;
 
     @api set journalpost(value) {
         this._journalpost = value;
@@ -49,11 +50,38 @@ export default class NksSafJournalpost extends LightningElement {
         this.fromToType = fromToType;
     }
 
-    get journalpostDate() {
+    setJournalpostDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        let dateString = this.journalpost.datoOpprettet;
+
+        let dateString = '';
+
+        switch (this.journalpost.journalposttype) {
+            case 'I':
+                dateString = this.firstNotNull(['DATO_REGISTRERT']);
+                break;
+            case 'U':
+                dateString = this.firstNotNull(['DATO_EKSPEDERT', 'DATO_SENDT_PRINT', 'DATO_JOURNALFOERT']);
+                break;
+            case 'N':
+                dateString = this.firstNotNull(['DATO_JOURNALFOERT']);
+                break;
+        }
 
         return new Date(dateString).toLocaleDateString('no-NO', options);
+    }
+
+    firstNotNull(datoTypes) {
+        datoTypes.forEach((datoType) => {
+            let date = this.journalpost.relevanteDatoer.find((relevantDato) => {
+                return relevantDato.datoType === datoType ? relevantDato.dato : null;
+            });
+
+            if (date) {
+                return date;
+            }
+        });
+
+        return '';
     }
 
     setMainDocument() {
