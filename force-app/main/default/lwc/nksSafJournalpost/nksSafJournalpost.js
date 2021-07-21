@@ -15,6 +15,7 @@ export default class NksSafJournalpost extends LightningElement {
 
         this.getNumberOfAttachments();
         this.setFromToType();
+        this.setJournalpostDate();
         this.setMainDocument();
         this.setAttachments();
     }
@@ -53,35 +54,36 @@ export default class NksSafJournalpost extends LightningElement {
     setJournalpostDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
-        let dateString = '';
+        let jpDate;
 
         switch (this.journalpost.journalposttype) {
             case 'I':
-                dateString = this.firstNotNull(['DATO_REGISTRERT']);
+                jpDate = this.firstNotNull(['DATO_REGISTRERT', 'DATO_JOURNALFOERT']);
                 break;
             case 'U':
-                dateString = this.firstNotNull(['DATO_EKSPEDERT', 'DATO_SENDT_PRINT', 'DATO_JOURNALFOERT']);
+                jpDate = this.firstNotNull(['DATO_EKSPEDERT', 'DATO_SENDT_PRINT', 'DATO_JOURNALFOERT']);
                 break;
             case 'N':
-                dateString = this.firstNotNull(['DATO_JOURNALFOERT']);
+                jpDate = this.firstNotNull(['DATO_JOURNALFOERT']);
                 break;
         }
 
-        return new Date(dateString).toLocaleDateString('no-NO', options);
+        this.journalpostDate = jpDate ? new Date(jpDate).toLocaleDateString('no-NO', options) : '-';
     }
 
     firstNotNull(datoTypes) {
-        datoTypes.forEach((datoType) => {
-            let date = this.journalpost.relevanteDatoer.find((relevantDato) => {
-                return relevantDato.datoType === datoType ? relevantDato.dato : null;
+        let date = null;
+
+        for (let index in datoTypes) {
+            date = this.journalpost.relevanteDatoer.find((relevantDato) => {
+                return relevantDato.datoType === datoTypes[index] ? relevantDato.dato : null;
             });
-
             if (date) {
-                return date;
+                return date.dato;
             }
-        });
+        }
 
-        return '';
+        return date;
     }
 
     setMainDocument() {
