@@ -78,6 +78,7 @@ public with sharing class NKS_SafJournalPostListController {
             }
         );
         journalposter.addNode('sak').addFields(new List<String>{ 'fagsakId', 'fagsaksystem', 'sakstype', 'tema' });
+        journalposter.addNode('relevanteDatoer').addFields(new List<String>{ 'dato', 'datotype' });
         journalposter.addNode('avsenderMottaker').addField('navn');
         journalposter.addNode('dokumenter')
             .addFields(new List<String>{ 'dokumentInfoId', 'tittel' })

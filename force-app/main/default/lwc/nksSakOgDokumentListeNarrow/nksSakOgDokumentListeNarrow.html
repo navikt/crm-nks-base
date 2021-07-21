@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-box slds-theme_default">
+    <div class="slds-box slds-box_x-small slds-theme_default">
         <lightning-layout multiple-rows="true">
             <!-- INPUT SECTION -->
             <lightning-layout-item>
@@ -12,7 +12,7 @@
                                     type="checkbox"
                                     label="Inngående"
                                     name="I"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -23,7 +23,7 @@
                                     type="checkbox"
                                     label="Utgående"
                                     name="U"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -34,7 +34,7 @@
                                     type="checkbox"
                                     label="Notat"
                                     name="N"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -137,6 +137,7 @@
                                             key={casex.caseId}
                                             name={casex.caseId}
                                             label={casex.caseTitle}
+                                            class="slds-p-horizontal_none"
                                         >
                                             <ul class="slds-has-dividers_bottom-space">
                                                 <template iterator:it={casex.journalpostList}>
@@ -168,7 +169,6 @@
 
                         <template if:true={canLoadMore}>
                             <div class="slds-align_absolute-center slds-p-vertical_x-small slds-border_top">
-                                <!-- <lightning-layout-item class="slds-align_absolute-center slds-p-vertical_x-small" size="12"> -->
                                 <template if:true={isLoadingMore}>
                                     <div class="slds-is-relative">
                                         Last flere
@@ -178,7 +178,6 @@
                                 <template if:false={isLoadingMore}>
                                     <a onclick={queryMoreJournalPosts}>Last flere</a>
                                 </template>
-                                <!-- </lightning-layout-item> -->
                             </div>
                         </template>
                     </lightning-layout-item>
