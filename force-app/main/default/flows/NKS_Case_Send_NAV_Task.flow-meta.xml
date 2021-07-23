@@ -494,7 +494,7 @@ TODAY())</expression>
             <choiceReferences>Priority_Picklist</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <stringValue>NORM</stringValue>
+                <stringValue>LAV</stringValue>
             </defaultValue>
             <fieldText>Prioritet</fieldText>
             <fieldType>DropdownBox</fieldType>
