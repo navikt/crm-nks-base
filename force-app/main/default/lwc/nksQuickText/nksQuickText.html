@@ -17,6 +17,7 @@
                         icon-class="slds-button_icon-inverse"
                         onclick={hideModal}
                         variant="bare"
+                        alternative-text="Lukk"
                     >
                     </lightning-button-icon>
 
@@ -68,15 +69,16 @@
                 onclick={showModal}
                 alternative-text="Legg til hurtigtekst"
                 title="Hurtigtekst"
+                aria-label="Legg til hurtigtekst"
             ></lightning-button-icon>
-            <lightning-input-rich-text
+            <textarea
                 onkeyup={insertquicktext}
-                value={conversationNoteRich}
                 onchange={handleChange}
-                formats={inputFormats}
-                class="slds-var-m-bottom_small slds-is-relative"
+                class="slds-textarea conversationNoteTextArea"
+                rows="10"
             >
-            </lightning-input-rich-text>
+{conversationNoteRich}</textarea
+            >
         </div>
     </div>
 </template>

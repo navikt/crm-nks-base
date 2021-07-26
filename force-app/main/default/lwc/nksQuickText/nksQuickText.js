@@ -8,10 +8,11 @@ export default class nksQuickText extends LightningElement {
         BLANK_ERROR
     };
 
-    @api conversationNote;
-    @api conversationNoteRich;
+    // @api conversationNote;
+    // @api conversationNoteRich;
+    __conversationNote;
     @api comments;
-    @track data;
+    @track data = [];
     loadingData = false;
     @api required = false;
     quicktexts;
@@ -39,12 +40,20 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    get conversationNote() {
-        let plainText = this.conversationNoteRich ? this.conversationNoteRich : '';
-        plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
-        plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
-        plainText = plainText.replace(/&nbsp;/g, ' '); //Removes &nbsp; from the html that can arise from copy-paste
-        return plainText;
+    @api get conversationNote() {
+        return this._conversationNote;
+    }
+
+    set conversationNote(value) {
+        this._conversationNote = value;
+    }
+
+    @api get conversationNoteRich() {
+        return this._conversationNote;
+    }
+
+    set conversationNoteRich(value) {
+        this._conversationNote = value;
     }
 
     handleKeyUp(evt) {
@@ -79,10 +88,11 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        const editor = this.template.querySelector('lightning-input-rich-text');
-        editor.setRangeText(event.currentTarget.dataset.message, undefined, undefined, 'select');
+        const editor = this.template
+            .querySelector('.conversationNoteTextArea')
+            .setRangeText(event.currentTarget.dataset.message, undefined, undefined, 'select');
+        this.hideModal(undefined);
         this.conversationNoteRich = editor.value;
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -99,16 +109,20 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertquicktext(event) {
-        const isSpaceKey = event.keyCode === 32;
-        if (isSpaceKey) {
-            var textval = this.conversationNote.replace(/(\r\n|\n|\r)/gm, '');
-            var stringarray = textval.trim().split(' ');
-            const lastItem = stringarray[stringarray.length - 1].toUpperCase();
+        if (event.keyCode === 32) {
+            const editor = this.template.querySelector('.conversationNoteTextArea');
+            const carretPositionEnd = editor.selectionEnd;
+            const lastItem = editor.value
+                .substring(0, carretPositionEnd)
+                .replace(/(\r\n|\n|\r)/g, ' ')
+                .trim()
+                .split(' ')
+                .pop()
+                .toUpperCase();
+
             if (this.qmap.has(lastItem)) {
-                const inserttext = this.qmap.get(lastItem);
-                const editor = this.template.querySelector('lightning-input-rich-text');
-                const startindex = this.conversationNote.length - lastItem.length - 2;
-                editor.setRangeText(inserttext + ' ', startindex, startindex + inserttext.length, 'end');
+                const startindex = carretPositionEnd - lastItem.length - 1;
+                editor.setRangeText(this.qmap.get(lastItem) + ' ', startindex, carretPositionEnd, 'end');
             }
         }
     }
