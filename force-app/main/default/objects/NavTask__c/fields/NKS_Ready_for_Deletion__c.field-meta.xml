@@ -3,7 +3,11 @@
     <fullName>NKS_Ready_for_Deletion__c</fullName>
     <description>Formula field to tag NAV Tasks for deletion</description>
     <externalId>false</externalId>
-    <formula>FIND(NKS_TaskType__r.CRM_Code__c, &apos;COMMA SEPARATED LIST OF TYPES TO DELETE&apos; ) != 0</formula>
+    <formula>OR(
+        NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;,
+        NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;,
+        NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;
+    </formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Ready for Deletion</label>
     <trackTrending>false</trackTrending>
