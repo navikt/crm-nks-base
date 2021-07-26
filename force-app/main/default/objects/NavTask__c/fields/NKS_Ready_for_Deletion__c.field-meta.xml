@@ -7,6 +7,7 @@
         NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;,
         NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;,
         NKS_TaskType__r.CRM_Code__c == &apos;CODE TO DELETE&apos;
+        )
     </formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Ready for Deletion</label>
