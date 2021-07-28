@@ -45,7 +45,7 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
             true
         );
 
-        NKS_NorgNavUnitService.WorkAllocationResponse result;
+        List<NavUnit__c> result;
 
         Test.startTest();
         result = NKSNavTaskWorkAllocationController.getWorkAllocations(
@@ -57,11 +57,9 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(true, result.success, 'Excpected a successful result');
-        System.assertEquals(true, String.isBlank(result.errorMessage), 'Excpected blank value in error message');
-        System.assertNotEquals(null, result.units, 'Did not eexcpect the result NULL in units.');
-        System.assertEquals(1, result.units.size(), 'Expected one unit');
-        System.assertEquals(unit1.Id, result.units[0].sfId, 'Expected to the sf id populated with the correct Id');
+        System.assertNotEquals(null, result, 'Excpected a successful result');
+        System.assertEquals(1, result.size(), 'Expected one unit');
+        System.assertEquals(unit1.Id, result[0].Id, 'Expected to the sf id populated with the correct Id');
     }
 
     @isTest
@@ -99,7 +97,7 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
             true
         );
 
-        NKS_NorgNavUnitService.WorkAllocationResponse result;
+        List<NavUnit__c> result;
 
         Test.startTest();
         result = NKSNavTaskWorkAllocationController.getWorkAllocations(
@@ -111,11 +109,9 @@ private with sharing class NKSNavTaskWorkAllocationControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(true, result.success, 'Excpected a successful result');
-        System.assertEquals(true, String.isBlank(result.errorMessage), 'Excpected blank value in error message');
-        System.assertNotEquals(null, result.units, 'Did not eexcpect the result NULL in units.');
-        System.assertEquals(1, result.units.size(), 'Expected one unit');
-        System.assertEquals(unit1.Id, result.units[0].sfId, 'Expected to the sf id populated with the correct Id');
+        System.assertNotEquals(null, result, 'Excpected a successful result');
+        System.assertEquals(1, result.size(), 'Expected one unit');
+        System.assertEquals(unit1.Id, result[0].Id, 'Expected to the sf id populated with the correct Id');
     }
 
     @isTest

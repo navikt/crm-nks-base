@@ -1,8 +1,8 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-import { refreshApex } from '@salesforce/apex';
 import getNavUnit from '@salesforce/apex/NKS_NavUnitSingleController.findUnit';
 import getContactInformation from '@salesforce/apex/NKS_NavUnitSingleController.getContactInformation';
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 
 export default class NksNavUnitSingle extends LightningElement {
     @api recordId; // The record id
@@ -17,13 +17,11 @@ export default class NksNavUnitSingle extends LightningElement {
     @track navUnit; // The nav unit
     @track contactInformation; // The nav unit contact information
 
+    unitLookupValue;
     unitNumber;
-
     wireFields;
-    errorMessage; // Error messages
-    isError = false; // If error has occured
-    isLoaded = false; // If the nav unit and contact information has loaded
-    firstRun = false;
+    @track errors = [];
+    isLoaded = false;
     noLayout = false;
 
     connectedCallback() {
@@ -35,116 +33,101 @@ export default class NksNavUnitSingle extends LightningElement {
         }
     }
 
+    get isError() {
+        return this.errors.length > 0;
+    }
+
     @wire(getRecord, {
         recordId: '$recordId',
         fields: '$wireFields'
     })
     wiredRecordInfo({ error, data }) {
         if (data) {
-            if (this.wiredNavUnit && this.wiredNavUnit.data) {
-                this.isLoaded = false;
-                refreshApex(this.wiredNavUnit).then(() => {
-                    this.setWiredNavUnit();
-                });
-            }
+            this.isLoaded = false;
+            this.getRelatedRecordUnit(this.relationField, this.objectApiName);
         }
 
         if (error) {
-            this.errorMessage = error;
-            this.isError = true;
+            this.setErrorMessage(error, 'caught');
             this.isLoaded = true;
         }
     }
 
-    @wire(getNavUnit, {
-        field: '$relationField',
-        parentObject: '$objectApiName',
-        parentRecordId: '$recordId',
-        type: '$type'
-    })
-    wiredGetNavUnit(value) {
-        this.wiredNavUnit = value;
-        this.setWiredNavUnit();
+    getRelatedRecordUnit(relationshipField, objectApiName) {
+        getRelatedRecord({
+            parentId: this.recordId,
+            relationshipField: relationshipField,
+            objectApiName: objectApiName
+        })
+            .then((record) => {
+                let relationshipFieldValue = this.resolve(relationshipField, record);
+                this.unitLookupValue = relationshipFieldValue;
+            })
+            .catch((error) => {
+                this.setErrorMessage(error, 'caughtError');
+            });
     }
 
-    setWiredNavUnit() {
+    @wire(getNavUnit, { value: '$unitLookupValue', type: '$type' }) wiredGetNavUnit(value) {
+        this.wiredNavUnit = value;
         const { data, error } = this.wiredNavUnit;
         if (data) {
-            let newUnitNumber = data.unit && data.unit.enhetNr ? data.unit.enhetNr : null;
-
-            this.isLoaded = this.unitNumber === newUnitNumber ? true : false;
-
-            this.isError = !data.success;
-            this.navUnit = data.unit;
-            this.unitNumber = newUnitNumber;
-            this.errorMessage += data.errorMessage ? ' ' + data.errorMessage : '';
+            this.navUnit = data;
+            this.unitNumber = data.enhetNr;
+            this.isLoaded = true;
         }
 
         if (error) {
-            this.errorMessage = error;
-            this.isError = true;
+            this.setErrorMessage(error, 'caughtError');
             this.isLoaded = true;
         }
     }
 
     @wire(getContactInformation, { unitNumber: '$unitNumber' }) wiredGetContactInformation(value) {
         this.wiredContactInformation = value;
-        this.setWiredContactInformation();
-    }
-
-    setWiredContactInformation() {
         const { data, error } = this.wiredContactInformation;
         if (data) {
-            this.isError = !data.success;
-            this.contactInformation = data.contactInformation;
-            this.errorMessage += data.errorMessage ? ' ' + data.errorMessage : '';
+            this.contactInformation = data;
             this.isLoaded = true;
         }
 
         if (error) {
-            this.errorMessage = error;
-            this.isError = true;
+            this.setErrorMessage(error, 'caught');
             this.isLoaded = true;
         }
     }
 
-    /**
-     * Find the nav unit and the contact information
-     */
-    // async findNavUnit() {
-    //     this.isLoaded = false;
-    //     let errorString = '';
+    setErrorMessage(err, type) {
+        type = err.body && type === 'caughtError' ? 'fetchResponseError' : type;
+        switch (type) {
+            case 'fetchResponseError':
+                if (Array.isArray(err.body)) {
+                    this.errors = this.errors.concat(err.body.map((e) => e.message));
+                } else if (typeof err.body.message === 'string') {
+                    let errorType = err.body.exceptionType ? err.body.exceptionType + ': ' : '';
+                    this.errors.push(errorType + err.body.message);
+                }
+                break;
+            case 'journalpostError':
+                let errorString = '';
+                if (err.status) {
+                    errorString = err.status + ' ';
+                }
+                errorString += err.error + ' - ' + err.message;
+                this.errors.push(errorString);
+                break;
+            case 'caughtError':
+                this.errors.push('Ukjent feil: ' + err.message);
+                break;
+            default:
+                this.errors.push('Ukjent feil: ' + err);
+                break;
+        }
+    }
 
-    //     try {
-    //         const unitData = await getNavUnit({
-    //             field: this.relationField,
-    //             parentObject: this.objectApiName,
-    //             parentRecordId: this.recordId,
-    //             type: this.type
-    //         });
-    //         this.isError = !unitData.success;
-    //         this.navUnit = unitData.unit;
-    //         errorString += unitData.errorMessage ? ' ' + unitData.errorMessage : '';
-
-    //         if (false === this.isError) {
-    //             try {
-    //                 const contactInfoData = await getContactInformation({
-    //                     unitNumber: this.navUnit.enhetNr
-    //                 });
-    //                 this.isError = !contactInfoData.success;
-    //                 this.contactInformation = contactInfoData.contactInformation;
-    //                 errorString += contactInfoData.errorMessage ? ' ' + contactInfoData.errorMessage : '';
-    //             } catch (error) {
-    //                 errorString += error.body.message;
-    //                 this.isError = true;
-    //             }
-    //         }
-    //     } catch (error) {
-    //         errorString += error.body.message;
-    //         this.isError = true;
-    //     }
-
-    //     this.errorMessage = errorString;
-    //     this.isLoaded = true;
-    // }
+    resolve(path, obj) {
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || self);
+    }
 }

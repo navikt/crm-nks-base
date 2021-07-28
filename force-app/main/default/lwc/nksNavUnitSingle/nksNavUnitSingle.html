@@ -14,14 +14,21 @@
                     <!-- ERROR MESSAGE -->
                     <template if:true={isError}>
                         <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-                            <lightning-icon
-                                alternative-text="Feilmelding"
-                                icon-name="utility:error"
-                                size="xx-small"
-                                variant="error"
-                            >
-                            </lightning-icon>
-                            &nbsp;{errorMessage}
+                            <p>
+                                <lightning-icon
+                                    alternative-text="Feilmelding"
+                                    icon-name="utility:error"
+                                    size="xx-small"
+                                    variant="error"
+                                >
+                                </lightning-icon>
+                                &nbsp;En feil har oppstått og enhetsinfo kan ikke vises.
+                            </p>
+                            <ul class="slds-list_dotted">
+                                <template for:each={errors} for:item="error">
+                                    <li key={error}>{error}</li>
+                                </template>
+                            </ul>
                         </div>
                     </template>
 
@@ -55,14 +62,21 @@
                 <!-- ERROR MESSAGE -->
                 <template if:true={isError}>
                     <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-                        <lightning-icon
-                            alternative-text="Feilmelding"
-                            icon-name="utility:error"
-                            size="xx-small"
-                            variant="error"
-                        >
-                        </lightning-icon>
-                        &nbsp;{errorMessage}
+                        <p>
+                            <lightning-icon
+                                alternative-text="Feilmelding"
+                                icon-name="utility:error"
+                                size="xx-small"
+                                variant="error"
+                            >
+                            </lightning-icon>
+                            &nbsp;En feil har oppstått og enhetsinfo kan ikke vises.
+                        </p>
+                        <ul class="slds-list_dotted">
+                            <template for:each={errors} for:item="error">
+                                <li key={error}>{error}</li>
+                            </template>
+                        </ul>
                     </div>
                 </template>
 
@@ -92,14 +106,21 @@
                 <!-- ERROR MESSAGE -->
                 <template if:true={isError}>
                     <div class="slds-text-color_error slds-p-left_x-small slds-theme_default">
-                        <lightning-icon
-                            alternative-text="Feilmelding"
-                            icon-name="utility:error"
-                            size="xx-small"
-                            variant="error"
-                        >
-                        </lightning-icon>
-                        &nbsp;{errorMessage}
+                        <p>
+                            <lightning-icon
+                                alternative-text="Feilmelding"
+                                icon-name="utility:error"
+                                size="xx-small"
+                                variant="error"
+                            >
+                            </lightning-icon>
+                            &nbsp;En feil har oppstått og enhetsinfo kan ikke vises.
+                        </p>
+                        <ul class="slds-list_dotted">
+                            <template for:each={errors} for:item="error">
+                                <li key={error}>{error}</li>
+                            </template>
+                        </ul>
                     </div>
                 </template>
 

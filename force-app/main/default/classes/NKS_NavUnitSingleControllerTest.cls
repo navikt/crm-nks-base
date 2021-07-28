@@ -35,18 +35,15 @@ private with sharing class NKS_NavUnitSingleControllerTest {
             ),
             true
         );
-        Account pAccount = [SELECT Id FROM Account WHERE CRM_Person__c = :p.Id];
-        Case c = (Case) UTIL_TestDataFactory.createRecord(new Case(AccountId = pAccount.Id), true);
 
-        NKS_NorgNavUnitService.NavUnitResponse result;
+        NavUnit result;
 
         Test.startTest();
-        result = NKS_NavUnitSingleController.findUnit('Account.CRM_Person__c', 'Case', c.Id, 'PERSON_LOCATION');
+        result = NKS_NavUnitSingleController.findUnit(p.Id, 'PERSON_LOCATION');
         Test.stopTest();
 
-        System.assertEquals(true, result.success, 'Expected success');
-        System.assertEquals(true, String.isBlank(result.errorMessage), 'Expected blank errorMessage');
-        System.assertEquals('1234', result.unit.enhetNr, 'Expected the same unit number as in the mock');
+        System.assertNotEquals(null, result, 'Expected success');
+        System.assertEquals('1234', result.enhetNr, 'Expected the same unit number as in the mock');
     }
 
     @IsTest
@@ -79,23 +76,22 @@ private with sharing class NKS_NavUnitSingleControllerTest {
             true
         );
 
-        NKS_NorgNavUnitService.NavUnitResponse result;
+        NavUnit result;
 
         Test.startTest();
-        result = NKS_NavUnitSingleController.findUnit('INT_UnitNumber__c', 'NavUnit__c', unit.Id, 'UNIT_NUMBER');
+        result = NKS_NavUnitSingleController.findUnit('1234', 'UNIT_NUMBER');
         Test.stopTest();
 
-        System.assertEquals(true, result.success, 'Expected success');
-        System.assertEquals(true, String.isBlank(result.errorMessage), 'Expected blank errorMessage');
-        System.assertEquals('1234', result.unit.enhetNr, 'Expected the same unit number as in the mock');
+        System.assertNotEquals(null, result, 'Expected not null');
+        System.assertEquals('1234', result.enhetNr, 'Expected the same unit number as in the mock');
     }
 
     @IsTest
     static void findUnit_IncorrectType() {
-        NKS_NorgNavUnitService.NavUnitResponse result;
+        NavUnit result;
 
         Test.startTest();
-        result = NKS_NavUnitSingleController.findUnit('INT_UnitNumber__c', 'NavUnit__c', '', 'TEST');
+        result = NKS_NavUnitSingleController.findUnit('', 'TEST');
         Test.stopTest();
 
         System.assertEquals(null, result, 'Expected NULL in response');
@@ -131,14 +127,13 @@ private with sharing class NKS_NavUnitSingleControllerTest {
 
         Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', unitJSON, null));
 
-        NKS_NorgNavUnitService.NavUnitContactInformationResponse result;
+        NavUnitContactInformation result;
 
         Test.startTest();
         result = NKS_NavUnitSingleController.getContactInformation('1234');
         Test.stopTest();
 
-        System.assertEquals(true, result.success, 'Expected success');
-        System.assertEquals(true, String.isBlank(result.errorMessage), 'Expected blank errorMessage');
-        System.assertEquals('1234', result.contactInformation.enhetNr, 'Expected the same unit number as in the mock');
+        System.assertNotEquals(null, result, 'Expected not null');
+        System.assertEquals('1234', result.enhetNr, 'Expected the same unit number as in the mock');
     }
 }
