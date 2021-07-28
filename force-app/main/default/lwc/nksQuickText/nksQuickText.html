@@ -74,10 +74,11 @@
             <textarea
                 onkeyup={insertquicktext}
                 onchange={handleChange}
+                onpaste={handlePaste}
                 class="slds-textarea conversationNoteTextArea"
                 rows="10"
             >
-{conversationNoteRich}</textarea
+{conversationNote}</textarea
             >
         </div>
     </div>

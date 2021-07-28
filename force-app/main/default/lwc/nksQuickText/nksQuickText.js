@@ -8,9 +8,7 @@ export default class nksQuickText extends LightningElement {
         BLANK_ERROR
     };
 
-    // @api conversationNote;
-    // @api conversationNoteRich;
-    __conversationNote;
+    _conversationNote;
     @api comments;
     @track data = [];
     loadingData = false;
@@ -25,7 +23,7 @@ export default class nksQuickText extends LightningElement {
     //Screen reader does not detect component as as input field until after the first focus
     renderedCallback() {
         if (this.initialRender === true) {
-            let inputField = this.template.querySelector('lightning-input-rich-text');
+            let inputField = this.template.querySelector('.conversationNoteTextArea');
             inputField.focus();
             inputField.blur();
             this.initialRender = false;
@@ -54,6 +52,17 @@ export default class nksQuickText extends LightningElement {
 
     set conversationNoteRich(value) {
         this._conversationNote = value;
+    }
+
+    handlePaste(evt) {
+        const editor = this.template.querySelector('.conversationNoteTextArea');
+        editor.setRangeText(
+            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'end'
+        );
+        evt.preventDefault();
     }
 
     handleKeyUp(evt) {
@@ -88,11 +97,16 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        const editor = this.template
-            .querySelector('.conversationNoteTextArea')
-            .setRangeText(event.currentTarget.dataset.message, undefined, undefined, 'select');
+        const editor = this.template.querySelector('.conversationNoteTextArea');
+        editor.setRangeText(
+            this.toPlainText(event.currentTarget.dataset.message),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'select'
+        );
+
         this.hideModal(undefined);
-        this.conversationNoteRich = editor.value;
+        this.conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -101,7 +115,7 @@ export default class nksQuickText extends LightningElement {
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        this.conversationNoteRich = event.target.value;
+        this.conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -125,6 +139,14 @@ export default class nksQuickText extends LightningElement {
                 editor.setRangeText(this.qmap.get(lastItem) + ' ', startindex, carretPositionEnd, 'end');
             }
         }
+    }
+
+    toPlainText(value) {
+        let plainText = value ? value : '';
+        plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
+        plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
+        plainText = plainText.replace(/&nbsp;/g, ' '); //Removes &nbsp; from the html that can arise from copy-paste
+        return plainText;
     }
 
     @api
