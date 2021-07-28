@@ -25,7 +25,7 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.34.0.LATEST"
+                    "versionNumber": "0.56.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
@@ -33,10 +33,14 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.1.0.LATEST"
+                    "versionNumber": "0.2.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
+                    "versionNumber": "0.1.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-oppgave",
                     "versionNumber": "0.1.0.LATEST"
                 }
             ]
@@ -54,6 +58,7 @@
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
         "crm-nks-integration": "0Ho2o000000fxX6CAI",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
-        "crm-henvendelse": "0Ho2o000000fxXfCAI"
+        "crm-henvendelse": "0Ho2o000000fxXfCAI",
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
     }
 }
