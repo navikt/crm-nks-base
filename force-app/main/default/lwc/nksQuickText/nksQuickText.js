@@ -98,6 +98,7 @@ export default class nksQuickText extends LightningElement {
 
     insertText(event) {
         const editor = this.template.querySelector('.conversationNoteTextArea');
+        editor.focus();
         editor.setRangeText(
             this.toPlainText(event.currentTarget.dataset.message),
             editor.selectionStart,
@@ -147,6 +148,11 @@ export default class nksQuickText extends LightningElement {
         plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
         plainText = plainText.replace(/&nbsp;/g, ' '); //Removes &nbsp; from the html that can arise from copy-paste
         return plainText;
+    }
+
+    setFocusOnTextArea() {
+        let inputField = this.template.querySelector('.conversationNoteTextArea');
+        inputField.focus();
     }
 
     @api
