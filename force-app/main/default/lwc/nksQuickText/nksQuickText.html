@@ -1,5 +1,5 @@
 <template>
-    <div data-id="modal" class="modalHide">
+    <div data-id="modal" class="modalHide" onkeydown={modalOnEscape}>
         <section
             role="dialog"
             tabindex="-1"
@@ -39,47 +39,65 @@
                 >
                     <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
                     <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
-                    <lightning-layout multiple-rows="true" pull-to-boundary="small">
-                        <template if:true={data} for:each={data} for:item="record" for:index="index">
-                            <lightning-layout-item
-                                key={record.RecordId}
-                                class="slds-size_1-of-1 quicktext-item"
-                                onclick={insertText}
-                                data-message={record.Message}
-                            >
-                                <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
-                                    <p class="slds-text-link">{record.Name}</p>
-                                    <p>{record.Summary}</p>
-                                </div>
-                            </lightning-layout-item>
-                        </template>
-                    </lightning-layout>
+                    <ul>
+                        <lightning-layout multiple-rows="true" pull-to-boundary="small">
+                            <template if:true={data} for:each={data} for:item="record" for:index="index">
+                                <lightning-layout-item
+                                    key={record.RecordId}
+                                    class="slds-size_1-of-1 quicktext-item"
+                                    onclick={insertText}
+                                    data-message={record.Message}
+                                >
+                                    <li>
+                                        <div class="slds-var-p-horizontal_small slds-var-p-vertical_x-small">
+                                            <lightning-button
+                                                variant="base"
+                                                label={record.Name}
+                                                onclick={insertText}
+                                                class="slds-text-link"
+                                            ></lightning-button>
+                                            <p>{record.Summary}</p>
+                                        </div>
+                                    </li>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </ul>
                 </div>
             </div>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
+
     <div class="slds-form-element">
         <label class="slds-form-element__label" for="textarea-id-01">Samtalereferat</label>
         <div class="slds-form-element__control">
-            <lightning-button-icon
-                class="quicktext-button"
-                icon-name="utility:quick_text"
-                variant="border-filled"
-                onclick={showModal}
-                alternative-text="Legg til hurtigtekst"
-                title="Hurtigtekst"
-                aria-label="Legg til hurtigtekst"
-            ></lightning-button-icon>
-            <textarea
-                onkeyup={insertquicktext}
-                onchange={handleChange}
-                onpaste={handlePaste}
-                class="slds-textarea conversationNoteTextArea"
-                rows="10"
-            >
-{conversationNote}</textarea
-            >
+            <div class="slds-rich-text-editor slds-grid slds-grid_vertical slds-nowrap">
+                <div role="toolbar" class="slds-rich-text-editor__toolbar slds-shrink-none">
+                    <ul aria-label="Format text" class="slds-button-group-list">
+                        <li>
+                            <lightning-button-icon
+                                icon-name="utility:quick_text"
+                                variant="border-filled"
+                                onclick={showModal}
+                                alternative-text="Legg til hurtigtekst"
+                                title="Hurtigtekst"
+                                aria-label="Legg til hurtigtekst"
+                            ></lightning-button-icon>
+                        </li>
+                    </ul>
+                </div>
+                <textarea
+                    onkeyup={insertquicktext}
+                    onchange={handleChange}
+                    onpaste={handlePaste}
+                    class="slds-rich-text-editor__textarea slds-grid slds-textarea conversationNoteTextArea"
+                    rows="10"
+                >
+                    {conversationNote}
+                    </textarea
+                >
+            </div>
         </div>
     </div>
 </template>

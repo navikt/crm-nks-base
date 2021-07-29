@@ -65,11 +65,22 @@ export default class nksQuickText extends LightningElement {
         evt.preventDefault();
     }
 
+    modalOnEscape(evt) {
+        if (evt.key === 'Escape') {
+            this.hideModal(evt);
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+        }
+    }
+
     handleKeyUp(evt) {
-        const isEnterKey = evt.keyCode === 13;
         const queryTerm = evt.target.value;
 
-        if (isEnterKey || (queryTerm.length > 2 && this.loadingData == false)) {
+        if (evt.key.length > 1 && evt.key !== 'Enter') {
+            return;
+        }
+
+        if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData == false)) {
             this.loadingData = true;
             searchRecords({
                 search: queryTerm
