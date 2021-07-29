@@ -8,12 +8,14 @@ export default class NksSafJournalpost extends LightningElement {
 
     numberOfAttachments = 0;
     fromToType = null;
+    journalpostDate = null;
 
     @api set journalpost(value) {
         this._journalpost = value;
 
         this.getNumberOfAttachments();
         this.setFromToType();
+        this.setJournalpostDate();
         this.setMainDocument();
         this.setAttachments();
     }
@@ -49,11 +51,39 @@ export default class NksSafJournalpost extends LightningElement {
         this.fromToType = fromToType;
     }
 
-    get journalpostDate() {
+    setJournalpostDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        let dateString = this.journalpost.datoOpprettet;
 
-        return new Date(dateString).toLocaleDateString('no-NO', options);
+        let jpDate;
+
+        switch (this.journalpost.journalposttype) {
+            case 'I':
+                jpDate = this.firstNotNull(['DATO_REGISTRERT', 'DATO_JOURNALFOERT']);
+                break;
+            case 'U':
+                jpDate = this.firstNotNull(['DATO_EKSPEDERT', 'DATO_SENDT_PRINT', 'DATO_JOURNALFOERT']);
+                break;
+            case 'N':
+                jpDate = this.firstNotNull(['DATO_JOURNALFOERT']);
+                break;
+        }
+
+        this.journalpostDate = jpDate ? new Date(jpDate).toLocaleDateString('no-NO', options) : '-';
+    }
+
+    firstNotNull(datoTypes) {
+        let date = null;
+
+        for (let index in datoTypes) {
+            date = this.journalpost.relevanteDatoer.find((relevantDato) => {
+                return relevantDato.datoType === datoTypes[index] ? relevantDato.dato : null;
+            });
+            if (date) {
+                return date.dato;
+            }
+        }
+
+        return date;
     }
 
     setMainDocument() {

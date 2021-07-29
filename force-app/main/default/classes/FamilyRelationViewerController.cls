@@ -71,15 +71,17 @@ public without sharing class FamilyRelationViewerController {
         Person__c p
     ) {
         List<Person__c> withoutChildrenOver21 = new List<Person__c>();
-        Integer personage = Integer.valueOf(
-            Date.valueOf(p.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
-        );
+        Integer personage = Integer.valueOf(p.CRM_Age__c);
+        //  Integer.valueOf(
+        //     Date.valueOf(p.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
+        // );
         for (Person__c person : familyRelations) {
             String role = relatedPersonIds.get(person.Name).toLowerCase().capitalize();
             if (person.INT_DateOfBirth__c != null) {
-                Integer age = Integer.valueOf(
-                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
-                );
+                Integer age = Integer.valueOf(person.CRM_Age__c);
+                // Integer.valueOf(
+                //     Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
+                // );
                 if (age <= 21 && role == 'Barn')
                     withoutChildrenOver21.add(person);
             }
@@ -102,11 +104,12 @@ public without sharing class FamilyRelationViewerController {
                 if (marriedto.INT_DateOfBirth__c != null) {
                     DateTime d = Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00');
                     birthdate = d.format('dd.MM.yyyy');
-                    maritalrelation.age = Integer.valueOf(
-                        Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
-                    );
+                    // maritalrelation.age = Integer.valueOf(
+                    //     Date.valueOf(marriedto.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
+                    // );
                 }
                 maritalrelation.birthdate = birthdate;
+                maritalrelation.age = Integer.valueOf(marriedto.CRM_Age__c);
                 if (marriedto.INT_Sex__c == 'Kvinne')
                     maritalrelation.color = 'pink';
                 else if (marriedto.INT_Sex__c == 'Mann')
@@ -127,14 +130,14 @@ public without sharing class FamilyRelationViewerController {
     ) {
         List<Relation> relations = new List<Relation>();
         for (Person__c person : relatedPersons) {
-            Integer age;
+            // Integer age;
             String birthdate;
             if (person.INT_DateOfBirth__c != null) {
                 DateTime d = Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00');
                 birthdate = d.format('dd.MM.yyyy');
-                age = Integer.valueOf(
-                    Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
-                );
+                //     age = Integer.valueOf(
+                //         Date.valueOf(person.INT_DateOfBirth__c + ' 00:00:00').daysBetween(Date.Today()) / 365
+                //     );
             }
             String role = roleByRelatedPersonIdent.get(person.Name).toLowerCase().capitalize();
 
@@ -144,7 +147,7 @@ public without sharing class FamilyRelationViewerController {
             r.personIdent = person.Name;
             r.personName = person.CRM_Account__r.Name;
             r.role = role;
-            r.age = age;
+            r.age = Integer.valueOf(person.CRM_Age__c);
             r.birthdate = birthdate;
             r.sex = person.INT_Sex__c;
             r.deceased = person.INT_IsDeceased__c;
@@ -180,6 +183,7 @@ public without sharing class FamilyRelationViewerController {
                 INT_Sex__c,
                 CRM_Account__c,
                 CRM_Account__r.Name,
+                CRM_Age__c,
                 INT_Confidential__c,
                 INT_IsNavEmployee__c,
                 INT_IsDeceased__c
@@ -197,6 +201,7 @@ public without sharing class FamilyRelationViewerController {
         return [
             SELECT
                 Id,
+                CRM_Age__c,
                 INT_MaritalRelation__c,
                 INT_MaritalStatus__c,
                 INT_ActorId__c,
@@ -217,6 +222,7 @@ public without sharing class FamilyRelationViewerController {
                 INT_ActorId__c,
                 CRM_Account__c,
                 CRM_Account__r.Name,
+                CRM_Age__c,
                 INT_Sex__c,
                 INT_DateOfBirth__c,
                 INT_Confidential__c,

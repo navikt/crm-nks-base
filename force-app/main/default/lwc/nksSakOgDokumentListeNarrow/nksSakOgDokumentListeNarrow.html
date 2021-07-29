@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-box slds-theme_default">
+    <div class="slds-box slds-box_x-small slds-theme_default">
         <lightning-layout multiple-rows="true">
             <!-- INPUT SECTION -->
             <lightning-layout-item>
@@ -12,7 +12,7 @@
                                     type="checkbox"
                                     label="Inngående"
                                     name="I"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -23,7 +23,7 @@
                                     type="checkbox"
                                     label="Utgående"
                                     name="U"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -34,7 +34,7 @@
                                     type="checkbox"
                                     label="Notat"
                                     name="N"
-                                    class="journalpostType slds-m-top_large"
+                                    class="journalpostType"
                                     checked
                                     onchange={handleJournalpostTypeCheckboxChange}
                                 >
@@ -175,6 +175,7 @@
                                             key={casex.caseId}
                                             name={casex.caseId}
                                             label={casex.caseTitle}
+                                            class="slds-p-horizontal_none"
                                         >
                                             <ul class="slds-has-dividers_bottom-space">
                                                 <template iterator:it={casex.journalpostList}>
