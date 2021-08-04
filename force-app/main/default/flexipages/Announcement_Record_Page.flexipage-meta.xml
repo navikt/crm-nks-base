@@ -77,19 +77,20 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.Name</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-60381bf8-0abe-41ad-80f8-bad135a31215</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.LastModifiedById</fieldItem>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-ab582346-90b7-4138-a917-e75dce9f334c</name>
+        <name>Facet-60381bf8-0abe-41ad-80f8-bad135a31215</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -98,15 +99,6 @@
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-60381bf8-0abe-41ad-80f8-bad135a31215</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-ab582346-90b7-4138-a917-e75dce9f334c</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
             </componentInstance>
