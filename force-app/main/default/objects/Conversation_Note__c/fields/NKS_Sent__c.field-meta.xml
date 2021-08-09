@@ -3,7 +3,12 @@
     <fullName>NKS_Sent__c</fullName>
     <description>Resolves to true if the conversation note has successfully been sent to Henvendelse.</description>
     <externalId>false</externalId>
-    <formula>NOT(ISBLANK(NKS_Henvendelse_BehandlingsId__c))</formula>
+    <formula>
+        OR(
+            NOT(ISBLANK(NKS_Henvendelse_BehandlingsId__c)),
+            NOT(ISBLANK(CRM_Henvendelse_BehandlingsId__c))
+        )
+    </formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Sent</label>
     <trackTrending>false</trackTrending>
