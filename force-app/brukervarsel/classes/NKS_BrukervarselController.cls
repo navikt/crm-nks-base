@@ -1,11 +1,11 @@
 public with sharing class NKS_BrukervarselController {
     @AuraEnabled(cacheable=true)
-    public static List<NKS_BrukervarslingBestilling> getBrukerVarselFromActorId(String actorId) {
-        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(
-            actorId,
-            Date.today().addMonths(-1),
-            Date.today()
-        );
+    public static List<NKS_BrukervarslingBestilling> getBrukerVarselFromActorId(
+        String actorId,
+        Date fromDate,
+        Date toDate
+    ) {
+        HttpResponse response = NKS_BrukervarselService.getBrukerVarslerFromActorId(actorId, fromDate, toDate);
 
         Integer statusCode = response.getStatusCode();
 

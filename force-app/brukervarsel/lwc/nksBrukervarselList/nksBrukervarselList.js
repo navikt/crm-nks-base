@@ -15,9 +15,12 @@ export default class NksBrukervarselList extends LightningElement {
     isLoaded = false;
     @track notifications = [];
     @track errorMessages = [];
+    fromDate;
+    toDate;
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
+        this.setDefaultDates();
     }
 
     get showNotifications() {
@@ -89,7 +92,9 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     @wire(getBrukerVarsel, {
-        actorId: '$personIdent'
+        actorId: '$personIdent',
+        fromDate: '$fromDate',
+        toDate: '$toDate'
     })
     wiredVarsel({ error, data }) {
         if (data) {
@@ -101,6 +106,13 @@ export default class NksBrukervarselList extends LightningElement {
         if (error) {
             this.addError(error);
         }
+    }
+
+    setDefaultDates() {
+        const today = new Date();
+        this.toDate = today.toISOString().split('T')[0];
+        today.setMonth(today.getMonth() - 1);
+        this.fromDate = today.toISOString().split('T')[0];
     }
 
     showAllNotifications() {

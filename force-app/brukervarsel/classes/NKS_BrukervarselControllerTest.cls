@@ -5,7 +5,7 @@ private with sharing class NKS_BrukervarselControllerTest {
         ApiMock.setTestMock('GET_VARSEL_FROM_BRUKER_ID', 200, 'OK');
         List<NKS_BrukervarslingBestilling> result;
         Test.startTest();
-        result = NKS_BrukervarselController.getBrukerVarselFromActorId('100003000120');
+        result = NKS_BrukervarselController.getBrukerVarselFromActorId('100003000120', Date.today(), Date.today());
         Test.stopTest();
 
         System.assertEquals(6, result.size(), 'Excpected three items in list');
@@ -17,7 +17,7 @@ private with sharing class NKS_BrukervarselControllerTest {
 
         Test.startTest();
         try {
-            NKS_BrukervarselController.getBrukerVarselFromActorId('100003000120');
+            NKS_BrukervarselController.getBrukerVarselFromActorId('100003000120', Date.today(), Date.today());
         } catch (AuraHandledException ex) {
             System.assert(true, 'Correct exception');
         } catch (Exception ex) {
