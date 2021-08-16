@@ -12,6 +12,10 @@
     </values>
     <values>
         <field>Field3__c</field>
+        <value xsi:type="xsd:string">External Id</value>
+    </values>
+    <values>
+        <field>Field4__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
@@ -28,6 +32,10 @@
     </values>
     <values>
         <field>Operator3__c</field>
+        <value xsi:type="xsd:string">equals</value>
+    </values>
+    <values>
+        <field>Operator4__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
@@ -48,6 +56,10 @@
     </values>
     <values>
         <field>Values3__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Values4__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
