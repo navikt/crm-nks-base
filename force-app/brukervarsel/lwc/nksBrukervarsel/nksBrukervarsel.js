@@ -2,11 +2,15 @@ import { LightningElement, api } from 'lwc';
 
 export default class NksBrukervarsel extends LightningElement {
     @api brukervarsel;
+    sortedVarselList;
 
     showDetails = false;
 
     get showVarselListe() {
-        return this.hasMessageList && this.showDetails === true;
+        let retValue = this.hasMessageList && this.showDetails === true;
+        if(retValue && this.sortedVarselList == null)
+            this.sortedVarselList = [...this.brukervarsel.varselListe].sort((a,b) => (a.sendt < b.sendt) - (a.sendt > b.sendt));
+        return retValue;
     }
 
     get hasMessageList() {
