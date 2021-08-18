@@ -108,6 +108,22 @@ export default class NksBrukervarselList extends LightningElement {
         }
     }
 
+    onDateFilterChange(event) {
+        const eventName = event.target.name;
+        const eventValue = event.target.value;
+
+        switch (eventName) {
+            case 'fromDate':
+                this.fromDate = eventValue;
+                break;
+            case 'toDate':
+                this.toDate = eventValue;
+                break;
+            default:
+                break;
+        }
+    }
+
     setDefaultDates() {
         const today = new Date();
         this.toDate = today.toISOString().split('T')[0];

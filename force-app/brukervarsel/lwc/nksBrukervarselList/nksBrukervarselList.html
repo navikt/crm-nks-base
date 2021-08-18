@@ -11,10 +11,22 @@
                 <div>
                     <lightning-layout horizontal-align="end">
                         <lightning-layout-item size="4" class="slds-p-right_xx-small">
-                            <lightning-input type="date" name="input1" label="Fra" value={fromDate}></lightning-input>
+                            <lightning-input
+                                type="date"
+                                name="fromDate"
+                                label="Fra"
+                                value={fromDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
                         </lightning-layout-item>
                         <lightning-layout-item size="4">
-                            <lightning-input type="date" name="input1" label="Til" value={toDate}></lightning-input>
+                            <lightning-input
+                                type="date"
+                                name="toDate"
+                                label="Til"
+                                value={toDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
                         </lightning-layout-item>
                     </lightning-layout>
                 </div>
