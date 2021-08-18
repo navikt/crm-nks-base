@@ -11,12 +11,23 @@
                 <div>
                     <lightning-layout horizontal-align="end" vertical-align="end">
                         <lightning-layout-item size="4" class="slds-p-right_xx-small">
-                            <lightning-input type="date" name="fromDate" label="Fra" value={fromDate} onchange={checkDate}></lightning-input>
+                            <lightning-input
+                                type="date"
+                                name="fromDate"
+                                label="Fra"
+                                value={fromDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
                         </lightning-layout-item>
                         <lightning-layout-item size="4">
-                            <lightning-input type="date" name="toDate" label="Til" value={toDate} onchange={checkDate}></lightning-input>
+                            <lightning-input
+                                type="date"
+                                name="toDate"
+                                label="Til"
+                                value={toDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
                         </lightning-layout-item>
-                        <!-- -->
                         <lightning-button-icon
                             icon-name="utility:refresh"
                             variant="border-filled"
@@ -25,7 +36,6 @@
                             aria-label="Hent meldinger på nytt"
                             onclick={refreshNotificationList}
                     ></lightning-button-icon>
-                        <!-- -->
                     </lightning-layout>
                 </div>
             </header>

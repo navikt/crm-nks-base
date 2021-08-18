@@ -65,17 +65,6 @@ export default class NksBrukervarselList extends LightningElement {
         return this.showAll === false && this.notifications.length > 1;
     }
 
-    checkDate(evt) {
-        const field = evt.target.name;
-        if (field === "toDate"){
-            this.toDate = evt.target.value;
-            if ( this.toDate < this.fromDate) this.fromDate = this.toDate;
-        } else if (field === "fromDate"){
-            this.fromDate = evt.target.value;
-            if ( this.fromDate > this.toDate) this.toDate = this.fromDate;
-        }
-    }
-
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({
             parentId: this.recordId,
@@ -147,6 +136,24 @@ export default class NksBrukervarselList extends LightningElement {
         return refreshApex(this.wiredBrukerVarsel).then(() => {
             this.setWiredBrukerVarsel();
         });
+    }
+
+    onDateFilterChange(event) {
+        const eventName = event.target.name;
+        const eventValue = event.target.value;
+
+        switch (eventName) {
+            case 'fromDate':
+                this.fromDate = eventValue;
+                if ( this.fromDate > this.toDate) this.toDate = this.fromDate;
+                break;
+            case 'toDate':
+                this.toDate = eventValue;
+                if ( this.toDate < this.fromDate) this.fromDate = this.toDate;
+                break;
+            default:
+                break;
+        }
     }
 
     setDefaultDates() {

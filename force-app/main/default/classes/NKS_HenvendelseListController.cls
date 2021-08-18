@@ -83,6 +83,13 @@ public with sharing class NKS_HenvendelseListController {
         }
 
         List<MessageThread> threadList = threadMap.values();
+
+        for (Integer i = threadList.size() - 1; i > 0; i--) {
+            if (true == threadList[i].isDeleted || threadList[i].messageList.isEmpty()) {
+                threadList.remove(i);
+            }
+        }
+
         threadList.sort();
         return threadList;
     }
@@ -124,7 +131,11 @@ public with sharing class NKS_HenvendelseListController {
         }
 
         public void addHenvendelse(NKS_Henvendelse henvendelse) {
-            messageList.add(new Message(henvendelse));
+            Message msg = new Message(henvendelse);
+            if (true == msg.erSlettet) {
+                return;
+            }
+            messageList.add(msg);
             sortMessageList();
         }
 
@@ -353,7 +364,7 @@ public with sharing class NKS_HenvendelseListController {
             this.erDelsvar = NKS_HenvendelseUtil.isPartialyAnswered(henvendelse.henvendelseType);
             this.erLest = erMeldingFraBruker ? false : String.isNotBlank(henvendelse.lestDato);
             this.erUlest = erMeldingFraBruker ? false : String.isBlank(henvendelse.lestDato);
-            this.erSlettet = String.isBlank(henvendelse.gjeldendeTemagruppe);
+            this.erSlettet = String.isBlank(henvendelse.gjeldendeTemagruppe) || henvendelse.metadataListe == null;
             this.erMeldingstypeSamtalereferat = NKS_HenvendelseUtil.isConversationNotes(henvendelse.henvendelseType);
             this.tittel = NKS_HenvendelseUtil.getMessageTitle(henvendelse);
             this.journalfortTekst = getJournalfortTekst();
