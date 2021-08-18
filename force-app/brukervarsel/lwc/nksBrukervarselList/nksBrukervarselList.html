@@ -8,6 +8,28 @@
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">Varsler ({numberOfNotifications})</h2>
                 </div>
+                <div>
+                    <lightning-layout horizontal-align="end">
+                        <lightning-layout-item size="4" class="slds-p-right_xx-small">
+                            <lightning-input
+                                type="date"
+                                name="fromDate"
+                                label="Fra"
+                                value={fromDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4">
+                            <lightning-input
+                                type="date"
+                                name="toDate"
+                                label="Til"
+                                value={toDate}
+                                onchange={onDateFilterChange}
+                            ></lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
             </header>
         </div>
         <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
