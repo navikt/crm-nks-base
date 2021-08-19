@@ -34,23 +34,18 @@ export default class NksBrukervarselList extends LightningElement {
             return [];
         }
         /*
-        * sort list descending by date in sisteVarselutsendelse
-        * if missing, then looking for the latest date in varselListe.sendt
-        */
-        let n = [...this.notifications].sort(
-            (a,b) => 
-                {
-                    let reduceToMaxDate = (c,d) => ( c.sendt > d.sendt ) ? c : d ;
-                    let getLatestDate = (e) => 
-                        (e.sisteVarselutsendelse != null) ? 
-                        e.sisteVarselutsendelse : 
-                        e.varselListe.reduce(reduceToMaxDate).sendt;
-                    let ad = getLatestDate(a);
-                    let bd = getLatestDate(b);     
-                    return (ad < bd) - (ad > bd);
-                }
-        ); 
-        return this.showAll ? n : n.slice(0,1);
+         * sort list descending by date in sisteVarselutsendelse
+         * if missing, then looking for the latest date in varselListe.sendt
+         */
+        let n = [...this.notifications].sort((a, b) => {
+            let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
+            let getLatestDate = (e) =>
+                e.sisteVarselutsendelse != null ? e.sisteVarselutsendelse : e.varselListe.reduce(reduceToMaxDate).sendt;
+            let ad = getLatestDate(a);
+            let bd = getLatestDate(b);
+            return (ad < bd) - (ad > bd);
+        });
+        return this.showAll ? n : n.slice(0, 1);
     }
 
     get numberOfNotifications() {
@@ -119,7 +114,7 @@ export default class NksBrukervarselList extends LightningElement {
         this.setWiredBrukerVarsel();
     }
     setWiredBrukerVarsel() {
-        const {error, data} = this.wiredBrukerVarsel;
+        const { error, data } = this.wiredBrukerVarsel;
         if (data) {
             this.errorMessages = [];
             this.notifications = data;
@@ -144,12 +139,14 @@ export default class NksBrukervarselList extends LightningElement {
 
         switch (eventName) {
             case 'fromDate':
+                this.isLoaded = this.fromDate === eventValue;
                 this.fromDate = eventValue;
-                if ( this.fromDate > this.toDate) this.toDate = this.fromDate;
+                if (this.fromDate > this.toDate) this.toDate = this.fromDate;
                 break;
             case 'toDate':
+                this.isLoaded = this.toDate === eventValue;
                 this.toDate = eventValue;
-                if ( this.toDate < this.fromDate) this.fromDate = this.toDate;
+                if (this.toDate < this.fromDate) this.fromDate = this.toDate;
                 break;
             default:
                 break;
