@@ -1,4 +1,5 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import getBrukerVarsel from '@salesforce/apex/NKS_BrukervarselController.getBrukerVarselFromActorId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
@@ -15,9 +16,13 @@ export default class NksBrukervarselList extends LightningElement {
     isLoaded = false;
     @track notifications = [];
     @track errorMessages = [];
+    fromDate;
+    toDate;
+    wiredBrukerVarsel;
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
+        this.setDefaultDates();
     }
 
     get showNotifications() {
@@ -28,8 +33,19 @@ export default class NksBrukervarselList extends LightningElement {
         if (this.notifications.length < 1) {
             return [];
         }
-
-        return this.showAll ? this.notifications : this.notifications.slice(0, 1);
+        /*
+         * sort list descending by date in sisteVarselutsendelse
+         * if missing, then looking for the latest date in varselListe.sendt
+         */
+        let n = [...this.notifications].sort((a, b) => {
+            let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
+            let getLatestDate = (e) =>
+                e.sisteVarselutsendelse != null ? e.sisteVarselutsendelse : e.varselListe.reduce(reduceToMaxDate).sendt;
+            let ad = getLatestDate(a);
+            let bd = getLatestDate(b);
+            return (ad < bd) - (ad > bd);
+        });
+        return this.showAll ? n : n.slice(0, 1);
     }
 
     get numberOfNotifications() {
@@ -89,9 +105,16 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     @wire(getBrukerVarsel, {
-        actorId: '$personIdent'
+        actorId: '$personIdent',
+        fromDate: '$fromDate',
+        toDate: '$toDate'
     })
-    wiredVarsel({ error, data }) {
+    wiredGetBrukerVarsel(value) {
+        this.wiredBrukerVarsel = value;
+        this.setWiredBrukerVarsel();
+    }
+    setWiredBrukerVarsel() {
+        const { error, data } = this.wiredBrukerVarsel;
         if (data) {
             this.errorMessages = [];
             this.notifications = data;
@@ -101,6 +124,40 @@ export default class NksBrukervarselList extends LightningElement {
         if (error) {
             this.addError(error);
         }
+    }
+
+    refreshNotificationList() {
+        this.isLoaded = false;
+        return refreshApex(this.wiredBrukerVarsel).then(() => {
+            this.setWiredBrukerVarsel();
+        });
+    }
+
+    onDateFilterChange(event) {
+        const eventName = event.target.name;
+        const eventValue = event.target.value;
+
+        switch (eventName) {
+            case 'fromDate':
+                this.isLoaded = this.fromDate === eventValue;
+                this.fromDate = eventValue;
+                if (this.fromDate > this.toDate) this.toDate = this.fromDate;
+                break;
+            case 'toDate':
+                this.isLoaded = this.toDate === eventValue;
+                this.toDate = eventValue;
+                if (this.toDate < this.fromDate) this.fromDate = this.toDate;
+                break;
+            default:
+                break;
+        }
+    }
+
+    setDefaultDates() {
+        const today = new Date();
+        this.toDate = today.toISOString().split('T')[0];
+        today.setMonth(today.getMonth() - 1);
+        this.fromDate = today.toISOString().split('T')[0];
     }
 
     showAllNotifications() {

@@ -63,6 +63,13 @@ export default class nksQuickText extends LightningElement {
             'end'
         );
         evt.preventDefault();
+        evt.stopImmediatePropagation();
+
+        this.conversationNote = editor.value;
+        const attributeChangeEvent = new CustomEvent('commentschange', {
+            detail: this.conversationNote
+        });
+        this.dispatchEvent(attributeChangeEvent);
     }
 
     modalOnEscape(evt) {
