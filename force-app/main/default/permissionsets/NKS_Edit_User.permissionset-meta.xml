@@ -13,6 +13,11 @@
         <name>ManageNksUsers</name>
     </customPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>User.CRM_NAV_Ident__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.NKS_Alias__c</field>
         <readable>true</readable>
@@ -24,7 +29,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>User.CRM_NAV_Ident__c</field>
+        <field>User.NKS_FullNameAlias__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.NKS_FullName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
