@@ -44,7 +44,7 @@
             </lightning-layout-item>
             <lightning-layout-item size="12" if:true={showVarselListe} class="slds-box">
                 <ol class="slds-has-dividers_bottom-space">
-                    <template iterator:it={brukervarsel.varselListe}>
+                    <template iterator:it={sortedVarselList}>
                         <li if:false={it.last} class="slds-item" key={it.value.sendt}>
                             <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
                         </li>

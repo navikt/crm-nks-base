@@ -9,7 +9,7 @@
                     <h2 class="slds-card__header-title">Varsler ({numberOfNotifications})</h2>
                 </div>
                 <div>
-                    <lightning-layout horizontal-align="end">
+                    <lightning-layout horizontal-align="end" vertical-align="end">
                         <lightning-layout-item size="4" class="slds-p-right_xx-small">
                             <lightning-input
                                 type="date"
@@ -28,6 +28,14 @@
                                 onchange={onDateFilterChange}
                             ></lightning-input>
                         </lightning-layout-item>
+                        <lightning-button-icon
+                            icon-name="utility:refresh"
+                            variant="border-filled"
+                            alternative-text="Hent meldinger på nytt"
+                            title="Hent meldinger på nytt"
+                            aria-label="Hent meldinger på nytt"
+                            onclick={refreshNotificationList}
+                    ></lightning-button-icon>
                     </lightning-layout>
                 </div>
             </header>
