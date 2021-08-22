@@ -30,6 +30,6 @@ global class NKS_ConversationNotePersonAccessHandler  extends MyTriggers {
     }
 
     private List<Conversation_Note__c> getConversationNotesFromPersonIds(Set<Id> personIds) {
-        return [SELECT Id, CRM_Account__c, NKS_Incorrectly_Sent__c FROM Conversation_Note__c WHERE CRM_Account__r.CRM_Person__c IN :personIds];
+        return [SELECT Id, CRM_Account__c, NKS_Incorrectly_Sent__c, CRM_Henvendelse_BehandlingsId__c FROM Conversation_Note__c WHERE CRM_Account__r.CRM_Person__c IN :personIds AND CRM_Henvendelse_BehandlingsId__c=null];
     }
 }
