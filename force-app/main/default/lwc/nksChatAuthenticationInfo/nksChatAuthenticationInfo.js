@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getChatInfo from '@salesforce/apex/ChatAuthController.getChatInfo';
 import setStatusRequested from '@salesforce/apex/ChatAuthController.setStatusRequested';
 import getCommunityAuthUrl from '@salesforce/apex/ChatAuthController.getCommunityAuthUrl';
+import getCouncellorName from '@salesforce/apex/ChatAuthController.getCouncellorName';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 
 //#### LABEL IMPORTS ####
@@ -31,6 +32,7 @@ export default class ChatAuthenticationOverview extends LightningElement {
     @api accountFields; //Comma separated string with field names to display from the related account
     @api caseFields; //Comma separated string with field names to display from the related case
     @api personFields; //Comma separated string with field names to display from the related accounts person
+    @api councellorName; 
     accountId; //Transcript AccountId
     caseId; //Transcript CaseId
     personId; //Transcript Account PersonId
@@ -160,15 +162,18 @@ export default class ChatAuthenticationOverview extends LightningElement {
     }
 
     sendLoginEvent() {
-        //Message defaults to norwegian
-        const loginMessage = this.chatLanguage === 'en_US' ? CHAT_LOGIN_MSG_EN : CHAT_LOGIN_MSG_NO;
+        getCouncellorName({recordId: this.recordId}).then((data) => {
+            this.councellorName = data;
+            //Message defaults to norwegian
+            const loginMessage = this.chatLanguage === 'en_US' ? 'You are now in a secure chat with NAV, you are chatting with ' + this.councellorName + '. ' + CHAT_LOGIN_MSG_EN : 'Du er nå i en innlogget chat med NAV, du snakker med ' + this.councellorName + '. ' + CHAT_LOGIN_MSG_NO;
 
-        //Sending event handled by parent to to trigger default chat login message
-        const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
-            detail: { loginMessage }
-        });
-        this.dispatchEvent(authenticationCompleteEvt);
-        this.loginEvtSent = true;
+            //Sending event handled by parent to to trigger default chat login message
+            const authenticationCompleteEvt = new CustomEvent('authenticationcomplete', {
+                detail: { loginMessage }
+            });
+            this.dispatchEvent(authenticationCompleteEvt);
+            this.loginEvtSent = true;
+        });   
     }
 
     //Sends event handled by parent to utilize conversation API to send message for init of auth process
