@@ -75,4 +75,16 @@ public class ChatAuthController_Test {
 
         System.assert(String.isNotBlank(communityUrl));
     }
+
+    @isTest
+    static void testGetCouncellorName(){
+        String fullname; 
+        LiveChatTranscript chatTranscript = [SELECT Id FROM LiveChatTranscript LIMIT 1];
+
+        Test.startTest();
+        fullname = ChatAuthController.getCouncellorName(chatTranscript.Id);
+        Test.stopTest();
+
+        System.assert(String.isNotBlank(fullname)); 
+    }
 }
