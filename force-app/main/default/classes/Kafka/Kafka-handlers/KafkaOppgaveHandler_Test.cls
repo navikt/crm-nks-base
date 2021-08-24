@@ -102,5 +102,6 @@ public class KafkaOppgaveHandler_Test {
 
         System.assert([SELECT COUNT() FROM NavTask__c] != 0);
         System.assert([SELECT COUNT() FROM NavTask__c WHERE CRM_NavUnit__c = NULL] == 1);
+        System.assert([SELECT COUNT() FROM NavTask__c WHERE Name = 'Kontakt Bruker'] != 0);
     }
 }
