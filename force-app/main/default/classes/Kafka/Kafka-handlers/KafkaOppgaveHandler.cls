@@ -3,7 +3,7 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
     private Map<String, String> actorAccMap = new Map<String, String>();
     private Map<String, List<KafkaMessage__c>> messageMap = new Map<String, List<KafkaMessage__c>>(); //Maps CRM_Key__c to a list of KafkaMessages for that key
     private Map<String, NavUnit__c> navUnitMap;
-    private Map<String, String> commonCodeMap;
+    private Map<String, Common_Code__c> commonCodeMap;
 
     //Default constructor
     public KafkaOppgaveHandler() {
@@ -16,13 +16,13 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
      * @author Stian Ruud Schikora | 03-26-2021
      **/
     private void initCommonCodeMap() {
-        commonCodeMap = new Map<String, String>();
+        commonCodeMap = new Map<String, Common_Code__c>();
         for (Common_Code__c comCode : [
-            SELECT Id, CRM_Code__c, CRM_Code_Set__c
+            SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
             FROM Common_Code__c
             WHERE CRM_Code_Set__c IN ('Tema', 'Behandlingstema', 'Oppgavetyper')
         ]) {
-            commonCodeMap.put(comCode.CRM_Code_Set__c + comCode.CRM_Code__c, comCode.Id);
+            commonCodeMap.put(comCode.CRM_Code_Set__c + comCode.CRM_Code__c, comCode);
         }
     }
 
@@ -224,16 +224,16 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 ? this.navUnitMap.get(kafkaOppgave.tildeltEnhetsnr).Id
                 : null;
             navTask.Name = this.commonCodeMap.containsKey('Oppgavetyper' + kafkaOppgave.oppgavetype)
-            ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
-            : 'Oppgave';
+                ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype).Name
+                : 'Oppgave';
             navTask.NKS_Assignee__c = kafkaOppgave.tilordnetRessurs;
             navTask.NKS_Comments__c = kafkaOppgave.beskrivelse;
             navTask.NKS_TaskType__c = this.commonCodeMap.containsKey('Oppgavetyper' + kafkaOppgave.oppgavetype)
-                ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype)
+                ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype).Id
                 : null;
-            navTask.NKS_Theme__c = this.commonCodeMap.get('Tema' + kafkaOppgave.tema);
+            navTask.NKS_Theme__c = this.commonCodeMap.get('Tema' + kafkaOppgave.tema).Id;
             navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey('Behandlingstema' + kafkaOppgave.tema)
-                ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema)
+                ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema).Id
                 : null;
             navTask.CRM_DueDate__c = String.isNotBlank(kafkaOppgave.fristFerdigstillelse)
                 ? Date.valueOf(kafkaOppgave.fristFerdigstillelse)
