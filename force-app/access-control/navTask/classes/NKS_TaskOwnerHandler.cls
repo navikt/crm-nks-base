@@ -5,7 +5,8 @@ public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
 
         if(newOwnerId!=null){
            for(NavTask__c task:(List<NavTask__c>) records){
-               task.OwnerId=newOwnerId;
+               if(task.CRM_Theme__c==null)
+                task.OwnerId=newOwnerId;
            }            
         }
     }
