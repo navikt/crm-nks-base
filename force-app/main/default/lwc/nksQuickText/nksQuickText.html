@@ -38,7 +38,7 @@
                     id="modal-content-id-1"
                 >
                     <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
-                    <div if:true={data} class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <div if:true={data} aria-live="polite" class="slds-text-title_caps">{numberOfRows} resultater</div>
                     <ul>
                         <lightning-layout multiple-rows="true" pull-to-boundary="small">
                             <template if:true={data} for:each={data} for:item="record" for:index="index">
