@@ -182,20 +182,9 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         private void setSecurityMeasures() {
-            if (0 < person.NKS_NumberOfSecurityMeasures__c) {
-                badges.add(
-                    new Badge(
-                        'securityMeasures',
-                        person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak',
-                        'slds-theme_error slds-m-left_x-small slds-m-vertical_xx-small pointer',
-                        '',
-                        '',
-                        true
-                    )
-                );
-
-                try {
-                    for (SecurityMeasure__c sm : person.SecurityMeasures__r) {
+            try {
+                for (SecurityMeasure__c sm : person.SecurityMeasures__r) {
+                    if (sm.INT_ValidToDate__c == null || sm.INT_ValidToDate__c >= Date.today()) {
                         securityMeasures.add(
                             new SecurityMeasure(
                                 sm.Id,
@@ -205,9 +194,23 @@ public with sharing class NKS_PersonBadgesController {
                             )
                         );
                     }
-                } catch (Exception e) {
-                    errors.add('Feil ved uthenting av sikkerhetstiltak');
                 }
+                if (0 < person.NKS_NumberOfSecurityMeasures__c) {
+                    if (securityMeasures.size() > 0) {
+                        badges.add(
+                            new Badge(
+                                'securityMeasures',
+                                person.NKS_NumberOfSecurityMeasures__c + ' sikkerhetstiltak',
+                                'slds-theme_error slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                                '',
+                                '',
+                                true
+                            )
+                        );
+                    }
+                }
+            } catch (Exception e) {
+                errors.add('Feil ved uthenting av sikkerhetstiltak');
             }
         }
 
