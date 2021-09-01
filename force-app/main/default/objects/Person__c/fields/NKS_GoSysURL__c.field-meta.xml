@@ -5,7 +5,7 @@
     >Sjekker om ORG = UAT, hvis ikke vis link til prod.</description>
     <externalId>false</externalId>
     <formula
-    >IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://gosys-nais-q1.nais.preprod.local/gosys/personoversikt/fnr=&quot;&amp;Name , &quot;GoSys&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://gosys-nais.nais.adeo.no/gosys/personoversikt/fnr=&quot;&amp;Name , &quot;GoSys&quot;, &quot;_self&quot;)
+    >IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://gosys-q1.dev.intern.nav.no/gosys/personoversikt/fnr=&quot;&amp;Name , &quot;GoSys&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://gosys.intern.nav.no/gosys/personoversikt/fnr=&quot;&amp;Name , &quot;GoSys&quot;, &quot;_self&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>GoSys</label>
