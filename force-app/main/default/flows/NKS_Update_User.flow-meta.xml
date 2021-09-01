@@ -1525,7 +1525,7 @@
             <targetReference>Get_User</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>allPicklistValues</name>
         <dataType>String</dataType>
