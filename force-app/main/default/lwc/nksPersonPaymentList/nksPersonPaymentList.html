@@ -6,7 +6,7 @@
                     <lightning-layout-item size="6" class="slds-var-p-bottom_medium">
                         <div class="slds-is-relative">
                             <div>
-                                <h1>{labels.PERIOD_HEADER}</h1>
+                                <p>{labels.PERIOD_HEADER}</p>
                             </div>
                             <lightning-spinner
                                 if:false={historyLoaded}
@@ -55,7 +55,7 @@
                     </lightning-layout-item>
                     <lightning-layout-item size="6">
                         <div if:true={hasPayments}>
-                            <h1>{labels.YTELSE_HEADER}</h1>
+                            <p>{labels.YTELSE_HEADER}</p>
                         </div>
                         <lightning-checkbox-group
                             name="ytelseOptions"
@@ -79,7 +79,7 @@
                         <c-nks-payment-totals payment-groups={paymentGroups} labels={labels}></c-nks-payment-totals>
                         <template for:each={paymentGroups} for:item="paymentGroup">
                             <template iterator:it={paymentGroup}>
-                                <h1
+                                <h2
                                     if:true={it.first}
                                     class="slds-text-title_caps slds-border_bottom slds-var-m-bottom_small"
                                     style="font-weight: bold; font-size: 1.1em"
@@ -107,7 +107,7 @@
                                             value={it.value.data.posteringsdato}
                                         ></lightning-formatted-date-time>
                                     </div>
-                                </h1>
+                                </h2>
                                 <c-nks-person-payment
                                     key={it.value.data.posteringsdato}
                                     payment={it.value.data}

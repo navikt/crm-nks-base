@@ -8,7 +8,7 @@
             <lightning-layout-item size="11">
                 <lightning-layout multiple-rows="true">
                     <lightning-layout-item size="8" padding="horizontal-small">
-                        <b class="slds-text-title_caps">{ytelserHeader}</b>
+                        <h3 class="slds-text-title_caps">{ytelserHeader}</h3>
                     </lightning-layout-item>
                     <lightning-layout-item size="4" padding="horizontal-small">
                         <lightning-layout horizontal-align="end">
@@ -67,13 +67,8 @@
                             aria-expanded={expanded}
                             onclick={toggleExpand}
                         >
-                            <p class="chevron-toggle slds-var-p-right_small">{detailText}</p>
-                            <lightning-icon
-                                icon-name={chevronIcon}
-                                size="x-small"
-                                class="slds-var-p-right_small slds-float_right slds-var-m-top_x-small chevron-toggle"
-                            >
-                            </lightning-icon>
+                            <button class="slds-button chevron-toggle">{detailText}<lightning-icon icon-name={chevronIcon} size="x-small" class="slds-button__icon slds-button__icon_right chevron-toggle"></lightning-icon></button>
+                            
                         </lightning-layout>
                     </lightning-layout-item>
                 </lightning-layout>
