@@ -232,8 +232,8 @@ public class KafkaOppgaveHandler implements IKafkaMessageConsumer {
                 ? this.commonCodeMap.get('Oppgavetyper' + kafkaOppgave.oppgavetype).Id
                 : null;
             navTask.NKS_Theme__c = this.commonCodeMap.get('Tema' + kafkaOppgave.tema).Id;
-            navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey('Behandlingstema' + kafkaOppgave.tema)
-                ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.tema).Id
+            navTask.NKS_Subtheme__c = this.commonCodeMap.containsKey('Behandlingstema' + kafkaOppgave.behandlingstema)
+                ? this.commonCodeMap.get('Behandlingstema' + kafkaOppgave.behandlingstema).Id
                 : null;
             navTask.CRM_DueDate__c = String.isNotBlank(kafkaOppgave.fristFerdigstillelse)
                 ? Date.valueOf(kafkaOppgave.fristFerdigstillelse)
