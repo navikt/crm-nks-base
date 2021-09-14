@@ -15,6 +15,7 @@ export default class nksQuickText extends LightningElement {
     @api required = false;
     quicktexts;
     qmap;
+    numberOfRows = 0; 
     get inputFormats() {
         return [''];
     }

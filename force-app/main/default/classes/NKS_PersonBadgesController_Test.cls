@@ -16,8 +16,23 @@ private with sharing class NKS_PersonBadgesController_Test {
         acc.CRM_Person__c = p.Id;
         update acc;
 
-        SecurityMeasure__c sm = (SecurityMeasure__c) UTIL_TestDataFactory.createRecord(
-            new SecurityMeasure__c(INT_Person__c = p.Id, INT_SecurityMeasure__c = 'FTUS'),
+        SecurityMeasure__c sm1 = (SecurityMeasure__c) UTIL_TestDataFactory.createRecord(
+            new SecurityMeasure__c(
+                INT_Person__c = p.Id,
+                INT_SecurityMeasure__c = 'FTUS',
+                INT_ValidFromDate__c = Date.today().addDays(-30),
+                INT_ValidToDate__c = Date.today()
+            ),
+            true
+        );
+
+        SecurityMeasure__c sm2 = (SecurityMeasure__c) UTIL_TestDataFactory.createRecord(
+            new SecurityMeasure__c(
+                INT_Person__c = p.Id,
+                INT_SecurityMeasure__c = 'FTUS',
+                INT_ValidFromDate__c = Date.today().addDays(-60),
+                INT_ValidToDate__c = Date.today().addDays(-1)
+            ),
             true
         );
 
@@ -28,6 +43,7 @@ private with sharing class NKS_PersonBadgesController_Test {
         );
 
         System.assertEquals(1, pbd.securityMeasures.size(), 'Expected one');
+        System.assertEquals(sm1.Id, pbd.securityMeasures[0].RecordId, 'Expected the first security measure we added.');
         System.assertEquals(3, pbd.badges.size(), 'Expected three');
         System.assertEquals(2, pbd.spokenLanguagesIntepreter.size(), 'Expected two');
     }
