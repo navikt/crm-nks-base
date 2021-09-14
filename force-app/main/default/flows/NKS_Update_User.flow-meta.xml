@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_Current_Memberships</name>
         <label>Get Current Memberships</label>
-        <locationX>1968</locationX>
-        <locationY>1512</locationY>
+        <locationX>4399</locationX>
+        <locationY>1393</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -41,7 +41,7 @@
         <name>Get_User_Queues</name>
         <label>Get User Queues</label>
         <locationX>2375</locationX>
-        <locationY>713</locationY>
+        <locationY>908</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -78,7 +78,7 @@
         <name>GetPicklistValues</name>
         <label>GetPicklistValues</label>
         <locationX>2503</locationX>
-        <locationY>713</locationY>
+        <locationY>908</locationY>
         <actionName>GetPicklistValues</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -105,7 +105,7 @@
         <name>Add_queue_name</name>
         <label>Add queue name</label>
         <locationX>2759</locationX>
-        <locationY>607</locationY>
+        <locationY>802</locationY>
         <assignmentItems>
             <assignToReference>UsersQueueNames</assignToReference>
             <operator>Add</operator>
@@ -120,8 +120,8 @@
     <assignments>
         <name>Add_to_collection_variable</name>
         <label>Add to collection variable</label>
-        <locationX>1773</locationX>
-        <locationY>1636</locationY>
+        <locationX>4204</locationX>
+        <locationY>1517</locationY>
         <assignmentItems>
             <assignToReference>singleGroupString</assignToReference>
             <operator>Assign</operator>
@@ -144,7 +144,7 @@
         <name>Add_to_selectable_divisions</name>
         <label>Add to selectable divisions</label>
         <locationX>2682</locationX>
-        <locationY>607</locationY>
+        <locationY>802</locationY>
         <assignmentItems>
             <assignToReference>SelectableDivisions</assignToReference>
             <operator>Add</operator>
@@ -157,10 +157,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_quick_text_variable</name>
+        <label>Assign quick text variable</label>
+        <locationX>2966</locationX>
+        <locationY>640</locationY>
+        <assignmentItems>
+            <assignToReference>BooleanvariabletocheckQuickTextEditorassignment</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Permset_Knowledge_Editor</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_quick_text_variable_0_0</name>
+        <label>Assign quick text variable</label>
+        <locationX>3173</locationX>
+        <locationY>633</locationY>
+        <assignmentItems>
+            <assignToReference>KnowledgeEditorCheckbox</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Permset_Topics</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Selected_Value_To_String</name>
         <label>Assign Selected Value To String</label>
-        <locationX>1842</locationX>
-        <locationY>1378</locationY>
+        <locationX>4273</locationX>
+        <locationY>1259</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -188,26 +220,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Checked_True_for_Quick_Text_Editor</name>
-        <label>Set Checked=True for Quick Text Editor</label>
-        <locationX>3506</locationX>
-        <locationY>575</locationY>
-        <assignmentItems>
-            <assignToReference>BooleanvariabletocheckQuickTextEditorassignment</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Check_if_user_has_Topics_permission</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Checked_True_for_Topics</name>
-        <label>Set Checked=True for Topics</label>
-        <locationX>3901</locationX>
-        <locationY>640</locationY>
+        <name>Assign_topic_variable_0_0_0</name>
+        <label>Assign topic variable</label>
+        <locationX>3379</locationX>
+        <locationY>671</locationY>
         <assignmentItems>
             <assignToReference>BooleanvariabletocheckTopicsAssignment</assignToReference>
             <operator>Assign</operator>
@@ -215,12 +231,15 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>UpdateUser</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Update_the_Selected_Account_String</name>
         <label>Update the Selected Account String</label>
-        <locationX>1703</locationX>
-        <locationY>1511</locationY>
+        <locationX>4134</locationX>
+        <locationY>1392</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -233,57 +252,10 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Check_if_user_has_Quick_Text_Editor_permission</name>
-        <label>Check if user has Quick Text Editor permission</label>
-        <locationX>3501</locationX>
-        <locationY>726</locationY>
-        <defaultConnector>
-            <targetReference>Check_if_user_has_Topics_permission</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>UserhasQuickTextEditorpermission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Quick_Text_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Checked_True_for_Quick_Text_Editor</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_if_user_has_Topics_permission</name>
-        <label>Check if user has Topics permission</label>
-        <locationX>3733</locationX>
-        <locationY>637</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>HasTopicspermission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Topics</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Checked_True_for_Topics</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Check_selected_string</name>
         <label>Check selected string</label>
-        <locationX>1833</locationX>
-        <locationY>1513</locationY>
+        <locationX>4264</locationX>
+        <locationY>1394</locationY>
         <defaultConnector>
             <targetReference>Add_to_collection_variable</targetReference>
         </defaultConnector>
@@ -304,8 +276,8 @@
     <decisions>
         <name>Edit_Division</name>
         <label>Edit Division?</label>
-        <locationX>1834</locationX>
-        <locationY>1129</locationY>
+        <locationX>4265</locationX>
+        <locationY>1010</locationY>
         <defaultConnector>
             <targetReference>Edit_Queues</targetReference>
         </defaultConnector>
@@ -329,8 +301,8 @@
     <decisions>
         <name>Edit_Queues</name>
         <label>Edit Queues?</label>
-        <locationX>1833</locationX>
-        <locationY>1265</locationY>
+        <locationX>4264</locationX>
+        <locationY>1146</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>EditQueuesTrue</name>
@@ -351,8 +323,8 @@
     <decisions>
         <name>Empty_list</name>
         <label>Empty list?</label>
-        <locationX>1938</locationX>
-        <locationY>1992</locationY>
+        <locationX>4369</locationX>
+        <locationY>1873</locationY>
         <defaultConnector>
             <targetReference>Create_group_memberships</targetReference>
         </defaultConnector>
@@ -371,10 +343,64 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Group_Empty_0_0_0</name>
+        <label>Group Empty?</label>
+        <locationX>3730</locationX>
+        <locationY>171</locationY>
+        <defaultConnector>
+            <targetReference>Update_QuickText_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Don&apos;t change</defaultConnectorLabel>
+        <rules>
+            <name>AddGroup</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Knowledge_Group_Member</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>setKnowledgeUser</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Knowledge_Group_Member</targetReference>
+            </connector>
+            <label>Add Group</label>
+        </rules>
+        <rules>
+            <name>Remove_Group</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Knowledge_Group_Member</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>setKnowledgeUser</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Knowledge_Group_Member</targetReference>
+            </connector>
+            <label>Remove Group</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_there_any_to_delete</name>
         <label>Is there any to delete?</label>
-        <locationX>1960</locationX>
-        <locationY>1686</locationY>
+        <locationX>4391</locationX>
+        <locationY>1567</locationY>
         <defaultConnector>
             <targetReference>Loop_String_Collection</targetReference>
         </defaultConnector>
@@ -396,24 +422,92 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Knowledge_Editor_assignement_exists</name>
-        <label>Knowledge Editor assignement exists</label>
-        <locationX>3929</locationX>
-        <locationY>1486</locationY>
+        <name>Knowledge_Editor_Empty_0</name>
+        <label>Knowledge Editor Empty?</label>
+        <locationX>3158</locationX>
+        <locationY>815</locationY>
         <defaultConnector>
-            <targetReference>Quick_Text_Editor_is_checked</targetReference>
+            <targetReference>Get_Permset_Topics</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Knowledge Editor</defaultConnectorLabel>
+        <rules>
+            <name>Has_Knowledge_Editor_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Permset_Assignment_Knowledge_Editor</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_quick_text_variable_0_0</targetReference>
+            </connector>
+            <label>Has Knowledge Editor</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Quick_Text_Editor_Empty</name>
+        <label>Quick Text Editor Empty?</label>
+        <locationX>2957</locationX>
+        <locationY>820</locationY>
+        <defaultConnector>
+            <targetReference>Get_Permset_Knowledge_Editor</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Quick Text Editor</defaultConnectorLabel>
+        <rules>
+            <name>Has_Quick_Text_Editor</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Permset_Assignment_Quick_Text_Editor</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_quick_text_variable</targetReference>
+            </connector>
+            <label>Has Quick Text Editor</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Topic_Editor_Empty_0_0</name>
+        <label>Topic Editor Empty?</label>
+        <locationX>3370</locationX>
+        <locationY>817</locationY>
+        <defaultConnector>
+            <targetReference>UpdateUser</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Topic Editor</defaultConnectorLabel>
+        <rules>
+            <name>Has_Topic_Editor_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Permset_Assignment_Topics</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_topic_variable_0_0_0</targetReference>
+            </connector>
+            <label>Has Topic Editor</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Knowledge</name>
+        <label>Update Knowledge?</label>
+        <locationX>3715</locationX>
+        <locationY>689</locationY>
+        <defaultConnector>
+            <targetReference>Update_QuickText_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>UserhasNKSKnowledgeEditorpermission</name>
+            <name>Give_Knowledge_Access</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Knowledge_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>setKnowledgeUser</leftValueReference>
                 <operator>EqualTo</operator>
@@ -421,76 +515,20 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Quick_Text_Editor_is_checked</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-        <rules>
-            <name>If_user_has_Knowledge_Editor_perset_while_is_not_Knowledge_User</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Permset_Assignment_Knowledge_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>setKnowledgeUser</leftValueReference>
+                <leftValueReference>KnowledgeEditorCheckbox</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_Knowledge_Editor_permset_assignment</targetReference>
-            </connector>
-            <label>If user has Knowledge Editor perset while is not Knowledge User</label>
-        </rules>
-        <rules>
-            <name>Give_Knowledge_Editor_permission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Knowledge_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>setKnowledgeUser</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Create_Knowledge_Editor_permset_assignment</targetReference>
             </connector>
-            <label>Give Knowledge Editor permission</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Knowledge_User_is_checked</name>
-        <label>Knowledge User is checked</label>
-        <locationX>3978</locationX>
-        <locationY>1677</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>KnowledgeUserIsChecked</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>setKnowledgeUser</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Yes</label>
+            <label>Give Knowledge Access</label>
         </rules>
         <rules>
-            <name>KnowledgeUserisunchecked</name>
+            <name>Remove_Knowledge_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>setKnowledgeUser</leftValueReference>
@@ -499,65 +537,31 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Quick_Text_Editor_is_checked</name>
-        <label>Quick Text Editor is checked</label>
-        <locationX>3420</locationX>
-        <locationY>1229</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>QuickTextEditorIsChecked</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
+                <leftValueReference>KnowledgeEditorCheckbox</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Quick_Text_Editor_permission_exists</targetReference>
+                <targetReference>Remove_Knowledge_Editor_permset_assignment</targetReference>
             </connector>
-            <label>Yes</label>
-        </rules>
-        <rules>
-            <name>QuickTextEditorIsUnchecked</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Quick_Text_Editor_permission_exists</targetReference>
-            </connector>
-            <label>No</label>
+            <label>Remove Knowledge Access</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Quick_Text_Editor_permission_exists</name>
-        <label>Quick Text Editor permission exists</label>
-        <locationX>3287</locationX>
-        <locationY>1236</locationY>
+        <name>Update_QuickText_0</name>
+        <label>Update Quick Text?</label>
+        <locationX>4014</locationX>
+        <locationY>584</locationY>
         <defaultConnector>
-            <targetReference>Topics_is_checked</targetReference>
+            <targetReference>Update_Topic_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>QuickTextEditorExists</name>
+            <name>Give_QuickText_Access_0</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Quick_Text_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
                 <operator>EqualTo</operator>
@@ -565,64 +569,52 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Topics_is_checked</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-        <rules>
-            <name>Remove_Quick_Text_Editor_permission</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Permset_Assignment_Quick_Text_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
+                <leftValueReference>BooleanvariabletocheckQuickTextEditorassignment</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_Quick_Text_Editor_permset_assignment</targetReference>
-            </connector>
-            <label>Remove Quick Text Editor permission</label>
-        </rules>
-        <rules>
-            <name>Give_Quick_Text_Editor_permission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Quick_Text_Editor</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Create_Quick_Text_Editor_permset_assignement</targetReference>
             </connector>
-            <label>Give Quick Text Editor permission</label>
+            <label>Give Quick Text Access</label>
+        </rules>
+        <rules>
+            <name>Remove_QuickText_Access_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BooleanvariabletocheckQuickTextEditorassignment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_Quick_Text_Editor_permset_assignment</targetReference>
+            </connector>
+            <label>Remove Quick Text Access</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Topics_is_checked</name>
-        <label>Topics is checked</label>
-        <locationX>3571</locationX>
-        <locationY>1593</locationY>
+        <name>Update_Topic_0_0</name>
+        <label>Update Topic?</label>
+        <locationX>4330</locationX>
+        <locationY>584</locationY>
+        <defaultConnector>
+            <targetReference>Set_chat_user</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>TopicsIsChecked</name>
+            <name>Give_Topic_Access_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Set_NKS_Topics</leftValueReference>
@@ -631,102 +623,46 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Topics_permission_exists</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-        <rules>
-            <name>TopicsIsUnchecked</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
+                <leftValueReference>BooleanvariabletocheckTopicsAssignment</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Topics_permission_exists</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Topics_permission_exists</name>
-        <label>Topics permission exists</label>
-        <locationX>3284</locationX>
-        <locationY>1603</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>TopicsIsExists</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Topics</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <label>Yes</label>
-        </rules>
-        <rules>
-            <name>Remove_Topics_permission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Topics</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_Topics_permset_assignment</targetReference>
-            </connector>
-            <label>Remove Topics permission</label>
-        </rules>
-        <rules>
-            <name>Give_Topics_permission</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Permset_Assignment_Topics</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Create_Topics_permset_assignment</targetReference>
             </connector>
-            <label>Give Topics permission</label>
+            <label>Give Topic Access</label>
+        </rules>
+        <rules>
+            <name>Remove_Topic_Access_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Set_NKS_Topics</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BooleanvariabletocheckTopicsAssignment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_Topics_permset_assignment</targetReference>
+            </connector>
+            <label>Remove Topic Access</label>
         </rules>
     </decisions>
     <decisions>
         <name>Users_divisions</name>
         <label>Users divisions</label>
         <locationX>2544</locationX>
-        <locationY>605</locationY>
+        <locationY>800</locationY>
         <defaultConnector>
             <targetReference>Loop_Picklist_Values</targetReference>
         </defaultConnector>
@@ -767,6 +703,11 @@
         <expression>&apos;K&apos;+MID({!Get_User.Department},3,2)</expression>
     </formulas>
     <formulas>
+        <name>QuickTextEditorFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(!ISBLANK({!Get_Permset_Assignment_Quick_Text_Editor.Id}),true,false)</expression>
+    </formulas>
+    <formulas>
         <name>singleGroup</name>
         <dataType>String</dataType>
         <expression>TRIM(SUBSTITUTE(LEFT({!selectedGroupIds},FIND(&quot;;&quot;,{!selectedGroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
@@ -797,7 +738,7 @@
         <name>Loop_Picklist_Values</name>
         <label>Loop Picklist Values</label>
         <locationX>2617</locationX>
-        <locationY>713</locationY>
+        <locationY>908</locationY>
         <collectionReference>allPicklistValues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -811,7 +752,7 @@
         <name>Loop_queues</name>
         <label>Loop queues</label>
         <locationX>2758</locationX>
-        <locationY>720</locationY>
+        <locationY>915</locationY>
         <collectionReference>UserGroups</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -824,8 +765,8 @@
     <loops>
         <name>Loop_String_Collection</name>
         <label>Loop String Collection</label>
-        <locationX>1967</locationX>
-        <locationY>1815</locationY>
+        <locationX>4398</locationX>
+        <locationY>1696</locationY>
         <collectionReference>SelectedGroupList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -854,8 +795,8 @@
     <recordCreates>
         <name>Create_group_memberships</name>
         <label>Create group memberships</label>
-        <locationX>1857</locationX>
-        <locationY>1897</locationY>
+        <locationX>4288</locationX>
+        <locationY>1778</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
@@ -877,10 +818,10 @@
     <recordCreates>
         <name>Create_Knowledge_Editor_permset_assignment</name>
         <label>Create Knowledge Editor permset assignment</label>
-        <locationX>3689</locationX>
-        <locationY>1240</locationY>
+        <locationX>3802</locationX>
+        <locationY>523</locationY>
         <connector>
-            <targetReference>Quick_Text_Editor_is_checked</targetReference>
+            <targetReference>Get_Knowledge_Editor_Group</targetReference>
         </connector>
         <inputAssignments>
             <field>AssigneeId</field>
@@ -898,12 +839,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Create_Knowledge_Group_Member</name>
+        <label>Create Knowledge Group Member</label>
+        <locationX>3617</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Update_QuickText_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>GroupId</field>
+            <value>
+                <elementReference>Get_Knowledge_Editor_Group.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserOrGroupId</field>
+            <value>
+                <elementReference>Get_User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>GroupMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Create_Quick_Text_Editor_permset_assignement</name>
         <label>Create Quick Text Editor permset assignement</label>
-        <locationX>3129</locationX>
-        <locationY>1253</locationY>
+        <locationX>4034</locationX>
+        <locationY>392</locationY>
         <connector>
-            <targetReference>Topics_is_checked</targetReference>
+            <targetReference>Update_Topic_0_0</targetReference>
         </connector>
         <inputAssignments>
             <field>AssigneeId</field>
@@ -923,8 +887,11 @@
     <recordCreates>
         <name>Create_Topics_permset_assignment</name>
         <label>Create Topics permset assignment</label>
-        <locationX>3334</locationX>
-        <locationY>1799</locationY>
+        <locationX>4341</locationX>
+        <locationY>392</locationY>
+        <connector>
+            <targetReference>Set_chat_user</targetReference>
+        </connector>
         <inputAssignments>
             <field>AssigneeId</field>
             <value>
@@ -943,48 +910,108 @@
     <recordDeletes>
         <name>Delete_current_memberships</name>
         <label>Delete current memberships</label>
-        <locationX>1860</locationX>
-        <locationY>1749</locationY>
+        <locationX>4291</locationX>
+        <locationY>1630</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
         <inputReference>groupMembershipsToDelete</inputReference>
     </recordDeletes>
     <recordDeletes>
+        <name>Delete_Knowledge_Group_Member</name>
+        <label>Delete Knowledge Group Member</label>
+        <locationX>3872</locationX>
+        <locationY>52</locationY>
+        <connector>
+            <targetReference>Update_QuickText_0</targetReference>
+        </connector>
+        <inputReference>Get_Knowledge_Group_Member</inputReference>
+    </recordDeletes>
+    <recordDeletes>
         <name>Remove_Knowledge_Editor_permset_assignment</name>
         <label>Remove Knowledge Editor permset assignment</label>
-        <locationX>3890</locationX>
-        <locationY>1180</locationY>
+        <locationX>3664</locationX>
+        <locationY>514</locationY>
         <connector>
-            <targetReference>Quick_Text_Editor_is_checked</targetReference>
+            <targetReference>Get_Knowledge_Editor_Group</targetReference>
         </connector>
         <inputReference>Get_Permset_Assignment_Knowledge_Editor</inputReference>
     </recordDeletes>
     <recordDeletes>
         <name>Remove_Quick_Text_Editor_permset_assignment</name>
         <label>Remove Quick Text Editor permset assignment</label>
-        <locationX>3187</locationX>
-        <locationY>1463</locationY>
+        <locationX>4178</locationX>
+        <locationY>391</locationY>
         <connector>
-            <targetReference>Topics_is_checked</targetReference>
+            <targetReference>Update_Topic_0_0</targetReference>
         </connector>
         <inputReference>Get_Permset_Assignment_Quick_Text_Editor</inputReference>
     </recordDeletes>
     <recordDeletes>
         <name>Remove_Topics_permset_assignment</name>
         <label>Remove Topics permset assignment</label>
-        <locationX>3078</locationX>
-        <locationY>1721</locationY>
+        <locationX>4469</locationX>
+        <locationY>399</locationY>
+        <connector>
+            <targetReference>Set_chat_user</targetReference>
+        </connector>
         <inputReference>Get_Permset_Assignment_Topics</inputReference>
     </recordDeletes>
     <recordLookups>
-        <name>Get_Permset_Assignment_Knowledge_Editor</name>
-        <label>Get Permset Assignment Knowledge Editor</label>
-        <locationX>3180</locationX>
-        <locationY>724</locationY>
+        <name>Get_Knowledge_Editor_Group</name>
+        <label>Get Knowledge Editor Group</label>
+        <locationX>3734</locationX>
+        <locationY>404</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Assignment_Topics</targetReference>
+            <targetReference>Get_Knowledge_Group_Member</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NKS_Knowledge_Editors</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Knowledge_Group_Member</name>
+        <label>Get Knowledge Group Member</label>
+        <locationX>3738</locationX>
+        <locationY>285</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Group_Empty_0_0_0</targetReference>
+        </connector>
+        <filters>
+            <field>GroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Knowledge_Editor_Group.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>UserOrGroupId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_User.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>GroupMember</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Permset_Assignment_Knowledge_Editor</name>
+        <label>Get Permset Assignment Knowledge Editor</label>
+        <locationX>3167</locationX>
+        <locationY>930</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Knowledge_Editor_Empty_0</targetReference>
         </connector>
         <filters>
             <field>AssigneeId</field>
@@ -1007,11 +1034,11 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Quick_Text_Editor</name>
         <label>Get Permset Assignment Quick Text Editor</label>
-        <locationX>3392</locationX>
-        <locationY>724</locationY>
+        <locationX>2967</locationX>
+        <locationY>926</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_if_user_has_Quick_Text_Editor_permission</targetReference>
+            <targetReference>Quick_Text_Editor_Empty</targetReference>
         </connector>
         <filters>
             <field>AssigneeId</field>
@@ -1034,11 +1061,11 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Topics</name>
         <label>Get Permset Assignment Topics</label>
-        <locationX>3291</locationX>
-        <locationY>724</locationY>
+        <locationX>3379</locationX>
+        <locationY>934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>
+            <targetReference>Topic_Editor_Empty_0_0</targetReference>
         </connector>
         <filters>
             <field>AssigneeId</field>
@@ -1061,8 +1088,8 @@
     <recordLookups>
         <name>Get_Permset_Knowledge_Editor</name>
         <label>Get Permset Knowledge Editor</label>
-        <locationX>3075</locationX>
-        <locationY>724</locationY>
+        <locationX>3059</locationX>
+        <locationY>930</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Knowledge_Editor</targetReference>
@@ -1081,11 +1108,11 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor</name>
         <label>Get Permset Quick Text Editor</label>
-        <locationX>2856</locationX>
-        <locationY>724</locationY>
+        <locationX>2866</locationX>
+        <locationY>925</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Topics</targetReference>
+            <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>
         </connector>
         <filters>
             <field>Name</field>
@@ -1101,11 +1128,11 @@
     <recordLookups>
         <name>Get_Permset_Topics</name>
         <label>Get Permset Topics</label>
-        <locationX>2966</locationX>
-        <locationY>724</locationY>
+        <locationX>3268</locationX>
+        <locationY>934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Knowledge_Editor</targetReference>
+            <targetReference>Get_Permset_Assignment_Topics</targetReference>
         </connector>
         <filters>
             <field>Name</field>
@@ -1122,7 +1149,7 @@
         <name>Get_User</name>
         <label>Get User</label>
         <locationX>2253</locationX>
-        <locationY>713</locationY>
+        <locationY>908</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
@@ -1141,8 +1168,8 @@
     <recordUpdates>
         <name>Set_chat_user</name>
         <label>Set chat user</label>
-        <locationX>1846</locationX>
-        <locationY>1006</locationY>
+        <locationX>4277</locationX>
+        <locationY>887</locationY>
         <connector>
             <targetReference>Edit_Division</targetReference>
         </connector>
@@ -1188,8 +1215,8 @@
     <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
-        <locationX>1720</locationX>
-        <locationY>1125</locationY>
+        <locationX>4151</locationX>
+        <locationY>1006</locationY>
         <connector>
             <targetReference>Edit_Queues</targetReference>
         </connector>
@@ -1212,11 +1239,14 @@
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>1847</locationX>
-        <locationY>894</locationY>
+        <locationX>3723</locationX>
+        <locationY>809</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Knowledge</targetReference>
+        </connector>
         <fields>
             <name>display</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Veileder sitt fullt navn er: &lt;b&gt;{!Get_User.NKS_FullName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
@@ -1238,7 +1268,7 @@
             <defaultValue>
                 <elementReference>Get_User.NKS_Alias__c</elementReference>
             </defaultValue>
-            <fieldText>Alias</fieldText>
+            <fieldText>Fornavn Alias</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>
@@ -1349,7 +1379,7 @@
             <defaultValue>
                 <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
             </defaultValue>
-            <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
+            <fieldText>Chat tilgang</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1359,7 +1389,7 @@
             <defaultValue>
                 <elementReference>Get_User.UserPermissionsKnowledgeUser</elementReference>
             </defaultValue>
-            <fieldText>Sett knowledge bruker</fieldText>
+            <fieldText>Knowledge Editor</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1369,7 +1399,7 @@
             <defaultValue>
                 <elementReference>BooleanvariabletocheckQuickTextEditorassignment</elementReference>
             </defaultValue>
-            <fieldText>Sett NKS-Quick Text Editor</fieldText>
+            <fieldText>NKS-Quick Text Editor</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1379,7 +1409,7 @@
             <defaultValue>
                 <elementReference>BooleanvariabletocheckTopicsAssignment</elementReference>
             </defaultValue>
-            <fieldText>Sett NKS-Topics</fieldText>
+            <fieldText>NKS-Topics</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1388,7 +1418,7 @@
     </screens>
     <start>
         <locationX>2127</locationX>
-        <locationY>587</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
@@ -1407,6 +1437,9 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>BooleanvariabletocheckTopicsAssignment</name>
@@ -1414,6 +1447,9 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>currentGroupMember</name>
@@ -1453,6 +1489,34 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>KnowledgeEditorCheckbox</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>KnowledgeGroupMember</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>GroupMember</objectType>
+    </variables>
+    <variables>
+        <name>quickTextFilled</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>false</stringValue>
+        </value>
     </variables>
     <variables>
         <name>recordId</name>
