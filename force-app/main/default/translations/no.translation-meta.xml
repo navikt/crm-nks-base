@@ -1328,9 +1328,6 @@
                     <name>Set_NKS_Topics</name>
                 </fields>
                 <fields>
-                    <name>Set_alias</name>
-                </fields>
-                <fields>
                     <name>UpdateDivision</name>
                 </fields>
                 <fields>
