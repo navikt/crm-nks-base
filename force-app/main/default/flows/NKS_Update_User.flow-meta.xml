@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_Current_Memberships</name>
         <label>Get Current Memberships</label>
-        <locationX>1151</locationX>
-        <locationY>1798</locationY>
+        <locationX>1968</locationX>
+        <locationY>1512</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -40,8 +40,8 @@
     <actionCalls>
         <name>Get_User_Queues</name>
         <label>Get User Queues</label>
-        <locationX>2365</locationX>
-        <locationY>793</locationY>
+        <locationX>2375</locationX>
+        <locationY>713</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -77,8 +77,8 @@
     <actionCalls>
         <name>GetPicklistValues</name>
         <label>GetPicklistValues</label>
-        <locationX>2505</locationX>
-        <locationY>793</locationY>
+        <locationX>2503</locationX>
+        <locationY>713</locationY>
         <actionName>GetPicklistValues</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -104,8 +104,8 @@
     <assignments>
         <name>Add_queue_name</name>
         <label>Add queue name</label>
-        <locationX>2905</locationX>
-        <locationY>1125</locationY>
+        <locationX>2759</locationX>
+        <locationY>607</locationY>
         <assignmentItems>
             <assignToReference>UsersQueueNames</assignToReference>
             <operator>Add</operator>
@@ -120,8 +120,8 @@
     <assignments>
         <name>Add_to_collection_variable</name>
         <label>Add to collection variable</label>
-        <locationX>834</locationX>
-        <locationY>2041</locationY>
+        <locationX>1773</locationX>
+        <locationY>1636</locationY>
         <assignmentItems>
             <assignToReference>singleGroupString</assignToReference>
             <operator>Assign</operator>
@@ -143,8 +143,8 @@
     <assignments>
         <name>Add_to_selectable_divisions</name>
         <label>Add to selectable divisions</label>
-        <locationX>3110</locationX>
-        <locationY>797</locationY>
+        <locationX>2682</locationX>
+        <locationY>607</locationY>
         <assignmentItems>
             <assignToReference>SelectableDivisions</assignToReference>
             <operator>Add</operator>
@@ -159,8 +159,8 @@
     <assignments>
         <name>Assign_Selected_Value_To_String</name>
         <label>Assign Selected Value To String</label>
-        <locationX>813</locationX>
-        <locationY>1587</locationY>
+        <locationX>1842</locationX>
+        <locationY>1378</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -190,8 +190,8 @@
     <assignments>
         <name>Set_Checked_True_for_Quick_Text_Editor</name>
         <label>Set Checked=True for Quick Text Editor</label>
-        <locationX>2066</locationX>
-        <locationY>1167</locationY>
+        <locationX>3506</locationX>
+        <locationY>575</locationY>
         <assignmentItems>
             <assignToReference>BooleanvariabletocheckQuickTextEditorassignment</assignToReference>
             <operator>Assign</operator>
@@ -200,14 +200,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Permset_Topics</targetReference>
+            <targetReference>Check_if_user_has_Topics_permission</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Checked_True_for_Topics</name>
         <label>Set Checked=True for Topics</label>
-        <locationX>1782</locationX>
-        <locationY>889</locationY>
+        <locationX>3901</locationX>
+        <locationY>640</locationY>
         <assignmentItems>
             <assignToReference>BooleanvariabletocheckTopicsAssignment</assignToReference>
             <operator>Assign</operator>
@@ -215,15 +215,12 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>UpdateUser</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Update_the_Selected_Account_String</name>
         <label>Update the Selected Account String</label>
-        <locationX>624</locationX>
-        <locationY>1901</locationY>
+        <locationX>1703</locationX>
+        <locationY>1511</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -238,10 +235,10 @@
     <decisions>
         <name>Check_if_user_has_Quick_Text_Editor_permission</name>
         <label>Check if user has Quick Text Editor permission</label>
-        <locationX>2058</locationX>
-        <locationY>1410</locationY>
+        <locationX>3501</locationX>
+        <locationY>726</locationY>
         <defaultConnector>
-            <targetReference>Get_Permset_Topics</targetReference>
+            <targetReference>Check_if_user_has_Topics_permission</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -263,11 +260,8 @@
     <decisions>
         <name>Check_if_user_has_Topics_permission</name>
         <label>Check if user has Topics permission</label>
-        <locationX>2160</locationX>
-        <locationY>987</locationY>
-        <defaultConnector>
-            <targetReference>UpdateUser</targetReference>
-        </defaultConnector>
+        <locationX>3733</locationX>
+        <locationY>637</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>HasTopicspermission</name>
@@ -288,8 +282,8 @@
     <decisions>
         <name>Check_selected_string</name>
         <label>Check selected string</label>
-        <locationX>823</locationX>
-        <locationY>1797</locationY>
+        <locationX>1833</locationX>
+        <locationY>1513</locationY>
         <defaultConnector>
             <targetReference>Add_to_collection_variable</targetReference>
         </defaultConnector>
@@ -308,35 +302,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Edit_Alias</name>
-        <label>Edit Alias?</label>
-        <locationX>865</locationX>
-        <locationY>742</locationY>
-        <defaultConnector>
-            <targetReference>Edit_full_name_alias</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Set_alias</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_User_Alias</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Edit_Division</name>
         <label>Edit Division?</label>
-        <locationX>923</locationX>
-        <locationY>1230</locationY>
+        <locationX>1834</locationX>
+        <locationY>1129</locationY>
         <defaultConnector>
             <targetReference>Edit_Queues</targetReference>
         </defaultConnector>
@@ -358,35 +327,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Edit_full_name_alias</name>
-        <label>Edit full name alias?</label>
-        <locationX>867</locationX>
-        <locationY>971</locationY>
-        <defaultConnector>
-            <targetReference>Edit_Division</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>editFullNameAlias</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Set_alias</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_User_Full_Name_Alias</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Edit_Queues</name>
         <label>Edit Queues?</label>
-        <locationX>926</locationX>
-        <locationY>1497</locationY>
+        <locationX>1833</locationX>
+        <locationY>1265</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>EditQueuesTrue</name>
@@ -407,8 +351,8 @@
     <decisions>
         <name>Empty_list</name>
         <label>Empty list?</label>
-        <locationX>1165</locationX>
-        <locationY>2732</locationY>
+        <locationX>1938</locationX>
+        <locationY>1992</locationY>
         <defaultConnector>
             <targetReference>Create_group_memberships</targetReference>
         </defaultConnector>
@@ -429,8 +373,8 @@
     <decisions>
         <name>Is_there_any_to_delete</name>
         <label>Is there any to delete?</label>
-        <locationX>1143</locationX>
-        <locationY>2006</locationY>
+        <locationX>1960</locationX>
+        <locationY>1686</locationY>
         <defaultConnector>
             <targetReference>Loop_String_Collection</targetReference>
         </defaultConnector>
@@ -454,8 +398,8 @@
     <decisions>
         <name>Knowledge_Editor_assignement_exists</name>
         <label>Knowledge Editor assignement exists</label>
-        <locationX>1366</locationX>
-        <locationY>527</locationY>
+        <locationX>3929</locationX>
+        <locationY>1486</locationY>
         <defaultConnector>
             <targetReference>Quick_Text_Editor_is_checked</targetReference>
         </defaultConnector>
@@ -530,8 +474,8 @@
     <decisions>
         <name>Knowledge_User_is_checked</name>
         <label>Knowledge User is checked</label>
-        <locationX>1274</locationX>
-        <locationY>1102</locationY>
+        <locationX>3978</locationX>
+        <locationY>1677</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>KnowledgeUserIsChecked</name>
@@ -543,9 +487,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Get_Permset_Knowledge_Editor</targetReference>
-            </connector>
             <label>Yes</label>
         </rules>
         <rules>
@@ -558,17 +499,14 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Get_Permset_Knowledge_Editor</targetReference>
-            </connector>
             <label>No</label>
         </rules>
     </decisions>
     <decisions>
         <name>Quick_Text_Editor_is_checked</name>
         <label>Quick Text Editor is checked</label>
-        <locationX>1099</locationX>
-        <locationY>244</locationY>
+        <locationX>3420</locationX>
+        <locationY>1229</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>QuickTextEditorIsChecked</name>
@@ -604,8 +542,8 @@
     <decisions>
         <name>Quick_Text_Editor_permission_exists</name>
         <label>Quick Text Editor permission exists</label>
-        <locationX>857</locationX>
-        <locationY>122</locationY>
+        <locationX>3287</locationX>
+        <locationY>1236</locationY>
         <defaultConnector>
             <targetReference>Topics_is_checked</targetReference>
         </defaultConnector>
@@ -680,8 +618,8 @@
     <decisions>
         <name>Topics_is_checked</name>
         <label>Topics is checked</label>
-        <locationX>860</locationX>
-        <locationY>348</locationY>
+        <locationX>3571</locationX>
+        <locationY>1593</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>TopicsIsChecked</name>
@@ -717,11 +655,8 @@
     <decisions>
         <name>Topics_permission_exists</name>
         <label>Topics permission exists</label>
-        <locationX>706</locationX>
-        <locationY>488</locationY>
-        <defaultConnector>
-            <targetReference>Edit_Alias</targetReference>
-        </defaultConnector>
+        <locationX>3284</locationX>
+        <locationY>1603</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>TopicsIsExists</name>
@@ -740,9 +675,6 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Edit_Alias</targetReference>
-            </connector>
             <label>Yes</label>
         </rules>
         <rules>
@@ -793,8 +725,8 @@
     <decisions>
         <name>Users_divisions</name>
         <label>Users divisions</label>
-        <locationX>2849</locationX>
-        <locationY>668</locationY>
+        <locationX>2544</locationX>
+        <locationY>605</locationY>
         <defaultConnector>
             <targetReference>Loop_Picklist_Values</targetReference>
         </defaultConnector>
@@ -864,8 +796,8 @@
     <loops>
         <name>Loop_Picklist_Values</name>
         <label>Loop Picklist Values</label>
-        <locationX>2634</locationX>
-        <locationY>793</locationY>
+        <locationX>2617</locationX>
+        <locationY>713</locationY>
         <collectionReference>allPicklistValues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -878,8 +810,8 @@
     <loops>
         <name>Loop_queues</name>
         <label>Loop queues</label>
-        <locationX>2632</locationX>
-        <locationY>1125</locationY>
+        <locationX>2758</locationX>
+        <locationY>720</locationY>
         <collectionReference>UserGroups</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -892,8 +824,8 @@
     <loops>
         <name>Loop_String_Collection</name>
         <label>Loop String Collection</label>
-        <locationX>1151</locationX>
-        <locationY>2363</locationY>
+        <locationX>1967</locationX>
+        <locationY>1815</locationY>
         <collectionReference>SelectedGroupList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -922,8 +854,8 @@
     <recordCreates>
         <name>Create_group_memberships</name>
         <label>Create group memberships</label>
-        <locationX>1262</locationX>
-        <locationY>2555</locationY>
+        <locationX>1857</locationX>
+        <locationY>1897</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
@@ -945,8 +877,8 @@
     <recordCreates>
         <name>Create_Knowledge_Editor_permset_assignment</name>
         <label>Create Knowledge Editor permset assignment</label>
-        <locationX>1368</locationX>
-        <locationY>256</locationY>
+        <locationX>3689</locationX>
+        <locationY>1240</locationY>
         <connector>
             <targetReference>Quick_Text_Editor_is_checked</targetReference>
         </connector>
@@ -968,8 +900,8 @@
     <recordCreates>
         <name>Create_Quick_Text_Editor_permset_assignement</name>
         <label>Create Quick Text Editor permset assignement</label>
-        <locationX>569</locationX>
-        <locationY>202</locationY>
+        <locationX>3129</locationX>
+        <locationY>1253</locationY>
         <connector>
             <targetReference>Topics_is_checked</targetReference>
         </connector>
@@ -991,11 +923,8 @@
     <recordCreates>
         <name>Create_Topics_permset_assignment</name>
         <label>Create Topics permset assignment</label>
-        <locationX>614</locationX>
-        <locationY>623</locationY>
-        <connector>
-            <targetReference>Edit_Alias</targetReference>
-        </connector>
+        <locationX>3334</locationX>
+        <locationY>1799</locationY>
         <inputAssignments>
             <field>AssigneeId</field>
             <value>
@@ -1014,8 +943,8 @@
     <recordDeletes>
         <name>Delete_current_memberships</name>
         <label>Delete current memberships</label>
-        <locationX>1050</locationX>
-        <locationY>2148</locationY>
+        <locationX>1860</locationX>
+        <locationY>1749</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
@@ -1024,8 +953,8 @@
     <recordDeletes>
         <name>Remove_Knowledge_Editor_permset_assignment</name>
         <label>Remove Knowledge Editor permset assignment</label>
-        <locationX>1569</locationX>
-        <locationY>195</locationY>
+        <locationX>3890</locationX>
+        <locationY>1180</locationY>
         <connector>
             <targetReference>Quick_Text_Editor_is_checked</targetReference>
         </connector>
@@ -1034,8 +963,8 @@
     <recordDeletes>
         <name>Remove_Quick_Text_Editor_permset_assignment</name>
         <label>Remove Quick Text Editor permset assignment</label>
-        <locationX>454</locationX>
-        <locationY>118</locationY>
+        <locationX>3187</locationX>
+        <locationY>1463</locationY>
         <connector>
             <targetReference>Topics_is_checked</targetReference>
         </connector>
@@ -1044,21 +973,18 @@
     <recordDeletes>
         <name>Remove_Topics_permset_assignment</name>
         <label>Remove Topics permset assignment</label>
-        <locationX>500</locationX>
-        <locationY>747</locationY>
-        <connector>
-            <targetReference>Edit_Alias</targetReference>
-        </connector>
+        <locationX>3078</locationX>
+        <locationY>1721</locationY>
         <inputReference>Get_Permset_Assignment_Topics</inputReference>
     </recordDeletes>
     <recordLookups>
         <name>Get_Permset_Assignment_Knowledge_Editor</name>
         <label>Get Permset Assignment Knowledge Editor</label>
-        <locationX>1369</locationX>
-        <locationY>650</locationY>
+        <locationX>3180</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Knowledge_Editor_assignement_exists</targetReference>
+            <targetReference>Get_Permset_Assignment_Topics</targetReference>
         </connector>
         <filters>
             <field>AssigneeId</field>
@@ -1081,8 +1007,8 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Quick_Text_Editor</name>
         <label>Get Permset Assignment Quick Text Editor</label>
-        <locationX>2452</locationX>
-        <locationY>1382</locationY>
+        <locationX>3392</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_user_has_Quick_Text_Editor_permission</targetReference>
@@ -1108,11 +1034,11 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Topics</name>
         <label>Get Permset Assignment Topics</label>
-        <locationX>2373</locationX>
-        <locationY>986</locationY>
+        <locationX>3291</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_if_user_has_Topics_permission</targetReference>
+            <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>
         </connector>
         <filters>
             <field>AssigneeId</field>
@@ -1135,8 +1061,8 @@
     <recordLookups>
         <name>Get_Permset_Knowledge_Editor</name>
         <label>Get Permset Knowledge Editor</label>
-        <locationX>1367</locationX>
-        <locationY>814</locationY>
+        <locationX>3075</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Knowledge_Editor</targetReference>
@@ -1155,11 +1081,11 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor</name>
         <label>Get Permset Quick Text Editor</label>
-        <locationX>2634</locationX>
-        <locationY>1384</locationY>
+        <locationX>2856</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>
+            <targetReference>Get_Permset_Topics</targetReference>
         </connector>
         <filters>
             <field>Name</field>
@@ -1175,11 +1101,11 @@
     <recordLookups>
         <name>Get_Permset_Topics</name>
         <label>Get Permset Topics</label>
-        <locationX>2372</locationX>
-        <locationY>1176</locationY>
+        <locationX>2966</locationX>
+        <locationY>724</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Permset_Assignment_Topics</targetReference>
+            <targetReference>Get_Permset_Knowledge_Editor</targetReference>
         </connector>
         <filters>
             <field>Name</field>
@@ -1196,7 +1122,7 @@
         <name>Get_User</name>
         <label>Get User</label>
         <locationX>2253</locationX>
-        <locationY>793</locationY>
+        <locationY>713</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
@@ -1215,10 +1141,10 @@
     <recordUpdates>
         <name>Set_chat_user</name>
         <label>Set chat user</label>
-        <locationX>1582</locationX>
-        <locationY>1099</locationY>
+        <locationX>1846</locationX>
+        <locationY>1006</locationY>
         <connector>
-            <targetReference>Knowledge_User_is_checked</targetReference>
+            <targetReference>Edit_Division</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -1231,6 +1157,18 @@
             <field>CRM_NAV_Ident__c</field>
             <value>
                 <elementReference>NAV_Ident</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Alias__c</field>
+            <value>
+                <elementReference>Alias</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_FullNameAlias__c</field>
+            <value>
+                <elementReference>Fullt_Navn_Alias</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1250,8 +1188,8 @@
     <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
-        <locationX>818</locationX>
-        <locationY>1353</locationY>
+        <locationX>1720</locationX>
+        <locationY>1125</locationY>
         <connector>
             <targetReference>Edit_Queues</targetReference>
         </connector>
@@ -1270,64 +1208,15 @@
         </inputAssignments>
         <object>User</object>
     </recordUpdates>
-    <recordUpdates>
-        <name>Update_User_Alias</name>
-        <label>Update User Alias</label>
-        <locationX>703</locationX>
-        <locationY>814</locationY>
-        <connector>
-            <targetReference>Edit_full_name_alias</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NKS_Alias__c</field>
-            <value>
-                <elementReference>Alias</elementReference>
-            </value>
-        </inputAssignments>
-        <object>User</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_User_Full_Name_Alias</name>
-        <label>Update User Full Name Alias</label>
-        <locationX>674</locationX>
-        <locationY>1046</locationY>
-        <connector>
-            <targetReference>Edit_Division</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NKS_FullNameAlias__c</field>
-            <value>
-                <elementReference>Fullt_Navn_Alias</elementReference>
-            </value>
-        </inputAssignments>
-        <object>User</object>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>1782</locationX>
-        <locationY>1099</locationY>
+        <locationX>1847</locationX>
+        <locationY>894</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Set_chat_user</targetReference>
-        </connector>
         <fields>
             <name>display</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Veileder sitt fullt navn er: &lt;b&gt;{!Get_User.NKS_FullName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!UsersQueueNames}&lt;/b&gt;&lt;/p&gt;</fieldText>
@@ -1344,55 +1233,24 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Chat_user_permission</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
-            </defaultValue>
-            <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Set_alias</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Sett chat alias</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
             <name>Alias</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_User.NKS_Alias__c</elementReference>
+            </defaultValue>
             <fieldText>Alias</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Set_alias</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Fullt_Navn_Alias</name>
             <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_User.NKS_FullNameAlias__c</elementReference>
+            </defaultValue>
             <fieldText>Fullt Navn Alias</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Set_alias</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SetDivision</name>
@@ -1484,6 +1342,16 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>Chat_user_permission</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
+            </defaultValue>
+            <fieldText>Huk av dersom bruker skal ha tilgang til chat</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>setKnowledgeUser</name>

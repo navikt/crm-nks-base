@@ -37,47 +37,47 @@
         <name>CRM_Chat_Unconfirmed_Identity_Warning</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List Col Case Id --></label>
+        <label/>
         <name>CRM_Journal_Case_List_Col_Case_Id</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List Col Created Date --></label>
+        <label/>
         <name>CRM_Journal_Case_List_Col_Created_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List No Cases Error --></label>
+        <label/>
         <name>CRM_Journal_Case_List_No_Cases_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Retrieve Error --></label>
+        <label/>
         <name>CRM_NAV_Case_Retrieve_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Title --></label>
+        <label/>
         <name>CRM_NAV_Case_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Validation Error --></label>
+        <label/>
         <name>CRM_NAV_Case_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Task Type Validation Error --></label>
+        <label/>
         <name>CRM_NAV_Task_Type_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Nav Task Work Allocation Delegate to Self --></label>
+        <label/>
         <name>CRM_Nav_Task_Work_Allocation_Delegate_to_Self</name>
     </customLabels>
     <customLabels>
-        <label><!-- Nav Task Work Allocation Validation Error --></label>
+        <label/>
         <name>CRM_Nav_Task_Work_Allocation_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- No Cases for Selected Theme Group --></label>
+        <label/>
         <name>CRM_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
-        <label><!-- Theme Categorization Validation Error --></label>
+        <label/>
         <name>CRM_Theme_Categorization_Validation_Error</name>
     </customLabels>
     <customLabels>
@@ -93,11 +93,11 @@
         <name>Errors_InvalidSettingConfiguration</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Unit person location missing --></label>
+        <label/>
         <name>NAV_Unit_Error_person_location_missing</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV_Unit_Error_person_not_accessible --></label>
+        <label/>
         <name>NAV_Unit_Error_person_not_accessible</name>
     </customLabels>
     <customLabels>
@@ -109,175 +109,175 @@
         <name>NKS_Chat_Login_Message_NO</name>
     </customLabels>
     <customLabels>
-        <label><!-- Conversation Note Blank Error --></label>
+        <label/>
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Conversation Note Share With User --></label>
+        <label/>
         <name>NKS_Conversation_Note_Share_With_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- Create Conversation Note --></label>
+        <label/>
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List Col Case Id --></label>
+        <label/>
         <name>NKS_Journal_Case_List_Col_Case_Id</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List Col Created Date --></label>
+        <label/>
         <name>NKS_Journal_Case_List_Col_Created_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Case List No Cases Error --></label>
+        <label/>
         <name>NKS_Journal_Case_List_No_Cases_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Flow Complete Button --></label>
+        <label/>
         <name>NKS_Journal_Flow_Complete_Button</name>
     </customLabels>
     <customLabels>
-        <label><!-- Journal Flow New Journal --></label>
+        <label/>
         <name>NKS_Journal_Flow_New_Journal</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Retrieve Error --></label>
+        <label/>
         <name>NKS_NAV_Case_Retrieve_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Title --></label>
+        <label/>
         <name>NKS_NAV_Case_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Case Validation Error --></label>
+        <label/>
         <name>NKS_NAV_Case_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- NAV Task Type Validation Error --></label>
+        <label/>
         <name>NKS_NAV_Task_Type_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Nav Task Work Allocation Delegate to Self --></label>
+        <label/>
         <name>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</name>
     </customLabels>
     <customLabels>
-        <label><!-- Nav Task Work Allocation Validation Error --></label>
+        <label/>
         <name>NKS_Nav_Task_Work_Allocation_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- No Cases for Selected Theme Group --></label>
+        <label/>
         <name>NKS_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List API Error --></label>
+        <label/>
         <name>NKS_Payment_List_API_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Bank Account --></label>
+        <label/>
         <name>NKS_Payment_List_Bank_Account</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Col Amount --></label>
+        <label/>
         <name>NKS_Payment_List_Col_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Col Details --></label>
+        <label/>
         <name>NKS_Payment_List_Col_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Col Quantity --></label>
+        <label/>
         <name>NKS_Payment_List_Col_Quantity</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Col Rate --></label>
+        <label/>
         <name>NKS_Payment_List_Col_Rate</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Deduction --></label>
+        <label/>
         <name>NKS_Payment_List_Deduction</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Due Date --></label>
+        <label/>
         <name>NKS_Payment_List_Due_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Gross Amount --></label>
+        <label/>
         <name>NKS_Payment_List_Gross_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Hide Details --></label>
+        <label/>
         <name>NKS_Payment_List_Hide_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List No Access Error --></label>
+        <label/>
         <name>NKS_Payment_List_No_Access_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List No Payments --></label>
+        <label/>
         <name>NKS_Payment_List_No_Payments</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment_List_Payment_Header --></label>
+        <label/>
         <name>NKS_Payment_List_Payment_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Payment Message --></label>
+        <label/>
         <name>NKS_Payment_List_Payment_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Payment Recipient --></label>
+        <label/>
         <name>NKS_Payment_List_Payment_Recipient</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Payout --></label>
+        <label/>
         <name>NKS_Payment_List_Payout</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Period Custom --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Custom</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Period Custom From --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Custom_From</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Period Custom To --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Custom_To</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Period Header --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Period Last Month --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Last_Month</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment_List_Period_Previous_Year --></label>
+        <label/>
         <name>NKS_Payment_List_Period_Previous_Year</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment_List_Period_This_Year --></label>
+        <label/>
         <name>NKS_Payment_List_Period_This_Year</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Show Details --></label>
+        <label/>
         <name>NKS_Payment_List_Show_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Tax Deduction --></label>
+        <label/>
         <name>NKS_Payment_List_Tax_Deduction</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment List Total Header --></label>
+        <label/>
         <name>NKS_Payment_List_Total_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- Payment_List_Ytelse_Header --></label>
+        <label/>
         <name>NKS_Payment_List_Ytelse_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- Single Record Input Validation Error --></label>
+        <label/>
         <name>NKS_Single_Record_Input_Validation_Error</name>
     </customLabels>
     <customLabels>
@@ -285,227 +285,227 @@
         <name>NKS_Theme_Categorization_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Activities --></label>
+        <label/>
         <name>Timeline_Activities</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] All Data Loaded --></label>
+        <label/>
         <name>Timeline_AllDataLoaded</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Collapse --></label>
+        <label/>
         <name>Timeline_Collapse</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Empty Group --></label>
+        <label/>
         <name>Timeline_EmptyGroup</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Empty Subtitle --></label>
+        <label/>
         <name>Timeline_EmptySubtitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Empty Title --></label>
+        <label/>
         <name>Timeline_EmptyTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Error Title --></label>
+        <label/>
         <name>Timeline_ErrorTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Expand --></label>
+        <label/>
         <name>Timeline_Expand</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Last --></label>
+        <label/>
         <name>Timeline_Last</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Load More --></label>
+        <label/>
         <name>Timeline_LoadMore</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Moment.js Language --></label>
+        <label/>
         <name>Timeline_MomentJsLanguage</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] New --></label>
+        <label/>
         <name>Timeline_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Not Configured --></label>
+        <label/>
         <name>Timeline_NotConfugred</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Older --></label>
+        <label/>
         <name>Timeline_Older</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Overdue --></label>
+        <label/>
         <name>Timeline_Overdue</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Previous Month --></label>
+        <label/>
         <name>Timeline_PreviousMonth</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] This Month --></label>
+        <label/>
         <name>Timeline_ThisMonth</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Today --></label>
+        <label/>
         <name>Timeline_Today</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Tomorrow --></label>
+        <label/>
         <name>Timeline_Tomorrow</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Unknown --></label>
+        <label/>
         <name>Timeline_Unknown</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Upcoming --></label>
+        <label/>
         <name>Timeline_Upcoming</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] View All --></label>
+        <label/>
         <name>Timeline_ViewAll</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] View More --></label>
+        <label/>
         <name>Timeline_ViewMore</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] Yesterday --></label>
+        <label/>
         <name>Timeline_Yesterday</name>
     </customLabels>
     <customLabels>
-        <label><!-- [ActTime] You --></label>
+        <label/>
         <name>Timeline_You</name>
     </customLabels>
     <customLabels>
-        <label><!-- AccessLevel --></label>
+        <label/>
         <name>fbc_AccessLevel</name>
     </customLabels>
     <customLabels>
-        <label><!-- Back --></label>
+        <label/>
         <name>fbc_Back</name>
     </customLabels>
     <customLabels>
-        <label><!-- ButtonIsNotSupportedMessage --></label>
+        <label/>
         <name>fbc_ButtonIsNotSupportedMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ConditionLogicHelpText --></label>
+        <label/>
         <name>fbc_ConditionLogicHelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- Delete --></label>
+        <label/>
         <name>fbc_Delete</name>
     </customLabels>
     <customLabels>
-        <label><!-- FieldIsNotSupportedMessage --></label>
+        <label/>
         <name>fbc_FieldIsNotSupportedMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- For --></label>
+        <label/>
         <name>fbc_For</name>
     </customLabels>
     <customLabels>
-        <label><!-- LackingPermissions --></label>
+        <label/>
         <name>fbc_LackingPermissions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ManagerEmptyMessage --></label>
+        <label/>
         <name>fbc_ManagerEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultipleGroupsForRole --></label>
+        <label/>
         <name>fbc_MultipleGroupsForRole</name>
     </customLabels>
     <customLabels>
-        <label><!-- Name --></label>
+        <label/>
         <name>fbc_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- NonePicklistValueLabel --></label>
+        <label/>
         <name>fbc_NonePicklistValueLabel</name>
     </customLabels>
     <customLabels>
-        <label><!-- OWDReadWrite --></label>
+        <label/>
         <name>fbc_OWDReadWrite</name>
     </customLabels>
     <customLabels>
-        <label><!-- OwnerAdminModify --></label>
+        <label/>
         <name>fbc_OwnerAdminModify</name>
     </customLabels>
     <customLabels>
-        <label><!-- PublicGroups --></label>
+        <label/>
         <name>fbc_PublicGroups</name>
     </customLabels>
     <customLabels>
-        <label><!-- Queues --></label>
+        <label/>
         <name>fbc_Queues</name>
     </customLabels>
     <customLabels>
-        <label><!-- Read --></label>
+        <label/>
         <name>fbc_Read</name>
     </customLabels>
     <customLabels>
-        <label><!-- ReadWrite --></label>
+        <label/>
         <name>fbc_ReadWrite</name>
     </customLabels>
     <customLabels>
-        <label><!-- Reason --></label>
+        <label/>
         <name>fbc_Reason</name>
     </customLabels>
     <customLabels>
-        <label><!-- RelatedUsers --></label>
+        <label/>
         <name>fbc_RelatedUsers</name>
     </customLabels>
     <customLabels>
-        <label><!-- Roles --></label>
+        <label/>
         <name>fbc_Roles</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search in --></label>
+        <label/>
         <name>fbc_Search</name>
     </customLabels>
     <customLabels>
-        <label><!-- SearchFor --></label>
+        <label/>
         <name>fbc_SearchFor</name>
     </customLabels>
     <customLabels>
-        <label><!-- SetAccessLevel --></label>
+        <label/>
         <name>fbc_SetAccessLevel</name>
     </customLabels>
     <customLabels>
-        <label><!-- SupportedAddCapabilitiesEmptyMessage --></label>
+        <label/>
         <name>fbc_SupportedAddCapabilitiesEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- SupportedButtonsEmptyMessage --></label>
+        <label/>
         <name>fbc_SupportedButtonsEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- SupportedEditCapabilitiesEmptyMessage --></label>
+        <label/>
         <name>fbc_SupportedEditCapabilitiesEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- TooManyResultsMessage --></label>
+        <label/>
         <name>fbc_TooManyResultsMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- Type --></label>
+        <label/>
         <name>fbc_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- UserOrGroup --></label>
+        <label/>
         <name>fbc_UserOrGroup</name>
     </customLabels>
     <customLabels>
-        <label><!-- Users --></label>
+        <label/>
         <name>fbc_Users</name>
     </customLabels>
     <customLabels>
@@ -553,11 +553,11 @@
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
     <customTabs>
-        <label><!-- API Transactions --></label>
+        <label/>
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
-        <label><!-- Administrer veiledere --></label>
+        <label/>
         <name>NKS_User_administration</name>
     </customTabs>
     <flowDefinitions>
@@ -696,10 +696,10 @@
     <flowDefinitions>
         <flows>
             <choices>
-                <name>Create_Nav_Task_Action</name>
+                <name>New_Conversation_Note_Action</name>
             </choices>
             <choices>
-                <name>New_Conversation_Note_Action</name>
+                <name>Create_Nav_Task_Action</name>
             </choices>
             <screens>
                 <fields>
@@ -1100,9 +1100,6 @@
                     <name>Set_NKS_Topics</name>
                 </fields>
                 <fields>
-                    <name>Set_alias</name>
-                </fields>
-                <fields>
                     <name>UpdateDivision</name>
                 </fields>
                 <fields>
@@ -1119,10 +1116,10 @@
     <flowDefinitions>
         <flows>
             <choices>
-                <name>UsersWithoutQueue</name>
+                <name>userchoice</name>
             </choices>
             <choices>
-                <name>userchoice</name>
+                <name>UsersWithoutQueue</name>
             </choices>
             <screens>
                 <fields>
@@ -1137,10 +1134,10 @@
                 <name>Show_members</name>
             </screens>
             <textTemplates>
-                <name>indent</name>
+                <name>linebreak</name>
             </textTemplates>
             <textTemplates>
-                <name>linebreak</name>
+                <name>indent</name>
             </textTemplates>
         </flows>
         <fullName>NKS_Veiledere</fullName>
@@ -1287,43 +1284,43 @@
     <flowDefinitions>
         <flows>
             <choices>
-                <name>Agder</name>
-            </choices>
-            <choices>
-                <name>Innlandet</name>
-            </choices>
-            <choices>
-                <name>MoreogRomsdal</name>
-            </choices>
-            <choices>
-                <name>Nordland</name>
-            </choices>
-            <choices>
-                <name>Olso</name>
-            </choices>
-            <choices>
-                <name>Oslo</name>
-            </choices>
-            <choices>
-                <name>OstViken</name>
-            </choices>
-            <choices>
-                <name>Rogaland</name>
-            </choices>
-            <choices>
-                <name>TromsogFinnmark</name>
-            </choices>
-            <choices>
-                <name>Trondelag</name>
-            </choices>
-            <choices>
                 <name>VestViken</name>
+            </choices>
+            <choices>
+                <name>Vestland</name>
             </choices>
             <choices>
                 <name>VestfoldogTelemark</name>
             </choices>
             <choices>
-                <name>Vestland</name>
+                <name>Nordland</name>
+            </choices>
+            <choices>
+                <name>MoreogRomsdal</name>
+            </choices>
+            <choices>
+                <name>Innlandet</name>
+            </choices>
+            <choices>
+                <name>Agder</name>
+            </choices>
+            <choices>
+                <name>Trondelag</name>
+            </choices>
+            <choices>
+                <name>TromsogFinnmark</name>
+            </choices>
+            <choices>
+                <name>Rogaland</name>
+            </choices>
+            <choices>
+                <name>OstViken</name>
+            </choices>
+            <choices>
+                <name>Oslo</name>
+            </choices>
+            <choices>
+                <name>Olso</name>
             </choices>
             <screens>
                 <fields>
@@ -1338,69 +1335,9 @@
         <fullName>Update_NAVUnits</fullName>
     </flowDefinitions>
     <prompts>
-        <name>SalesCloudTrialContactsListViewsVideo</name>
+        <name>SalesCloudCoreHomepage</name>
         <promptVersions>
-            <name>Sales Cloud Trial Contacts List Views Video</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudCoreContactsTab</name>
-        <promptVersions>
-            <name>Sales Cloud Core Contacts Tab</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>IAGFeatureAdoption</name>
-        <promptVersions>
-            <name>IAG Feature Adoption Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>IAG Feature Adoption Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudTrialHomePage</name>
-        <promptVersions>
-            <name>Sales Cloud Trial Home Page</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudTrialCasesTab</name>
-        <promptVersions>
-            <name>Service Cloud Trial Cases Tab</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EssOpptysServiceFlow</name>
-        <promptVersions>
-            <name>Opptys Service Flow Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Service Flow Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Service Flow Step 3</name>
-            <stepNumber>3</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Service Flow Step 4</name>
-            <stepNumber>4</stepNumber>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>OmProfflink</name>
-        <promptVersions>
-            <name>Om ny Proff link</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
-        <promptVersions>
-            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+            <name>Sales Cloud Core Homepage</name>
         </promptVersions>
     </prompts>
     <prompts>
@@ -1410,207 +1347,9 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name>Underskelseinkludering</name>
+        <name>SalesCloudTrialHomePage</name>
         <promptVersions>
-            <name>Undersøkelse inkludering</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ReleaseReadinessServiceSandbox</name>
-        <promptVersions>
-            <name>Release Readiness Service Sandbox</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>Virksomhetskortet</name>
-        <promptVersions>
-            <name>Virksomhetskortet</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudTrialDashboardGuide</name>
-        <promptVersions>
-            <name>Service Cloud Trial Dashboard Guide</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudCoreChatter</name>
-        <promptVersions>
-            <name>Service Cloud Core Chatter</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EndreEierpoppgaven</name>
-        <promptVersions>
-            <name>Endre Eier på oppgaven</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudTrialHomepageGuide</name>
-        <promptVersions>
-            <name>Service Cloud Trial Homepage Guide</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudTrialKanbanVideo</name>
-        <promptVersions>
-            <name>Sales Cloud Trial Kanban Video</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudCoreOpportunitiesTab</name>
-        <promptVersions>
-            <name>Sales Cloud Core Opportunities Tab</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EssAccountsServiceFlow1</name>
-        <promptVersions>
-            <name>Accounts Service Flow Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Accounts Service Flow Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Accounts Service Flow Step 3</name>
-            <stepNumber>3</stepNumber>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudCoreCases</name>
-        <promptVersions>
-            <name>Service Cloud Core Cases</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudCoreHomepage</name>
-        <promptVersions>
-            <name>Sales Cloud Core Homepage</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ServiceCloudCoreReportsTab</name>
-        <promptVersions>
-            <name>Service Cloud Core Reports Tab</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EssActivitiesFlow</name>
-        <promptVersions>
-            <name>Activities Flow Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Flow Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Flow Step 3</name>
-            <stepNumber>3</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Flow Step 4</name>
-            <stepNumber>4</stepNumber>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCoreQuoteAdminCpq</name>
-        <promptVersions>
-            <name>Sales Core Quote Admin to CPQ</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SelfSupportDataImportWizard</name>
-        <promptVersions>
-            <name>Self Support Data Import Wizard</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ReleaseReadinessSandboxSales</name>
-        <promptVersions>
-            <name>Release Readiness Sandbox Sales</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EssActivitiesServiceFlow</name>
-        <promptVersions>
-            <name>Activities Service Flow Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Service Flow Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Service Flow Step 3</name>
-            <stepNumber>3</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Activities Service Flow Step 4</name>
-            <stepNumber>4</stepNumber>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudTrailPreconfiguredDashboardsGuide</name>
-        <promptVersions>
-            <name>Sales Cloud Trail Pre-configured Dashboards Guide</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>ReleaseReadiness</name>
-        <promptVersions>
-            <name>Release Readiness</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudCoreReportsTab</name>
-        <promptVersions>
-            <name>Sales Cloud Core Reports Tab</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>VelkomstmeldingtilNAVKontorbrukereTAG</name>
-        <promptVersions>
-            <name>Velkomst melding til NAV Kontor brukere (TAG)</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>SalesCloudTrialChatterGuide</name>
-        <promptVersions>
-            <name>Sales Cloud Trial Chatter Guide</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>KontokoblettilNAVkontor</name>
-        <promptVersions>
-            <name>Konto koblet til NAV kontor</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>Lenketilproffnoerforbedret</name>
-        <promptVersions>
-            <name>Lenke til proff.no er forbedret</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>EssOpptysFlow</name>
-        <promptVersions>
-            <name>Opptys Flow Step 1</name>
-            <stepNumber>1</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Flow Step 2</name>
-            <stepNumber>2</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Flow Step 3</name>
-            <stepNumber>3</stepNumber>
-        </promptVersions>
-        <promptVersions>
-            <name>Opptys Flow Step 4</name>
-            <stepNumber>4</stepNumber>
+            <name>Sales Cloud Trial Home Page</name>
         </promptVersions>
     </prompts>
     <prompts>
@@ -1620,9 +1359,45 @@
         </promptVersions>
     </prompts>
     <prompts>
+        <name>FinnInnkomneoppgaver</name>
+        <promptVersions>
+            <name>Finn Innkomne oppgaver</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudPipelineInspectionDockedPrompt</name>
+        <promptVersions>
+            <name>Sales Cloud Pipeline Inspection Docked Prompt</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Lenketilproffnoerforbedret</name>
+        <promptVersions>
+            <name>Lenke til proff.no er forbedret</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EndreEierpoppgaven</name>
+        <promptVersions>
+            <name>Endre Eier på oppgaven</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
         <name>ServiceCloudCoreHomepage</name>
         <promptVersions>
             <name>Service Cloud Core Homepage</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialKanbanVideo</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Kanban Video</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialHomepageGuide</name>
+        <promptVersions>
+            <name>Service Cloud Trial Homepage Guide</name>
         </promptVersions>
     </prompts>
     <prompts>
@@ -1632,15 +1407,75 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name>FinnInnkomneoppgaver</name>
-        <promptVersions>
-            <name>Finn Innkomne oppgaver</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
         <name>SalesCloudCoreChatterTab</name>
         <promptVersions>
             <name>Sales Cloud Core Chatter Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>OmProfflink</name>
+        <promptVersions>
+            <name>Om ny Proff link</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreReportsTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Reports Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreCases</name>
+        <promptVersions>
+            <name>Service Cloud Core Cases</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ReleaseReadiness</name>
+        <promptVersions>
+            <name>Release Readiness</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrailPreconfiguredDashboardsGuide</name>
+        <promptVersions>
+            <name>Sales Cloud Trail Pre-configured Dashboards Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreReportsTab</name>
+        <promptVersions>
+            <name>Service Cloud Core Reports Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <promptVersions>
+            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialCasesTab</name>
+        <promptVersions>
+            <name>Service Cloud Trial Cases Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialDashboardGuide</name>
+        <promptVersions>
+            <name>Service Cloud Trial Dashboard Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialContactsListViewsVideo</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Contacts List Views Video</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCoreQuoteAdminCpq</name>
+        <promptVersions>
+            <name>Sales Core Quote Admin to CPQ</name>
         </promptVersions>
     </prompts>
     <prompts>
@@ -1650,30 +1485,51 @@
         </promptVersions>
     </prompts>
     <prompts>
-        <name>SalesHVSDialer</name>
+        <name>KontokoblettilNAVkontor</name>
         <promptVersions>
-            <name>Sales HVS Dialer</name>
+            <name>Konto koblet til NAV kontor</name>
         </promptVersions>
     </prompts>
     <prompts>
-        <name>GlobalActionsFinal</name>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAG</name>
         <promptVersions>
-            <name>Global Actions Final</name>
+            <name>Velkomst melding til NAV Kontor brukere (TAG)</name>
         </promptVersions>
     </prompts>
     <prompts>
-        <name>EssModifiedAccountsFlow</name>
+        <name>ServiceCloudCoreChatter</name>
         <promptVersions>
-            <name>Modified Accounts Flow Step 1</name>
-            <stepNumber>1</stepNumber>
+            <name>Service Cloud Core Chatter</name>
         </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreContactsTab</name>
         <promptVersions>
-            <name>Modified Accounts Flow Step 2</name>
-            <stepNumber>2</stepNumber>
+            <name>Sales Cloud Core Contacts Tab</name>
         </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialChatterGuide</name>
         <promptVersions>
-            <name>Modified Accounts Flow Step 3</name>
-            <stepNumber>3</stepNumber>
+            <name>Sales Cloud Trial Chatter Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreOpportunitiesTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Opportunities Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Virksomhetskortet</name>
+        <promptVersions>
+            <name>Virksomhetskortet</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Underskelseinkludering</name>
+        <promptVersions>
+            <name>Undersøkelse inkludering</name>
         </promptVersions>
     </prompts>
     <quickActions>
@@ -1681,7 +1537,7 @@
         <name>LogACall</name>
     </quickActions>
     <quickActions>
-        <label><!-- New Task --></label>
+        <label/>
         <name>NKS_newTask</name>
     </quickActions>
     <quickActions>
@@ -1777,124 +1633,124 @@
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Kampanje med kontoer --></description>
-        <label><!-- Kampanje med kontoer --></label>
+        <description/>
+        <label/>
         <name>Kampanjer_med_kontoer_og_kontakter</name>
         <sections>
-            <label><!-- Custom Campaign Members --></label>
+            <label/>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label><!-- Custom Campaigns --></label>
+            <label/>
             <name>Custom Campaigns</name>
         </sections>
         <sections>
-            <label><!-- Kontoer --></label>
+            <label/>
             <name>Kontoer</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge --></description>
-        <label><!-- Knowledge --></label>
+        <description/>
+        <label/>
         <name>Knowledge</name>
         <sections>
-            <label><!-- Knowledge --></label>
+            <label/>
             <name>Knowledge</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Article Searches --></description>
-        <label><!-- Knowledge Article Searches --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Article_Searches</name>
         <sections>
-            <label><!-- Knowledge Article Searches --></label>
+            <label/>
             <name>Knowledge Article Searches</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Article Views --></description>
-        <label><!-- Knowledge Article Views --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Article_Views</name>
         <sections>
-            <label><!-- Knowledge Article Views --></label>
+            <label/>
             <name>Knowledge Article Views</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Articles --></description>
-        <label><!-- Knowledge Articles --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Articles</name>
         <sections>
-            <label><!-- Knowledge Articles --></label>
+            <label/>
             <name>Knowledge Articles</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Articles with views --></description>
-        <label><!-- Knowledge Articles with views --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Articles_with_views</name>
         <sections>
-            <label><!-- Article View Statistics --></label>
+            <label/>
             <name>Article View Statistics</name>
         </sections>
         <sections>
-            <label><!-- Knowledge Articles --></label>
+            <label/>
             <name>Knowledge Articles</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Keyword Search --></description>
-        <label><!-- Knowledge Keyword Search --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Keyword_Search</name>
         <sections>
-            <label><!-- Knowledge Keyword Search --></label>
+            <label/>
             <name>Knowledge Keyword Search</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Knowledge Search Activity --></description>
-        <label><!-- Knowledge Search Activity --></label>
+        <description/>
+        <label/>
         <name>Knowledge_Search_Activity</name>
         <sections>
-            <label><!-- Knowledge Search Activity --></label>
+            <label/>
             <name>Knowledge Search Activity</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Kontakter i kampanje --></description>
-        <label><!-- Kontakter i kampanje --></label>
+        <description/>
+        <label/>
         <name>Kontakter_i_kampanje</name>
         <sections>
-            <label><!-- Account Relationships --></label>
+            <label/>
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label/>
             <name>Contacts</name>
         </sections>
         <sections>
-            <label><!-- Custom Campaign Members --></label>
+            <label/>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label><!-- Felter fra konto --></label>
+            <label/>
             <name>Felter fra konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Kontakter med Arbeidsgivere som har Arena Aktivite --></description>
-        <label><!-- Kontakter med Arbeidsgivere som har Arena Aktivite --></label>
+        <description/>
+        <label/>
         <name>Kontakter_med_Arbeidsgivere_som_har_Arena_Aktivite</name>
         <sections>
-            <label><!-- Account Relationships --></label>
+            <label/>
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label><!-- Arena Aktiviteter --></label>
+            <label/>
             <name>Arena Aktiviteter</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label/>
             <name>Contacts</name>
         </sections>
     </reportTypes>
