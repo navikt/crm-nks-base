@@ -1,10 +1,10 @@
 {
-  "activeViewId" : "3e5af87f-ced7-4380-98c5-20ef612b865f",
-  "appPageId" : "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
-  "id" : "b29ba308-dac0-4a10-84a2-fd8a1f3fb179",
-  "label" : "Search",
-  "pageAccess" : "UseParent",
-  "routeType" : "global-search",
-  "type" : "route",
-  "urlPrefix" : "global-search"
+    "activeViewId": "3e5af87f-ced7-4380-98c5-20ef612b865f",
+    "appPageId": "aa01fd5c-7326-4b5e-9b1a-4821ffc1260e",
+    "id": "b29ba308-dac0-4a10-84a2-fd8a1f3fb179",
+    "label": "Search",
+    "pageAccess": "UseParent",
+    "routeType": "global-search",
+    "type": "route",
+    "urlPrefix": "global-search"
 }
