@@ -1,0 +1,47 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 10% 10% 15% 65%;
+    grid-auto-flow: column row;
+  }
+
+  .slds-theme_default {
+      padding: 0;
+  }
+
+.gender {
+    position: relative;
+    padding: 10px 0 0 10px;
+    width: auto;
+}
+
+.grid-item {
+    position: relative;
+    padding-top: 15px;
+    width: auto;
+}
+
+.badge {
+    position: relative;
+    /*padding: 0 0 10px 10px;*/
+    width: auto;
+}
+
+
+.MaleFilled {
+    --sds-c-icon-color-foreground-default: lightblue;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}
+
+.FemaleFilled {
+    --sds-c-icon-color-foreground-default: pink;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}
+
+.NeutralFilled {
+    --sds-c-icon-color-foreground-default: gray;
+    border-radius: 0.25rem;
+    background-clip: padding-box;
+}
+

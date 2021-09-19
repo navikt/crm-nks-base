@@ -70,8 +70,8 @@
 
                 <!-- SECURITY MEASURES -->
                 <template if:true={showSecurityMeasures}>
-                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
-                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default slds-text-heading_small">
                             <ul class="slds-has-dividers_bottom-space">
                                 <template iterator:it={securityMeasures}>
                                     <li if:false={it.last} class="slds-item" key={it.value.RecordId}>
@@ -94,8 +94,8 @@
 
                 <!-- INTERPRETER SPOKEN LANGUAGES -->
                 <template if:true={showIntepreterSpokenLanguage}>
-                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
-                        <div class="slds-box slds-box_xx-small slds-theme_default">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default slds-text-heading_small">
                             <ul class="slds-list_dotted" aria-label="Talespråktolk">
                                 <template for:each={interpreterSpokenLanguages} for:item="language">
                                     <li key={language}>{language}</li>
@@ -107,12 +107,12 @@
 
                 <!-- POWER OF ATTORNEY -->
                 <template if:true={showPowerOfAttorney}>
-                    <lightning-layout-item size="12" class="slds-p-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-p-vertical_x-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space" aria-label="Fullmakt">
                                 <template iterator:it={powerOfAttorneys}>
                                     <li if:false={it.last} class="slds-item" key={it.value.id}>
-                                        <c-nks-person-badge-power-of-attorney-item
+                                        <c-nks-person-badge-power-of-attorney-item 
                                             power-of-attorney={it.value}
                                         ></c-nks-person-badge-power-of-attorney-item>
                                     </li>
@@ -133,7 +133,7 @@
 
                 <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
                 <template if:true={showGuardianship}>
-                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space" aria-label="Vergemål">
                                 <template iterator:it={guardianships}>
@@ -159,7 +159,7 @@
 
                 <!-- HOT ENTITLEMENT -->
                 <template if:true={showEntitlements}>
-                    <lightning-layout-item size="12" class="slds-m-vertical_x-small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted" aria-label="Vedtak">
                                 <template for:each={entitlements} for:item="entitlement">
