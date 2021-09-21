@@ -1,15 +1,25 @@
 import { LightningElement, api, wire } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import synchConversationNotes from '@salesforce/apex/NKS_DataSynchController.doHenvendelseSynch';
+import syncBankAccountNumber from '@salesforce/apex/NKS_DataSynchController.doBankAccountNumberSync';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
 
+const syncStatus = {
+    SYNCING: 'SYNCING',
+    SYNCED: 'SYNCED',
+    ERROR: 'ERROR'
+};
 export default class NksDataSyncher extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
+
+    bankAccountNumberStatus = syncStatus.SYNCED;
+    henvendelseStatus = syncStatus.SYNCING;
+
     wireFields = [this.objectApiName + '.Id'];
     personId;
     personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
@@ -53,6 +63,7 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     async doSynch(personIdent, personActorId, personAccountId) {
+        await this.bankAccountNumberSync(personActorId);
         await this.conversationNoteSynch(personIdent, personAccountId);
         this.initialized = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
@@ -73,6 +84,27 @@ export default class NksDataSyncher extends LightningElement {
         });
     }
 
+    bankAccountNumberSync(personActorId) {
+        if (this.bankAccountNumberStatus != syncStatus.SYNCING) {
+            return;
+        }
+        return new Promise(async (resolve, reject) => {
+            syncBankAccountNumber({ actorId: personActorId })
+                .then((result) => {
+                    //HURRAY!
+
+                    this.bankAccountNumberStatus = result === true ? syncStatus.SYNCED : syncStatus.ERROR;
+                })
+                .catch((error) => {
+                    this.bankAccountNumberStatus = syncStatus.ERROR;
+                    console.error(JSON.stringify(error, null, 2));
+                })
+                .finally(() => {
+                    resolve();
+                });
+        });
+    }
+
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({
             parentId: this.recordId,
@@ -83,12 +115,25 @@ export default class NksDataSyncher extends LightningElement {
                 let resolvedPersonId = this.resolve(relationshipField, record);
                 //Only update the wired attribute if it is indeed changed
                 if (this.personId !== resolvedPersonId) {
+                    this.bankAccountNumberStatus = syncStatus.SYNCING;
                     this.personId = resolvedPersonId;
                 }
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
             });
+    }
+
+    get bankAccountIsSyncing() {
+        return this.bankAccountNumberStatus == syncStatus.SYNCING;
+    }
+
+    get bankAccountIsSynced() {
+        return this.bankAccountNumberStatus == syncStatus.SYNCED;
+    }
+
+    get bankAccountSyncError() {
+        return this.bankAccountNumberStatus == syncStatus.ERROR;
     }
 
     /**
