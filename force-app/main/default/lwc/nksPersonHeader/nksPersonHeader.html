@@ -2,18 +2,16 @@
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-text-body_small slds-theme_default">
             <div class="grid-container">
-                <div class="gender">
+                <div class="gender-container">
                     <template if:true={gender}>
                         <c-nks-custom-svg class={genderIcon}
                         src={genderIconSrc}
                         alt-text={gender}
                         classes={genderIconClass}
-                        ></c-nks-custom-svg>&nbsp;{gender}
+                        ></c-nks-custom-svg>&nbsp; 
                     </template>
-                </div>
-                <div class="grid-item">
                     <template if:true={personIdent}>
-                        {personIdent}
+                        <span class="personIdent">{personIdent}&nbsp;
                     <lightning-button-icon
                         icon-name="utility:copy"
                         variant="bare"
@@ -21,6 +19,7 @@
                         alternative-text="Kopier bruker ident"
                         title="Kopier bruker ident"
                     ></lightning-button-icon>
+                    </span>
                     </template>
                 </div>
                 <div class="grid-item">
@@ -28,18 +27,25 @@
                         {age} år 
                     </template>
                     <template if:true={citizenship}>
-                        &#47; {citizenship} 
+                        &#47;&nbsp; {citizenship} 
                     </template>
                     <template if:true={maritalStatus}>
-                        &#47; {maritalStatus}
+                        &#47;&nbsp; {maritalStatus}
                     </template>
                 </div>
-                <div class="badge" if:true={showPersonBadges}>
-                    <c-nks-person-badges
-                        record-id={recordId}
-                        object-api-name={objectApiName}
-                        person-relation-field={relationshipField}
-                    ></c-nks-person-badges>
+                <div class="grid-item">
+                    <template if:true={maritalStatus}>
+                        {bankAccountNumber}
+                    </template>
+                </div>
+                <div class="badge">
+                    <template if:true={showPersonBadges}>
+                        <c-nks-person-badges
+                            record-id={recordId}
+                            object-api-name={objectApiName}
+                            person-relation-field={relationshipField}
+                        ></c-nks-person-badges>
+                    </template>
                 </div>
             </div>
         </lightning-layout-item>
