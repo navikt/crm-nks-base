@@ -73,7 +73,7 @@ export default class NksPersonBadges extends LightningElement {
         if (true === this.addBoxLayout) {
             return 'slds-box slds-box_x-small slds-theme_default';
         }
-        return 'slds-p-around_x-small';
+        //return 'slds-p-around_x-small';
     }
 
     connectedCallback() {

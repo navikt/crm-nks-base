@@ -1,47 +1,57 @@
 .grid-container {
     display: grid;
-    grid-template-columns: 10% 10% 15% 65%;
-    grid-auto-flow: column row;
+    grid-template-columns: 15% 15% 15% 55%;
+    grid-auto-flow: column;
   }
 
-  .slds-theme_default {
-      padding: 0;
-  }
+.slds-theme_default {
+      padding: 4px;
+}
 
-.gender {
-    position: relative;
-    padding: 10px 0 0 10px;
-    width: auto;
+.gender-container {
+    display: flex;
+    flex-direction: row; 
+    padding-top: 1px;
+}
+
+.personIdent {
+    padding-top: 7px;
 }
 
 .grid-item {
-    position: relative;
-    padding-top: 15px;
-    width: auto;
+    display: flex;
+    flex-direction: row;
+    padding-top: 8px;
 }
 
 .badge {
-    position: relative;
-    /*padding: 0 0 10px 10px;*/
-    width: auto;
+    display: flex;
+    flex-direction: row;
 }
 
-
 .MaleFilled {
-    --sds-c-icon-color-foreground-default: lightblue;
+    --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-clip: padding-box;
+    background-color:  #3386E0;
+    width: 32px;
+    height: 32px;
+    padding: 4px 0 0 4px;
 }
 
 .FemaleFilled {
-    --sds-c-icon-color-foreground-default: pink;
+    --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-clip: padding-box;
+    background-color: #D05C4A;
+    width: 32px;
+    height: 32px;
+    padding: 4px 0 0 4px; 
 }
 
 .NeutralFilled {
-    --sds-c-icon-color-foreground-default: gray;
+    --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-clip: padding-box;
+    background-color: #A18DBB;
+    width: 32px;
+    height: 32px;
+    padding: 4px 0 0 4px;  
 }
-
