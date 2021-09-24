@@ -31,7 +31,7 @@
                     <template for:each={personAccessBadges} for:item="badge">
                         <lightning-badge
                             key={badge.name}
-                            class="slds-theme_error slds-m-left_x-small slds-m-vertical_xx-small"
+                            class="slds-theme_error slds-m-left_x-small"
                             data-id={badge.name}
                             label={badge.label}
                         >
@@ -70,8 +70,8 @@
 
                 <!-- SECURITY MEASURES -->
                 <template if:true={showSecurityMeasures}>
-                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small">
-                        <div class="slds-box slds-box_xx-small slds-theme_default slds-text-heading_small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-top_xxx-small slds-text-heading_small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space">
                                 <template iterator:it={securityMeasures}>
                                     <li if:false={it.last} class="slds-item" key={it.value.RecordId}>
@@ -80,7 +80,7 @@
                                     </li>
                                     <li
                                         if:true={it.last}
-                                        class="slds-p-left_x-small slds-p-top_x-small"
+                                        class="slds-p-left_x-small slds-p-vertical_x-small"
                                         key={it.value.RecordId}
                                     >
                                         <c-nks-person-badge-securitymeasure-item security-measure={it.value}>
@@ -94,8 +94,8 @@
 
                 <!-- INTERPRETER SPOKEN LANGUAGES -->
                 <template if:true={showIntepreterSpokenLanguage}>
-                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small">
-                        <div class="slds-box slds-box_xx-small slds-theme_default slds-text-heading_small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-top_xxx-small slds-text-heading_small">
+                        <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted" aria-label="Talespråktolk">
                                 <template for:each={interpreterSpokenLanguages} for:item="language">
                                     <li key={language}>{language}</li>
@@ -107,7 +107,7 @@
 
                 <!-- POWER OF ATTORNEY -->
                 <template if:true={showPowerOfAttorney}>
-                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-p-vertical_x-small slds-text-heading_small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-top_xxx-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space" aria-label="Fullmakt">
                                 <template iterator:it={powerOfAttorneys}>
@@ -118,7 +118,7 @@
                                     </li>
                                     <li
                                         if:true={it.last}
-                                        class="slds-p-left_x-small slds-p-top_x-small"
+                                        class="slds-p-left_x-small slds-p-vertical_x-small"
                                         key={it.value.id}
                                     >
                                         <c-nks-person-badge-power-of-attorney-item
@@ -133,7 +133,7 @@
 
                 <!-- GUARDIANSHIP OR FUTURE POWER OF ATTORNEY -->
                 <template if:true={showGuardianship}>
-                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small slds-text-heading_small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-top_xxx-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-has-dividers_bottom-space" aria-label="Vergemål">
                                 <template iterator:it={guardianships}>
@@ -144,7 +144,7 @@
                                     </li>
                                     <li
                                         if:true={it.last}
-                                        class="slds-p-left_x-small slds-p-top_x-small"
+                                        class="slds-p-left_x-small slds-p-vertical_x-small"
                                         key={it.value.id}
                                     >
                                         <c-nks-person-badge-guardianship-item
@@ -159,7 +159,7 @@
 
                 <!-- HOT ENTITLEMENT -->
                 <template if:true={showEntitlements}>
-                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-vertical_x-small slds-text-heading_small">
+                    <lightning-layout-item size="12" class="slds-p-left_x-small slds-m-top_xxx-small slds-text-heading_small">
                         <div class="slds-box slds-box_xx-small slds-theme_default">
                             <ul class="slds-list_dotted" aria-label="Vedtak">
                                 <template for:each={entitlements} for:item="entitlement">
