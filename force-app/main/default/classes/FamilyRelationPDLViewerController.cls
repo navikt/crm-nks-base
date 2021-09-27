@@ -22,8 +22,8 @@ public with sharing class FamilyRelationPDLViewerController {
         //TODO: catch PDL_API related exceptions here
         String personIdent;
         PDL_API_Response relationsFromPDL =  queryRelationsFromPDL(personIdent);
-        relations.add(getMaritalPerson(relationsFromPDL));
-        relations.add(getChildren(relationsFromPDL));
+        relations.addAll(getMaritalPerson(relationsFromPDL));
+        relations.addAll(getChildren(relationsFromPDL));
         // relations.add(getParents(relationsFromPDL));
         return relations;
     }
@@ -67,14 +67,14 @@ public with sharing class FamilyRelationPDLViewerController {
         if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
             return children;
         }
-        for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelerbarnrelasjon){
+        for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelderbarnrelasjon){
             if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN &&
             relation.relatertpersonsident != null){
                 PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
-                if(child != null){
+                if(childResponse != null){
                     Relation childRelation = makeRelationFromResponse(childResponse);
                     if(childRelation.age != null && childRelation.age < 21){
-                        childRelation.role = relation.relatertpersonsrolle;
+                        childRelation.role = relation.relatertpersonsrolle.name();
                         children.add(childRelation);
                     }
                 }
@@ -96,12 +96,12 @@ public with sharing class FamilyRelationPDLViewerController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
-    private static Relation getMaritalPerson(PDL_API_Response relations){
-        List<Reslation> maritalRelationList = new List<Relation>();
+    private static List<Relation> getMaritalPerson(PDL_API_Response relations){
+        List<Relation> maritalRelationList = new List<Relation>();
         if(!maritalStatusOfInterest.contains(relations?.data?.hentPerson?.sivilstand[0]?.type)){
             return maritalRelationList;
         }
-        if(relations.data.hentPeson.sivilstand[0].relatertVedSivilstand == null){
+        if(relations.data.hentPerson.sivilstand[0].relatertVedSivilstand == null){
             return maritalRelationList;
         }
         PDL_API_Response response = queryMaritalPerson(relations.data.hentPerson.sivilstand[0].relatertVedSivilstand);
@@ -118,19 +118,17 @@ public with sharing class FamilyRelationPDLViewerController {
         Relation r = new Relation();
         r.disableurl = false;
         if(isUnauthorized(response)){
-            r.Name = 'IKKE TILGJENGELIG';
+            r.personName = 'IKKE TILGJENGELIG';
             r.disableurl = true;
             return r;
         }
 
-        r.Name = getFullName(response);
-        r.birthdate = (response.data?.hentPerson?.foedsel[0]?.foedselsdato != null)
-                    ? response.data.henpPerson.foedsel[0].foedselsdato.format('dd.MM.yyyy')
-                    : null;
+        r.personName = getFullName(response);
+        r.birthdate = formatDate(response.data?.hentPerson?.foedsel[0]?.foedselsdato);
         r.age = getAge(response);
         r.sex = response.data?.hentPerson?.kjoenn[0]?.kjoenn?.name();
         r.color = (r.sex == 'MANN')? 'blue' : ( (r.sex == 'KVINNE')? 'pink' : 'gray' );
-        r.dateOfDeath = response.data?.hentPerson?.doedsfall[0]?.dato?.format('dd.MM.yyyy');
+        r.dateOfDeath = formatDate(response.data?.hentPerson?.doedsfall[0]?.doedsdato);
         r.deceased = (r.dateOfDeath != null) ? true : false;
         if(!hasShield(response)){
             r.personId = getPersonIdFromIdents(getIdentsList(response));
@@ -139,6 +137,12 @@ public with sharing class FamilyRelationPDLViewerController {
             r.disableurl = true;
         }
         return r;
+    }
+    private static String formatDate(Date d){
+        if(d == null){
+            return null;
+        }
+        return DateTime.newInstance(d, Time.newInstance(0, 0, 0, 0)).format('dd.MM.yyyy');
     }
     private static PDL_API_Response queryMaritalPerson(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
@@ -166,10 +170,10 @@ public with sharing class FamilyRelationPDLViewerController {
         return false;
     }
     private static Boolean hasShield(PDL_API_Response response){
-        if(response.data?.hentPerson?.adressebekyttelse[0]?.gradering == null){
+        if(response.data?.hentPerson?.adressebeskyttelse[0]?.gradering == null){
             return false;
         }
-        if(response.data.hentPerson.adressebeskyttelse[0].gradering == 'UGRADERT'){
+        if(response.data.hentPerson.adressebeskyttelse[0].gradering == PDL_AdressebeskyttelseGradering.UGRADERT){
             return false;
         }
         return true;
@@ -221,8 +225,8 @@ public with sharing class FamilyRelationPDLViewerController {
         }else{
             return null;
         }
-        Date d = (response.data?.hentPerson?.doedsfall[0]?.dato != null) 
-                ? response.data.hentPerson.doedsfall[0].dato 
+        Date d = (response.data?.hentPerson?.doedsfall[0]?.doedsdato != null) 
+                ? response.data.hentPerson.doedsfall[0].doedsdato 
                 : Date.today();
         return d
                 .addDays(-response.data.hentPerson.foedsel[0].foedselsdato.day())
@@ -253,5 +257,4 @@ public with sharing class FamilyRelationPDLViewerController {
                                       PDL_Sivilstandstype.REGISTRERT_PARTNER,
                                       PDL_Sivilstandstype.SEPARERT_PARTNER,
                                       PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
-}
 }
