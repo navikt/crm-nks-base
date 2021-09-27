@@ -6,7 +6,7 @@
         <label>Process NAV task</label>
         <locationX>174</locationX>
         <locationY>713</locationY>
-        <actionName>NKS_NavTaskManager</actionName>
+        <actionName>CRM_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validate_Callout</targetReference>
@@ -69,7 +69,7 @@
         <label>Set Due Date</label>
         <locationX>4</locationX>
         <locationY>728</locationY>
-        <actionName>nksDueDateUtility</actionName>
+        <actionName>CRM_DueDateUtility</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Process_NAV_task</targetReference>
@@ -274,8 +274,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -283,8 +283,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -447,7 +447,7 @@ TODAY())</expression>
         </connector>
         <fields>
             <name>Theme_Categorization</name>
-            <extensionName>c:nksThemeCategorization</extensionName>
+            <extensionName>c:crmThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>subtheme</name>
@@ -472,7 +472,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>tasktype</name>
-            <extensionName>c:nksTaskTypePicklist</extensionName>
+            <extensionName>c:crmTaskTypePicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>showcomponent</name>
@@ -509,7 +509,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>workAllocation</name>
-            <extensionName>c:nksNavTaskWorkAllocation</extensionName>
+            <extensionName>c:crmNavTaskWorkAllocation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>personId</name>
@@ -595,7 +595,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Error_Source</name>
             <value>
-                <stringValue>NKS_NavTaskManager</stringValue>
+                <stringValue>CRM_NavTaskManager</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

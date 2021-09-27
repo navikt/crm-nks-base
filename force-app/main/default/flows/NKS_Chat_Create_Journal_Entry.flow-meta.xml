@@ -6,7 +6,7 @@
         <label>Delegate NAV Task</label>
         <locationX>736</locationX>
         <locationY>1653</locationY>
-        <actionName>NKS_NavTaskManager</actionName>
+        <actionName>CRM_NavTaskManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validate_NAV_Task_Callout</targetReference>
@@ -70,7 +70,7 @@
         <label>Encode Original</label>
         <locationX>1345</locationX>
         <locationY>858</locationY>
-        <actionName>NKS_JournalUtilities</actionName>
+        <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Create_PDF_Document_Variant</targetReference>
@@ -95,7 +95,7 @@
         <label>Generate PDF</label>
         <locationX>1345</locationX>
         <locationY>733</locationY>
-        <actionName>NKS_JournalUtilities</actionName>
+        <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Encode_Original</targetReference>
@@ -120,7 +120,7 @@
         <label>Post Journal</label>
         <locationX>1337</locationX>
         <locationY>1150</locationY>
-        <actionName>NKS_JournalUtilities</actionName>
+        <actionName>CRM_JournalUtilities</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Validate_Callout</targetReference>
@@ -153,7 +153,7 @@
         <label>Set Due Date</label>
         <locationX>535</locationX>
         <locationY>1636</locationY>
-        <actionName>nksDueDateUtility</actionName>
+        <actionName>CRM_DueDateUtility</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Delegate_NAV_Task</targetReference>
@@ -174,7 +174,7 @@
         <label>Set Due Date</label>
         <locationX>1666</locationX>
         <locationY>966</locationY>
-        <actionName>nksDueDateUtility</actionName>
+        <actionName>CRM_DueDateUtility</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Create_Placeholder_Task</targetReference>
@@ -1247,16 +1247,16 @@
         <description>Task priority picklist values.</description>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Task_Type_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -2007,7 +2007,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Person_NAV_Cases</name>
-            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <extensionName>c:crmPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>actorId</name>
@@ -2059,7 +2059,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>tasktype</name>
-            <extensionName>c:nksTaskTypePicklist</extensionName>
+            <extensionName>c:crmTaskTypePicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>showcomponent</name>
@@ -2133,7 +2133,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>workAllocation</name>
-            <extensionName>c:nksNavTaskWorkAllocation</extensionName>
+            <extensionName>c:crmNavTaskWorkAllocation</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>personId</name>
@@ -2263,7 +2263,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Error_Source</name>
             <value>
-                <stringValue>NKS_JournalUtilities</stringValue>
+                <stringValue>CRM_JournalUtilities</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2343,7 +2343,7 @@ TODAY())</expression>
         <inputAssignments>
             <name>Error_Source</name>
             <value>
-                <stringValue>NKS_NavTaskManager</stringValue>
+                <stringValue>CRM_NavTaskManager</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2543,7 +2543,7 @@ TODAY())</expression>
     <variables>
         <description>Journal documents to be added.</description>
         <name>Journal_Documents</name>
-        <apexClass>NKS_Dokumenter</apexClass>
+        <apexClass>CRM_Dokumenter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -2569,7 +2569,7 @@ TODAY())</expression>
     <variables>
         <description>Request wrapper for dokarkiv callout.</description>
         <name>Journal_Request</name>
-        <apexClass>NKS_JournalEntryWrapper</apexClass>
+        <apexClass>CRM_JournalEntryWrapper</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -2578,7 +2578,7 @@ TODAY())</expression>
     <variables>
         <description>Original document variant for the journal.</description>
         <name>Journal_Variant_Original</name>
-        <apexClass>NKS_Dokumentvarianter</apexClass>
+        <apexClass>CRM_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -2587,7 +2587,7 @@ TODAY())</expression>
     <variables>
         <description>PDF document variant.</description>
         <name>Journal_Variant_PDF</name>
-        <apexClass>NKS_Dokumentvarianter</apexClass>
+        <apexClass>CRM_Dokumentvarianter</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
