@@ -45,6 +45,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>subtypeCode</name>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedSubtype</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>task</name>
             <value>
                 <elementReference>NAV_Task</elementReference>
@@ -132,6 +138,12 @@
             <name>journalRequest</name>
             <value>
                 <elementReference>Journal_Request</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>navIdent</name>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -595,6 +607,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NAV_Task.CRM_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_NAV_Cases.selectedSubtypeSfId</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1247,16 +1266,16 @@
         <description>Task priority picklist values.</description>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Task_Type_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -1612,8 +1631,8 @@ TODAY())</expression>
     <recordUpdates>
         <name>Update_Transcript</name>
         <label>Update Transcript</label>
-        <locationX>1692</locationX>
-        <locationY>1607</locationY>
+        <locationX>1693</locationX>
+        <locationY>1611</locationY>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0</targetReference>
         </faultConnector>
@@ -1687,7 +1706,7 @@ TODAY())</expression>
         <description>Success screen shown if the chat was logged with social information.</description>
         <name>Chat_Journal_Social_Screen</name>
         <label>Chat Journal Social Screen</label>
-        <locationX>2170</locationX>
+        <locationX>2171</locationX>
         <locationY>714</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1970,8 +1989,8 @@ TODAY())</expression>
         <description>Input from user to connect journal entry to correct case, and if a task should be created to another NAV unit</description>
         <name>Input_Screen</name>
         <label>Input Screen</label>
-        <locationX>1175</locationX>
-        <locationY>521</locationY>
+        <locationX>1176</locationX>
+        <locationY>522</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2225,7 +2244,7 @@ TODAY())</expression>
         <name>Wrong_Owner_Screen</name>
         <label>Wrong Owner Screen</label>
         <locationX>1186</locationX>
-        <locationY>365</locationY>
+        <locationY>368</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2244,7 +2263,7 @@ TODAY())</expression>
             <targetReference>Get_Chat_Transcript</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>

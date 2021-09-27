@@ -703,7 +703,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue />
+                    <stringValue/>
                 </rightValue>
             </conditions>
             <connector>
@@ -1229,8 +1229,8 @@
         <description>Screen shown when case was closed without account connection</description>
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
-        <locationX>778</locationX>
-        <locationY>558</locationY>
+        <locationX>776</locationX>
+        <locationY>597</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1611,7 +1611,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
@@ -1636,8 +1636,7 @@
         <text>Takk for at du tok kontakt
             
 Du har fått informasjon om 
-- 
-</text>
+-</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
@@ -1694,7 +1693,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue />
+            <stringValue/>
         </value>
     </variables>
     <variables>

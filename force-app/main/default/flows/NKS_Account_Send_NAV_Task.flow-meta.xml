@@ -45,6 +45,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>subtypeCode</name>
+            <value>
+                <elementReference>Theme_Categorization.subtypeCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>task</name>
             <value>
                 <elementReference>NavTask</elementReference>
@@ -168,6 +174,13 @@
                 <elementReference>Task_Name</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Theme_Categorization.subtype</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Set_Due_date</targetReference>
         </connector>
@@ -202,8 +215,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -211,8 +224,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -363,6 +376,12 @@ TODAY())</expression>
                 <name>theme</name>
                 <value>
                     <elementReference>NavTask.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>subtype</name>
+                <value>
+                    <elementReference>NavTask.CRM_Subtype__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
