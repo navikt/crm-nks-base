@@ -2,48 +2,52 @@
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-text-body_small slds-theme_default">
             <div class="grid-container">
-                <div class="gender">
-                    <template if:true={gender}>
-                        <c-nks-custom-svg class={genderIcon}
-                        src={genderIconSrc}
-                        alt-text={gender}
-                        classes={genderIconClass}
-                        ></c-nks-custom-svg>&nbsp;{gender}
-                    </template>
+                <div class="float-container slds-var-p-right_xx-small">
+                    <div class="gender">
+                        <template if:true={gender}>
+                            <c-nks-custom-svg
+                                class={genderIcon}
+                                src={genderIconSrc}
+                                alt-text={gender}
+                                classes={genderIconClass}
+                            ></c-nks-custom-svg>
+                        </template>
+                    </div>
+                    <div>
+                        <template if:true={personIdent}>
+                            <span class="personIdent"
+                                >{personIdent}
+                                <lightning-button-icon
+                                    icon-name="utility:copy"
+                                    variant="bare"
+                                    onclick={handleCopyIdent}
+                                    alternative-text="Kopier bruker ident"
+                                    title="Kopier bruker ident"
+                                ></lightning-button-icon>
+                            </span>
+                        </template>
+                    </div>
                 </div>
-                <div class="grid-item">
-                    <template if:true={personIdent}>
-                        {personIdent}
-                    <lightning-button-icon
-                        icon-name="utility:copy"
-                        variant="bare"
-                        onclick={handleCopyIdent}
-                        alternative-text="Kopier bruker ident"
-                        title="Kopier bruker ident"
-                    ></lightning-button-icon>
-                    </template>
+                <div class="grid-info slds-var-p-right_xx-small">
+                    <template if:true={age}> {age} år </template>
+                    <template if:true={citizenship}> &#47; {citizenship} </template>
+                    <template if:true={maritalStatus}> &#47; {maritalStatus} </template>
                 </div>
-                <div class="grid-item">
-                    <template if:true={age}>
-                        {age} år 
-                    </template>
-                    <template if:true={citizenship}>
-                        &#47; {citizenship} 
-                    </template>
-                    <template if:true={maritalStatus}>
-                        &#47; {maritalStatus}
-                    </template>
+                <div class="grid-info slds-var-p-right_xx-small">
+                    <template if:true={bankAccountNumber}> {bankAccountNumber} </template>
                 </div>
-                <div class="badge" if:true={showPersonBadges}>
-                    <c-nks-person-badges
-                        record-id={recordId}
-                        object-api-name={objectApiName}
-                        person-relation-field={relationshipField}
-                    ></c-nks-person-badges>
+                <div class="grid-badge slds-var-p-right_xx-small">
+                    <template if:true={showPersonBadges}>
+                        <c-nks-person-badges
+                            record-id={recordId}
+                            object-api-name={objectApiName}
+                            person-relation-field={relationshipField}
+                        ></c-nks-person-badges>
+                    </template>
                 </div>
             </div>
         </lightning-layout-item>
-        <lightning-layout-item size="12" class="slds-p-top_x-small">
+        <lightning-layout-item size="12" class="slds-var-p-top_x-small">
             <div if:true={showErrors} class="slds-text-color_error">
                 Noe har gått feil i innlastingen av varsler:
                 <ul class="slds-list_dotted">
