@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Familie" icon-name="custom:custom1">
+        <div class="slds-p-horizontal_small">
+            <template if:true={relations.data}>
+                <ul class="slds-has-dividers_top-space">
+                    <template for:each={relations.data} for:item="relation">
+                        <li class="slds-item" key={relation.personId}>
+                            <c-relation-from-pdl-viewer-entry relation={relation}></c-relation-from-pdl-viewer-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+    </lightning-card>
+</template>
