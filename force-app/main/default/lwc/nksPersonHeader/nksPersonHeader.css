@@ -1,38 +1,26 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: 15% 15% 15% 55%;
-    grid-auto-flow: column;
-  }
-
 .slds-theme_default {
-      padding: 4px;
+    padding: 4px;
 }
 
-.gender-container {
+.gender {
     display: flex;
-    flex-direction: row; 
-    padding-top: 1px;
+    width: 32px;
+    height: 32px;
+    float: left;
 }
 
 .personIdent {
-    padding-top: 7px;
+    float: left;
 }
 
-.grid-item {
-    display: flex;
-    flex-direction: row;
-    padding-top: 8px;
-}
-
-.badge {
-    display: flex;
-    flex-direction: row;
+.copy-icon {
+    float: right;
 }
 
 .MaleFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-color:  #3386E0;
+    background-color: #3386e0;
     width: 32px;
     height: 32px;
     padding: 4px 0 0 4px;
@@ -41,17 +29,17 @@
 .FemaleFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-color: #D05C4A;
+    background-color: #d05c4a;
     width: 32px;
     height: 32px;
-    padding: 4px 0 0 4px; 
+    padding: 4px 0 0 4px;
 }
 
 .NeutralFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
-    background-color: #A18DBB;
+    background-color: #a18dbb;
     width: 32px;
     height: 32px;
-    padding: 4px 0 0 4px;  
+    padding: 4px 0 0 4px;
 }
