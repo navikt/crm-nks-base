@@ -20,7 +20,10 @@ public with sharing class FamilyRelationPDLViewerController {
             return relations;
 
         //TODO: catch PDL_API related exceptions here
-        String personIdent;
+        String personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+        if(personIdent == null){
+            return relations;
+        }
         PDL_API_Response relationsFromPDL =  queryRelationsFromPDL(personIdent);
         relations.addAll(getMaritalPerson(relationsFromPDL));
         relations.addAll(getChildren(relationsFromPDL));
@@ -54,6 +57,7 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String color;
     }
+    @TestVisible
     private static PDL_API_Response queryRelationsFromPDL(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.sivilstand.selectAll();
@@ -62,6 +66,7 @@ public with sharing class FamilyRelationPDLViewerController {
         query.hentPerson.foedsel.foedselsaar = true;
         return query.execute();
     }
+    @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relations){
         List<Relation> children = new List<Relation>();
         if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
@@ -81,7 +86,7 @@ public with sharing class FamilyRelationPDLViewerController {
             }
         }
         return children;
-    }
+    }@TestVisible
     private static PDL_API_Response queryChild(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.navn.fornavn = true;
@@ -96,21 +101,26 @@ public with sharing class FamilyRelationPDLViewerController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+    @TestVisible
     private static List<Relation> getMaritalPerson(PDL_API_Response relations){
         List<Relation> maritalRelationList = new List<Relation>();
-        if(!maritalStatusOfInterest.contains(relations?.data?.hentPerson?.sivilstand[0]?.type)){
+        List<PDL_Sivilstand> sivilstand = relations.data?.hentPerson?.sivilstand;
+        if(sivilstand == null || sivilstand.isEmpty()){
             return maritalRelationList;
         }
-        if(relations.data.hentPerson.sivilstand[0].relatertVedSivilstand == null){
+        if(!maritalStatusOfInterest.contains(sivilstand[0].type)){
             return maritalRelationList;
         }
-        PDL_API_Response response = queryMaritalPerson(relations.data.hentPerson.sivilstand[0].relatertVedSivilstand);
+        if(sivilstand[0].relatertVedSivilstand == null){
+            return maritalRelationList;
+        }
+        PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
         
         if(response == null){
             return maritalRelationList;
         }
         Relation maritalRelation = makeRelationFromResponse(response);
-        maritalRelation.role = relations?.data?.hentPerson?.sivilstand[0]?.type?.name();
+        maritalRelation.role = sivilstand[0].type.name();
         maritalRelationList.add(maritalRelation);
         return maritalRelationList;
     }
@@ -124,13 +134,13 @@ public with sharing class FamilyRelationPDLViewerController {
         }
 
         r.personName = getFullName(response);
-        r.birthdate = formatDate(response.data?.hentPerson?.foedsel[0]?.foedselsdato);
+        r.birthdate = getBirthdate(response);
         r.age = getAge(response);
-        r.sex = response.data?.hentPerson?.kjoenn[0]?.kjoenn?.name();
+        r.sex = getSex(response);
         r.color = (r.sex == 'MANN')? 'blue' : ( (r.sex == 'KVINNE')? 'pink' : 'gray' );
-        r.dateOfDeath = formatDate(response.data?.hentPerson?.doedsfall[0]?.doedsdato);
+        r.dateOfDeath = getDateOfDeath(response);
         r.deceased = (r.dateOfDeath != null) ? true : false;
-        if(!hasShield(response)){
+        if(!isShielded(response)){
             r.personId = getPersonIdFromIdents(getIdentsList(response));
             r.accountId = getAccountIdFromPersonId(r.personId);
             r.personIdent = getPersonIdent(response);
@@ -144,6 +154,37 @@ public with sharing class FamilyRelationPDLViewerController {
         }
         return DateTime.newInstance(d, Time.newInstance(0, 0, 0, 0)).format('dd.MM.yyyy');
     }
+    private static String getSex(PDL_API_Response response){
+        List<PDL_Kjoenn> kjoenn = response.data?.hentPerson?.kjoenn;
+        if(kjoenn == null || kjoenn.isEmpty()){
+            return null;
+        }
+        if(kjoenn[0]?.kjoenn == null){
+            return null;
+        }
+        return kjoenn[0].kjoenn.name();
+    }
+    private static String getDateOfDeath(PDL_API_Response response){
+        List<PDL_Doedsfall> doedsfall = response.data?.hentPerson?.doedsfall;
+        if(doedsfall == null || doedsfall.isEmpty()){
+            return null;
+        }
+        if(doedsfall[0]?.doedsdato == null){
+            return null;
+        }
+        return formatDate(doedsfall[0].doedsdato);
+    }
+    private static String getBirthdate(PDL_API_Response response){
+        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
+        if(foedsel == null || foedsel.isEmpty()){
+            return null;
+        }
+        if(foedsel[0]?.foedselsdato == null){
+            return null;
+        }
+        return formatDate(foedsel[0].foedselsdato);
+    }
+    @TestVisible
     private static PDL_API_Response queryMaritalPerson(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.sivilstand.type = true;
@@ -159,6 +200,7 @@ public with sharing class FamilyRelationPDLViewerController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+    @TestVisible
     private static Boolean isUnauthorized(PDL_API_Response response){
         if(response.errors != null){
             for(PDL_Error error : response.errors){
@@ -168,12 +210,16 @@ public with sharing class FamilyRelationPDLViewerController {
             }
         }
         return false;
-    }
-    private static Boolean hasShield(PDL_API_Response response){
-        if(response.data?.hentPerson?.adressebeskyttelse[0]?.gradering == null){
+    }@TestVisible
+    private static Boolean isShielded(PDL_API_Response response){
+        List<PDL_Adressebeskyttelse> adressebeskyttelse = response.data?.hentPerson?.adressebeskyttelse;
+        if(adressebeskyttelse == null || adressebeskyttelse.isEmpty()){
             return false;
         }
-        if(response.data.hentPerson.adressebeskyttelse[0].gradering == PDL_AdressebeskyttelseGradering.UGRADERT){
+        if(adressebeskyttelse[0]?.gradering == null){
+            return false;
+        }
+        if(adressebeskyttelse[0].gradering == PDL_AdressebeskyttelseGradering.UGRADERT){
             return false;
         }
         return true;
@@ -218,32 +264,45 @@ public with sharing class FamilyRelationPDLViewerController {
     }
     private static Integer getAge(PDL_API_Response response){
         Date birthDate;
-        if(response.data?.hentPerson?.foedsel[0]?.foedselsdato != null){
-            birthDate = response.data.hentPerson.foedsel[0].foedselsdato;
-        }else if(response.data?.hentPerson?.foedsel[0]?.foedselsaar != null){
-            birthDate = Date.newInstance(response.data.hentPerson.foedsel[0].foedselsaar, 1, 1);
+        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
+        if(foedsel == null || foedsel.isEmpty()){
+            return null;
+        }
+        if(foedsel[0]?.foedselsdato != null){
+            birthDate = foedsel[0].foedselsdato;
+        }else if(foedsel[0]?.foedselsaar != null){
+            birthDate = Date.newInstance(foedsel[0].foedselsaar, 1, 1);
         }else{
             return null;
         }
-        Date d = (response.data?.hentPerson?.doedsfall[0]?.doedsdato != null) 
-                ? response.data.hentPerson.doedsfall[0].doedsdato 
-                : Date.today();
+        List<PDL_Doedsfall> doedsfall = response.data?.hentPerson?.doedsfall;
+        Date d;
+        if(doedsfall != null && !doedsfall.isEmpty() && doedsfall[0]?.doedsdato != null){
+            d = doedsfall[0].doedsdato;
+        }else {
+            d = Date.today();
+        }
+                System.debug(d);
         return d
-                .addDays(-response.data.hentPerson.foedsel[0].foedselsdato.day())
-                .addMonths(-response.data.hentPerson.foedsel[0].foedselsdato.month())
-                .addYears(-response.data.hentPerson.foedsel[0].foedselsdato.year())
+                .addDays(-birthDate.day())
+                .addMonths(-birthDate.month())
+                .addYears(-birthDate.year())
                 .year();
     }
     private static String getFullName(PDL_API_Response response){
+        List<PDL_Navn> navn = response.data?.hentPerson?.navn;
+        if(navn == null || navn.isEmpty()){
+            return null;
+        }
         List<String> nameParts = new List<String>();
-        if(response?.data?.hentPerson?.navn[0]?.fornavn != null){
-            nameParts.add(response.data.hentPerson.navn[0].fornavn);
+        if(navn[0]?.fornavn != null){
+            nameParts.add(navn[0].fornavn);
         }
-        if(response?.data?.hentPerson?.navn[0]?.mellomnavn != null){
-            nameParts.add(response.data.hentPerson.navn[0].mellomnavn);
+        if(navn[0]?.mellomnavn != null){
+            nameParts.add(navn[0].mellomnavn);
         }
-        if(response?.data?.hentPerson?.navn[0]?.etternavn != null){
-            nameParts.add(response.data.hentPerson.navn[0].etternavn);
+        if(navn[0]?.etternavn != null){
+            nameParts.add(navn[0].etternavn);
         }
         if(nameParts.isEmpty()){
             return null;
