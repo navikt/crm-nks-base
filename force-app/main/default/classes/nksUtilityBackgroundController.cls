@@ -31,10 +31,28 @@ public with sharing class nksUtilityBackgroundController {
     }
     @AuraEnabled
     public static string getOnlineId() {
-        String statusId = String.valueOf(
-            [SELECT Id FROM ServicePresenceStatus WHERE DeveloperName = 'Available_for_Chat']
-            ?.Id
-        );
+        String statusId;
+        UserAppInfo userAppInfo = [
+            SELECT Id, AppDefinitionId
+            FROM UserAppInfo
+            WHERE UserId = :UserInfo.getUserId()
+            LIMIT 1
+        ];
+        AppDefinition appDefinition = [
+            SELECT DurableId, Label
+            FROM AppDefinition
+            WHERE DurableId = :userAppInfo.AppDefinitionId
+            LIMIT 1
+        ];
+
+        if (appDefinition.Label.equalsIgnoreCase('NAV Kontaktsenter')) {
+            statusId = String.valueOf(
+                [SELECT Id FROM ServicePresenceStatus WHERE DeveloperName = 'Available_for_Chat']
+                ?.Id
+            );
+        } else if (appDefinition.Label.equalsIgnoreCase('NKS STO')) {
+            statusId = String.valueOf([SELECT Id FROM ServicePresenceStatus WHERE DeveloperName = 'Skriv_til_oss']?.Id);
+        }
         return statusId.substring(0, 15);
     }
 }
