@@ -1020,8 +1020,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>692</locationX>
-        <locationY>788</locationY>
+        <locationX>753</locationX>
+        <locationY>509</locationY>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
@@ -1633,11 +1633,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>Takk for at du tok kontakt
-            
-Du har fått informasjon om 
-- 
-</text>
+        <text>&lt;p&gt;Takk for at du tok kontakt&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Du har fått informasjon om &lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
