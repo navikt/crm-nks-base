@@ -1,44 +1,72 @@
 <template>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-text-body_small slds-theme_default">
-            <div class="grid-container">
-                <div class="gender-container">
-                    <template if:true={gender}>
-                        <c-nks-custom-svg class={genderIcon}
-                        src={genderIconSrc}
-                        alt-text={gender}
-                        classes={genderIconClass}
-                        ></c-nks-custom-svg>&nbsp; 
-                    </template>
-                    <template if:true={personIdent}>
-                        <span class="personIdent">{personIdent}&nbsp;
-                    <lightning-button-icon
-                        icon-name="utility:copy"
-                        variant="bare"
-                        onclick={handleCopyIdent}
-                        alternative-text="Kopier bruker ident"
-                        title="Kopier bruker ident"
-                    ></lightning-button-icon>
-                    </span>
-                    </template>
-                </div>
-                <div class="grid-item">
-                    <template if:true={age}>
-                        {age} år 
-                    </template>
-                    <template if:true={citizenship}>
-                        &#47;&nbsp; {citizenship} 
-                    </template>
-                    <template if:true={maritalStatus}>
-                        &#47;&nbsp; {maritalStatus}
-                    </template>
-                </div>
-                <div class="grid-item">
-                    <template if:true={maritalStatus}>
-                        {bankAccountNumber}
-                    </template>
-                </div>
-                <div class="badge">
+            <lightning-layout multiple-columns="true" multiple-rows="true">
+                <lightning-layout-item
+                    size="4"
+                    small-device-size="4"
+                    medium-device-size="4"
+                    large-device-size="3"
+                    class="slds-var-p-right_small"
+                >
+                    <lightning-layout multiple-columns="true">
+                        <lightning-layout-item class="gender">
+                            <template if:true={gender}>
+                                <c-nks-custom-svg
+                                    class={genderIcon}
+                                    src={genderIconSrc}
+                                    alt-text={gender}
+                                    classes={genderIconClass}
+                                ></c-nks-custom-svg>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-var-p-top_x-small">
+                            <template if:true={personIdent}>
+                                <span class="personIdent"
+                                    >&nbsp;{personIdent}
+                                    <lightning-button-icon
+                                        class="copy-icon"
+                                        icon-name="utility:copy"
+                                        variant="bare"
+                                        onclick={handleCopyIdent}
+                                        alternative-text="Kopier bruker ident"
+                                        title="Kopier bruker ident"
+                                    ></lightning-button-icon>
+                                </span>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item
+                    size="4"
+                    small-device-size="4"
+                    medium-device-size="4"
+                    large-device-size="3"
+                    class="slds-var-p-right_small slds-var-p-top_x-small"
+                >
+                    <template if:true={age}> {age} år </template>
+                    <template if:true={citizenship}> &#47; {citizenship} </template>
+                    <template if:true={maritalStatus}> &#47; {maritalStatus} </template>
+                </lightning-layout-item>
+
+                <lightning-layout-item
+                    size="4"
+                    small-device-size="4"
+                    medium-device-size="4"
+                    large-device-size="2"
+                    class="slds-var-p-right_small slds-var-p-top_x-small"
+                >
+                    <template if:true={bankAccountNumber}> {bankAccountNumber} </template>
+                </lightning-layout-item>
+
+                <lightning-layout-item
+                    size="12"
+                    small-device-size="12"
+                    medium-device-size="12"
+                    large-device-size="4"
+                    class="slds-var-p-right_small"
+                >
                     <template if:true={showPersonBadges}>
                         <c-nks-person-badges
                             record-id={recordId}
@@ -46,10 +74,10 @@
                             person-relation-field={relationshipField}
                         ></c-nks-person-badges>
                     </template>
-                </div>
-            </div>
+                </lightning-layout-item>
+            </lightning-layout>
         </lightning-layout-item>
-        <lightning-layout-item size="12" class="slds-p-top_x-small">
+        <lightning-layout-item size="12" class="slds-var-p-top_x-small">
             <div if:true={showErrors} class="slds-text-color_error">
                 Noe har gått feil i innlastingen av varsler:
                 <ul class="slds-list_dotted">
