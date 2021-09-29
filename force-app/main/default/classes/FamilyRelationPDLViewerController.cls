@@ -72,15 +72,20 @@ public with sharing class FamilyRelationPDLViewerController {
         if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
             return children;
         }
+        List<String> childrenIdenter = new List<String>();
         for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelderbarnrelasjon){
             if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
                 if(relation.relatertpersonsident != null){
+                    if(childrenIdenter.contains(relation.relatertpersonsident)){
+                        continue;
+                    }
                     PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
                     if(childResponse != null){
                         Relation childRelation = makeRelationFromResponse(childResponse);
                         if(childRelation.age != null && childRelation.age < 21){
                             childRelation.role = relation.relatertpersonsrolle.name();
                             children.add(childRelation);
+                            childrenIdenter.add(relation.relatertpersonsident);
                             continue;
                         }
                     }
@@ -156,6 +161,9 @@ public with sharing class FamilyRelationPDLViewerController {
             r.personId = getPersonIdFromIdents(getIdentsList(response));
             r.accountId = getAccountIdFromPersonId(r.personId);
             r.personIdent = getPersonIdent(response);
+            if(r.accountId == null){
+                r.disableurl = true;
+            }
         }else{
             r.disableurl = true;
         }
