@@ -144,6 +144,7 @@ public with sharing class FamilyRelationPDLViewerController {
             r.personId = getPersonIdFromIdents(getIdentsList(response));
             r.accountId = getAccountIdFromPersonId(r.personId);
             r.personIdent = getPersonIdent(response);
+        }else{
             r.disableurl = true;
         }
         return r;
