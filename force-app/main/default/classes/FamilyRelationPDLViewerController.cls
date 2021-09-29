@@ -73,16 +73,21 @@ public with sharing class FamilyRelationPDLViewerController {
             return children;
         }
         for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelderbarnrelasjon){
-            if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN &&
-            relation.relatertpersonsident != null){
-                PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
-                if(childResponse != null){
-                    Relation childRelation = makeRelationFromResponse(childResponse);
-                    if(childRelation.age != null && childRelation.age < 21){
-                        childRelation.role = relation.relatertpersonsrolle.name();
-                        children.add(childRelation);
+            if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
+                if(relation.relatertpersonsident != null){
+                    PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
+                    if(childResponse != null){
+                        Relation childRelation = makeRelationFromResponse(childResponse);
+                        if(childRelation.age != null && childRelation.age < 21){
+                            childRelation.role = relation.relatertpersonsrolle.name();
+                            children.add(childRelation);
+                            continue;
+                        }
                     }
                 }
+                Relation r = new Relation();
+                r.role = relation.relatertpersonsrolle.name();
+                r.personName = ukjentName;
             }
         }
         return children;
@@ -112,6 +117,10 @@ public with sharing class FamilyRelationPDLViewerController {
             return maritalRelationList;
         }
         if(sivilstand[0].relatertVedSivilstand == null){
+            Relation r = new Relation();
+            r.role = sivilstand[0].type.name();
+            r.personName = ukjentName;
+            maritalRelationList.add(r);
             return maritalRelationList;
         }
         PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
@@ -307,7 +316,7 @@ public with sharing class FamilyRelationPDLViewerController {
             nameParts.add(navn[0].etternavn);
         }
         if(nameParts.isEmpty()){
-            return null;
+            return ukjentName;
         }
         return String.join(nameParts, ' ');
     }
@@ -318,4 +327,5 @@ public with sharing class FamilyRelationPDLViewerController {
                                       PDL_Sivilstandstype.REGISTRERT_PARTNER,
                                       PDL_Sivilstandstype.SEPARERT_PARTNER,
                                       PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
+    private static final String ukjentName = 'UKJENT_NAVN';
 }
