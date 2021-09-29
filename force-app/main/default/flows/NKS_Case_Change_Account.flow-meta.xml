@@ -134,6 +134,9 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>AccountId</field>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>Closed</stringValue>
