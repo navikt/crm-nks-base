@@ -1318,7 +1318,7 @@
         </fields>
         <fields>
             <name>Create_Journal_Entry</name>
-            <extensionName>flowruntime:Toggle</extensionName>
+            <extensionName>flowruntime:toggle</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>label</name>
