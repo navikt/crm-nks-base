@@ -29,6 +29,10 @@
         <name>NKS_Change_Account</name>
     </quickActions>
     <quickActions>
+        <label>Bytt Bruker</label>
+        <name>NKS_Close_and_Change_Account</name>
+    </quickActions>
+    <quickActions>
         <label><!-- NewChildCase --></label>
         <name>NewChildCase</name>
     </quickActions>
