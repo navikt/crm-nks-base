@@ -703,7 +703,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue />
                 </rightValue>
             </conditions>
             <connector>
@@ -1318,7 +1318,7 @@
         </fields>
         <fields>
             <name>Create_Journal_Entry</name>
-            <extensionName>flowruntime:toggle</extensionName>
+            <extensionName>flowruntime:Toggle</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>label</name>
@@ -1693,7 +1693,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue />
         </value>
     </variables>
     <variables>
