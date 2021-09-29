@@ -1265,7 +1265,7 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>975</locationX>
+        <locationX>976</locationX>
         <locationY>979</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1520,7 +1520,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1187</locationX>
+        <locationX>1188</locationX>
         <locationY>352</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1636,8 +1636,7 @@
         <text>Takk for at du tok kontakt
             
 Du har fått informasjon om 
-- 
-</text>
+-</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
