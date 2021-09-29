@@ -1,5 +1,5 @@
 import { LightningElement, track, api, wire } from 'lwc';
-import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+import crmSingleValueUpdate from '@salesforce/messageChannel/crmSingleValueUpdate__c';
 import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import { publish, MessageContext } from 'lightning/messageService';
 
@@ -28,6 +28,6 @@ export default class Toggle extends LightningElement {
 
     publishFieldChange(field, value) {
         const payload = { name: field, value: value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 }

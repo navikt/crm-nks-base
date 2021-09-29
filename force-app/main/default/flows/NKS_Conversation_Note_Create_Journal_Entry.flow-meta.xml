@@ -197,7 +197,7 @@
         </connector>
         <fields>
             <name>Case_Overview</name>
-            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <extensionName>c:crmPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>actorId</name>
@@ -230,7 +230,7 @@
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>JOURNAL_POST_RESPONSE</name>
         <dataType>String</dataType>
