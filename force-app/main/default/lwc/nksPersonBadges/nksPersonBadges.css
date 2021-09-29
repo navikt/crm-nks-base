@@ -2,17 +2,10 @@
     cursor: pointer;
 }
 
-.slds-p-top_x-small {
-    background-color: #F3F2F2;
-    padding: 5px;
-    
+.slds-box {
+    background-color: #f3f2f2;
 }
 
-.slds-theme_default {
-   padding: 0;
+li {
+    word-break: break-word;
 }
-
-.lightning-layout-item {
-    padding-left: 10px;
-}
-

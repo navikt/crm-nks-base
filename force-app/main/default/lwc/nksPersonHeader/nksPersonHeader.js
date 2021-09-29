@@ -6,6 +6,7 @@ import GENDER_FIELD from '@salesforce/schema/Person__c.INT_Sex__c';
 import AGE_FIELD from '@salesforce/schema/Person__c.CRM_Age__c';
 import CITIZENSHIP_FIELD from '@salesforce/schema/Person__c.INT_Citizenships__c';
 import MARITAL_STATUS_FIELD from '@salesforce/schema/Person__c.INT_MaritalStatus__c';
+import BANK_ACCOUNT_NUMBER_FIELD from '@salesforce/schema/Person__c.INT_BankAccountNumber__c';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
 
 export default class NksPersonHeader extends LightningElement {
@@ -21,12 +22,13 @@ export default class NksPersonHeader extends LightningElement {
     age;
     citizenship;
     maritalStatus;
+    bankAccountNumber;
     wireFields;
     @track errorMessages = [];
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
-    } 
+    }
 
     get showNotifications() {
         return this.notifications.length > 0;
@@ -38,20 +40,20 @@ export default class NksPersonHeader extends LightningElement {
 
     get genderIcon() {
         switch (this.gender) {
-             case 'Mann':
+            case 'Mann':
                 return 'MaleFilled';
-             case 'Kvinne':
+            case 'Kvinne':
                 return 'FemaleFilled';
-       }
+        }
         return 'NeutralFilled';
     }
 
     get genderIconSrc() {
-        return NAV_ICONS + '/'+this.genderIcon+'.svg#'+this.genderIcon;
+        return NAV_ICONS + '/' + this.genderIcon + '.svg#' + this.genderIcon;
     }
-        
+
     get genderIconClass() {
-        return this.genderIcon + ' slds-p-around_xx-small';
+        return this.genderIcon;
     }
 
     handleCopyIdent() {
@@ -67,10 +69,10 @@ export default class NksPersonHeader extends LightningElement {
         } catch (err) {
             console.log('Oops, unable to copy');
         }
-        
+
         document.body.removeChild(hiddenInput);
     }
-    
+
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({
             parentId: this.recordId,
@@ -87,7 +89,14 @@ export default class NksPersonHeader extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$personId',
-        fields: [PERSON_IDENT_FIELD, GENDER_FIELD, AGE_FIELD, CITIZENSHIP_FIELD, MARITAL_STATUS_FIELD]
+        fields: [
+            PERSON_IDENT_FIELD,
+            GENDER_FIELD,
+            AGE_FIELD,
+            CITIZENSHIP_FIELD,
+            MARITAL_STATUS_FIELD,
+            BANK_ACCOUNT_NUMBER_FIELD
+        ]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {
@@ -96,6 +105,7 @@ export default class NksPersonHeader extends LightningElement {
             this.age = getFieldValue(data, AGE_FIELD);
             this.citizenship = getFieldValue(data, CITIZENSHIP_FIELD);
             this.maritalStatus = getFieldValue(data, MARITAL_STATUS_FIELD);
+            this.bankAccountNumber = getFieldValue(data, BANK_ACCOUNT_NUMBER_FIELD);
         }
         if (error) {
             this.addError(error);
@@ -137,7 +147,7 @@ export default class NksPersonHeader extends LightningElement {
      * @param {data path} path
      * @param {JS object} obj
      */
-     resolve(path, obj) {
+    resolve(path, obj) {
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
         }, obj || self);
