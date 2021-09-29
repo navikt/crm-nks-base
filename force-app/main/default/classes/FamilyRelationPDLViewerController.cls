@@ -284,11 +284,12 @@ public with sharing class FamilyRelationPDLViewerController {
             d = Date.today();
         }
                 System.debug(d);
+        // dates starts form 0001.01.01, so doing some math
         return d
-                .addDays(-birthDate.day())
-                .addMonths(-birthDate.month())
-                .addYears(-birthDate.year())
-                .year();
+                .addDays(-birthDate.day()+1)
+                .addMonths(-birthDate.month()+1)
+                .addYears(-birthDate.year()+1)
+                .year()-1;
     }
     private static String getFullName(PDL_API_Response response){
         List<PDL_Navn> navn = response.data?.hentPerson?.navn;
