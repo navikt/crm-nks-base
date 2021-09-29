@@ -230,7 +230,7 @@
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>JOURNAL_POST_RESPONSE</name>
         <dataType>String</dataType>
