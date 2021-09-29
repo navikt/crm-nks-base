@@ -30,7 +30,7 @@
     </quickActions>
     <quickActions>
         <label>Bytt Bruker</label>
-        <name>NKS_Close_and_Change_Account</name>
+        <name>NKS_Clone_and_Change_Account</name>
     </quickActions>
     <quickActions>
         <label><!-- NewChildCase --></label>
