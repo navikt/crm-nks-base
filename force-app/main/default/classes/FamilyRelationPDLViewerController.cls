@@ -87,11 +87,13 @@ public with sharing class FamilyRelationPDLViewerController {
                 }
                 Relation r = new Relation();
                 r.role = relation.relatertpersonsrolle.name();
-                r.personName = ukjentName;
+                r.personName = unknownName;
+                r.disableurl = true;
             }
         }
         return children;
-    }@TestVisible
+    }
+    @TestVisible
     private static PDL_API_Response queryChild(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.navn.fornavn = true;
@@ -119,7 +121,8 @@ public with sharing class FamilyRelationPDLViewerController {
         if(sivilstand[0].relatertVedSivilstand == null){
             Relation r = new Relation();
             r.role = sivilstand[0].type.name();
-            r.personName = ukjentName;
+            r.personName = unknownName;
+            r.disableurl = true;
             maritalRelationList.add(r);
             return maritalRelationList;
         }
@@ -137,7 +140,7 @@ public with sharing class FamilyRelationPDLViewerController {
         Relation r = new Relation();
         r.disableurl = false;
         if(isUnauthorized(response)){
-            r.personName = 'IKKE TILGJENGELIG';
+            r.personName = notAvailableName;
             r.disableurl = true;
             return r;
         }
@@ -316,7 +319,7 @@ public with sharing class FamilyRelationPDLViewerController {
             nameParts.add(navn[0].etternavn);
         }
         if(nameParts.isEmpty()){
-            return ukjentName;
+            return unknownName;
         }
         return String.join(nameParts, ' ');
     }
@@ -327,5 +330,6 @@ public with sharing class FamilyRelationPDLViewerController {
                                       PDL_Sivilstandstype.REGISTRERT_PARTNER,
                                       PDL_Sivilstandstype.SEPARERT_PARTNER,
                                       PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
-    private static final String ukjentName = 'UKJENT_NAVN';
+    private static final String unknownName = 'UKJENT_NAVN';
+    private static final String notAvailableName = 'IKKE_TILHGJENGELIG';
 }
