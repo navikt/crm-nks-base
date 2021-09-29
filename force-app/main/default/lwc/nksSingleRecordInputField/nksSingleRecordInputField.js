@@ -26,13 +26,13 @@ export default class NksSingleRecordInputField extends LightningElement {
 
     connectedCallback() {
         const payload = { name: this.fieldName, value: this.value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 
     onChange(event) {
         this.value = event.detail.value;
         const payload = { name: this.fieldName, value: this.value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 
     //Validation preventing user moving to next screen in flow if state is not valid
