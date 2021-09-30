@@ -1,6 +1,49 @@
 public with sharing class FamilyRelationPDLViewerController {
+    public static Boolean TEST_MODE = true;
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelatedPersons(Id recordId, String objectApiName) {
+        if(TEST_MODE){
+            List<Relation> l = new List<Relation>();
+            Relation r1 = new Relation();
+            Relation r2 = new Relation();
+            Relation r3 = new Relation();
+            Relation r4 = new Relation();
+            Relation r5 = new Relation();
+            r1.personName = 'name1';
+            r1.personIdent = '11111111111';
+            r1.birthdate = Datetime.newInstance(1975, 8, 30).format('dd.MM.yyyy');
+            r1.age = 36;
+            r1.accountId = '111';
+            r1.color = 'blue';
+            r1.sex = 'MANN';
+            r1.role = 'FAR';
+            
+            r2.personName = 'name2';
+            r2.personIdent = '22222222222';
+            r2.birthdate = Datetime.newInstance(2000, 6, 15).format('dd.MM.yyyy');
+            r2.age = 21;
+            r2.accountId = '222';
+            r2.color = 'pink';
+            r2.sex = 'KVINNE';
+            r2.role = 'BARN';
+            r2.missingInSalesforce = true;
+
+            r3.personName = 'name3';
+            r3.personIdent = '33333333333';
+            r3.birthdate = Datetime.newInstance(2000, 6, 15).format('dd.MM.yyyy');
+            r3.age = 21;
+            r3.accountId = '222';
+            r3.color = 'blue';
+            r3.sex = 'MANN';
+            r3.role = 'BARN';
+            r3.deceased = true;
+            r3.dateOfDeath = Datetime.newInstance(2001, 6, 15).format('dd.MM.yyyy');
+
+            l.add(r1);
+            l.add(r2);
+            l.add(r3);
+            return l;
+        }
         Id personId;
         if (objectApiName == 'Case')
             personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
@@ -45,7 +88,7 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String sex;
         @AuraEnabled
-        public Boolean deceased;
+        public Boolean deceased = false;
         @AuraEnabled
         public Integer age;
         @AuraEnabled
@@ -53,9 +96,15 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String dateOfDeath;
         @AuraEnabled
-        public Boolean disableurl;
+        public Boolean disableurl = false;
         @AuraEnabled
         public String color;
+        @AuraEnabled
+        public Boolean shielded = false;
+        @AuraEnabled
+        public Boolean unauthorized = false;
+        @AuraEnabled
+        public Boolean missingInSalesforce = false;
     }
     @TestVisible
     private static PDL_API_Response queryRelationsFromPDL(String ident){
@@ -77,6 +126,7 @@ public with sharing class FamilyRelationPDLViewerController {
             if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
                 if(relation.relatertpersonsident != null){
                     if(childrenIdenter.contains(relation.relatertpersonsident)){
+                        //checking if child with same ID already added
                         continue;
                     }
                     PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
@@ -143,9 +193,9 @@ public with sharing class FamilyRelationPDLViewerController {
     }
     private static Relation makeRelationFromResponse(PDL_API_Response response){
         Relation r = new Relation();
-        r.disableurl = false;
         if(isUnauthorized(response)){
             r.personName = notAvailableName;
+            r.unauthorized = true;
             r.disableurl = true;
             return r;
         }
@@ -162,9 +212,11 @@ public with sharing class FamilyRelationPDLViewerController {
             r.accountId = getAccountIdFromPersonId(r.personId);
             r.personIdent = getPersonIdent(response);
             if(r.accountId == null){
+                r.missingInSalesforce = true;
                 r.disableurl = true;
             }
         }else{
+            r.shielded = true;
             r.disableurl = true;
         }
         return r;
