@@ -703,7 +703,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue />
                 </rightValue>
             </conditions>
             <connector>
@@ -1229,8 +1229,8 @@
         <description>Screen shown when case was closed without account connection</description>
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
-        <locationX>778</locationX>
-        <locationY>558</locationY>
+        <locationX>776</locationX>
+        <locationY>597</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1349,7 +1349,7 @@
         </fields>
         <fields>
             <name>Conversation_Theme_Categorization</name>
-            <extensionName>c:nksThemeCategorization</extensionName>
+            <extensionName>c:crmThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>themeGroup</name>
@@ -1378,7 +1378,7 @@
         </fields>
         <fields>
             <name>Case_Overview</name>
-            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <extensionName>c:crmPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>actorId</name>
@@ -1611,7 +1611,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
@@ -1693,7 +1693,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue />
         </value>
     </variables>
     <variables>

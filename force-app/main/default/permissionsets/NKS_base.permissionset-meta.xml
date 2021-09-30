@@ -181,6 +181,30 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CRM_JournalUtilities</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_NAVTaskTypeController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_NavSakService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_NavTaskManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_NavTaskWorkAllocationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CRM_ThemeUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CachedTokensHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -849,11 +873,6 @@
         <editable>false</editable>
         <field>User.CRM_NAV_Ident__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>User.NKS_FullNameAlias__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

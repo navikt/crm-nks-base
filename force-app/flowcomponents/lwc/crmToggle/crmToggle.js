@@ -3,7 +3,7 @@ import crmSingleValueUpdate from '@salesforce/messageChannel/crmSingleValueUpdat
 import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import { publish, MessageContext } from 'lightning/messageService';
 
-export default class Toggle extends LightningElement {
+export default class CRM_Toggle extends LightningElement {
     @track checked = false;
     @api label;
 
@@ -28,6 +28,6 @@ export default class Toggle extends LightningElement {
 
     publishFieldChange(field, value) {
         const payload = { name: field, value: value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 }
