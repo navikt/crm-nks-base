@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+import crmSingleValueUpdate from '@salesforce/messageChannel/crmSingleValueUpdate__c';
 import { publish, MessageContext } from 'lightning/messageService';
 
 //#### LABEL IMPORTS ####
