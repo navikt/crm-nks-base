@@ -4,7 +4,7 @@
         <name>Navigate_to_Case</name>
         <label>Navigate to Case</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>518</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <inputParameters>
@@ -15,7 +15,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <description>Closes the current case and created a duplicate with a new account relation.</description>
+    <description>Creates a duplicate case with a new account relation.</description>
     <interviewLabel>Case Change Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Change Account</label>
     <processMetadataValues>
@@ -43,7 +43,7 @@
         <locationX>176</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Close_Calling_Case</targetReference>
+            <targetReference>Navigate_to_Case</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -117,33 +117,6 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Close the case that called this flow.</description>
-        <name>Close_Calling_Case</name>
-        <label>Close Calling Case</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
-        <connector>
-            <targetReference>Navigate_to_Case</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>AccountId</field>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Screen where user has to pick the correct account for the new case</description>
