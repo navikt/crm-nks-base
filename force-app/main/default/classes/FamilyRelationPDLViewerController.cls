@@ -39,7 +39,7 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String accountId;
         @AuraEnabled
-        public String personName;
+        public String personName = unknownName;
         @AuraEnabled
         public String role;
         @AuraEnabled
@@ -134,6 +134,7 @@ public with sharing class FamilyRelationPDLViewerController {
             Relation r = new Relation();
             r.role = sivilstand[0].type.name();
             r.personName = unknownName;
+            r.missingInSalesforce = true;
             r.disableurl = true;
             maritalRelationList.add(r);
             return maritalRelationList;
@@ -258,12 +259,25 @@ public with sharing class FamilyRelationPDLViewerController {
         if(response.data?.hentIdenter?.identer == null){
             return null;
         }
+        List<String> idents = new List<String>();
         for(PDL_IdentInformasjon ident : response.data.hentIdenter.identer){
-            if(ident.ident != null && ident.historisk != true){
-                return ident.ident;
+            if(ident.ident != null && ident.historisk != true && ident.gruppe == PDL_IdentGruppe.FOLKEREGISTERIDENT){
+                idents.add(
+                    typeOfId(ident.ident).name() +
+                    ': ' + 
+                    ident.ident
+                );
+                //return ident.ident;
             }
         }
+        if(!idents.isEmpty()){
+            return String.join(idents, ', ');
+        }
         return null;
+    }
+    private static PDL_IdentType typeOfId(String ident){
+        if(ident == null) {return null;}
+        return (4 <= Integer.valueOf(ident.left(1))) ? PDL_IdentType.DNR : PDL_IdentType.FNR;
     }
     private static String getAccountIdFromPersonId(String personId){
         if(personID == null){
