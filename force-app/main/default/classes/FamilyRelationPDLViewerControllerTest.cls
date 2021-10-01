@@ -11,6 +11,13 @@ private class FamilyRelationPDLViewerControllerTest {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
         List<FamilyRelationPDLViewerController.Relation> l = FamilyRelationPDLViewerController.getChildren(query.execute());
+        System.assertEquals(1, l.size());
+    }
+    @isTest
+    private static void getParentsTest(){
+        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        List<FamilyRelationPDLViewerController.Relation> l = FamilyRelationPDLViewerController.getParents(query.execute());
         System.assertEquals(0, l.size());
     }
     @isTest

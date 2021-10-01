@@ -27,7 +27,9 @@ public with sharing class FamilyRelationPDLViewerController {
         PDL_API_Response relationsFromPDL =  queryRelationsFromPDL(personIdent);
         relations.addAll(getMaritalPerson(relationsFromPDL));
         relations.addAll(getChildren(relationsFromPDL));
-        // relations.add(getParents(relationsFromPDL));
+        if(getAge(relationsFromPDL) < 21){
+            relations.addAll(getParents(relationsFromPDL));
+        }
         return relations;
     }
 
@@ -73,6 +75,32 @@ public with sharing class FamilyRelationPDLViewerController {
         return query.execute();
     }
     @TestVisible
+    private static List<Relation> getParents(PDL_API_Response relations){
+        List<Relation> parents = new List<Relation>();
+        if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
+            return parents;
+        }
+        for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelderbarnrelasjon){
+            if(parentTypes.contains(relation.relatertpersonsrolle)){
+                if(relation.relatertpersonsident != null){
+                    PDL_API_Response parentResponse = queryChild(relation.relatertpersonsident);
+                    if(parentResponse != null){
+                        Relation parentRelation = makeRelationFromResponse(parentResponse);
+                        parents.add(parentRelation);
+                        continue;
+                    }
+                }
+                Relation r = new Relation();
+                r.role = relation.relatertpersonsrolle.name();
+                r.personName = unknownName;
+                r.disableurl = true;
+                r.missingInSalesforce = true;
+                parents.add(r);
+            }
+        }
+        return parents;
+    }
+    @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relations){
         List<Relation> children = new List<Relation>();
         if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
@@ -101,6 +129,8 @@ public with sharing class FamilyRelationPDLViewerController {
                 r.role = relation.relatertpersonsrolle.name();
                 r.personName = unknownName;
                 r.disableurl = true;
+                r.missingInSalesforce = true;
+                children.add(r);
             }
         }
         return children;
@@ -120,6 +150,7 @@ public with sharing class FamilyRelationPDLViewerController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+
     @TestVisible
     private static List<Relation> getMaritalPerson(PDL_API_Response relations){
         List<Relation> maritalRelationList = new List<Relation>();
@@ -361,6 +392,10 @@ public with sharing class FamilyRelationPDLViewerController {
                                       PDL_Sivilstandstype.REGISTRERT_PARTNER,
                                       PDL_Sivilstandstype.SEPARERT_PARTNER,
                                       PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
+    private static final List<PDL_ForelderBarnRelasjonRolle> parentTypes =
+        new List<PDL_ForelderBarnRelasjonRolle>{PDL_ForelderBarnRelasjonRolle.MOR,
+                                                PDL_ForelderBarnRelasjonRolle.FAR,
+                                                PDL_ForelderBarnRelasjonRolle.MEDMOR};
     private static final String unknownName = 'UKJENT_NAVN';
     private static final String notAvailableName = 'IKKE_TILHGJENGELIG';
 }
