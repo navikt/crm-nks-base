@@ -4,13 +4,11 @@
 
 .gender {
     display: flex;
-    width: 32px;
-    height: 32px;
-    float: left;
+    float: center;
+    align-items: center;
 }
 
 .personIdent {
-    float: left;
 }
 
 .copy-icon {
@@ -21,25 +19,22 @@
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #3386e0;
-    width: 32px;
-    height: 32px;
-    padding: 4px 0 0 4px;
+    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
 }
 
 .FemaleFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #d05c4a;
-    width: 32px;
-    height: 32px;
-    padding: 4px 0 0 4px;
+    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
 }
 
 .NeutralFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #a18dbb;
-    width: 32px;
-    height: 32px;
-    padding: 4px 0 0 4px;
+    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
 }
