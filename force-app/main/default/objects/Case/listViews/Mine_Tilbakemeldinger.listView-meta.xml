@@ -30,4 +30,7 @@
         <value>Arbeid,ArbeidsgiverSamhandler,Eures,Familie,Felles,Gjeldsraadgivning,Helse,Internasjonalt,Lege_og_Behandler,Pensjon,Permittering_og_rekruttering,SosialeTjenester,Sykefravaersoppfolging</value>
     </filters>
     <label>Mine Tilbakemeldinger</label>
+    <sharedTo>
+        <group>NKS_Knowledge_Editors</group>
+    </sharedTo>
 </ListView>
