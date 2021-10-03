@@ -707,7 +707,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue />
+                    <stringValue/>
                 </rightValue>
             </conditions>
             <connector>
@@ -1637,10 +1637,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>Takk for at du tok kontakt
-            
-Du har fått informasjon om 
--</text>
+        <text>&lt;p&gt;Takk for at du tok kontakt&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Du har fått informasjon om &lt;/p&gt;&lt;p&gt;- &lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
@@ -1697,7 +1694,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue />
+            <stringValue/>
         </value>
     </variables>
     <variables>
