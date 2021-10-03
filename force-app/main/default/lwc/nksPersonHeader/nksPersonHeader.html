@@ -4,9 +4,9 @@
             <lightning-layout multiple-columns="true" multiple-rows="true">
                 <lightning-layout-item
                     size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
-                    large-device-size="3"
+                    small-device-size="6"
+                    medium-device-size="6"
+                    large-device-size="4"
                     class="slds-var-p-horizontal_small"
                 >
                     <lightning-layout multiple-columns="true">
@@ -23,8 +23,8 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-var-p-around_x-small">
                             <template if:true={personIdent}>
-                                <span class="personIdent"
-                                    >&nbsp;{personIdent}&nbsp;
+                                <div class="personIdent">
+                                    {personIdent}
                                     <lightning-button-icon
                                         class="copy-icon"
                                         icon-name="utility:copy"
@@ -33,7 +33,7 @@
                                         alternative-text="Kopier bruker ident"
                                         title="Kopier bruker ident"
                                     ></lightning-button-icon>
-                                </span>
+                                </div>
                             </template>
                         </lightning-layout-item>
                     </lightning-layout>
@@ -41,8 +41,8 @@
 
                 <lightning-layout-item
                     size="3"
-                    small-device-size="4"
-                    medium-device-size="4"
+                    small-device-size="6"
+                    medium-device-size="6"
                     large-device-size="3"
                     class="slds-var-p-right_small slds-var-p-top_x-small"
                 >
@@ -65,7 +65,7 @@
                     size="12"
                     small-device-size="12"
                     medium-device-size="12"
-                    large-device-size="6"
+                    large-device-size="5"
                     class="slds-var-p-right_small"
                 >
                     <template if:true={showPersonBadges}>
