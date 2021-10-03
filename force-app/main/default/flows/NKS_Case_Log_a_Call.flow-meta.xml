@@ -146,6 +146,10 @@
                 <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.CRM_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NAV_Task_Flow</targetReference>
         </connector>
@@ -703,7 +707,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue />
                 </rightValue>
             </conditions>
             <connector>
@@ -1229,8 +1233,8 @@
         <description>Screen shown when case was closed without account connection</description>
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
-        <locationX>778</locationX>
-        <locationY>558</locationY>
+        <locationX>776</locationX>
+        <locationY>597</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1265,7 +1269,7 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>975</locationX>
+        <locationX>976</locationX>
         <locationY>979</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1349,7 +1353,7 @@
         </fields>
         <fields>
             <name>Conversation_Theme_Categorization</name>
-            <extensionName>c:nksThemeCategorization</extensionName>
+            <extensionName>c:crmThemeCategorization</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>themeGroup</name>
@@ -1378,7 +1382,7 @@
         </fields>
         <fields>
             <name>Case_Overview</name>
-            <extensionName>c:nksPersonCaseOverview</extensionName>
+            <extensionName>c:crmPersonCaseOverview</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>actorId</name>
@@ -1520,7 +1524,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1187</locationX>
+        <locationX>1188</locationX>
         <locationY>352</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1633,7 +1637,10 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;Takk for at du tok kontakt&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Du har fått informasjon om &lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</text>
+        <text>Takk for at du tok kontakt
+            
+Du har fått informasjon om 
+-</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
@@ -1690,7 +1697,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue />
         </value>
     </variables>
     <variables>
