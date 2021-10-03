@@ -39,13 +39,13 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String accountId;
         @AuraEnabled
-        public String personName;
+        public String personName = unknownName;
         @AuraEnabled
         public String role;
         @AuraEnabled
         public String sex;
         @AuraEnabled
-        public Boolean deceased;
+        public Boolean deceased = false;
         @AuraEnabled
         public Integer age;
         @AuraEnabled
@@ -53,9 +53,15 @@ public with sharing class FamilyRelationPDLViewerController {
         @AuraEnabled
         public String dateOfDeath;
         @AuraEnabled
-        public Boolean disableurl;
+        public Boolean disableurl = false;
         @AuraEnabled
         public String color;
+        @AuraEnabled
+        public Boolean shielded = false;
+        @AuraEnabled
+        public Boolean unauthorized = false;
+        @AuraEnabled
+        public Boolean missingInSalesforce = false;
     }
     @TestVisible
     private static PDL_API_Response queryRelationsFromPDL(String ident){
@@ -72,21 +78,34 @@ public with sharing class FamilyRelationPDLViewerController {
         if(relations?.data?.hentPerson?.forelderbarnrelasjon == null){
             return children;
         }
+        List<String> childrenIdenter = new List<String>();
         for(PDL_Forelderbarnrelasjon relation : relations.data.hentPerson.forelderbarnrelasjon){
-            if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN &&
-            relation.relatertpersonsident != null){
-                PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
-                if(childResponse != null){
-                    Relation childRelation = makeRelationFromResponse(childResponse);
-                    if(childRelation.age != null && childRelation.age < 21){
-                        childRelation.role = relation.relatertpersonsrolle.name();
-                        children.add(childRelation);
+            if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
+                if(relation.relatertpersonsident != null){
+                    if(childrenIdenter.contains(relation.relatertpersonsident)){
+                        //checking if child with same ID already added
+                        continue;
+                    }
+                    PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
+                    if(childResponse != null){
+                        Relation childRelation = makeRelationFromResponse(childResponse);
+                        if(childRelation.age != null && childRelation.age < 21){
+                            childRelation.role = relation.relatertpersonsrolle.name();
+                            children.add(childRelation);
+                            childrenIdenter.add(relation.relatertpersonsident);
+                            continue;
+                        }
                     }
                 }
+                Relation r = new Relation();
+                r.role = relation.relatertpersonsrolle.name();
+                r.personName = unknownName;
+                r.disableurl = true;
             }
         }
         return children;
-    }@TestVisible
+    }
+    @TestVisible
     private static PDL_API_Response queryChild(String ident){
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.navn.fornavn = true;
@@ -112,6 +131,12 @@ public with sharing class FamilyRelationPDLViewerController {
             return maritalRelationList;
         }
         if(sivilstand[0].relatertVedSivilstand == null){
+            Relation r = new Relation();
+            r.role = sivilstand[0].type.name();
+            r.personName = unknownName;
+            r.missingInSalesforce = true;
+            r.disableurl = true;
+            maritalRelationList.add(r);
             return maritalRelationList;
         }
         PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
@@ -126,9 +151,9 @@ public with sharing class FamilyRelationPDLViewerController {
     }
     private static Relation makeRelationFromResponse(PDL_API_Response response){
         Relation r = new Relation();
-        r.disableurl = false;
         if(isUnauthorized(response)){
-            r.personName = 'IKKE TILGJENGELIG';
+            r.personName = notAvailableName;
+            r.unauthorized = true;
             r.disableurl = true;
             return r;
         }
@@ -144,6 +169,12 @@ public with sharing class FamilyRelationPDLViewerController {
             r.personId = getPersonIdFromIdents(getIdentsList(response));
             r.accountId = getAccountIdFromPersonId(r.personId);
             r.personIdent = getPersonIdent(response);
+            if(r.accountId == null){
+                r.missingInSalesforce = true;
+                r.disableurl = true;
+            }
+        }else{
+            r.shielded = true;
             r.disableurl = true;
         }
         return r;
@@ -228,12 +259,25 @@ public with sharing class FamilyRelationPDLViewerController {
         if(response.data?.hentIdenter?.identer == null){
             return null;
         }
+        List<String> idents = new List<String>();
         for(PDL_IdentInformasjon ident : response.data.hentIdenter.identer){
-            if(ident.ident != null && ident.historisk != true){
-                return ident.ident;
+            if(ident.ident != null && ident.historisk != true && ident.gruppe == PDL_IdentGruppe.FOLKEREGISTERIDENT){
+                idents.add(
+                    typeOfId(ident.ident).name() +
+                    ': ' + 
+                    ident.ident
+                );
+                //return ident.ident;
             }
         }
+        if(!idents.isEmpty()){
+            return String.join(idents, ', ');
+        }
         return null;
+    }
+    private static PDL_IdentType typeOfId(String ident){
+        if(ident == null) {return null;}
+        return (4 <= Integer.valueOf(ident.left(1))) ? PDL_IdentType.DNR : PDL_IdentType.FNR;
     }
     private static String getAccountIdFromPersonId(String personId){
         if(personID == null){
@@ -283,11 +327,12 @@ public with sharing class FamilyRelationPDLViewerController {
             d = Date.today();
         }
                 System.debug(d);
+        // dates starts form 0001.01.01, so doing some math
         return d
-                .addDays(-birthDate.day())
-                .addMonths(-birthDate.month())
-                .addYears(-birthDate.year())
-                .year();
+                .addDays(-birthDate.day()+1)
+                .addMonths(-birthDate.month()+1)
+                .addYears(-birthDate.year()+1)
+                .year()-1;
     }
     private static String getFullName(PDL_API_Response response){
         List<PDL_Navn> navn = response.data?.hentPerson?.navn;
@@ -305,7 +350,7 @@ public with sharing class FamilyRelationPDLViewerController {
             nameParts.add(navn[0].etternavn);
         }
         if(nameParts.isEmpty()){
-            return null;
+            return unknownName;
         }
         return String.join(nameParts, ' ');
     }
@@ -316,4 +361,6 @@ public with sharing class FamilyRelationPDLViewerController {
                                       PDL_Sivilstandstype.REGISTRERT_PARTNER,
                                       PDL_Sivilstandstype.SEPARERT_PARTNER,
                                       PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
+    private static final String unknownName = 'UKJENT_NAVN';
+    private static final String notAvailableName = 'IKKE_TILHGJENGELIG';
 }

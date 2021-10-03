@@ -146,6 +146,10 @@
                 <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task_to_Create.CRM_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NAV_Task_Flow</targetReference>
         </connector>
@@ -1611,7 +1615,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>

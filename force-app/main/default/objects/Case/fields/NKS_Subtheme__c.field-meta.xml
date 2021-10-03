@@ -13,7 +13,7 @@
             <operation>equals</operation>
             <valueField>Common_Code__c.CRM_Parent_Code__c</valueField>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Common_Code__c</referenceTo>
     <relationshipLabel>Cases (Subtheme)</relationshipLabel>
