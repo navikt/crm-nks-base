@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tilbakemeldinger</fullName>
+    <fullName>Mine_Tilbakemeldinger</fullName>
+    <booleanFilter>1 AND 2 AND ( 3 OR 4 )</booleanFilter>
     <columns>CASES.CASE_NUMBER</columns>
     <columns>KnowledgeArticle__c</columns>
     <columns>Data_Categories__c</columns>
@@ -18,7 +19,17 @@
         <operation>notEqual</operation>
         <value>Closed</value>
     </filters>
-    <label>Tilbakemeldinger</label>
+    <filters>
+        <field>Assignee_Name__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Data_Categories__c</field>
+        <operation>includes</operation>
+        <value>Arbeid,ArbeidsgiverSamhandler,Eures,Familie,Felles,Gjeldsraadgivning,Helse,Internasjonalt,Lege_og_Behandler,Pensjon,Permittering_og_rekruttering,SosialeTjenester,Sykefravaersoppfolging</value>
+    </filters>
+    <label>Mine Tilbakemeldinger</label>
     <sharedTo>
         <group>NKS_Knowledge_Editors</group>
     </sharedTo>
