@@ -28,7 +28,7 @@ export default class NksPersonHeader extends LightningElement {
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
-    } 
+    }
 
     get showNotifications() {
         return this.notifications.length > 0;
@@ -40,18 +40,18 @@ export default class NksPersonHeader extends LightningElement {
 
     get genderIcon() {
         switch (this.gender) {
-             case 'Mann':
+            case 'Mann':
                 return 'MaleFilled';
-             case 'Kvinne':
+            case 'Kvinne':
                 return 'FemaleFilled';
-       }
+        }
         return 'NeutralFilled';
     }
 
     get genderIconSrc() {
-        return NAV_ICONS + '/'+this.genderIcon+'.svg#'+this.genderIcon;
+        return NAV_ICONS + '/' + this.genderIcon + '.svg#' + this.genderIcon;
     }
-        
+
     get genderIconClass() {
         return this.genderIcon;
     }
@@ -69,10 +69,10 @@ export default class NksPersonHeader extends LightningElement {
         } catch (err) {
             console.log('Oops, unable to copy');
         }
-        
+
         document.body.removeChild(hiddenInput);
     }
-    
+
     getRelatedRecordId(relationshipField, objectApiName) {
         getRelatedRecord({
             parentId: this.recordId,
@@ -89,7 +89,14 @@ export default class NksPersonHeader extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$personId',
-        fields: [PERSON_IDENT_FIELD, GENDER_FIELD, AGE_FIELD, CITIZENSHIP_FIELD, MARITAL_STATUS_FIELD, BANK_ACCOUNT_NUMBER_FIELD]
+        fields: [
+            PERSON_IDENT_FIELD,
+            GENDER_FIELD,
+            AGE_FIELD,
+            CITIZENSHIP_FIELD,
+            MARITAL_STATUS_FIELD,
+            BANK_ACCOUNT_NUMBER_FIELD
+        ]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {
@@ -140,7 +147,7 @@ export default class NksPersonHeader extends LightningElement {
      * @param {data path} path
      * @param {JS object} obj
      */
-     resolve(path, obj) {
+    resolve(path, obj) {
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
         }, obj || self);
