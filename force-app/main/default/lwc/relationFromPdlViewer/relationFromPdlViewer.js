@@ -7,6 +7,7 @@ export default class RelationFromPdlViewer extends LightningElement {
     @api objectApiName;
     @api recordId;
     wireFields;
+    isLoaded = false;
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -18,7 +19,7 @@ export default class RelationFromPdlViewer extends LightningElement {
     })
     wiredRecordInfo({ data }) {
         if (data) {
-            refreshApex(this.relations);
+            refreshApex(this.relations).then(() => (this.isLoaded = true));
         }
     }
 

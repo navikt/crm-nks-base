@@ -122,6 +122,10 @@
         <tab>Knowledge__kav</tab>
         <visibility>Available</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>standard-Case</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>AllowUniversalSearch</name>

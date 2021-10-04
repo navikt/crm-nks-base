@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import nksSingleValueUpdate from '@salesforce/messageChannel/nksSingleValueUpdate__c';
+import crmSingleValueUpdate from '@salesforce/messageChannel/crmSingleValueUpdate__c';
 import { publish, MessageContext } from 'lightning/messageService';
 
 //#### LABEL IMPORTS ####
@@ -26,13 +26,13 @@ export default class NksSingleRecordInputField extends LightningElement {
 
     connectedCallback() {
         const payload = { name: this.fieldName, value: this.value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 
     onChange(event) {
         this.value = event.detail.value;
         const payload = { name: this.fieldName, value: this.value };
-        publish(this.messageContext, nksSingleValueUpdate, payload);
+        publish(this.messageContext, crmSingleValueUpdate, payload);
     }
 
     //Validation preventing user moving to next screen in flow if state is not valid
