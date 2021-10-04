@@ -1637,7 +1637,10 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
-        <text>&lt;p&gt;Takk for at du tok kontakt&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Du har fått informasjon om &lt;/p&gt;&lt;p&gt;-&lt;/p&gt;</text>
+        <text>Takk for at du tok kontakt
+
+Du har fått informasjon om
+- </text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
