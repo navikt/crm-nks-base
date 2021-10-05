@@ -22,11 +22,11 @@ public without sharing class NKS_DataSynchController {
     }
 
     @AuraEnabled
-    public static Boolean doBankAccountNumberSync(String actorId) {
+    public static Boolean doBankAccountNumberSync(String ident) {
         Boolean isSynced = true;
 
         try {
-            TPS_Persons.getBankkonto(actorId, true);
+            TPS_Persons.getBankkonto(ident, true);
         } catch (Exception e) {
             isSynced = false;
         }
