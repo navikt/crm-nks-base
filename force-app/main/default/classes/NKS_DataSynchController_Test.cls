@@ -20,12 +20,14 @@ public class NKS_DataSynchController_Test {
 
     @isTest
     static void testBankAccountSync() {
-        Person__c person = (Person__c) UTIL_TestDataFactory.createRecord(new Person__c(INT_ActorId__c = '123456789'));
+        Person__c person = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(INT_ActorId__c = '123456789', Name = '01234567890')
+        );
 
         ApiMock.setTestMock('GET_TPS_BANKKONTO', 200, 'OK');
 
         Test.startTest();
-        NKS_DataSynchController.doBankAccountNumberSync('123456789');
+        NKS_DataSynchController.doBankAccountNumberSync('01234567890');
         Test.stopTest();
 
         person = [
