@@ -26,14 +26,13 @@
                         &nbsp;
                     </template>
                     <lightning-icon
-                    icon-name="utility:user"
-                    size="x-small"
-                    alternative-text={relation.sex}
-                    class={relation.color}
-                ></lightning-icon>
-                &nbsp;
-                {relation.age} år. {relation.birthdate} •
-                {relation.personIdent} <b if:true={relation.deceased}>( DØD {relation.dateOfDeath} )</b> <br />
+                        icon-name="utility:user"
+                        size="x-small"
+                        alternative-text={relation.sex}
+                        class={relation.color}
+                    ></lightning-icon>
+                    &nbsp; {relation.age} år. {relation.birthdate} • {relation.personIdent}
+                    <b if:true={relation.deceased}>( DØD {relation.dateOfDeath} )</b> <br />
                 </template>
             </template>
         </p>
