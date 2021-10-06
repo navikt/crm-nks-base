@@ -759,7 +759,7 @@
             <targetReference>Add_queue_name</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>UpdateUser</targetReference>
+            <targetReference>Get_Permset_Quick_Text_Editor</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1034,8 +1034,8 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Quick_Text_Editor</name>
         <label>Get Permset Assignment Quick Text Editor</label>
-        <locationX>2967</locationX>
-        <locationY>926</locationY>
+        <locationX>2969</locationX>
+        <locationY>938</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quick_Text_Editor_Empty</targetReference>
@@ -1108,8 +1108,8 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor</name>
         <label>Get Permset Quick Text Editor</label>
-        <locationX>2866</locationX>
-        <locationY>925</locationY>
+        <locationX>2865</locationX>
+        <locationY>938</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>

@@ -175,6 +175,7 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>FeedbackScreen</name>
         <label>FeedbackScreen</label>
