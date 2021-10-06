@@ -27,6 +27,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Knowledge_Area__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Knowledge__kav.AdvisorInformationInternal__c</field>
         <readable>true</readable>
     </fieldPermissions>
