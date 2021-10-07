@@ -115,15 +115,11 @@
         <name>Errors_InvalidSettingConfiguration</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Unit person location missing -->
-        </label>
+        <label>Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</label>
         <name>NAV_Unit_Error_person_location_missing</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV_Unit_Error_person_not_accessible -->
-        </label>
+        <label>Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</label>
         <name>NAV_Unit_Error_person_not_accessible</name>
     </customLabels>
     <customLabels>
@@ -135,261 +131,175 @@
         <name>NKS_Chat_Login_Message_NO</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Conversation Note Blank Error -->
-        </label>
+        <label>Samtalereferatet kan ikke være tomt!</label>
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Conversation Note Share With User -->
-        </label>
+        <label>Del med bruker</label>
         <name>NKS_Conversation_Note_Share_With_User</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Create Conversation Note -->
-        </label>
+        <label>Opprett samtalereferat</label>
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List Col Case Id -->
-        </label>
+        <label>Saks-id</label>
         <name>NKS_Journal_Case_List_Col_Case_Id</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List Col Created Date -->
-        </label>
+        <label>Opprettet dato</label>
         <name>NKS_Journal_Case_List_Col_Created_Date</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List No Cases Error -->
-        </label>
+        <label>Ingen saker registrert på bruker.</label>
         <name>NKS_Journal_Case_List_No_Cases_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Flow Complete Button -->
-        </label>
+        <label>Ferdigstill</label>
         <name>NKS_Journal_Flow_Complete_Button</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Flow New Journal -->
-        </label>
+        <label>Ny journalføring</label>
         <name>NKS_Journal_Flow_New_Journal</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Retrieve Error -->
-        </label>
+        <label>Det oppsto en feil ved uthenting av brukerens saker.</label>
         <name>NKS_NAV_Case_Retrieve_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Title -->
-        </label>
+        <label>Saker</label>
         <name>NKS_NAV_Case_Title</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Validation Error -->
-        </label>
+        <label>Velg minst en sak for journalføring.</label>
         <name>NKS_NAV_Case_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Task Type Validation Error -->
-        </label>
+        <label>Oppgavetype er påkrevd</label>
         <name>NKS_NAV_Task_Type_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Nav Task Work Allocation Delegate to Self -->
-        </label>
+        <label>Send til meg</label>
         <name>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Nav Task Work Allocation Validation Error -->
-        </label>
+        <label>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</label>
         <name>NKS_Nav_Task_Work_Allocation_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- No Cases for Selected Theme Group -->
-        </label>
+        <label>Ingen saker for valgt temagruppe.</label>
         <name>NKS_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List API Error -->
-        </label>
+        <label>Det oppsto en feil ved uthenting av brukerens utbetalinger. Feilkode:</label>
         <name>NKS_Payment_List_API_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Bank Account -->
-        </label>
+        <label>Kontonummer:</label>
         <name>NKS_Payment_List_Bank_Account</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Col Amount -->
-        </label>
+        <label>Antall</label>
         <name>NKS_Payment_List_Col_Amount</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Col Details -->
-        </label>
+        <label>Detaljer</label>
         <name>NKS_Payment_List_Col_Details</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Col Quantity -->
-        </label>
+        <label>Antall</label>
         <name>NKS_Payment_List_Col_Quantity</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Col Rate -->
-        </label>
+        <label>Sats</label>
         <name>NKS_Payment_List_Col_Rate</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Deduction -->
-        </label>
+        <label>Trekk</label>
         <name>NKS_Payment_List_Deduction</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Due Date -->
-        </label>
+        <label>Forfallsdato</label>
         <name>NKS_Payment_List_Due_Date</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Gross Amount -->
-        </label>
+        <label>Brutto</label>
         <name>NKS_Payment_List_Gross_Amount</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Hide Details -->
-        </label>
+        <label>Skjul detaljer</label>
         <name>NKS_Payment_List_Hide_Details</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List No Access Error -->
-        </label>
+        <label>Du har ikke tilgang til å se denne brukerens utbetalinger.</label>
         <name>NKS_Payment_List_No_Access_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List No Payments -->
-        </label>
+        <label>Brukeren har ingen utbetalinger</label>
         <name>NKS_Payment_List_No_Payments</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment_List_Payment_Header -->
-        </label>
+        <label>Utbetalinger</label>
         <name>NKS_Payment_List_Payment_Header</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Payment Message -->
-        </label>
+        <label>Melding:</label>
         <name>NKS_Payment_List_Payment_Message</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Payment Recipient -->
-        </label>
+        <label>Utbetalt til:</label>
         <name>NKS_Payment_List_Payment_Recipient</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Payout -->
-        </label>
+        <label>Utbetalt</label>
         <name>NKS_Payment_List_Payout</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Period Custom -->
-        </label>
+        <label>Egendefinert</label>
         <name>NKS_Payment_List_Period_Custom</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Period Custom From -->
-        </label>
+        <label>Fra og med:</label>
         <name>NKS_Payment_List_Period_Custom_From</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Period Custom To -->
-        </label>
+        <label>Til og med:</label>
         <name>NKS_Payment_List_Period_Custom_To</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Period Header -->
-        </label>
+        <label>Periode</label>
         <name>NKS_Payment_List_Period_Header</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Period Last Month -->
-        </label>
+        <label>Siste måned</label>
         <name>NKS_Payment_List_Period_Last_Month</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment_List_Period_Previous_Year -->
-        </label>
+        <label>I fjor</label>
         <name>NKS_Payment_List_Period_Previous_Year</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment_List_Period_This_Year -->
-        </label>
+        <label>I år</label>
         <name>NKS_Payment_List_Period_This_Year</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Show Details -->
-        </label>
+        <label>Vis detaljer</label>
         <name>NKS_Payment_List_Show_Details</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Tax Deduction -->
-        </label>
+        <label>Skattetrekk</label>
         <name>NKS_Payment_List_Tax_Deduction</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment List Total Header -->
-        </label>
+        <label>Total</label>
         <name>NKS_Payment_List_Total_Header</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Payment_List_Ytelse_Header -->
-        </label>
+        <label>Ytelse</label>
         <name>NKS_Payment_List_Ytelse_Header</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Single Record Input Validation Error -->
-        </label>
+        <label>Vennligst fyll ut feltet.</label>
         <name>NKS_Single_Record_Input_Validation_Error</name>
     </customLabels>
     <customLabels>
@@ -547,189 +457,127 @@
         <name>Timeline_You</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- AccessLevel -->
-        </label>
+        <label>Tilgangsnivå</label>
         <name>fbc_AccessLevel</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Back -->
-        </label>
+        <label>Tilbake</label>
         <name>fbc_Back</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- ButtonIsNotSupportedMessage -->
-        </label>
+        <label>Følgende knapper er ikke støttet:</label>
         <name>fbc_ButtonIsNotSupportedMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- ConditionLogicHelpText -->
-        </label>
+        <label>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</label>
         <name>fbc_ConditionLogicHelpText</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Delete -->
-        </label>
+        <label>Slett</label>
         <name>fbc_Delete</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- FieldIsNotSupportedMessage -->
-        </label>
+        <label>Følgende felter er ikke støttet:</label>
         <name>fbc_FieldIsNotSupportedMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- For -->
-        </label>
+        <label>For</label>
         <name>fbc_For</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- LackingPermissions -->
-        </label>
+        <label>Du mangler tilgang</label>
         <name>fbc_LackingPermissions</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- ManagerEmptyMessage -->
-        </label>
+        <label>Manager APEX Class can not be empty</label>
         <name>fbc_ManagerEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- MultipleGroupsForRole -->
-        </label>
+        <label>There are multiple groups for that role</label>
         <name>fbc_MultipleGroupsForRole</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Name -->
-        </label>
+        <label>Navn</label>
         <name>fbc_Name</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NonePicklistValueLabel -->
-        </label>
+        <label>-- None --</label>
         <name>fbc_NonePicklistValueLabel</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- OWDReadWrite -->
-        </label>
+        <label>Sharing Settings must be private or public read/write to enable manual sharing</label>
         <name>fbc_OWDReadWrite</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- OwnerAdminModify -->
-        </label>
+        <label>Only the record owner or administrators can modify permissions</label>
         <name>fbc_OwnerAdminModify</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- PublicGroups -->
-        </label>
+        <label>Public Groups</label>
         <name>fbc_PublicGroups</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Queues -->
-        </label>
+        <label>Queues</label>
         <name>fbc_Queues</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Read -->
-        </label>
+        <label>Read</label>
         <name>fbc_Read</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- ReadWrite -->
-        </label>
+        <label>Read / Write</label>
         <name>fbc_ReadWrite</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Reason -->
-        </label>
+        <label>Reason</label>
         <name>fbc_Reason</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- RelatedUsers -->
-        </label>
+        <label>Related Users</label>
         <name>fbc_RelatedUsers</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Roles -->
-        </label>
+        <label>Roles</label>
         <name>fbc_Roles</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Search in -->
-        </label>
+        <label>Search in</label>
         <name>fbc_Search</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- SearchFor -->
-        </label>
+        <label>For</label>
         <name>fbc_SearchFor</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- SetAccessLevel -->
-        </label>
+        <label>Set Access Level</label>
         <name>fbc_SetAccessLevel</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- SupportedAddCapabilitiesEmptyMessage -->
-        </label>
+        <label>Add capabilities can not be empty</label>
         <name>fbc_SupportedAddCapabilitiesEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- SupportedButtonsEmptyMessage -->
-        </label>
+        <label>Supportet buttons can not be empty</label>
         <name>fbc_SupportedButtonsEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- SupportedEditCapabilitiesEmptyMessage -->
-        </label>
+        <label>Edit capabilities can not be empty</label>
         <name>fbc_SupportedEditCapabilitiesEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- TooManyResultsMessage -->
-        </label>
+        <label>Your search found more than 200 results.  Keep typing to make it more specific</label>
         <name>fbc_TooManyResultsMessage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Type -->
-        </label>
+        <label>Type</label>
         <name>fbc_Type</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- UserOrGroup -->
-        </label>
+        <label>User Or Group</label>
         <name>fbc_UserOrGroup</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Users -->
-        </label>
+        <label>Users</label>
         <name>fbc_Users</name>
     </customLabels>
     <customLabels>
@@ -783,9 +631,7 @@
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
-        <label>
-            <!-- Administrer veiledere -->
-        </label>
+        <label>Administrer veiledere</label>
         <name>NKS_User_administration</name>
     </customTabs>
     <flowDefinitions>
@@ -1567,9 +1413,7 @@
         <name>LogACall</name>
     </quickActions>
     <quickActions>
-        <label>
-            <!-- New Task -->
-        </label>
+        <label>Ny oppgave</label>
         <name>NKS_newTask</name>
     </quickActions>
     <quickActions>
@@ -1685,120 +1529,74 @@
             <name>Custom Campaigns</name>
         </sections>
         <sections>
-            <label>
-                <!-- Kontoer -->
-            </label>
+            <label>Kontoer</label>
             <name>Kontoer</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge -->
-        </description>
-        <label>
-            <!-- Knowledge -->
-        </label>
+        <description>Kunnskapsbase</description>
+        <label>Kunnskapsbase</label>
         <name>Knowledge</name>
         <sections>
-            <label>
-                <!-- Knowledge -->
-            </label>
+            <label>Kunnskapsbase</label>
             <name>Knowledge</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Article Searches -->
-        </description>
-        <label>
-            <!-- Knowledge Article Searches -->
-        </label>
+        <description>Knowledge Article Searches</description>
+        <label>Knowledge Article Searches</label>
         <name>Knowledge_Article_Searches</name>
         <sections>
-            <label>
-                <!-- Knowledge Article Searches -->
-            </label>
+            <label>Knowledge Article Searches</label>
             <name>Knowledge Article Searches</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Article Views -->
-        </description>
-        <label>
-            <!-- Knowledge Article Views -->
-        </label>
+        <description>Knowledge Article Views</description>
+        <label>Knowledge Article Views</label>
         <name>Knowledge_Article_Views</name>
         <sections>
-            <label>
-                <!-- Knowledge Article Views -->
-            </label>
+            <label>Knowledge Article Views</label>
             <name>Knowledge Article Views</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Articles -->
-        </description>
-        <label>
-            <!-- Knowledge Articles -->
-        </label>
+        <description>Knowledge_Articles</description>
+        <label>Knowledge_Articles</label>
         <name>Knowledge_Articles</name>
         <sections>
-            <label>
-                <!-- Knowledge Articles -->
-            </label>
+            <label>Knowledge_Articles</label>
             <name>Knowledge Articles</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Articles with views -->
-        </description>
-        <label>
-            <!-- Knowledge Articles with views -->
-        </label>
+        <description>Knowledge Articles with views</description>
+        <label>Knowledge Articles with views</label>
         <name>Knowledge_Articles_with_views</name>
         <sections>
-            <label>
-                <!-- Article View Statistics -->
-            </label>
+            <label>Article View Statistics</label>
             <name>Article View Statistics</name>
         </sections>
         <sections>
-            <label>
-                <!-- Knowledge Articles -->
-            </label>
+            <label>Knowledge Articles</label>
             <name>Knowledge Articles</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Keyword Search -->
-        </description>
-        <label>
-            <!-- Knowledge Keyword Search -->
-        </label>
+        <description>Knowledge Keyword Search</description>
+        <label>Knowledge Keyword Search</label>
         <name>Knowledge_Keyword_Search</name>
         <sections>
-            <label>
-                <!-- Knowledge Keyword Search -->
-            </label>
+            <label>Knowledge Keyword Search</label>
             <name>Knowledge Keyword Search</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Knowledge Search Activity -->
-        </description>
-        <label>
-            <!-- Knowledge Search Activity -->
-        </label>
+        <description>Knowledge Search Activity</description>
+        <label>Knowledge Search Activity</label>
         <name>Knowledge_Search_Activity</name>
         <sections>
-            <label>
-                <!-- Knowledge Search Activity -->
-            </label>
+            <label>Knowledge Search Activity</label>
             <name>Knowledge Search Activity</name>
         </sections>
     </reportTypes>
@@ -1817,9 +1615,7 @@
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label>
-                <!-- Contacts -->
-            </label>
+            <label>Kontakter</label>
             <name>Contacts</name>
         </sections>
         <sections>

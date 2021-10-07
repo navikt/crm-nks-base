@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Datakategorier</label>
+    <name>Data_Categories__c</name>
+    <picklistValues>
+        <masterLabel>Arbeid</masterLabel>
+        <translation>Arbeid</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeid: Arbeidsavklaringspenger</masterLabel>
+        <translation>Arbeid: Arbeidsavklaringspenger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeid: Arbeidssøker</masterLabel>
+        <translation>Arbeid: Arbeidssøker</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeid: Dagpenger</masterLabel>
+        <translation>Arbeid: Dagpenger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeid: Tilleggsstønader</masterLabel>
+        <translation>Arbeid: Tilleggsstønader</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeid: Tiltakspenger</masterLabel>
+        <translation>Arbeid: Tiltakspenger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeidsgiver og Samhandler</masterLabel>
+        <translation>Arbeidsgiver og Samhandler</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeidsgiver og Samhandler: Arbeidsgiver</masterLabel>
+        <translation>Arbeidsgiver og Samhandler: Arbeidsgiver</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeidsgiver og Samhandler: Arbeidsgiver og tiltaksarrangør</masterLabel>
+        <translation>Arbeidsgiver og Samhandler: Arbeidsgiver og tiltaksarrangør</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arbeidsgiver og Samhandler: Arbeidsgiverperiode</masterLabel>
+        <translation>Arbeidsgiver og Samhandler: Arbeidsgiverperiode</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Eures</masterLabel>
+        <translation>Eures</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie</masterLabel>
+        <translation>Familie</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Barnebidrag</masterLabel>
+        <translation>Familie: Barnebidrag</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Barnetrygd</masterLabel>
+        <translation>Familie: Barnetrygd</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Enslig forsørger</masterLabel>
+        <translation>Familie: Enslig forsørger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Familie og Foreldrepenger</masterLabel>
+        <translation>Familie: Familie og Foreldrepenger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Farskap</masterLabel>
+        <translation>Familie: Farskap</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Foreldrepenger, engangsstønad og svanger</masterLabel>
+        <translation>Familie: Foreldrepenger, engangsstønad og svanger</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Kontantstøtte</masterLabel>
+        <translation>Familie: Kontantstøtte</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Pleiepenger sykt barn</masterLabel>
+        <translation>Familie: Pleiepenger sykt barn</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Familie: Ytelser ved nærstående og barns sykdom</masterLabel>
+        <translation>Familie: Ytelser ved nærstående og barns sykdom</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles</masterLabel>
+        <translation>Felles</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Dialog</masterLabel>
+        <translation>Felles: Dialog</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Generell</masterLabel>
+        <translation>Felles: Generell </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Klage og Anke</masterLabel>
+        <translation>Felles: Klage og Anke </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Sikkerhet</masterLabel>
+        <translation>Felles: Sikkerhet </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Skatt</masterLabel>
+        <translation>Felles: Skatt </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Felles: Taushetsplikt</masterLabel>
+        <translation>Felles: Taushetsplikt </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Gjeldsrådgivning</masterLabel>
+        <translation>Gjeldsrådgivning </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse</masterLabel>
+        <translation>Helse </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Gravferdsstønad</masterLabel>
+        <translation>Helse: Gravferdsstønad </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Grunn- og hjelpestønad</masterLabel>
+        <translation>Helse: Grunn- og hjelpestønad </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Hjelpemidler i Hjemmet</masterLabel>
+        <translation>Helse: Hjelpemidler i Hjemmet </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Inkluderende Arbeidsliv</masterLabel>
+        <translation>Helse: Inkluderende Arbeidsliv </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Ménerstatning og yrkesskade</masterLabel>
+        <translation>Helse: Ménerstatning og yrkesskade </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Helse: Sykepenger</masterLabel>
+        <translation>Helse: Sykepenger </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Internasjonalt</masterLabel>
+        <translation>Internasjonalt </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Lege og Behandler</masterLabel>
+        <translation>Lege og Behandler </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon</masterLabel>
+        <translation>Pensjon </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: AFP Offentlig</masterLabel>
+        <translation>Pensjon: AFP Offentlig </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: AFP Privat</masterLabel>
+        <translation>Pensjon: AFP Privat </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Alderspensjon</masterLabel>
+        <translation>Pensjon: Alderspensjon </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Alderspensjon kapittel 19</masterLabel>
+        <translation>Pensjon: Alderspensjon kapittel 19 </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Alderspensjon kapittel 20</masterLabel>
+        <translation>Pensjon: Alderspensjon kapittel 20 </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Barnepensjon</masterLabel>
+        <translation>Pensjon: Barnepensjon </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Gjenlevendepensjon</masterLabel>
+        <translation>Pensjon: Gjenlevendepensjon </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Krigspensjon og gammel yrkesskade</masterLabel>
+        <translation>Pensjon: Krigspensjon og gammel yrkesskade </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Omsorgsopptjening</masterLabel>
+        <translation>Pensjon: Omsorgsopptjening </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pensjon: Supplerende stønad</masterLabel>
+        <translation>Pensjon: Supplerende stønad </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permittering og rekruttering</masterLabel>
+        <translation>Permittering og rekruttering </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permittering og rekruttering: Arbeidsrettede tiltak</masterLabel>
+        <translation>Permittering og rekruttering: Arbeidsrettede tiltak </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permittering og rekruttering: Omstilling</masterLabel>
+        <translation>Permittering og rekruttering: Omstilling </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permittering og rekruttering: Permittering</masterLabel>
+        <translation>Permittering og rekruttering: Permittering </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Permittering og rekruttering: Rekruttering</masterLabel>
+        <translation>Permittering og rekruttering: Rekruttering </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sosiale Tjenester: Husbanken</masterLabel>
+        <translation>Sosiale Tjenester: Husbanken </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sosiale Tjenester: Økonomisk sosialhjelp</masterLabel>
+        <translation>Sosiale Tjenester: Økonomisk sosialhjelp </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sosiale tjenester</masterLabel>
+        <translation>Sosiale tjenester </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging</masterLabel>
+        <translation>Sykefraværsoppfølging </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging: Inkluderende arbeidsliv</masterLabel>
+        <translation>Sykefraværsoppfølging: Inkluderende arbeidsliv </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging: Oppfølging AAP</masterLabel>
+        <translation>Sykefraværsoppfølging: Oppfølging AAP </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging: Sykdom i familien</masterLabel>
+        <translation>Sykefraværsoppfølging: Sykdom i familien </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging: Tiltak og virkemidler</masterLabel>
+        <translation>Sykefraværsoppfølging: Tiltak og virkemidler </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sykefraværsoppfølging: Yrkesskade</masterLabel>
+        <translation>Sykefraværsoppfølging: Yrkesskade </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Teknisk brukerstøtte</masterLabel>
+        <translation>Teknisk brukerstøtte </translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Uføretrygd</masterLabel>
+        <translation>Uføretrygd </translation>
+    </picklistValues>
+</CustomFieldTranslation>

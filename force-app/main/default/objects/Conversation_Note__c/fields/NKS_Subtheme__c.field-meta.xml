@@ -18,7 +18,7 @@
             <operation>equals</operation>
             <valueField>$Source.NKS_Theme__c</valueField>
         </filterItems>
-        <isOptional>false</isOptional>
+        <isOptional>true</isOptional>
     </lookupFilter>
     <referenceTo>Common_Code__c</referenceTo>
     <relationshipLabel>Conversation Notes (Subtheme)</relationshipLabel>

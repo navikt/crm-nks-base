@@ -21,6 +21,19 @@ public without sharing class NKS_DataSynchController {
         }
     }
 
+    @AuraEnabled
+    public static Boolean doBankAccountNumberSync(String ident) {
+        Boolean isSynced = true;
+
+        try {
+            TPS_Persons.getBankkonto(ident, true);
+        } catch (Exception e) {
+            isSynced = false;
+        }
+
+        return isSynced;
+    }
+
     /**
      * @description: Performs callout to henvendelse to synch conversation note data
      * @author Stian Ruud Schikora | 05-14-2021
@@ -133,8 +146,17 @@ public without sharing class NKS_DataSynchController {
     private static Conversation_Note__c convertToConversationNote(NKS_Henvendelse henv, String accountId) {
         Conversation_Note__c convNote = new Conversation_Note__c();
         convNote.CRM_Account__c = accountId;
-        if (henv.metadataListe == null || henv.metadataListe.metadata == null || henv.metadataListe.metadata.isEmpty())
-            return null;
+        if (
+            henv.metadataListe == null ||
+            henv.metadataListe.metadata == null ||
+            henv.metadataListe.metadata.isEmpty()
+        ) {
+            //This means the conversation note has been disposed
+            convNote.CRM_Conversation_Note__c = ''; //If the note has been synched and stored before disposal, the existing record text is overwritten
+        } else {
+            convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
+        }
+
         if (henv.markeringer != null) {
             convNote.NKS_Incorrectly_Sent__c = henv.markeringer.feilsendt != null ? true : false;
         }
@@ -142,7 +164,6 @@ public without sharing class NKS_DataSynchController {
             ? themeGroupMap.get(henv.gjeldendeTemagruppe)
             : null;
         convNote.NKS_Is_Read__c = String.isNotBlank(henv.lestDato) ? true : false;
-        convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
         convNote.NKS_Created_By__c = henv.metadataListe.metadata[0].navident;
         convNote.NKS_Date_Time_Registered__c = String.isNotBlank(henv.opprettetDato)
             ? Datetime.valueOf(henv.opprettetDato.replace('T', ' '))

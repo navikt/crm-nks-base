@@ -3,19 +3,13 @@
     <apiVersion>51.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>External Data Syncher</masterLabel>
+    <description>Imports henvendelse and bankaccountnumber from TPS</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-        <property
-                name="relationshipField"
-                label="Relationship field (API)"
-                description="Relationship field for identifying the person record"
-                type="String"
-                required="true"
-                default="CRM_Person__c"
-            />
+            <property name="relationshipField" label="Relationship field (API)" description="Relationship field for identifying the person record" type="String" required="true" default="CRM_Person__c" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

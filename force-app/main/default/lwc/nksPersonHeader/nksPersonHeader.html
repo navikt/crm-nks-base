@@ -1,15 +1,15 @@
 <template>
     <lightning-layout multiple-rows="true">
-        <lightning-layout-item size="12" class="slds-box slds-text-body_small slds-theme_default">
-            <lightning-layout multiple-columns="true" multiple-rows="true">
+        <lightning-layout-item size="12" class="slds-box slds-theme_default">
+            <lightning-layout multiple-rows="true">
                 <lightning-layout-item
                     size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
-                    large-device-size="3"
-                    class="slds-var-p-right_small"
+                    small-device-size="6"
+                    medium-device-size="6"
+                    large-device-size="4"
+                    class="slds-var-p-horizontal_small"
                 >
-                    <lightning-layout multiple-columns="true">
+                    <lightning-layout>
                         <lightning-layout-item class="gender">
                             <template if:true={gender}>
                                 <c-nks-custom-svg
@@ -17,13 +17,14 @@
                                     src={genderIconSrc}
                                     alt-text={gender}
                                     classes={genderIconClass}
+                                    size="small"
                                 ></c-nks-custom-svg>
                             </template>
                         </lightning-layout-item>
-                        <lightning-layout-item class="slds-var-p-top_x-small">
+                        <lightning-layout-item class="slds-var-p-around_x-small">
                             <template if:true={personIdent}>
-                                <span class="personIdent"
-                                    >&nbsp;{personIdent}
+                                <div class="personIdent">
+                                    {personIdent}
                                     <lightning-button-icon
                                         class="copy-icon"
                                         icon-name="utility:copy"
@@ -32,16 +33,16 @@
                                         alternative-text="Kopier bruker ident"
                                         title="Kopier bruker ident"
                                     ></lightning-button-icon>
-                                </span>
+                                </div>
                             </template>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
 
                 <lightning-layout-item
-                    size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
+                    size="3"
+                    small-device-size="6"
+                    medium-device-size="6"
                     large-device-size="3"
                     class="slds-var-p-right_small slds-var-p-top_x-small"
                 >
@@ -57,14 +58,14 @@
                     large-device-size="2"
                     class="slds-var-p-right_small slds-var-p-top_x-small"
                 >
-                    <template if:true={bankAccountNumber}> {bankAccountNumber} </template>
+                    <template if:true={bankAccountNumber}>Kontonummer {bankAccountNumber} </template>
                 </lightning-layout-item>
 
                 <lightning-layout-item
                     size="12"
                     small-device-size="12"
                     medium-device-size="12"
-                    large-device-size="4"
+                    large-device-size="5"
                     class="slds-var-p-right_small"
                 >
                     <template if:true={showPersonBadges}>

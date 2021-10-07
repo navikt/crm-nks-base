@@ -1,11 +1,40 @@
 <template>
     <div if:false={initialized} class="slds-box slds-theme_shade">
-        <lightning-layout>
+        <lightning-layout multiple-rows="true">
             <lightning-layout-item class="slds-align_absolute-center" size="8">
                 <h1 class="slds-text-heading_large">Henter informasjon fra fagsystemer</h1>
             </lightning-layout-item>
             <lightning-layout-item size="4" class="slds-align_absolute-center">
                 <c-einstein-spinner></c-einstein-spinner>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <ul class="slds-list_horizontal slds-has-dividers_left">
+                    <template for:each={syncStatuses} for:item="status">
+                        <li class="slds-item" key={status.name}>
+                            <lightning-icon
+                                if:true={status.isSyncing}
+                                icon-name="utility:sync"
+                                alternative-text="Oppdatering pågår"
+                                size="x-small"
+                            ></lightning-icon>
+                            <lightning-icon
+                                if:true={status.isSynced}
+                                icon-name="utility:success"
+                                alternative-text="Oppdatering fullført"
+                                size="x-small"
+                                variant="success"
+                            ></lightning-icon>
+                            <lightning-icon
+                                if:true={status.isError}
+                                icon-name="utility:error"
+                                alternative-text="Oppdatering feilet"
+                                variant="error"
+                                size="x-small"
+                            ></lightning-icon>
+                            {status.label}
+                        </li>
+                    </template>
+                </ul>
             </lightning-layout-item>
         </lightning-layout>
     </div>
