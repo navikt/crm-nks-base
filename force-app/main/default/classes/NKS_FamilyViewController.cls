@@ -75,6 +75,7 @@ public with sharing class NKS_FamilyViewController {
 
         relations.addAll(getMaritalPerson(relationsData));
         relations.addAll(getChildren(relationsData));
+        relations.addAll(getParents(relationsData));
 
         return relations;
     }
@@ -93,12 +94,49 @@ public with sharing class NKS_FamilyViewController {
         return query.execute();
     }
     @TestVisible
+    private static List<Relation> getParents(PDL_API_Response relationsData){
+        List<Relation> parents = new List<Relation>();
+        if(getAge(relationsData) >= 21){
+            return parents;
+        }
+        if(relationsData?.data?.hentPerson?.forelderbarnrelasjon == null){
+            return parents;
+        }
+        for(PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon){
+            if(parentTypes.contains(relation.relatertpersonsrolle)){
+                Relation parent = new Relation();
+                parent.recordType = 'parent';
+                parent.role = relation.relatertpersonsrolle.name();
+                if(relation.relatertpersonsident != null){
+                    PDL_API_Response parentResponse = queryChild(relation.relatertpersonsident);
+                    if(isConfidentialRelation(relationsData,parentResponse)){
+                        parent.unauthorized = true;
+                        parents.add(parent);
+                        continue;
+                    }
+                    fillRelationFromResponse(parent, parentResponse);
+                    parent.personIdent = relation.relatertPersonsIdent;
+                    parent.livesWith = hasSameAddress(parentResponse, relationsData);
+                    List<String> childIdents = getIdentsList(relationsData);
+                    if(parentResponse?.data?.hentPerson?.foreldreansvar != null && childIdents != null){
+                        for(PDL_Foreldreansvar foreldreansvar : parentResponse.data.hentPerson.foreldreansvar){
+                            if(foreldreansvar.ansvarssubjekt != null && childIdents.contains(foreldreansvar.ansvarssubjekt)){
+                                parent.responsibility = true;
+                            }
+                        }
+                    }
+                }
+                parents.add(parent);
+            }
+        }
+        return parents;
+    }
+    @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relationsData){
         List<Relation> children = new List<Relation>();
         if(relationsData?.data?.hentPerson?.forelderbarnrelasjon == null){
             return children;
         }
-        List<String> parentIdents = getIdentsList(relationsData);
         for(PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon){
             if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
                 Relation child = new Relation();
@@ -117,6 +155,7 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     child.livesWith = hasSameAddress(relationsData, childResponse);
+                    List<String> parentIdents = getIdentsList(relationsData);
                     if(childResponse?.data?.hentPerson?.foreldreansvar != null && parentIdents != null){
                         for(PDL_Foreldreansvar foreldreansvar : childResponse.data.hentPerson.foreldreansvar){
                             if(foreldreansvar.ansvarlig != null && parentIdents.contains(foreldreansvar.ansvarlig)){
@@ -550,17 +589,25 @@ public with sharing class NKS_FamilyViewController {
         return false;
     }
     private static final List<PDL_Sivilstandstype> maritalStatusOfInterest = 
-    new List<PDL_Sivilstandstype>{PDL_Sivilstandstype.GIFT,
-                                  PDL_Sivilstandstype.ENKE_ELLER_ENKEMANN,
-                                  PDL_Sivilstandstype.SEPARERT,
-                                  PDL_Sivilstandstype.REGISTRERT_PARTNER,
-                                  PDL_Sivilstandstype.SEPARERT_PARTNER,
-                                  PDL_Sivilstandstype.GJENLEVENDE_PARTNER};
+        new List<PDL_Sivilstandstype>{
+            PDL_Sivilstandstype.GIFT,
+            PDL_Sivilstandstype.ENKE_ELLER_ENKEMANN,
+            PDL_Sivilstandstype.SEPARERT,
+            PDL_Sivilstandstype.REGISTRERT_PARTNER,
+            PDL_Sivilstandstype.SEPARERT_PARTNER,
+            PDL_Sivilstandstype.GJENLEVENDE_PARTNER
+        };
     private final static Map<PDL_AdressebeskyttelseGradering,Integer> gradeWeight = 
-    new Map<PDL_AdressebeskyttelseGradering,Integer>{
-                                    PDL_AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND => 2,
-                                    PDL_AdressebeskyttelseGradering.STRENGT_FORTROLIG => 2,
-                                    PDL_AdressebeskyttelseGradering.FORTROLIG => 1,
-                                    PDL_AdressebeskyttelseGradering.UGRADERT => 0
-                                };
+        new Map<PDL_AdressebeskyttelseGradering,Integer>{
+            PDL_AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND => 2,
+            PDL_AdressebeskyttelseGradering.STRENGT_FORTROLIG => 2,
+            PDL_AdressebeskyttelseGradering.FORTROLIG => 1,
+            PDL_AdressebeskyttelseGradering.UGRADERT => 0
+        };
+    private static final List<PDL_ForelderBarnRelasjonRolle> parentTypes =
+        new List<PDL_ForelderBarnRelasjonRolle>{
+            PDL_ForelderBarnRelasjonRolle.MOR,
+            PDL_ForelderBarnRelasjonRolle.FAR,
+            PDL_ForelderBarnRelasjonRolle.MEDMOR
+        };
 }

@@ -35,12 +35,20 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.recordPageUrl;
     }
     get isMarital(){
-        if(this.relation.recordType == 'marital') return true; 
+        if(this.relation.recordType === 'marital') return true; 
         return false;
     }
     get isChild(){
-        if(this.relation.recordType == 'child') return true;
+        if(this.relation.recordType === 'child') return true;
         return false;
+    }
+    get isParent(){
+        if(this.relation.recordType === 'parent') return true;
+        return false;
+    }
+    get isError(){
+        if(isMarital || isChild || isParent) return false;
+        return true;
     }
     get getColor(){
         if(this.relation.sex == 'MANN') return 'blue';
@@ -103,7 +111,13 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
-        return this.getLiveWithText + this.getResponsibilityText;
+        return this.getLiveWithText + this.getResponsibilityChildText;
+    }
+    get getParentText(){
+        if(this.relation.unauthorized === true || this.relation.deceased){
+            return '';
+        }
+        return this.getLiveWithText + this.getResponsibilityParentText;
     }
     get getLiveWithText(){
         if(this.relation.livesWith === true){
@@ -111,9 +125,15 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return '';
     }
-    get getResponsibilityText(){
+    get getResponsibilityChildText(){
         if(this.relation.responsibility === true){
             return ' - Bruker har foreldreansvar.';
+        }
+        return '';
+    }
+    get getResponsibilityParentText(){
+        if(this.relation.responsibility === true){
+            return ' - Har foreldreansvar.';
         }
         return '';
     }

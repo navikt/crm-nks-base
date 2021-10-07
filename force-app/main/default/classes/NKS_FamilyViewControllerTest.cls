@@ -15,6 +15,13 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(0, l.size());
     }
     @isTest
+    private static void getParentsTest(){
+        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getParents(query.execute());
+        System.assertEquals(0, l.size());
+    }
+    @isTest
     private static void queryRelationsFromPDL(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_Response r = NKS_FamilyViewController.queryRelationsFromPDL('12106519356');
