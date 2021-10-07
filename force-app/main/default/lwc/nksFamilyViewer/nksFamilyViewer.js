@@ -1,9 +1,9 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
-import getRelatedPersons from '@salesforce/apex/FamilyRelationPDLViewerController.getRelatedPersons';
+import getRelations from '@salesforce/apex/NKS_FamilyViewController.getRelations';
 
-export default class RelationFromPdlViewer extends LightningElement {
+export default class nksFamilyViewer extends LightningElement {
     @api objectApiName;
     @api recordId;
     wireFields;
@@ -23,7 +23,7 @@ export default class RelationFromPdlViewer extends LightningElement {
         }
     }
 
-    @wire(getRelatedPersons, {
+    @wire(getRelations, {
         recordId: '$recordId',
         objectApiName: '$objectApiName'
     })

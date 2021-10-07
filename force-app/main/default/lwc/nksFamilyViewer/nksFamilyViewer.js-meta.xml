@@ -4,7 +4,7 @@
     <description
     >Queries and visualizes relationships between persons in runtime from PDL</description>
     <isExposed>true</isExposed>
-    <masterLabel>Relation From PDL Viewer</masterLabel>
+    <masterLabel>Family Viewer(PDL)</masterLabel>
     <targets>
         <target>
             lightning__RecordPage
