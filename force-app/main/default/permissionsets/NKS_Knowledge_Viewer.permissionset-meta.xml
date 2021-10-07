@@ -13,6 +13,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Knowledge_Area__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Knowledge__kav.AdvisorInformationInternal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -121,6 +126,10 @@
     <tabSettings>
         <tab>Knowledge__kav</tab>
         <visibility>Available</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-Case</tab>
+        <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
         <enabled>true</enabled>

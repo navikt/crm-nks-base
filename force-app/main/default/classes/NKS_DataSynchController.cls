@@ -21,6 +21,19 @@ public without sharing class NKS_DataSynchController {
         }
     }
 
+    @AuraEnabled
+    public static Boolean doBankAccountNumberSync(String ident) {
+        Boolean isSynced = true;
+
+        try {
+            TPS_Persons.getBankkonto(ident, true);
+        } catch (Exception e) {
+            isSynced = false;
+        }
+
+        return isSynced;
+    }
+
     /**
      * @description: Performs callout to henvendelse to synch conversation note data
      * @author Stian Ruud Schikora | 05-14-2021

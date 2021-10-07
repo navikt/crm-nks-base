@@ -1,15 +1,24 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import synchConversationNotes from '@salesforce/apex/NKS_DataSynchController.doHenvendelseSynch';
+import syncBankAccountNumber from '@salesforce/apex/NKS_DataSynchController.doBankAccountNumberSync';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
 
+const syncStatus = {
+    SYNCING: 'SYNCING',
+    SYNCED: 'SYNCED',
+    ERROR: 'ERROR'
+};
 export default class NksDataSyncher extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
+
+    @track syncStatuses = [];
+
     wireFields = [this.objectApiName + '.Id'];
     personId;
     personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
@@ -17,6 +26,8 @@ export default class NksDataSyncher extends LightningElement {
 
     connectedCallback() {
         //Initial synch performed in connected callback to prevent boxcaring due to many events triggered at the same time.
+        this.addSyncStatus('bankAccount', 'Bankkontonummer', syncStatus.SYNCING);
+        this.addSyncStatus('henvendelse', 'Henvendelse', syncStatus.SYNCING);
         this.getRelatedRecordId(this.relationshipField, this.objectApiName);
     }
 
@@ -53,19 +64,45 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     async doSynch(personIdent, personActorId, personAccountId) {
-        await this.conversationNoteSynch(personIdent, personAccountId);
+        await Promise.all([
+            this.bankAccountNumberSync(personIdent),
+            this.conversationNoteSynch(personIdent, personAccountId)
+        ]);
         this.initialized = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
     }
 
     conversationNoteSynch(personIdent, personAccountId) {
         return new Promise(async (resolve, reject) => {
+            if (this.getSyncStatus('henvendelse').status != syncStatus.SYNCING) {
+                return resolve();
+            }
             synchConversationNotes({ personIdent: personIdent, accountId: personAccountId })
                 .then(() => {
-                    //HURRAY!
+                    this.setSyncStatus('henvendelse', syncStatus.SYNCED);
                 })
                 .catch((error) => {
+                    this.setSyncStatus('henvendelse', syncStatus.ERROR);
                     console.log(JSON.stringify(error, null, 2));
+                })
+                .finally(() => {
+                    resolve();
+                });
+        });
+    }
+
+    bankAccountNumberSync(ident) {
+        return new Promise(async (resolve, reject) => {
+            if (this.getSyncStatus('bankAccount').status != syncStatus.SYNCING) {
+                return resolve();
+            }
+            syncBankAccountNumber({ ident: ident })
+                .then((result) => {
+                    this.setSyncStatus('bankAccount', syncStatus.SYNCED);
+                })
+                .catch((error) => {
+                    this.setSyncStatus('bankAccount', syncStatus.ERROR);
+                    console.error(JSON.stringify(error, null, 2));
                 })
                 .finally(() => {
                     resolve();
@@ -83,12 +120,57 @@ export default class NksDataSyncher extends LightningElement {
                 let resolvedPersonId = this.resolve(relationshipField, record);
                 //Only update the wired attribute if it is indeed changed
                 if (this.personId !== resolvedPersonId) {
+                    this.setSyncStatus('bankAccount', syncStatus.SYNCING);
+                    this.setSyncStatus('henvendelse', syncStatus.SYNCING);
                     this.personId = resolvedPersonId;
                 }
             })
             .catch((error) => {
                 console.log(JSON.stringify(error, null, 2));
             });
+    }
+
+    addSyncStatus(name, label, status) {
+        let ss = this.getSyncStatus(name);
+
+        if (ss) {
+            ss.label = label;
+            ss.status = status;
+        } else {
+            ss = this.getNewSyncStatus(name, label, status);
+            this.syncStatuses.push(ss);
+        }
+
+        this.calculateSyncStatus(ss);
+    }
+
+    getNewSyncStatus(name, label, status) {
+        return {
+            name: name,
+            label: label,
+            status: status,
+            isSyncing: false,
+            isSynced: false,
+            isError: false
+        };
+    }
+
+    setSyncStatus(name, status) {
+        let ss = this.getSyncStatus(name);
+        ss.status = status;
+        if (ss) {
+            this.calculateSyncStatus(ss);
+        }
+    }
+
+    calculateSyncStatus(ss) {
+        ss.isSyncing = ss.status === syncStatus.SYNCING ? true : false;
+        ss.isSynced = ss.status === syncStatus.SYNCED ? true : false;
+        ss.isError = ss.status === syncStatus.ERROR ? true : false;
+    }
+
+    getSyncStatus(name) {
+        return this.syncStatuses.find((element) => element.name === name);
     }
 
     /**
