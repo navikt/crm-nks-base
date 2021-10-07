@@ -5,6 +5,7 @@ import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization
 import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
+import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
 export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedJornalpostTypes = ['I', 'U', 'N']; //The selected Journalpost types to show
@@ -40,6 +41,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         { label: '', value: '' },
         { label: '', value: '' }
     ];
+
     @track themeArr = [];
     @track availableThemes = [];
     @track filteredJournalPosts = [];
@@ -51,6 +53,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedThemeGroups = '';
     isLoaded = false;
     personId;
+    journalPostThemeSet = new Set();
 
     set brukerId(value) {
         this.queryVariables.brukerId.id = value;
@@ -58,16 +61,34 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this.callGetCases();
     }
 
+    get totaltNumOfJournalPosts() {
+        if (this.sideInfo) return this.sideInfo.totaltAntall;
+    }
+
+    get lastJournalPostOnPage() {
+        return this.filteredJournalPosts.length;
+    }
+
     @api get nmbOfJournalPosts() {
+        // number of journal posts to show for each query
         return this.queryVariables.foerste;
     }
+
     set nmbOfJournalPosts(value) {
         this.queryVariables.foerste = value;
     }
 
     set selectedTheme(value) {
         this._selectedTheme = value;
+        this.getAvailableThemes();
         this.filterJournalposts();
+    }
+
+    getAvailableThemes() {
+        this.journalposts.forEach((journalpost) => this.journalPostThemeSet.add(journalpost.sak.tema));
+        this.availableThemes = this.themeArr.filter(
+            (theme) => true === this.journalPostThemeSet.has(theme.value) || theme.value === 'all'
+        );
     }
 
     get hasErrors() {
@@ -90,10 +111,22 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this._selectedThemeGroups = value ? value : [];
         this.filterThemes();
         this.selectedTheme = 'all';
+        /*
+        if (this.availableThemes.length == 0) {
+            this.selectedTheme = 'all';
+        } else {
+            this.getAvailableThemes();
+            this.filterJournalposts();
+        } */
     }
 
     get showAsList() {
-        return this.selectedThemeGroups.length === this.themeGroupArr.length - 1 ? true : false;
+        if (
+            (this.selectedThemeGroups.length === this.themeGroupArr.length - 1 && this.selectedTheme === 'all') ||
+            (this.selectedThemeGroups.length !== this.themeGroupArr.length - 1 && this.selectedTheme === 'all')
+        )
+            return true;
+        else return false;
     }
 
     get fromDate() {
@@ -261,6 +294,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                     this.journalposts = [];
                     this.setErrorMessage(journalpostData.errors[0], 'journalpostError');
                 }
+                this.getAvailableThemes();
                 this.filterJournalposts();
             } catch (err) {
                 this.setErrorMessage(err, 'caughtError');
@@ -333,7 +367,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         listThemes.forEach((theme) => {
             returnThemes.push({ label: theme.Name, value: theme.CRM_Code__c });
         });
-
         this.themeArr = returnThemes;
     }
 
@@ -377,9 +410,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                 }
             });
 
-        this.availableThemes = this.themeArr.filter(
-            (theme) => true === journalpostThemes.has(theme.value) || theme.value === 'all'
-        );
         this.filteredJournalPosts = this.showAsList === true ? journalpostOrderedList : Array.from(caseMap.values());
     }
 

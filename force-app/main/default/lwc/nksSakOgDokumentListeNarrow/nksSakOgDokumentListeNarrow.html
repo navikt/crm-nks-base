@@ -67,6 +67,7 @@
                             <lightning-layout-item class="slds-p-right_small">
                                 <lightning-input
                                     type="date"
+                                    date-style="short"
                                     label="Fra"
                                     value={fromDate}
                                     onchange={handleJournalpostFromDateChange}
@@ -75,6 +76,7 @@
                             <lightning-layout-item>
                                 <lightning-input
                                     type="date"
+                                    date-style="short"
                                     label="Til"
                                     value={toDate}
                                     onchange={handleJournalpostToDateChange}
@@ -109,6 +111,10 @@
                             onchange={handleSetSelectedTheme}
                             disabled={isThemeFieldsDisabled}
                         ></lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" class="counter slds-text-heading_small">
+                        <span> Viser 1-{lastJournalPostOnPage} </span> av
+                        <span> {totaltNumOfJournalPosts} </span> resultater
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
