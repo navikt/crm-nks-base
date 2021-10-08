@@ -5,10 +5,6 @@
     --sds-c-accordion-section-spacing-inline-start: 0rem;
 }
 
-.slds-box {
-    border: 0;
-}
-
 .counter {
     text-align: right;
 }

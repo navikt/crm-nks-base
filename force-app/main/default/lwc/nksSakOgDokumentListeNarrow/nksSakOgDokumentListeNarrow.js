@@ -5,7 +5,6 @@ import getCategorization from '@salesforce/apex/NKS_ThemeUtils.getCategorization
 import getCases from '@salesforce/apex/NKS_SafJournalpostListController.getNavCases';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
-import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
 export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedJornalpostTypes = ['I', 'U', 'N']; //The selected Journalpost types to show
@@ -61,8 +60,8 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this.callGetCases();
     }
 
-    get totaltNumOfJournalPosts() {
-        if (this.sideInfo) return this.sideInfo.totaltAntall;
+    get totalNumOfJournalPosts() {
+        return this.sideInfo ? this.sideInfo.totaltAntall : 0;
     }
 
     get lastJournalPostOnPage() {
@@ -70,7 +69,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     }
 
     @api get nmbOfJournalPosts() {
-        // number of journal posts to show for each query
         return this.queryVariables.foerste;
     }
 
@@ -111,22 +109,17 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this._selectedThemeGroups = value ? value : [];
         this.filterThemes();
         this.selectedTheme = 'all';
-        /*
-        if (this.availableThemes.length == 0) {
-            this.selectedTheme = 'all';
-        } else {
-            this.getAvailableThemes();
-            this.filterJournalposts();
-        } */
     }
 
     get showAsList() {
         if (
             (this.selectedThemeGroups.length === this.themeGroupArr.length - 1 && this.selectedTheme === 'all') ||
             (this.selectedThemeGroups.length !== this.themeGroupArr.length - 1 && this.selectedTheme === 'all')
-        )
+        ) {
             return true;
-        else return false;
+        } else {
+            return false;
+        }
     }
 
     get fromDate() {
