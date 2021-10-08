@@ -1,7 +1,7 @@
 <template>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-theme_default">
-            <lightning-layout multiple-columns="true" multiple-rows="true">
+            <lightning-layout multiple-rows="true">
                 <lightning-layout-item
                     size="4"
                     small-device-size="6"
@@ -9,7 +9,7 @@
                     large-device-size="4"
                     class="slds-var-p-horizontal_small"
                 >
-                    <lightning-layout multiple-columns="true">
+                    <lightning-layout>
                         <lightning-layout-item class="gender">
                             <template if:true={gender}>
                                 <c-nks-custom-svg
@@ -51,15 +51,15 @@
                     <template if:true={maritalStatus}> &#47; {maritalStatus} </template>
                 </lightning-layout-item>
 
-                <!--<lightning-layout-item
+                <!-- <lightning-layout-item
                     size="4"
                     small-device-size="4"
                     medium-device-size="4"
                     large-device-size="2"
                     class="slds-var-p-right_small slds-var-p-top_x-small"
                 >
-                    <template if:true={bankAccountNumber}> {bankAccountNumber} </template>
-                </lightning-layout-item>-->
+                    <template if:true={bankAccountNumber}>Kontonummer {bankAccountNumber} </template>
+                </lightning-layout-item> -->
 
                 <lightning-layout-item
                     size="12"
