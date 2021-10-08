@@ -238,6 +238,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+    @TestVisible
     private static void fillRelationFromResponse(Relation relation, PDL_API_Response response){
         if(relation == null || response == null) return;
         
@@ -291,6 +292,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return formatDate(foedsel[0].foedselsdato);
     }
+    @TestVisible
     private static String getDateOfDeath(PDL_API_Response response){
         List<PDL_Doedsfall> doedsfall = response.data?.hentPerson?.doedsfall;
         if(doedsfall == null || doedsfall.isEmpty()){
