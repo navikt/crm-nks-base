@@ -2107,7 +2107,7 @@ TODAY())</expression>
                 <stringValue>LAV</stringValue>
             </defaultValue>
             <fieldText>Oppgaveprioritet:</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>

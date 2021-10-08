@@ -407,8 +407,8 @@ TODAY())</expression>
             <defaultValue>
                 <stringValue>LAV</stringValue>
             </defaultValue>
-            <fieldText>Priroritet</fieldText>
-            <fieldType>DropdownBox</fieldType>
+            <fieldText>Prioritet</fieldText>
+            <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
