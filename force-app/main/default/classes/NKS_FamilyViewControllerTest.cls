@@ -119,7 +119,7 @@ private class NKS_FamilyViewControllerTest {
               '"errors" : null,' +
               '"data" : {' +
                 '"hentPerson" : {' +
-                  '"doedsfall" : [ { "doedsdato" : "2021-09-02" } ]' +
+                  '"doedsfall" : [ { "doedsdato" : null } ]' +
                 '}' +
               '}' +
             '}';
