@@ -1,0 +1,59 @@
+<template>
+    <div>
+        <template if:true={isError}>
+            FEIL
+        </template>
+        <template if:false={isError}>
+            <template if:true={isMarital}>
+                <p>
+                    <b>
+                        Sivilstand: {relation.role}
+                    </b>
+                    <template if:true={hasEventDate}>
+                         <i>&nbsp;- Fra: {relation.eventDate}</i>
+                    </template>
+                </p>
+            </template>
+            <template if:true={isChild}>
+                <p>
+                    <b>
+                        {relation.role}
+                    </b>
+                    <i>
+                        {getChildText}
+                    </i>
+                </p>
+            </template>
+            <template if:true={isParent}>
+                <p>
+                    <b>
+                        {relation.role}
+                    </b>
+                    <i>
+                        {getParentText}
+                    </i>
+                </p>
+            </template>
+
+            <lightning-tile label={getTileName} href={getUrl} type="media">
+                <lightning-icon
+                        slot="media"
+                        icon-name="utility:user"
+                        size="small"
+                        alternative-text={getSex}
+                        class={getColor}
+                ></lightning-icon>
+                <template if:false={relation.unauthorized}>
+                <ul class="slds-list_vertical">
+                    <li class="slds-item">{relation.personIdent}</li>
+                    <li class="slds-item">Kjønn: {getSex}</li>
+                    <li class="slds-item">Født: {getBirthDate}&nbsp;
+                        <template if:true={relation.deceased}>
+                            - Død: {getDateOfDeath} &nbsp;
+                        </template></li>
+                </ul>
+                </template>
+            </lightning-tile>
+        </template>
+    </div>
+</template>
