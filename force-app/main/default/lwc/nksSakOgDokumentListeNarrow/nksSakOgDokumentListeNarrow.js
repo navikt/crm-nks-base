@@ -40,6 +40,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         { label: '', value: '' },
         { label: '', value: '' }
     ];
+
     @track themeArr = [];
     @track availableThemes = [];
     @track filteredJournalPosts = [];
@@ -51,6 +52,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     _selectedThemeGroups = '';
     isLoaded = false;
     personId;
+    journalPostThemeSet = new Set();
 
     set brukerId(value) {
         this.queryVariables.brukerId.id = value;
@@ -58,16 +60,33 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         this.callGetCases();
     }
 
+    get totalNumOfJournalPosts() {
+        return this.sideInfo ? this.sideInfo.totaltAntall : 0;
+    }
+
+    get lastJournalPostOnPage() {
+        return this.filteredJournalPosts.length;
+    }
+
     @api get nmbOfJournalPosts() {
         return this.queryVariables.foerste;
     }
+
     set nmbOfJournalPosts(value) {
         this.queryVariables.foerste = value;
     }
 
     set selectedTheme(value) {
         this._selectedTheme = value;
+        this.getAvailableThemes();
         this.filterJournalposts();
+    }
+
+    getAvailableThemes() {
+        this.journalposts.forEach((journalpost) => this.journalPostThemeSet.add(journalpost.sak.tema));
+        this.availableThemes = this.themeArr.filter(
+            (theme) => true === this.journalPostThemeSet.has(theme.value) || theme.value === 'all'
+        );
     }
 
     get hasErrors() {
@@ -93,7 +112,14 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
     }
 
     get showAsList() {
-        return this.selectedThemeGroups.length === this.themeGroupArr.length - 1 ? true : false;
+        if (
+            (this.selectedThemeGroups.length === this.themeGroupArr.length - 1 && this.selectedTheme === 'all') ||
+            (this.selectedThemeGroups.length !== this.themeGroupArr.length - 1 && this.selectedTheme === 'all')
+        ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     get fromDate() {
@@ -261,6 +287,7 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                     this.journalposts = [];
                     this.setErrorMessage(journalpostData.errors[0], 'journalpostError');
                 }
+                this.getAvailableThemes();
                 this.filterJournalposts();
             } catch (err) {
                 this.setErrorMessage(err, 'caughtError');
@@ -333,7 +360,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         listThemes.forEach((theme) => {
             returnThemes.push({ label: theme.Name, value: theme.CRM_Code__c });
         });
-
         this.themeArr = returnThemes;
     }
 
@@ -377,9 +403,6 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
                 }
             });
 
-        this.availableThemes = this.themeArr.filter(
-            (theme) => true === journalpostThemes.has(theme.value) || theme.value === 'all'
-        );
         this.filteredJournalPosts = this.showAsList === true ? journalpostOrderedList : Array.from(caseMap.values());
     }
 
