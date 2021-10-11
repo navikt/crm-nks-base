@@ -1,13 +1,14 @@
 <template>
+    <h1 hidden><template if:true={fullName}> {fullName} </template></h1>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-theme_default">
-            <lightning-layout multiple-rows="true">
+            <lightning-layout>
                 <lightning-layout-item
                     size="4"
-                    small-device-size="6"
-                    medium-device-size="6"
-                    large-device-size="4"
-                    class="slds-var-p-horizontal_small"
+                    small-device-size="4"
+                    medium-device-size="4"
+                    large-device-size="3"
+                    class="slds-var-p-right_small"
                 >
                     <lightning-layout>
                         <lightning-layout-item class="gender">
@@ -17,55 +18,44 @@
                                     src={genderIconSrc}
                                     alt-text={gender}
                                     classes={genderIconClass}
-                                    size="small"
                                 ></c-nks-custom-svg>
                             </template>
                         </lightning-layout-item>
-                        <lightning-layout-item class="slds-var-p-around_x-small">
+                        <lightning-layout-item>
                             <template if:true={personIdent}>
-                                <div class="personIdent">
-                                    {personIdent}
-                                    <lightning-button-icon
-                                        class="copy-icon"
-                                        icon-name="utility:copy"
-                                        variant="bare"
-                                        onclick={handleCopyIdent}
-                                        alternative-text="Kopier bruker ident"
-                                        title="Kopier bruker ident"
-                                    ></lightning-button-icon>
-                                </div>
+                                <span class="personIdent">&nbsp;{personIdent} </span>
+                                <lightning-button-icon
+                                    class="copy-icon"
+                                    icon-name="utility:copy"
+                                    variant="bare"
+                                    onclick={handleCopyIdent}
+                                    alternative-text="Kopier fødselsnummer"
+                                    title="Kopier fødselsnummer"
+                                ></lightning-button-icon>
                             </template>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
 
                 <lightning-layout-item
-                    size="3"
-                    small-device-size="6"
-                    medium-device-size="6"
-                    large-device-size="3"
-                    class="slds-var-p-right_small slds-var-p-top_x-small"
-                >
-                    <template if:true={age}> {age} år </template>
-                    <template if:true={citizenship}> &#47; {citizenship} </template>
-                    <template if:true={maritalStatus}> &#47; {maritalStatus} </template>
-                </lightning-layout-item>
-
-                <!-- <lightning-layout-item
+                    class="slds-var-p-right_small"
                     size="4"
                     small-device-size="4"
                     medium-device-size="4"
-                    large-device-size="2"
-                    class="slds-var-p-right_small slds-var-p-top_x-small"
+                    large-device-size="3"
                 >
-                    <template if:true={bankAccountNumber}>Kontonummer {bankAccountNumber} </template>
-                </lightning-layout-item> -->
+                    <template if:true={age}> {age} år </template>
+                    <template if:true={condition1}>&#47;</template>
+                    <template if:true={citizenship}> {citizenship} </template>
+                    <template if:true={condition2}>&#47;</template>
+                    <template if:true={maritalStatus}> {maritalStatus} </template>
+                </lightning-layout-item>
 
                 <lightning-layout-item
-                    size="12"
-                    small-device-size="12"
-                    medium-device-size="12"
-                    large-device-size="5"
+                    size="4"
+                    small-device-size="4"
+                    medium-device-size="4"
+                    large-device-size="6"
                     class="slds-var-p-right_small"
                 >
                     <template if:true={showPersonBadges}>
@@ -78,7 +68,7 @@
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
-        <lightning-layout-item size="12" class="slds-var-p-top_x-small">
+        <lightning-layout-item size="12" class="slds-var-p-top_xx-small">
             <div if:true={showErrors} class="slds-text-color_error">
                 Noe har gått feil i innlastingen av varsler:
                 <ul class="slds-list_dotted">
