@@ -4,5 +4,11 @@
         "saveRefs": true,
         "resolveRefs": false,
         "files": ["announcements.json"]
+    },
+    {
+        "sobject": "PushTopic",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["pushTopics.json"]
     }
 ]
