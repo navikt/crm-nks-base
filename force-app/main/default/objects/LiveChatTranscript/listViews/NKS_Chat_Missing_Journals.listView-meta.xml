@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Chat_Missing_Journals</fullName>
     <columns>Name</columns>
@@ -16,6 +16,11 @@
         <field>NKS_Journal_Entry_Status__c</field>
         <operation>notEqual</operation>
         <value>Completed</value>
+    </filters>
+    <filters>
+        <field>NKS_Journal_Entry_Created__c</field>
+        <operation>equals</operation>
+        <value>0</value>
     </filters>
     <label>Chat - Manglende Journalføring</label>
 </ListView>
