@@ -28,38 +28,38 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.recordPageUrl = url;
         });
     }
-    get getUrl(){
+    getUrl(){
         if(this.relation.unauthorized === true || this.relation.confidential === true || this.relation.accountId == null){
             return '#';
         }
         return this.recordPageUrl;
     }
-    get isMarital(){
+    isMarital(){
         if(this.relation.recordType === 'marital') return true; 
         return false;
     }
-    get isChild(){
+    isChild(){
         if(this.relation.recordType === 'child') return true;
         return false;
     }
-    get isParent(){
+    isParent(){
         if(this.relation.recordType === 'parent') return true;
         return false;
     }
-    get isError(){
-        if(isMarital || isChild || isParent) return false;
+    isError(){
+        if(isMarital() || isChild() || isParent()) return false;
         return true;
     }
-    get getColor(){
+    getColor(){
         if(this.relation.sex == 'MANN') return 'blue';
         if(this.relation.sex == 'KVINNE') return 'pink';
         return null;
     }
-    get hasEventDate(){
+    hasEventDate(){
         if(this.relation.eventDate != null) return true;
         return false;
     }
-    get getName(){
+    getName(){
         if(this.relation.unauthorized == true){
             return 'IKKE TILGJENGELIG';
         }
@@ -68,70 +68,70 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.relation.name;
     }
-    get getTileName(){
+    getTileName(){
         if(this.relation.unauthorized === true){
-            return this.getName;
+            return this.getName();
         }
         if(this.relation.deceased === true){
-            return this.getName + '(Død)';
+            return this.getName() + '(Død)';
         }
-        return this.getName + '(' + this.getAge + ')';
+        return this.getName() + '(' + this.getAge() + ')';
     }
-    get getDateOfDeath(){
+    getDateOfDeath(){
         if(this.relation.dateOfDeath != null){
             return this.relation.dateOfDeath;
         }
         return 'UKJENT DATE';
     }
-    get getBirthDate(){
+    getBirthDate(){
         if(this.relation.birthDate != null){
             return this.relation.birthDate;
         }
         return 'UKJENT DATE';
     }
-    get getAge(){
+    getAge(){
         if(this.relation.age != null){
             return this.relation.age;
         }
         return 'UKJENT ALDER'
     }
-    get hasAccount(){
+    hasAccount(){
         if(this.relation.accountId != null){
             return true;
         }
         return false;
     }
-    get getSex(){
+    getSex(){
         if(this.relation.sex != null){
             return this.relation.sex;
         }
         return 'UKJENT KJØNN';
     }
-    get getChildText(){
+    getChildText(){
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
-        return this.getLiveWithText + this.getResponsibilityChildText;
+        return this.getLiveWithText() + this.getResponsibilityChildText();
     }
-    get getParentText(){
+    getParentText(){
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
-        return this.getLiveWithText + this.getResponsibilityParentText;
+        return this.getLiveWithText() + this.getResponsibilityParentText();
     }
-    get getLiveWithText(){
+    getLiveWithText(){
         if(this.relation.livesWith === true){
             return ' - Bor med bruker.';
         }
         return '';
     }
-    get getResponsibilityChildText(){
+    getResponsibilityChildText(){
         if(this.relation.responsibility === true){
             return ' - Bruker har foreldreansvar.';
         }
         return '';
     }
-    get getResponsibilityParentText(){
+    getResponsibilityParentText(){
         if(this.relation.responsibility === true){
             return ' - Har foreldreansvar.';
         }
