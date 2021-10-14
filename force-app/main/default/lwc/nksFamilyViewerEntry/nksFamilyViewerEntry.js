@@ -28,7 +28,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.recordPageUrl = url;
         });
     }
-    getUrl(){
+    get getUrl(){
         if(this.relation.unauthorized === true || this.relation.confidential === true || this.relation.accountId == null){
             return '#';
         }
@@ -46,16 +46,16 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.recordType === 'parent') return true;
         return false;
     }
-    isError(){
+    get isError(){
         if(this.isMarital() || this.isChild() || this.isParent()) return false;
         return true;
     }
-    getColor(){
+    get getColor(){
         if(this.relation.sex == 'MANN') return 'blue';
         if(this.relation.sex == 'KVINNE') return 'pink';
         return null;
     }
-    hasEventDate(){
+    get hasEventDate(){
         if(this.relation.eventDate != null) return true;
         return false;
     }
@@ -68,7 +68,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.relation.name;
     }
-    getTileName(){
+    get getTileName(){
         if(this.relation.unauthorized === true){
             return this.getName();
         }
@@ -77,13 +77,13 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.getName() + '(' + this.getAge() + ')';
     }
-    getDateOfDeath(){
+    get getDateOfDeath(){
         if(this.relation.dateOfDeath != null){
             return this.relation.dateOfDeath;
         }
         return 'UKJENT DATE';
     }
-    getBirthDate(){
+    get getBirthDate(){
         if(this.relation.birthDate != null){
             return this.relation.birthDate;
         }
@@ -101,19 +101,19 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return false;
     }
-    getSex(){
+    get getSex(){
         if(this.relation.sex != null){
             return this.relation.sex;
         }
         return 'UKJENT KJØNN';
     }
-    getChildText(){
+    get getChildText(){
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
         return this.getLiveWithText() + this.getResponsibilityChildText();
     }
-    getParentText(){
+    get getParentText(){
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
