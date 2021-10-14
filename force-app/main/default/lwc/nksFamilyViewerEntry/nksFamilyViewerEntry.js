@@ -47,7 +47,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return false;
     }
     isError(){
-        if(isMarital() || isChild() || isParent()) return false;
+        if(this.isMarital() || this.isChild() || this.isParent()) return false;
         return true;
     }
     getColor(){
