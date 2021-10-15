@@ -1,140 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Initiate_Journal_Process</name>
-        <label>Initiate Journal Process</label>
-        <locationX>536</locationX>
-        <locationY>566</locationY>
-        <actionName>NKS_HenvendelseController</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Verify_Journal_Post</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Journal_Error</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>behandlingskjedeId</name>
-            <value>
-                <elementReference>Get_Conversation_Note.NKS_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>navUnitNumber</name>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>navCaseId</name>
-            <value>
-                <elementReference>Get_Conversation_Note.NKS_Legacy_Case_Id__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>requestType</name>
-            <value>
-                <stringValue>JOURNAL</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>themeCode</name>
-            <value>
-                <elementReference>Case_Overview.selectedCaseTheme</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>JOURNAL_POST_RESPONSE</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <assignments>
-        <name>Set_Journal_Completed</name>
-        <label>Set Journal Completed</label>
-        <locationX>303</locationX>
-        <locationY>734</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Conversation_Note.NKS_Journal_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Journal Completed</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Conversation_Note</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Journal_Data</name>
-        <label>Set Journal Data</label>
-        <locationX>536</locationX>
-        <locationY>446</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Conversation_Note.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Conversation_Note.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedThemeGroupSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Conversation_Note.NKS_Legacy_Case_Id__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Initiate_Journal_Process</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Journal_Error</name>
-        <label>Set Journal Error</label>
-        <locationX>759</locationX>
-        <locationY>729</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Conversation_Note.NKS_Journal_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Journal Error</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Conversation_Note</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Verify_Journal_Post</name>
-        <label>Verify Journal Post</label>
-        <locationX>530</locationX>
-        <locationY>735</locationY>
-        <defaultConnector>
-            <targetReference>Set_Journal_Error</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Post failed</defaultConnectorLabel>
-        <rules>
-            <name>Successful_Post</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>JOURNAL_POST_RESPONSE</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>OK</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Journal_Completed</targetReference>
-            </connector>
-            <label>Successful Post</label>
-        </rules>
-    </decisions>
     <interviewLabel>Conversation Note Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Create Journal Entry</label>
     <processMetadataValues>
@@ -146,7 +11,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -159,8 +24,8 @@
     <recordLookups>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>536</locationX>
-        <locationY>206</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Journal_Screen</targetReference>
@@ -176,24 +41,17 @@
         <object>Conversation_Note__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Conversation_Note</name>
-        <label>Update Conversation Note</label>
-        <locationX>536</locationX>
-        <locationY>1022</locationY>
-        <inputReference>Get_Conversation_Note</inputReference>
-    </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
-        <locationX>536</locationX>
-        <locationY>326</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Set_Journal_Data</targetReference>
+            <targetReference>Post_Journal_Entry</targetReference>
         </connector>
         <fields>
             <name>Case_Overview</name>
@@ -224,20 +82,57 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>410</locationX>
-        <locationY>48</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Active</status>
-    <variables>
-        <name>JOURNAL_POST_RESPONSE</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <status>Draft</status>
+    <subflows>
+        <name>Post_Journal_Entry</name>
+        <label>Post Journal Entry</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <flowName>CRM_Journal_Conversation_Note</flowName>
+        <inputAssignments>
+            <name>Journal_Case_ID</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Case_Legacy_System</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacySystem</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Entry_NAV_Ident</name>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Entry_Unit</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Theme_Code</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseTheme</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <description>ID of the conversation note where the flow is triggered from.</description>
         <name>recordId</name>
