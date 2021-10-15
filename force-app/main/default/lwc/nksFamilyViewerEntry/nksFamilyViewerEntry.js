@@ -46,6 +46,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.recordType === 'parent') return true;
         return false;
     }
+    get isStillBorn(){
+        if(this.relation.recordType === 'stillborn') return true;
+        return false;
+    }
     get isError(){
         if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent') return false;
         return true;
@@ -139,9 +143,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     get showCard(){
         if(this.relation.unauthorized) return false;
-        if  (this.relation.recordType === 'marital' && 
+        if(this.relation.recordType === 'marital' && 
                 (this.relation.role === 'UGIFT' || this.relation.role === 'UOPPGITT')
             ) return false;
+        if(this.relation.recordType === 'stillborn') return false;
         return true;
     }
 }

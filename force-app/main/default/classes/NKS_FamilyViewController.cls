@@ -74,10 +74,29 @@ public with sharing class NKS_FamilyViewController {
         PDL_API_Response relationsData = queryRelationsFromPDL(personIdent);
 
         relations.addAll(getMaritalPerson(relationsData));
+        relations.addAll(getStillBorns(relationsData));
         relations.addAll(getChildren(relationsData));
         relations.addAll(getParents(relationsData));
 
         return relations;
+    }
+    @TestVisible
+    private static List<Relation> getStillBorns(PDL_API_Response relationsData){
+        List<Relation> stillBorns = new List<Relation>();
+        if(relationsData?.data?.hentPerson?.doedfoedtBarn == null){
+            return stillBorns;
+        }
+        if(relationsData.data.hentPerson.doedfoedtBarn.isEmpty()){
+            return stillBorns;
+        }
+        for(PDL_DoedfoedtBarn relation : relationsData.data.hentPerson.doedfoedtBarn){
+            Relation stillBorn = new Relation();
+            stillBorn.recordType = 'stillborn';
+            stillBorn.role = 'DØDFØDT BARN';
+            stillBorn.eventDate = formatDate(relation.dato);
+            stillBorns.add(stillBorn);
+        }
+        return stillBorns;
     }
     @TestVisible
     private static PDL_API_Response queryRelationsFromPDL(String ident){
