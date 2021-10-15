@@ -146,6 +146,45 @@ private class NKS_FamilyViewControllerTest {
         List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response);
         System.assertEquals(1, parents.size());
     }
+    @isTest
+    private static void getStillBornsTest(){
+        String hasStillBorn = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                    '"doedfoedtBarn" : [ {' +
+                        '"dato" : "2021-09-02"' +
+                      '},' +
+                      '{' +
+                        '"dato" : "2020-09-02"' +
+                    '} ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getStillBorns(response);
+        System.assertEquals(2, l.size());
+        hasStillBorn = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                    '"doedfoedtBarn" : []' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+        l = NKS_FamilyViewController.getStillBorns(response);
+        System.assertEquals(0, l.size());
+        hasStillBorn = 
+        '{' +
+          '"data" : {' +
+            '"hentPerson" : null' +
+          '}' +
+        '}';
+    response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+    l = NKS_FamilyViewController.getStillBorns(response);
+    System.assertEquals(0, l.size());
+    }
     /*
     @isTest
     private static void testjson(){
