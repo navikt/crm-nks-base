@@ -23,6 +23,7 @@
             <property name="datefield" label="Date field" description="API Name of date field. Supported: LastModifiedDate, CreatedDate" default="CreatedDate" type="String" required="true" />
             <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" />
             <property name="filterbyskills" label="Filter by user skills?" description="Show only posts which are related to user skills" type="Boolean" required="false" />
+            <property name="refreshPageAutomatically" label="Refresh Page Automatically" description="The page will refresh automatically" type="Boolean" required="false" default="false" />
         </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
             <property name="cardLabel" label="Card title" type="String" default="Title" />

@@ -4,3 +4,7 @@
     --sds-c-accordion-section-spacing-block-end: 0.25rem;
     --sds-c-accordion-section-spacing-inline-start: 0rem;
 }
+
+.counter {
+    text-align: right;
+}

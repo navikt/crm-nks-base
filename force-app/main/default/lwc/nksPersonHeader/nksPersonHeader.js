@@ -1,12 +1,12 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import FULL_NAME_FIELD from '@salesforce/schema/Person__c.CRM_FullName__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import GENDER_FIELD from '@salesforce/schema/Person__c.INT_Sex__c';
 import AGE_FIELD from '@salesforce/schema/Person__c.CRM_Age__c';
 import CITIZENSHIP_FIELD from '@salesforce/schema/Person__c.INT_Citizenships__c';
 import MARITAL_STATUS_FIELD from '@salesforce/schema/Person__c.INT_MaritalStatus__c';
-import BANK_ACCOUNT_NUMBER_FIELD from '@salesforce/schema/Person__c.INT_BankAccountNumber__c';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
 
 export default class NksPersonHeader extends LightningElement {
@@ -17,13 +17,15 @@ export default class NksPersonHeader extends LightningElement {
     showAll = false;
     isLoaded = false;
     personId;
+    fullName;
     personIdent;
     gender;
     age;
     citizenship;
     maritalStatus;
-    bankAccountNumber;
     wireFields;
+    @api condition1;
+    @api condition2;
     @track errorMessages = [];
 
     connectedCallback() {
@@ -54,6 +56,14 @@ export default class NksPersonHeader extends LightningElement {
 
     get genderIconClass() {
         return this.genderIcon;
+    }
+
+    get condition1() {
+        if (this.age && (this.citizenship || this.maritalStatus)) return true;
+    }
+
+    get condition2() {
+        if (this.citizenship && this.maritalStatus) return true;
     }
 
     handleCopyIdent() {
@@ -89,23 +99,16 @@ export default class NksPersonHeader extends LightningElement {
 
     @wire(getRecord, {
         recordId: '$personId',
-        fields: [
-            PERSON_IDENT_FIELD,
-            GENDER_FIELD,
-            AGE_FIELD,
-            CITIZENSHIP_FIELD,
-            MARITAL_STATUS_FIELD,
-            BANK_ACCOUNT_NUMBER_FIELD
-        ]
+        fields: [FULL_NAME_FIELD, PERSON_IDENT_FIELD, GENDER_FIELD, AGE_FIELD, CITIZENSHIP_FIELD, MARITAL_STATUS_FIELD]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {
+            this.fullName = getFieldValue(data, FULL_NAME_FIELD);
             this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
             this.gender = getFieldValue(data, GENDER_FIELD);
             this.age = getFieldValue(data, AGE_FIELD);
             this.citizenship = getFieldValue(data, CITIZENSHIP_FIELD);
             this.maritalStatus = getFieldValue(data, MARITAL_STATUS_FIELD);
-            this.bankAccountNumber = getFieldValue(data, BANK_ACCOUNT_NUMBER_FIELD);
         }
         if (error) {
             this.addError(error);

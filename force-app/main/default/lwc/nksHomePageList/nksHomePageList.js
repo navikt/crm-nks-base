@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
-
+import { subscribe, onError } from 'lightning/empApi';
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -16,12 +16,17 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api datefield;
     @api showimage;
     @api filterbyskills;
+    @api refreshPageAutomatically;
+    isInitiated = false;
+    channelName = '/topic/Announcement_Updates';
+    subscription = {};
 
     @track records;
     error;
     pageurl;
 
     connectedCallback() {
+        this.isInitiated = true;
         this.loadList();
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
@@ -35,6 +40,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
+
+        this.handleSubscribe();
     }
 
     loadList() {
@@ -69,4 +76,20 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             }
         });
     }
+
+    handleSubscribe() {
+        if (this.refreshPageAutomatically)
+            subscribe(this.channelName, -1, this.refreshList).then((response) => {
+                console.log('Subscription request sent to: ', JSON.stringify(response.channel));
+                this.subscription = response;
+            });
+        onError((error) => {
+            console.error('Received error from server: ', JSON.stringify(error));
+        });
+    }
+
+    refreshList = () => {
+        this.isInitiated = true;
+        this.loadList();
+    };
 }
