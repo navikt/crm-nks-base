@@ -222,7 +222,7 @@ public with sharing class NKS_FamilyViewController {
         r.recordType = 'marital';
         List<PDL_Sivilstand> sivilstand = relationsData?.data?.hentPerson?.sivilstand;
         if(sivilstand == null || sivilstand.isEmpty()){
-
+            r.role = PDL_Sivilstandstype.UOPPGITT.name();
         }else if(sivilstand[0].type == PDL_Sivilstandstype.UOPPGITT ||
         sivilstand[0].type == PDL_Sivilstandstype.UGIFT){
             r.role = sivilstand[0].type.name();

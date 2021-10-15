@@ -44,25 +44,27 @@
                    </template>
                 </p>
             </template>
-            <lightning-tile label={getTileName} href={getUrl} type="media">
-                <lightning-icon
-                        slot="media"
-                        icon-name="utility:user"
-                        size="small"
-                        alternative-text={getSex}
-                        class={getColor}
-                ></lightning-icon>
-                <template if:true={showCard}>
-                    <ul class="slds-list_vertical">
-                        <li class="slds-item">{relation.personIdent}</li>
-                        <li class="slds-item">Kjønn: {getSex}</li>
-                        <li class="slds-item">Født: {getBirthDate}&nbsp;
-                            <template if:true={relation.deceased}>
-                                - Død: {getDateOfDeath} &nbsp;
-                            </template></li>
-                    </ul>
-                </template>
-            </lightning-tile>
+            <template if:true={showCardTile}>
+                <lightning-tile label={getTileName} href={getUrl} type="media">
+                    <lightning-icon
+                            slot="media"
+                            icon-name="utility:user"
+                            size="small"
+                            alternative-text={getSex}
+                            class={getColor}
+                    ></lightning-icon>
+                    <template if:true={showInfoCard}>
+                        <ul class="slds-list_vertical">
+                            <li class="slds-item">{relation.personIdent}</li>
+                            <li class="slds-item">Kjønn: {getSex}</li>
+                            <li class="slds-item">Født: {getBirthDate}&nbsp;
+                                <template if:true={relation.deceased}>
+                                    - Død: {getDateOfDeath} &nbsp;
+                                </template></li>
+                        </ul>
+                    </template>
+                </lightning-tile>
+            </template>
         </template>
     </div>
 </template>
