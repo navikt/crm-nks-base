@@ -119,7 +119,7 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     fillRelationFromResponse(parent, parentResponse);
-                    parent.personIdent = relation.relatertPersonsIdent;
+                    // parent.personIdent = relation.relatertPersonsIdent;
                     parent.livesWith = hasSameAddress(parentResponse, relationsData);
                     List<String> childIdents = getIdentsList(relationsData);
                     if(parentResponse?.data?.hentPerson?.foreldreansvar != null && childIdents != null){
@@ -158,7 +158,7 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     fillRelationFromResponse(child,childResponse);
-                    child.personIdent = relation.relatertPersonsIdent;
+                    // child.personIdent = relation.relatertPersonsIdent;
                     if(isOver21(child)){
                         continue;
                     }
