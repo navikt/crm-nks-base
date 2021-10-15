@@ -43,15 +43,15 @@
                         alternative-text={getSex}
                         class={getColor}
                 ></lightning-icon>
-                <template if:false={relation.unauthorized}>
-                <ul class="slds-list_vertical">
-                    <li class="slds-item">{relation.personIdent}</li>
-                    <li class="slds-item">Kjønn: {getSex}</li>
-                    <li class="slds-item">Født: {getBirthDate}&nbsp;
-                        <template if:true={relation.deceased}>
-                            - Død: {getDateOfDeath} &nbsp;
-                        </template></li>
-                </ul>
+                <template if:false={showCard}>
+                    <ul class="slds-list_vertical">
+                        <li class="slds-item">{relation.personIdent}</li>
+                        <li class="slds-item">Kjønn: {getSex}</li>
+                        <li class="slds-item">Født: {getBirthDate}&nbsp;
+                            <template if:true={relation.deceased}>
+                                - Død: {getDateOfDeath} &nbsp;
+                            </template></li>
+                    </ul>
                 </template>
             </lightning-tile>
         </template>

@@ -34,20 +34,20 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.recordPageUrl;
     }
-    isMarital(){
+    get isMarital(){
         if(this.relation.recordType === 'marital') return true; 
         return false;
     }
-    isChild(){
+    get isChild(){
         if(this.relation.recordType === 'child') return true;
         return false;
     }
-    isParent(){
+    get isParent(){
         if(this.relation.recordType === 'parent') return true;
         return false;
     }
     get isError(){
-        if(this.isMarital() || this.isChild() || this.isParent()) return false;
+        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent') return false;
         return true;
     }
     get getColor(){
@@ -136,5 +136,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             return ' - Har foreldreansvar.';
         }
         return '';
+    }
+    get showCard(){
+        if(this.relation.unauthorized) return false;
+        if  (this.relation.recordType === 'marital' && 
+                (this.relation.role === 'UGIFT' || this.relation.role === 'UOPPGITT')
+            ) return false;
+        return true;
     }
 }
