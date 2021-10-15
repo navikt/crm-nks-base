@@ -102,12 +102,16 @@ public with sharing class NKS_FamilyViewController {
         if(relationsData?.data?.hentPerson?.forelderbarnrelasjon == null){
             return parents;
         }
+        Set<String> uniqRelations = new Set<String>();
         for(PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon){
             if(parentTypes.contains(relation.relatertpersonsrolle)){
                 Relation parent = new Relation();
                 parent.recordType = 'parent';
                 parent.role = relation.relatertpersonsrolle.name();
                 if(relation.relatertpersonsident != null){
+                    if(!uniqRelations.add(relation.relatertpersonsident)){
+                        continue;
+                    }
                     PDL_API_Response parentResponse = queryChild(relation.relatertpersonsident);
                     if(isConfidentialRelation(relationsData,parentResponse)){
                         parent.unauthorized = true;
@@ -137,12 +141,16 @@ public with sharing class NKS_FamilyViewController {
         if(relationsData?.data?.hentPerson?.forelderbarnrelasjon == null){
             return children;
         }
+        Set<String> uniqRelations = new Set<String>();
         for(PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon){
             if(relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN){
                 Relation child = new Relation();
                 child.recordType = 'child';
                 child.role = relation.relatertpersonsrolle.name();
                 if(relation.relatertpersonsident != null){
+                    if(!uniqRelations.add(relation.relatertpersonsident)){
+                        continue;
+                    }
                     PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
                     if(isConfidentialRelation(relationsData,childResponse)){
                         child.unauthorized = true;

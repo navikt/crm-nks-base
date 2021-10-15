@@ -47,7 +47,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return false;
     }
     get isError(){
-        if(isMarital || isChild || isParent) return false;
+        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent') return false;
         return true;
     }
     get getColor(){
@@ -59,7 +59,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.eventDate != null) return true;
         return false;
     }
-    get getName(){
+    getName(){
         if(this.relation.unauthorized == true){
             return 'IKKE TILGJENGELIG';
         }
@@ -70,12 +70,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     get getTileName(){
         if(this.relation.unauthorized === true){
-            return this.getName;
+            return this.getName();
         }
         if(this.relation.deceased === true){
-            return this.getName + '(Død)';
+            return this.getName() + '(Død)';
         }
-        return this.getName + '(' + this.getAge + ')';
+        return this.getName() + '(' + this.getAge() + ')';
     }
     get getDateOfDeath(){
         if(this.relation.dateOfDeath != null){
@@ -89,13 +89,13 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return 'UKJENT DATE';
     }
-    get getAge(){
+    getAge(){
         if(this.relation.age != null){
             return this.relation.age;
         }
         return 'UKJENT ALDER'
     }
-    get hasAccount(){
+    hasAccount(){
         if(this.relation.accountId != null){
             return true;
         }
@@ -111,30 +111,37 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
-        return this.getLiveWithText + this.getResponsibilityChildText;
+        return this.getLiveWithText() + this.getResponsibilityChildText();
     }
     get getParentText(){
         if(this.relation.unauthorized === true || this.relation.deceased){
             return '';
         }
-        return this.getLiveWithText + this.getResponsibilityParentText;
+        return this.getLiveWithText() + this.getResponsibilityParentText();
     }
-    get getLiveWithText(){
+    getLiveWithText(){
         if(this.relation.livesWith === true){
             return ' - Bor med bruker.';
         }
         return '';
     }
-    get getResponsibilityChildText(){
+    getResponsibilityChildText(){
         if(this.relation.responsibility === true){
             return ' - Bruker har foreldreansvar.';
         }
         return '';
     }
-    get getResponsibilityParentText(){
+    getResponsibilityParentText(){
         if(this.relation.responsibility === true){
             return ' - Har foreldreansvar.';
         }
         return '';
+    }
+    get showCard(){
+        if(this.relation.unauthorized) return false;
+        if  (this.relation.recordType === 'marital' && 
+                (this.relation.role === 'UGIFT' || this.relation.role === 'UOPPGITT')
+            ) return false;
+        return true;
     }
 }
