@@ -141,12 +141,15 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return '';
     }
-    get showCard(){
-        if(this.relation.unauthorized) return false;
+    get showCardTile(){
         if(this.relation.recordType === 'marital' && 
                 (this.relation.role === 'UGIFT' || this.relation.role === 'UOPPGITT')
             ) return false;
         if(this.relation.recordType === 'stillborn') return false;
+        return true;
+    }
+    get showInfoCard(){
+        if(this.relation.unauthorized) return false;
         return true;
     }
 }
