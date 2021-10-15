@@ -184,7 +184,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND OwnerId=:userId</value>
+                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND NKS_Journal_Entry_Created__c = false AND OwnerId=:userId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>
