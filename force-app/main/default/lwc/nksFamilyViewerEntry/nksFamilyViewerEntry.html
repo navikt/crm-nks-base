@@ -1,7 +1,7 @@
 <template>
     <div>
         <template if:true={isError}>
-            FEIL
+            FEIL: {getErrorMsg}
         </template>
         <template if:false={isError}>
             <template if:true={isMarital}>

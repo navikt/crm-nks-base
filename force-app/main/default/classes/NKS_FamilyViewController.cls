@@ -73,6 +73,16 @@ public with sharing class NKS_FamilyViewController {
 
         PDL_API_Response relationsData = queryRelationsFromPDL(personIdent);
 
+        if(relationsData?.data?.hentPerson == null){
+            Relation r = new Relation();
+            r.recordType = 'ERROR';
+            if(relationsData?.errors != null && !relationsData.errors.isEmpty()){
+                r.name = relationsData.errors[0].message;
+            }
+            relations.add(r);
+            return relations;
+        }
+
         relations.addAll(getMaritalPerson(relationsData));
         relations.addAll(getStillBorns(relationsData));
         relations.addAll(getChildren(relationsData));
@@ -313,7 +323,11 @@ public with sharing class NKS_FamilyViewController {
         if(nameParts.isEmpty()){
             return null;
         }
-        return String.join(nameParts, ' ');
+        String fullName = String.join(nameParts, ' ');
+        if(String.isBlank(fullName)){
+            return null;
+        }
+        return fullName;
     }
     private static String getBirthdate(PDL_API_Response response){
         List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
@@ -459,17 +473,17 @@ public with sharing class NKS_FamilyViewController {
         if(ident == null) {return null;}
         return (4 <= Integer.valueOf(ident.left(1))) ? PDL_IdentType.DNR : PDL_IdentType.FNR;
     }
-    private static String getPersonIdFromIdents(List<String> idents){
+    private static String getPersonIdFromIdents(Set<String> idents){
         if(idents == null){
             return null;
         }
         return [SELECT Id FROM Person__c WHERE Name IN :idents LIMIT 1]?.Id;
     }
-    private static List<String> getIdentsList(PDL_API_Response response){
+    private static Set<String> getIdentsList(PDL_API_Response response){
         if(response.data?.hentIdenter?.identer == null){
             return null;
         }
-        List<String> identer = new List<String>();
+        Set<String> identer = new Set<String>();
         for(PDL_IdentInformasjon ident : response.data.hentIdenter.identer){
             if(ident?.ident != null){
                 identer.add(ident.ident);
@@ -483,7 +497,7 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static Boolean hasResponsibility(PDL_API_Response parent, PDL_API_Response child){
         Set<String> responsibleSet = getAnsvarligSet(child);
-        List<String> idents = getIdentsList(parent);
+        Set<String> idents = getIdentsList(parent);
         if(responsibleSet != null && idents != null){
             responsibleSet.retainAll(idents);
             if(!responsibleSet.isEmpty()){
