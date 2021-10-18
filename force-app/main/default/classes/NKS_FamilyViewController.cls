@@ -140,6 +140,8 @@ public with sharing class NKS_FamilyViewController {
                     fillRelationFromResponse(parent, parentResponse);
                     // parent.personIdent = relation.relatertPersonsIdent;
                     parent.livesWith = hasSameAddress(parentResponse, relationsData);
+                    parent.responsibility = hasResponsibility(parentResponse, relationsData);
+                    /*
                     List<String> childIdents = getIdentsList(relationsData);
                     if(parentResponse?.data?.hentPerson?.foreldreansvar != null && childIdents != null){
                         for(PDL_Foreldreansvar foreldreansvar : parentResponse.data.hentPerson.foreldreansvar){
@@ -148,6 +150,7 @@ public with sharing class NKS_FamilyViewController {
                             }
                         }
                     }
+                    */
                 }
                 parents.add(parent);
             }
@@ -182,6 +185,8 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     child.livesWith = hasSameAddress(relationsData, childResponse);
+                    child.responsibility = hasResponsibility(relationsData, childResponse);
+                    /*
                     List<String> parentIdents = getIdentsList(relationsData);
                     if(childResponse?.data?.hentPerson?.foreldreansvar != null && parentIdents != null){
                         for(PDL_Foreldreansvar foreldreansvar : childResponse.data.hentPerson.foreldreansvar){
@@ -190,6 +195,7 @@ public with sharing class NKS_FamilyViewController {
                             }
                         }
                     }
+                    */
                 }
                 children.add(child);
             }
@@ -473,6 +479,58 @@ public with sharing class NKS_FamilyViewController {
             return null;
         }
         return identer;
+    }
+    @TestVisible
+    private static Boolean hasResponsibility(PDL_API_Response parent, PDL_API_Response child){
+        Set<String> responsibleSet = getAnsvarligSet(child);
+        List<String> idents = getIdentsList(parent);
+        if(responsibleSet != null && idents != null){
+            responsibleSet.retainAll(idents);
+            if(!responsibleSet.isEmpty()){
+                return true;
+            }
+        }
+        responsibleSet = getAnsvarssubjektSet(parent);
+        idents = getIdentsList(child);
+        if(responsibleSet != null && idents != null){
+            responsibleSet.retainAll(idents);
+            if(!responsibleSet.isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+    @TestVisible
+    private static Set<String> getAnsvarligSet(PDL_API_Response response){
+        if(response?.data?.hentPerson?.foreldreansvar == null){
+            return null;
+        }
+        Set<String> ansvarligSet = new Set<String>();
+        for(PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar){
+            if(foreldreansvar.ansvarlig != null){
+                ansvarligSet.add(foreldreansvar.ansvarlig);
+            }
+        }
+        if(ansvarligSet.isEmpty()){
+            return null;
+        }
+        return ansvarligSet;
+    }
+    @TestVisible
+    private static Set<String> getAnsvarssubjektSet(PDL_API_Response response){
+        if(response?.data?.hentPerson?.foreldreansvar == null){
+            return null;
+        }
+        Set<String> ansvarssubjektSet = new Set<String>();
+        for(PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar){
+            if(foreldreansvar.ansvarssubjekt != null){
+                ansvarssubjektSet.add(foreldreansvar.ansvarssubjekt);
+            }
+        }
+        if(ansvarssubjektSet.isEmpty()){
+            return null;
+        }
+        return ansvarssubjektSet;
     }
     @TestVisible
     private static Boolean hasSameAddress(PDL_API_Response parent, PDL_API_Response child){
