@@ -101,6 +101,175 @@ private class NKS_FamilyViewControllerTest {
 
     }
     @isTest
+    private static void getAnsvarligSetTest(){
+        String responsiblePerson = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        Set<String> responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
+        System.assertEquals(true, responsibleSet.contains('12345678901'));
+
+        responsiblePerson = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [  ]' +
+                '}' +
+              '}' +
+            '}';
+        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
+        System.assertEquals(null, responsibleSet);
+
+        responsiblePerson = 
+        '{' +
+          '"errors" : null,' +
+          '"data" : {' +
+            '"hentPerson" : {' +
+              '"bostedsadresse" : [  ]' +
+            '}' +
+          '}' +
+        '}';
+        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
+        System.assertEquals(null, responsibleSet);
+    }
+    @isTest
+    private static void getAnsvarssubjektSetTest(){
+        String responsiblePerson = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarssubjekt" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        Set<String> responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
+        System.assertEquals(true, responsibleSet.contains('12345678901'));
+
+        responsiblePerson = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [  ]' +
+                '}' +
+              '}' +
+            '}';
+        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
+        System.assertEquals(null, responsibleSet);
+
+        responsiblePerson = 
+        '{' +
+          '"errors" : null,' +
+          '"data" : {' +
+            '"hentPerson" : {' +
+              '"bostedsadresse" : [  ]' +
+            '}' +
+          '}' +
+        '}';
+        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
+        responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
+        System.assertEquals(null, responsibleSet);
+    }
+    @isTest
+    private static void hasResponsibilityTest(){
+        String parentString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarssubjekt" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        String childString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentIdenter" : {' +
+                  '"identer" : [ { "ident" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
+        PDL_API_Response child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
+        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent,child));
+        childString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        parentString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentIdenter" : {' +
+                  '"identer" : [ { "ident" : "12345678901" },{ "ident" : "111111111" } ]' +
+                '}' +
+              '}' +
+            '}';
+        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
+        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
+        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent,child));
+        childString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
+                '}' +
+              '}' +
+            '}';
+        parentString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentIdenter" : {' +
+                  '"identer" : [ { "ident" : "11111111111" } ]' +
+                '}' +
+              '}' +
+            '}';
+        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
+        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
+        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent,child));
+        childString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : []' +
+                '}' +
+              '}' +
+            '}';
+        parentString = 
+            '{' +
+              '"errors" : null,' +
+              '"data" : {' +
+                '"hentIdenter" : {' +
+                  '"identer" : [ { "ident" : "11111111111" } ]' +
+                '}' +
+              '}' +
+            '}';
+        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
+        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
+        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent,child));
+    }
+    @isTest
     private static void getDateOfDeathTest(){
         String deadPerson = 
             '{' +
@@ -145,6 +314,45 @@ private class NKS_FamilyViewControllerTest {
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(withParentsPerson, PDL_API_Response.class);
         List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response);
         System.assertEquals(1, parents.size());
+    }
+    @isTest
+    private static void getStillBornsTest(){
+        String hasStillBorn = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                    '"doedfoedtBarn" : [ {' +
+                        '"dato" : "2021-09-02"' +
+                      '},' +
+                      '{' +
+                        '"dato" : "2020-09-02"' +
+                    '} ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getStillBorns(response);
+        System.assertEquals(2, l.size());
+        hasStillBorn = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                    '"doedfoedtBarn" : []' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+        l = NKS_FamilyViewController.getStillBorns(response);
+        System.assertEquals(0, l.size());
+        hasStillBorn = 
+        '{' +
+          '"data" : {' +
+            '"hentPerson" : null' +
+          '}' +
+        '}';
+    response = (PDL_API_Response) System.JSON.deserialize(hasStillBorn, PDL_API_Response.class);
+    l = NKS_FamilyViewController.getStillBorns(response);
+    System.assertEquals(0, l.size());
     }
     /*
     @isTest
