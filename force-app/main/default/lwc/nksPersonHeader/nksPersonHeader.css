@@ -1,14 +1,20 @@
 .slds-theme_default {
-    padding: 4px;
+    padding: 6px;
+}
+
+.slds-grid {
+    align-items: center;
 }
 
 .gender {
     display: flex;
-    float: center;
-    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    float: left;
 }
 
 .personIdent {
+    float: left;
 }
 
 .copy-icon {
@@ -19,22 +25,34 @@
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #3386e0;
-    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
-    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    width: 2rem;
+    height: 2rem;
+    padding: 4px 0 0 4px;
 }
 
 .FemaleFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #d05c4a;
-    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
-    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    width: 2rem;
+    height: 2rem;
+    padding: 4px 0 0 4px;
 }
 
 .NeutralFilled {
     --sds-c-icon-color-foreground-default: white;
     border-radius: 0.25rem;
     background-color: #a18dbb;
-    width: var(--lwc-squareIconSmallBoundary, 1.5rem);
-    height: var(--lwc-squareIconSmallBoundary, 1.5rem);
+    width: 2rem;
+    height: 2rem;
+    padding: 4px 0 0 4px;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }

@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
-import { subscribe, unsubscribe, onError } from 'lightning/empApi';
+import { subscribe, onError } from 'lightning/empApi';
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;

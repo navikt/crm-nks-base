@@ -64,6 +64,14 @@ export default class NksSakOgDokumentListeNarrow extends LightningElement {
         return this.sideInfo ? this.sideInfo.totaltAntall : 0;
     }
 
+    get firstJournalPostOnPage() {
+        if (this.filteredJournalPosts.length === 0) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
     get lastJournalPostOnPage() {
         return this.filteredJournalPosts.length;
     }
