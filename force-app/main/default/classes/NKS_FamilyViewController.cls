@@ -418,6 +418,9 @@ public with sharing class NKS_FamilyViewController {
                 }
             }
         }
+        if(isNavEmployee(response)){
+            return true;
+        }
         return false;
     }
     private static Boolean isConfidentialRelation(PDL_API_Response person, PDL_API_Response relation){
@@ -437,6 +440,13 @@ public with sharing class NKS_FamilyViewController {
             return true;
         }
         return false;
+    }
+    private static Boolean isNavEmployee(PDL_API_Response response){
+        Set<String> idents = getIdentsList(response);
+        if(idents == null){
+            return null;
+        }
+        return [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
     }
     private static String formatDate(Date d){
         if(d == null){
