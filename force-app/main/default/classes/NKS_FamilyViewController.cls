@@ -23,6 +23,7 @@ public with sharing class NKS_FamilyViewController {
         @AuraEnabled
         public String eventDate; //date if separated/ stillborn date
         @AuraEnabled
+        public String ageString;
         public Integer age;
         @AuraEnabled
         public String sex;
@@ -293,6 +294,7 @@ public with sharing class NKS_FamilyViewController {
         relation.name = getFullName(response);
         relation.birthdate = getBirthdate(response);
         relation.age = getAge(response);
+        relation.ageString = getAgeString(response);
         relation.sex = getSex(response);
         relation.dateOfDeath = getDateOfDeath(response);
         relation.deceased = (relation.dateOfDeath != null) ? true : false;
@@ -350,7 +352,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return formatDate(doedsfall[0].doedsdato);
     }
-    private static Integer getAge(PDL_API_Response response){
+    private static Date getAgeDate(PDL_API_Response response){
         Date birthDate;
         List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
         if(foedsel == null || foedsel.isEmpty()){
@@ -370,13 +372,31 @@ public with sharing class NKS_FamilyViewController {
         }else {
             d = Date.today();
         }
-                System.debug(d);
         // dates starts form 0001.01.01, so doing some math
         return d
                 .addDays(-birthDate.day()+1)
                 .addMonths(-birthDate.month()+1)
-                .addYears(-birthDate.year()+1)
-                .year()-1;
+                .addYears(-birthDate.year()+1);
+    }
+    private static Integer getAge(PDL_API_Response response){
+        Date d = getAgeDate(response);
+        if(d == null){
+            return null;
+        }
+        return d.year()-1;
+    }
+    private static String getAgeString(PDL_API_Response response){
+        Date d = getAgeDate(response);
+        if(d == null){
+            return null;
+        }
+        if((d.year()-1) > 0){
+            return String.valueOf(d.year()-1) + 'år';
+        }
+        if((d.month()-1) > 0){
+            return String.valueOf(d.month()-1) + 'mnd';
+        }
+        return String.valueOf(d.day()-1) + 'd';
     }
     private static String getSex(PDL_API_Response response){
         List<PDL_Kjoenn> kjoenn = response.data?.hentPerson?.kjoenn;
@@ -418,6 +438,9 @@ public with sharing class NKS_FamilyViewController {
                 }
             }
         }
+        if(isNavEmployee(response) == true){
+            return true;
+        }
         return false;
     }
     private static Boolean isConfidentialRelation(PDL_API_Response person, PDL_API_Response relation){
@@ -437,6 +460,13 @@ public with sharing class NKS_FamilyViewController {
             return true;
         }
         return false;
+    }
+    private static Boolean isNavEmployee(PDL_API_Response response){
+        Set<String> idents = getIdentsList(response);
+        if(idents == null){
+            return null;
+        }
+        return [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
     }
     private static String formatDate(Date d){
         if(d == null){
