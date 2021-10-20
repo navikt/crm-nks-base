@@ -48,6 +48,10 @@
                     <value>CreatedDate DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showimage</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -66,7 +70,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
-                    <value>Ukas glamelding</value>
+                    <value>Ukas gladmelding</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -74,7 +78,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>type</name>
-                    <value>Glamelding</value>
+                    <value>Gladmelding</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
             </componentInstance>
@@ -151,6 +155,10 @@
                     <value>CreatedDate DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showimage</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -176,7 +184,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND OwnerId=:userId</value>
+                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND NKS_Journal_Entry_Created__c = false AND OwnerId=:userId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>
@@ -205,6 +213,10 @@
                 <componentInstanceProperties>
                     <name>orderby</name>
                     <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showimage</name>
@@ -261,6 +273,10 @@
                 <componentInstanceProperties>
                     <name>orderby</name>
                     <value>LastModifiedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showimage</name>
