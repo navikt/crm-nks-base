@@ -409,7 +409,7 @@ public with sharing class NKS_FamilyViewController {
         return kjoenn[0].kjoenn.name();
     }
     private static Boolean isOver21(Relation r){
-        if(!r.deceased && r.age > 21){
+        if(!r.deceased && r.age >= 21){
             return true;
         }
         return false;
