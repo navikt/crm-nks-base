@@ -438,7 +438,7 @@ public with sharing class NKS_FamilyViewController {
                 }
             }
         }
-        if(isNavEmployee(response)){
+        if(isNavEmployee(response) == true){
             return true;
         }
         return false;

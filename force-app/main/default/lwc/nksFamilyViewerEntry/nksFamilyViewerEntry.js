@@ -52,7 +52,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return false;
     }
     get isError(){
-        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent') return false;
+        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent' || this.relation.recordType === 'stillborn') return false;
         return true;
     }
     get getErrorMsg(){
@@ -189,6 +189,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     get showUrl(){
         if(this.relation.unauthorized === true) return false;
         if(this.relation.confidential === true) return false;
+        if(this.relation.accountId == null) return false;
         return this.hasAccount();
     }
     get getRole(){
