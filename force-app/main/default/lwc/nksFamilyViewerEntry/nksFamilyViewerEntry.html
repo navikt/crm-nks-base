@@ -10,7 +10,7 @@
                         Sivilstand: {getRole}
                     </b>
                     <template if:true={hasEventDate}>
-                         <i>&nbsp;- Fra: {relation.eventDate}</i>
+                         &nbsp;- Fra: {relation.eventDate}
                     </template>
                 </p>
             </template>
@@ -34,21 +34,12 @@
                         {getRole}
                     </b>
                     <template if:true={hasEventDate}>
-                        <i>&nbsp;- Dato: {relation.eventDate}</i>
+                        &nbsp;- Dato: {relation.eventDate}
                    </template>
                 </p>
             </template>
             <template if:true={showCardTile}>
                 <lightning-tile type="media" class="familyRelationTile">
-                    <!--
-                    <lightning-icon
-                            slot="media"
-                            icon-name="utility:user"
-                            size="small"
-                            alternative-text={getSex}
-                            class={getColor}
-                    ></lightning-icon>
-                    -->
                     <template if:true={showUrl}>
                         <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
                     </template>
