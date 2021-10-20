@@ -12,6 +12,25 @@
         "NKS_Announcement_Operational_Editor",
         "NKS_Announcement_News_Editor",
         "NKS_Beta_Permission",
-        "NKS_Config"
+        "NKS_Config",
+        "NKS_Announcement_News_Editor",
+        "NKS_Announcement_Operational_Editor",
+        "NKS_Announcement_Viewer",
+        "NKS_base",
+        "NKS_Case",
+        "NKS_Chat_Permissions",
+        "NKS_Conversation_Note",
+        "NKS_Edit_User",
+        "NKS_Knowledge_Viewer",
+        "NKS_NAV_Task",
+        "NKS_Person_Access",
+        "NKS_PromotedSearchTerms",
+        "NKS_Quick_Text_Reader",
+        "NKS_Screen_Reader",
+        "NKS_Secure_Chat_Access",
+        "NKS_Tableau_Reporting",
+        "NKS_Topics",
+        "NKS_Traffic_Chat_Permissions",
+        "NKS_View_Saf_Journalpost"
     ]
 }
