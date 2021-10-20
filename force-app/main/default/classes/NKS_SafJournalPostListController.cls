@@ -58,7 +58,8 @@ public with sharing class NKS_SafJournalPostListController {
             .addArgument('tilDato', '$tilDato ')
             .addArgument('foerste', '$foerste ')
             .addArgument('etter', '$etter ');
-        dokumentoversiktBruker.addNode('sideInfo').addFields(new List<String>{ 'sluttpeker', 'finnesNesteSide' });
+        dokumentoversiktBruker.addNode('sideInfo')
+            .addFields(new List<String>{ 'sluttpeker', 'finnesNesteSide', 'totaltAntall' });
 
         GraphQLNode journalposter = dokumentoversiktBruker.addNode('journalposter');
         journalposter.addFields(
