@@ -123,8 +123,8 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return 'UKJENT DATE';
     }
     getAge(){
-        if(this.relation.age != null){
-            return this.relation.age;
+        if(this.relation.ageString != null){
+            return this.relation.ageString;
         }
         return 'UKJENT ALDER'
     }
