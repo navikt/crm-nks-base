@@ -488,8 +488,8 @@ public with sharing class NKS_FamilyViewController {
         for(PDL_IdentInformasjon ident : response.data.hentIdenter.identer){
             if(ident.ident != null && ident.historisk != true && ident.gruppe == PDL_IdentGruppe.FOLKEREGISTERIDENT){
                 idents.add(
-                    typeOfId(ident.ident).name() +
-                    ': ' + 
+                    //typeOfId(ident.ident).name() +
+                    //': ' + 
                     ident.ident
                 );
             }

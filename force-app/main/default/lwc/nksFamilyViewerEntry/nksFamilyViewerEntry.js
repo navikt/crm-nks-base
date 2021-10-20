@@ -59,11 +59,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if(this.relation.name != null) return this.relation.name;
         return '';
     }
-    get getColor(){
-        if(this.relation.sex == 'MANN') return 'blue';
-        if(this.relation.sex == 'KVINNE') return 'pink';
-        return null;
-    }
     get genderIcon() {
         switch (this.relation.sex) {
             case 'MANN':
