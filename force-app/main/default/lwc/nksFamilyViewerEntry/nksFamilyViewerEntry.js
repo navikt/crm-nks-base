@@ -154,19 +154,19 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     getLiveWithText(){
         if(this.relation.livesWith === true){
-            return ' - Bor med bruker.';
+            return 'Bor med bruker. ';
         }
         return '';
     }
     getResponsibilityChildText(){
         if(this.relation.responsibility === true){
-            return ' - Bruker har foreldreansvar.';
+            return 'Bruker har foreldreansvar.';
         }
         return '';
     }
     getResponsibilityParentText(){
         if(this.relation.responsibility === true){
-            return ' - Har foreldreansvar.';
+            return 'Har foreldreansvar.';
         }
         return '';
     }
@@ -213,7 +213,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
                 if(this.relation.sex === 'KVINNE'){
                     return 'ENKEMANN';
                 }
-                return 'ENKE ELLER ENKEMAN';
+                return 'ENKE ELLER ENKEMANN';
             }
             if(this.relation.role === 'REGISTRERT_PARTNER'){
                 return 'REGISTRERT PARTNER';
