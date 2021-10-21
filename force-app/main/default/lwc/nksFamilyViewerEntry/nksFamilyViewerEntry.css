@@ -9,6 +9,7 @@
     width: 2rem;
     height: 2rem;
     float: left;
+    padding-top: 2px;
 }
 .MaleFilled {
     --sds-c-icon-color-foreground-default: white;
