@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
 
 export default class nksFamilyViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
@@ -51,17 +52,29 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return false;
     }
     get isError(){
-        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent') return false;
+        if(this.relation.recordType === 'marital' || this.relation.recordType === 'child' || this.relation.recordType === 'parent' || this.relation.recordType === 'stillborn') return false;
         return true;
     }
     get getErrorMsg(){
         if(this.relation.name != null) return this.relation.name;
         return '';
     }
-    get getColor(){
-        if(this.relation.sex == 'MANN') return 'blue';
-        if(this.relation.sex == 'KVINNE') return 'pink';
-        return null;
+    get genderIcon() {
+        switch (this.relation.sex) {
+            case 'MANN':
+                return 'MaleFilled';
+            case 'KVINNE':
+                return 'FemaleFilled';
+        }
+        return 'NeutralFilled';
+    }
+
+    get genderIconSrc() {
+        return NAV_ICONS + '/' + this.genderIcon + '.svg#' + this.genderIcon;
+    }
+
+    get genderIconClass() {
+        return this.genderIcon;
     }
     get hasEventDate(){
         if(this.relation.eventDate != null) return true;
@@ -69,21 +82,28 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     getName(){
         if(this.relation.unauthorized == true){
-            return 'IKKE TILGJENGELIG';
+            return 'SKJERMET';
         }
         if(this.relation.name == null){
             return 'UKJENT NAVN';
         }
-        return this.relation.name;
+        return this.capitalize(this.relation.name);
+    }
+    capitalize(input){
+       return  input
+       .toLowerCase()
+       .split(' ')
+       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+       .join(' ');
     }
     get getTileName(){
         if(this.relation.unauthorized === true){
             return this.getName();
         }
         if(this.relation.deceased === true){
-            return this.getName() + '(Død)';
+            return this.getName() + ' (Død)';
         }
-        return this.getName() + '(' + this.getAge() + ')';
+        return this.getName() + ' (' + this.getAge() + ')';
     }
     get getDateOfDeath(){
         if(this.relation.dateOfDeath != null){
@@ -98,8 +118,8 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return 'UKJENT DATE';
     }
     getAge(){
-        if(this.relation.age != null){
-            return this.relation.age;
+        if(this.relation.ageString != null){
+            return this.relation.ageString;
         }
         return 'UKJENT ALDER'
     }
@@ -129,31 +149,80 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     getLiveWithText(){
         if(this.relation.livesWith === true){
-            return ' - Bor med bruker.';
+            return 'Bor med bruker. ';
         }
         return '';
     }
     getResponsibilityChildText(){
         if(this.relation.responsibility === true){
-            return ' - Bruker har foreldreansvar.';
+            return 'Bruker har foreldreansvar.';
         }
         return '';
     }
     getResponsibilityParentText(){
         if(this.relation.responsibility === true){
-            return ' - Har foreldreansvar.';
+            return 'Har foreldreansvar.';
         }
         return '';
     }
     get showCardTile(){
         if(this.relation.recordType === 'marital' && 
-                (this.relation.role === 'UGIFT' || this.relation.role === 'UOPPGITT')
+                (
+                    this.relation.role === 'UGIFT' || 
+                    this.relation.role === 'UOPPGITT' || 
+                    this.relation.role === 'SKILT' ||
+                    this.relation.role === 'SKILT_PARTNER'
+                )
             ) return false;
         if(this.relation.recordType === 'stillborn') return false;
         return true;
     }
     get showInfoCard(){
-        if(this.relation.unauthorized) return false;
+        if(this.relation.unauthorized === true) return false;
         return true;
+    }
+    get showUrl(){
+        if(this.relation.unauthorized === true) return false;
+        if(this.relation.confidential === true) return false;
+        if(this.relation.accountId == null) return false;
+        return this.hasAccount();
+    }
+    get getRole(){
+        if(this.relation.recordType === 'stillborn'){
+            return 'DØDFØDT BARN';
+        }
+        if(this.relation.recordType ==='child'){
+            if(this.relation.sex === 'MANN'){
+                return 'GUTT';
+            }
+            if(this.relation.sex === 'KVINNE'){
+                return 'JENTE'
+            }
+            return this.relation.role;
+        }
+        if(this.relation.recordType === 'marital'){
+            if(this.relation.role === 'ENKE_ELLER_ENKEMANN'){
+                if(this.relation.sex === 'MANN'){
+                    return 'ENKE';
+                }
+                if(this.relation.sex === 'KVINNE'){
+                    return 'ENKEMANN';
+                }
+                return 'ENKE ELLER ENKEMANN';
+            }
+            if(this.relation.role === 'REGISTRERT_PARTNER'){
+                return 'REGISTRERT PARTNER';
+            }
+            if(this.relation.role === 'SEPARERT_PARTNER'){
+                return 'SEPARERT PARTNER';
+            }
+            if(this.relation.role === 'SKILT_PARTNER'){
+                return 'SKILT PARTNER';
+            }
+            if(this.relation.role === 'GJENLEVENDE PARTNER'){
+                return 'GJENLEVENDE PARTNER';
+            }
+        }
+        return this.relation.role;
     }
 }

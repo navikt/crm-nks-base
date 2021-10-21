@@ -7,60 +7,67 @@
             <template if:true={isMarital}>
                 <p>
                     <b>
-                        Sivilstand: {relation.role}
+                        Sivilstand: {getRole}
                     </b>
                     <template if:true={hasEventDate}>
-                         <i>&nbsp;- Fra: {relation.eventDate}</i>
+                         &nbsp;- Fra: {relation.eventDate}
                     </template>
                 </p>
             </template>
             <template if:true={isChild}>
                 <p>
                     <b>
-                        {relation.role}
+                        {getRole}
                     </b>
-                    <i>
-                        {getChildText}
-                    </i>
                 </p>
             </template>
             <template if:true={isParent}>
                 <p>
                     <b>
-                        {relation.role}
+                        {getRole}
                     </b>
-                    <i>
-                        {getParentText}
-                    </i>
                 </p>
             </template>
             <template if:true={isStillBorn}>
                 <p>
                     <b>
-                        {relation.role}
+                        {getRole}
                     </b>
                     <template if:true={hasEventDate}>
-                        <i>&nbsp;- Dato: {relation.eventDate}</i>
+                        &nbsp;- Dato: {relation.eventDate}
                    </template>
                 </p>
             </template>
             <template if:true={showCardTile}>
-                <lightning-tile label={getTileName} href={getUrl} type="media">
-                    <lightning-icon
-                            slot="media"
-                            icon-name="utility:user"
-                            size="small"
-                            alternative-text={getSex}
-                            class={getColor}
-                    ></lightning-icon>
+                <lightning-tile type="media" class="familyRelationTile">
+                    <template if:true={showUrl}>
+                        <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
+                    </template>
+                    <template if:false={showUrl}>
+                        {getTileName}
+                    </template>
+                    
+                    <lightning-layout-item class="gender" slot="media">
+                        <c-nks-custom-svg
+                            class={genderIcon}
+                            src={genderIconSrc}
+                            alt-text={getSex}
+                            classes={genderIconClass}
+                        ></c-nks-custom-svg>
+                    </lightning-layout-item>
                     <template if:true={showInfoCard}>
                         <ul class="slds-list_vertical">
                             <li class="slds-item">{relation.personIdent}</li>
-                            <li class="slds-item">Kjønn: {getSex}</li>
-                            <li class="slds-item">Født: {getBirthDate}&nbsp;
+                            <li class="slds-item">{getBirthDate}&nbsp;
                                 <template if:true={relation.deceased}>
-                                    - Død: {getDateOfDeath} &nbsp;
+                                    - <b>{getDateOfDeath}</b> &nbsp;
                                 </template></li>
+                                <template if:true={isChild}>
+                                    <li class="slds-item">{getChildText}</li>
+                                </template>
+                                <template if:true={isParent}>
+                                    <li class="slds-item">{getParentText}</li>
+                                </template>
                         </ul>
                     </template>
                 </lightning-tile>
