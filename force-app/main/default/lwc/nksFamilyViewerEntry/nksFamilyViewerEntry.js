@@ -184,6 +184,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     get showUrl(){
         if(this.relation.unauthorized === true) return false;
         if(this.relation.confidential === true) return false;
+        if(this.relation.employee == true) return false;
         if(this.relation.accountId == null) return false;
         return this.hasAccount();
     }

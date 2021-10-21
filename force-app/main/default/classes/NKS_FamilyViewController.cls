@@ -35,6 +35,8 @@ public with sharing class NKS_FamilyViewController {
         public Boolean unauthorized = false;
         @AuraEnabled
         public Boolean confidential = false;
+        @AuraEnabled 
+        public Boolean employee = false;
         @AuraEnabled
         public String confidentialStatus; //fortrolig/strengt_fortrolig
     }
@@ -115,7 +117,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.sivilstand.selectAll();
         query.hentPerson.forelderbarnrelasjon.selectAll();
         query.hentPerson.doedfoedtBarn.selectAll();
-        query.hentPerson.foreldreansvar.ansvar = true;
+        query.hentPerson.foreldreansvar.ansvarlig = true;
         query.hentPerson.foreldreansvar.ansvarssubjekt = true;
         query.hentPerson.foedsel.foedselsdato = true;
         query.hentPerson.foedsel.foedselsaar = true;
@@ -224,6 +226,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
         query.hentPerson.foreldreansvar.ansvarlig = true;
+        query.hentPerson.foreldreansvar.ansvarssubjekt = true;
         query.hentPerson.bostedsadresse.vegadresse.selectAll();
         query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
         query.hentPerson.deltBosted.vegadresse.selectAll();
@@ -300,7 +303,8 @@ public with sharing class NKS_FamilyViewController {
         relation.deceased = (relation.dateOfDeath != null) ? true : false;
         relation.confidentialStatus = getConfidentialStatus(response);
         relation.confidential = isConfidential(relation.confidentialStatus);
-        if(!relation.confidential){
+        relation.employee = isNavEmployee(response);
+        if(!relation.confidential && !relation.employee){
             relation.personId = getPersonIdFromIdents(getIdentsList(response));
             relation.accountId = getAccountIdFromPersonId(relation.personId);
             relation.personIdent = getPersonIdent(response);
@@ -438,9 +442,11 @@ public with sharing class NKS_FamilyViewController {
                 }
             }
         }
+        /*
         if(isNavEmployee(response) == true){
             return true;
         }
+        */
         return false;
     }
     private static Boolean isConfidentialRelation(PDL_API_Response person, PDL_API_Response relation){
@@ -464,9 +470,10 @@ public with sharing class NKS_FamilyViewController {
     private static Boolean isNavEmployee(PDL_API_Response response){
         Set<String> idents = getIdentsList(response);
         if(idents == null){
-            return null;
+            return false;
         }
-        return [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
+        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
+        return (isNavEmployee == null) ? false: isNavEmployee;
     }
     private static String formatDate(Date d){
         if(d == null){
