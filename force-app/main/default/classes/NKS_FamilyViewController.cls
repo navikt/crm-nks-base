@@ -115,7 +115,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.sivilstand.selectAll();
         query.hentPerson.forelderbarnrelasjon.selectAll();
         query.hentPerson.doedfoedtBarn.selectAll();
-        query.hentPerson.foreldreansvar.ansvar = true;
+        query.hentPerson.foreldreansvar.ansvarlig = true;
         query.hentPerson.foreldreansvar.ansvarssubjekt = true;
         query.hentPerson.foedsel.foedselsdato = true;
         query.hentPerson.foedsel.foedselsaar = true;
@@ -224,6 +224,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
         query.hentPerson.foreldreansvar.ansvarlig = true;
+        query.hentPerson.foreldreansvar.ansvarssubjekt = true;
         query.hentPerson.bostedsadresse.vegadresse.selectAll();
         query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
         query.hentPerson.deltBosted.vegadresse.selectAll();
