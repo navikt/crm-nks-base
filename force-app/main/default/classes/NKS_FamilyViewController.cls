@@ -472,7 +472,8 @@ public with sharing class NKS_FamilyViewController {
         if(idents == null){
             return false;
         }
-        return [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
+        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]?.INT_IsNavEmployee__c;
+        return (isNavEmployee == null) ? false: isNavEmployee;
     }
     private static String formatDate(Date d){
         if(d == null){
