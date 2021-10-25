@@ -29,6 +29,22 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.recordPageUrl = url;
         });
     }
+    handleCopyIdent() {
+        var hiddenInput = document.createElement('input');
+        hiddenInput.value = this.relation.personIdent;
+        document.body.appendChild(hiddenInput);
+        hiddenInput.focus();
+        hiddenInput.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+
+        document.body.removeChild(hiddenInput);
+    }
     get getUrl(){
         if(this.relation.unauthorized === true || this.relation.confidential === true || this.relation.accountId == null){
             return '#';
