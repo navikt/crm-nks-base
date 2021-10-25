@@ -188,6 +188,7 @@ public with sharing class NKS_FamilyViewController {
                     }
                     PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
                     if(isConfidentialRelation(relationsData,childResponse)){
+                        //if(isOver21(childResponse)) continue;
                         child.unauthorized = true;
                         children.add(child);
                         continue;
@@ -293,7 +294,6 @@ public with sharing class NKS_FamilyViewController {
             relation.unauthorized = true;
             return;
         }
-
         relation.name = getFullName(response);
         relation.birthdate = getBirthdate(response);
         relation.age = getAge(response);
@@ -412,6 +412,15 @@ public with sharing class NKS_FamilyViewController {
         }
         return kjoenn[0].kjoenn.name();
     }
+    /*
+    private static Boolean isOver21(PDL_API_Response response){
+        Integer age = getAge(response);
+        if(age == null || age < 21) {
+            return false;
+        }
+        return true;
+    }
+    */
     private static Boolean isOver21(Relation r){
         if(!r.deceased && r.age >= 21){
             return true;
