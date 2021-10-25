@@ -32,7 +32,7 @@ global class NKS_ThreadSharingActivation_Batch implements Database.Batchable<sOb
 
         Set<Id> personIds = new Set<Id>();
         for (Thread__c thread : scope) {
-            personIds.add(note.CRM_Account__r.CRM_Person__c);
+            personIds.add(thread.CRM_Account__r.CRM_Person__c);
         }
 
         Map<Id, Person__c> personById = new Map<Id, Person__c>();

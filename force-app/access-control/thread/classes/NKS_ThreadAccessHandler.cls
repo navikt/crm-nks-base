@@ -25,11 +25,7 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
         for (Thread__c thread : (List<Thread__c>) records) {
             Thread__c oldRecord = (Thread__c) triggerOldMap.get(thread.Id);
             if (MyTriggers.hasChangedFields(fieldNamesToCheck, thread, oldRecord)) {
-                if (thread.NKS_Incorrectly_Sent__c) {
-                    parentIdToDelete.add(thread.Id);
-                } else {
-                    threadsWithNewSharing.add(thread);
-                }
+                threadsWithNewSharing.add(thread);
             }
         }
 

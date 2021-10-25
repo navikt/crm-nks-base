@@ -21,7 +21,7 @@ private class NKS_ThreadAccessHandlerTest {
         Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
 
         Test.startTest();
-        Thread thread = new Thread(CRM_Account__c = accountId);
+        Thread__c thread = new Thread__c(CRM_Account__c = accountId);
         insert thread;
         Test.stopTest();
 
