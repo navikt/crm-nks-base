@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Operator3__c</field>
-        <value xsi:type="xsd:string">equals</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Operator4__c</field>
