@@ -859,9 +859,6 @@
                     <name>Error_Header</name>
                 </fields>
                 <fields>
-                    <name>Error_Screen_Message</name>
-                </fields>
-                <fields>
                     <name>No_Account_Error</name>
                 </fields>
                 <name>Error_Screen</name>

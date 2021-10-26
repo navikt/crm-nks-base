@@ -3,10 +3,11 @@
     <actionCalls>
         <name>Task_Created_Toast</name>
         <label>Task Created Toast</label>
-        <locationX>172</locationX>
-        <locationY>908</locationY>
+        <locationX>173</locationX>
+        <locationY>1075</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>mode</name>
             <value>
@@ -39,6 +40,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
@@ -166,6 +168,32 @@
             <label>No Account</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Check if the API post was successful</description>
+        <name>Verify_Task_Post</name>
+        <label>Verify Task Post</label>
+        <locationX>287</locationX>
+        <locationY>907</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Post Error</defaultConnectorLabel>
+        <rules>
+            <name>Successful_Post</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Send_NAV_Task.SUCCESSFUL_POST</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Task_Created_Toast</targetReference>
+            </connector>
+            <label>Successful Post</label>
+        </rules>
+    </decisions>
     <description>Creates and sends an outbound NAV task from a case view.</description>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
@@ -244,6 +272,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -261,7 +290,7 @@ TODAY())</expression>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>555</locationX>
-        <locationY>305</locationY>
+        <locationY>304</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -281,6 +310,21 @@ TODAY())</expression>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Post_Error_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; color: rgb(23, 43, 77);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Successful_Post</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -327,6 +371,7 @@ TODAY())</expression>
                     <elementReference>NavTask.CRM_Subtype__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -346,6 +391,7 @@ TODAY())</expression>
                     <elementReference>Task_Theme_Code</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -395,6 +441,7 @@ TODAY())</expression>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -408,7 +455,7 @@ TODAY())</expression>
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
@@ -455,7 +502,7 @@ TODAY())</expression>
         <locationX>173</locationX>
         <locationY>759</locationY>
         <connector>
-            <targetReference>Task_Created_Toast</targetReference>
+            <targetReference>Verify_Task_Post</targetReference>
         </connector>
         <flowName>CRM_Send_NAV_Task_Auto</flowName>
         <inputAssignments>
