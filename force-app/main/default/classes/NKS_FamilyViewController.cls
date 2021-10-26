@@ -151,19 +151,8 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     fillRelationFromResponse(parent, parentResponse);
-                    // parent.personIdent = relation.relatertPersonsIdent;
                     parent.livesWith = hasSameAddress(parentResponse, relationsData);
                     parent.responsibility = hasResponsibility(parentResponse, relationsData);
-                    /*
-                    List<String> childIdents = getIdentsList(relationsData);
-                    if(parentResponse?.data?.hentPerson?.foreldreansvar != null && childIdents != null){
-                        for(PDL_Foreldreansvar foreldreansvar : parentResponse.data.hentPerson.foreldreansvar){
-                            if(foreldreansvar.ansvarssubjekt != null && childIdents.contains(foreldreansvar.ansvarssubjekt)){
-                                parent.responsibility = true;
-                            }
-                        }
-                    }
-                    */
                 }
                 parents.add(parent);
             }
@@ -188,27 +177,17 @@ public with sharing class NKS_FamilyViewController {
                     }
                     PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
                     if(isConfidentialRelation(relationsData,childResponse)){
+                        if(isOver21(childResponse)) continue;
                         child.unauthorized = true;
                         children.add(child);
                         continue;
                     }
                     fillRelationFromResponse(child,childResponse);
-                    // child.personIdent = relation.relatertPersonsIdent;
                     if(isOver21(child)){
                         continue;
                     }
                     child.livesWith = hasSameAddress(relationsData, childResponse);
                     child.responsibility = hasResponsibility(relationsData, childResponse);
-                    /*
-                    List<String> parentIdents = getIdentsList(relationsData);
-                    if(childResponse?.data?.hentPerson?.foreldreansvar != null && parentIdents != null){
-                        for(PDL_Foreldreansvar foreldreansvar : childResponse.data.hentPerson.foreldreansvar){
-                            if(foreldreansvar.ansvarlig != null && parentIdents.contains(foreldreansvar.ansvarlig)){
-                                child.responsibility = true;
-                            }
-                        }
-                    }
-                    */
                 }
                 children.add(child);
             }
@@ -293,7 +272,6 @@ public with sharing class NKS_FamilyViewController {
             relation.unauthorized = true;
             return;
         }
-
         relation.name = getFullName(response);
         relation.birthdate = getBirthdate(response);
         relation.age = getAge(response);
@@ -304,10 +282,10 @@ public with sharing class NKS_FamilyViewController {
         relation.confidentialStatus = getConfidentialStatus(response);
         relation.confidential = isConfidential(relation.confidentialStatus);
         relation.employee = isNavEmployee(response);
+        relation.personIdent = getPersonIdent(response);
         if(!relation.confidential && !relation.employee){
             relation.personId = getPersonIdFromIdents(getIdentsList(response));
             relation.accountId = getAccountIdFromPersonId(relation.personId);
-            relation.personIdent = getPersonIdent(response);
         }
         return;
     }
@@ -412,6 +390,13 @@ public with sharing class NKS_FamilyViewController {
         }
         return kjoenn[0].kjoenn.name();
     }
+    private static Boolean isOver21(PDL_API_Response response){
+        Integer age = getAge(response);
+        if(age == null || age < 21) {
+            return false;
+        }
+        return true;
+    }
     private static Boolean isOver21(Relation r){
         if(!r.deceased && r.age >= 21){
             return true;
@@ -465,6 +450,13 @@ public with sharing class NKS_FamilyViewController {
         if(personGrade < relationGrade){
             return true;
         }
+        Boolean isPersonNavEmployee = isNavEmployee(person);
+        Boolean isRelationNavEmployee = isNavEmployee(relation);
+        if(isRelationNavEmployee == true){
+            if(isPersonNavEmployee != true){
+                return true;
+            }
+        }
         return false;
     }
     private static Boolean isNavEmployee(PDL_API_Response response){
@@ -495,8 +487,6 @@ public with sharing class NKS_FamilyViewController {
         for(PDL_IdentInformasjon ident : response.data.hentIdenter.identer){
             if(ident.ident != null && ident.historisk != true && ident.gruppe == PDL_IdentGruppe.FOLKEREGISTERIDENT){
                 idents.add(
-                    //typeOfId(ident.ident).name() +
-                    //': ' + 
                     ident.ident
                 );
             }

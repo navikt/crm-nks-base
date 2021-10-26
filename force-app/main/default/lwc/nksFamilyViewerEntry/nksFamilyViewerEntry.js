@@ -29,6 +29,22 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.recordPageUrl = url;
         });
     }
+    handleCopyIdent() {
+        var hiddenInput = document.createElement('input');
+        hiddenInput.value = this.relation.personIdent;
+        document.body.appendChild(hiddenInput);
+        hiddenInput.focus();
+        hiddenInput.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+
+        document.body.removeChild(hiddenInput);
+    }
     get getUrl(){
         if(this.relation.unauthorized === true || this.relation.confidential === true || this.relation.accountId == null){
             return '#';
@@ -183,8 +199,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
     get showUrl(){
         if(this.relation.unauthorized === true) return false;
-        if(this.relation.confidential === true) return false;
-        if(this.relation.employee == true) return false;
         if(this.relation.accountId == null) return false;
         return this.hasAccount();
     }
@@ -225,5 +239,58 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             }
         }
         return this.relation.role;
+    }
+    get uuAlertText(){
+        let alertText = '';
+    
+        let navEmployeeText = ' er egen ansatt';
+        let isConfidentialText = ' skjermet';
+    
+        alertText += 'Bruker';
+        alertText += this.relation.isNavEmployee ? navEmployeeText : '';
+        alertText +=
+            this.relation.isNavEmployee && this.relation.isConfidential 
+                ? ' og'
+                : this.relation.isConfidential
+                ? ' er'
+                : '';
+        alertText += this.relation.isConfidential ? isConfidentialText : '';
+        alertText += '.';
+    
+        return alertText;
+    }
+    get badges(){
+        let badgesArray = [];
+        if(this.relation.isNavEmployee === true){
+            let badge;
+            badge.name='isNavEmployee';
+            badge.label = 'Skjermet person (NAV Ansatt)'
+            badgesArray.push(badge);
+        }
+        if(this.relation.isConfidential === true){
+            if (this.relation.isConfidentialText === 'FORTROLIG') {
+                let badge;
+                badge.name='isConfidential';
+                badge.label = 'Skjermet adresse - fortrolig'
+                badgesArray.push(badge);
+            } else if (this.relation.isConfidentialText === 'STRENGT_FORTROLIG') {
+                let badge;
+                badge.name='isConfidential';
+                badge.label = 'Skjermet adresse - strengt fortrolig'
+                badgesArray.push(badge);
+            } else if (this.relation.isConfidentialText === 'STRENGT_FORTROLIG_UTLAND') {
+                let badge;
+                badge.name='isConfidential';
+                badge.label = 'Skjermet adresse - strengt fortrolig'
+                badgesArray.push(badge);
+            }
+        }
+        return badgesArray;
+    }
+    get hasBages(){
+        if(this.relation.isNavEmployee === true || this.relation.isConfidential === true){
+            return true;
+        }
+        return false;
     }
 }
