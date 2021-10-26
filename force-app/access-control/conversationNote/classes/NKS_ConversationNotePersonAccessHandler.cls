@@ -1,6 +1,5 @@
-global class NKS_ConversationNotePersonAccessHandler  extends MyTriggers {
-     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
-        
+global class NKS_ConversationNotePersonAccessHandler extends MyTriggers {
+    global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
         List<String> fieldNamesToCheck = new List<String>{ 'INT_Confidential__c', 'INT_IsNavEmployee__c' };
         Set<Id> personIdsWithNewSharing = new Set<Id>();
 
@@ -30,6 +29,10 @@ global class NKS_ConversationNotePersonAccessHandler  extends MyTriggers {
     }
 
     private List<Conversation_Note__c> getConversationNotesFromPersonIds(Set<Id> personIds) {
-        return [SELECT Id, CRM_Account__c, NKS_Incorrectly_Sent__c, CRM_Henvendelse_BehandlingsId__c FROM Conversation_Note__c WHERE CRM_Account__r.CRM_Person__c IN :personIds AND CRM_Henvendelse_BehandlingsId__c=null];
+        return [
+            SELECT Id, CRM_Account__c, NKS_Incorrectly_Sent__c, CRM_Henvendelse_BehandlingsId__c
+            FROM Conversation_Note__c
+            WHERE CRM_Account__r.CRM_Person__c IN :personIds
+        ];
     }
 }

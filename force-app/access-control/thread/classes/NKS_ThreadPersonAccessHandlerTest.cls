@@ -23,7 +23,7 @@ private class NKS_ThreadPersonAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 41001'
+            'Expected thread to be shared with group 41002'
         );
 
         Test.startTest();
@@ -34,7 +34,7 @@ private class NKS_ThreadPersonAccessHandlerTest {
         System.assertEquals(
             0,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to not be shared with group 41001'
+            'Expected thread to not be shared with group 41002'
         );
     }
 
@@ -56,7 +56,7 @@ private class NKS_ThreadPersonAccessHandlerTest {
         System.assertEquals(
             0,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to not be shared with group 41001'
+            'Expected thread to not be shared with group 41002'
         );
 
         Test.startTest();
@@ -67,7 +67,7 @@ private class NKS_ThreadPersonAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 41001'
+            'Expected thread to be shared with group 41002'
         );
     }
 }

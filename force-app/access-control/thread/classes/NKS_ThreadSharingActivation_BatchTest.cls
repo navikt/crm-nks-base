@@ -32,7 +32,7 @@ private class NKS_ThreadSharingActivation_BatchTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 41001'
+            'Expected thread to be shared with group 41002'
         );
     }
 
@@ -61,7 +61,7 @@ private class NKS_ThreadSharingActivation_BatchTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 410098'
+            'Expected thread to be shared with group 410099'
         );
     }
 
@@ -90,7 +90,7 @@ private class NKS_ThreadSharingActivation_BatchTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 999907'
+            'Expected thread to be shared with group 999908'
         );
     }
 }

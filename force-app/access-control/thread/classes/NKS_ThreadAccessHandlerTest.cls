@@ -28,7 +28,7 @@ private class NKS_ThreadAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 41001'
+            'Expected thread to be shared with group 41002'
         );
     }
 
