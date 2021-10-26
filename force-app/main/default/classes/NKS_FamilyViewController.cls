@@ -282,10 +282,10 @@ public with sharing class NKS_FamilyViewController {
         relation.confidentialStatus = getConfidentialStatus(response);
         relation.confidential = isConfidential(relation.confidentialStatus);
         relation.employee = isNavEmployee(response);
+        relation.personIdent = getPersonIdent(response);
         if(!relation.confidential && !relation.employee){
             relation.personId = getPersonIdFromIdents(getIdentsList(response));
             relation.accountId = getAccountIdFromPersonId(relation.personId);
-            relation.personIdent = getPersonIdent(response);
         }
         return;
     }
