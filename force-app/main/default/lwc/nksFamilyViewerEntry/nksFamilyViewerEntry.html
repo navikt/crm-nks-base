@@ -47,6 +47,22 @@
                         {getTileName}
                     </template>
                     
+                    <template if:true={hasBadges}>
+                        <span if:true={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <template for:each={badges} for:item="badge">
+                                    <lightning-badge
+                                        key={badge.name}
+                                        class="slds-theme_error slds-var-m-left_x-small"
+                                        label={badge.label}
+                                    >
+                                    </lightning-badge>
+                                </template>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </template>
+
                     <lightning-layout-item class="gender" slot="media">
                         <c-nks-custom-svg
                             class={genderIcon}
