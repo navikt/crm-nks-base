@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Timeline_Name__c</fullName>
+    <description>Friendly name displayed in timeline component for the thread.</description>
+    <externalId>false</externalId>
+    <formula>Name + IF(CRM_Number_of_unread_Messages__c != 0, &apos; (&apos; +  TEXT(CRM_Number_of_unread_Messages__c) + &apos; ulest&apos; + IF(CRM_Number_of_unread_Messages__c == 1, &apos;&apos;,&apos;e&apos;) + &apos; meldinger)&apos;, &apos; (Lest)&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Timeline Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
