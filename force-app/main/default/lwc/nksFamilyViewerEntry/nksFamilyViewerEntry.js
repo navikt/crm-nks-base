@@ -247,38 +247,38 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         let isConfidentialText = ' skjermet';
     
         alertText += 'Bruker';
-        alertText += this.relation.isNavEmployee ? navEmployeeText : '';
+        alertText += this.relation.employee ? navEmployeeText : '';
         alertText +=
-            this.relation.isNavEmployee && this.relation.isConfidential 
+            this.relation.employee && this.relation.confidential 
                 ? ' og'
-                : this.relation.isConfidential
+                : this.relation.confidential
                 ? ' er'
                 : '';
-        alertText += this.relation.isConfidential ? isConfidentialText : '';
+        alertText += this.relation.confidential ? isConfidentialText : '';
         alertText += '.';
     
         return alertText;
     }
     get badges(){
         let badgesArray = [];
-        if(this.relation.isNavEmployee === true){
+        if(this.relation.employee === true){
             let badge;
             badge.name='isNavEmployee';
             badge.label = 'Skjermet person (NAV Ansatt)'
             badgesArray.push(badge);
         }
-        if(this.relation.isConfidential === true){
-            if (this.relation.isConfidentialText === 'FORTROLIG') {
+        if(this.relation.confidential === true){
+            if (this.relation.confidentialStatus === 'FORTROLIG') {
                 let badge;
                 badge.name='isConfidential';
                 badge.label = 'Skjermet adresse - fortrolig'
                 badgesArray.push(badge);
-            } else if (this.relation.isConfidentialText === 'STRENGT_FORTROLIG') {
+            } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG') {
                 let badge;
                 badge.name='isConfidential';
                 badge.label = 'Skjermet adresse - strengt fortrolig'
                 badgesArray.push(badge);
-            } else if (this.relation.isConfidentialText === 'STRENGT_FORTROLIG_UTLAND') {
+            } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG_UTLAND') {
                 let badge;
                 badge.name='isConfidential';
                 badge.label = 'Skjermet adresse - strengt fortrolig'
@@ -288,7 +288,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return badgesArray;
     }
     get hasBages(){
-        if(this.relation.isNavEmployee === true || this.relation.isConfidential === true){
+        if(this.relation.employee === true || this.relation.confidential === true){
             return true;
         }
         return false;
