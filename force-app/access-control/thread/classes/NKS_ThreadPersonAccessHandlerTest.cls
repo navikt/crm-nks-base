@@ -3,6 +3,8 @@ private class NKS_ThreadPersonAccessHandlerTest {
     @TestSetup
     static void makeData() {
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
+        TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
+        TestDataFactory.getPublicGroup('Dialog Skjermet', NKS_GroupVariables.SKJERMET_GROUP_NAME);
     }
 
     @IsTest
