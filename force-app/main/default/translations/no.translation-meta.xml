@@ -314,12 +314,6 @@
     </customLabels>
     <customLabels>
         <label>
-            <!-- [ActTime] All Data Loaded -->
-        </label>
-        <name>Timeline_AllDataLoaded</name>
-    </customLabels>
-    <customLabels>
-        <label>
             <!-- [ActTime] Collapse -->
         </label>
         <name>Timeline_Collapse</name>
