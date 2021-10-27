@@ -13,19 +13,15 @@
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.74.0.LATEST"
+                    "versionNumber": "0.80.0.LATEST"
                 },
                 {
                     "package": "crm-shared-timeline",
-                    "versionNumber": "1.7.0.LATEST"
+                    "versionNumber": "1.8.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
                     "versionNumber": "1.159.0.LATEST"
-                },
-                {
-                    "package": "crm-shared-user-notification",
-                    "versionNumber": "0.1.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
@@ -40,19 +36,23 @@
                     "versionNumber": "0.6.0.LATEST"
                 },
                 {
+                    "package": "crm-shared-user-notification",
+                    "versionNumber": "0.1.0.LATEST"
+                },
+                {
                     "package": "crm-henvendelse",
                     "versionNumber": "0.17.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
-                    "versionNumber": "0.12.0.LATEST"
+                    "versionNumber": "0.13.0.LATEST"
                 }
             ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "49.0",
+    "sourceApiVersion": "51.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
@@ -62,8 +62,8 @@
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
         "crm-nks-integration": "0Ho2o000000fxX6CAI",
         "crm-journal-utilities": "0Ho2o000000fxXkCAI",
+        "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
-        "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
-        "crm-shared-user-notification": "0Ho2o000000fxY4CAI"
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
     }
 }

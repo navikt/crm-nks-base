@@ -1,103 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <description>Calls apex with the desired action.</description>
-        <name>Process_NAV_task</name>
-        <label>Process NAV task</label>
-        <locationX>174</locationX>
-        <locationY>713</locationY>
-        <actionName>CRM_NavTaskManager</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Validate_Callout</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log_0</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>actorId</name>
-            <value>
-                <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>assignToUnitNumber</name>
-            <value>
-                <elementReference>workAllocation.selectedUnitNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>createdByUnitNumber</name>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>requestType</name>
-            <value>
-                <stringValue>POST</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subthemeCode</name>
-            <value>
-                <elementReference>Theme_Categorization.subthemeCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subtypeCode</name>
-            <value>
-                <elementReference>Theme_Categorization.subtypeCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>task</name>
-            <value>
-                <elementReference>NavTask</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>taskTypeCode</name>
-            <value>
-                <elementReference>tasktype.selectedTaskType</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>themeCode</name>
-            <value>
-                <elementReference>Theme_Categorization.themeCode</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
-        <name>Set_Due_Date</name>
-        <label>Set Due Date</label>
-        <locationX>4</locationX>
-        <locationY>728</locationY>
-        <actionName>CRM_DueDateUtility</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Process_NAV_task</targetReference>
-        </connector>
-        <inputParameters>
-            <name>taskList</name>
-            <value>
-                <elementReference>NavTask</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>NavTask.CRM_DueDate__c</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Task_Created_Toast</name>
         <label>Task Created Toast</label>
         <locationX>173</locationX>
-        <locationY>1218</locationY>
+        <locationY>1075</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>mode</name>
             <value>
@@ -130,12 +40,13 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>176</locationX>
-        <locationY>555</locationY>
+        <locationX>175</locationX>
+        <locationY>580</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -228,7 +139,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Due_Date</targetReference>
+            <targetReference>Send_NAV_Task</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -258,29 +169,29 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Validate if the callout was successful</description>
-        <name>Validate_Callout</name>
-        <label>Validate Callout</label>
-        <locationX>164</locationX>
-        <locationY>848</locationY>
+        <description>Check if the API post was successful</description>
+        <name>Verify_Task_Post</name>
+        <label>Verify Task Post</label>
+        <locationX>287</locationX>
+        <locationY>907</locationY>
         <defaultConnector>
-            <targetReference>Store_Placeholder_Task</targetReference>
+            <targetReference>Error_Screen</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Post Error</defaultConnectorLabel>
         <rules>
-            <name>Success</name>
+            <name>Successful_Post</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Process_NAV_task.success</leftValueReference>
+                <leftValueReference>Send_NAV_Task.SUCCESSFUL_POST</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Salesforce_Task</targetReference>
+                <targetReference>Task_Created_Toast</targetReference>
             </connector>
-            <label>Success</label>
+            <label>Successful Post</label>
         </rules>
     </decisions>
     <description>Creates and sends an outbound NAV task from a case view.</description>
@@ -348,33 +259,6 @@ TODAY())</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Salesforce_Task</name>
-        <label>Create Salesforce Task</label>
-        <locationX>174</locationX>
-        <locationY>1040</locationY>
-        <connector>
-            <targetReference>Task_Created_Toast</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log</targetReference>
-        </faultConnector>
-        <inputReference>Process_NAV_task.task</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Store the NAV task in Salesforce for resubmission after error is handled.</description>
-        <name>Store_Placeholder_Task</name>
-        <label>Store Placeholder Task</label>
-        <locationX>363</locationX>
-        <locationY>848</locationY>
-        <connector>
-            <targetReference>Error_Screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log</targetReference>
-        </faultConnector>
-        <inputReference>NavTask</inputReference>
-    </recordCreates>
     <recordLookups>
         <description>Query information needed from the Case and its relations.</description>
         <name>Get_Case</name>
@@ -388,6 +272,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -404,8 +289,8 @@ TODAY())</expression>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>556</locationX>
-        <locationY>768</locationY>
+        <locationX>555</locationX>
+        <locationY>304</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -430,13 +315,13 @@ TODAY())</expression>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Error_Screen_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Post_Error_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; color: rgb(23, 43, 77);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Success</leftValueReference>
+                    <leftValueReference>Successful_Post</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -486,6 +371,7 @@ TODAY())</expression>
                     <elementReference>NavTask.CRM_Subtype__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -505,6 +391,7 @@ TODAY())</expression>
                     <elementReference>Task_Theme_Code</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -542,6 +429,19 @@ TODAY())</expression>
                     <elementReference>Task_Theme_Code</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>hideDelegateToSelf</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disableConditionalRendering</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -559,8 +459,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>1022</locationX>
-        <locationY>1025</locationY>
+        <locationX>739</locationX>
+        <locationY>199</locationY>
         <connector>
             <targetReference>Error_Screen</targetReference>
         </connector>
@@ -597,44 +497,27 @@ TODAY())</expression>
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Create_App_Log_0</name>
-        <label>Create App Log</label>
-        <locationX>361</locationX>
-        <locationY>712</locationY>
+        <name>Send_NAV_Task</name>
+        <label>Send NAV Task</label>
+        <locationX>173</locationX>
+        <locationY>759</locationY>
         <connector>
-            <targetReference>Store_Placeholder_Task</targetReference>
+            <targetReference>Verify_Task_Post</targetReference>
         </connector>
-        <flowName>Flow_Create_Application_Log</flowName>
+        <flowName>CRM_Send_NAV_Task_Auto</flowName>
         <inputAssignments>
-            <name>Error_Payload</name>
+            <name>Created_By_Unit_Number</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>$User.Department</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>Error_Source</name>
+            <name>NAV_Task</name>
             <value>
-                <stringValue>CRM_NavTaskManager</stringValue>
+                <elementReference>NavTask</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>Log_Message</name>
-            <value>
-                <stringValue>Error occurred in flow</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Reference_Object</name>
-            <value>
-                <stringValue>Case</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ReferenceID</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <description>The NAV task record to perform the action on.</description>
