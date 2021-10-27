@@ -287,7 +287,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return badgesArray;
     }
-    get hasBages(){
+    get hasBadges(){
         if(this.relation.employee === true || this.relation.confidential === true){
             return true;
         }
