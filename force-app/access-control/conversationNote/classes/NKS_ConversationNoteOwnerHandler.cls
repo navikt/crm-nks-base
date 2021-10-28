@@ -3,9 +3,8 @@ public with sharing class NKS_ConversationNoteOwnerHandler extends MyTriggers {
         Id newOwnerId = RecordOwnerService.getDefaultOwner();
 
         if (newOwnerId != null) {
-            for (Conversation_Note__c task : (List<Conversation_Note__c>) records) {
-                if (task.CRM_Theme__c == null)
-                    task.OwnerId = newOwnerId;
+            for (Conversation_Note__c note : (List<Conversation_Note__c>) records) {
+                note.OwnerId = newOwnerId;
             }
         }
     }

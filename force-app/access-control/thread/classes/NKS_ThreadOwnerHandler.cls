@@ -3,9 +3,8 @@ public with sharing class NKS_ThreadOwnerHandler extends MyTriggers {
         Id newOwnerId = RecordOwnerService.getDefaultOwner();
 
         if (newOwnerId != null) {
-            for (Thread__c task : (List<Thread__c>) records) {
-                if (task.CRM_Theme__c == null)
-                    task.OwnerId = newOwnerId;
+            for (Thread__c thread : (List<Thread__c>) records) {
+                thread.OwnerId = newOwnerId;
             }
         }
     }
