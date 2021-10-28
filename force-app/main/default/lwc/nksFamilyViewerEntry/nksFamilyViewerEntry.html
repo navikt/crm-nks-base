@@ -40,12 +40,7 @@
             </template>
             <template if:true={showCardTile}>
                 <lightning-tile type="media" class="familyRelationTile">
-                    <template if:true={showUrl}>
-                        <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
-                    </template>
-                    <template if:false={showUrl}>
-                        {getTileName}
-                    </template>
+                    
                     <lightning-layout-item class="gender" slot="media">
                         <c-nks-custom-svg
                             class={genderIcon}
@@ -54,8 +49,18 @@
                             classes={genderIconClass}
                         ></c-nks-custom-svg>
                     </lightning-layout-item>
-                    <template if:true={showInfoCard}>
-                        <ul class="slds-list_vertical">
+
+                    <ul class="slds-list_vertical">
+                        <template if:true={showUrl}>
+                            <li class="slds-item">
+                                <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
+                            </li>
+                        </template>
+                        <template if:false={showUrl}>
+                            <li class="slds-item">{getTileName}</li>
+                        </template>
+
+                        <template if:true={showInfoCard}>
                             <li class="slds-item">{getBirthDate}&nbsp;
                                 <template if:true={relation.deceased}>
                                     - <b>{getDateOfDeath}</b> &nbsp;
@@ -81,14 +86,14 @@
                                     <li class="slds-item">{getParentText}</li>
                                 </template>
                                 <template if:true={hasBadges}>
-                                    <li>
+                                    <li class="slds-item">
                                         <span if:true={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
-                                        <lightning-layout multiple-rows="true">
-                                            <lightning-layout-item size="12" style="margin-left: -12px">
+                                        <lightning-layout class="BadgeLayout">
+                                            <lightning-layout-item>
                                                 <template for:each={badges} for:item="badge">
                                                     <lightning-badge
                                                         key={badge.name}
-                                                        class="slds-theme_error slds-var-m-left_x-small"
+                                                        class="slds-theme_error"
                                                         label={badge.label}
                                                     >
                                                     </lightning-badge>
@@ -97,8 +102,8 @@
                                         </lightning-layout>
                                     </li>
                                 </template>
-                        </ul>
-                    </template>
+                        </template>
+                    </ul>
                 </lightning-tile>
             </template>
         </template>
