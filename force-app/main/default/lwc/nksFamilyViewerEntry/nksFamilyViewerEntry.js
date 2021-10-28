@@ -33,7 +33,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         var hiddenInput = document.createElement('input');
         hiddenInput.value = this.relation.personIdent;
         document.body.appendChild(hiddenInput);
-        hiddenInput.focus();
         hiddenInput.select();
         try {
             var successful = document.execCommand('copy');

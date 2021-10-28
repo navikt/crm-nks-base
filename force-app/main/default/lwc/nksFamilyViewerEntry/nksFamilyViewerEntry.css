@@ -40,3 +40,7 @@
 .familyRelationTile {
     padding: 4px 0 0 0;
 }
+.BadgeLayout {
+    margin-left: -3px;
+    margin-top: 4px;
+}
