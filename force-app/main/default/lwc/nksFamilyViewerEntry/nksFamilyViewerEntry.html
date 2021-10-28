@@ -40,29 +40,7 @@
             </template>
             <template if:true={showCardTile}>
                 <lightning-tile type="media" class="familyRelationTile">
-                    <template if:true={showUrl}>
-                        <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
-                    </template>
-                    <template if:false={showUrl}>
-                        {getTileName}
-                    </template>
                     
-                    <template if:true={hasBadges}>
-                        <span if:true={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
-                        <lightning-layout multiple-rows="true">
-                            <lightning-layout-item size="12">
-                                <template for:each={badges} for:item="badge">
-                                    <lightning-badge
-                                        key={badge.name}
-                                        class="slds-theme_error slds-var-m-left_x-small"
-                                        label={badge.label}
-                                    >
-                                    </lightning-badge>
-                                </template>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </template>
-
                     <lightning-layout-item class="gender" slot="media">
                         <c-nks-custom-svg
                             class={genderIcon}
@@ -71,31 +49,61 @@
                             classes={genderIconClass}
                         ></c-nks-custom-svg>
                     </lightning-layout-item>
-                    <template if:true={showInfoCard}>
-                        <ul class="slds-list_vertical">
-                            <template if:true={relation.personIdent}>
-                                {relation.personIdent}
-                                <lightning-button-icon
-                                    class="copy-icon"
-                                    icon-name="utility:copy"
-                                    variant="bare"
-                                    onclick={handleCopyIdent}
-                                    alternative-text="Kopier fødselsnummer"
-                                    title="Kopier fødselsnummer"
-                                ></lightning-button-icon>
-                            </template>
+
+                    <ul class="slds-list_vertical">
+                        <template if:true={showUrl}>
+                            <li class="slds-item">
+                                <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
+                            </li>
+                        </template>
+                        <template if:false={showUrl}>
+                            <li class="slds-item">{getTileName}</li>
+                        </template>
+
+                        <template if:true={showInfoCard}>
                             <li class="slds-item">{getBirthDate}&nbsp;
                                 <template if:true={relation.deceased}>
                                     - <b>{getDateOfDeath}</b> &nbsp;
-                                </template></li>
+                                </template>
+                            </li>
+                                <template if:true={relation.personIdent}>
+                                    <li>
+                                        {relation.personIdent}
+                                        <lightning-button-icon
+                                            class="copy-icon"
+                                            icon-name="utility:copy"
+                                            variant="bare"
+                                            onclick={handleCopyIdent}
+                                            alternative-text="Kopier fødselsnummer"
+                                            title="Kopier fødselsnummer"
+                                        ></lightning-button-icon>
+                                    </li>
+                                </template>
                                 <template if:true={isChild}>
                                     <li class="slds-item">{getChildText}</li>
                                 </template>
                                 <template if:true={isParent}>
                                     <li class="slds-item">{getParentText}</li>
                                 </template>
-                        </ul>
-                    </template>
+                                <template if:true={hasBadges}>
+                                    <li class="slds-item">
+                                        <span if:true={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
+                                        <lightning-layout class="BadgeLayout">
+                                            <lightning-layout-item>
+                                                <template for:each={badges} for:item="badge">
+                                                    <lightning-badge
+                                                        key={badge.name}
+                                                        class="slds-theme_error"
+                                                        label={badge.label}
+                                                    >
+                                                    </lightning-badge>
+                                                </template>
+                                            </lightning-layout-item>
+                                        </lightning-layout>
+                                    </li>
+                                </template>
+                        </template>
+                    </ul>
                 </lightning-tile>
             </template>
         </template>
