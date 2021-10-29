@@ -33,7 +33,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         var hiddenInput = document.createElement('input');
         hiddenInput.value = this.relation.personIdent;
         document.body.appendChild(hiddenInput);
-        hiddenInput.focus();
         hiddenInput.select();
         try {
             var successful = document.execCommand('copy');
@@ -262,26 +261,30 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     get badges(){
         let badgesArray = [];
         if(this.relation.employee === true){
-            let badge;
-            badge.name='isNavEmployee';
-            badge.label = 'Skjermet person (NAV Ansatt)'
+            let badge ={
+            name: 'isNavEmployee',
+            label: 'Skjermet person (NAV Ansatt)'
+            }
             badgesArray.push(badge);
         }
         if(this.relation.confidential === true){
             if (this.relation.confidentialStatus === 'FORTROLIG') {
-                let badge;
-                badge.name='isConfidential';
-                badge.label = 'Skjermet adresse - fortrolig'
+                let badge ={
+                    name: 'isConfidential',
+                    label: 'Skjermet adresse - fortrolig'
+                }
                 badgesArray.push(badge);
             } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG') {
-                let badge;
-                badge.name='isConfidential';
-                badge.label = 'Skjermet adresse - strengt fortrolig'
+                let badge ={
+                    name: 'isConfidential',
+                    label: 'Skjermet adresse - strengt fortrolig'
+                }
                 badgesArray.push(badge);
             } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG_UTLAND') {
-                let badge;
-                badge.name='isConfidential';
-                badge.label = 'Skjermet adresse - strengt fortrolig'
+                let badge ={
+                    name: 'isConfidential',
+                    label: 'Skjermet adresse - strengt fortrolig'
+                }
                 badgesArray.push(badge);
             }
         }
