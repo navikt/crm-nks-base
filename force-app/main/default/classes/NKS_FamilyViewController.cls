@@ -378,12 +378,12 @@ public with sharing class NKS_FamilyViewController {
             return null;
         }
         if((d.year()-1) > 0){
-            return String.valueOf(d.year()-1) + 'år';
+            return String.valueOf(d.year()-1) + ' år';
         }
         if((d.month()-1) > 0){
-            return String.valueOf(d.month()-1) + 'mnd';
+            return String.valueOf(d.month()-1) + ' mnd';
         }
-        return String.valueOf(d.day()-1) + 'd';
+        return String.valueOf(d.day()-1) + ' d';
     }
     private static String getSex(PDL_API_Response response){
         List<PDL_Kjoenn> kjoenn = response.data?.hentPerson?.kjoenn;
