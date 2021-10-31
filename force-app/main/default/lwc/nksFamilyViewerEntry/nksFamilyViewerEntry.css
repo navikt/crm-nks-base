@@ -47,3 +47,6 @@
 .tileListItem {
     height: 18px;
 }
+.tileListItemBadge {
+    height: 25px;
+}
