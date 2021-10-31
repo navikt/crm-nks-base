@@ -80,10 +80,14 @@
                                     </li>
                                 </template>
                                 <template if:true={isChild}>
-                                    <li class="tileListItem">{getChildText}</li>
+                                    <template if:true={getChildText}>
+                                        <li class="tileListItem">{getChildText}</li>
+                                    </template>
                                 </template>
                                 <template if:true={isParent}>
-                                    <li class="tileListItem">{getParentText}</li>
+                                    <template if:true={getParentText}>
+                                        <li class="tileListItem">{getParentText}</li>
+                                    </template>
                                 </template>
                                 <template if:true={hasBadges}>
                                     <li class="tileListItem">
