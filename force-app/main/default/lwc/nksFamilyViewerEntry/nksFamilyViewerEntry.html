@@ -52,25 +52,25 @@
 
                     <ul class="slds-list_vertical">
                         <template if:true={showUrl}>
-                            <li class="slds-item">
+                            <li class="tileListItem">
                                 <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
                             </li>
                         </template>
                         <template if:false={showUrl}>
-                            <li class="slds-item">{getTileName}</li>
+                            <li class="tileListItem">{getTileName}</li>
                         </template>
 
                         <template if:true={showInfoCard}>
-                            <li class="slds-item">{getBirthDate}&nbsp;
+                            <li class="tileListItem">{getBirthDate}&nbsp;
                                 <template if:true={relation.deceased}>
                                     - <b>{getDateOfDeath}</b> &nbsp;
                                 </template>
                             </li>
                                 <template if:true={relation.personIdent}>
-                                    <li>
+                                    <li class="tileListItem">
                                         {relation.personIdent}
                                         <lightning-button-icon
-                                            class="copy-icon"
+                                            class="slds-m-left_xx-small copyButton"
                                             icon-name="utility:copy"
                                             variant="bare"
                                             onclick={handleCopyIdent}
@@ -80,13 +80,17 @@
                                     </li>
                                 </template>
                                 <template if:true={isChild}>
-                                    <li class="slds-item">{getChildText}</li>
+                                    <template if:true={getChildText}>
+                                        <li class="tileListItem">{getChildText}</li>
+                                    </template>
                                 </template>
                                 <template if:true={isParent}>
-                                    <li class="slds-item">{getParentText}</li>
+                                    <template if:true={getParentText}>
+                                        <li class="tileListItem">{getParentText}</li>
+                                    </template>
                                 </template>
                                 <template if:true={hasBadges}>
-                                    <li class="slds-item">
+                                    <li class="tileListItemBadge">
                                         <span if:true={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
                                         <lightning-layout class="BadgeLayout">
                                             <lightning-layout-item>

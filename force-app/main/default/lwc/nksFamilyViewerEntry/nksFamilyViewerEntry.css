@@ -44,3 +44,9 @@
     margin-left: -3px;
     margin-top: 4px;
 }
+.tileListItem {
+    height: 18px;
+}
+.tileListItemBadge {
+    height: 25px;
+}

@@ -3,8 +3,6 @@ public with sharing class NKS_FamilyViewController {
     public class Relation{
 
         @AuraEnabled
-        public String personId; //link to Person__c object
-        @AuraEnabled
         public String accountId; //link to Account object
         @AuraEnabled
         public String personIdent; //personal identification number(FNR/DNR)
@@ -288,10 +286,7 @@ public with sharing class NKS_FamilyViewController {
         relation.confidential = isConfidential(relation.confidentialStatus);
         relation.employee = isNavEmployee(response);
         relation.personIdent = getPersonIdent(response);
-        if(!relation.confidential && !relation.employee){
-            relation.personId = getPersonIdFromIdents(getIdentsList(response));
-            relation.accountId = getAccountIdFromPersonId(relation.personId);
-        }
+        relation.accountId = getAccountIdFromPersonId(getPersonIdFromIdents(getIdentsList(response)));
         return;
     }
     private static String getFullName(PDL_API_Response response){
