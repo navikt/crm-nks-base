@@ -58,7 +58,7 @@
             </value>
         </filters>
         <object>LiveChatTranscript</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
