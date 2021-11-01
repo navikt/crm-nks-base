@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>ConfigId__c</field>
-        <value xsi:type="xsd:string">NKS_PERSON</value>
+        <value xsi:type="xsd:string">NKS_PERSON_NEW</value>
     </values>
     <values>
         <field>CreateableObject_Checkbox__c</field>
@@ -40,6 +40,6 @@
     </values>
     <values>
         <field>Timeline_Child__c</field>
-        <value xsi:type="xsd:string">NKS_Conversation_Note</value>
+        <value xsi:type="xsd:string">NKS_Conversation_Note_New</value>
     </values>
 </CustomMetadata>

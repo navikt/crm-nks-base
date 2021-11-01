@@ -1,76 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
-        <description>Passes the NAV task to Apex for delegation.</description>
-        <name>Delegate_NAV_Task</name>
-        <label>Delegate NAV Task</label>
-        <locationX>736</locationX>
-        <locationY>1653</locationY>
-        <actionName>CRM_NavTaskManager</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Validate_NAV_Task_Callout</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log_0_0</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>actorId</name>
-            <value>
-                <elementReference>Get_Person.INT_ActorId__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>assignToUnitNumber</name>
-            <value>
-                <elementReference>workAllocation.selectedUnitNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>createdByUnitNumber</name>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>requestType</name>
-            <value>
-                <stringValue>POST</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subthemeCode</name>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedSubtheme</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>subtypeCode</name>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedSubtype</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>task</name>
-            <value>
-                <elementReference>NAV_Task</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>taskTypeCode</name>
-            <value>
-                <elementReference>tasktype.selectedTaskType</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>themeCode</name>
-            <value>
-                <elementReference>Person_NAV_Cases.selectedCaseTheme</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <description>Base 64 encodes the original document for archiving</description>
         <name>Encode_Original</name>
         <label>Encode Original</label>
@@ -81,6 +11,7 @@
         <connector>
             <targetReference>Create_PDF_Document_Variant</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -106,6 +37,7 @@
         <connector>
             <targetReference>Encode_Original</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>documentString</name>
             <value>
@@ -134,6 +66,7 @@
         <faultConnector>
             <targetReference>Create_App_Log</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>journalRequest</name>
             <value>
@@ -161,27 +94,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Set_Due_Date</name>
-        <label>Set Due Date</label>
-        <locationX>535</locationX>
-        <locationY>1636</locationY>
-        <actionName>CRM_DueDateUtility</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Delegate_NAV_Task</targetReference>
-        </connector>
-        <inputParameters>
-            <name>taskList</name>
-            <value>
-                <elementReference>NAV_Task</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>NAV_Task.CRM_DueDate__c</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Set_Due_Date_0</name>
         <label>Set Due Date</label>
         <locationX>1666</locationX>
@@ -191,6 +103,7 @@
         <connector>
             <targetReference>Create_Placeholder_Task</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>taskList</name>
             <value>
@@ -217,6 +130,7 @@
             <typeName>T__refRecord</typeName>
             <typeValue>Journal_Entry__c</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>logLevel</name>
             <value>
@@ -242,6 +156,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <description>Adds information from the iterated journal entry.</description>
         <name>Add_Journal_Entry</name>
@@ -455,8 +370,8 @@
         <description>Assigns values to the original document variant.</description>
         <name>Create_Original_Document_Variant</name>
         <label>Create Original Document Variant</label>
-        <locationX>1056</locationX>
-        <locationY>857</locationY>
+        <locationX>1055</locationX>
+        <locationY>858</locationY>
         <assignmentItems>
             <assignToReference>Journal_Variant_Original.filtype</assignToReference>
             <operator>Assign</operator>
@@ -486,8 +401,8 @@
         <description>Assigns values to the PDF document variant.</description>
         <name>Create_PDF_Document_Variant</name>
         <label>Create PDF Document Variant</label>
-        <locationX>1212</locationX>
-        <locationY>857</locationY>
+        <locationX>1183</locationX>
+        <locationY>858</locationY>
         <assignmentItems>
             <assignToReference>Journal_Variant_PDF.filtype</assignToReference>
             <operator>Assign</operator>
@@ -617,7 +532,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Due_Date</targetReference>
+            <targetReference>Send_NAV_Task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -875,22 +790,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Should_Create_Task</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_NAV_Task_Failed</name>
-        <label>Set NAV Task Failed</label>
-        <locationX>2135</locationX>
-        <locationY>1826</locationY>
-        <assignmentItems>
-            <assignToReference>NavTask_Failed</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Error_Screen_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -1239,26 +1138,26 @@
         <description>Validates the API callout</description>
         <name>Validate_NAV_Task_Callout</name>
         <label>Validate NAV Task Callout</label>
-        <locationX>1091</locationX>
-        <locationY>1747</locationY>
+        <locationX>1015</locationX>
+        <locationY>1686</locationY>
         <defaultConnector>
-            <targetReference>Create_Salesforce_NAV_Task_0</targetReference>
+            <targetReference>Store_Journal_Entry_0_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Task Post Failed</defaultConnectorLabel>
         <rules>
-            <name>Success</name>
+            <name>Task_Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Delegate_NAV_Task.success</leftValueReference>
+                <leftValueReference>Send_NAV_Task.SUCCESSFUL_POST</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Salesforce_NAV_Task</targetReference>
+                <targetReference>Store_Journal_Entry</targetReference>
             </connector>
-            <label>Success</label>
+            <label>Task Success</label>
         </rules>
     </decisions>
     <description>Flow to initiate the creation of a journal entry.</description>
@@ -1266,16 +1165,16 @@
         <description>Task priority picklist values.</description>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>Task_Type_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -1363,34 +1262,6 @@ TODAY())</expression>
         <inputReference>NAV_Task</inputReference>
     </recordCreates>
     <recordCreates>
-        <description>Inserts the Salesforce NAV task after a successful callout.</description>
-        <name>Create_Salesforce_NAV_Task</name>
-        <label>Create Salesforce NAV Task</label>
-        <locationX>1222</locationX>
-        <locationY>1627</locationY>
-        <connector>
-            <targetReference>Store_Journal_Entry</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log_0_0_0</targetReference>
-        </faultConnector>
-        <inputReference>Delegate_NAV_Task.task</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Inserts the Salesforce NAV task after a successful callout.</description>
-        <name>Create_Salesforce_NAV_Task_0</name>
-        <label>Create Salesforce NAV Task</label>
-        <locationX>1095</locationX>
-        <locationY>1957</locationY>
-        <connector>
-            <targetReference>Error_Screen_0</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log_0_0_0_0_0_0</targetReference>
-        </faultConnector>
-        <inputReference>Delegate_NAV_Task.task</inputReference>
-    </recordCreates>
-    <recordCreates>
         <description>Stores the generated journal entry data i custom object</description>
         <name>Store_Journal_Entry</name>
         <label>Store Journal Entry</label>
@@ -1406,24 +1277,10 @@ TODAY())</expression>
     </recordCreates>
     <recordCreates>
         <description>Stores the generated journal entry data i custom object</description>
-        <name>Store_Journal_Entry_0</name>
-        <label>Store Journal Entry</label>
-        <locationX>1777</locationX>
-        <locationY>1818</locationY>
-        <connector>
-            <targetReference>Update_Transcript_0</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Store_Application_Log</targetReference>
-        </faultConnector>
-        <inputReference>Journal_Entry</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Stores the generated journal entry data i custom object</description>
         <name>Store_Journal_Entry_0_0</name>
         <label>Store Journal Entry</label>
-        <locationX>1559</locationX>
-        <locationY>2014</locationY>
+        <locationX>1261</locationX>
+        <locationY>1827</locationY>
         <connector>
             <targetReference>Update_Transcript_0_0</targetReference>
         </connector>
@@ -1445,6 +1302,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1471,6 +1329,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1498,6 +1357,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1531,6 +1391,7 @@ TODAY())</expression>
         <connector>
             <targetReference>Check_Owner_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1567,6 +1428,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_Chat_Transcript__c</field>
             <operator>EqualTo</operator>
@@ -1591,6 +1453,7 @@ TODAY())</expression>
         <faultConnector>
             <targetReference>Create_App_Log_0_0_0_0_0</targetReference>
         </faultConnector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1613,6 +1476,7 @@ TODAY())</expression>
         <label>Update Chat Completed</label>
         <locationX>2548</locationX>
         <locationY>648</locationY>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1639,23 +1503,10 @@ TODAY())</expression>
         <inputReference>Get_Chat_Transcript</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Transcript_0</name>
-        <label>Update Transcript</label>
-        <locationX>1915</locationX>
-        <locationY>1818</locationY>
-        <connector>
-            <targetReference>Set_NAV_Task_Failed</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Create_App_Log_0_0_0_0</targetReference>
-        </faultConnector>
-        <inputReference>Get_Chat_Transcript</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Transcript_0_0</name>
         <label>Update Transcript</label>
-        <locationX>1782</locationX>
-        <locationY>2006</locationY>
+        <locationX>1409</locationX>
+        <locationY>1825</locationY>
         <connector>
             <targetReference>Error_Screen_0</targetReference>
         </connector>
@@ -1696,6 +1547,7 @@ TODAY())</expression>
                     <stringValue>Henvendelsen er ferdigstilt.</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1777,6 +1629,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1829,7 +1682,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>Success</leftValueReference>
+                    <leftValueReference>Task_Success</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -1851,8 +1704,8 @@ TODAY())</expression>
         <description>Screen for displaying potential error messages</description>
         <name>Error_Screen_0</name>
         <label>Error Screen</label>
-        <locationX>2617</locationX>
-        <locationY>1949</locationY>
+        <locationX>2160</locationX>
+        <locationY>1833</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1878,22 +1731,15 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Error_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Ooops! Noe har gått galt! En dyktig utvikler har allerede fått beskjed om denne feilen og er snart i gang med å finne ut hva som gikk galt. Han eller hun vil ta kontakt med deg direkte i Teams slik at dere kan løse det sammen og få opprettet oppgaven på riktig måte. Du kan bare lukke denne chatfanen og jobbe videre.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 12px; font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif;&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Success</leftValueReference>
+                    <leftValueReference>Task_Success</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NavTask_Failed</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1967,7 +1813,7 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>Success</leftValueReference>
+                    <leftValueReference>Task_Success</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -2040,6 +1886,7 @@ TODAY())</expression>
                     <elementReference>Get_Chat_Transcript.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2063,6 +1910,7 @@ TODAY())</expression>
                     <stringValue>Opprett oppgave:</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2086,6 +1934,7 @@ TODAY())</expression>
                     <elementReference>createtasktoggle.togglechecked</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2160,6 +2009,7 @@ TODAY())</expression>
                     <elementReference>Get_Person.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2195,6 +2045,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2233,6 +2084,7 @@ TODAY())</expression>
                     <stringValue>NEXT</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2307,90 +2159,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log_0</name>
         <label>Create App Log</label>
-        <locationX>2076</locationX>
-        <locationY>2111</locationY>
+        <locationX>1337</locationX>
+        <locationY>2072</locationY>
         <connector>
             <targetReference>Error_Screen_0</targetReference>
-        </connector>
-        <flowName>Flow_Create_Application_Log</flowName>
-        <inputAssignments>
-            <name>Error_Payload</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Error_Source</name>
-            <value>
-                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Log_Message</name>
-            <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Reference_Object</name>
-            <value>
-                <stringValue>LiveChatTranscript</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ReferenceID</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Create_App_Log_0_0</name>
-        <label>Create App Log</label>
-        <locationX>736</locationX>
-        <locationY>1835</locationY>
-        <connector>
-            <targetReference>Validate_NAV_Task_Callout</targetReference>
-        </connector>
-        <flowName>Flow_Create_Application_Log</flowName>
-        <inputAssignments>
-            <name>Error_Payload</name>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Error_Source</name>
-            <value>
-                <stringValue>CRM_NavTaskManager</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Log_Message</name>
-            <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Reference_Object</name>
-            <value>
-                <stringValue>LiveChatTranscript</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ReferenceID</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Create_App_Log_0_0_0</name>
-        <label>Create App Log</label>
-        <locationX>1454</locationX>
-        <locationY>1818</locationY>
-        <connector>
-            <targetReference>Store_Journal_Entry_0</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
         <inputAssignments>
@@ -2505,44 +2277,27 @@ TODAY())</expression>
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Create_App_Log_0_0_0_0_0_0</name>
-        <label>Create App Log</label>
-        <locationX>1374</locationX>
-        <locationY>2014</locationY>
+        <name>Send_NAV_Task</name>
+        <label>Send NAV Task</label>
+        <locationX>739</locationX>
+        <locationY>1684</locationY>
         <connector>
-            <targetReference>Store_Journal_Entry_0_0</targetReference>
+            <targetReference>Validate_NAV_Task_Callout</targetReference>
         </connector>
-        <flowName>Flow_Create_Application_Log</flowName>
+        <flowName>CRM_Send_NAV_Task_Auto</flowName>
         <inputAssignments>
-            <name>Error_Payload</name>
+            <name>Created_By_Unit_Number</name>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>$User.Department</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>Error_Source</name>
+            <name>NAV_Task</name>
             <value>
-                <stringValue>NKS_Chat_Create_Journal_Entry</stringValue>
+                <elementReference>NAV_Task</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>Log_Message</name>
-            <value>
-                <stringValue>Flow fault: NKS_Chat_Create_Journal_Entry. Failed to insert NAV Task.</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Reference_Object</name>
-            <value>
-                <stringValue>LiveChatTranscript</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ReferenceID</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>Conversation_String</name>
