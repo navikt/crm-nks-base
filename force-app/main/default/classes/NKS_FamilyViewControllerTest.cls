@@ -4,7 +4,7 @@ private class NKS_FamilyViewControllerTest {
     private static void getMaritalPersonTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(query.execute(),new NKS_FamilyViewController.Relation());
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(query.execute(), new NKS_FamilyViewController.Relation());
         System.assertEquals('UGIFT', l[0].role);
         String giftPerson = 
             '{' +
@@ -24,10 +24,48 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals('GIFT', l[0].role);
     }
     @isTest
+    private static void isOver21Test(){
+
+             String personWithAge = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+             
+             '"foedsel" : [ {' +
+            '"foedselsdato" : "1965-10-12",' +
+            '"foedselsaar" : 1965,' +
+            '"foedested" : "Fødested i/på Gjemnes",' +
+            '"foedeland" : "NOR",' +
+            '"foedekommune" : null' +
+          '} ]' +
+             
+                  
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(personWithAge, PDL_API_Response.class);
+        System.assertEquals(true, NKS_FamilyViewController.isOver21(response));
+        personWithAge = 
+           '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"sivilstand" : [ {' +
+                    '"type" : "GIFT",' +
+                    '"relatertVedSivilstand" : "02091379875",' +
+                    '"gyldigFraOgMed" : "2021-09-02",' +
+                    '"bekreftelsesdato" : null' +
+                  '} ]' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(personWithAge, PDL_API_Response.class);
+        System.assertEquals(false, NKS_FamilyViewController.isOver21(response));
+    }
+    @isTest
     private static void getChildrenTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getChildren(query.execute(),new NKS_FamilyViewController.Relation());
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getChildren(query.execute() ,new NKS_FamilyViewController.Relation());
         System.assertEquals(0, l.size());
     }
     @isTest
@@ -312,7 +350,7 @@ private class NKS_FamilyViewControllerTest {
     private static void getParentsTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(withParentsPerson, PDL_API_Response.class);
-        List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response,new NKS_FamilyViewController.Relation());
+        List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response, new NKS_FamilyViewController.Relation());
         System.assertEquals(1, parents.size());
     }
     @isTest

@@ -426,6 +426,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return kjoenn[0].kjoenn.name();
     }
+    @TestVisible
     private static Boolean isOver21(PDL_API_Response response){
         Integer age = getAge(response);
         if(age == null || age < 21) {
