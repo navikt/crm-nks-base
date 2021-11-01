@@ -1,10 +1,21 @@
 @isTest
 private class NKS_FamilyViewControllerTest {
     @isTest
+    private static void getRelationsTest(){
+        Person__c p = new Person__c(Name='12106519356',INT_LastName__c='TestName',INT_FirstName__c='TestLastname');
+        insert p;
+        Account a = new Account(CRM_Person__c=p.Id, Name='testName');
+        insert a;
+   		//Id accId = [SELECT Id FROM Account WHERE CRM_Person__r.Id = :p.Id LIMIT 1].Id;
+        List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
+        System.debug(rl);
+        System.assertEquals(false, rl.isEmpty());
+    }
+    @isTest
     private static void getMaritalPersonTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(query.execute());
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(query.execute(), new NKS_FamilyViewController.Relation());
         System.assertEquals('UGIFT', l[0].role);
         String giftPerson = 
             '{' +
@@ -20,14 +31,52 @@ private class NKS_FamilyViewControllerTest {
               '}' +
             '}';
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response);
+        l = NKS_FamilyViewController.getMaritalPerson(response,new NKS_FamilyViewController.Relation());
         System.assertEquals('GIFT', l[0].role);
+    }
+    @isTest
+    private static void isOver21Test(){
+
+             String personWithAge = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+             
+             '"foedsel" : [ {' +
+            '"foedselsdato" : "1965-10-12",' +
+            '"foedselsaar" : 1965,' +
+            '"foedested" : "Fødested i/på Gjemnes",' +
+            '"foedeland" : "NOR",' +
+            '"foedekommune" : null' +
+          '} ]' +
+             
+                  
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(personWithAge, PDL_API_Response.class);
+        System.assertEquals(true, NKS_FamilyViewController.isOver21(response));
+        personWithAge = 
+           '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"sivilstand" : [ {' +
+                    '"type" : "GIFT",' +
+                    '"relatertVedSivilstand" : "02091379875",' +
+                    '"gyldigFraOgMed" : "2021-09-02",' +
+                    '"bekreftelsesdato" : null' +
+                  '} ]' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(personWithAge, PDL_API_Response.class);
+        System.assertEquals(false, NKS_FamilyViewController.isOver21(response));
     }
     @isTest
     private static void getChildrenTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getChildren(query.execute());
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getChildren(query.execute() ,new NKS_FamilyViewController.Relation());
         System.assertEquals(0, l.size());
     }
     @isTest
@@ -312,7 +361,7 @@ private class NKS_FamilyViewControllerTest {
     private static void getParentsTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(withParentsPerson, PDL_API_Response.class);
-        List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response);
+        List<NKS_FamilyViewController.Relation> parents = NKS_FamilyViewController.getParents(response, new NKS_FamilyViewController.Relation());
         System.assertEquals(1, parents.size());
     }
     @isTest
