@@ -541,10 +541,6 @@ public with sharing class NKS_FamilyViewController {
         }
         return null;
     }
-    private static PDL_IdentType typeOfId(String ident){
-        if(ident == null) {return null;}
-        return (4 <= Integer.valueOf(ident.left(1))) ? PDL_IdentType.DNR : PDL_IdentType.FNR;
-    }
     private static Set<String> getIdentsList(PDL_API_Response response){
         if(response.data?.hentIdenter?.identer == null){
             return null;

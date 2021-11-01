@@ -1,6 +1,17 @@
 @isTest
 private class NKS_FamilyViewControllerTest {
     @isTest
+    private static void getRelationsTest(){
+        Person__c p = new Person__c(Name='12106519356',INT_LastName__c='TestName',INT_FirstName__c='TestLastname');
+        insert p;
+        Account a = new Account(CRM_Person__c=p.Id, Name='testName');
+        insert a;
+   		//Id accId = [SELECT Id FROM Account WHERE CRM_Person__r.Id = :p.Id LIMIT 1].Id;
+        List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
+        System.debug(rl);
+        System.assertEquals(false, rl.isEmpty());
+    }
+    @isTest
     private static void getMaritalPersonTest(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
