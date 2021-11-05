@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ApexClass__c</field>
-        <value xsi:type="xsd:string">NKS_ThreadSharingEvent</value>
+        <value xsi:type="xsd:string">NKS_ThreadSharingEventHandler</value>
     </values>
     <values>
         <field>ObjectType__c</field>
