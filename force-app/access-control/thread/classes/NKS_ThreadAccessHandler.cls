@@ -16,6 +16,7 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
     }
 
     public void grantAccessToNewThreads(List<Thread__c> threads){
+        system.debug('#'+threads.size());
         new NKS_ThreadAccessService().grantAccess(threads, getPersons(threads));
     }
 
