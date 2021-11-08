@@ -4,6 +4,7 @@ private class NavTaskPersonAccessHandlerTest {
     static void makeData() {
         TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
         TestDataFactory.getPublicGroup('HMS Agder', 'group_47001');
+        TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410098');
     }
 
     @IsTest
@@ -13,16 +14,10 @@ private class NavTaskPersonAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName ='group_410098' LIMIT 1].Id;
 
         NavTask__c task = new NavTask__c(CRM_Account__c = accountId);
         insert task;
-
-        System.assertEquals(
-            1,
-            [SELECT COUNT() FROM NavTask__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected task to be shared with group 41001'
-        );
 
         Test.startTest();
         person.INT_IsNavEmployee__c = true;
@@ -30,9 +25,9 @@ private class NavTaskPersonAccessHandlerTest {
         Test.stopTest();
 
         System.assertEquals(
-            0,
+            1,
             [SELECT COUNT() FROM NavTask__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected task to not be shared with group 41001'
+            'Expected task to not be shared with group 41002'
         );
     }
 

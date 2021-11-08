@@ -3,6 +3,18 @@
     <label>Conversation Note</label>
     <protected>false</protected>
     <values>
+        <field>AllowAutoOpen__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>AutomaticRefresh_PushTopicName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>AutomaticRefresh__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>CreateableObject_Field1__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -40,7 +52,7 @@
     </values>
     <values>
         <field>ExpandedFieldsToDisplay__c</field>
-        <value xsi:type="xsd:string">NKS_Is_Read__c, NKS_Created_By__c, CRM_Conversation_Note__c</value>
+        <value xsi:type="xsd:string">CRM_Is_Read__c, CRM_Conversation_Note__c, CRM_Timeline_User__c</value>
     </values>
     <values>
         <field>SLDS_Dropdown_Icon__c</field>
@@ -60,7 +72,7 @@
     </values>
     <values>
         <field>SObjectDateField__c</field>
-        <value xsi:type="xsd:string">NKS_Date_Time_Registered__c</value>
+        <value xsi:type="xsd:string">CRM_Date_Time_Registered__c</value>
     </values>
     <values>
         <field>SObjectName__c</field>
@@ -100,10 +112,10 @@
     </values>
     <values>
         <field>SubtitleRelatedUserPrepositionEng__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">with</value>
     </values>
     <values>
         <field>SubtitleRelatedUserPrepositionNor__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">med</value>
     </values>
 </CustomMetadata>
