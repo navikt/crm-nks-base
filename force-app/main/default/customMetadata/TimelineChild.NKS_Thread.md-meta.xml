@@ -3,6 +3,10 @@
     <label>Thread</label>
     <protected>false</protected>
     <values>
+        <field>AllowAutoOpen__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>AutomaticRefresh_PushTopicName__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -48,7 +52,7 @@
     </values>
     <values>
         <field>ExpandedFieldsToDisplay__c</field>
-        <value xsi:type="xsd:string">CRM_Journal_Status_Formula__c, CRM_Conversation_Summary__c</value>
+        <value xsi:type="xsd:string">CRM_Conversation_Summary__c, CRM_Journal_Status_Formula__c</value>
     </values>
     <values>
         <field>SLDS_Dropdown_Icon__c</field>
