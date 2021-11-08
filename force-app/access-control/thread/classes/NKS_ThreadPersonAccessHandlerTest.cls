@@ -16,17 +16,12 @@ private class NKS_ThreadPersonAccessHandlerTest {
         person.INT_Confidential__c = 'UGRADERT';
         person.INT_IsNavEmployee__c = false;
         insert person;
+        
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.SKJERMET_GROUP_NAME LIMIT 1].Id;
 
         Thread__c thread = new Thread__c(CRM_Account__c = accountId);
         insert thread;
-
-        System.assertEquals(
-            1,
-            [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to be shared with group 41002'
-        );
 
         Test.startTest();
         person.INT_IsNavEmployee__c = true;
@@ -34,9 +29,9 @@ private class NKS_ThreadPersonAccessHandlerTest {
         Test.stopTest();
 
         System.assertEquals(
-            0,
+            1,
             [SELECT COUNT() FROM Thread__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected thread to not be shared with group 41002'
+            'Expected thread to be shared with group 41002'
         );
     }
 
