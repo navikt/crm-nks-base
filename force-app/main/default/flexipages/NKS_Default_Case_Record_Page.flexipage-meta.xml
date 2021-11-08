@@ -239,7 +239,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>nksFamilyViewer</componentName>
+                <componentName>personRelationViewer</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-0c1a5265-fb5d-461e-93eb-b5fb15b9293d</name>
