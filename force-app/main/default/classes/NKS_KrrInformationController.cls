@@ -3,26 +3,29 @@ public without sharing class NKS_KrrInformationController {
 
     @AuraEnabled
     public static void updateKrrInformation(String personIdent) {
-        Person__c personToUpdate;
+        List<Person__c> personsToUpdate = new List<Person__c>();
         try {
             List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
                 new List<String>{ personIdent }
             );
             if (personer != null && !personer.isEmpty()) {
-                Id personId = [SELECT Id FROM Person__c WHERE Name = :personIdent]?.Id;
-                personToUpdate = new Person__c(
-                    Id = personId,
-                    INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
-                    INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
-                    INT_LastUpdatedFromKRR__c = Datetime.now(),
-                    INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
-                );
+                for (Person__c person : [SELECT Id FROM Person__c WHERE Name = :personIdent]) {
+                    personsToUpdate.add(
+                        new Person__c(
+                            Id = person.Id,
+                            INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
+                            INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
+                            INT_LastUpdatedFromKRR__c = Datetime.now(),
+                            INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
+                        )
+                    );
+                }
             }
 
-            if (personToUpdate != null)
-                update personToUpdate;
+            if (!personsToUpdate.isEmpty())
+                update personsToUpdate;
         } catch (Exception e) {
-            logger.exception(e, personToUpdate);
+            logger.exception(e, personsToUpdate[0]);
             logger.publish();
             throw new AuraHandledException('Failed to refresh KRR information.');
         }
