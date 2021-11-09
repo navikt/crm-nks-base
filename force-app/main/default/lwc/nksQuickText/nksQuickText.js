@@ -163,7 +163,6 @@ export default class nksQuickText extends LightningElement {
                     editor.setRangeText(lowerCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
                 } else {
                     const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                    console.log(upperCaseQuickText);
                     editor.setRangeText(upperCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
                 }
             }
