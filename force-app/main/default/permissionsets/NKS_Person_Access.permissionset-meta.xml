@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>FamilyRelationViewerController</apexClass>
+        <apexClass>NKS_AccessErrorController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_AccessErrorController</apexClass>
+        <apexClass>NKS_FamilyViewController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <description>Permission set granting read access to person fields</description>
@@ -26,12 +26,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.CRM_FullName__c</field>
+        <field>Person__c.CRM_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.CRM_Age__c</field>
+        <field>Person__c.CRM_FullName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
