@@ -154,6 +154,8 @@ public without sharing class NKS_DataSynchController {
             //This means the conversation note has been disposed
             convNote.CRM_Conversation_Note__c = ''; //If the note has been synched and stored before disposal, the existing record text is overwritten
         } else {
+            //Moved here as disposed conversation notes threw an error
+            convNote.NKS_Created_By__c = henv.metadataListe.metadata[0].navident;
             convNote.CRM_Conversation_Note__c = henv.metadataListe.metadata[0].fritekst;
         }
 
@@ -164,7 +166,6 @@ public without sharing class NKS_DataSynchController {
             ? themeGroupMap.get(henv.gjeldendeTemagruppe)
             : null;
         convNote.NKS_Is_Read__c = String.isNotBlank(henv.lestDato) ? true : false;
-        convNote.NKS_Created_By__c = henv.metadataListe.metadata[0].navident;
         convNote.NKS_Date_Time_Registered__c = String.isNotBlank(henv.opprettetDato)
             ? Datetime.valueOf(henv.opprettetDato.replace('T', ' '))
             : null;

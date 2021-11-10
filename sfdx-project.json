@@ -5,35 +5,39 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.163.0.NEXT",
+            "versionNumber": "0.165.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.124.0.LATEST"
+                    "versionNumber": "0.126.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
                     "versionNumber": "0.80.0.LATEST"
                 },
                 {
-                    "package": "crm-shared-timeline",
-                    "versionNumber": "1.8.0.LATEST"
+                    "package": "crm-shared-base",
+                    "versionNumber": "1.1.0.LATEST"
                 },
                 {
-                    "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.159.0.LATEST"
+                    "package": "crm-shared-timeline",
+                    "versionNumber": "1.8.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
                     "versionNumber": "0.61.0.LATEST"
                 },
                 {
+                    "package": "crm-arbeidsgiver-base",
+                    "versionNumber": "1.181.0.LATEST"
+                },
+                {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.9.0.LATEST"
+                    "versionNumber": "0.10.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.6.0.LATEST"
+                    "versionNumber": "0.7.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -58,6 +62,7 @@
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-platform-access-control": "0Ho2o0000008OR3CAM",
         "crm-shared-timeline": "0Ho2o000000fxXBCAY",
+        "crm-shared-base": "0Ho2o000000fxXLCAY",
         "crm-arbeidsgiver-base": "0Ho2o0000008OQtCAM",
         "crm-platform-integration": "0Ho2o0000008ORrCAM",
         "crm-nks-integration": "0Ho2o000000fxX6CAI",

@@ -197,9 +197,16 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return true;
     }
     get showUrl(){
+        return false;
+        /*
+            Link to account should be opened in an separate workspace tab.
+            Link disabled until there will be a solution for such behavior.
+        */
+        /*
         if(this.relation.unauthorized === true) return false;
         if(this.relation.accountId == null) return false;
         return this.hasAccount();
+        */
     }
     get getRole(){
         if(this.relation.recordType === 'stillborn'){
