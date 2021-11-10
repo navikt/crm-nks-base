@@ -159,10 +159,11 @@ export default class nksQuickText extends LightningElement {
                 const startindex = carretPositionEnd - lastItem.length - 1;
 
                 if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
-                    const copyQuickText = quickText.toLowerCase();
-                    editor.setRangeText(copyQuickText + ' ', startindex, carretPositionEnd, 'end');
+                    const lowerCaseQuickText = quickText.toLowerCase();
+                    editor.setRangeText(lowerCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
                 } else {
-                    editor.setRangeText(quickText + ' ', startindex, carretPositionEnd, 'end');
+                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                    editor.setRangeText(upperCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
                 }
             }
         }

@@ -265,6 +265,10 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>amountOfRecordsToOpen</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>
