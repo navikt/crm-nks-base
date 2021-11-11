@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Theme_Group_Code__c</field>
-        <value xsi:type="xsd:string">HELSE</value>
+        <value xsi:type="xsd:string">FMLI</value>
     </values>
 </CustomMetadata>
