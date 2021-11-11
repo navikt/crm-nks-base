@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>News</fullName>
     <active>true</active>
@@ -14,7 +14,7 @@
             <default>true</default>
         </values>
         <values>
-            <fullName>Tips</fullName>
+            <fullName>Salesforce oppdatering</fullName>
             <default>false</default>
         </values>
     </picklistValues>

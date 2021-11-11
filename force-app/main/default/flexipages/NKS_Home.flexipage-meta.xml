@@ -78,7 +78,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>type</name>
-                    <value>Gladmelding</value>
+                    <value>Glamelding</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
             </componentInstance>
@@ -91,7 +91,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
-                    <value>Ukas tips</value>
+                    <value>Oppdateringer i Salesforce</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -99,9 +99,69 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>type</name>
-                    <value>tips</value>
+                    <value>Salesforce oppdatering</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Tidligere oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>content</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>datefield</name>
+                    <value>CreatedDate</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>NKS_Type__c = &apos;Salesforce oppdatering&apos; AND RecordType.Name = &apos;News&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>utility:salesforce1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Se alle Salesforce oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>Salesforce_oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>NKS_Announcement__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showimage</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
             </componentInstance>
         </itemInstances>
         <name>bottomRight</name>
