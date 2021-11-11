@@ -26,6 +26,33 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Information__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
@@ -68,6 +95,13 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -78,6 +112,11 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NKS_Type__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -130,6 +169,19 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.NKS_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Nyhet</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -142,6 +194,13 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
