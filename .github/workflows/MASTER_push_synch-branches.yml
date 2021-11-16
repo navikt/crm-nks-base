@@ -20,6 +20,8 @@ jobs:
       - name: Init git
         run: |
           git fetch origin
+          git config --local user.email "branchsyncher@github.com"
+          git config --local user.name "BRANCH SYNCHER"
 
       # Synchronize DEV branch
       #Adding empty commit with skip ci message to override CI on push to branches.
