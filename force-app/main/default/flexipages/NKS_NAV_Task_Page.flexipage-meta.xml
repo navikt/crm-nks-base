@@ -76,6 +76,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NKS_Comments__c</fieldItem>
             </fieldInstance>
         </itemInstances>
