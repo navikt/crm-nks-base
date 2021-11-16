@@ -40,7 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NKS_Subthemeformula__c</field>
+                <field>CRM_GjelderFormula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
