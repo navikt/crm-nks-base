@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CRM_FlowUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>NavTask__c.CRM_AccountRelated__c</field>
@@ -31,6 +35,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.CRM_GjelderFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NavTask__c.CRM_NavUnit__c</field>
         <readable>true</readable>
@@ -53,6 +62,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NavTask__c.CRM_SubTheme__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.CRM_Subtype__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
