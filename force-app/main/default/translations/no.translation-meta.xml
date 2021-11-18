@@ -712,17 +712,6 @@
         <flows>
             <screens>
                 <fields>
-                    <name>Origin</name>
-                </fields>
-                <name>Case_Input_Screen</name>
-            </screens>
-        </flows>
-        <fullName>NKS_Account_Create_New_Case</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <screens>
-                <fields>
                     <name>Error_Header</name>
                 </fields>
                 <fields>
