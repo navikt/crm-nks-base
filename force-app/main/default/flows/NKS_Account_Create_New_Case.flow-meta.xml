@@ -5,9 +5,10 @@
         <name>Redirect_to_Case</name>
         <label>Redirect to Case</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -16,6 +17,8 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <description>Pop up screen deleted for Case Origin input</description>
     <dynamicChoiceSets>
         <name>Case_Origin</name>
         <dataType>Picklist</dataType>
@@ -49,7 +52,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>158</locationY>
         <connector>
             <targetReference>Redirect_to_Case</targetReference>
         </connector>
@@ -62,7 +65,7 @@
         <inputAssignments>
             <field>Origin</field>
             <value>
-                <elementReference>Origin</elementReference>
+                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -75,33 +78,11 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Case_Input_Screen</name>
-        <label>Case Input Screen</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Create_Case</targetReference>
-        </connector>
-        <fields>
-            <name>Origin</name>
-            <choiceReferences>Case_Origin</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Type Henvendelse</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Case_Input_Screen</targetReference>
+            <targetReference>Create_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>

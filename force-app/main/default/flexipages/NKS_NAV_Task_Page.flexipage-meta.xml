@@ -45,11 +45,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -73,13 +73,6 @@
                     <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.ScreenReader}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -88,10 +81,6 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.NKS_Comments__c</fieldItem>
             </fieldInstance>
         </itemInstances>
