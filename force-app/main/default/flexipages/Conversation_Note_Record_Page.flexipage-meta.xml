@@ -96,7 +96,7 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.NKS_Date_Time_Registered__c</fieldItem>
+                <fieldItem>Record.CRM_Date_Registered__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <name>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</name>
