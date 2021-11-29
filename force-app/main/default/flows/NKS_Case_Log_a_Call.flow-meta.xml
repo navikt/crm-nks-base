@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>Journal_Case_ID</name>
             <value>
@@ -47,6 +48,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assign_Account_to_Case</name>
         <label>Assign Account to Case</label>
@@ -620,6 +622,7 @@
         <connector>
             <targetReference>Get_Person_Access</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -643,6 +646,7 @@
         <connector>
             <targetReference>Get_Person_Access_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -666,6 +670,7 @@
         <connector>
             <targetReference>Get_Person_Access_Case_Closed</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -689,6 +694,7 @@
         <connector>
             <targetReference>Check_Case_Status</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -710,6 +716,7 @@
         <connector>
             <targetReference>Changed_Account</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -731,6 +738,7 @@
         <connector>
             <targetReference>Get_Account_Case_Closed</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Case__c</field>
             <operator>EqualTo</operator>
@@ -764,6 +772,7 @@
         <connector>
             <targetReference>Case_Assignment_Default_0_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Case__c</field>
             <operator>EqualTo</operator>
@@ -788,6 +797,7 @@
         <connector>
             <targetReference>Check_Person_Access</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>UserId</field>
             <operator>EqualTo</operator>
@@ -821,6 +831,7 @@
         <connector>
             <targetReference>Check_Person_Access_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>UserId</field>
             <operator>EqualTo</operator>
@@ -854,6 +865,7 @@
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>UserId</field>
             <operator>EqualTo</operator>
@@ -886,6 +898,7 @@
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -906,6 +919,7 @@
         <label>Set Case Closed</label>
         <locationX>1688</locationX>
         <locationY>1169</locationY>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -972,6 +986,7 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1032,6 +1047,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1067,6 +1083,7 @@
                     <stringValue>neutral</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1114,6 +1131,7 @@
                     <stringValue>Henvendelsen ble lukket uten tilknytning til bruker</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1147,6 +1165,7 @@
                     <stringValue>h2</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1171,6 +1190,7 @@
                     <elementReference>Summary_Template</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1202,6 +1222,7 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1221,6 +1242,7 @@
                     <elementReference>Get_Case.NKS_Theme__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1256,6 +1278,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1279,6 +1302,7 @@
                     <elementReference>recordId</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1316,6 +1340,7 @@
                             <stringValue>neutral</stringValue>
                         </value>
                     </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
@@ -1358,6 +1383,7 @@
                             <booleanValue>false</booleanValue>
                         </value>
                     </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
@@ -1402,6 +1428,7 @@
                     <stringValue>Mangler tilknytning til bruker</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1456,10 +1483,35 @@
                     <stringValue>label-hidden</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>No_Account_Next_Button</name>
+            <extensionName>c:nksFlowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Bekreft Valg</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Account_Relation.value</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
@@ -1469,7 +1521,7 @@
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
@@ -1491,6 +1543,7 @@
     </subflows>
     <textTemplates>
         <name>Summary_Template</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>Takk for at du tok kontakt
 
 Du har fått informasjon om
