@@ -104,11 +104,11 @@
     </values>
     <values>
         <field>SubtitlePastEnglish__c</field>
-        <value xsi:type="xsd:string">received a notification</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SubtitlePastNorwegian__c</field>
-        <value xsi:type="xsd:string">mottok en notifikasjon</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SubtitleRelatedUserPrepositionEng__c</field>
