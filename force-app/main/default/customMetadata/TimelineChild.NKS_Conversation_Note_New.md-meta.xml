@@ -104,18 +104,18 @@
     </values>
     <values>
         <field>SubtitlePastEnglish__c</field>
-        <value xsi:type="xsd:string">had a phone conversation</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SubtitlePastNorwegian__c</field>
-        <value xsi:type="xsd:string">hadde en telefonsamtale</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SubtitleRelatedUserPrepositionEng__c</field>
-        <value xsi:type="xsd:string">with</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SubtitleRelatedUserPrepositionNor__c</field>
-        <value xsi:type="xsd:string">med</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
