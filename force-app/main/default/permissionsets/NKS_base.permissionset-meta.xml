@@ -353,6 +353,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CRM_FlowUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_NavTaskRoutingHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
