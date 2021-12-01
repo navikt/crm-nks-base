@@ -87,19 +87,33 @@ jobs:
           sfdx auth:sfdxurl:store -f ./UAT_SFDX_URL.txt -a uat-sandbox -s
           rm -f ./UAT_SFDX_URL.txt
 
-      # Install new package version into integration org
-      - name: Install new package version into integration org
-        id: integration-installation
+      # Install new package version into UAT org
+      - name: Install new package version into UAT org
+        id: uat-installation
         run: |
           sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u uat-sandbox -r -k ${{ secrets.PACKAGE_KEY }} --json | tee output
 
           echo "::set-output name=installOutput::$(cat output | jq '.message')"
           if [ $(cat output | jq '.status') == "0" ]; then
             echo "::set-output name=successfullyInstalled::true"
+          else
+            echo
+            echo FAILED TO INSTALL PACKAGE IN UAT SANDBOX
+            echo
+
+            exit 125
+          fi
+
+      # Deploy unpackagable content
+      - name: Deploy unpackagable content
+        run: |
+          if [ -d "./force-app/unpackagable-with-auto-deploy" ]; then
+            echo "Starting deployment of ./force-app/unpackagable-with-auto-deploy"
+            sfdx force:source:deploy -p ./force-app/unpackagable-with-auto-deploy -l RunLocalTests
           fi
     outputs:
-      successfullyInstalled: ${{ steps.integration-installation.outputs.successfullyInstalled }}
-      installOutput: ${{ steps.integration-installation.outputs.installOutput }}
+      successfullyInstalled: ${{ steps.uat-installation.outputs.successfullyInstalled }}
+      installOutput: ${{ steps.uat-installation.outputs.installOutput }}
 
   # ################################################################# #
   # ######################### CREATE RELEASE ######################## #
