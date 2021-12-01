@@ -900,6 +900,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>UserNotification__c.CRM_NotificationError__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_RelatedSfRecord__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>UserNotification__c.CRM_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -956,6 +966,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.INT_Link__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.INT_PreferredChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
