@@ -332,15 +332,6 @@
                     <name>relationshipField</name>
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
-                <componentName>nksPersonHenvendelseList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>CRM_Person__c</value>
-                </componentInstanceProperties>
                 <componentName>nksBrukervarselList</componentName>
             </componentInstance>
         </itemInstances>
