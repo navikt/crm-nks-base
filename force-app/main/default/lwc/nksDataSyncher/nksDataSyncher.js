@@ -65,8 +65,8 @@ export default class NksDataSyncher extends LightningElement {
 
     async doSynch(personIdent, personActorId, personAccountId) {
         await Promise.all([
-            this.bankAccountNumberSync(personIdent),
-            this.conversationNoteSynch(personIdent, personAccountId)
+            this.bankAccountNumberSync(personIdent)
+            //this.conversationNoteSynch(personIdent, personAccountId) Disabling this for henvendelse migration
         ]);
         this.initialized = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
