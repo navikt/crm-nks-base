@@ -95,7 +95,7 @@
             <assignToReference>Task_to_Create.NKS_Henvendelse_BehandlingsId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BEHANDLINGS_ID</elementReference>
+                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -133,7 +133,7 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>761</locationX>
+        <locationX>763</locationX>
         <locationY>1327</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -195,7 +195,7 @@
             <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BEHANDLINGS_ID</elementReference>
+                <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -205,7 +205,7 @@
     <assignments>
         <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
-        <locationX>1057</locationX>
+        <locationX>1058</locationX>
         <locationY>1536</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -267,7 +267,7 @@
             <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BEHANDLINGS_ID</elementReference>
+                <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -594,7 +594,7 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>761</locationX>
+        <locationX>760</locationX>
         <locationY>1485</locationY>
         <connector>
             <targetReference>Post_Journal</targetReference>
@@ -689,7 +689,7 @@
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>776</locationX>
-        <locationY>206</locationY>
+        <locationY>207</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Case_Status</targetReference>
@@ -748,10 +748,6 @@
         </filters>
         <object>Conversation_Note__c</object>
         <outputAssignments>
-            <assignToReference>BEHANDLINGS_ID</assignToReference>
-            <field>CRM_API_Reference__c</field>
-        </outputAssignments>
-        <outputAssignments>
             <assignToReference>Conversation_Note_Summary</assignToReference>
             <field>CRM_Conversation_Note__c</field>
         </outputAssignments>
@@ -774,7 +770,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>CRM_Case__c</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Conversation_Note_Record.Id</elementReference>
@@ -783,7 +779,7 @@
         <object>Conversation_Note__c</object>
         <outputAssignments>
             <assignToReference>BEHANDLINGS_ID</assignToReference>
-            <field>CRM_API_Reference__c</field>
+            <field>CRM_Henvendelse_BehandlingskjedeId__c</field>
         </outputAssignments>
         <sortField>Id</sortField>
         <sortOrder>Desc</sortOrder>
