@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>ExpandedFieldsToDisplay__c</field>
-        <value xsi:type="xsd:string">CRM_Is_Read__c, CRM_Conversation_Note__c, CRM_Timeline_User__c, 	CRM_Journal_Status_Formula__c</value>
+        <value xsi:type="xsd:string">CRM_Conversation_Note__c, CRM_Timeline_User__c, 	CRM_Journal_Status_Formula__c, CRM_Is_Read_Formula__c</value>
     </values>
     <values>
         <field>SLDS_Dropdown_Icon__c</field>
