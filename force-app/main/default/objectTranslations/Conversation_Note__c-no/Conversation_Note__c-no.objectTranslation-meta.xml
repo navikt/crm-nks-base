@@ -34,7 +34,9 @@
     <layouts>
         <layout>NKS Conversation Note Layout</layout>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label>
+                <!-- Custom Links -->
+            </label>
             <section>Custom Links</section>
         </sections>
     </layouts>
