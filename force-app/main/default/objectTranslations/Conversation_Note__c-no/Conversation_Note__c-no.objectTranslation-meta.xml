@@ -40,6 +40,7 @@
     </layouts>
     <nameFieldLabel>Referatnummer</nameFieldLabel>
     <quickActions>
+        <aspect>Master</aspect>
         <label>Journalfør</label>
         <name>NKS_Journal</name>
     </quickActions>
