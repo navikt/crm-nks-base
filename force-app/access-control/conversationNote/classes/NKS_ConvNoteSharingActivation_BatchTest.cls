@@ -11,7 +11,6 @@ private class NKS_ConvNoteSharingActivation_BatchTest {
         TestDataFactory.getPublicGroup('Dialog Skjermet', NKS_GroupVariables.SKJERMET_GROUP_NAME);
     }
 
-  
     @isTest
     private static void activateSharingConversationNoteForPersonsWithFortroligAddressWithBehId() {
         //we don't want handlers to be run on test data insert
