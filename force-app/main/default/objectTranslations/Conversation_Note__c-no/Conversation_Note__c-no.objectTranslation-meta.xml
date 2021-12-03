@@ -40,7 +40,23 @@
     </layouts>
     <nameFieldLabel>Referatnummer</nameFieldLabel>
     <quickActions>
+        <aspect>Master</aspect>
+        <label>Fullfør sladding</label>
+        <name>Complete_Redaction</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Kasser</label>
+        <name>Discard_Conversation</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
         <label>Journalfør</label>
         <name>NKS_Journal</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Sett til sladding</label>
+        <name>Set_To_Redaction</name>
     </quickActions>
 </CustomObjectTranslation>
