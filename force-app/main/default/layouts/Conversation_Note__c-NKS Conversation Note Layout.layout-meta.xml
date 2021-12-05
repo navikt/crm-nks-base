@@ -63,20 +63,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>Theme__c</fields>
-        <fields>NAV_Case_Reference__c</fields>
-        <fields>CRM_Journal_Date__c</fields>
-        <fields>CRM_Created_By_Ident__c</fields>
-        <relatedList>Journal_Entry__c.CRM_Conversation_Note__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x0000034fu7</masterLabel>
+        <masterLabel>00h1j000002jqQO</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

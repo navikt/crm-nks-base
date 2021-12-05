@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>49.0</apiVersion>
     <interviewLabel>Conversation Note Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Create Journal Entry</label>
     <processMetadataValues>
@@ -31,7 +30,6 @@
         <connector>
             <targetReference>Journal_Screen</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -74,10 +72,9 @@
             <inputParameters>
                 <name>prefilledThemeGroup</name>
                 <value>
-                    <elementReference>Get_Conversation_Note.CRM_Theme_Group__c</elementReference>
+                    <elementReference>Get_Conversation_Note.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -91,7 +88,7 @@
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Post_Journal_Entry</name>
         <label>Post Journal Entry</label>

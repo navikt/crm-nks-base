@@ -3,7 +3,7 @@
     <fullName>CRM_Timeline_User__c</fullName>
     <description>Friendly user displayed in timeline component for the conversation notes.</description>
     <externalId>false</externalId>
-    <formula>IF(ISBLANK(CreatedBy.CRM_NAV_Ident__c), CRM_Created_By_Ident__c,  CreatedBy.NKS_FullName__c + &apos;(&apos; + CRM_Created_By_Ident__c + &apos;)&apos;)</formula>
+    <formula>IF(ISBLANK(CRM_Created_By_Ident__c), &apos;&apos;, CreatedBy.NKS_FullName__c + &apos;(&apos; + CRM_Created_By_Ident__c + &apos;)&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Timeline User</label>
     <required>false</required>
