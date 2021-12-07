@@ -13,6 +13,7 @@
         <faultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>behandlingskjedeId</name>
             <value>
@@ -62,6 +63,7 @@
         <faultConnector>
             <targetReference>Create_Journal_Entry_Decision_0</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>content</name>
             <value>
@@ -357,7 +359,7 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>1187</locationX>
+        <locationX>1188</locationX>
         <locationY>502</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -611,8 +613,8 @@
     <decisions>
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
-        <locationX>1467</locationX>
-        <locationY>1133</locationY>
+        <locationX>1468</locationX>
+        <locationY>1131</locationY>
         <defaultConnector>
             <targetReference>Post_to_Henvendelse</targetReference>
         </defaultConnector>
@@ -708,7 +710,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue />
+                    <stringValue/>
                 </rightValue>
             </conditions>
             <connector>
@@ -798,6 +800,10 @@
             </value>
         </filters>
         <object>Account</object>
+        <outputAssignments>
+            <assignToReference>SF_PERSON_ID</assignToReference>
+            <field>CRM_Person__c</field>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>personIdent</assignToReference>
             <field>INT_PersonIdent__c</field>
@@ -950,7 +956,7 @@
             <field>RecordId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+                <elementReference>SF_PERSON_ID</elementReference>
             </value>
         </filters>
         <object>UserRecordAccess</object>
@@ -1034,8 +1040,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>753</locationX>
-        <locationY>509</locationY>
+        <locationX>587</locationX>
+        <locationY>778</locationY>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
@@ -1060,6 +1066,7 @@
         <label>Set Case Closed</label>
         <locationX>1688</locationX>
         <locationY>1134</locationY>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1088,7 +1095,7 @@
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1186</locationX>
+        <locationX>1188</locationX>
         <locationY>655</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -1240,6 +1247,30 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Record_Refresher_Closed_Case</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>No_Person_Access</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1248,7 +1279,7 @@
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
         <locationX>776</locationX>
-        <locationY>597</locationY>
+        <locationY>573</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1690,7 +1721,7 @@
         <text>Takk for at du tok kontakt
 
 Du har fått informasjon om
-- </text>
+-</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>
@@ -1747,7 +1778,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue />
+            <stringValue/>
         </value>
     </variables>
     <variables>
@@ -1770,6 +1801,14 @@ Du har fått informasjon om
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Salesforce ID to the Person__c record</description>
+        <name>SF_PERSON_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
