@@ -359,7 +359,7 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>1187</locationX>
+        <locationX>1188</locationX>
         <locationY>502</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -613,8 +613,8 @@
     <decisions>
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
-        <locationX>1467</locationX>
-        <locationY>1133</locationY>
+        <locationX>1468</locationX>
+        <locationY>1131</locationY>
         <defaultConnector>
             <targetReference>Post_to_Henvendelse</targetReference>
         </defaultConnector>
@@ -1095,7 +1095,7 @@
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1186</locationX>
+        <locationX>1188</locationX>
         <locationY>655</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -1240,6 +1240,30 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>HAS_PERSON_READ</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Record_Refresher_Closed_Case</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>No_Person_Access</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
