@@ -1,9 +1,8 @@
 <template>
     <lightning-layout multiple-rows="true">
-        <lightning-layout-item if:true={displayHeader} size="12">
-            <b class="slds-text-title_caps">{ytelse.ytelsestype.value}</b>
-        </lightning-layout-item>
-        <lightning-layout-item if:true={displayHeader} size="12">
+        <lightning-layout-item if:true={displayHeader} class="slds-var-p-bottom_x-small" size="12">
+            <b class="slds-text-title_bold">{ytelse.ytelsestype.value}</b>
+            &nbsp; &nbsp;
             <lightning-formatted-date-time
                 year="numeric"
                 month="2-digit"
@@ -21,16 +20,16 @@
             ></lightning-formatted-date-time>
         </lightning-layout-item>
         <lightning-layout-item size="6">
-            <b class="slds-text-title_caps">{labels.COL_DETAILS}</b>
+            <b class="slds-text-title_bold">{labels.COL_DETAILS}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">{labels.COL_RATE}</b>
+            <b class="slds-text-title_bold slds-float_right">{labels.COL_RATE}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">{labels.COL_QUANTITY}</b>
+            <b class="slds-text-title_bold slds-float_right">{labels.COL_QUANTITY}</b>
         </lightning-layout-item>
         <lightning-layout-item size="2">
-            <b class="slds-text-title_caps slds-float_right">{labels.COL_AMOUNT}</b>
+            <b class="slds-text-title_bold slds-float_right">{labels.COL_AMOUNT}</b>
         </lightning-layout-item>
         <template for:each={ytelse.ytelseskomponentListe} for:item="ytelseskomponent">
             <lightning-layout-item size="6" key={ytelseskomponent.ytelseskomponenttype}>

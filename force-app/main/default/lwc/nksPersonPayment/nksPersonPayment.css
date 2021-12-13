@@ -1,6 +1,6 @@
-.payment-tile-bg  {
+.payment-tile-bg {
     border-style: solid;
-    border-color: darkolivegreen;
+    border-color: #949494;
     border-width: 1.5px;
     cursor: pointer;
     border-radius: 0.3em;

@@ -1,7 +1,7 @@
 <template>
     <lightning-card title={listTitle} icon-name="utility:moneybag" class="moneybag-color">
         <lightning-layout multiple-rows="true">
-            <lightning-layout-item size="12" class="slds-var-p-bottom_medium">
+            <lightning-layout-item size="12" class="slds-var-p-bottom_large">
                 <lightning-layout multiple-rows="true" alternative-text="Filter">
                     <lightning-layout-item size="6" class="slds-var-p-bottom_medium">
                         <div class="slds-is-relative">
@@ -81,8 +81,8 @@
                             <template iterator:it={paymentGroup}>
                                 <h2
                                     if:true={it.first}
-                                    class="slds-text-title_caps slds-border_bottom slds-var-m-bottom_small"
-                                    style="font-weight: bold; font-size: 1.1em"
+                                    class="slds-text-title_bold slds-var-m-bottom_small"
+                                    style="font-weight: bold; font-size: 1.1em; text-transform: capitalize"
                                     key={it.value.group}
                                 >
                                     <div if:true={it.value.data.utbetalingsdato}>
