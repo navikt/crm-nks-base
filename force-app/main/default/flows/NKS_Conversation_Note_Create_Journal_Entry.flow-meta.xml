@@ -13,6 +13,7 @@
         <faultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>behandlingskjedeId</name>
             <value>
@@ -48,6 +49,7 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Set_Journal_Completed</name>
         <label>Set Journal Completed</label>
@@ -222,6 +224,7 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <nextOrFinishButtonLabel>Journalfør</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
