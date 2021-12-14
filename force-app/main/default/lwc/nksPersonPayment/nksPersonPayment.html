@@ -11,12 +11,12 @@
             <lightning-layout-item size="11" class="slds-var-p-left_small">
                 <lightning-layout
                     multiple-rows="true"
-                    class="slds-var-p-bottom_small slds-var-p-top_small slds-var-p-right_small"
+                    class="slds-var-p-bottom_xx-small slds-var-p-top_small slds-var-p-right_medium"
                 >
-                    <lightning-layout-item size="8" padding="horizontal-small">
+                    <lightning-layout-item size="8">
                         <h3 class="slds-text-title_bold">{ytelserHeader}</h3>
                     </lightning-layout-item>
-                    <lightning-layout-item size="4" padding="horizontal-small">
+                    <lightning-layout-item size="4">
                         <lightning-layout horizontal-align="end">
                             <b>
                                 <lightning-formatted-number
@@ -27,7 +27,7 @@
                             </b>
                         </lightning-layout>
                     </lightning-layout-item>
-                    <lightning-layout-item size="8" padding="horizontal-small">
+                    <lightning-layout-item size="8">
                         <lightning-layout if:true={payment.utbetalingsdato}>
                             <lightning-formatted-date-time
                                 value={payment.utbetalingsdato}
@@ -37,14 +37,14 @@
                         </lightning-layout>
                         <p if:false={payment.utbetalingsdato}>{payment.utbetalingsstatus}</p>
                     </lightning-layout-item>
-                    <lightning-layout-item size="4" padding="horizontal-small">
+                    <lightning-layout-item size="4">
                         <lightning-layout if:true={payment.forfallsdato} horizontal-align="end">
                             <p>{labels.PAYMENT_DUE_DATE}:</p>
                             &nbsp;
                             <lightning-formatted-date-time value={payment.forfallsdato}></lightning-formatted-date-time>
                         </lightning-layout>
                     </lightning-layout-item>
-                    <lightning-layout-item if:false={multipleYtelser} size="12" padding="horizontal-small">
+                    <lightning-layout-item if:false={multipleYtelser} size="12">
                         <template for:each={payment.ytelseListe} for:item="ytelse">
                             <b key={ytelse.ytelsestype}
                                 ><lightning-formatted-date-time
@@ -65,7 +65,7 @@
                             ></b>
                         </template>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" padding="horizontal-small">
+                    <lightning-layout-item size="12">
                         <lightning-layout
                             class="slds-float_right"
                             type="button"
@@ -84,15 +84,15 @@
                 </lightning-layout>
             </lightning-layout-item>
             <!--PAYMENT DETAILS-->
-            <lightning-layout-item if:true={expanded} size="12">
+            <lightning-layout-item if:true={expanded} size="12" class="slds-var-p-bottom_medium">
                 <lightning-layout multiple-rows="true" class="slds-var-m-bottom_small">
-                    <lightning-layout-item size="12" padding="horizontal-small">
+                    <lightning-layout-item size="12" padding="horizontal-medium">
                         <b>{labels.PAYMENT_RECIPIENT}</b> {payment.utbetaltTil.navn}
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" padding="horizontal-small" if:true={payment.utbetaltTilKonto}>
+                    <lightning-layout-item size="12" padding="horizontal-medium" if:true={payment.utbetaltTilKonto}>
                         <b>{labels.BANK_ACCOUNT_NUMBER}</b> {payment.utbetaltTilKonto.kontonummer}
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" padding="horizontal-small" if:true={payment.utbetalingsmelding}>
+                    <lightning-layout-item size="12" padding="horizontal-medium" if:true={payment.utbetalingsmelding}>
                         <b>{labels.PAYMENT_MESSAGE}</b> {payment.utbetalingsmelding}
                     </lightning-layout-item>
                 </lightning-layout>
