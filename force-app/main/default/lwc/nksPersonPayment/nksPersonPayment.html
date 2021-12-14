@@ -1,16 +1,18 @@
 <template>
-    <div
-        class="slds-var-p-around_small slds-var-m-bottom_x-small payment-tile-bg"
-        aria-expanded={expanded}
-        onclick={toggleExpand}
-    >
+    <div class="slds-var-m-bottom_x-small payment-tile-bg" aria-expanded={expanded} onclick={toggleExpand}>
         <lightning-layout multiple-rows="true">
-            <lightning-layout-item size="1" padding="horizontal-small" class="slds-align_absolute-center">
-                <lightning-icon data-paid={paid} icon-name={statusIcon} size="medium" class="slds-var-p-right_small">
-                </lightning-icon>
+            <lightning-layout-item
+                size="1"
+                padding="horizontal-small"
+                class="slds-var-p-left_x-large slds-var-p-top_x-large"
+            >
+                <lightning-icon data-paid={paid} icon-name={statusIcon} size="medium"> </lightning-icon>
             </lightning-layout-item>
-            <lightning-layout-item size="11">
-                <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="11" class="slds-var-p-left_small">
+                <lightning-layout
+                    multiple-rows="true"
+                    class="slds-var-p-bottom_small slds-var-p-top_small slds-var-p-right_small"
+                >
                     <lightning-layout-item size="8" padding="horizontal-small">
                         <h3 class="slds-text-title_bold">{ytelserHeader}</h3>
                     </lightning-layout-item>
@@ -63,7 +65,7 @@
                             ></b>
                         </template>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12">
+                    <lightning-layout-item size="12" padding="horizontal-small">
                         <lightning-layout
                             class="slds-float_right"
                             type="button"
@@ -82,15 +84,15 @@
                 </lightning-layout>
             </lightning-layout-item>
             <!--PAYMENT DETAILS-->
-            <lightning-layout-item if:true={expanded} class="slds-var-m-top_small" padding="horizontal-small" size="12">
+            <lightning-layout-item if:true={expanded} size="12">
                 <lightning-layout multiple-rows="true" class="slds-var-m-bottom_small">
-                    <lightning-layout-item size="12">
+                    <lightning-layout-item size="12" padding="horizontal-small">
                         <b>{labels.PAYMENT_RECIPIENT}</b> {payment.utbetaltTil.navn}
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" if:true={payment.utbetaltTilKonto}>
+                    <lightning-layout-item size="12" padding="horizontal-small" if:true={payment.utbetaltTilKonto}>
                         <b>{labels.BANK_ACCOUNT_NUMBER}</b> {payment.utbetaltTilKonto.kontonummer}
                     </lightning-layout-item>
-                    <lightning-layout-item size="12" if:true={payment.utbetalingsmelding}>
+                    <lightning-layout-item size="12" padding="horizontal-small" if:true={payment.utbetalingsmelding}>
                         <b>{labels.PAYMENT_MESSAGE}</b> {payment.utbetalingsmelding}
                     </lightning-layout-item>
                 </lightning-layout>
