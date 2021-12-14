@@ -1,10 +1,6 @@
 <template>
-    <lightning-layout multiple-rows="true">
-        <lightning-layout-item
-            if:true={displayHeader}
-            class="slds-var-p-bottom_x-small slds-var-p-left_medium"
-            size="12"
-        >
+    <lightning-layout class="slds-var-p-bottom_small" multiple-rows="true">
+        <lightning-layout-item if:true={displayHeader} class="slds-var-p-bottom_small slds-var-p-left_medium" size="12">
             <b class="slds-text-title_bold">{ytelse.ytelsestype.value}</b>
             &nbsp; &nbsp;
             <lightning-formatted-date-time
