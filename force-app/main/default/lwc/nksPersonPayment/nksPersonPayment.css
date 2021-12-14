@@ -1,7 +1,7 @@
 .payment-tile-bg {
     border-style: solid;
     border-color: #949494;
-    border-width: 1.5px;
+    border-width: 1px;
     cursor: pointer;
     border-radius: 0.3em;
 }
@@ -10,7 +10,6 @@
     border-color: rgb(21, 137, 238);
     border-style: solid;
     box-shadow: 0 0 0.1em #0070d2;
-    border-width: 1px;
 }
 
 .chevron-toggle {
