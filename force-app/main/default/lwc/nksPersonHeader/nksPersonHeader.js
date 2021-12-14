@@ -14,8 +14,6 @@ export default class NksPersonHeader extends LightningElement {
     @api objectApiName;
     @api relationshipField;
     @api showPersonBadges = false;
-    showAll = false;
-    isLoaded = false;
     personId;
     fullName;
     personIdent;
@@ -26,7 +24,6 @@ export default class NksPersonHeader extends LightningElement {
     wireFields;
     @api condition1;
     @api condition2;
-    @track errorMessages = [];
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -76,7 +73,7 @@ export default class NksPersonHeader extends LightningElement {
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
-        } catch (err) {
+        } catch (error) {
             console.log('Oops, unable to copy');
         }
 
@@ -93,7 +90,7 @@ export default class NksPersonHeader extends LightningElement {
                 this.personId = this.resolve(relationshipField, record);
             })
             .catch((error) => {
-                this.addError(error);
+                console.log(error);
             });
     }
 
@@ -111,7 +108,7 @@ export default class NksPersonHeader extends LightningElement {
             this.maritalStatus = getFieldValue(data, MARITAL_STATUS_FIELD);
         }
         if (error) {
-            this.addError(error);
+            console.log(error);
         }
     }
 
@@ -126,22 +123,7 @@ export default class NksPersonHeader extends LightningElement {
             }
         }
         if (error) {
-            this.addError(error);
-        }
-    }
-
-    showAllNotifications() {
-        this.showAll = true;
-    }
-
-    addError(error) {
-        this.isLoaded = true;
-        if (Array.isArray(error.body)) {
-            this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
-        } else if (error.body && typeof error.body.message === 'string') {
-            this.errorMessages.push(error.body.message);
-        } else {
-            this.errorMessages.push(error.body);
+            console.log(error);
         }
     }
 
