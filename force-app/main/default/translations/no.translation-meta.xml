@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
-        <label />
+        <label/>
         <name>NAV_Kontaktsenter</name>
     </customApplications>
     <customApplications>
@@ -9,109 +9,127 @@
         <name>Permitteringsvarsler</name>
     </customApplications>
     <customApplications>
+        <label><!-- Sladding --></label>
+        <name>Sladding</name>
+    </customApplications>
+    <customApplications>
         <label>NAV</label>
         <name>TAG_NAV_default</name>
     </customApplications>
     <customLabels>
-        <label />
+        <label><!-- CRMHenveldelse_Blank --></label>
+        <name>CRMHenveldelse_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Conversation Note Redacted Message Notification Text --></label>
+        <name>CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Henvendelse - Innboks Base URL --></label>
+        <name>CRMHenvendelse_InnboksBaseURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - New Conversation Note Notification --></label>
+        <name>CRMHenvendelse_NewConversationNoteNotification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - New Message Notification --></label>
+        <name>CRMHenvendelse_NewMessageNotification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Thread Redacted Message Notification Text --></label>
+        <name>CRMHenvendelse_RedactedMessageNotificationText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - Samtalereferat URL --></label>
+        <name>CRMHenvendelse_SamtalereferatURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - System User --></label>
+        <name>CRMHenvendelse_SystemUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - Thread URL --></label>
+        <name>CRMHenvendelse_ThreadURL</name>
+    </customLabels>
+    <customLabels>
+        <label/>
         <name>CRM_Chat_Authentication_Init_Failed</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>CRM_Chat_Authentication_Requested</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>CRM_Chat_Authentication_Started</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>CRM_Chat_Identity_Confirmed</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>CRM_Chat_Identity_Confirmed_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>CRM_Chat_Unconfirmed_Identity_Warning</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List Col Case Id -->
-        </label>
+        <label/>
         <name>CRM_Journal_Case_List_Col_Case_Id</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List Col Created Date -->
-        </label>
+        <label/>
         <name>CRM_Journal_Case_List_Col_Created_Date</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Journal Case List No Cases Error -->
-        </label>
+        <label/>
         <name>CRM_Journal_Case_List_No_Cases_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Retrieve Error -->
-        </label>
+        <label/>
         <name>CRM_NAV_Case_Retrieve_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Title -->
-        </label>
+        <label/>
         <name>CRM_NAV_Case_Title</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Case Validation Error -->
-        </label>
+        <label/>
         <name>CRM_NAV_Case_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- NAV Task Type Validation Error -->
-        </label>
+        <label/>
         <name>CRM_NAV_Task_Type_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Nav Task Work Allocation Delegate to Self -->
-        </label>
+        <label/>
         <name>CRM_Nav_Task_Work_Allocation_Delegate_to_Self</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Nav Task Work Allocation Validation Error -->
-        </label>
+        <label/>
         <name>CRM_Nav_Task_Work_Allocation_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- No Cases for Selected Theme Group -->
-        </label>
+        <label/>
         <name>CRM_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- Theme Categorization Validation Error -->
-        </label>
+        <label/>
         <name>CRM_Theme_Categorization_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>Errors_CannotFindTriggerHandlerClass</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>Errors_DuplicateTriggerHandlerClass</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>Errors_InvalidSettingConfiguration</name>
     </customLabels>
     <customLabels>
@@ -123,11 +141,11 @@
         <name>NAV_Unit_Error_person_not_accessible</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>NKS_Chat_Login_Message_EN</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>NKS_Chat_Login_Message_NO</name>
     </customLabels>
     <customLabels>
@@ -199,7 +217,7 @@
         <name>NKS_Payment_List_Bank_Account</name>
     </customLabels>
     <customLabels>
-        <label>Antall</label>
+        <label>Beløp</label>
         <name>NKS_Payment_List_Col_Amount</name>
     </customLabels>
     <customLabels>
@@ -307,147 +325,103 @@
         <name>NKS_Theme_Categorization_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Activities -->
-        </label>
+        <label/>
         <name>Timeline_Activities</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Collapse -->
-        </label>
+        <label/>
         <name>Timeline_Collapse</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Empty Group -->
-        </label>
+        <label/>
         <name>Timeline_EmptyGroup</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Empty Subtitle -->
-        </label>
+        <label/>
         <name>Timeline_EmptySubtitle</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Empty Title -->
-        </label>
+        <label/>
         <name>Timeline_EmptyTitle</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Error Title -->
-        </label>
+        <label/>
         <name>Timeline_ErrorTitle</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Expand -->
-        </label>
+        <label/>
         <name>Timeline_Expand</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Last -->
-        </label>
+        <label/>
         <name>Timeline_Last</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Load More -->
-        </label>
+        <label/>
         <name>Timeline_LoadMore</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Moment.js Language -->
-        </label>
+        <label/>
         <name>Timeline_MomentJsLanguage</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] New -->
-        </label>
+        <label/>
         <name>Timeline_New</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Not Configured -->
-        </label>
+        <label/>
         <name>Timeline_NotConfugred</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Older -->
-        </label>
+        <label/>
         <name>Timeline_Older</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Overdue -->
-        </label>
+        <label/>
         <name>Timeline_Overdue</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Previous Month -->
-        </label>
+        <label/>
         <name>Timeline_PreviousMonth</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] This Month -->
-        </label>
+        <label/>
         <name>Timeline_ThisMonth</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Today -->
-        </label>
+        <label><!-- [ActTime] Time prefix --></label>
+        <name>Timeline_TimePrefix</name>
+    </customLabels>
+    <customLabels>
+        <label/>
         <name>Timeline_Today</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Tomorrow -->
-        </label>
+        <label/>
         <name>Timeline_Tomorrow</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Unknown -->
-        </label>
+        <label/>
         <name>Timeline_Unknown</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Upcoming -->
-        </label>
+        <label/>
         <name>Timeline_Upcoming</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] View All -->
-        </label>
+        <label/>
         <name>Timeline_ViewAll</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] View More -->
-        </label>
+        <label/>
         <name>Timeline_ViewMore</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] Yesterday -->
-        </label>
+        <label/>
         <name>Timeline_Yesterday</name>
     </customLabels>
     <customLabels>
-        <label>
-            <!-- [ActTime] You -->
-        </label>
+        <label/>
         <name>Timeline_You</name>
     </customLabels>
     <customLabels>
@@ -575,53 +549,51 @@
         <name>fbc_Users</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_QueryFactory_fieldset_wrong_sobject_error</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_QueryFactory_recursive_subquery_error</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_QueryFactory_subquery_invalid_relationship</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_field_not_insertable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_field_not_readable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_field_not_updateable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_object_not_deletable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_object_not_insertable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_object_not_readable</name>
     </customLabels>
     <customLabels>
-        <label />
+        <label/>
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
     <customTabs>
-        <label>
-            <!-- API Transactions -->
-        </label>
+        <label/>
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
@@ -629,7 +601,11 @@
         <name>NKS_User_administration</name>
     </customTabs>
     <flowDefinitions>
-        <flows />
+        <flows/>
+        <fullName>AccountTriggerBefore</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Account_Team_Update</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -642,6 +618,162 @@
             </screens>
         </flows>
         <fullName>Add_campaign_member</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_AfterInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_AfterUpdate_OnIsReadSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeUpdate_OfficeRestrictionSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeUpdate_OnAccountChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterInsert_OnInterntalMessage</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterUpdate_OnIsRedactedSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterUpdate_OnReadSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnAccountChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnOfficeRestrictionSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnSetActiveToFalse</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnThreadTypeChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_Subflow_CreateUserNotificationOnRedactedMessage</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <textTemplates>
+                <name>MessageSummaryText</name>
+            </textTemplates>
+        </flows>
+        <fullName>CRMHenvendelse_Thread_Subflow_RecalculateMessageSummary</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Conversation_Note_Before_Update_Incorrectly_Sent_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Create_Thread_Event</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Conversation_Note</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Message_Thread</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Confirmation_Text</name>
+                </fields>
+                <name>Confirm_Remove_Screeen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Error_Header</name>
+                </fields>
+                <fields>
+                    <name>Error_Screen_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+        </flows>
+        <fullName>CRM_Patch_NAV_Task_Remove_Assignee</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_Header</name>
+                </fields>
+                <fields>
+                    <name>Error_Screen_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Task_Due_Date</name>
+                    <validationRule/>
+                </fields>
+                <fields>
+                    <name>Task_Priority</name>
+                </fields>
+                <fields>
+                    <name>Task_Status</name>
+                </fields>
+                <fields>
+                    <name>Task_Type_Selector</name>
+                </fields>
+                <fields>
+                    <name>Theme_Categorization</name>
+                </fields>
+                <fields>
+                    <name>Work_Allocation</name>
+                </fields>
+                <name>NAV_Task_Input_Screen</name>
+            </screens>
+        </flows>
+        <fullName>CRM_Patch_Update_NAV_Task</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Retry_NAV_Task_Post</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -685,28 +817,178 @@
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows>
+            <textTemplates>
+                <name>Newline</name>
+            </textTemplates>
+        </flows>
         <fullName>CRM_Send_NAV_Task_Auto</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
+        <fullName>CRM_Thread_Before_Update_Incorrectly_Sent_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Thread_Create_Journal_Entry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Chat_Set_SourceId_On_Case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Contract</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>userNotificationError</name>
+                </fields>
+                <name>No_user_notification</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next_0</name>
+                </fields>
+                <name>Trigger_sync_0</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>partialSuccessMessage</name>
+                </fields>
+                <name>partialSuccess</name>
+            </screens>
+            <textTemplates>
+                <name>Update_Conversation_Note</name>
+            </textTemplates>
+        </flows>
+        <fullName>ConversationNote_Screenflow_Complete_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Not_Complete</name>
+                </fields>
+                <name>Failed</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>somethingWnetWrongText</name>
+                </fields>
+                <fields>
+                    <name>userNotificationNotCreated</name>
+                </fields>
+                <fields>
+                    <name>usernotificationCreatedButNotSent</name>
+                </fields>
+                <name>Something_is_not_OK</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next_0</name>
+                </fields>
+                <name>Trigger_sync_0</name>
+            </screens>
+            <textTemplates>
+                <name>Update_Conversation_Note_After_Discarding</name>
+            </textTemplates>
+        </flows>
+        <fullName>ConversationNote_Screenflow_Discard_Conversation</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_After_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_After_update_Archive</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_Before_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Cause</name>
+                </fields>
+                <fields>
+                    <name>Sensitive_Toggle</name>
+                </fields>
+                <name>Set_Conversation_Note_to_redaction</name>
+            </screens>
+        </flows>
+        <fullName>Conversation_Note_Set_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_Subflow_Create_User_Notification_On_Discarded_Conversation</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Custom_Campaign_Member_RelatedList</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Custom_Opportunity_update_Inq_Cat_2</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Delete_chat_body_Sosiale_tjenester</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
+        <fullName>Discarding_Email_Alert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Flow_Create_Application_Log</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
+        <fullName>Gjelder_insert_before_save</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Conversation_Note_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Entry_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Message_Thread_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>NAVTask_Owner_Change</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Account_Create_New_Case</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -745,6 +1027,23 @@
             </screens>
         </flows>
         <fullName>NKS_Account_Send_NAV_Task</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Account_Relation</name>
+                </fields>
+                <fields>
+                    <name>Select_Account_Header</name>
+                </fields>
+                <fields>
+                    <name>Select_Account_Text</name>
+                </fields>
+                <name>Account_Search_Screen</name>
+            </screens>
+        </flows>
+        <fullName>NKS_Case_Change_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -825,6 +1124,9 @@
                     <name>Missing_Account_Header</name>
                 </fields>
                 <fields>
+                    <name>No_Account_Next_Button</name>
+                </fields>
+                <fields>
                     <name>Update_Account_Text</name>
                 </fields>
                 <name>No_Account_Screen</name>
@@ -843,6 +1145,9 @@
                 </fields>
                 <fields>
                     <name>No_Account_Error</name>
+                </fields>
+                <fields>
+                    <name>Post_Error_Text</name>
                 </fields>
                 <name>Error_Screen</name>
             </screens>
@@ -879,7 +1184,7 @@
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>NKS_Chat_Case_Anonymization</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -1006,7 +1311,7 @@
         <fullName>NKS_Chat_Create_Journal_Entry</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>NKS_Close_Case_and_Tab</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -1081,6 +1386,9 @@
                 <fields>
                     <name>FeedbackList</name>
                 </fields>
+                <fields>
+                    <name>where</name>
+                </fields>
                 <name>FeedbackScreen</name>
             </screens>
         </flows>
@@ -1116,7 +1424,7 @@
         <fullName>NKS_Send_NAV_Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>NKS_Set_Chat_Theme_Group</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -1193,11 +1501,11 @@
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Opportunity</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>POST_JOURNAL_AUTO_TEMPLATE</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -1218,8 +1526,29 @@
         <fullName>POST_JOURNAL_TEMPLATE</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows>
+            <screens>
+                <fields>
+                    <name>Comment</name>
+                </fields>
+                <fields>
+                    <name>Comment_Failed_Text</name>
+                </fields>
+                <name>Add_Comment_Screen</name>
+            </screens>
+            <textTemplates>
+                <name>NEWLINE</name>
+            </textTemplates>
+        </flows>
+        <fullName>Patch_NAV_Task_Add_Comment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Remove_Old_TopicAssignment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Reset_Account_Warning_After_6_Months</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -1297,15 +1626,15 @@
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Temporary_Layoff_Update</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -1330,6 +1659,86 @@
             </screens>
         </flows>
         <fullName>Test_SMS_Callout</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_After_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_After_update_Archive</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_Before_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>userNotificationError</name>
+                </fields>
+                <name>No_user_notification</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>partialSuccessMessage</name>
+                </fields>
+                <name>partialSuccess</name>
+            </screens>
+            <textTemplates>
+                <name>Redacted_Message_Notification_Text</name>
+            </textTemplates>
+        </flows>
+        <fullName>Thread_Screenflow_Complete_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Not_Complete</name>
+                </fields>
+                <name>Failed</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>somethingWnetWrongText</name>
+                </fields>
+                <fields>
+                    <name>userNotificationNotCreated</name>
+                </fields>
+                <fields>
+                    <name>usernotificationCreatedButNotSent</name>
+                </fields>
+                <name>Something_is_not_OK</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <textTemplates>
+                <name>Redacted_Message_Notification_Text</name>
+            </textTemplates>
+        </flows>
+        <fullName>Thread_Screenflow_Discard_Message</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>UN_UserNotificationCreateDoneEventFromRelatedRecordId</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -1385,123 +1794,82 @@
         <fullName>Update_NAVUnits</fullName>
     </flowDefinitions>
     <quickActions>
-        <label />
+        <aspect>Master</aspect>
+        <label/>
         <name>LogACall</name>
     </quickActions>
     <quickActions>
+        <aspect>Master</aspect>
         <label>Ny oppgave</label>
         <name>NKS_newTask</name>
     </quickActions>
     <quickActions>
-        <label />
-        <name>NewAccount</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewCase</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewContact</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewEvent</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewGroup</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewLead</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewNote</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewOpportunity</name>
-    </quickActions>
-    <quickActions>
-        <label />
-        <name>NewTask</name>
-    </quickActions>
-    <quickActions>
-        <label />
+        <aspect>Master</aspect>
+        <label/>
         <name>SendEmail</name>
     </quickActions>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Admin_dashboard_Rapport</name>
         <sections>
-            <label />
+            <label/>
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Dashboards</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Admin_rapport_over_Rapporter</name>
         <sections>
-            <label />
+            <label/>
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Reports</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Bedriftskampanjemedlemmer_med_Konto</name>
         <sections>
-            <label />
+            <label/>
             <name>Activities</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Chat_Transcript</name>
         <sections>
-            <label />
+            <label/>
             <name>Chat Transcripts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Kampanje med kontoer -->
-        </description>
-        <label>
-            <!-- Kampanje med kontoer -->
-        </label>
+        <description/>
+        <label/>
         <name>Kampanjer_med_kontoer_og_kontakter</name>
         <sections>
-            <label>
-                <!-- Custom Campaign Members -->
-            </label>
+            <label/>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label>
-                <!-- Custom Campaigns -->
-            </label>
+            <label/>
             <name>Custom Campaigns</name>
         </sections>
         <sections>
@@ -1577,17 +1945,11 @@
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Kontakter i kampanje -->
-        </description>
-        <label>
-            <!-- Kontakter i kampanje -->
-        </label>
+        <description/>
+        <label/>
         <name>Kontakter_i_kampanje</name>
         <sections>
-            <label>
-                <!-- Account Relationships -->
-            </label>
+            <label/>
             <name>Account Relationships</name>
         </sections>
         <sections>
@@ -1595,150 +1957,140 @@
             <name>Contacts</name>
         </sections>
         <sections>
-            <label>
-                <!-- Custom Campaign Members -->
-            </label>
+            <label/>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label>
-                <!-- Felter fra konto -->
-            </label>
+            <label/>
             <name>Felter fra konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description>
-            <!-- Kontakter med Arbeidsgivere som har Arena Aktivite -->
-        </description>
-        <label>
-            <!-- Kontakter med Arbeidsgivere som har Arena Aktivite -->
-        </label>
+        <description/>
+        <label/>
         <name>Kontakter_med_Arbeidsgivere_som_har_Arena_Aktivite</name>
         <sections>
-            <label>
-                <!-- Account Relationships -->
-            </label>
+            <label/>
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label>
-                <!-- Arena Aktiviteter -->
-            </label>
+            <label/>
             <name>Arena Aktiviteter</name>
         </sections>
         <sections>
-            <label>
-                <!-- Contacts -->
-            </label>
+            <label/>
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Kontoer_med_NAV_Kontaktperson</name>
         <sections>
-            <label />
+            <label/>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Kontoer_med_eller_uten_kontakter</name>
         <sections>
-            <label />
+            <label/>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Kontoer_med_eller_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label />
+            <label/>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Kontoer_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label />
+            <label/>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>Muligheter_med_konto_og_NAV_Kontor</name>
         <sections>
-            <label />
+            <label/>
             <name>Custom Opportunities</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
+            <label/>
             <name>Virksomhet</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>NKS_Agent_Work</name>
         <sections>
-            <label />
+            <label/>
             <name>Agent Work</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>TAG_Permitteringsvarsler_med_konto_og_NAV_kontor</name>
         <sections>
-            <label />
+            <label/>
             <name>Konto</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Temporary Layoffs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description/>
+        <label/>
         <name>screen_flows_prebuilt_crt</name>
         <sections>
-            <label />
+            <label/>
             <name>Flow Interview Log Entries</name>
         </sections>
         <sections>
-            <label />
+            <label/>
             <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
