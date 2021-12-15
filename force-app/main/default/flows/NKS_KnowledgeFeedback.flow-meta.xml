@@ -28,7 +28,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assign_feedback</name>
         <label>Assign feedback</label>
@@ -92,8 +92,8 @@
     <dynamicChoiceSets>
         <name>Area</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>Knowledge_Area__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>

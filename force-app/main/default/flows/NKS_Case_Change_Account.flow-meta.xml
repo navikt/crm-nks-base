@@ -16,7 +16,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <description>Creates a duplicate case with a new account relation.</description>
     <interviewLabel>Case Change Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Change Account</label>
