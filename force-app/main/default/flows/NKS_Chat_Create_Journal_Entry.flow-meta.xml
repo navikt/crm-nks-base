@@ -1620,7 +1620,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <elementReference>Journalfør</elementReference>
+                    <elementReference>$Label.NKS_Journal_Flow_Complete_Button</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
