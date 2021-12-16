@@ -53,6 +53,13 @@ public class NKS_PaymentListController {
         return returnList;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static String getBeregningsGrunnlag(String personIdent) {
+        NKS_ArenaService arenaService = new NKS_ArenaService();
+        HttpResponse resp = arenaService.getBeregningsGrunnlag(personIdent);
+        return resp.getBody();
+    }
+
     /**
      * @description: If response code does not indicate success, log the response and thro AuraHandledException
      * @author Stian Ruud Schikora | 04-13-2021

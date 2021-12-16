@@ -3,6 +3,7 @@ import { LightningElement, api } from 'lwc';
 export default class NksPersonPayment extends LightningElement {
     @api payment;
     @api labels;
+    @api personIdent;
     expanded = false;
 
     get statusIcon() {

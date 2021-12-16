@@ -67,8 +67,13 @@
                             aria-expanded={expanded}
                             onclick={toggleExpand}
                         >
-                            <button class="slds-button chevron-toggle">{detailText}<lightning-icon icon-name={chevronIcon} size="x-small" class="slds-button__icon slds-button__icon_right chevron-toggle"></lightning-icon></button>
-                            
+                            <button class="slds-button chevron-toggle">
+                                {detailText}<lightning-icon
+                                    icon-name={chevronIcon}
+                                    size="x-small"
+                                    class="slds-button__icon slds-button__icon_right chevron-toggle"
+                                ></lightning-icon>
+                            </button>
                         </lightning-layout>
                     </lightning-layout-item>
                 </lightning-layout>
@@ -94,6 +99,7 @@
                 <template for:each={payment.ytelseListe} for:item="ytelse">
                     <c-nks-payment-details
                         key={ytelse.ytelsestype}
+                        person-ident={personIdent}
                         ytelse={ytelse}
                         display-header={multipleYtelser}
                         labels={labels}

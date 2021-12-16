@@ -111,6 +111,7 @@
                                 <c-nks-person-payment
                                     key={it.value.data.posteringsdato}
                                     payment={it.value.data}
+                                    person-ident={personIdent}
                                     labels={labels}
                                 ></c-nks-person-payment>
                                 <div if:true={it.last} key={it.value.group} class="slds-var-m-bottom_xx-large"></div>
