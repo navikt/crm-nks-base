@@ -731,9 +731,6 @@ public with sharing class NKS_FamilyViewController {
                 childAddress1Match = false;
                 childAddress2Match = false;
         }
-        if(childAddress1Match || childAddress2Match){
-            return true;
-        }
         if(parentAddress.tilleggsnavn != null){
             if(parentAddress.tilleggsnavn != childAddress1?.tilleggsnavn){
                 childAddress1Match = false;
@@ -748,6 +745,9 @@ public with sharing class NKS_FamilyViewController {
             if(childAddress2?.tilleggsnavn != null){
                 childAddress2Match = false;
             }
+        }
+	if(childAddress1Match || childAddress2Match){
+            return true;
         }
         return false;
     }
