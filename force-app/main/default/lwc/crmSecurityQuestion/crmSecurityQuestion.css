@@ -1,0 +1,8 @@
+.linebreak {
+    white-space: pre-line;
+}
+
+.gap {
+    gap: 1em;
+    display: flex;
+}
