@@ -40,31 +40,6 @@ public class NKS_HistorikkViewController_Test {
         System.debug(hData);
     }
 
-    /*  @isTest
-    private static void nullFraDatoTest() {
-        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_HistorikkViewController.Historikk> l = NKS_HistorikkViewController.getFullmakt(query.execute());
-        System.assertEquals('FULLMEKTIG', l[0].motpartsRolle);
-        String fullmaktPerson =
-            '{' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"fullmakt" : [ {' +
-            '"motpartsPersonident" : "27036012345",' +
-            '"motpartsRolle" : "Full",' +
-            '"omraader" :["Pensjon","Familie","Arbeid"],' +
-            '"gyldigFraOgMed" : "2019-10-12",' +
-            '"gyldigTilOgMed" : "2020-10-12"' +
-            '} ]' +
-            '}' +
-            '}' +
-            '}';
-        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(fullmaktPerson, PDL_API_Response.class);
-        l = NKS_HistorikkViewController.getFullmakt(response);
-        System.assertEquals('FULL', l[0].motpartsRolle);
-    }*/
-
     @isTest
     private static void nullTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
