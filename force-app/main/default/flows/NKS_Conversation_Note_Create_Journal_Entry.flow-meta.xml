@@ -13,6 +13,7 @@
         <faultConnector>
             <targetReference>Set_Journal_Error</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>behandlingskjedeId</name>
             <value>
@@ -48,6 +49,7 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Set_Journal_Completed</name>
         <label>Set Journal Completed</label>
@@ -165,6 +167,7 @@
         <connector>
             <targetReference>Journal_Screen</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -217,9 +220,11 @@
                     <elementReference>Get_Conversation_Note.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <nextOrFinishButtonLabel>Journalfør</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>

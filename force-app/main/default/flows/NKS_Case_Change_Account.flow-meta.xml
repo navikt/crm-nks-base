@@ -7,6 +7,7 @@
         <locationY>518</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -15,6 +16,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>51.0</apiVersion>
     <description>Creates a duplicate case with a new account relation.</description>
     <interviewLabel>Case Change Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Change Account</label>
@@ -106,6 +108,7 @@
         <connector>
             <targetReference>Account_Search_Screen</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -146,6 +149,7 @@
                     <stringValue>Velg bruker</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -194,9 +198,11 @@
                     <stringValue>Case</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <nextOrFinishButtonLabel>Bytt bruker</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
