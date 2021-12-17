@@ -353,6 +353,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CRM_FlowUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_NavTaskRoutingHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -896,6 +900,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>UserNotification__c.CRM_NotificationError__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_RelatedSfRecord__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>UserNotification__c.CRM_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -952,6 +966,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.INT_Link__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.INT_PreferredChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1034,6 +1053,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>QuickText</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>UserNotification__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
