@@ -8,7 +8,11 @@ public with sharing class CRM_SecurityQuestionPicker {
 
     private static SecurityQuestionWrapper getRecursiveQuestion(String accountId, List<Integer> usedQuestions) {
         if (usedQuestions.size() == questions.size()) {
-            return new SecurityQuestionWrapper('Klarte ikke å finne et spørsmål', '', usedQuestions);
+            return new SecurityQuestionWrapper(
+                'Klarte ikke å finne et spørsmål',
+                'Trykk på "nytt" knappen for å prøve igjen',
+                usedQuestions
+            );
         }
         return getSecurityQuestion(accountId, usedQuestions);
     }
@@ -26,7 +30,8 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
         }
 
-        String ident = getIdentification(accountId);
+        String ident = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
+        ?.INT_ActorId__c;
 
         String returnAnswer = null;
         switch on random {
@@ -38,10 +43,16 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
             when 1 {
                 //Fra KRR
-                List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
-                    new List<String>{ ident }
-                );
-                returnAnswer = personer[0]?.kontaktinformasjon.epostadresse;
+                try {
+                    List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
+                        new List<String>{ ident }
+                    );
+                    returnAnswer = personer[0]?.kontaktinformasjon.epostadresse;
+                } catch (Exception e) {
+                    System.debug(e);
+                    returnAnswer = [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
+                    ?.INT_KrrEmail__c;
+                }
             }
             when 2 {
                 //Fra PDL
@@ -90,11 +101,6 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getIdentification(String accountId) {
-        Person__c person = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0];
-        return person?.INT_ActorId__c;
-    }
-
     private static PDL_API_Response getPersonFields(String ident) {
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.forelderBarnRelasjon.selectAll();
@@ -126,6 +132,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         List<PDL_HentPerson> viableChildren = new List<PDL_HentPerson>();
         for (PDL_API_Response child : children) {
             if (
+                child.data.hentPerson.adressebeskyttelse[0]?.gradering == null &&
                 checkAge(child) &&
                 NKS_FamilyViewController.hasSameAddress(parent, child) &&
                 child.data.hentperson.doedsfall[0]?.doedsdato == null
@@ -141,7 +148,10 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static Boolean checkAge(PDL_API_Response child) {
-        Date foedselsdato = child.data.hentPerson.foedsel[0].foedselsdato;
+        Date foedselsdato = child.data.hentPerson.foedsel[0]?.foedselsdato;
+        if (foedselsdato == null) {
+            return false;
+        }
         Date today = Date.today();
         Integer alder = (today.year() - foedselsdato.year());
         // Checks if their birthday hasnt happened yet.
