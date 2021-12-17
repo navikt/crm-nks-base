@@ -1,5 +1,5 @@
 public with sharing class CRM_SecurityQuestionPicker {
-    static List<String> questions = new List<String>{
+    static final List<String> questions = new List<String>{
         'Hva er bankkontonummeret ditt?',
         'Hva er eposten din?',
         'Hva er fødselsdatoen til barnet ditt?',
@@ -33,63 +33,30 @@ public with sharing class CRM_SecurityQuestionPicker {
         String ident = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
         ?.INT_ActorId__c;
 
+        usedQuestions.add(random);
         String returnAnswer = null;
         switch on random {
             when 0 {
                 //Fra TPS
-                // Sjekk at INT_BankAccountNumberLastModified__c og INT_LastUpdatedFromKRR__c er lik IKKE GJØR DETTE SJEKKE SLACK
-                TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
-                returnAnswer = bankkonto?.bankkontoNorge.bankkontonummer;
+                returnAnswer = getBankAccount(ident);
             }
             when 1 {
                 //Fra KRR
-                try {
-                    List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
-                        new List<String>{ ident }
-                    );
-                    returnAnswer = personer[0]?.kontaktinformasjon.epostadresse;
-                } catch (Exception e) {
-                    System.debug(e);
-                    returnAnswer = [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
-                    ?.INT_KrrEmail__c;
-                }
+                returnAnswer = getEmail(ident, accountId);
             }
             when 2 {
                 //Fra PDL
-                PDL_API_Response pdl = getPersonFields(ident);
-                List<String> childrenIdents = PDL_API_Query.getRelationsByRole(pdl, PDL_ForelderBarnRelasjonRolle.BARN);
-                List<PDL_API_Response> children = getChildren(childrenIdents);
-                List<PDL_HentPerson> filteredChildren = filterChildren(children, pdl);
-                if (filteredChildren.isEmpty()) {
-                    returnAnswer = null;
-                } else {
-                    PDL_HentPerson randomChild = filteredChildren[
-                        Integer.valueOf(Math.Random() * filteredChildren.size())
-                    ];
-                    returnAnswer =
-                        randomChild.navn[0].fornavn +
-                        ' ' +
-                        randomChild.navn[0].mellomnavn +
-                        ' ' +
-                        randomChild.navn[0].etternavn +
-                        '\n' +
-                        randomChild.foedsel[0].foedselsdato.format();
-                }
+                returnAnswer = getChildBirthday(ident);
             }
             when 3 {
-                PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
-                query.hentPerson.sivilstand.type = true;
-                query.hentPerson.sivilstand.gyldigFraOgMed = true;
-                PDL_API_Response resp = query.execute();
-                if (resp.data.hentPerson.sivilstand[0].type == PDL_Sivilstandstype.GIFT) {
-                    returnAnswer = resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
-                }
+                //Fra PDL
+                returnAnswer = getMarriageDate(ident);
             }
             when else {
-                returnAnswer = 'Ja';
+                returnAnswer = null;
             }
         }
-        usedQuestions.add(random);
+
         if (returnAnswer == null) {
             return getRecursiveQuestion(accountId, usedQuestions);
         }
@@ -101,13 +68,53 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
+    private static String getBankAccount(String ident) {
+        TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
+        return bankkonto?.bankkontoNorge?.bankkontonummer;
+    }
+
+    private static String getEmail(String ident, String accountId) {
+        List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+        return (personer[0]?.kontaktinformasjon?.epostadresse != null)
+            ? personer[0]?.kontaktinformasjon?.epostadresse
+            : [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]?.INT_KrrEmail__c;
+    }
+
+    private static String getChildBirthday(String ident) {
+        PDL_API_Response pdl = getPersonFields(ident);
+        List<String> childrenIdents = PDL_API_Query.getRelationsByRole(pdl, PDL_ForelderBarnRelasjonRolle.BARN);
+        List<PDL_API_Response> children = getChildren(childrenIdents);
+        List<PDL_HentPerson> filteredChildren = filterChildren(children, pdl);
+        if (filteredChildren.isEmpty()) {
+            return null;
+        } else {
+            PDL_HentPerson randomChild = filteredChildren[Integer.valueOf(Math.Random() * filteredChildren.size())];
+            return (randomChild.navn[0].fornavn +
+            ' ' +
+            randomChild.navn[0].mellomnavn +
+            ' ' +
+            randomChild.navn[0].etternavn +
+            '\n' +
+            randomChild.foedsel[0].foedselsdato.format());
+        }
+    }
+
+    private static String getMarriageDate(String ident) {
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        query.hentPerson.sivilstand.type = true;
+        query.hentPerson.sivilstand.gyldigFraOgMed = true;
+        PDL_API_Response resp = query.execute();
+        if (resp.data.hentPerson.sivilstand[0].type == PDL_Sivilstandstype.GIFT) {
+            return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
+        }
+        return null;
+    }
+
     private static PDL_API_Response getPersonFields(String ident) {
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.forelderBarnRelasjon.selectAll();
-        query.hentPerson.bostedsadresse.vegadresse.husnummer = true;
-        query.hentPerson.bostedsadresse.vegadresse.husbokstav = true;
-        query.hentPerson.bostedsadresse.vegadresse.adressenavn = true;
-        query.hentPerson.bostedsadresse.vegadresse.postnummer = true;
+        query.hentPerson.bostedsadresse.vegadresse.selectAll();
+        query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
         return query.execute();
     }
 
@@ -120,7 +127,11 @@ public with sharing class CRM_SecurityQuestionPicker {
             query.hentPerson.navn.etternavn = true;
             query.hentPerson.adressebeskyttelse.gradering = true;
             query.hentPerson.foedsel.foedselsdato = true;
-            //query.hentPerson.bostedsadresse; // Vet ikke hvilken adresse jeg skal bruke.
+            query.hentPerson.bostedsadresse.vegadresse.selectAll();
+            query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
+            query.hentPerson.deltBosted.vegadresse.selectAll();
+            query.hentPerson.deltBosted.matrikkeladresse.selectAll();
+
             query.hentPerson.doedsfall.doedsdato = true;
             PDL_API_Response pdl = query.execute();
             returnList.add(pdl);
@@ -144,7 +155,7 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static Boolean checkAge(PDL_API_Response child) {
-        Date foedselsdato = child.data.hentPerson.foedsel[0]?.foedselsdato;
+        Date foedselsdato = child.data?.hentPerson?.foedsel[0]?.foedselsdato;
         if (foedselsdato == null) {
             return false;
         }
