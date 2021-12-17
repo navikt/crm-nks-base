@@ -3,7 +3,7 @@
     <apiVersion>52.0</apiVersion>
     <description>Person Historikk Data from PDL</description>
     <isExposed>true</isExposed>
-    <masterLabel>Historikk Viewer(PDL)</masterLabel>
+    <masterLabel>Historikk(PDL)</masterLabel>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>

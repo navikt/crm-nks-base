@@ -13,7 +13,7 @@ public with sharing class NKS_HistorikkViewController {
         @AuraEnabled
         public String gyldigTilOgMed; //date
         @AuraEnabled
-        public String periode;
+        public String periode; //fullmat periode
         @AuraEnabled
         public String motpartsPersonNavn; //related person name
     }
