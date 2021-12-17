@@ -2,17 +2,17 @@
     <template if:false={closed}>
         <div class="slds-card slds-var-p-around_medium">
             <lightning-layout>
-                <lightning-layout-item size="5">
-                    <p>
+                <lightning-layout-item size="4">
+                    <p class="slds-m-right_xx-small">
                         For din egen sikkerhet må jeg stille deg noen spørsmål, slik at jeg er sikker på at jeg snakker
                         med riktig person.
                     </p>
                 </lightning-layout-item>
                 <lightning-layout-item size="5" style="border-left: 3px solid black">
-                    <h3>{question}</h3>
-                    <p class="linebreak">{answer}</p>
+                    <h3 class="bold slds-m-left_xx-small">{question}</h3>
+                    <p class="linebreak slds-m-left_xx-small">{answer}</p>
                 </lightning-layout-item>
-                <lightning-layout-item size="2" class="gap">
+                <lightning-layout-item size="3" class="gap">
                     <lightning-button
                         disabled={disabled}
                         variant="brand"

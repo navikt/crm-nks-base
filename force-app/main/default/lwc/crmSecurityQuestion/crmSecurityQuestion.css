@@ -2,7 +2,12 @@
     white-space: pre-line;
 }
 
-.gap {
-    gap: 1em;
+.flexBtns {
     display: flex;
+    align-self: center;
+    justify-content: space-evenly;
+}
+
+.bold {
+    font-weight: bold;
 }
