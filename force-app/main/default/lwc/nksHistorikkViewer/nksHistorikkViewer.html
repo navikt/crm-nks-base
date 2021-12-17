@@ -25,21 +25,21 @@
                 <tbody class="slds-box slds-box_xx-small slds-has-top-magnet">
                     <template for:each={fullmaktData} for:item="fullmakt">
                         <tr key={fullmakt.name} class="rowClass">
-                            <td data-label="UniqueName" scope="row" class="colName">
+                            <td data-label="UniqueName" class="colName">
                                 <div class="slds-line-clamp" title={fullmakt.periode}>{fullmakt.periode}</div>
                             </td>
-                            <td data-label="UniqueName" scope="row" class="slds-cell-wrap">
+                            <td data-label="UniqueName" class="slds-cell-wrap">
                                 <div class="slds-line-clamp" title={fullmakt.omraader}>{fullmakt.omraader}</div>
                             </td>
-                            <td data-label="UniqueName" scope="row">
+                            <td data-label="UniqueName">
                                 <div class="slds-truncate" title={fullmakt.motpartsRolle}>{fullmakt.motpartsRolle}</div>
                             </td>
-                            <td data-label="UniqueName" scope="row" class="slds-cell-wrap">
+                            <td data-label="UniqueName" class="slds-cell-wrap">
                                 <div class="slds-line-clamp" title={fullmakt.motpartsPersonNavn}>
                                     {fullmakt.motpartsPersonNavn}
                                 </div>
                             </td>
-                            <td data-label="UniqueName" scope="row">
+                            <td data-label="UniqueName">
                                 <div class="slds-truncate" title={fullmakt.motpartsPersonident}>
                                     {fullmakt.motpartsPersonident}
                                 </div>
@@ -49,6 +49,5 @@
                 </tbody>
             </table>
         </template>
-        <!--<button class="close" onclick={handleFullmaktData}>Lukk</button> -->
     </template>
 </template>
