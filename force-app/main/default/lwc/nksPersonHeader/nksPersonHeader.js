@@ -136,10 +136,10 @@ export default class NksPersonHeader extends LightningElement {
      * To change the button color on click
      */
     handleFullmaktData() {
-        if (this.btnClick == false) {
+        if (!this.btnClick) {
             this.btnClick = true;
             this.customclass = 'blue-icon';
-        } else if (this.btnClick == true) {
+        } else if (this.btnClick) {
             this.btnClick = false;
             this.customclass = 'grey-icon';
         }
