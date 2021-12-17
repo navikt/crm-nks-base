@@ -88,7 +88,6 @@ public with sharing class NKS_HistorikkViewController {
                     person.periode = person.gyldigFraOgMed + '-' + person.gyldigTilOgMed;
                 fmList.add(person);
             }
-            //return fmList;
         }
         return fmList;
     }
@@ -147,12 +146,5 @@ public with sharing class NKS_HistorikkViewController {
             return null;
         }
         return [SELECT id, CRM_Account__r.Name FROM Person__c WHERE Name = :motpartsPersonident]?.CRM_Account__r.Name;
-    }
-
-    private static String getAccountIdFromPersonId(Set<String> idents) {
-        if (idents == null) {
-            return null;
-        }
-        return [SELECT Id FROM Account WHERE CRM_Person__r.Name IN :idents LIMIT 1]?.Id;
     }
 }
