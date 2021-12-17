@@ -56,3 +56,24 @@
     height: 1px;
     overflow: hidden;
 }
+
+.card-color {
+    background-color: #f3f2f2;
+}
+
+.blue-icon {
+    float: right;
+    --lwc-colorTextIconDefault: #3386e0;
+}
+
+.grey-icon {
+    float: right;
+    --lwc-colorTextIconDefault: grey;
+}
+
+.close {
+    float: right;
+    border: 0;
+    padding-top: 5px;
+    background: none;
+}
