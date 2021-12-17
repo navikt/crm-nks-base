@@ -439,7 +439,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return false;
     }
-    private static String getConfidentialStatus(PDL_API_Response response) {
+    public static String getConfidentialStatus(PDL_API_Response response) {
         List<PDL_Adressebeskyttelse> adressebeskyttelse = response.data?.hentPerson?.adressebeskyttelse;
         if (adressebeskyttelse == null || adressebeskyttelse.isEmpty()) {
             return null;
