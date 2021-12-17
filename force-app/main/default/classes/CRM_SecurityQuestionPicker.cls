@@ -132,7 +132,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         List<PDL_HentPerson> viableChildren = new List<PDL_HentPerson>();
         for (PDL_API_Response child : children) {
             if (
-                child.data.hentPerson.adressebeskyttelse[0]?.gradering == null &&
+                NKS_FamilyViewController.getConfidentialStatus(child) == null &&
                 checkAge(child) &&
                 NKS_FamilyViewController.hasSameAddress(parent, child) &&
                 child.data.hentperson.doedsfall[0]?.doedsdato == null
@@ -141,10 +141,6 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
         }
         return viableChildren;
-        // harSammeBosted();
-        // barn.tilPerson.diskresjonskode
-        // !erDød(barn.tilPerson.personstatus)
-        // !harDødsDato(barn)
     }
 
     private static Boolean checkAge(PDL_API_Response child) {
