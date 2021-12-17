@@ -8,14 +8,13 @@ import AGE_FIELD from '@salesforce/schema/Person__c.CRM_Age__c';
 import CITIZENSHIP_FIELD from '@salesforce/schema/Person__c.INT_Citizenships__c';
 import MARITAL_STATUS_FIELD from '@salesforce/schema/Person__c.INT_MaritalStatus__c';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
+import getHistorikk from '@salesforce/apex/NKS_HistorikkViewController.getHistorikk';
 
 export default class NksPersonHeader extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
     @api showPersonBadges = false;
-    showAll = false;
-    isLoaded = false;
     personId;
     fullName;
     personIdent;
@@ -26,7 +25,10 @@ export default class NksPersonHeader extends LightningElement {
     wireFields;
     @api condition1;
     @api condition2;
-    @track errorMessages = [];
+    @api btnClick = false;
+    @api btnShowFullmakt = false;
+    @api fullmaktHistData;
+    @track customclass = 'grey-icon';
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -76,7 +78,7 @@ export default class NksPersonHeader extends LightningElement {
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
-        } catch (err) {
+        } catch (error) {
             console.log('Oops, unable to copy');
         }
 
@@ -93,7 +95,7 @@ export default class NksPersonHeader extends LightningElement {
                 this.personId = this.resolve(relationshipField, record);
             })
             .catch((error) => {
-                this.addError(error);
+                console.log(error);
             });
     }
 
@@ -111,7 +113,7 @@ export default class NksPersonHeader extends LightningElement {
             this.maritalStatus = getFieldValue(data, MARITAL_STATUS_FIELD);
         }
         if (error) {
-            this.addError(error);
+            console.log(error);
         }
     }
 
@@ -126,22 +128,32 @@ export default class NksPersonHeader extends LightningElement {
             }
         }
         if (error) {
-            this.addError(error);
+            console.log(error);
         }
     }
 
-    showAllNotifications() {
-        this.showAll = true;
+    handleFullmaktData() {
+        if (this.btnClick == false) {
+            this.btnClick = true;
+            this.customclass = 'blue-icon';
+        } else if (this.btnClick == true) {
+            this.btnClick = false;
+            this.customclass = 'grey-icon';
+        }
     }
 
-    addError(error) {
-        this.isLoaded = true;
-        if (Array.isArray(error.body)) {
-            this.errorMessages = this.errorMessages.concat(error.body.map((e) => e.message));
-        } else if (error.body && typeof error.body.message === 'string') {
-            this.errorMessages.push(error.body.message);
-        } else {
-            this.errorMessages.push(error.body);
+    @wire(getHistorikk, {
+        recordId: '$recordId',
+        objectApiName: '$objectApiName'
+    })
+    wiredHistorikk({ error, data }) {
+        if (data) {
+            console.log('pppp:' + JSON.stringify(data));
+            this.fullmaktHistData = data;
+            this.btnShowFullmakt = this.fullmaktHistData.length > 0;
+        }
+        if (error) {
+            this.addError(error);
         }
     }
 
