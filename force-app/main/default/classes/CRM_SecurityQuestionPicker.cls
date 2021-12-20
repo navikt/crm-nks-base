@@ -81,22 +81,25 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static String getChildBirthday(String ident) {
-        PDL_API_Response pdl = getPersonFields(ident);
-        List<String> childrenIdents = PDL_API_Query.getRelationsByRole(pdl, PDL_ForelderBarnRelasjonRolle.BARN);
-        List<PDL_API_Response> children = getChildren(childrenIdents);
-        List<PDL_HentPerson> filteredChildren = filterChildren(children, pdl);
-        if (filteredChildren.isEmpty()) {
-            return null;
-        } else {
-            PDL_HentPerson randomChild = filteredChildren[Integer.valueOf(Math.Random() * filteredChildren.size())];
-            return (randomChild.navn[0].fornavn +
-            ' ' +
-            randomChild.navn[0].mellomnavn +
-            ' ' +
-            randomChild.navn[0].etternavn +
-            '\n' +
-            randomChild.foedsel[0].foedselsdato.format());
+        PDL_API_Response person = getPersonFields(ident);
+        List<String> childrenIdents = PDL_API_Query.getRelationsByRole(person, PDL_ForelderBarnRelasjonRolle.BARN);
+        PDL_HentPerson randomChild = null;
+        while (childrenIdents.size() > 0) {
+            String randomChildIdent = childrenIdents[Integer.valueOf(Math.Random() * childrenIdents.size())];
+            PDL_API_Response child = getChild(randomChildIdent);
+            if (isValidChild(child, person)) {
+                randomChild = child.data.hentPerson;
+                break;
+            }
         }
+        String navn = randomChild.navn[0].fornavn;
+        if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
+            navn += ' ' + randomChild?.navn[0]?.mellomnavn;
+        }
+        if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
+            navn += ' ' + randomChild?.navn[0]?.etternavn;
+        }
+        return navn;
     }
 
     private static String getMarriageDate(String ident) {
@@ -118,40 +121,28 @@ public with sharing class CRM_SecurityQuestionPicker {
         return query.execute();
     }
 
-    private static List<PDL_API_Response> getChildren(List<String> children) {
-        List<PDL_API_Response> returnList = new List<PDL_API_Response>();
-        for (String ident : children) {
-            PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
-            query.hentPerson.navn.fornavn = true;
-            query.hentPerson.navn.mellomnavn = true;
-            query.hentPerson.navn.etternavn = true;
-            query.hentPerson.adressebeskyttelse.gradering = true;
-            query.hentPerson.foedsel.foedselsdato = true;
-            query.hentPerson.bostedsadresse.vegadresse.selectAll();
-            query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
-            query.hentPerson.deltBosted.vegadresse.selectAll();
-            query.hentPerson.deltBosted.matrikkeladresse.selectAll();
-
-            query.hentPerson.doedsfall.doedsdato = true;
-            PDL_API_Response pdl = query.execute();
-            returnList.add(pdl);
-        }
-        return returnList;
+    private static PDL_API_Response getChild(String childIdent) {
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper(childIdent);
+        query.hentPerson.navn.fornavn = true;
+        query.hentPerson.navn.mellomnavn = true;
+        query.hentPerson.navn.etternavn = true;
+        query.hentPerson.adressebeskyttelse.gradering = true;
+        query.hentPerson.foedsel.foedselsdato = true;
+        query.hentPerson.bostedsadresse.vegadresse.selectAll();
+        query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
+        query.hentPerson.deltBosted.vegadresse.selectAll();
+        query.hentPerson.deltBosted.matrikkeladresse.selectAll();
+        query.hentPerson.doedsfall.doedsdato = true;
+        return query.execute();
     }
 
-    private static List<PDL_HentPerson> filterChildren(List<PDL_API_Response> children, PDL_API_Response parent) {
-        List<PDL_HentPerson> viableChildren = new List<PDL_HentPerson>();
-        for (PDL_API_Response child : children) {
-            if (
-                NKS_FamilyViewController.getConfidentialStatus(child) == null &&
-                checkAge(child) &&
-                NKS_FamilyViewController.hasSameAddress(parent, child) &&
-                child.data.hentperson.doedsfall[0]?.doedsdato == null
-            ) {
-                viableChildren.add(child.data.hentPerson);
-            }
-        }
-        return viableChildren;
+    private static Boolean isValidChild(PDL_API_Response child, PDL_API_Response parent) {
+        return (NKS_FamilyViewController.getConfidentialStatus(child) == null &&
+        checkAge(child) &&
+        NKS_FamilyViewController.hasSameAddress(parent, child) &&
+        (child.data.hentperson?.doedsfall == null ||
+        child.data.hentperson?.doedsfall?.isEmpty() ||
+        child.data.hentperson?.doedsfall[0]?.doedsdato == null));
     }
 
     private static Boolean checkAge(PDL_API_Response child) {
@@ -170,11 +161,6 @@ public with sharing class CRM_SecurityQuestionPicker {
             alder--;
         }
         return alder < 21;
-    }
-
-    private static Boolean checkAdresse(PDL_API_Response child, PDL_Bostedsadresse adresse) {
-        // Gidd ikke nå. Får se på det senere
-        return true;
     }
 
     public class SecurityQuestionWrapper {
