@@ -63,8 +63,4 @@ export default class CrmSecurityQuestion extends LightningElement {
     handleClose() {
         this.closed = true;
     }
-
-    get test() {
-        return this.questionsAsked.toString();
-    }
 }
