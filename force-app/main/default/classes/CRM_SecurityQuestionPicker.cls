@@ -95,13 +95,13 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
         }
         String navn = randomChild.navn[0].fornavn;
-        if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
+        if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
             navn += ' ' + randomChild?.navn[0]?.mellomnavn;
         }
-        if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
+        if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
             navn += ' ' + randomChild?.navn[0]?.etternavn;
         }
-        return navn;
+        return navn + '\n' + randomChild.foedsel[0].foedselsdato.format();
     }
 
     private static String getMarriageDate(String ident) {
