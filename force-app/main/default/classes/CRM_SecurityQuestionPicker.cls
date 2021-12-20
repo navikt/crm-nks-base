@@ -86,14 +86,14 @@ public with sharing class CRM_SecurityQuestionPicker {
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
-            return getBackupEmail();
+            return getBackupEmail(accountId);
         }
         return (personer[0]?.kontaktinformasjon?.epostadresse != null)
             ? personer[0]?.kontaktinformasjon?.epostadresse
-            : getBackupEmail();
+            : getBackupEmail(accountId);
     }
 
-    public static String getBackupEmail() {
+    public static String getBackupEmail(String accountId) {
         Person__c emailInfo = [
             SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
             FROM Person__c
