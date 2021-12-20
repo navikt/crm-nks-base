@@ -69,12 +69,26 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static String getBankAccount(String ident) {
-        TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
-        return bankkonto?.bankkontoNorge?.bankkontonummer;
+        try {
+            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
+            return bankkonto?.bankkontoNorge?.bankkontonummer;
+        } catch (TPS_Persons.TPS_PersonsException e) {
+            // TPS_PersonsException betyr at vi fikk en annen response enn 200,
+            // mest sannsynlig 204 'Bruker ikke funnet'.
+            return null;
+        }
     }
 
     private static String getEmail(String ident, String accountId) {
-        List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+        List<KrrCalloutService.Personer> personer;
+        try {
+            personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+        } catch (SecurityException e) {
+            // This means that we have an invalid crypto key,
+            // most likely because of KRR callout key not in test env.
+            return [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
+            ?.INT_KrrEmail__c;
+        }
         return (personer[0]?.kontaktinformasjon?.epostadresse != null)
             ? personer[0]?.kontaktinformasjon?.epostadresse
             : [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]?.INT_KrrEmail__c;
@@ -93,6 +107,9 @@ public with sharing class CRM_SecurityQuestionPicker {
                 randomChild = child.data.hentPerson;
                 break;
             }
+        }
+        if (randomChild == null) {
+            return null;
         }
         String navn = randomChild.navn[0].fornavn;
         if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
