@@ -85,7 +85,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         List<String> childrenIdents = PDL_API_Query.getRelationsByRole(person, PDL_ForelderBarnRelasjonRolle.BARN);
         PDL_HentPerson randomChild = null;
         while (childrenIdents.size() > 0) {
-            String randomChildIdent = childrenIdents[Integer.valueOf(Math.Random() * childrenIdents.size())];
+            Integer random = Integer.valueOf(Math.Random() * childrenIdents.size());
+            String randomChildIdent = childrenIdents[random];
+            childrenIdents.remove(random);
             PDL_API_Response child = getChild(randomChildIdent);
             if (isValidChild(child, person)) {
                 randomChild = child.data.hentPerson;
