@@ -89,13 +89,14 @@ public with sharing class CRM_SecurityQuestionPicker {
             return null;
         } else {
             PDL_HentPerson randomChild = filteredChildren[Integer.valueOf(Math.Random() * filteredChildren.size())];
-            return (randomChild.navn[0].fornavn +
-            ' ' +
-            randomChild.navn[0].mellomnavn +
-            ' ' +
-            randomChild.navn[0].etternavn +
-            '\n' +
-            randomChild.foedsel[0].foedselsdato.format());
+            String navn = randomChild.navn[0].fornavn;
+            if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
+                navn += ' ' + randomChild?.navn[0]?.mellomnavn;
+            }
+            if (randomChild?.navn != null && randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
+                navn += ' ' + randomChild?.navn[0]?.etternavn;
+            }
+            return navn;
         }
     }
 
@@ -146,7 +147,9 @@ public with sharing class CRM_SecurityQuestionPicker {
                 NKS_FamilyViewController.getConfidentialStatus(child) == null &&
                 checkAge(child) &&
                 NKS_FamilyViewController.hasSameAddress(parent, child) &&
-                child.data.hentperson.doedsfall[0]?.doedsdato == null
+                (child.data.hentperson?.doedsfall == null ||
+                child.data.hentperson?.doedsfall?.isEmpty() ||
+                child.data.hentperson?.doedsfall[0]?.doedsdato == null)
             ) {
                 viableChildren.add(child.data.hentPerson);
             }
@@ -170,11 +173,6 @@ public with sharing class CRM_SecurityQuestionPicker {
             alder--;
         }
         return alder < 21;
-    }
-
-    private static Boolean checkAdresse(PDL_API_Response child, PDL_Bostedsadresse adresse) {
-        // Gidd ikke nå. Får se på det senere
-        return true;
     }
 
     public class SecurityQuestionWrapper {
