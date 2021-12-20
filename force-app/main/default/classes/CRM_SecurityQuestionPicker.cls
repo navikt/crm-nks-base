@@ -38,7 +38,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         switch on random {
             when 0 {
                 //Fra TPS
-                returnAnswer = getBankAccount(ident);
+                returnAnswer = getBankAccount(ident, accountId);
             }
             when 1 {
                 //Fra KRR
@@ -68,13 +68,24 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String ident) {
+    private static String getBankAccount(String ident, String accountId) {
         try {
             TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
             // mest sannsynlig 204 'Bruker ikke funnet'.
+            List<Person__c> bankAccountInfo = [
+                SELECT INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
+                FROM Person__c
+                WHERE CRM_Account__c = :accountId
+                LIMIT 1
+            ];
+            if (bankAccountInfo != null) {
+                if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
+                    return bankAccountInfo[0].INT_BankAccountNumber__c;
+                }
+            }
             return null;
         }
     }
