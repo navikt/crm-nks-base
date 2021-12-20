@@ -38,7 +38,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         switch on random {
             when 0 {
                 //Fra TPS
-                returnAnswer = getBankAccount(ident);
+                returnAnswer = getBankAccount(ident, accountId);
             }
             when 1 {
                 //Fra KRR
@@ -68,13 +68,24 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String ident) {
+    private static String getBankAccount(String ident, String accountId) {
         try {
             TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
             // mest sannsynlig 204 'Bruker ikke funnet'.
+            List<Person__c> bankAccountInfo = [
+                SELECT INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
+                FROM Person__c
+                WHERE CRM_Account__c = :accountId
+                LIMIT 1
+            ];
+            if (bankAccountInfo != null) {
+                if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
+                    return bankAccountInfo[0].INT_BankAccountNumber__c;
+                }
+            }
             return null;
         }
     }
@@ -86,23 +97,27 @@ public with sharing class CRM_SecurityQuestionPicker {
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
-            Person__c emailInfo = [
-                SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
-                FROM Person__c
-                WHERE CRM_Account__c = :accountId
-                LIMIT 1
-            ][0];
-            if (
-                emailInfo.INT_LastUpdatedFromKRR__c != null &&
-                emailInfo.INT_LastUpdatedFromKRR__c.addDays(1) > System.now()
-            ) {
-                return emailInfo.INT_KrrEmail__c;
-            }
-            return null;
+            return getBackupEmail(accountId);
         }
         return (personer[0]?.kontaktinformasjon?.epostadresse != null)
             ? personer[0]?.kontaktinformasjon?.epostadresse
-            : [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]?.INT_KrrEmail__c;
+            : getBackupEmail(accountId);
+    }
+
+    public static String getBackupEmail(String accountId) {
+        Person__c emailInfo = [
+            SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ][0];
+        if (
+            emailInfo.INT_LastUpdatedFromKRR__c != null &&
+            emailInfo.INT_LastUpdatedFromKRR__c.addDays(1) > System.now()
+        ) {
+            return emailInfo.INT_KrrEmail__c;
+        }
+        return null;
     }
 
     private static String getChildBirthday(String ident) {
