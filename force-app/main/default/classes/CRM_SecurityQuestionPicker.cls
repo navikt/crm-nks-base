@@ -86,23 +86,27 @@ public with sharing class CRM_SecurityQuestionPicker {
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
-            Person__c emailInfo = [
-                SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
-                FROM Person__c
-                WHERE CRM_Account__c = :accountId
-                LIMIT 1
-            ][0];
-            if (
-                emailInfo.INT_LastUpdatedFromKRR__c != null &&
-                emailInfo.INT_LastUpdatedFromKRR__c.addDays(1) > System.now()
-            ) {
-                return emailInfo.INT_KrrEmail__c;
-            }
-            return null;
+            return getBackupEmail();
         }
         return (personer[0]?.kontaktinformasjon?.epostadresse != null)
             ? personer[0]?.kontaktinformasjon?.epostadresse
-            : [SELECT INT_KrrEmail__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]?.INT_KrrEmail__c;
+            : getBackupEmail();
+    }
+
+    public static String getBackupEmail() {
+        Person__c emailInfo = [
+            SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ][0];
+        if (
+            emailInfo.INT_LastUpdatedFromKRR__c != null &&
+            emailInfo.INT_LastUpdatedFromKRR__c.addDays(1) > System.now()
+        ) {
+            return emailInfo.INT_KrrEmail__c;
+        }
+        return null;
     }
 
     private static String getChildBirthday(String ident) {
