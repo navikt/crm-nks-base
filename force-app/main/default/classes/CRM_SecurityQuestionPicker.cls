@@ -81,7 +81,12 @@ public with sharing class CRM_SecurityQuestionPicker {
                 WHERE CRM_Account__c = :accountId
                 LIMIT 1
             ];
-            if (bankAccountInfo != null) {
+            if (
+                bankAccountInfo != null &&
+                !bankAccountInfo.isEmpty() &&
+                bankAccountInfo[0]?.INT_BankAccountNumberLastModified__c != null &&
+                bankAccountInfo[0]?.INT_BankAccountNumber__c != null
+            ) {
                 if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
                     return bankAccountInfo[0].INT_BankAccountNumber__c;
                 }
