@@ -30,6 +30,15 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
         }
 
+        List<Person__c> personList = [
+            SELECT Id, INT_ActorId__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ];
+        if (personList.size() != 1) {
+            return CRM_SecurityQuestionPicker.SecurityQuestionWrapper.noPersonError();
+        }
         String ident = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
         ?.INT_ActorId__c;
 
@@ -69,42 +78,34 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static String getBankAccount(String ident, String accountId) {
+        List<Person__c> bankAccountInfo = [
+            SELECT INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ];
+        if (
+            bankAccountInfo != null &&
+            !bankAccountInfo.isEmpty() &&
+            bankAccountInfo[0]?.INT_BankAccountNumberLastModified__c != null &&
+            bankAccountInfo[0]?.INT_BankAccountNumber__c != null
+        ) {
+            if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
+                return bankAccountInfo[0].INT_BankAccountNumber__c;
+            }
+        }
+
         try {
             TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
             // mest sannsynlig 204 'Bruker ikke funnet'.
-            List<Person__c> bankAccountInfo = [
-                SELECT INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
-                FROM Person__c
-                WHERE CRM_Account__c = :accountId
-                LIMIT 1
-            ];
-            if (bankAccountInfo != null) {
-                if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
-                    return bankAccountInfo[0].INT_BankAccountNumber__c;
-                }
-            }
             return null;
         }
     }
 
     private static String getEmail(String ident, String accountId) {
-        List<KrrCalloutService.Personer> personer;
-        try {
-            personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
-        } catch (SecurityException e) {
-            // This means that we have an invalid crypto key,
-            // most likely because of KRR callout key not in test env.
-            return getBackupEmail(accountId);
-        }
-        return (personer[0]?.kontaktinformasjon?.epostadresse != null)
-            ? personer[0]?.kontaktinformasjon?.epostadresse
-            : getBackupEmail(accountId);
-    }
-
-    public static String getBackupEmail(String accountId) {
         Person__c emailInfo = [
             SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
             FROM Person__c
@@ -117,7 +118,15 @@ public with sharing class CRM_SecurityQuestionPicker {
         ) {
             return emailInfo.INT_KrrEmail__c;
         }
-        return null;
+        List<KrrCalloutService.Personer> personer;
+        try {
+            personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+        } catch (SecurityException e) {
+            // This means that we have an invalid crypto key,
+            // most likely because of KRR callout key not in test env.
+            return null;
+        }
+        return personer[0]?.kontaktinformasjon?.epostadresse;
     }
 
     private static String getChildBirthday(String ident) {
@@ -206,6 +215,14 @@ public with sharing class CRM_SecurityQuestionPicker {
             alder--;
         }
         return alder < 21;
+    }
+
+    public static CRM_SecurityQuestionPicker.SecurityQuestionWrapper noPersonError() {
+        return new CRM_SecurityQuestionPicker.SecurityQuestionWrapper(
+            'Det oppstod en feil',
+            'Fant ikke brukeren',
+            null
+        );
     }
 
     public class SecurityQuestionWrapper {
