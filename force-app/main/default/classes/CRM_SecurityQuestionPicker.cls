@@ -30,6 +30,15 @@ public with sharing class CRM_SecurityQuestionPicker {
             }
         }
 
+        List<Person__c> personList = [
+            SELECT Id, INT_ActorId__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ];
+        if (personList.size() != 1) {
+            return CRM_SecurityQuestionPicker.SecurityQuestionWrapper.noPersonError();
+        }
         String ident = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
         ?.INT_ActorId__c;
 
@@ -211,6 +220,14 @@ public with sharing class CRM_SecurityQuestionPicker {
             alder--;
         }
         return alder < 21;
+    }
+
+    public static CRM_SecurityQuestionPicker.SecurityQuestionWrapper noPersonError() {
+        return new CRM_SecurityQuestionPicker.SecurityQuestionWrapper(
+            'Det oppstod en feil',
+            'Fant ikke brukeren',
+            null
+        );
     }
 
     public class SecurityQuestionWrapper {
