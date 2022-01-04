@@ -133,41 +133,49 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static String getChildBirthday(String ident) {
-        PDL_API_Response person = getPersonFields(ident);
-        List<String> childrenIdents = PDL_API_Query.getRelationsByRole(person, PDL_ForelderBarnRelasjonRolle.BARN);
-        PDL_HentPerson randomChild = null;
-        while (childrenIdents.size() > 0) {
-            Integer random = Integer.valueOf(Math.Random() * childrenIdents.size());
-            String randomChildIdent = childrenIdents[random];
-            childrenIdents.remove(random);
-            PDL_API_Response child = getChild(randomChildIdent);
-            if (isValidChild(child, person)) {
-                randomChild = child.data.hentPerson;
-                break;
+        try {
+            PDL_API_Response person = getPersonFields(ident);
+            List<String> childrenIdents = PDL_API_Query.getRelationsByRole(person, PDL_ForelderBarnRelasjonRolle.BARN);
+            PDL_HentPerson randomChild = null;
+            while (childrenIdents.size() > 0) {
+                Integer random = Integer.valueOf(Math.Random() * childrenIdents.size());
+                String randomChildIdent = childrenIdents[random];
+                childrenIdents.remove(random);
+                PDL_API_Response child = getChild(randomChildIdent);
+                if (isValidChild(child, person)) {
+                    randomChild = child.data.hentPerson;
+                    break;
+                }
             }
-        }
-        if (randomChild == null) {
+            if (randomChild == null) {
+                return null;
+            }
+            String navn = randomChild.navn[0].fornavn;
+            if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
+                navn += ' ' + randomChild?.navn[0]?.mellomnavn;
+            }
+            if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
+                navn += ' ' + randomChild?.navn[0]?.etternavn;
+            }
+            return navn + '\n' + randomChild.foedsel[0].foedselsdato.format();
+        } catch (PDL_API_Response.HentPersonResponseException e) {
             return null;
         }
-        String navn = randomChild.navn[0].fornavn;
-        if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.mellomnavn != null) {
-            navn += ' ' + randomChild?.navn[0]?.mellomnavn;
-        }
-        if (randomChild?.navn != null && !randomChild?.navn.isEmpty() && randomChild?.navn[0]?.etternavn != null) {
-            navn += ' ' + randomChild?.navn[0]?.etternavn;
-        }
-        return navn + '\n' + randomChild.foedsel[0].foedselsdato.format();
     }
 
     private static String getMarriageDate(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
-        query.hentPerson.sivilstand.type = true;
-        query.hentPerson.sivilstand.gyldigFraOgMed = true;
-        PDL_API_Response resp = query.execute();
-        if (resp.data.hentPerson.sivilstand[0].type == PDL_Sivilstandstype.GIFT) {
-            return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
+        try {
+            PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+            query.hentPerson.sivilstand.type = true;
+            query.hentPerson.sivilstand.gyldigFraOgMed = true;
+            PDL_API_Response resp = query.execute();
+            if (resp.data.hentPerson.sivilstand[0].type == PDL_Sivilstandstype.GIFT) {
+                return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
+            }
+            return null;
+        } catch (PDL_API_Response.HentPersonResponseException e) {
+            return null;
         }
-        return null;
     }
 
     private static PDL_API_Response getPersonFields(String ident) {
