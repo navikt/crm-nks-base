@@ -8,22 +8,22 @@
                         med riktig person.
                     </p>
                 </lightning-layout-item>
-                <lightning-layout-item size="5" style="border-left: 3px solid black">
+                <lightning-layout-item size="5" class="borderSpacing">
                     <h3 class="bold slds-m-left_xx-small">{question}</h3>
                     <p class="linebreak slds-m-left_xx-small">{answer}</p>
                 </lightning-layout-item>
                 <lightning-layout-item size="3" class="flexBtns">
                     <lightning-button
-                        disabled={disabled}
+                        label="Lukk"
                         variant="brand"
+                        title="Closes the question box"
+                        onclick={handleClose}
+                    ></lightning-button>
+                    <lightning-button
+                        disabled={disabled}
                         label="Nytt"
                         title="Gets a new question"
                         onclick={handleNextQuestion}
-                    ></lightning-button>
-                    <lightning-button
-                        label="Lukk"
-                        title="Closes the question box"
-                        onclick={handleClose}
                     ></lightning-button>
                 </lightning-layout-item>
             </lightning-layout>

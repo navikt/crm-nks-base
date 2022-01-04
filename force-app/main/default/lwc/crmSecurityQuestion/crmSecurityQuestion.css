@@ -4,10 +4,16 @@
 
 .flexBtns {
     display: flex;
-    align-self: center;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .bold {
     font-weight: bold;
+}
+
+.borderSpacing {
+    border-left: 1px solid #a0a0a0;
+    padding-left: 16px;
 }
