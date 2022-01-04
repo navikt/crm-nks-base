@@ -1,0 +1,32 @@
+<template>
+    <template if:false={closed}>
+        <div class="slds-card slds-var-p-around_medium">
+            <lightning-layout>
+                <lightning-layout-item size="4">
+                    <p class="slds-m-right_xx-small">
+                        For din egen sikkerhet må jeg stille deg noen spørsmål, slik at jeg er sikker på at jeg snakker
+                        med riktig person.
+                    </p>
+                </lightning-layout-item>
+                <lightning-layout-item size="5" class="borderSpacing">
+                    <h3 class={questionClass}>{question}</h3>
+                    <p class="linebreak slds-m-left_xx-small">{answer}</p>
+                </lightning-layout-item>
+                <lightning-layout-item size="3" class="flexBtns">
+                    <lightning-button
+                        label="Lukk"
+                        variant="brand"
+                        title="Closes the question box"
+                        onclick={handleClose}
+                    ></lightning-button>
+                    <lightning-button
+                        disabled={disabled}
+                        label="Nytt"
+                        title="Gets a new question"
+                        onclick={handleNextQuestion}
+                    ></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </template>
+</template>
