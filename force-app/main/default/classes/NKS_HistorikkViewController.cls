@@ -87,6 +87,8 @@ public with sharing class NKS_HistorikkViewController {
                 if (person.gyldigFraOgMed != null && person.gyldigTilOgMed != null)
                     person.periode = person.gyldigFraOgMed + '-' + person.gyldigTilOgMed;
                 fmList.add(person);
+                if (fmList.size() == 3)
+                    break;
             }
         }
         return fmList;
@@ -114,7 +116,16 @@ public with sharing class NKS_HistorikkViewController {
         omdList = fmResp.omraader;
         String omd = '';
         for (String s : fmResp.omraader) {
-            omd = omd + s + ', ';
+            String oName = [
+                SELECT Name, CRM_Code__c
+                FROM Common_Code__c
+                WHERE CRM_Code__c = :s AND CRM_Code_Set__c = 'Tema'
+            ]
+            ?.Name;
+            if (oName != null)
+                omd = omd + oName + ', ';
+            else
+                omd = omd + s + ', ';            
         }
         omd = omd.removeEnd(', ');
         return omd;
