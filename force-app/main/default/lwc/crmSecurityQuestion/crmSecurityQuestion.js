@@ -11,6 +11,7 @@ export default class CrmSecurityQuestion extends LightningElement {
     @track closed = false;
     @track personId;
     @api recordId;
+    useErrorColor = false;
 
     @wire(getSecurityQuestion, { accountId: '$personId', usedQuestions: [] })
     fetchData({ error, data }) {
@@ -18,10 +19,12 @@ export default class CrmSecurityQuestion extends LightningElement {
             console.log(error);
             this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
             this.answer = error.body.message;
+            this.useErrorColor = true;
         } else if (data) {
             this.question = data.question;
             this.answer = data.answer;
             this.questionsAsked = data.usedQuestions;
+            this.useErrorColor = this.questionsAsked == null;
         }
         this.disabled = false;
     }
@@ -51,16 +54,22 @@ export default class CrmSecurityQuestion extends LightningElement {
                 this.answer = data.answer;
                 this.questionsAsked = data.usedQuestions;
                 this.disabled = false;
+                this.useErrorColor = this.questionsAsked == null;
             })
             .catch((error) => {
                 console.log(error);
                 this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
                 this.answer = error.body.message;
                 this.disabled = false;
+                this.useErrorColor = true;
             });
     }
 
     handleClose() {
         this.closed = true;
+    }
+
+    get questionClass() {
+        return 'bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
     }
 }

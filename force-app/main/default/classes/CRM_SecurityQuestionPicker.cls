@@ -10,8 +10,8 @@ public with sharing class CRM_SecurityQuestionPicker {
         if (usedQuestions.size() == questions.size()) {
             return new SecurityQuestionWrapper(
                 'Klarte ikke å finne et spørsmål',
-                'Trykk på "nytt" knappen for å prøve igjen',
-                usedQuestions
+                'Trykk på "Nytt"-knappen for å prøve igjen',
+                null
             );
         }
         return getSecurityQuestion(accountId, usedQuestions);
@@ -19,7 +19,10 @@ public with sharing class CRM_SecurityQuestionPicker {
 
     @AuraEnabled(cacheable=true)
     public static SecurityQuestionWrapper getSecurityQuestion(String accountId, List<Integer> usedQuestions) {
-        if (usedQuestions.size() == questions.size()) {
+        if (usedQuestions == null) {
+            usedQuestions = new List<Integer>();
+        }
+        if (usedQuestions.size() >= questions.size()) {
             usedQuestions.clear();
         }
         Integer random = Integer.valueOf(Math.Random() * (questions.size() - usedQuestions.size()));
