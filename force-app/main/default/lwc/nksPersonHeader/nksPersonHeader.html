@@ -1,68 +1,103 @@
 <template>
     <h1 class="sr-only"><template if:true={fullName}> {fullName} </template></h1>
-    <lightning-layout size="12" class="slds-box slds-theme_default">
-        <lightning-layout-item
-            size="4"
-            small-device-size="4"
-            medium-device-size="4"
-            large-device-size="3"
-            class="slds-var-p-right_small"
-        >
-            <lightning-layout>
-                <lightning-layout-item class="gender">
-                    <template if:true={gender}>
-                        <c-nks-custom-svg
-                            class={genderIcon}
-                            src={genderIconSrc}
-                            alt-text={gender}
-                            classes={genderIconClass}
-                        ></c-nks-custom-svg>
+    <!-- Added layout again to show fullmakt in next row -->
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12" class="slds-box slds-theme_default">
+            <lightning-layout class="slds-has-bottom-magnet">
+                <lightning-layout-item
+                    size="3"
+                    small-device-size="3"
+                    medium-device-size="3"
+                    large-device-size="3"
+                    class="slds-var-p-right_small"
+                >
+                    <lightning-layout>
+                        <lightning-layout-item class="gender">
+                            <template if:true={gender}>
+                                <c-nks-custom-svg
+                                    class={genderIcon}
+                                    src={genderIconSrc}
+                                    alt-text={gender}
+                                    classes={genderIconClass}
+                                ></c-nks-custom-svg>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item>
+                            <template if:true={personIdent}>
+                                <span class="personIdent">&nbsp;{personIdent} </span>
+                                <lightning-button-icon
+                                    class="copy-icon"
+                                    icon-name="utility:copy"
+                                    variant="bare"
+                                    onclick={handleCopyIdent}
+                                    alternative-text="Kopier fødselsnummer"
+                                    title="Kopier fødselsnummer"
+                                ></lightning-button-icon>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item
+                    class="slds-var-p-right_small"
+                    size="3"
+                    small-device-size="3"
+                    medium-device-size="3"
+                    large-device-size="3"
+                >
+                    <template if:true={age}> {age} år </template>
+                    <template if:true={condition1}>&#47;</template>
+                    <template if:true={citizenship}> {citizenship} </template>
+                    <template if:true={condition2}>&#47;</template>
+                    <template if:true={maritalStatus}> {maritalStatus} </template>
+                </lightning-layout-item>
+
+                <lightning-layout-item
+                    size="5"
+                    small-device-size="5"
+                    medium-device-size="5"
+                    large-device-size="5"
+                    class="slds-var-p-right_small"
+                >
+                    <template if:true={showPersonBadges}>
+                        <c-nks-person-badges
+                            record-id={recordId}
+                            object-api-name={objectApiName}
+                            person-relation-field={relationshipField}
+                        ></c-nks-person-badges>
                     </template>
                 </lightning-layout-item>
-                <lightning-layout-item>
-                    <template if:true={personIdent}>
-                        <span class="personIdent">&nbsp;{personIdent} </span>
-                        <lightning-button-icon
-                            class="copy-icon"
-                            icon-name="utility:copy"
-                            variant="bare"
-                            onclick={handleCopyIdent}
-                            alternative-text="Kopier fødselsnummer"
-                            title="Kopier fødselsnummer"
-                        ></lightning-button-icon>
-                    </template>
+                <lightning-layout-item
+                    class="slds-var-p-right_small"
+                    size="1"
+                    small-device-size="1"
+                    medium-device-size="1"
+                    large-device-size="1"
+                >
+                    <button
+                        class="slds-button slds-button_icon slds-float_right"
+                        onclick={handleFullmaktData}
+                        if:true={btnShowFullmakt}
+                    >
+                        <lightning-icon
+                            icon-name="utility:open_folder"
+                            class={customclass}
+                            alternative-text="Historiske fullmakter"
+                            title="Historiske fullmakter"
+                            size="x-small"
+                        ></lightning-icon>
+                    </button>
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
 
-        <lightning-layout-item
-            class="slds-var-p-right_small"
-            size="4"
-            small-device-size="4"
-            medium-device-size="4"
-            large-device-size="3"
-        >
-            <template if:true={age}> {age} år </template>
-            <template if:true={condition1}>&#47;</template>
-            <template if:true={citizenship}> {citizenship} </template>
-            <template if:true={condition2}>&#47;</template>
-            <template if:true={maritalStatus}> {maritalStatus} </template>
+        <lightning-layout-item size="12" class="card-color slds-box slds-box_x-small" if:true={btnClick}>
+            <lightning-layout class="slds-has-top-magnet">
+                <lightning-layout-item size="12">
+                    <c-nks-historikk-viewer fullmakt-data={fullmaktHistData}></c-nks-historikk-viewer>
+                </lightning-layout-item>
+            </lightning-layout>
+            <button class="close" onclick={handleFullmaktData}>Lukk</button>
         </lightning-layout-item>
-
-        <lightning-layout-item
-            size="4"
-            small-device-size="4"
-            medium-device-size="4"
-            large-device-size="6"
-            class="slds-var-p-right_small"
-        >
-            <template if:true={showPersonBadges}>
-                <c-nks-person-badges
-                    record-id={recordId}
-                    object-api-name={objectApiName}
-                    person-relation-field={relationshipField}
-                ></c-nks-person-badges>
-            </template>
-        </lightning-layout-item>
-    </lightning-layout>    
+    </lightning-layout>
 </template>
