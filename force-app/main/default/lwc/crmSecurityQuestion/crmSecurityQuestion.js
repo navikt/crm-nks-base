@@ -6,25 +6,31 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 export default class CrmSecurityQuestion extends LightningElement {
     @track question;
     @track answer;
-    @track questionsAsked = [];
+    questionsAsked = null;
     @track disabled = true;
-    @track closed = false;
-    @track personId;
+    closed = false;
+    personId;
     @api recordId;
     useErrorColor = false;
 
     @wire(getSecurityQuestion, { accountId: '$personId', usedQuestions: [] })
     fetchData({ error, data }) {
-        if (error) {
-            console.log(error);
+        if (error && error != null) {
             this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
             this.answer = error.body.message;
             this.useErrorColor = true;
-        } else if (data) {
-            this.question = data.question;
-            this.answer = data.answer;
-            this.questionsAsked = data.usedQuestions;
-            this.useErrorColor = this.questionsAsked == null;
+        } else if (data && data != null) {
+            if (this.questionsAsked == data.usedQuestions && this.questionsAsked == null) {
+                this.question = 'Brukeren har ingen gyldige spørsmål.';
+                this.answer = '';
+                this.useErrorColor = this.questionsAsked == null;
+                return;
+            } else {
+                this.question = data.question;
+                this.answer = data.answer;
+                this.questionsAsked = data.usedQuestions;
+                this.useErrorColor = this.questionsAsked == null;
+            }
         }
         this.disabled = false;
     }
@@ -50,18 +56,14 @@ export default class CrmSecurityQuestion extends LightningElement {
             usedQuestions: this.questionsAsked
         })
             .then((data) => {
-                this.question = data.question;
-                this.answer = data.answer;
-                this.questionsAsked = data.usedQuestions;
-                this.disabled = false;
-                this.useErrorColor = this.questionsAsked == null;
+                this.fetchData({ error: null, data: data });
+            })
+            .then(() => {
+                let questionHeader = this.template.querySelector('.question');
+                questionHeader.focus();
             })
             .catch((error) => {
-                console.log(error);
-                this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
-                this.answer = error.body.message;
-                this.disabled = false;
-                this.useErrorColor = true;
+                this.fetchData({ error: error, data: null });
             });
     }
 
@@ -70,6 +72,6 @@ export default class CrmSecurityQuestion extends LightningElement {
     }
 
     get questionClass() {
-        return 'bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
+        return 'question bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
     }
 }

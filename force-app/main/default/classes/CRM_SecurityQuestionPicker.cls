@@ -7,10 +7,10 @@ public with sharing class CRM_SecurityQuestionPicker {
     };
 
     private static SecurityQuestionWrapper getRecursiveQuestion(String accountId, List<Integer> usedQuestions) {
-        if (usedQuestions.size() == questions.size()) {
+        if (usedQuestions.size() >= questions.size()) {
             return new SecurityQuestionWrapper(
-                'Klarte ikke å finne et spørsmål',
-                'Trykk på "Nytt"-knappen for å prøve igjen',
+                'Ingen flere spørsmål',
+                'Trykk på "Nytt"-knappen for å se tidligere spørsmål',
                 null
             );
         }
@@ -23,7 +23,7 @@ public with sharing class CRM_SecurityQuestionPicker {
             usedQuestions = new List<Integer>();
         }
         if (usedQuestions.size() >= questions.size()) {
-            usedQuestions.clear();
+            getRecursiveQuestion(accountId, usedQuestions);
         }
         Integer random = Integer.valueOf(Math.Random() * (questions.size() - usedQuestions.size()));
         usedQuestions.sort();
@@ -202,6 +202,7 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static Boolean isValidChild(PDL_API_Response child, PDL_API_Response parent) {
+        // Sjekker diskresjonskode, at barn er under 21, ikke død og bor med forelderen.
         return (NKS_FamilyViewController.getConfidentialStatus(child) == null &&
         checkAge(child) &&
         NKS_FamilyViewController.hasSameAddress(parent, child) &&

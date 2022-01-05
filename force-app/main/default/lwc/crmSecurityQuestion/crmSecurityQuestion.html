@@ -9,20 +9,22 @@
                     </p>
                 </lightning-layout-item>
                 <lightning-layout-item size="5" class="borderSpacing">
-                    <h3 class={questionClass}>{question}</h3>
+                    <h3 tabindex="-1" class={questionClass}>{question}</h3>
                     <p class="linebreak slds-m-left_xx-small">{answer}</p>
                 </lightning-layout-item>
                 <lightning-layout-item size="3" class="flexBtns">
                     <lightning-button
                         label="Lukk"
                         variant="brand"
-                        title="Closes the question box"
+                        title="Lukker sikkerhetsspørsmålet"
+                        aria-label="Lukker sikkerhetsspørsmålet"
                         onclick={handleClose}
                     ></lightning-button>
                     <lightning-button
                         disabled={disabled}
                         label="Nytt"
-                        title="Gets a new question"
+                        title="Henter et nytt sikkerhetsspørsmål"
+                        aria-label="Henter et nytt sikkerhetsspørsmål"
                         onclick={handleNextQuestion}
                     ></lightning-button>
                 </lightning-layout-item>
