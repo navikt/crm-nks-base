@@ -338,7 +338,6 @@ TODAY())</expression>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
         <fields>
@@ -364,7 +363,6 @@ TODAY())</expression>
         <locationX>578</locationX>
         <locationY>278</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
