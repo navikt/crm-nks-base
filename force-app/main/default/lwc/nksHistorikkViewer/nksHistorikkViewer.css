@@ -1,0 +1,25 @@
+.his {
+    font-weight: 500;
+    font-size: large;
+    padding-left: 8px;
+}
+
+.colName {
+    font-weight: bold;
+}
+
+.space3 {
+    column-width: 30%;
+    background-color: white;
+}
+
+.space2 {
+    column-width: 20%;
+    background-color: white;
+}
+
+.rowClass {
+    padding-inline: 8px;
+    border: 0;
+    height: 38px;
+}
