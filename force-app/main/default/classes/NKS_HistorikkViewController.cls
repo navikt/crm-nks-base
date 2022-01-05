@@ -125,7 +125,7 @@ public with sharing class NKS_HistorikkViewController {
             if (oName != null)
                 omd = omd + oName + ', ';
             else
-                omd = omd + s + ', ';            
+                omd = omd + s + ', ';        
         }
         omd = omd.removeEnd(', ');
         return omd;
