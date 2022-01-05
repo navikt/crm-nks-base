@@ -8,6 +8,7 @@ import AGE_FIELD from '@salesforce/schema/Person__c.CRM_Age__c';
 import CITIZENSHIP_FIELD from '@salesforce/schema/Person__c.INT_Citizenships__c';
 import MARITAL_STATUS_FIELD from '@salesforce/schema/Person__c.INT_MaritalStatus__c';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
+import getHistorikk from '@salesforce/apex/NKS_HistorikkViewController.getHistorikk';
 
 export default class NksPersonHeader extends LightningElement {
     @api recordId;
@@ -24,6 +25,10 @@ export default class NksPersonHeader extends LightningElement {
     wireFields;
     @api condition1;
     @api condition2;
+    @api btnClick = false;
+    @api btnShowFullmakt = false;
+    @api fullmaktHistData;
+    @track customclass = 'grey-icon';
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -124,6 +129,33 @@ export default class NksPersonHeader extends LightningElement {
         }
         if (error) {
             console.log(error);
+        }
+    }
+
+    /*
+     * To change the button color on click
+     */
+    handleFullmaktData() {
+        if (!this.btnClick) {
+            this.btnClick = true;
+            this.customclass = 'blue-icon';
+        } else if (this.btnClick) {
+            this.btnClick = false;
+            this.customclass = 'grey-icon';
+        }
+    }
+
+    @wire(getHistorikk, {
+        recordId: '$recordId',
+        objectApiName: '$objectApiName'
+    })
+    wiredHistorikk({ error, data }) {
+        if (data) {            
+            this.fullmaktHistData = data;
+            this.btnShowFullmakt = this.fullmaktHistData.length > 0;
+        }
+        if (error) {
+            this.addError(error);
         }
     }
 
