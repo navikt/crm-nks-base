@@ -74,6 +74,6 @@ export default class CrmSecurityQuestion extends LightningElement {
     }
 
     get questionText() {
-        return this.disabled ? 'Henter spørsmål' : this.question;
+        return this.disabled || this.question == undefined ? 'Henter spørsmål' : this.question;
     }
 }
