@@ -5,8 +5,8 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>179</locationX>
-        <locationY>457</locationY>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -99,8 +99,8 @@
         <description>Validate if the callout was successful</description>
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
-        <locationX>172</locationX>
-        <locationY>783</locationY>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -171,7 +171,7 @@ TODAY())</expression>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -185,8 +185,8 @@ TODAY())</expression>
         <description>Query information needed from the account and its relations.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>176</locationX>
-        <locationY>190</locationY>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
@@ -211,8 +211,8 @@ TODAY())</expression>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>513</locationX>
-        <locationY>783</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -232,8 +232,8 @@ TODAY())</expression>
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>176</locationX>
-        <locationY>309</locationY>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -332,22 +332,27 @@ TODAY())</expression>
         <description>Screen for telling user that the task was successfully sent.</description>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>179</locationX>
-        <locationY>963</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
+        </connector>
         <fields>
             <name>Success_Screen_Text</name>
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>false</showFooter>
+        <nextOrFinishButtonLabel>Ny oppgave</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -356,9 +361,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log1</name>
         <label>Create App Log</label>
-        <locationX>678</locationX>
-        <locationY>929</locationY>
+        <locationX>578</locationX>
+        <locationY>278</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
@@ -396,8 +402,8 @@ TODAY())</expression>
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>180</locationX>
-        <locationY>633</locationY>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
