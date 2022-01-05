@@ -9,7 +9,12 @@
                     </p>
                 </lightning-layout-item>
                 <lightning-layout-item size="5" class="borderSpacing">
-                    <h3 tabindex="-1" class={questionClass}>{questionText}</h3>
+                    <div tabindex="-1" class="loading">
+                        <template if:true={disabled}>
+                            <p tabindex="-1">Henter spørsmål</p>
+                        </template>
+                    </div>
+                    <h3 tabindex="-1" class={questionClass}>{question}</h3>
                     <p class="linebreak slds-m-left_xx-small">{answer}</p>
                 </lightning-layout-item>
                 <lightning-layout-item size="3" class="flexBtns">
@@ -23,8 +28,8 @@
                     <lightning-button
                         disabled={disabled}
                         label="Nytt"
-                        title="Henter et nytt sikkerhetsspørsmål"
-                        aria-label="Henter et nytt sikkerhetsspørsmål"
+                        title="Nytt sikkerhetsspørsmål"
+                        aria-label="Nytt sikkerhetsspørsmål"
                         onclick={handleNextQuestion}
                     ></lightning-button>
                 </lightning-layout-item>
