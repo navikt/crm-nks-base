@@ -81,23 +81,6 @@ public with sharing class CRM_SecurityQuestionPicker {
     }
 
     private static String getBankAccount(String ident, String accountId) {
-        List<Person__c> bankAccountInfo = [
-            SELECT INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
-            FROM Person__c
-            WHERE CRM_Account__c = :accountId
-            LIMIT 1
-        ];
-        if (
-            bankAccountInfo != null &&
-            !bankAccountInfo.isEmpty() &&
-            bankAccountInfo[0]?.INT_BankAccountNumberLastModified__c != null &&
-            bankAccountInfo[0]?.INT_BankAccountNumber__c != null
-        ) {
-            if (bankAccountInfo[0].INT_BankAccountNumberLastModified__c.addDays(1) >= Date.today()) {
-                return bankAccountInfo[0].INT_BankAccountNumber__c;
-            }
-        }
-
         try {
             TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
