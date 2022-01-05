@@ -4,7 +4,7 @@ import ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 export default class CrmSecurityQuestion extends LightningElement {
-    @track question;
+    question;
     @track answer;
     questionsAsked = null;
     @track disabled = true;
@@ -51,16 +51,14 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     async handleNextQuestion() {
         this.disabled = true;
+        let questionHeader = this.template.querySelector('.question');
+        questionHeader.focus();
         getSecurityQuestion({
             accountId: this.personId,
             usedQuestions: this.questionsAsked
         })
             .then((data) => {
                 this.fetchData({ error: null, data: data });
-            })
-            .then(() => {
-                let questionHeader = this.template.querySelector('.question');
-                questionHeader.focus();
             })
             .catch((error) => {
                 this.fetchData({ error: error, data: null });
@@ -73,5 +71,9 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     get questionClass() {
         return 'question bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
+    }
+
+    get questionText() {
+        return this.disabled ? 'Henter spørsmål' : this.question;
     }
 }
