@@ -1,7 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import crmSingleValueUpdate from '@salesforce/messageChannel/crmSingleValueUpdate__c';
 import { publish, MessageContext } from 'lightning/messageService';
-import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 
 //#### LABEL IMPORTS ####
 import VALIDATION_ERROR from '@salesforce/label/c.NKS_Single_Record_Input_Validation_Error';
@@ -31,12 +30,7 @@ export default class NksSingleRecordInputField extends LightningElement {
     }
 
     onChange(event) {
-        if(event.detail.value.length === 0){
-            this.value = null;
-        }else{
-            this.value = event.detail.value;
-        }
-        this.dispatchEvent(new FlowAttributeChangeEvent('value',this.value));
+        this.value = event.detail.value;
         const payload = { name: this.fieldName, value: this.value };
         publish(this.messageContext, crmSingleValueUpdate, payload);
     }

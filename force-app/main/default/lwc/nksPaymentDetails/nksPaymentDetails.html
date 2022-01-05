@@ -1,8 +1,9 @@
 <template>
-    <lightning-layout class="slds-var-p-bottom_small" multiple-rows="true">
-        <lightning-layout-item if:true={displayHeader} class="slds-var-p-bottom_small slds-var-p-left_medium" size="12">
-            <b class="slds-text-title_bold">{ytelse.ytelsestype.value}</b>
-            &nbsp; &nbsp;
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item if:true={displayHeader} size="12">
+            <b class="slds-text-title_caps">{ytelse.ytelsestype.value}</b>
+        </lightning-layout-item>
+        <lightning-layout-item if:true={displayHeader} size="12">
             <lightning-formatted-date-time
                 year="numeric"
                 month="2-digit"
@@ -19,105 +20,93 @@
                 key={ytelse.ytelsestype}
             ></lightning-formatted-date-time>
         </lightning-layout-item>
-        <lightning-layout-item class="slds-border_bottom" size="6" padding="horizontal-medium">
-            <b class="slds-text-title_bold">{labels.COL_DETAILS}</b>
+        <lightning-layout-item size="6">
+            <b class="slds-text-title_caps">{labels.COL_DETAILS}</b>
         </lightning-layout-item>
-        <lightning-layout-item class="slds-border_bottom" size="2" padding="horizontal-medium">
-            <b class="slds-text-title_bold slds-float_right">{labels.COL_RATE}</b>
+        <lightning-layout-item size="2">
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_RATE}</b>
         </lightning-layout-item>
-        <lightning-layout-item class="slds-border_bottom" size="2" padding="horizontal-medium">
-            <b class="slds-text-title_bold slds-float_right">{labels.COL_QUANTITY}</b>
+        <lightning-layout-item size="2">
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_QUANTITY}</b>
         </lightning-layout-item>
-        <lightning-layout-item class="slds-border_bottom" size="2" padding="horizontal-medium">
-            <b class="slds-text-title_bold slds-float_right">{labels.COL_AMOUNT}</b>
+        <lightning-layout-item size="2">
+            <b class="slds-text-title_caps slds-float_right">{labels.COL_AMOUNT}</b>
         </lightning-layout-item>
         <template for:each={ytelse.ytelseskomponentListe} for:item="ytelseskomponent">
-            <lightning-layout-item size="12" class="detail-table-row" key={ytelseskomponent.ytelseskomponenttype}>
-                <lightning-layout>
-                    <lightning-layout-item size="6" padding="horizontal-medium">
-                        <p>{ytelseskomponent.ytelseskomponenttype}</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <div if:true={ytelseskomponent.satstype} class="slds-float_right">
-                            <p>
-                                <lightning-formatted-number
-                                    value={ytelseskomponent.satsbeloep}
-                                    maximum-fraction-digits="2"
-                                    minimum-fraction-digits="1"
-                                ></lightning-formatted-number>
-                                /{ytelseskomponent.satstype}
-                            </p>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
+            <lightning-layout-item size="6" key={ytelseskomponent.ytelseskomponenttype}>
+                <p>{ytelseskomponent.ytelseskomponenttype}</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
+                <div if:true={ytelseskomponent.satstype} class="slds-float_right">
+                    <p>
                         <lightning-formatted-number
-                            if:true={ytelseskomponent.satsantall}
-                            value={ytelseskomponent.satsantall}
-                            maximum-fraction-digits="2"
-                            class="slds-float_right"
-                        ></lightning-formatted-number>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <lightning-formatted-number
-                            value={ytelseskomponent.ytelseskomponentbeloep}
+                            value={ytelseskomponent.satsbeloep}
                             maximum-fraction-digits="2"
                             minimum-fraction-digits="1"
-                            class="slds-float_right"
                         ></lightning-formatted-number>
-                    </lightning-layout-item>
-                </lightning-layout>
+                        /{ytelseskomponent.satstype}
+                    </p>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
+                <lightning-formatted-number
+                    if:true={ytelseskomponent.satsantall}
+                    value={ytelseskomponent.satsantall}
+                    maximum-fraction-digits="2"
+                    class="slds-float_right"
+                ></lightning-formatted-number>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={ytelseskomponent.ytelseskomponenttype}>
+                <lightning-formatted-number
+                    value={ytelseskomponent.ytelseskomponentbeloep}
+                    maximum-fraction-digits="2"
+                    minimum-fraction-digits="1"
+                    class="slds-float_right"
+                ></lightning-formatted-number>
             </lightning-layout-item>
         </template>
         <template for:each={ytelse.trekkListe} for:item="trekk">
-            <lightning-layout-item size="12" class="detail-table-row" key={trekk.trekktype}>
-                <lightning-layout>
-                    <lightning-layout-item size="6" padding="horizontal-medium">
-                        <p>{trekk.trekktype} ({trekk.kreditor})</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <p class="slds-float_right">-</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <p class="slds-float_right">-</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <lightning-formatted-number
-                            value={trekk.trekkbeloep}
-                            maximum-fraction-digits="2"
-                            minimum-fraction-digits="1"
-                            class="slds-float_right"
-                        ></lightning-formatted-number>
-                    </lightning-layout-item>
-                </lightning-layout>
+            <lightning-layout-item size="6" key={trekk.trekktype}>
+                <p>{trekk.trekktype} ({trekk.kreditor})</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={trekk.trekktype}>
+                <p class="slds-float_right">-</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={trekk.trekktype}>
+                <p class="slds-float_right">-</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={trekk.trekktype}>
+                <lightning-formatted-number
+                    value={trekk.trekkbeloep}
+                    maximum-fraction-digits="2"
+                    minimum-fraction-digits="1"
+                    class="slds-float_right"
+                ></lightning-formatted-number>
             </lightning-layout-item>
         </template>
         <template for:each={ytelse.skattListe} for:item="skatt">
-            <lightning-layout-item size="12" class="detail-table-row" key={skatt.skattebeloep}>
-                <lightning-layout>
-                    <lightning-layout-item size="6" padding="horizontal-medium">
-                        <p>{labels.TAX_DEDUCTION}</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <p class="slds-float_right">-</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <p class="slds-float_right">-</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="2" padding="horizontal-medium">
-                        <lightning-formatted-number
-                            value={skatt.skattebeloep}
-                            maximum-fraction-digits="2"
-                            minimum-fraction-digits="1"
-                            class="slds-float_right"
-                        ></lightning-formatted-number>
-                    </lightning-layout-item>
-                </lightning-layout>
+            <lightning-layout-item size="6" key={skatt.skattebeloep}>
+                <p>{labels.TAX_DEDUCTION}</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={skatt.skattebeloep}>
+                <p class="slds-float_right">-</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={skatt.skattebeloep}>
+                <p class="slds-float_right">-</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" key={skatt.skattebeloep}>
+                <lightning-formatted-number
+                    value={skatt.skattebeloep}
+                    maximum-fraction-digits="2"
+                    minimum-fraction-digits="1"
+                    class="slds-float_right"
+                ></lightning-formatted-number>
             </lightning-layout-item>
         </template>
         <lightning-layout-item size="6" class="slds-border_top"> </lightning-layout-item>
         <lightning-layout-item size="2" class="slds-border_top"> </lightning-layout-item>
         <lightning-layout-item size="2" class="slds-border_top"> </lightning-layout-item>
-        <lightning-layout-item size="2" padding="horizontal-medium" class="slds-border_top">
+        <lightning-layout-item size="2" class="slds-border_top">
             <lightning-formatted-number
                 value={ytelse.ytelseNettobeloep}
                 maximum-fraction-digits="2"

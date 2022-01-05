@@ -274,7 +274,7 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>nksFamilyViewer</componentName>
+                <componentName>personRelationViewer</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</name>
@@ -302,10 +302,6 @@
                 <componentInstanceProperties>
                     <name>amountOfRecordsToOpen</name>
                     <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonIsHidden</name>
-                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>configId</name>
@@ -490,6 +486,9 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Account.NKS_Account_Create_NAV_Task</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.NKS_New_Case</value>
                         </valueListItems>
                     </valueList>
@@ -556,22 +555,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>buttonIcon</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonLabel</name>
-                    <value>Opprett NAV-oppgave</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>flowName</name>
-                    <value>NKS_Account_Send_NAV_Task</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>fullButtonWidth</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>nksFlowStarter</componentName>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -624,11 +608,6 @@
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

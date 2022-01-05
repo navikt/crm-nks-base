@@ -7,7 +7,6 @@
         <locationY>502</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>message</name>
             <value>
@@ -28,7 +27,6 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assign_feedback</name>
         <label>Assign feedback</label>
@@ -92,8 +90,8 @@
     <dynamicChoiceSets>
         <name>Area</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Knowledge_Area__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
@@ -159,7 +157,6 @@
         <faultConnector>
             <targetReference>FeedbackScreen</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>ParentId</field>
             <operator>EqualTo</operator>
@@ -180,7 +177,6 @@
         <connector>
             <targetReference>Get_DataCategories</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
@@ -303,11 +299,9 @@
                     <stringValue>CreatedDate</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Send</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>

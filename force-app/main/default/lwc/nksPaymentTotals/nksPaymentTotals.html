@@ -1,117 +1,115 @@
 <template>
-    <div class="total-tile-bg slds-var-m-bottom_large">
-        <div
-            class="slds-var-p-left_medium slds-var-p-top_medium slds-var-p-right_medium total-tile-header-bg slds-var-p-bottom_xxx-small"
-        >
-            <lightning-layout vertical-align="center" multiple-rows="true">
-                <lightning-layout-item size="6">
-                    <h2 class="slds-text-title_caps" style="font-weight: bold; font-size: large">
-                        {labels.TOTAL_HEADER}
-                    </h2>
-                </lightning-layout-item>
-                <lightning-layout-item size="6">
-                    <lightning-layout multiple-rows="true">
-                        <lightning-layout-item size="12" large-device-size="4">
-                            <lightning-layout horizontal-align="right" multiple-rows="true">
-                                <lightning-layout-item size="12">
-                                    <p class="slds-text-title_bold slds-float_right">{labels.GROSS_AMOUNT}</p>
-                                </lightning-layout-item>
-                                <lightning-layout-item size="12">
-                                    <b
-                                        ><lightning-formatted-number
-                                            value={totalPaymentAmount}
-                                            maximum-fraction-digits="2"
-                                            minimum-fraction-digits="2"
-                                            class="slds-float_right"
-                                        ></lightning-formatted-number
-                                    ></b>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" large-device-size="4">
-                            <lightning-layout multiple-rows="true">
-                                <lightning-layout-item size="12">
-                                    <p class="slds-text-title_bold slds-float_right">{labels.DEDUCTIONS}</p>
-                                </lightning-layout-item>
-                                <lightning-layout-item size="12">
-                                    <b
-                                        ><lightning-formatted-number
-                                            value={totalDeductions}
-                                            maximum-fraction-digits="2"
-                                            minimum-fraction-digits="2"
-                                            class="slds-float_right"
-                                        ></lightning-formatted-number
-                                    ></b>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" large-device-size="4">
-                            <lightning-layout multiple-rows="true">
-                                <lightning-layout-item size="12">
-                                    <p class="slds-text-title_bold slds-float_right">{labels.PAYOUT}</p>
-                                </lightning-layout-item>
-                                <lightning-layout-item size="12">
-                                    <b
-                                        ><lightning-formatted-number
-                                            value={totalNetAmount}
-                                            maximum-fraction-digits="2"
-                                            minimum-fraction-digits="2"
-                                            class="slds-float_right"
-                                        ></lightning-formatted-number
-                                    ></b>
-                                </lightning-layout-item>
-                            </lightning-layout>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </lightning-layout-item>
-            </lightning-layout>
-        </div>
-        <!-- YTELSE BREAKDOWNS -->
-        <div class="slds-var-p-left_medium slds-var-p-bottom_medium slds-var-p-right_medium">
-            <lightning-layout vertical-align="center" multiple-rows="true" class="slds-var-p-top_x-small">
-                <template for:each={ytelseTotals} for:item="ytelseTotal">
-                    <lightning-layout-item key={ytelseTotal.ytelse} size="6">
-                        <p>{ytelseTotal.ytelse}</p>
-                    </lightning-layout-item>
-                    <lightning-layout-item key={ytelseTotal.ytelse} size="6">
+    <div class="slds-var-p-around_small total-tile-bg slds-var-m-bottom_medium">
+        <lightning-layout vertical-align="center" multiple-rows="true">
+            <lightning-layout-item size="4">
+                <h2 class="slds-text-title_caps" style="font-weight: bold; font-size: large">{labels.TOTAL_HEADER}</h2>
+            </lightning-layout-item>
+            <lightning-layout-item size="8">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" large-device-size="4">
                         <lightning-layout horizontal-align="right" multiple-rows="true">
-                            <lightning-layout-item class="slds-hide_large" size="12">
+                            <lightning-layout-item size="12">
                                 <p class="slds-text-title_caps slds-float_right">{labels.GROSS_AMOUNT}</p>
                             </lightning-layout-item>
-                            <lightning-layout-item size="12" large-device-size="4">
-                                <lightning-formatted-number
+                            <lightning-layout-item size="12">
+                                <b
+                                    ><lightning-formatted-number
+                                        value={totalPaymentAmount}
+                                        maximum-fraction-digits="2"
+                                        minimum-fraction-digits="2"
+                                        class="slds-float_right"
+                                    ></lightning-formatted-number
+                                ></b>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" large-device-size="4">
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <p class="slds-text-title_caps slds-float_right">{labels.DEDUCTIONS}</p>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <b
+                                    ><lightning-formatted-number
+                                        value={totalDeductions}
+                                        maximum-fraction-digits="2"
+                                        minimum-fraction-digits="2"
+                                        class="slds-float_right"
+                                    ></lightning-formatted-number
+                                ></b>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" large-device-size="4">
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="12">
+                                <p class="slds-text-title_caps slds-float_right">{labels.PAYOUT}</p>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <b
+                                    ><lightning-formatted-number
+                                        value={totalNetAmount}
+                                        maximum-fraction-digits="2"
+                                        minimum-fraction-digits="2"
+                                        class="slds-float_right"
+                                    ></lightning-formatted-number
+                                ></b>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+        <!-- YTELSE BREAKDOWNS -->
+        <lightning-layout vertical-align="center" multiple-rows="true" class="slds-border_top slds-var-p-top_x-small">
+            <template for:each={ytelseTotals} for:item="ytelseTotal">
+                <lightning-layout-item key={ytelseTotal.ytelse} size="4">
+                    <p>{ytelseTotal.ytelse}</p>
+                </lightning-layout-item>
+                <lightning-layout-item key={ytelseTotal.ytelse} size="8">
+                    <lightning-layout horizontal-align="right" multiple-rows="true">
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">{labels.GROSS_AMOUNT}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" large-device-size="4">
+                            <b
+                                ><lightning-formatted-number
                                     value={ytelseTotal.totals.totalGrossAmount}
                                     maximum-fraction-digits="2"
                                     minimum-fraction-digits="2"
                                     class="slds-float_right"
-                                ></lightning-formatted-number>
-                            </lightning-layout-item>
-                            <lightning-layout-item class="slds-hide_large" size="12">
-                                <p class="slds-text-title_caps slds-float_right">{labels.DEDUCTIONS}</p>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12" large-device-size="4">
-                                <lightning-formatted-number
+                                ></lightning-formatted-number
+                            ></b>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">{labels.DEDUCTIONS}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" large-device-size="4">
+                            <b
+                                ><lightning-formatted-number
                                     value={ytelseTotal.totals.totalDeductions}
                                     maximum-fraction-digits="2"
                                     minimum-fraction-digits="2"
                                     class="slds-float_right"
-                                ></lightning-formatted-number>
-                            </lightning-layout-item>
-                            <lightning-layout-item class="slds-hide_large" size="12">
-                                <p class="slds-text-title_caps slds-float_right">{labels.PAYOUT}</p>
-                            </lightning-layout-item>
-                            <lightning-layout-item size="12" large-device-size="4">
-                                <lightning-formatted-number
+                                ></lightning-formatted-number
+                            ></b>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-hide_large" size="12">
+                            <p class="slds-text-title_caps slds-float_right">{labels.PAYOUT}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" large-device-size="4">
+                            <b
+                                ><lightning-formatted-number
                                     value={ytelseTotal.totals.totalNetAmount}
                                     maximum-fraction-digits="2"
                                     minimum-fraction-digits="2"
                                     class="slds-float_right"
-                                ></lightning-formatted-number>
-                            </lightning-layout-item>
-                        </lightning-layout>
-                    </lightning-layout-item>
-                </template>
-            </lightning-layout>
-        </div>
+                                ></lightning-formatted-number
+                            ></b>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
     </div>
 </template>

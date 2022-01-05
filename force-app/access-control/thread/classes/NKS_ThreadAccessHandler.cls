@@ -4,12 +4,10 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
         //run sharing in a platform event
         
         for(Thread__c thread:(List<Thread__c>) records){
-            if(thread.CRM_Related_Object_Type__c!='Inquiry__c' && thread.CRM_Related_Object_Type__c!='Application__c'){
-               SharingEvent__e event=new SharingEvent__e();
-                event.RecordId__c=thread.Id;
-                event.ObjectType__c='Thread__c';
-                events.add(event);
-            }
+            SharingEvent__e event=new SharingEvent__e();
+            event.RecordId__c=thread.Id;
+            event.ObjectType__c='Thread__c';
+            events.add(event);
         }
        
         if(events.size()>0){
@@ -18,6 +16,7 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
     }
 
     public void grantAccessToNewThreads(List<Thread__c> threads){
+        system.debug('#'+threads.size());
         new NKS_ThreadAccessService().grantAccess(threads, getPersons(threads));
     }
 

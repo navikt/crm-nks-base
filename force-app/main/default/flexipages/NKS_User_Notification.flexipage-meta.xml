@@ -2,128 +2,6 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>actionNames</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>header</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.INT_Description__c</fieldItem>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>BESKJED</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>OPPGAVE</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>VARSEL</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>INNBOKS</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.INT_InternalStatus__c</fieldItem>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>STATUSOPPDATERING</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.INT_Link__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-062755f0-2cbf-4b95-ba57-65c70097fc56</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-062755f0-2cbf-4b95-ba57-65c70097fc56</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>leftcol</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -195,11 +73,6 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CRM_Account__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>readonly</value>
@@ -239,6 +112,11 @@
                         <rightValue>OPPGAVE</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.CRM_Account__c</fieldItem>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -284,6 +162,75 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.INT_Description__c</fieldItem>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>BESKJED</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>OPPGAVE</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>VARSEL</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.INT_InternalStatus__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.INT_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>STATUSOPPDATERING</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.INT_Link__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-062755f0-2cbf-4b95-ba57-65c70097fc56</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
@@ -291,18 +238,29 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Detaljer</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
             </componentInstance>
         </itemInstances>
-        <name>rightcol</name>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-062755f0-2cbf-4b95-ba57-65c70097fc56</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>NKS User Notification</masterLabel>
     <sobjectType>UserNotification__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeTwoColEqualHeaderTemplateDesktop</name>
+        <name>flexipage:recordHomeSingleColNoHeaderTemplateDesktop</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>

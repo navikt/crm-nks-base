@@ -269,10 +269,6 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>buttonIsHidden</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>

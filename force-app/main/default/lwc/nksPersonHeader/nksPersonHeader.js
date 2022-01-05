@@ -150,7 +150,8 @@ export default class NksPersonHeader extends LightningElement {
         objectApiName: '$objectApiName'
     })
     wiredHistorikk({ error, data }) {
-        if (data) {            
+        if (data) {
+            console.log('pppp:' + JSON.stringify(data));
             this.fullmaktHistData = data;
             this.btnShowFullmakt = this.fullmaktHistData.length > 0;
         }

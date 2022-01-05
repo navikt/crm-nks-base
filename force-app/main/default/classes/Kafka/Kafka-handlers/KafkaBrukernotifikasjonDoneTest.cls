@@ -275,4 +275,47 @@ private class KafkaBrukernotifikasjonDoneTest {
         // prettier-ignore
         System.assertEquals(doneEvent.tidspunktFormated, userNotification.INT_DoneEventTime__c, 'Expected value to be set');
     }
+
+    @IsTest
+    static void testEventToDoneTimeError() {
+        KafkaBrukernotifikasjonKey key = new KafkaBrukernotifikasjonKey();
+        key.systembruker = 'testbruker';
+        key.eventId = '12345ABcD';
+
+        KafkaBrukernotifikasjonBeskjed doneEvent = new KafkaBrukernotifikasjonBeskjed();
+        doneEvent.tidspunkt = Datetime.now().addDays(-30).getTime();
+        doneEvent.fodselsnummer = '12345678901';
+        doneEvent.grupperingsId = '1234';
+
+        KafkaMessage__c message = new KafkaMessage__c();
+        message.CRM_Key__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(key)));
+        message.CRM_Value__c = EncodingUtil.base64Encode(Blob.valueOf(JSON.serialize(doneEvent)));
+        message.CRM_Status__c = KafkaMessageService.STATUS_PENDING;
+        message.CRM_Topic__c = 'aapen-brukernotifikasjon-done-v1';
+        insert message;
+
+        System.assertEquals(
+            1,
+            [SELECT Id FROM AsyncRequest__c WHERE CRM_Status__c = 'Pending'].size(),
+            'Expected one async request record that is pending'
+        );
+
+        Test.startTest();
+        Database.executeBatch(new AsyncRequestBatchable());
+        Test.stopTest();
+
+        System.assertEquals(
+            1,
+            [SELECT Id FROM AsyncRequest__c WHERE CRM_Status__c = 'Processed'].size(),
+            'Expected one async request record that is processed'
+        );
+
+        message = [SELECT Id, CRM_Status__c FROM KafkaMessage__c WHERE Id = :message.Id];
+
+        System.assertEquals(
+            KafkaMessageService.STATUS_ERROR,
+            message.CRM_Status__c,
+            'Excpected that the message was set to error'
+        );
+    }
 }

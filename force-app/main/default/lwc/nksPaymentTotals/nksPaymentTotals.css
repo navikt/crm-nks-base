@@ -1,7 +1,7 @@
-.total-tile-bg {
-    background: rgba(204, 241, 214, 0.5);
-}
-
-.total-tile-header-bg {
-    background: rgba(204, 241, 214, 1);
+.total-tile-bg  {
+    background-color: rgb(242, 242, 242);
+    border-style: solid;
+    border-color: rgb(242, 242, 242);
+    border-width: 1px;
+    border-radius: 0.2em;
 }
