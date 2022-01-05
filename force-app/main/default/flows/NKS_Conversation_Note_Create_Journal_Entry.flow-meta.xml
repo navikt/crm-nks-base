@@ -217,7 +217,7 @@
             <inputParameters>
                 <name>prefilledThemeGroup</name>
                 <value>
-                    <elementReference>Get_Conversation_Note.CRM_Theme_Group__c</elementReference>
+                    <elementReference>Get_Conversation_Note.NKS_Theme_Group__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

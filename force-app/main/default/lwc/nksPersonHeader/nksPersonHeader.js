@@ -8,7 +8,6 @@ import AGE_FIELD from '@salesforce/schema/Person__c.CRM_Age__c';
 import CITIZENSHIP_FIELD from '@salesforce/schema/Person__c.INT_Citizenships__c';
 import MARITAL_STATUS_FIELD from '@salesforce/schema/Person__c.INT_MaritalStatus__c';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
-import getHistorikk from '@salesforce/apex/NKS_HistorikkViewController.getHistorikk';
 
 export default class NksPersonHeader extends LightningElement {
     @api recordId;
@@ -25,10 +24,6 @@ export default class NksPersonHeader extends LightningElement {
     wireFields;
     @api condition1;
     @api condition2;
-    @api btnClick = false;
-    @api btnShowFullmakt = false;
-    @api fullmaktHistData;
-    @track customclass = 'grey-icon';
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
