@@ -439,7 +439,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return false;
     }
-    private static String getConfidentialStatus(PDL_API_Response response) {
+    public static String getConfidentialStatus(PDL_API_Response response) {
         List<PDL_Adressebeskyttelse> adressebeskyttelse = response.data?.hentPerson?.adressebeskyttelse;
         if (adressebeskyttelse == null || adressebeskyttelse.isEmpty()) {
             return null;
@@ -610,8 +610,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return ansvarssubjektSet;
     }
-    @TestVisible
-    private static Boolean hasSameAddress(PDL_API_Response parent, PDL_API_Response child) {
+    public static Boolean hasSameAddress(PDL_API_Response parent, PDL_API_Response child) {
         if (parent?.data?.hentPerson?.bostedsadresse == null || parent.data.hentPerson.bostedsadresse.isEmpty()) {
             return false;
         }
