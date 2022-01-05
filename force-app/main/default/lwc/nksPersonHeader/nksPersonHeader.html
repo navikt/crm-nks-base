@@ -1,5 +1,6 @@
 <template>
     <h1 class="sr-only"><template if:true={fullName}> {fullName} </template></h1>
+    <!-- Added layout again to show fullmakt in next row -->
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-theme_default">
             <lightning-layout class="slds-has-bottom-magnet">
@@ -64,7 +65,7 @@
                             object-api-name={objectApiName}
                             person-relation-field={relationshipField}
                         ></c-nks-person-badges>
-                      </template>
+                    </template>
                 </lightning-layout-item>
                 <lightning-layout-item
                     class="slds-var-p-right_small"
@@ -81,8 +82,8 @@
                         <lightning-icon
                             icon-name="utility:open_folder"
                             class={customclass}
-                            alternative-text="fullmakt"
-                            title="fullmakt"
+                            alternative-text="Historiske fullmakter"
+                            title="Historiske fullmakter"
                             size="x-small"
                         ></lightning-icon>
                     </button>
@@ -98,5 +99,5 @@
             </lightning-layout>
             <button class="close" onclick={handleFullmaktData}>Lukk</button>
         </lightning-layout-item>
-    </lightning-layout>    
+    </lightning-layout>
 </template>
