@@ -48,8 +48,8 @@ public with sharing class CRM_SecurityQuestionPicker {
             WHERE CRM_Account__c = :accountId
             LIMIT 1
         ][0];
-        Sting ident = person.INT_ActorId__c;
-        String fnr = person.fnr__c;
+        String ident = person.INT_ActorId__c;
+        String fnr = person.INT_fnr__c;
 
         usedQuestions.add(random);
         String returnAnswer = null;
