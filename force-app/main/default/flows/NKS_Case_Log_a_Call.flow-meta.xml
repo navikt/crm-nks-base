@@ -710,7 +710,7 @@
                 <leftValueReference>BEHANDLINGS_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1361,7 +1361,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <elementReference>Summary_Template</elementReference>
+                    <stringValue></stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1680,7 +1680,7 @@
                     <leftValueReference>Account_Relation.value</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue/>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1778,7 +1778,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </variables>
     <variables>

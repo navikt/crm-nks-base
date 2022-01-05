@@ -3,7 +3,21 @@
     <fullName>CRM_Timeline_Name__c</fullName>
     <description>Friendly name displayed in timeline component for the thread.</description>
     <externalId>false</externalId>
-    <formula>Name + IF(CRM_Number_of_unread_Messages__c != 0, &apos; (&apos; +  TEXT(CRM_Number_of_unread_Messages__c) + &apos; ulest&apos; + IF(CRM_Number_of_unread_Messages__c == 1, &apos;&apos;,&apos;e&apos;) + &apos; meldinger)&apos;, &apos; (Lest)&apos;)</formula>
+    <formula>Name + 
+IF(CRM_Number_of_unread_Messages__c != 0, 
+    &apos; (&apos; +  
+    TEXT(CRM_Number_of_unread_Messages__c) + 
+    IF(CRM_Number_of_unread_Messages__c &gt; 1, 
+        &apos; uleste meldinger&apos;,
+        &apos; ulest melding&apos;
+    ), 
+    &apos; (Lest&apos;
+) +
+IF(CRM_Is_Closed__c,
+    &apos; | AVSLUTTET&apos;,
+    &apos; | ÅPEN&apos;
+) +
+&apos;)&apos;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Timeline Name</label>
     <required>false</required>

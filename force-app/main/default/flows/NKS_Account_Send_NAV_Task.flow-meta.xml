@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>53.0</apiVersion>
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
@@ -125,8 +125,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -134,8 +134,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -324,6 +324,7 @@ TODAY())</expression>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <nextOrFinishButtonLabel>Opprett oppgave</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
