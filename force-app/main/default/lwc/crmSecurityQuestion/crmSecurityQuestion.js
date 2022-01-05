@@ -51,8 +51,8 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     async handleNextQuestion() {
         this.disabled = true;
-        let questionHeader = this.template.querySelector('.question');
-        questionHeader.focus();
+        this.answer = '';
+        this.question = '';
         getSecurityQuestion({
             accountId: this.personId,
             usedQuestions: this.questionsAsked
@@ -63,6 +63,8 @@ export default class CrmSecurityQuestion extends LightningElement {
             .catch((error) => {
                 this.fetchData({ error: error, data: null });
             });
+        let questionHeader = this.template.querySelector('.question');
+        questionHeader.focus();
     }
 
     handleClose() {
@@ -71,9 +73,5 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     get questionClass() {
         return 'question bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
-    }
-
-    get questionText() {
-        return this.disabled || this.question == undefined ? 'Henter spørsmål' : this.question;
     }
 }
