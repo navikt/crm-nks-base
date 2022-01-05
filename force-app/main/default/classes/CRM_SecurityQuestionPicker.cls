@@ -42,15 +42,21 @@ public with sharing class CRM_SecurityQuestionPicker {
         if (personList.size() != 1) {
             return CRM_SecurityQuestionPicker.SecurityQuestionWrapper.noPersonError();
         }
-        String ident = [SELECT Id, INT_ActorId__c FROM Person__c WHERE CRM_Account__c = :accountId LIMIT 1][0]
-        ?.INT_ActorId__c;
+        Person__c person = [
+            SELECT Id, INT_ActorId__c, INT_fnr__c
+            FROM Person__c
+            WHERE CRM_Account__c = :accountId
+            LIMIT 1
+        ][0];
+        Sting ident = person.INT_ActorId__c;
+        String fnr = person.fnr__c;
 
         usedQuestions.add(random);
         String returnAnswer = null;
         switch on random {
             when 0 {
                 //Fra TPS
-                returnAnswer = getBankAccount(ident, accountId);
+                returnAnswer = getBankAccount(fnr);
             }
             when 1 {
                 //Fra KRR
@@ -80,9 +86,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String ident, String accountId) {
+    private static String getBankAccount(String fnr) {
         try {
-            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
+            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(fnr);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
