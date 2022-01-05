@@ -126,4 +126,20 @@
             ></lightning-formatted-number>
         </lightning-layout-item>
     </lightning-layout>
+
+    <lightning-layout
+        if:true={anmerkninger}
+        multiple-rows
+        class="slds-p-top_x-small slds-p-bottom_x-small slds-var-p-left_medium arena-detail"
+    >
+        <lightning-layout-item size="12">
+            <strong class="slds-text-title_bold">{labels.PAYMENT_DETAIL_ANNOTATIONS}</strong>
+        </lightning-layout-item>
+        <template for:each={anmerkninger} for:item="anmerkning">
+            <lightning-layout-item key={anmerkning.kilde} size="12">
+                <span class="slds-var-p-right_small"> {anmerkning.kilde} </span>
+                <span> {anmerkning.beskrivelse} </span>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
 </template>

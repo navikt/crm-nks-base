@@ -385,6 +385,14 @@
         <value>I år</value>
     </labels>
     <labels>
+        <fullName>NKS_Payment_Detail_Annotations</fullName>
+        <categories>UI, NKS, NAV Case, nksPaymentList</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payment Detail Annotations</shortDescription>
+        <value>Anmerkninger</value>
+    </labels>
+    <labels>
         <fullName>NKS_Payment_List_Show_Details</fullName>
         <categories>UI, NKS, NAV Case, nksPaymentList</categories>
         <language>en_US</language>

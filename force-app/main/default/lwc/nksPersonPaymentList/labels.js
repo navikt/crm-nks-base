@@ -25,6 +25,7 @@ import PERIOD_TO from '@salesforce/label/c.NKS_Payment_List_Period_Custom_To';
 import NO_ACCESS from '@salesforce/label/c.NKS_Payment_List_No_Access_Error';
 import API_ERROR from '@salesforce/label/c.NKS_Payment_List_API_Error';
 import PAYMENT_DUE_DATE from '@salesforce/label/c.NKS_Payment_List_Due_Date';
+import PAYMENT_DETAIL_ANNOTATIONS from '@salesforce/label/c.NKS_Payment_Detail_Annotations';
 
 export default {
     NO_PAYMENTS,
@@ -53,5 +54,6 @@ export default {
     PERIOD_TO,
     NO_ACCESS,
     API_ERROR,
-    PAYMENT_DUE_DATE
+    PAYMENT_DUE_DATE,
+    PAYMENT_DETAIL_ANNOTATIONS
 };

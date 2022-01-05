@@ -221,6 +221,10 @@
         <name>NKS_Payment_List_Total_Header</name>
     </customLabels>
     <customLabels>
+        <label>Anmerkninger</label>
+        <name>NKS_Payment_Detail_Annotations</name>
+    </customLabels>
+    <customLabels>
         <label>Ytelse</label>
         <name>NKS_Payment_List_Ytelse_Header</name>
     </customLabels>

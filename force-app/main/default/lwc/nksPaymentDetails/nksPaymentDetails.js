@@ -9,9 +9,25 @@ export default class NksPaymentDetails extends LightningElement {
     @api personIdent;
     arenaDetails;
 
+    get ytelseFromDate() {
+        return this.ytelse.ytelsesperiode?.fom;
+    }
+
+    get ytelseToDate() {
+        return this.ytelse.ytelsesperiode?.tom;
+    }
+
+    get ytelseType() {
+        return this.ytelse.ytelsestype?.value;
+    }
+
+    get anmerkninger() {
+        return this.arenaDetails?.anmerkninger; //List of anmerkning wrappers
+    }
+
     renderedCallback() {
-        console.log('YTELSE: ' + this.ytelse.ytelsestype.value);
-        if (arenaYtelser.includes(this.ytelse.ytelsestype.value) && !this.arenaDetails) {
+        console.log('YTELSE: ' + this.ytelseType);
+        if (arenaYtelser.includes(this.ytelseType) && !this.arenaDetails) {
             this.getArenaDetails();
         }
     }
@@ -22,6 +38,8 @@ export default class NksPaymentDetails extends LightningElement {
         })
             .then((data) => {
                 console.log(data);
+                let details = JSON.parse(data);
+                this.arenaDetails = details[2];
             })
             .catch((error) => {
                 console.log(error);
