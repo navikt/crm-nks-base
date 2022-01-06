@@ -13,8 +13,9 @@ public class NKS_HistorikkViewController_Test {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
 
         Test.startTest();
-        List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(a.Id, 'Account');
+        List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(a.Id, 'Account');        
         Test.stopTest();
+        System.debug(hData);
     }
 
     @isTest
@@ -34,6 +35,7 @@ public class NKS_HistorikkViewController_Test {
         Test.startTest();
         List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(c.Id, 'Case');
         Test.stopTest();
+        System.debug(hData);
     }
 
     @isTest
