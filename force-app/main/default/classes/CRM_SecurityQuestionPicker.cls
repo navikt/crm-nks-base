@@ -1,7 +1,7 @@
 public with sharing class CRM_SecurityQuestionPicker {
     static final List<String> questions = new List<String>{
         'Hva er bankkontonummeret ditt?',
-        'Hva er eposten din?',
+        'Hva er e-posten din?',
         'Hva er fødselsdatoen til barnet ditt?',
         'Hvilken dato giftet du deg?'
     };
@@ -158,7 +158,7 @@ public with sharing class CRM_SecurityQuestionPicker {
             query.hentPerson.sivilstand.type = true;
             query.hentPerson.sivilstand.gyldigFraOgMed = true;
             PDL_API_Response resp = query.execute();
-            if (resp.data.hentPerson.sivilstand[0].type == PDL_Sivilstandstype.GIFT) {
+            if (resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT) {
                 return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
             }
             return null;
