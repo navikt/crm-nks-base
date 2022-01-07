@@ -59,13 +59,9 @@ export default class CrmSecurityQuestion extends LightningElement {
         })
             .then((data) => {
                 this.fetchData({ error: null, data: data });
-                let questionHeader = this.template.querySelector('.question');
-                questionHeader.focus();
             })
             .catch((error) => {
                 this.fetchData({ error: error, data: null });
-                let questionHeader = this.template.querySelector('.question');
-                questionHeader.focus();
             });
     }
 

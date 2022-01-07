@@ -9,13 +9,8 @@
                     </p>
                 </lightning-layout-item>
                 <lightning-layout-item size="5" class="borderSpacing">
-                    <div tabindex="-1" class="loading">
-                        <template if:true={disabled}>
-                            <p tabindex="-1">Henter spørsmål</p>
-                        </template>
-                    </div>
-                    <h3 tabindex="-1" class={questionClass}>{question}</h3>
-                    <p class="linebreak slds-m-left_xx-small">{answer}</p>
+                    <h3 tabindex="-1" class={questionClass} aria-live="polite">{question}</h3>
+                    <p class="linebreak slds-m-left_xx-small" aria-live="polite">{answer}</p>
                 </lightning-layout-item>
                 <lightning-layout-item size="3" class="flexBtns">
                     <lightning-button
