@@ -140,4 +140,18 @@ public with sharing class CRM_SecurityQuestionTest {
         System.assertEquals('Hvilken dato giftet du deg?', question.question);
         System.assert(question.usedQuestions.size() > 0);
     }
+
+    @IsTest
+    static void testSecurityQuestionNoUser() {
+        List<Integer> usedQuestions = new List<Integer>{ 0, 1, 2 };
+        Test.startTest();
+        CRM_SecurityQuestionPicker.SecurityQuestionWrapper question = CRM_SecurityQuestionPicker.getSecurityQuestion(
+            '12345648975',
+            usedQuestions
+        );
+        Test.stopTest();
+        System.assertEquals('Det oppstod en feil', question.question);
+        System.assertEquals('Fant ikke brukeren', question.answer);
+        System.assert(question.usedQuestions == null);
+    }
 }
