@@ -388,11 +388,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_External_Actor_Account_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Thread__c.CRM_External_Person_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
