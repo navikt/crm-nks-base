@@ -1,0 +1,14 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader, force:hasRecordId">
+    <aura:attribute name="articleRecord" type="Object" />
+    <aura:attribute name="recordLoadError" type="String" />
+
+    <!--Copy the NKS_Summary field, how should formatting be handled?-->
+    <force:recordData
+        aura:id="recordLoader"
+        recordId="{!v.recordId}"
+        fields="Summary"
+        targetFields="{!v.articleRecord}"
+        targetError="{!v.recordLoadError}"
+        recordUpdated="{!c.handleArticleLoad}"
+    />
+</aura:component>
