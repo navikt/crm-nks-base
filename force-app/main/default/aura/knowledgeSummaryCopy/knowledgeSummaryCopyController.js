@@ -2,7 +2,7 @@
     handleArticleLoad: function (component, event, helper) {
         var eventParams = event.getParams();
         if (eventParams.changeType === 'LOADED') {
-            const summary = component.get('v.articleRecord.Summary');
+            const summary = component.get('v.articleRecord.NKS_Summary__c');
             helper.addToClipBoard(component, summary);
         } else if (eventParams.changeType === 'CHANGED') {
             // record is changed

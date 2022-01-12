@@ -6,7 +6,7 @@
     <force:recordData
         aura:id="recordLoader"
         recordId="{!v.recordId}"
-        fields="Summary"
+        fields="NKS_Summary__c"
         targetFields="{!v.articleRecord}"
         targetError="{!v.recordLoadError}"
         recordUpdated="{!c.handleArticleLoad}"
