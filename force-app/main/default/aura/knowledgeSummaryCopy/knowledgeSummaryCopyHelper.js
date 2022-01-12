@@ -1,7 +1,9 @@
 ({
     addToClipBoard: function (component, text) {
-        var hiddenInput = document.createElement('input');
-        hiddenInput.value = text;
+        const doc = new DOMParser().parseFromString(text, 'text/html'); //Handling correct parsing when copying text
+
+        var hiddenInput = document.createElement('textarea');
+        hiddenInput.value = doc.documentElement.textContent;
         document.body.appendChild(hiddenInput);
         hiddenInput.focus();
         hiddenInput.select();
