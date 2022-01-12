@@ -439,6 +439,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return false;
     }
+
     public static String getConfidentialStatus(PDL_API_Response response) {
         List<PDL_Adressebeskyttelse> adressebeskyttelse = response.data?.hentPerson?.adressebeskyttelse;
         if (adressebeskyttelse == null || adressebeskyttelse.isEmpty()) {
@@ -610,6 +611,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return ansvarssubjektSet;
     }
+
     public static Boolean hasSameAddress(PDL_API_Response parent, PDL_API_Response child) {
         if (parent?.data?.hentPerson?.bostedsadresse == null || parent.data.hentPerson.bostedsadresse.isEmpty()) {
             return false;
@@ -732,9 +734,6 @@ public with sharing class NKS_FamilyViewController {
             childAddress1Match = false;
             childAddress2Match = false;
         }
-        if (childAddress1Match || childAddress2Match) {
-            return true;
-        }
         if (parentAddress.tilleggsnavn != null) {
             if (parentAddress.tilleggsnavn != childAddress1?.tilleggsnavn) {
                 childAddress1Match = false;
@@ -749,6 +748,9 @@ public with sharing class NKS_FamilyViewController {
             if (childAddress2?.tilleggsnavn != null) {
                 childAddress2Match = false;
             }
+        }
+        if (childAddress1Match || childAddress2Match) {
+            return true;
         }
         return false;
     }
