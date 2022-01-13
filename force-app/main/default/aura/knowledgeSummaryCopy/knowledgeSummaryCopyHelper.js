@@ -1,6 +1,7 @@
 ({
     addToClipBoard: function (component, text) {
-        const doc = new DOMParser().parseFromString(text, 'text/html'); //Handling correct parsing when copying text
+        let escaped = text.replaceAll('<br>g', '\\n');
+        const doc = new DOMParser().parseFromString(escaped, 'text/html'); //Handling correct parsing when copying text
 
         var hiddenInput = document.createElement('textarea');
         hiddenInput.value = doc.documentElement.textContent;
