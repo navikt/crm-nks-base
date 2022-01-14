@@ -635,6 +635,10 @@
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
                 </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>true</value>
+                </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>
                     <criteria>
