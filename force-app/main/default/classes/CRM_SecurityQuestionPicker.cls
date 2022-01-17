@@ -42,14 +42,8 @@ public with sharing class CRM_SecurityQuestionPicker {
         if (personList.size() != 1) {
             return noPersonError();
         }
-        Person__c person = [
-            SELECT Id, INT_ActorId__c, INT_fnr__c
-            FROM Person__c
-            WHERE CRM_Account__c = :accountId
-            LIMIT 1
-        ][0];
-        String ident = person.INT_ActorId__c;
-        String fnr = person.INT_fnr__c;
+        String ident = personList[0].INT_ActorId__c;
+        String fnr = personList[0].INT_fnr__c;
 
         usedQuestions.add(random);
         String returnAnswer = null;
