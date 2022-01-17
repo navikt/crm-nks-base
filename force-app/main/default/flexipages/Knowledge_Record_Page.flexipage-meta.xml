@@ -108,6 +108,9 @@
                         <valueListItems>
                             <value>Knowledge__kav.Gi_tilbakemelding</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Knowledge__kav.Copy_Summary</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -128,7 +131,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
