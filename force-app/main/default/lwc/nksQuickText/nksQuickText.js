@@ -65,16 +65,12 @@ export default class nksQuickText extends LightningElement {
             modal.focus();
         } else {
             this.bufferFocus = true;
-        }
+        } 
     }
 
     @api 
     isOpen () {
-        if (this.template.querySelector('[data-id="modal"]').className == 'modalShow') {
-            return true;
-        } else {
-            return false;
-        }
+        return this.template.querySelector('[data-id="modal"]').className == 'modalShow' ? true : false;
     }
 
     handleModalFocus = (event) => {
@@ -83,7 +79,6 @@ export default class nksQuickText extends LightningElement {
             event.path.forEach((pathItem) => {
                 if (pathItem.ariaModal) {
                     modal = true;
-                    return;
                 }
             }); 
             
