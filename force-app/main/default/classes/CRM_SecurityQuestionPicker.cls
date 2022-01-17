@@ -34,7 +34,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         List<Person__c> personList = [
-            SELECT Id, INT_ActorId__c
+            SELECT Id, INT_ActorId__c, INT_fnr__c
             FROM Person__c
             WHERE CRM_Account__c = :accountId
             LIMIT 1
