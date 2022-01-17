@@ -4,80 +4,88 @@ import getQuicktexts from '@salesforce/apex/NKS_QuickTextSearchController.getQui
 //LABEL IMPORTS
 import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
 export default class nksQuickText extends LightningElement {
-    labels = {
-        BLANK_ERROR
-    };
-
-    _conversationNote;
     @api comments;
-    @track data = [];
-    loadingData = false;
     @api required = false;
+
+    @track data = [];
+
+    labels = {BLANK_ERROR};
+    _conversationNote;
+    loadingData = false;
     quicktexts;
     qmap;
-    numberOfRows = 0; 
-    get inputFormats() {
-        return [''];
-    }
     initialRender = true;
+    bufferFocus = false;
+    numberOfRows = 0; 
 
-    //Screen reader does not detect component as as input field until after the first focus
-    renderedCallback() {
+    renderedCallback () {
         if (this.initialRender === true) {
             let inputField = this.template.querySelector('.conversationNoteTextArea');
             inputField.focus();
             inputField.blur();
             this.initialRender = false;
         }
-    }
-
-    @wire(getQuicktexts, {})
-    wiredQuicktexts(value) {
-        if (value.data) {
-            this.quicktexts = value.data;
-            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        
+        if (this.bufferFocus) {
+            this.focusModal();
         }
     }
 
-    @api get conversationNote() {
-        return this._conversationNote;
+    disconnectedCallback() {
+        document.removeEventListener('focusin', this.handleModalFocus, true);
     }
 
-    set conversationNote(value) {
-        this._conversationNote = value;
-    }
-
-    @api get conversationNoteRich() {
-        return this._conversationNote;
-    }
-
-    set conversationNoteRich(value) {
-        this._conversationNote = value;
-    }
-
-    handlePaste(evt) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
-        editor.setRangeText(
-            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
-            editor.selectionStart,
-            editor.selectionEnd,
-            'end'
-        );
-        evt.preventDefault();
-        evt.stopImmediatePropagation();
-
-        this.conversationNote = editor.value;
-        const attributeChangeEvent = new CustomEvent('commentschange', {
-            detail: this.conversationNote
-        });
-        this.dispatchEvent(attributeChangeEvent);
-    }
-
-    modalOnEscape(evt) {
+    modalOnEscape (evt) {
         if (evt.key === 'Escape') {
             this.hideModal(evt);
             evt.preventDefault();
             evt.stopImmediatePropagation();
+        }
+    }
+
+    @api 
+    showModal (event) {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalShow';
+        this.template.querySelector('lightning-input').focus();
+        document.addEventListener('focusin', this.handleModalFocus, true);
+        this.focusModal();
+    }
+
+    hideModal (event) {
+        let modal = this.template.querySelector('[data-id="modal"]');
+        modal.className = 'modalHide';
+        document.removeEventListener('focusin', this.handleModalFocus, true);
+    }
+
+    focusModal() {
+        const modal = this.template.querySelector('[data-id="modal"]');
+        if (modal) {
+            this.bufferFocus = false;
+            modal.focus();
+        } else {
+            this.bufferFocus = true;
+        } 
+    }
+
+    @api 
+    isOpen () {
+        return this.template.querySelector('[data-id="modal"]').className == 'modalShow' ? true : false;
+    }
+
+    handleModalFocus = (event) => {
+        if (this.isOpen()) {
+            let modal = false;
+            event.path.forEach((pathItem) => {
+                if (pathItem.ariaModal) {
+                    modal = true;
+                }
+            }); 
+            
+            if (!modal) {
+                const modalFocusElement = this.template.querySelector('.slds-modal__close');
+                modalFocusElement.focus();
+            }  
         }
     }
 
@@ -106,16 +114,55 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    showModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalShow';
-        this.template.querySelector('lightning-input').focus();
+    @wire (getQuicktexts, {})
+    wiredQuicktexts (value) {
+        if (value.data) {
+            this.quicktexts = value.data;
+            this.qmap = new Map(value.data.map((key) => [key.nksAbbreviationKey__c.toUpperCase(), key.Message]));
+        }
     }
 
-    hideModal(event) {
-        this.template.querySelector('[data-id="modal"]').className = 'modalHide';
+    get inputFormats () {
+        return [''];
     }
 
-    insertText(event) {
+    @api 
+    get conversationNote () {
+        return this._conversationNote;
+    }
+
+    set conversationNote (value) {
+        this._conversationNote = value;
+    }
+
+    @api 
+    get conversationNoteRich () {
+        return this._conversationNote;
+    }
+
+    set conversationNoteRich (value) {
+        this._conversationNote = value;
+    }
+
+    handlePaste(evt) {
+        const editor = this.template.querySelector('.conversationNoteTextArea');
+        editor.setRangeText(
+            this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
+            editor.selectionStart,
+            editor.selectionEnd,
+            'end'
+        );
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
+
+        this.conversationNote = editor.value;
+        const attributeChangeEvent = new CustomEvent('commentschange', {
+            detail: this.conversationNote
+        });
+        this.dispatchEvent(attributeChangeEvent);
+    }
+
+    insertText (event) {
         const editor = this.template.querySelector('.conversationNoteTextArea');
         editor.focus();
         editor.setRangeText(
@@ -125,7 +172,7 @@ export default class nksQuickText extends LightningElement {
             'select'
         );
 
-        this.hideModal(undefined);
+        this.hideModal (undefined);
         this.conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
@@ -133,7 +180,7 @@ export default class nksQuickText extends LightningElement {
         this.dispatchEvent(attributeChangeEvent);
     }
 
-    handleChange(event) {
+    handleChange (event) {
         this[event.target.name] = event.target.value;
         this.conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
@@ -142,7 +189,7 @@ export default class nksQuickText extends LightningElement {
         this.dispatchEvent(attributeChangeEvent);
     }
 
-    insertquicktext(event) {
+    insertquicktext (event) {
         if (event.keyCode === 32) {
             const editor = this.template.querySelector('.conversationNoteTextArea');
             const carretPositionEnd = editor.selectionEnd;
@@ -169,7 +216,7 @@ export default class nksQuickText extends LightningElement {
         }
     }
 
-    toPlainText(value) {
+    toPlainText (value) {
         let plainText = value ? value : '';
         plainText = plainText.replace(/<\/[^\s>]+>/g, '\n'); //Replaces all ending tags with newlines.
         plainText = plainText.replace(/<[^>]+>/g, ''); //Remove remaining html tags
@@ -177,13 +224,13 @@ export default class nksQuickText extends LightningElement {
         return plainText;
     }
 
-    setFocusOnTextArea() {
+    setFocusOnTextArea () {
         let inputField = this.template.querySelector('.conversationNoteTextArea');
         inputField.focus();
     }
 
     @api
-    validate() {
+    validate () {
         if (this.required === true) {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
