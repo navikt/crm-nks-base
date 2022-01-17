@@ -65,6 +65,12 @@
                 max="4"
                 default="2"
             />
+            <property
+                name="enableRefresh"
+                label="Show refresh button"
+                type="Boolean"
+                default="false"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

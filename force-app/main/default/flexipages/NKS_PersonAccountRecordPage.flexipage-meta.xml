@@ -16,6 +16,10 @@
                     <value>INT_DateOfDeath__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -60,6 +64,10 @@
                     <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c, INT_BankAccountNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -95,6 +103,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c,NKS_County__c, INT_ResidentialPlace__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -155,6 +167,10 @@
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -196,6 +212,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -583,6 +603,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_ModiaURL__c, NKS_GoSysURL__c, NKS_AktivitetsplanURL__c, NKS_AAregisterURL__c, NKS_PSELVPensjonURL__c, NKS_PSELVUfoeretrygdURL__c, NKS_PESYSURL__c, NKS_SpeilURL__c, NKS_ForeldrepengerURL__c, NKS_K9URL__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
