@@ -40,7 +40,7 @@ public with sharing class CRM_SecurityQuestionPicker {
             LIMIT 1
         ];
         if (personList.size() != 1) {
-            return CRM_SecurityQuestionPicker.SecurityQuestionWrapper.noPersonError();
+            return noPersonError();
         }
         Person__c person = [
             SELECT Id, INT_ActorId__c, INT_fnr__c
@@ -218,12 +218,8 @@ public with sharing class CRM_SecurityQuestionPicker {
         return alder < 21;
     }
 
-    public static CRM_SecurityQuestionPicker.SecurityQuestionWrapper noPersonError() {
-        return new CRM_SecurityQuestionPicker.SecurityQuestionWrapper(
-            'Det oppstod en feil',
-            'Fant ikke brukeren',
-            null
-        );
+    public static SecurityQuestionWrapper noPersonError() {
+        return new SecurityQuestionWrapper('Fant ikke brukeren', '', null);
     }
 
     public class SecurityQuestionWrapper {
