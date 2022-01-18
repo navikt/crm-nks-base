@@ -27,7 +27,6 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -41,7 +40,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_Description__c</fieldItem>
-                <identifier>RecordINT_Description__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
@@ -74,7 +72,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_InternalStatus__c</fieldItem>
-                <identifier>RecordINT_InternalStatus__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -91,7 +88,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_Link__c</fieldItem>
-                <identifier>RecordINT_Link__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</name>
@@ -105,7 +101,6 @@
                     <value>Facet-9eba0665-6dbe-4ca5-b3a7-0baab4a5b436</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-062755f0-2cbf-4b95-ba57-65c70097fc56</name>
@@ -123,7 +118,6 @@
                     <value>Innhold</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
@@ -137,7 +131,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_EventTime__c</fieldItem>
-                <identifier>RecordINT_EventTime__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -147,7 +140,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_VisibleUntil__c</fieldItem>
-                <identifier>RecordINT_VisibleUntil__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -164,7 +156,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_DoneEventTime__c</fieldItem>
-                <identifier>RecordINT_DoneEventTime__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -181,7 +172,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_SecurityLevel__c</fieldItem>
-                <identifier>RecordINT_SecurityLevel__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -198,7 +188,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_ExternalNotification__c</fieldItem>
-                <identifier>RecordINT_ExternalNotification__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-88d95c0a-0b9d-4f1c-a925-3730a4b29a46</name>
@@ -208,7 +197,6 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CRM_Account__c</fieldItem>
-                <identifier>RecordCRM_Account__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -218,7 +206,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_Type__c</fieldItem>
-                <identifier>RecordINT_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -228,7 +215,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.INT_GlobalStatus__c</fieldItem>
-                <identifier>RecordINT_GlobalStatus__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -241,7 +227,6 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CRM_Status__c</fieldItem>
-                <identifier>RecordCRM_Status__cField</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
@@ -264,7 +249,6 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CRM_CaseTheme__c</fieldItem>
-                <identifier>RecordCRM_CaseTheme__cField</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_Type__c}</leftValue>
@@ -285,7 +269,6 @@
                     <value>Facet-88d95c0a-0b9d-4f1c-a925-3730a4b29a46</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -295,7 +278,6 @@
                     <value>Facet-c9e9a0b8-4161-4008-a669-38589beaa730</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-0ce473f1-1fc9-470b-a2b2-55e92a192eb8</name>
@@ -313,7 +295,6 @@
                     <value>Informasjon om brukernotifikasjonen</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>
