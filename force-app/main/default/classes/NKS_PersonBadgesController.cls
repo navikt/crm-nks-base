@@ -244,7 +244,6 @@ public with sharing class NKS_PersonBadgesController {
         }
 
         private void setPowerOfAttorney() {
-            Boolean activeAttorney = false;
             if (String.isNotBlank(person.INT_PowerOfAttorney__c)) {
                 Map<String, Person__c> relatedPersonMap = new Map<String, Person__c>();
                 try {
@@ -255,23 +254,24 @@ public with sharing class NKS_PersonBadgesController {
                             List<PowerOfAttorney>.class
                         )
                     ) {
-                        activeAttorney = poa.gyldigFraOgMed <= Date.today() && poa.gyldigTilOgMed >= Date.today();
-                        poa.id = '' + i;
-                        relatedPersonMap.put(poa.motpartsPersonident, null);
-                        if (poa.omraader != null && poa.omraader.size() > 0) {
-                            if (poa.omraader.size() == 1 && poa.omraader[0] == '*') {
-                                poa.omraader[0] = 'Gjelder alle ytelser';
-                            } else {
-                                for (Integer x = 0; x < poa.omraader.size(); x++) {
-                                    if (themeMap.containsKey(poa.omraader[x])) {
-                                        poa.omraader[x] = themeMap.get(poa.omraader[x]).Name;
+                        if (poa.gyldigFraOgMed <= Date.today() && poa.gyldigTilOgMed >= Date.today()) {
+                            poa.id = '' + i;
+                            relatedPersonMap.put(poa.motpartsPersonident, null);
+                            if (poa.omraader != null && poa.omraader.size() > 0) {
+                                if (poa.omraader.size() == 1 && poa.omraader[0] == '*') {
+                                    poa.omraader[0] = 'Gjelder alle ytelser';
+                                } else {
+                                    for (Integer x = 0; x < poa.omraader.size(); x++) {
+                                        if (themeMap.containsKey(poa.omraader[x])) {
+                                            poa.omraader[x] = themeMap.get(poa.omraader[x]).Name;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        powerOfAttorneys.add(poa);
-                        i++;
+                            powerOfAttorneys.add(poa);
+                            i++;
+                        }
                     }
 
                     if (powerOfAttorneys.size() > 0) {
@@ -290,24 +290,21 @@ public with sharing class NKS_PersonBadgesController {
                                     : relatedPersonMap.get(poa.motpartsPersonident).CRM_Account__r.Name;
                             }
                         }
+
+                        badges.add(
+                            new Badge(
+                                'powerOfAttorney',
+                                'Fullmakt',
+                                'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                                '',
+                                '',
+                                true
+                            )
+                        );
                     }
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av fullmakts detaljer');
                 }
-            }
-
-            //Only add the badge if there is at least one active power of attorney
-            if (activeAttorney) {
-                badges.add(
-                    new Badge(
-                        'powerOfAttorney',
-                        'Fullmakt',
-                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
-                        '',
-                        '',
-                        true
-                    )
-                );
             }
         }
 
