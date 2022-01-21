@@ -10,7 +10,7 @@ CRM_Theme_Group__r.Name))
 IF(ISBLANK(NKS_Theme_Group__c), &apos;Øvrige&apos;,
 IF(AND(NOT(ISBLANK(NKS_Theme__c)),(NKS_Theme__r.Name != &apos;Pensjon&apos;)), NKS_Theme_Group__r.Name + &apos;, &apos; + NKS_Theme__r.Name,
 IF(AND(NOT(ISBLANK(NKS_Subtheme__c)),(NKS_Theme__r.Name == &apos;Pensjon&apos;)),NKS_Theme_Group__r.Name + &apos;, &apos; + NKS_Subtheme__r.Name,NKS_Theme_Group__r.Name)))
-+ IF(ISBLANK(NKS_Owner_Department__c), &apos;&apos;, &apos; - &apos; + NKS_Owner_Department__c)</formula>
++ IF(ISBLANK(CRM_Created_By_NAV_Unit__c), &apos;&apos;, &apos; - &apos; + CRM_Created_By_NAV_Unit__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Timeline Name</label>
     <required>false</required>
