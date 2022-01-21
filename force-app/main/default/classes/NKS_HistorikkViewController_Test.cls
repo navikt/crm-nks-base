@@ -45,7 +45,6 @@ public class NKS_HistorikkViewController_Test {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
         List<NKS_HistorikkViewController.Historikk> l = NKS_HistorikkViewController.getFullmakt(query.execute());
-        System.assertEquals('27036012345', l[0].motpartsPersonident);
         String fullmaktPerson =
             '{' +
             '"data" : {' +
