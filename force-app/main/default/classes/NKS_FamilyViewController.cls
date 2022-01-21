@@ -163,13 +163,6 @@ public with sharing class NKS_FamilyViewController {
                     }
 
                     parent.accountId = getAccountIdFromPersonId(getIdentsList(parentResponse));
-                    parent.employee = isNavEmployee(parentResponse);
-                    if (isConfidentialEmployeeRelation(person.employee, parent.employee)) {
-                        parent.accountId = null;
-                        parent.unauthorized = true;
-                        parents.add(parent);
-                        continue;
-                    }
                     fillRelationFromResponse(parent, parentResponse);
                     parent.livesWith = hasSameAddress(parentResponse, relationsData);
                     parent.responsibility = hasResponsibility(parentResponse, relationsData);
@@ -203,16 +196,7 @@ public with sharing class NKS_FamilyViewController {
                         children.add(child);
                         continue;
                     }
-
                     child.accountId = getAccountIdFromPersonId(getIdentsList(childResponse));
-                    child.employee = isNavEmployee(childResponse);
-                    if (isConfidentialEmployeeRelation(person.employee, child.employee)) {
-                        child.accountId = null;
-                        child.unauthorized = true;
-                        children.add(child);
-                        continue;
-                    }
-
                     fillRelationFromResponse(child, childResponse);
                     if (isOver21(child)) {
                         continue;
@@ -270,11 +254,7 @@ public with sharing class NKS_FamilyViewController {
             if (sivilstand[0].relatertVedSivilstand != null) {
                 PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
                 r.accountId = getAccountIdFromPersonId(getIdentsList(response));
-                r.employee = isNavEmployee(response);
                 if (isConfidentialRelation(relationsData, response)) {
-                    r.accountId = null;
-                    r.unauthorized = true;
-                } else if (isConfidentialEmployeeRelation(person.employee, r.employee)) {
                     r.accountId = null;
                     r.unauthorized = true;
                 } else {
@@ -322,7 +302,7 @@ public with sharing class NKS_FamilyViewController {
         relation.deceased = (relation.dateOfDeath != null) ? true : false;
         relation.confidentialStatus = getConfidentialStatus(response);
         relation.confidential = isConfidential(relation.confidentialStatus);
-        //relation.employee = isNavEmployee(response);
+        relation.employee = isNavEmployee(response);
         relation.personIdent = getPersonIdent(response);
         //relation.accountId = getAccountIdFromPersonId(getIdentsList(response));
         return;
@@ -499,12 +479,6 @@ public with sharing class NKS_FamilyViewController {
             }
         }
 		*/
-        return false;
-    }
-    private static Boolean isConfidentialEmployeeRelation(Boolean person, Boolean relation) {
-        if (relation && !person) {
-            return true;
-        }
         return false;
     }
     private static Boolean isNavEmployee(PDL_API_Response response) {
