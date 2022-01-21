@@ -273,11 +273,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Message__c.CRM_From_Last_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Message__c.CRM_From_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -388,11 +383,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_External_Actor_Account_ID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Thread__c.CRM_External_Person_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -449,11 +439,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Latest_Message_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_NAV_Case_Reference__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,52 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Post_Journal</name>
-        <label>Post Journal</label>
-        <locationX>760</locationX>
-        <locationY>1655</locationY>
-        <actionName>CRM_ConvNoteJournalHelper</actionName>
+        <name>Initiate_Journal_Process</name>
+        <label>Initiate Journal Process</label>
+        <locationX>537</locationX>
+        <locationY>1685</locationY>
+        <actionName>NKS_HenvendelseController</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
+            <targetReference>Verify_Journal_Initiation</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Journal_Error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>Journal_Case_ID</name>
+            <name>behandlingskjedeId</name>
             <value>
-                <elementReference>Case_Overview.selectedCaseId</elementReference>
+                <elementReference>BEHANDLINGS_ID</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>Journal_Case_Legacy_System</name>
-            <value>
-                <elementReference>Case_Overview.selectedCaseLegacySystem</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>Journal_Entry_NAV_Ident</name>
-            <value>
-                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>Journal_Entry_Unit</name>
+            <name>navUnitNumber</name>
             <value>
                 <elementReference>$User.Department</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>Journal_Theme_Code</name>
+            <name>navCaseId</name>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>JOURNAL</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeCode</name>
             <value>
                 <elementReference>Case_Overview.selectedCaseTheme</elementReference>
             </value>
         </inputParameters>
+        <outputParameters>
+            <assignToReference>JOURNAL_POST_RESPONSE</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Posts the conversation note to henvendelse via API</description>
+        <name>Post_to_Henvendelse</name>
+        <label>Post to Henvendelse</label>
+        <locationX>975</locationX>
+        <locationY>1133</locationY>
+        <actionName>NKS_HenvendelseController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Verify_Henvendelse_Post</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Create_Journal_Entry_Decision_0</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>recordId</name>
+            <name>content</name>
             <value>
-                <elementReference>Conversation_Note_Record.Id</elementReference>
+                <elementReference>Dialogue_Summary.conversationNote</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>navUnitNumber</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>personIdent</name>
+            <value>
+                <elementReference>personIdent</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>requestType</name>
+            <value>
+                <stringValue>SEND</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>themeGroupCode</name>
+            <value>
+                <elementReference>CONV_NOTE_THEME_GROUP_CODDE</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>BEHANDLINGS_ID</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
@@ -95,7 +146,7 @@
             <assignToReference>Task_to_Create.NKS_Henvendelse_BehandlingsId__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>BEHANDLINGS_ID</elementReference>
+                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -108,10 +159,10 @@
     </assignments>
     <assignments>
         <description>Assigns updated values for case</description>
-        <name>Case_Assignment_Default_0_0</name>
+        <name>Case_Assignment_Default_0</name>
         <label>Case Assignment</label>
-        <locationX>1058</locationX>
-        <locationY>1960</locationY>
+        <locationX>986</locationX>
+        <locationY>1964</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -133,8 +184,8 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>761</locationX>
-        <locationY>1327</locationY>
+        <locationX>985</locationX>
+        <locationY>2259</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -150,14 +201,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.NKS_Theme__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Subtheme__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
@@ -171,31 +222,31 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme_Group__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_NAV_Unit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Henvendelse_BehandlingsId__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BEHANDLINGS_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Date_Time_Registered__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Created_By__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -203,123 +254,35 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Conversation_Note_Assignment_0</name>
-        <label>Conversation Note Assignment</label>
-        <locationX>1057</locationX>
-        <locationY>1536</locationY>
+        <description>Tags the conversation note with journal completion</description>
+        <name>Conversation_Note_Journal_Assignment</name>
+        <label>Conversation Note Journal Assignment</label>
+        <locationX>750</locationX>
+        <locationY>1865</locationY>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case.AccountId</elementReference>
+                <stringValue>Journal Completed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Case__c</assignToReference>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Dialogue_Summary.conversationNote</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_NAV_Unit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>BEHANDLINGS_ID</elementReference>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Conversation_Note_0</targetReference>
+            <targetReference>Case_Assignment_Default_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <description>Assigns updated values for case and conversation note.</description>
-        <name>Journal_Theme_Categorization_Assignment_0</name>
-        <label>Journal Theme Categorization Assignment</label>
-        <locationX>762</locationX>
-        <locationY>1172</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedThemeGroupSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Conversation_Note_Assignment</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Account</name>
-        <label>Set Account</label>
-        <locationX>1187</locationX>
-        <locationY>502</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case.AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Account_Relation.value</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Case_Account</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Assigns updated values for case and conversation note.</description>
-        <name>Theme_Categorization_Assignment</name>
-        <label>Theme Categorization Assignment</label>
-        <locationX>1056</locationX>
-        <locationY>1386</locationY>
+        <description>Assigns updated values for case and conversation note</description>
+        <name>Default_Theme_Categorization_Assignment</name>
+        <label>Default Theme Categorization Assignment</label>
+        <locationX>985</locationX>
+        <locationY>1780</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -342,7 +305,144 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Conversation_Note_Assignment_0</targetReference>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns updated values for case and conversation note.</description>
+        <name>Journal_Theme_Categorization_Assignment</name>
+        <label>Journal Theme Categorization Assignment</label>
+        <locationX>537</locationX>
+        <locationY>1412</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedThemeGroupSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Legacy_Case_ID_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assigns updated values for case and conversation note.</description>
+        <name>Journal_Theme_Categorization_Assignment_0</name>
+        <label>Journal Theme Categorization Assignment</label>
+        <locationX>1360</locationX>
+        <locationY>1768</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedThemeGroupSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Journal_Error_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Account</name>
+        <label>Set Account</label>
+        <locationX>1188</locationX>
+        <locationY>502</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Account_Relation.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Journal_Error</name>
+        <label>Set Journal Error</label>
+        <locationX>538</locationX>
+        <locationY>1972</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Journal_Error_0</name>
+        <label>Set Journal Error</label>
+        <locationX>1360</locationX>
+        <locationY>1964</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Error</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Assignment_Default_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the legacy case ID for journal initiation</description>
+        <name>Set_Legacy_Case_ID</name>
+        <label>Set Legacy Case ID</label>
+        <locationX>1360</locationX>
+        <locationY>1606</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Journal_Theme_Categorization_Assignment_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the legacy case ID for journal initiation</description>
+        <name>Set_Legacy_Case_ID_0</name>
+        <label>Set Legacy Case ID</label>
+        <locationX>537</locationX>
+        <locationY>1560</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.NKS_Legacy_Case_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Initiate_Journal_Process</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -365,7 +465,7 @@
         <name>Changed_Account</name>
         <label>Changed Account</label>
         <locationX>1235</locationX>
-        <locationY>987</locationY>
+        <locationY>988</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_to_Case</targetReference>
         </defaultConnector>
@@ -381,7 +481,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Journal_Entry_Decision</targetReference>
+                <targetReference>Post_to_Henvendelse</targetReference>
             </connector>
             <label>Same Account</label>
         </rules>
@@ -513,10 +613,10 @@
     <decisions>
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
-        <locationX>1469</locationX>
-        <locationY>1173</locationY>
+        <locationX>1468</locationX>
+        <locationY>1131</locationY>
         <defaultConnector>
-            <targetReference>Create_Journal_Entry_Decision</targetReference>
+            <targetReference>Post_to_Henvendelse</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Has Person Access</defaultConnectorLabel>
         <rules>
@@ -539,12 +639,12 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>1047</locationX>
-        <locationY>1173</locationY>
+        <locationX>769</locationX>
+        <locationY>1267</locationY>
         <defaultConnector>
-            <targetReference>Theme_Categorization_Assignment</targetReference>
+            <targetReference>Default_Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No Journal</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Create_Journal_Entry_True</name>
             <conditionLogic>and</conditionLogic>
@@ -556,9 +656,92 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Journal_Theme_Categorization_Assignment_0</targetReference>
+                <targetReference>Journal_Theme_Categorization_Assignment</targetReference>
             </connector>
             <label>Create Journal Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if journal entry is to be created.</description>
+        <name>Create_Journal_Entry_Decision_0</name>
+        <label>Create Journal Entry?</label>
+        <locationX>1189</locationX>
+        <locationY>1259</locationY>
+        <defaultConnector>
+            <targetReference>Default_Theme_Categorization_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Create_Journal_Entry_True_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Journal_Entry.value</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Legacy_Case_ID</targetReference>
+            </connector>
+            <label>Create Journal Entry</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_Henvendelse_Post</name>
+        <label>Verify Henvendelse Post</label>
+        <locationX>969</locationX>
+        <locationY>1266</locationY>
+        <defaultConnector>
+            <targetReference>Create_Journal_Entry_Decision_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Post Failed</defaultConnectorLabel>
+        <rules>
+            <name>Successful_Post</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BEHANDLINGS_ID</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BEHANDLINGS_ID</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Journal_Entry_Decision</targetReference>
+            </connector>
+            <label>Successful Post</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_Journal_Initiation</name>
+        <label>Verify Journal Initiation</label>
+        <locationX>659</locationX>
+        <locationY>1687</locationY>
+        <defaultConnector>
+            <targetReference>Set_Journal_Error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Journal Failed</defaultConnectorLabel>
+        <rules>
+            <name>Journal_Success</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>JOURNAL_POST_RESPONSE</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OK</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conversation_Note_Journal_Assignment</targetReference>
+            </connector>
+            <label>Journal Success</label>
         </rules>
     </decisions>
     <formulas>
@@ -594,22 +777,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>761</locationX>
-        <locationY>1485</locationY>
-        <connector>
-            <targetReference>Post_Journal</targetReference>
-        </connector>
-        <inputReference>Conversation_Note_Record</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Inserts the conversation note.</description>
-        <name>Create_Conversation_Note_0</name>
-        <label>Create Conversation Note</label>
-        <locationX>1058</locationX>
-        <locationY>1684</locationY>
-        <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
-        </connector>
+        <locationX>985</locationX>
+        <locationY>2415</locationY>
         <inputReference>Conversation_Note_Record</inputReference>
     </recordCreates>
     <recordLookups>
@@ -631,6 +800,10 @@
             </value>
         </filters>
         <object>Account</object>
+        <outputAssignments>
+            <assignToReference>SF_PERSON_ID</assignToReference>
+            <field>CRM_Person__c</field>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>personIdent</assignToReference>
             <field>INT_PersonIdent__c</field>
@@ -689,7 +862,7 @@
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>776</locationX>
-        <locationY>206</locationY>
+        <locationY>207</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Case_Status</targetReference>
@@ -710,8 +883,8 @@
         <description>Queries information from the case record</description>
         <name>Get_Case_Verify</name>
         <label>Get Case</label>
-        <locationX>1080</locationX>
-        <locationY>978</locationY>
+        <locationX>1070</locationX>
+        <locationY>979</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Changed_Account</targetReference>
@@ -732,7 +905,7 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>595</locationX>
+        <locationX>594</locationX>
         <locationY>351</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -748,10 +921,6 @@
         </filters>
         <object>Conversation_Note__c</object>
         <outputAssignments>
-            <assignToReference>BEHANDLINGS_ID</assignToReference>
-            <field>CRM_API_Reference__c</field>
-        </outputAssignments>
-        <outputAssignments>
             <assignToReference>Conversation_Note_Summary</assignToReference>
             <field>CRM_Conversation_Note__c</field>
         </outputAssignments>
@@ -759,31 +928,9 @@
             <assignToReference>Conversation_Note_Created_Date</assignToReference>
             <field>CreatedDate</field>
         </outputAssignments>
-        <sortField>Id</sortField>
-        <sortOrder>Desc</sortOrder>
-    </recordLookups>
-    <recordLookups>
-        <description>Queries the conversation note created for this case.</description>
-        <name>Get_Conversation_Note_0_0</name>
-        <label>Get Conversation Note</label>
-        <locationX>1057</locationX>
-        <locationY>1822</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Case_Assignment_Default_0_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_Case__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Conversation_Note_Record.Id</elementReference>
-            </value>
-        </filters>
-        <object>Conversation_Note__c</object>
         <outputAssignments>
             <assignToReference>BEHANDLINGS_ID</assignToReference>
-            <field>CRM_API_Reference__c</field>
+            <field>NKS_Henvendelse_BehandlingsId__c</field>
         </outputAssignments>
         <sortField>Id</sortField>
         <sortOrder>Desc</sortOrder>
@@ -809,7 +956,7 @@
             <field>RecordId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+                <elementReference>SF_PERSON_ID</elementReference>
             </value>
         </filters>
         <object>UserRecordAccess</object>
@@ -893,8 +1040,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>589</locationX>
-        <locationY>782</locationY>
+        <locationX>587</locationX>
+        <locationY>778</locationY>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
@@ -918,7 +1065,7 @@
         <name>Set_Case_Closed_0</name>
         <label>Set Case Closed</label>
         <locationX>1688</locationX>
-        <locationY>1169</locationY>
+        <locationY>1134</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -938,14 +1085,17 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>1059</locationX>
-        <locationY>2093</locationY>
+        <locationX>985</locationX>
+        <locationY>2114</locationY>
+        <connector>
+            <targetReference>Conversation_Note_Assignment</targetReference>
+        </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1186</locationX>
+        <locationX>1188</locationX>
         <locationY>655</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -1097,6 +1247,30 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Record_Refresher_Closed_Case</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>No_Person_Access</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1105,7 +1279,7 @@
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
         <locationX>776</locationX>
-        <locationY>597</locationY>
+        <locationY>573</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1142,7 +1316,7 @@
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>976</locationX>
-        <locationY>978</locationY>
+        <locationY>979</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1187,7 +1361,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <elementReference>Summary_Template</elementReference>
+                    <stringValue></stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1506,7 +1680,7 @@
                     <leftValueReference>Account_Relation.value</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue/>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1526,7 +1700,7 @@
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
         <locationX>116</locationX>
-        <locationY>1131</locationY>
+        <locationY>1132</locationY>
         <flowName>NKS_Case_Send_NAV_Task</flowName>
         <inputAssignments>
             <name>NavTask</name>
@@ -1604,7 +1778,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </variables>
     <variables>
@@ -1627,6 +1801,14 @@ Du har fått informasjon om
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Salesforce ID to the Person__c record</description>
+        <name>SF_PERSON_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

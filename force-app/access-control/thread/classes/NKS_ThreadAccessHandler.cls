@@ -1,22 +1,26 @@
 global class NKS_ThreadAccessHandler extends MyTriggers {
     global override void onAfterInsert() {
-        List<SharingEvent__e> events=new List<SharingEvent__e>();
+        List<SharingEvent__e> events = new List<SharingEvent__e>();
         //run sharing in a platform event
-        
-        for(Thread__c thread:(List<Thread__c>) records){
-            SharingEvent__e event=new SharingEvent__e();
-            event.RecordId__c=thread.Id;
-            event.ObjectType__c='Thread__c';
-            events.add(event);
+
+        for (Thread__c thread : (List<Thread__c>) records) {
+            if (
+                thread.CRM_Related_Object_Type__c != 'Inquiry__c' &&
+                thread.CRM_Related_Object_Type__c != 'Application__c'
+            ) {
+                SharingEvent__e event = new SharingEvent__e();
+                event.RecordId__c = thread.Id;
+                event.ObjectType__c = 'Thread__c';
+                events.add(event);
+            }
         }
-       
-        if(events.size()>0){
+
+        if (events.size() > 0) {
             EventBus.publish(events);
         }
     }
 
-    public void grantAccessToNewThreads(List<Thread__c> threads){
-        system.debug('#'+threads.size());
+    public void grantAccessToNewThreads(List<Thread__c> threads) {
         new NKS_ThreadAccessService().grantAccess(threads, getPersons(threads));
     }
 

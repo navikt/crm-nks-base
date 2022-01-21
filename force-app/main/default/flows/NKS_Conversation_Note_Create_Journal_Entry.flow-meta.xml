@@ -12,7 +12,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -25,8 +25,8 @@
     <recordLookups>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>536</locationX>
+        <locationY>206</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Journal_Screen</targetReference>
@@ -43,17 +43,24 @@
         <object>Conversation_Note__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Conversation_Note</name>
+        <label>Update Conversation Note</label>
+        <locationX>536</locationX>
+        <locationY>1022</locationY>
+        <inputReference>Get_Conversation_Note</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>536</locationX>
+        <locationY>326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Post_Journal_Entry</targetReference>
+            <targetReference>Set_Journal_Data</targetReference>
         </connector>
         <fields>
             <name>Case_Overview</name>
@@ -81,12 +88,13 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <nextOrFinishButtonLabel>Journalfør</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>410</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Get_Conversation_Note</targetReference>
         </connector>

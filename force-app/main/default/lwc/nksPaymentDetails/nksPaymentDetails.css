@@ -1,0 +1,3 @@
+.detail-table-row:nth-of-type(2n) {
+    background-color: #f2f2f2;
+}

@@ -7,6 +7,15 @@
                 onload={recordLoaded}
             >
                 <lightning-card title={cardLabel} icon-name={iconName}>
+                    <lightning-button-icon
+                        alternative-text="Oppdater"
+                        icon-name="utility:refresh"
+                        if:true={enableRefresh}
+                        onclick={refreshRecord}
+                        slot="actions"
+                    ></lightning-button-icon>
+                    <lightning-spinner if:true={showSpinner} title="Loading" size="medium" type="brand">
+                    </lightning-spinner>
                     <div class="slds-p-horizontal_small">
                         <lightning-layout multiple-rows="true">
                             <template iterator:it={fieldList}>

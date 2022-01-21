@@ -59,7 +59,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c,NKS_County__c</value>
+                    <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c,NKS_County__c,INT_ResidentialPlace__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -267,6 +267,10 @@
                 <componentInstanceProperties>
                     <name>amountOfRecordsToOpen</name>
                     <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>buttonIsHidden</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>configId</name>
@@ -588,6 +592,10 @@
                 <componentInstanceProperties>
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>

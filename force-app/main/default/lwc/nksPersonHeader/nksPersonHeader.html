@@ -2,11 +2,11 @@
     <h1 class="sr-only"><template if:true={fullName}> {fullName} </template></h1>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" class="slds-box slds-theme_default">
-            <lightning-layout>
+            <lightning-layout class="slds-has-bottom-magnet">
                 <lightning-layout-item
-                    size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
+                    size="3"
+                    small-device-size="3"
+                    medium-device-size="3"
                     large-device-size="3"
                     class="slds-var-p-right_small"
                 >
@@ -39,9 +39,9 @@
 
                 <lightning-layout-item
                     class="slds-var-p-right_small"
-                    size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
+                    size="3"
+                    small-device-size="3"
+                    medium-device-size="3"
                     large-device-size="3"
                 >
                     <template if:true={age}> {age} år </template>
@@ -52,10 +52,10 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item
-                    size="4"
-                    small-device-size="4"
-                    medium-device-size="4"
-                    large-device-size="6"
+                    size="5"
+                    small-device-size="5"
+                    medium-device-size="5"
+                    large-device-size="5"
                     class="slds-var-p-right_small"
                 >
                     <template if:true={showPersonBadges}>
@@ -66,17 +66,38 @@
                         ></c-nks-person-badges>
                     </template>
                 </lightning-layout-item>
+                <lightning-layout-item
+                    class="slds-var-p-right_small"
+                    size="1"
+                    small-device-size="1"
+                    medium-device-size="1"
+                    large-device-size="1"
+                >
+                    <button
+                        class="slds-button slds-button_icon slds-float_right"
+                        onclick={handleFullmaktData}
+                        if:true={btnShowFullmakt}
+                        aria-expanded={btnClick}
+                    >
+                        <lightning-icon
+                            icon-name="utility:open_folder"
+                            class={customclass}
+                            alternative-text="Historiske fullmakter"
+                            title="Historiske fullmakter"
+                            size="x-small"
+                        ></lightning-icon>
+                    </button>
+                </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
-        <lightning-layout-item size="12" class="slds-var-p-top_xx-small">
-            <div if:true={showErrors} class="slds-text-color_error">
-                Noe har gått feil i innlastingen av varsler:
-                <ul class="slds-list_dotted">
-                    <template for:each={errorMessages} for:item="error">
-                        <li key={error}>{error}</li>
-                    </template>
-                </ul>
-            </div>
+
+        <lightning-layout-item size="12" class="card-color slds-box slds-box_x-small" if:true={btnClick}>
+            <lightning-layout class="slds-has-top-magnet">
+                <lightning-layout-item size="12">
+                    <c-nks-historikk-viewer fullmakt-data={fullmaktHistData}></c-nks-historikk-viewer>
+                </lightning-layout-item>
+            </lightning-layout>
+            <button class="close" onclick={handleFullmaktData}>Lukk</button>
         </lightning-layout-item>
     </lightning-layout>
 </template>
