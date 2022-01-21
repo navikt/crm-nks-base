@@ -498,6 +498,11 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>crmSecurityQuestion</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-7559848c-76c3-4a70-a5de-d060fa3ded77</value>
@@ -629,6 +634,10 @@
                 <componentInstanceProperties>
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <visibilityRule>

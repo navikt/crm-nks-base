@@ -21,6 +21,8 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     _showLink = false; // Boolean to determine if action slot is to be displayed
     @api wireFields;
     @api parentWireFields;
+    @api enableRefresh = false; // Enable a visual refresh button to help solve issues related to NKS-1086
+    showSpinner = false;
     subscription;
 
     @wire(MessageContext)
@@ -133,7 +135,14 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     //Supports refreshing the record
     @api
     refreshRecord() {
-        refreshApex(this.wireRecord);
+        this.showSpinner = true;
+        refreshApex(this.wireRecord)
+            .then(() => {
+                //Successful refresh
+            })
+            .finally(() => {
+                this.showSpinner = false;
+            });
     }
 
     recordLoaded(event) {
