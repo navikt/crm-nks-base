@@ -1,11 +1,9 @@
 <template>
     <div data-id="modal" class="modalHide" onkeydown={modalOnEscape}>
-        <section
+        <div
             role="dialog"
             tabindex="-1"
-            aria-labelledby="modal-heading-01"
             aria-modal="true"
-            aria-describedby="modal-content-id-1"
             class="slds-modal slds-fade-in-open"
         >
             <div class="slds-modal__container">
@@ -28,6 +26,7 @@
                             placeholder="Søk i hurtigtekst..."
                             type="search"
                             variant="label-hidden"
+                            tabindex="0"
                         >
                         </lightning-input>
                     </div>
@@ -37,8 +36,12 @@
                     class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
                 >
-                    <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
-                    <div if:true={data} aria-live="polite" class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <lightning-spinner
+                        size="small"
+                        if:true={loadingData}
+                        alternative-text="Loading..."
+                    ></lightning-spinner>
+                    <div if:true={data} class="slds-text-title_caps" aria-live="polite">{numberOfRows} resultater</div>
                     <ul>
                         <lightning-layout multiple-rows="true" pull-to-boundary="small">
                             <template if:true={data} for:each={data} for:item="record" for:index="index">
@@ -65,7 +68,7 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
 
