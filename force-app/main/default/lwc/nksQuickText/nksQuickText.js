@@ -89,9 +89,6 @@ export default class nksQuickText extends LightningElement {
 
     _getCloseButton() {
         let closeButton = this.template.querySelector('lightning-button-icon[title="Lukk"]');
-        if (!closeButton) {
-            closeButton = this.template.querySelector('lightning-button-icon');
-        }
         return closeButton;
     }
 
