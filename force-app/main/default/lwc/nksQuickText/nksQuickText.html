@@ -14,7 +14,7 @@
             tabindex="-1"
         >
             <div class="slds-modal__container">
-                <a href="javascript:void(0)" class="firstlink" tabindex="0"></a>
+                <a href="javascript:void(0)" class="firstlink"></a>
 
                 <header class="slds-modal__header" onclick={innerClickHandler}>
                     <lightning-button-icon
@@ -36,7 +36,6 @@
                             placeholder="Søk i hurtigtekst..."
                             type="search"
                             variant="label-hidden"
-                            tabindex="0"
                         >
                         </lightning-input>
                     </div>
@@ -71,7 +70,6 @@
                                                 label={record.Name}
                                                 onclick={insertText}
                                                 class="slds-text-link"
-                                                tabindex="0"
                                             ></lightning-button>
                                             <p>{record.Summary}</p>
                                         </div>
@@ -81,7 +79,7 @@
                         </lightning-layout>
                     </ul>
                 </div>
-                <a href="javascript:void(0)" class="lastLink" tabindex="0"></a>
+                <a href="javascript:void(0)" class="lastLink"></a>
             </div>
         </section>
         <template if:true={isOpen}>
