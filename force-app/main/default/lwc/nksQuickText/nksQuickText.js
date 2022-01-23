@@ -2,6 +2,12 @@ import { LightningElement, track, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
 import getQuicktexts from '@salesforce/apex/NKS_QuickTextSearchController.getQuicktexts';
 import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
+
+const ESC_KEY_CODE = 27;
+const ESC_KEY_STRING = 'Escape';
+const TAB_KEY_CODE = 9;
+const TAB_KEY_STRING = 'Tab';
+const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
 export default class nksQuickText extends LightningElement {
     labels = { BLANK_ERROR };
     _conversationNote;
@@ -77,18 +83,17 @@ export default class nksQuickText extends LightningElement {
             this.hideModal();
         } else if (event.keyCode === TAB_KEY_CODE || event.code === TAB_KEY_STRING) {
             const el = this.template.activeElement;
-            let focusableElement;
             if (el.classList.contains('lastLink') || el.classList.contains('firstlink')) {
-                focusableElement = this._getCloseButton();
-            }
-            if (focusableElement) {
-                focusableElement.focus();
+                this._getCloseButton().focus();
             }
         }
     }
 
     _getCloseButton() {
         let closeButton = this.template.querySelector('lightning-button-icon[title="Lukk"]');
+        if (!closeButton) {
+            closeButton = this.template.querySelector('lightning-button-icon');
+        }
         return closeButton;
     }
 
