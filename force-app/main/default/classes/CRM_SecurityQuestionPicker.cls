@@ -34,22 +34,16 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         List<Person__c> personList = [
-            SELECT Id, INT_ActorId__c
+            SELECT Id, INT_ActorId__c, INT_fnr__c
             FROM Person__c
             WHERE CRM_Account__c = :accountId
             LIMIT 1
         ];
         if (personList.size() != 1) {
-            return CRM_SecurityQuestionPicker.SecurityQuestionWrapper.noPersonError();
+            return noPersonError();
         }
-        Person__c person = [
-            SELECT Id, INT_ActorId__c, INT_fnr__c
-            FROM Person__c
-            WHERE CRM_Account__c = :accountId
-            LIMIT 1
-        ][0];
-        String ident = person.INT_ActorId__c;
-        String fnr = person.INT_fnr__c;
+        String ident = personList[0].INT_ActorId__c;
+        String fnr = personList[0].INT_fnr__c;
 
         usedQuestions.add(random);
         String returnAnswer = null;
@@ -218,12 +212,8 @@ public with sharing class CRM_SecurityQuestionPicker {
         return alder < 21;
     }
 
-    public static CRM_SecurityQuestionPicker.SecurityQuestionWrapper noPersonError() {
-        return new CRM_SecurityQuestionPicker.SecurityQuestionWrapper(
-            'Det oppstod en feil',
-            'Fant ikke brukeren',
-            null
-        );
+    public static SecurityQuestionWrapper noPersonError() {
+        return new SecurityQuestionWrapper('Fant ikke brukeren', '', null);
     }
 
     public class SecurityQuestionWrapper {

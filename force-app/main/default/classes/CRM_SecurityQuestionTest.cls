@@ -150,8 +150,7 @@ public with sharing class CRM_SecurityQuestionTest {
             usedQuestions
         );
         Test.stopTest();
-        System.assertEquals('Det oppstod en feil', question.question);
-        System.assertEquals('Fant ikke brukeren', question.answer);
+        System.assertEquals('Fant ikke brukeren', question.question);
         System.assert(question.usedQuestions == null);
     }
 }

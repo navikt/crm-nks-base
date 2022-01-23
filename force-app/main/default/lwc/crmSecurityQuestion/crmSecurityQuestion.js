@@ -13,14 +13,17 @@ export default class CrmSecurityQuestion extends LightningElement {
     @api recordId;
     useErrorColor = false;
 
-    @wire(getSecurityQuestion, { accountId: '$personId', usedQuestions: [] })
     fetchData({ error, data }) {
         if (error && error != null) {
             this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
             this.answer = error.body.message;
             this.useErrorColor = true;
         } else if (data && data != null) {
-            if (this.questionsAsked == data.usedQuestions && this.questionsAsked == null) {
+            if (
+                this.questionsAsked == data.usedQuestions &&
+                this.questionsAsked == null &&
+                data.question != 'Fant ikke brukeren'
+            ) {
                 this.question = 'Brukeren har ingen gyldige spørsmål.';
                 this.answer = '';
                 this.useErrorColor = this.questionsAsked == null;
@@ -42,6 +45,8 @@ export default class CrmSecurityQuestion extends LightningElement {
     wiredPersonInfo({ error, data }) {
         if (data) {
             this.personId = getFieldValue(data, ACCOUNT_FIELD);
+            this.questionsAsked = null;
+            this.handleNextQuestion();
         }
 
         if (error) {
@@ -51,7 +56,8 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     async handleNextQuestion() {
         this.disabled = true;
-        this.answer = '';
+        this.answer = 'Henter spørsmål...';
+        this.useErrorColor = false;
         this.question = '';
         getSecurityQuestion({
             accountId: this.personId,
