@@ -21,6 +21,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api wireFields;
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
+    @api hideEmptyList; // Hides the list if there are no related records.
 
     @api displayedFields;
 
@@ -103,5 +104,9 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         if (this.iconName && this.iconName != '') nameString = this.iconName;
 
         return nameString;
+    }
+
+    get showCard() {
+        return !this.hideEmptyList || (this.relatedRecords != null && this.relatedRecords.length > 0);
     }
 }
