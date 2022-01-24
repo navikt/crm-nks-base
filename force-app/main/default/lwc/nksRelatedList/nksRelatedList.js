@@ -22,6 +22,8 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
 
+    @api displayedFields;
+
     connectedCallback() {
         //Call apex to retrieve related records
         this.wireFields = [this.objectApiName + '.Id'];
