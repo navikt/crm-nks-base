@@ -1,21 +1,30 @@
 <template>
-    <div data-id="modal" class="modalHide" onkeydown={modalOnEscape}>
-        <div
+    <section aria-hidden={isOpen}>
+        <slot name="body"></slot>
+    </section>
+    <div data-id="modal" class="modalHide">
+        <section
+            aria-describedby="modal-content-id-1"
+            aria-hidden={modalAriaHidden}
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            class={cssClass}
+            onkeyup={innerKeyUpHandler}
             role="dialog"
             tabindex="-1"
-            aria-modal="true"
-            class="slds-modal slds-fade-in-open"
         >
             <div class="slds-modal__container">
-                <header class="slds-modal__header">
+                <a href="javascript:void(0)" class="firstlink"></a>
+
+                <header class="slds-modal__header" onclick={innerClickHandler}>
                     <lightning-button-icon
                         class="slds-modal__close"
                         title="Lukk"
+                        alternative-text="Lukk"
                         icon-name="utility:close"
                         icon-class="slds-button_icon-inverse"
                         onclick={hideModal}
                         variant="bare"
-                        alternative-text="Lukk"
                     >
                     </lightning-button-icon>
 
@@ -26,7 +35,6 @@
                             placeholder="Søk i hurtigtekst..."
                             type="search"
                             variant="label-hidden"
-                            tabindex="0"
                         >
                         </lightning-input>
                     </div>
@@ -35,7 +43,10 @@
                 <div
                     class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
+                    tabindex="-1"
+                    onclick={innerClickHandler}
                 >
+                    <slot name="modalContent"></slot>
                     <lightning-spinner
                         size="small"
                         if:true={loadingData}
@@ -67,9 +78,12 @@
                         </lightning-layout>
                     </ul>
                 </div>
+                <a href="javascript:void(0)" class="lastLink"></a>
             </div>
-        </div>
-        <div class="slds-backdrop slds-backdrop_open"></div>
+        </section>
+        <template if:true={isOpen}>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
     </div>
 
     <div class="slds-form-element">
