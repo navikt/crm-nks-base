@@ -6,7 +6,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
     @api objectApiName;
-    @api relatedRecords;
+    @track relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
@@ -27,10 +27,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     connectedCallback() {
         //Call apex to retrieve related records
         this.wireFields = [this.objectApiName + '.Id'];
-        console.log(this.objectApiName);
-        console.log(this.recordId);
-        console.log(this.parentRelationField);
-        if (this.relatedRecords == undefined || this.relatedRecords.length) this.getList();
+        this.getList();
     }
 
     //Wire function to allow for dynamic update
@@ -53,8 +50,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             relationField: this.relationField,
             parentRelationField: this.parentRelationField,
             parentObjectApiName: this.objectApiName,
-            filterConditions: this.filterConditions,
-            extraFields: null
+            filterConditions: this.filterConditions
         })
             .then((data) => {
                 this.relatedRecords = data && data.length > 0 ? data : null;
@@ -94,17 +90,12 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             : '';
     }
 
-    get tableHeaderStyle() {
-        return 'width: 100%; max-height: ' + this.maxHeight.toString() + 'em';
-    }
-
     get scrollableStyle() {
         return 'max-height: ' + this.maxHeight.toString() + 'em';
     }
 
-    get fieldLabels() {
-        let labels = this.columnLabels != null ? this.columnLabels.replace(/\s/g, '').split(',') : [];
-        return labels;
+    get usedFields() {
+        return this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
     }
 
     get icon() {

@@ -1,8 +1,8 @@
 <template>
     <lightning-record-view-form record-id={record.Id} object-api-name={relatedObjectApiName}>
         <div class="slds-box slds-grid slds-wrap">
-            <template iterator:it={fieldLabels}>
-                <div key={it.value} class="slds-col slds-size_1-of-2">
+            <template iterator:it={usedFields}>
+                <div key={it.value}>
                     <lightning-output-field field-name={it.value}> </lightning-output-field>
                 </div>
             </template>

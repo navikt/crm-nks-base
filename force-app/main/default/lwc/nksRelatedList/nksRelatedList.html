@@ -11,7 +11,7 @@
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <div class="slds-table--header-fixed_container" style={tableHeaderStyle}>
+                <div class="slds-table--header-fixed_container">
                     <div class="slds-scrollable_y" style={scrollableStyle}>
                         <table
                             class="slds-table slds-table_cell-buffer slds-table--header-fixed slds-table_bordered slds-max-medium-table_stacked-horizontal"
@@ -21,7 +21,7 @@
                                     <c-nks-related-list-item
                                         key={record}
                                         record={record}
-                                        field-labels={fieldLabels}
+                                        used-fields={usedFields}
                                         row-index={rowIndex}
                                         related-object-api-name={relatedObjectApiName}
                                     ></c-nks-related-list-item>
