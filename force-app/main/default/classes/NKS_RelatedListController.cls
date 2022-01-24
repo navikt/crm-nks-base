@@ -2,18 +2,18 @@ public class NKS_RelatedListController {
     /**
      * @description: Returns a list of records
      * @author Stian Ruud Schikora | 09-29-2020
-     * @param fieldNames [List<String : Fields to retrieve from the returned records]
      * @param parentId [String : Id of the record the LWC is displayed on]
      * @param objectApiName  [String : API name of object to return]
      * @param relationField  [String : Field API name relating the record to the parent]
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @param parentObjectApiName [String : Object API name of the record the LWC is displayed on]
      * @param filterConditions [String : Optional filter conditions]
+     * @param removeSelf [Boolean : Removes itself from the list ]
      * @return List<sObject>
      **/
     @AuraEnabled
     public static List<sObject> getRelatedList(
-        List<String> fieldNames,
+        List<String> extraFields,
         String parentId,
         String objectApiName,
         String relationField,
@@ -25,7 +25,7 @@ public class NKS_RelatedListController {
         String query = 'SELECT ';
 
         //Appending fields to query string
-        for (String field : fieldNames) {
+        for (String field : extraFields) {
             query += field + ', ';
         }
 
