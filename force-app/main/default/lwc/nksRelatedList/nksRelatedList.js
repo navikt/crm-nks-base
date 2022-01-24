@@ -6,7 +6,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
     @api objectApiName;
-    @track relatedRecords;
+    @api relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
