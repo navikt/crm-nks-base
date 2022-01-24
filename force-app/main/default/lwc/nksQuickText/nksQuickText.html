@@ -1,23 +1,30 @@
 <template>
-    <div data-id="modal" class="modalHide" onkeydown={modalOnEscape}>
+    <section aria-hidden={isOpen}>
+        <slot name="body"></slot>
+    </section>
+    <div data-id="modal" class="modalHide">
         <section
-            role="dialog"
-            tabindex="-1"
+            aria-describedby="modal-content-id-1"
+            aria-hidden={modalAriaHidden}
             aria-labelledby="modal-heading-01"
             aria-modal="true"
-            aria-describedby="modal-content-id-1"
-            class="slds-modal slds-fade-in-open"
+            class={cssClass}
+            onkeyup={innerKeyUpHandler}
+            role="dialog"
+            tabindex="-1"
         >
             <div class="slds-modal__container">
-                <header class="slds-modal__header">
+                <a href="javascript:void(0)" class="firstlink"></a>
+
+                <header class="slds-modal__header" onclick={innerClickHandler}>
                     <lightning-button-icon
                         class="slds-modal__close"
                         title="Lukk"
+                        alternative-text="Lukk"
                         icon-name="utility:close"
                         icon-class="slds-button_icon-inverse"
                         onclick={hideModal}
                         variant="bare"
-                        alternative-text="Lukk"
                     >
                     </lightning-button-icon>
 
@@ -36,9 +43,16 @@
                 <div
                     class="slds-modal__content slds-var-p-horizontal_small slds-is-relative slds-var-p-vertical_x-small"
                     id="modal-content-id-1"
+                    tabindex="-1"
+                    onclick={innerClickHandler}
                 >
-                    <lightning-spinner size="small" if:true={loadingData}></lightning-spinner>
-                    <div if:true={data} aria-live="polite" class="slds-text-title_caps">{numberOfRows} resultater</div>
+                    <slot name="modalContent"></slot>
+                    <lightning-spinner
+                        size="small"
+                        if:true={loadingData}
+                        alternative-text="Loading..."
+                    ></lightning-spinner>
+                    <div if:true={data} class="slds-text-title_caps" aria-live="polite">{numberOfRows} resultater</div>
                     <ul>
                         <lightning-layout multiple-rows="true" pull-to-boundary="small">
                             <template if:true={data} for:each={data} for:item="record" for:index="index">
@@ -64,9 +78,12 @@
                         </lightning-layout>
                     </ul>
                 </div>
+                <a href="javascript:void(0)" class="lastLink"></a>
             </div>
         </section>
-        <div class="slds-backdrop slds-backdrop_open"></div>
+        <template if:true={isOpen}>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
     </div>
 
     <div class="slds-form-element">
