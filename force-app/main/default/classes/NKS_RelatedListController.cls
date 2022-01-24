@@ -13,7 +13,6 @@ public class NKS_RelatedListController {
      **/
     @AuraEnabled
     public static List<sObject> getRelatedList(
-        List<String> extraFields,
         String parentId,
         String objectApiName,
         String relationField,
@@ -22,14 +21,9 @@ public class NKS_RelatedListController {
         String filterConditions
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
-        String query = 'SELECT ';
+        String query;
 
-        //Appending fields to query string
-        for (String field : extraFields) {
-            query += field + ', ';
-        }
-
-        query = query.removeEndIgnoreCase(', ') + ' FROM ' + objectApiName + ' WHERE ';
+        query = 'SELECT Id FROM ' + objectApiName + ' WHERE ';
         query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
         query += relationField + ' IN :parentRelationIds ORDER BY ID DESC';
