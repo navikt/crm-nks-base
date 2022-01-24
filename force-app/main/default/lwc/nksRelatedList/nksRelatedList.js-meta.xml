@@ -86,6 +86,13 @@
                 type="Boolean"
                 default="false"
             />
+            <property
+                name="hideEmptyList"
+                label="Hide empty list"
+                description="Hides the list if there are no related records"
+                type="Boolean"
+                default="false"
+            />
       </targetConfig>
   </targetConfigs>
 </LightningComponentBundle>
