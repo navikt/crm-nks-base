@@ -26,12 +26,27 @@ export default class NksRelatedConversationNote extends NavigationMixin(Lightnin
         this.getList();
     }
 
+    _master = null;
+
     get isMaster() {
-        return this.trustworthyData && this.relatedRecords && this.relatedRecords.length > 0 && !this.isDetail;
+        return (
+            this._master ??
+            (this.trustworthyData && this.relatedRecords && this.relatedRecords.length > 0 && !this.isDetail)
+        );
     }
 
+    set isMaster(value) {
+        this._master = value;
+    }
+
+    _detail = null;
+
     get isDetail() {
-        return this.trustworthyData && this.behandlingsId != this.behandlingskjedeId;
+        return this._detail ?? (this.trustworthyData && this.behandlingsId != this.behandlingskjedeId);
+    }
+
+    set isDetail(value) {
+        this._detail = value;
     }
 
     get trustworthyData() {
@@ -39,11 +54,13 @@ export default class NksRelatedConversationNote extends NavigationMixin(Lightnin
     }
 
     get masterRecordId() {
-        return this.relatedRecords.find(
+        const master = this.relatedRecords.find(
             (record) =>
                 record.CRM_Henvendelse_BehandlingsId__c == record.CRM_Henvendelse_BehandlingskjedeId__c &&
                 record.CRM_Henvendelse_BehandlingsId__c != null
-        ).Id;
+        );
+        if (!master) this.isMaster = false;
+        return master?.Id;
     }
 
     //Calls apex to retrieve related records
@@ -58,7 +75,6 @@ export default class NksRelatedConversationNote extends NavigationMixin(Lightnin
             filterConditions: this.filterConditions
         })
             .then((data) => {
-                console.log('Got it!');
                 const recordIndex = data.findIndex((record) => record.Id == this.recordId);
                 const ownRecord = data[recordIndex];
                 data.splice(recordIndex, 1);
