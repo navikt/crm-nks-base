@@ -247,7 +247,6 @@ public with sharing class NKS_PersonBadgesController {
 
                 try {
                     for (String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
-                        String langcode = '';
                         if (landMap.containsKey(language)) {
                             String capCase = landMap.get(language).toLowerCase().capitalize();
                             spokenLanguagesIntepreter.add(capCase + ' (' + language + ')');
