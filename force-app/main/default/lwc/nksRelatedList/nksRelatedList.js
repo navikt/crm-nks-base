@@ -6,13 +6,12 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
     @api objectApiName;
-    @track relatedRecords;
+    @api relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
     @api iconName; //Displayed icon.
     @api columnLabels; //Columns to be displayed.
-    @api displayedFields = null;
     @api relatedObjectApiName; //Object name of the records in the list
     @api relationField; //Field API name of the lookup/master-detail connecting the parent
     @api parentRelationField; //Field API name of hos the parent is related in the junction
@@ -26,7 +25,10 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     connectedCallback() {
         //Call apex to retrieve related records
         this.wireFields = [this.objectApiName + '.Id'];
-        this.getList();
+        console.log(this.objectApiName);
+        console.log(this.recordId);
+        console.log(this.parentRelationField);
+        if (this.relatedRecords == undefined || this.relatedRecords.length) this.getList();
     }
 
     //Wire function to allow for dynamic update
@@ -44,13 +46,13 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     //Calls apex to retrieve related records
     getList() {
         getRelatedList({
-            fieldNames: this.fieldList,
             parentId: this.recordId,
             objectApiName: this.relatedObjectApiName,
             relationField: this.relationField,
             parentRelationField: this.parentRelationField,
             parentObjectApiName: this.objectApiName,
-            filterConditions: this.filterConditions
+            filterConditions: this.filterConditions,
+            extraFields: null
         })
             .then((data) => {
                 this.relatedRecords = data && data.length > 0 ? data : null;
@@ -76,30 +78,12 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         });
     }
 
-    //Tranforms the record array into an array that allows for resolving field dynamically as LWC currently does not support this
-    get listRecords() {
-        let returnRecords = [];
-        if (this.relatedRecords) {
-            this.relatedRecords.forEach((dataRecord) => {
-                let recordFields = [];
-                this.fieldList.forEach((key) => {
-                    if (key !== 'Id') {
-                        let recordField = {
-                            label: key,
-                            value: this.resolve(key, dataRecord)
-                        };
-                        recordFields.push(recordField);
-                    }
-                });
-                returnRecords.push({ recordFields: recordFields });
-            });
-        }
-        return returnRecords;
+    get cardTitle() {
+        return this.listTitle + ' (' + this.numRecords + ')';
     }
 
-    get cardTitle() {
-        const numRecords = this.relatedRecords ? this.relatedRecords.length : 0;
-        return this.listTitle + ' (' + numRecords + ')';
+    get numRecords() {
+        return this.relatedRecords ? this.relatedRecords.length : 0;
     }
 
     get headerBackground() {
@@ -121,26 +105,10 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         return labels;
     }
 
-    get fieldList() {
-        let fieldList = this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
-        return fieldList;
-    }
-
     get icon() {
         let nameString = null;
         if (this.iconName && this.iconName != '') nameString = this.iconName;
 
         return nameString;
-    }
-
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
-    resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || self);
     }
 }
