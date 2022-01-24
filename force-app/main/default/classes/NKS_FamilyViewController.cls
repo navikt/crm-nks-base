@@ -175,37 +175,27 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relationsData, Relation person) {
         List<Relation> children = new List<Relation>();
-        if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
-            return children;
-        }
-        Set<String> uniqRelations = new Set<String>();
-        for (PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon) {
-            if (relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN) {
-                Relation child = new Relation();
-                child.recordType = 'child';
-                child.role = relation.relatertpersonsrolle.name();
-                if (relation.relatertpersonsident != null) {
-                    if (!uniqRelations.add(relation.relatertpersonsident)) {
-                        continue;
-                    }
-                    PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
-                    if (isConfidentialRelation(relationsData, childResponse)) {
-                        if (isOver21(childResponse))
-                            continue;
-                        child.unauthorized = true;
-                        children.add(child);
-                        continue;
-                    }
-                    child.accountId = getAccountIdFromPersonId(getIdentsList(childResponse));
-                    fillRelationFromResponse(child, childResponse);
-                    if (isOver21(child)) {
-                        continue;
-                    }
-                    child.livesWith = hasSameAddress(relationsData, childResponse);
-                    child.responsibility = hasResponsibility(relationsData, childResponse);
-                }
+        List<PDL_API_Response> childrenResponse = getChildrenList(getChildrenIdentsSet(relationsData));
+        childrenResponse = sortResponseByBirthdate(childrenResponse);
+        for(PDL_API_Response childResponse : childrenResponse){
+            Relation child = new Relation();
+            child.recordType = 'child';
+            child.role = PDL_ForelderBarnRelasjonRolle.BARN.name();
+            if (isConfidentialRelation(relationsData, childResponse)) {
+                if (isOver21(childResponse))
+                    continue;
+                child.unauthorized = true;
                 children.add(child);
+                continue;
             }
+            child.accountId = getAccountIdFromPersonId(getIdentsList(childResponse));
+            fillRelationFromResponse(child, childResponse);
+            if (isOver21(child)) {
+                continue;
+            }
+            child.livesWith = hasSameAddress(relationsData, childResponse);
+            child.responsibility = hasResponsibility(relationsData, childResponse);
+            children.add(child);
         }
         return children;
     }
@@ -727,6 +717,65 @@ public with sharing class NKS_FamilyViewController {
             return true;
         }
         return false;
+    }
+    private static List<PDL_API_Response> getChildrenList(Set<String> identsList){
+        List<PDL_API_Response> relationsList = new List<PDL_API_Response>() ;
+        for(String ident : identsList){
+            relationsList.add(queryChild(ident));
+        }
+        return relationsList;
+    }
+    private static Set<String> getChildrenIdentsSet(PDL_API_Response relationsData){
+        Set<String> children = new Set<String>();
+        if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
+            return children;
+        }
+        for (PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon) {
+            if (relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN &&
+            relation.relatertpersonsident != null) {
+                children.add(relation.relatertpersonsident);
+            }
+        }
+        return children;
+    }
+    private static List<PDL_API_Response> sortResponseByBirthdate(List<PDL_API_Response> relations){
+        List<PDL_API_Response> result = new List<PDL_API_Response>();
+        while (relations.size() > 0) {
+            Integer youngest = getYoungest(relations);
+            result.add(relations[youngest]);
+            relations.remove(youngest);
+        }
+        return result;
+    }
+    private static Integer getYoungest(List<PDL_API_Response> relations){
+        Integer index = 0;
+        for(Integer i = 0; i < relations.size(); i++){
+            if(compareBirthdayDates(relations[index], relations[i]) < 0)
+            index = i;
+        }
+        return index;
+    }
+    private static Integer compareDates(Date d1, Date d2){
+        if( d1 == null && d2 == null)
+            return 0;
+        if( d1 == null && d2 != null)
+            return -1;
+        if( d1 != null && d2 == null)
+            return 1;
+        return d1.daysBetween(d2);
+    }
+    private static Integer compareBirthdayDates(PDL_API_Response r1, PDL_API_Response r2){
+        return compareDates(getBirthdayDate(r1),getBirthdayDate(r2));
+    }
+    private static Date getBirthdayDate(PDL_API_Response response){
+        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
+            if (foedsel == null || foedsel.isEmpty()) {
+                return null;
+            }
+            if (foedsel[0]?.foedselsdato == null) {
+                return null;
+            }
+        return foedsel[0].foedselsdato;
     }
     private static final List<PDL_Sivilstandstype> maritalStatusOfInterest = new List<PDL_Sivilstandstype>{
         PDL_Sivilstandstype.GIFT,
