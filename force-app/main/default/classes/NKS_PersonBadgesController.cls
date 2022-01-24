@@ -15,6 +15,24 @@ public with sharing class NKS_PersonBadgesController {
         'HOT_WritenInterpreting__c'
     };
 
+    private static Map<String, String> landMap {
+        get {
+            if (landMap == null) {
+                landMap = new Map<String, String>();
+                for (Common_Code__c land : [
+                    SELECT Id, Name, CRM_Code__c
+                    FROM Common_Code__c
+                    WHERE CRM_Code_set__c IN ('LandkoderISO2', 'Landkoder')
+                ]) {
+                    landMap.put(land.CRM_Code__c, land.Name);
+                }
+            }
+            return landMap;
+        }
+        private set {
+        }
+    }
+
     /**
      * @description Get an apex type holding all the data we need for showing badges.
      */
@@ -220,7 +238,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'spokenLanguageIntepreter',
                         getFieldLabel('INT_SpokenLanguageIntepreter__c'),
-                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer slds-float_right',
                         '',
                         '',
                         true
@@ -229,7 +247,13 @@ public with sharing class NKS_PersonBadgesController {
 
                 try {
                     for (String language : person.INT_SpokenLanguageIntepreter__c.split(';')) {
-                        spokenLanguagesIntepreter.add(language);
+                        String langcode = '';
+                        if (landMap.containsKey(language)) {
+                            String capCase = landMap.get(language).toLowerCase().capitalize();
+                            spokenLanguagesIntepreter.add(capCase + ' (' + language + ')');
+                        } else {
+                            spokenLanguagesIntepreter.add(language);
+                        }
                     }
                 } catch (Exception e) {
                     errors.add('Feil ved uthenting av språk for talespråktolk');
@@ -317,7 +341,7 @@ public with sharing class NKS_PersonBadgesController {
                     new Badge(
                         'guardianshipOrFuturePowerOfAttorney',
                         'Vergemål',
-                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer',
+                        'slds-theme_warning slds-m-left_x-small slds-m-vertical_xx-small pointer slds-float_right',
                         '',
                         '',
                         true
