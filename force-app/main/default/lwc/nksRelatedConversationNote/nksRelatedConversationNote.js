@@ -27,16 +27,15 @@ export default class NksRelatedConversationNote extends NavigationMixin(Lightnin
     }
 
     get isMaster() {
-        return this.dataFetched && this.relatedRecords && this.relatedRecords.length > 0 && !this.isDetail;
+        return this.trustworthyData && this.relatedRecords && this.relatedRecords.length > 0 && !this.isDetail;
     }
 
     get isDetail() {
-        return (
-            this.dataFetched &&
-            this.behandlingsId != this.behandlingskjedeId &&
-            this.behandlingsId != null &&
-            this.behandlingskjedeId != null
-        );
+        return this.trustworthyData && this.behandlingsId != this.behandlingskjedeId;
+    }
+
+    get trustworthyData() {
+        return this.dataFetched && this.behandlingsId != null && this.behandlingskjedeId != null;
     }
 
     get masterRecordId() {
