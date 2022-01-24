@@ -51,13 +51,6 @@
                 required="true"
             />
         <property
-                name="displayedFields"
-                label="Fields to display (API names, comma separated)"
-                type="String"
-                required="true"
-                default="Name"
-            />
-        <property
                 name="columnLabels"
                 label="Labels for the table columns (match the order of the displayed fields input)"
                 type="String"
