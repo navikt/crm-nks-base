@@ -1,6 +1,6 @@
 <template>
     <lightning-record-view-form record-id={record.Id} object-api-name={relatedObjectApiName}>
-        <div class="slds-box slds-grid slds-wrap">
+        <div class="slds-box slds-grid slds-wrap" role="listitem">
             <template iterator:it={usedFields}>
                 <div key={it.value}>
                     <lightning-output-field field-name={it.value}> </lightning-output-field>
