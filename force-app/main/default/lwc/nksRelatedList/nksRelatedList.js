@@ -92,7 +92,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     }
 
     get scrollableStyle() {
-        return 'max-height: ' + this.maxHeight.toString() + 'em';
+        return this.maxHeight != 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
     }
 
     get usedFields() {

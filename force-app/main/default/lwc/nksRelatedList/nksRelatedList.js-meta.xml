@@ -29,7 +29,7 @@
                 label="List Max Height"
                 description="The maximum height the list is allowed to consume on the layout (in em)"
                 type="String"
-                datasource="10, 20, 30, 40"
+                datasource="0, 10, 20, 30, 40"
                 default="20"
             />
         <property
