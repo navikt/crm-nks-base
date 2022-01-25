@@ -212,7 +212,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>maxHeight</name>
-                    <value>20</value>
+                    <value>0</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>parentRelationField</name>
