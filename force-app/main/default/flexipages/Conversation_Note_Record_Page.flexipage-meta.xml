@@ -172,6 +172,63 @@
                 <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>clickableRows</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>columnLabels</name>
+                    <value>CRM_Timeline_User__c, CRM_Date_Registered__c, CRM_Conversation_Note__c,</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>CRM_Timeline_User__c, CRM_Date_Registered__c, CRM_Conversation_Note__c,</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>dynamicUpdate</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterConditions</name>
+                    <value>Id != :parentId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerColor</name>
+                    <value>white</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideEmptyList</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>utility:archive</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listTitle</name>
+                    <value>Relaterte referat</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>maxHeight</name>
+                    <value>20</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRelationField</name>
+                    <value>CRM_Henvendelse_BehandlingskjedeId__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedObjectApiName</name>
+                    <value>Conversation_Note__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationField</name>
+                    <value>CRM_Henvendelse_BehandlingskjedeId__c</value>
+                </componentInstanceProperties>
+                <componentName>nksRelatedList</componentName>
+            </componentInstance>
+        </itemInstances>
         <name>rightcol</name>
         <type>Region</type>
     </flexiPageRegions>
