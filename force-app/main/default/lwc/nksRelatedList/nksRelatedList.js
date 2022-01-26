@@ -86,9 +86,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     }
 
     get headerBackground() {
-        return this.headerColor
-            ? 'background-color: ' + this.headerColor + '; border-color: ' + this.headerColor + 'border-style: solid'
-            : '';
+        return this.headerColor ? 'background-color: ' + this.headerColor + ';' : '';
     }
 
     get scrollableStyle() {

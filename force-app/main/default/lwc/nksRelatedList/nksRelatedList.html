@@ -1,10 +1,14 @@
 <template>
     <template if:true={showCard}>
-        <lightning-layout multiple-rows="true" class="slds-card">
+        <lightning-layout
+            multiple-rows="true"
+            class="slds-card"
+            style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
+        >
             <!--HEADER-->
             <lightning-layout-item
                 size="12"
-                class="slds-p-around_small slds-card__header slds-m-bottom_none custom-no-bottom-radius slds-box"
+                class="slds-p-around_small slds-card__header slds-border_bottom"
                 style={headerBackground}
             >
                 <lightning-layout vertical-align="center">
@@ -16,11 +20,12 @@
             </lightning-layout-item>
             <template if:true={relatedRecords}>
                 <div
-                    class="slds-grow slds-listbox_vertical slds-card__body slds-m-bottom_none slds-m-top_none"
+                    class="slds-grow slds-listbox_vertical slds-card__body"
                     role="list"
+                    style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
                 >
                     <div class="slds-scrollable_y" style={scrollableStyle}>
-                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <table class="slds-table slds-table_cell-buffer">
                             <tbody>
                                 <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
                                     <c-nks-related-list-item
