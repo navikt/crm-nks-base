@@ -21,16 +21,14 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api wireFields;
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
+    @api hideEmptyList; // Hides the list if there are no related records.
 
     @api displayedFields;
 
     connectedCallback() {
         //Call apex to retrieve related records
         this.wireFields = [this.objectApiName + '.Id'];
-        console.log(this.objectApiName);
-        console.log(this.recordId);
-        console.log(this.parentRelationField);
-        if (this.relatedRecords == undefined || this.relatedRecords.length) this.getList();
+        this.getList();
     }
 
     //Wire function to allow for dynamic update
@@ -53,8 +51,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             relationField: this.relationField,
             parentRelationField: this.parentRelationField,
             parentObjectApiName: this.objectApiName,
-            filterConditions: this.filterConditions,
-            extraFields: null
+            filterConditions: this.filterConditions
         })
             .then((data) => {
                 this.relatedRecords = data && data.length > 0 ? data : null;
@@ -94,17 +91,12 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             : '';
     }
 
-    get tableHeaderStyle() {
-        return 'width: 100%; max-height: ' + this.maxHeight.toString() + 'em';
-    }
-
     get scrollableStyle() {
-        return 'max-height: ' + this.maxHeight.toString() + 'em';
+        return this.maxHeight != 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
     }
 
-    get fieldLabels() {
-        let labels = this.columnLabels != null ? this.columnLabels.replace(/\s/g, '').split(',') : [];
-        return labels;
+    get usedFields() {
+        return this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
     }
 
     get icon() {
@@ -112,5 +104,9 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         if (this.iconName && this.iconName != '') nameString = this.iconName;
 
         return nameString;
+    }
+
+    get showCard() {
+        return !this.hideEmptyList || (this.relatedRecords != null && this.relatedRecords.length > 0);
     }
 }

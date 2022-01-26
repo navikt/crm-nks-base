@@ -1,27 +1,32 @@
 <template>
-    <article class="slds-card">
-        <lightning-layout multiple-rows="true">
+    <template if:true={showCard}>
+        <lightning-layout multiple-rows="true" class="slds-card">
             <!--HEADER-->
-            <lightning-layout-item size="12" class="slds-p-around_small" style={headerBackground}>
+            <lightning-layout-item
+                size="12"
+                class="slds-p-around_small slds-card__header slds-m-bottom_none custom-no-bottom-radius slds-box"
+                style={headerBackground}
+            >
                 <lightning-layout vertical-align="center">
                     <template if:true={icon}>
-                        <lightning-icon icon-name={icon}></lightning-icon>
+                        <lightning-icon icon-name={icon} size="small"></lightning-icon>
                     </template>
-                    <h3 class="slds-p-left_x-small slds-text-heading_medium">{cardTitle}</h3>
+                    <h3 class="slds-p-left_x-small slds-text-heading_small">{cardTitle}</h3>
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <div class="slds-table--header-fixed_container" style={tableHeaderStyle}>
+                <div
+                    class="slds-grow slds-listbox_vertical slds-card__body slds-m-bottom_none slds-m-top_none"
+                    role="list"
+                >
                     <div class="slds-scrollable_y" style={scrollableStyle}>
-                        <table
-                            class="slds-table slds-table_cell-buffer slds-table--header-fixed slds-table_bordered slds-max-medium-table_stacked-horizontal"
-                        >
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
                             <tbody>
                                 <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
                                     <c-nks-related-list-item
                                         key={record}
                                         record={record}
-                                        field-labels={fieldLabels}
+                                        used-fields={usedFields}
                                         row-index={rowIndex}
                                         related-object-api-name={relatedObjectApiName}
                                     ></c-nks-related-list-item>
@@ -32,5 +37,5 @@
                 </div>
             </template>
         </lightning-layout>
-    </article>
+    </template>
 </template>

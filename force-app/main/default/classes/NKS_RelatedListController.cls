@@ -13,7 +13,6 @@ public class NKS_RelatedListController {
      **/
     @AuraEnabled
     public static List<sObject> getRelatedList(
-        List<String> extraFields,
         String parentId,
         String objectApiName,
         String relationField,
@@ -22,14 +21,12 @@ public class NKS_RelatedListController {
         String filterConditions
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
-        String query = 'SELECT ';
-
-        //Appending fields to query string
-        for (String field : extraFields) {
-            query += field + ', ';
+        if (parentRelationIds.isEmpty()) {
+            return new List<SObject>();
         }
 
-        query = query.removeEndIgnoreCase(', ') + ' FROM ' + objectApiName + ' WHERE ';
+        String query;
+        query = 'SELECT Id FROM ' + objectApiName + ' WHERE ';
         query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
         query += relationField + ' IN :parentRelationIds ORDER BY ID DESC';
@@ -54,8 +51,11 @@ public class NKS_RelatedListController {
         Set<String> parentRelationIds = new Set<String>();
         String query = 'SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = :parentId';
 
+        String relationId;
         for (SObject sObj : Database.query(query)) {
-            parentRelationIds.add(getParentRelationId(sObj, parentRelationField));
+            relationId = getParentRelationId(sObj, parentRelationField);
+            if (relationId != null)
+                parentrelationIds.add(relationId);
         }
 
         return parentRelationIds;
