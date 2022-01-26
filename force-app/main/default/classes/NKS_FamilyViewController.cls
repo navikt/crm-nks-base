@@ -171,6 +171,7 @@ public with sharing class NKS_FamilyViewController {
                         if(!isVisible(person, parentPerson)){
                             continue;
                         }
+                        parent.unauthorized = false;
                         parent.personIdent = relation.relatertpersonsident;
                         fillRelationFromPerson(parent, parentPerson);
                         parent.livesWith = hasSameAddress(parentPerson,relationsData);
@@ -216,6 +217,7 @@ public with sharing class NKS_FamilyViewController {
                         if(!isVisible(person, childPerson)){
                             continue;
                         }
+                        child.unauthorized = false;
                         child.personIdent = relation.relatertpersonsident;
                         fillRelationFromPerson(child, childPerson);
                         if (isOver21(child)) {
