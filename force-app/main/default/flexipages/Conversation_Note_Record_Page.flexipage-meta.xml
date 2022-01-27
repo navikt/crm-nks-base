@@ -182,12 +182,8 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>columnLabels</name>
-                    <value>CRM_Conversation_Note__c, CRM_Timeline_User__c, CRM_Date_Registered__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>CRM_Conversation_Note__c, CRM_Timeline_User__c, CRM_Date_Registered__c</value>
+                    <value>CRM_Conversation_Note__c, CRM_Timeline_User__c, CRM_Date_Time_Registered__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>dynamicUpdate</name>
@@ -229,7 +225,7 @@
                     <name>relationField</name>
                     <value>CRM_Henvendelse_BehandlingskjedeId__c</value>
                 </componentInstanceProperties>
-                <componentName>nksRelatedList</componentName>
+                <componentName>crmRelatedList</componentName>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>
