@@ -48,4 +48,8 @@
         <recordType>NKS_Announcement__c.Operational</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Traffic_Controller</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 </PermissionSet>
