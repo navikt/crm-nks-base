@@ -338,7 +338,7 @@ public with sharing class NKS_FamilyViewController {
         relation.ageString = getAgeString(getAgeDate(relationPerson));
         relation.sex = getSex(relationPerson);
         relation.dateOfDeath = getDateOfDeath(relationPerson);
-        relation.deceased = (relation.dateOfDeath != null) ? true : false;
+        relation.deceased = (relation.dateOfDeath != null);
         relation.employee = relationPerson.INT_IsNavEmployee__c;
         relation.confidentialStatus = relationPerson.INT_Confidential__c;
         relation.confidential = isConfidential(relation.confidentialStatus);
@@ -523,7 +523,6 @@ public with sharing class NKS_FamilyViewController {
         return false;
     }
     private static Boolean isConfidentialRelation(PDL_API_Response person, PDL_API_Response relation) {
-        Integer personGrade = 0;
         PDL_AdressebeskyttelseGradering personGradering;
         PDL_AdressebeskyttelseGradering relationGradering;
         if (
@@ -532,7 +531,6 @@ public with sharing class NKS_FamilyViewController {
         ) {
             personGradering = person.data.hentPerson.adressebeskyttelse[0].gradering;
         }
-        Integer relationGrade = 0;
         if (
             relation?.data?.hentPerson?.adressebeskyttelse != null &&
             !relation.data.hentPerson.adressebeskyttelse.isEmpty()
@@ -546,20 +544,16 @@ public with sharing class NKS_FamilyViewController {
         PDL_AdressebeskyttelseGradering relationGradering = null;
         try{
             personGradering = PDL_AdressebeskyttelseGradering.valueOf(person);
-        }catch(Exception e){
-
-        }
+        }catch(Exception e){}
         try{
             relationGradering = PDL_AdressebeskyttelseGradering.valueOf(relation);
-        }catch(Exception e){
-
-        }
+        }catch(Exception e){}
         return isConfidentialRelation(personGradering, relationGradering);
     }
     private static Boolean isConfidentialRelation(PDL_AdressebeskyttelseGradering person, PDL_AdressebeskyttelseGradering relation){
         Integer personGrade = (person != null) ? gradeWeight.get(person) : 0;
         Integer relationGrade = (relation != null) ? gradeWeight.get(relation) : 0;
-        return (personGrade < relationGrade)? true : false;
+        return (personGrade < relationGrade);
     }
     private static Boolean isNavEmployee(PDL_API_Response response) {
         Set<String> idents = getIdentsSet(response);
@@ -568,12 +562,18 @@ public with sharing class NKS_FamilyViewController {
         }
         Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]
         ?.INT_IsNavEmployee__c;
-        return (isNavEmployee == null) ? false : isNavEmployee;
+        if(isNavEmployee == null){
+            return false;
+        }
+        return isNavEmployee;
     }
     private static Boolean isNavEmployee(String id){
         Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name = :id LIMIT 1]
         ?.INT_IsNavEmployee__c;
-        return (isNavEmployee == null) ? false : isNavEmployee;
+        if(isNavEmployee == null){
+            return false;
+        }
+        return isNavEmployee;
     }
     private static Boolean isVisible(Relation person, Person__c relation){
         if(relation == null || !relation.INT_IsNavEmployee__c){
@@ -649,20 +649,16 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static Boolean hasResponsibility(PDL_API_Response parent, String childId){
         Set<String> responsibleSet = getAnsvarssubjektSet(parent);
-        if (responsibleSet != null) {
-            if (responsibleSet.contains(childId)) {
-                return true;
-            }
+        if (responsibleSet != null && responsibleSet.contains(childId)) {
+            return true;
         }
         return false;
     }
     @TestVisible
     private static Boolean hasResponsibility(String parentId, PDL_API_Response child){
         Set<String> responsibleSet = getAnsvarligSet(child);
-        if (responsibleSet != null) {
-            if (responsibleSet.contains(parentId)) {
-                return true;
-            }
+        if (responsibleSet != null && responsibleSet.contains(parentId)) {
+            return true;
         }
         return false;
     }
@@ -826,10 +822,8 @@ public with sharing class NKS_FamilyViewController {
     // part of Address is required
     @TestVisible
     private static Boolean compareAddressPartsRequired(String parent, String child){
-        if(parent != null){
-            if(parent == child){
-                return true;
-            }
+        if(parent != null && parent == child){
+            return true;
         }
         return false;
     }
