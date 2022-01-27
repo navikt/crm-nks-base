@@ -207,6 +207,7 @@ public with sharing class NKS_FamilyViewController {
             if(child.unauthorized){
                 Person__c childPerson = getPerson(getIdentsSet(childResponse));
                 if(!isVisible(person, childPerson)){
+                    children.add(child);
                     continue;
                 }
                 child.unauthorized = false;
