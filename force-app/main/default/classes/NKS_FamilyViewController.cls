@@ -540,14 +540,18 @@ public with sharing class NKS_FamilyViewController {
         return isConfidentialRelation(personGradering, relationGradering);
     }
     private static Boolean isConfidentialRelation(String person, String relation){
-        PDL_AdressebeskyttelseGradering personGradering = null;
-        PDL_AdressebeskyttelseGradering relationGradering = null;
+        PDL_AdressebeskyttelseGradering personGradering;
+        PDL_AdressebeskyttelseGradering relationGradering;
         try{
             personGradering = PDL_AdressebeskyttelseGradering.valueOf(person);
-        }catch(Exception e){}
+        }catch(Exception e){
+            personGradering = null;
+        }
         try{
             relationGradering = PDL_AdressebeskyttelseGradering.valueOf(relation);
-        }catch(Exception e){}
+        }catch(Exception e){
+            relationGradering =null;
+        }
         return isConfidentialRelation(personGradering, relationGradering);
     }
     private static Boolean isConfidentialRelation(PDL_AdressebeskyttelseGradering person, PDL_AdressebeskyttelseGradering relation){
