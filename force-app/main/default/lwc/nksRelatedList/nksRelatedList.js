@@ -6,12 +6,11 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
     @api objectApiName;
-    @api relatedRecords;
+    relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
     @api iconName; //Displayed icon.
-    @api columnLabels; //Columns to be displayed.
     @api relatedObjectApiName; //Object name of the records in the list
     @api relationField; //Field API name of the lookup/master-detail connecting the parent
     @api parentRelationField; //Field API name of hos the parent is related in the junction

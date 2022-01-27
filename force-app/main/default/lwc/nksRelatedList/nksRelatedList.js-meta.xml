@@ -58,13 +58,6 @@
                 default="Name"
         />
         <property
-                name="columnLabels"
-                label="Labels for the table columns (match the order of the displayed fields input)"
-                type="String"
-                required="true"
-                default="Name"
-            />
-        <property
                 name="filterConditions"
                 label="Filter conditions"
                 description="I.e. Name != 'Test'"

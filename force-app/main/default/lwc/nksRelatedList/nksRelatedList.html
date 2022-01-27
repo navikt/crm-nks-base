@@ -29,10 +29,9 @@
                             <tbody>
                                 <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
                                     <c-nks-related-list-item
-                                        key={record}
+                                        key={record.Id}
                                         record={record}
                                         used-fields={usedFields}
-                                        row-index={rowIndex}
                                         related-object-api-name={relatedObjectApiName}
                                     ></c-nks-related-list-item>
                                 </template>
