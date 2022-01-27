@@ -890,7 +890,7 @@ public with sharing class NKS_FamilyViewController {
             return -1;
         if( d1 != null && d2 == null)
             return 1;
-        return d1.daysBetween(d2);
+        return d2.daysBetween(d1);
     }
     private static Integer compareBirthdayDates(PDL_API_Response r1, PDL_API_Response r2){
         return compareDates(getBirthdayDate(r1),getBirthdayDate(r2));
