@@ -211,7 +211,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
-                    <value>Title</value>
+                    <value>standard:announcement</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>type</name>
