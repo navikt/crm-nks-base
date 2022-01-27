@@ -1,0 +1,45 @@
+<template>
+    <template if:true={showCard}>
+        <lightning-layout
+            multiple-rows="true"
+            class="slds-card"
+            style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
+        >
+            <!--HEADER-->
+            <lightning-layout-item
+                size="12"
+                class="slds-p-around_small slds-card__header slds-border_bottom"
+                style={headerBackground}
+            >
+                <lightning-layout vertical-align="center">
+                    <template if:true={icon}>
+                        <lightning-icon icon-name={icon} size="small"></lightning-icon>
+                    </template>
+                    <h3 class="slds-p-left_x-small slds-text-heading_small">{cardTitle}</h3>
+                </lightning-layout>
+            </lightning-layout-item>
+            <template if:true={relatedRecords}>
+                <div
+                    class="slds-grow slds-listbox_vertical slds-card__body"
+                    role="list"
+                    style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
+                >
+                    <div class="slds-scrollable_y" style={scrollableStyle}>
+                        <table class="slds-table slds-table_cell-buffer">
+                            <tbody>
+                                <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
+                                    <c-nks-related-list-item
+                                        key={record.Id}
+                                        record={record}
+                                        used-fields={usedFields}
+                                        related-object-api-name={relatedObjectApiName}
+                                    ></c-nks-related-list-item>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

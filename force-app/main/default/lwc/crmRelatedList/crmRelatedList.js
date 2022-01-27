@@ -3,16 +3,14 @@ import getRelatedList from '@salesforce/apex/NKS_RelatedListController.getRelate
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
-export default class NksRelatedList extends NavigationMixin(LightningElement) {
+export default class CrmRelatedList extends LightningElement {
     @api recordId;
     @api objectApiName;
-    @track relatedRecords;
+    relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
     @api iconName; //Displayed icon.
-    @api columnLabels; //Columns to be displayed.
-    @api displayedFields = null;
     @api relatedObjectApiName; //Object name of the records in the list
     @api relationField; //Field API name of the lookup/master-detail connecting the parent
     @api parentRelationField; //Field API name of hos the parent is related in the junction
@@ -22,6 +20,9 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api wireFields;
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
+    @api hideEmptyList; // Hides the list if there are no related records.
+
+    @api displayedFields;
 
     connectedCallback() {
         //Call apex to retrieve related records
@@ -44,7 +45,6 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     //Calls apex to retrieve related records
     getList() {
         getRelatedList({
-            fieldNames: this.fieldList,
             parentId: this.recordId,
             objectApiName: this.relatedObjectApiName,
             relationField: this.relationField,
@@ -76,54 +76,24 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         });
     }
 
-    //Tranforms the record array into an array that allows for resolving field dynamically as LWC currently does not support this
-    get listRecords() {
-        let returnRecords = [];
-        if (this.relatedRecords) {
-            this.relatedRecords.forEach((dataRecord) => {
-                let recordFields = [];
-                this.fieldList.forEach((key) => {
-                    if (key !== 'Id') {
-                        let recordField = {
-                            label: key,
-                            value: this.resolve(key, dataRecord)
-                        };
-                        recordFields.push(recordField);
-                    }
-                });
-                returnRecords.push({ recordFields: recordFields });
-            });
-        }
-        return returnRecords;
+    get cardTitle() {
+        return this.listTitle + ' (' + this.numRecords + ')';
     }
 
-    get cardTitle() {
-        const numRecords = this.relatedRecords ? this.relatedRecords.length : 0;
-        return this.listTitle + ' (' + numRecords + ')';
+    get numRecords() {
+        return this.relatedRecords ? this.relatedRecords.length : 0;
     }
 
     get headerBackground() {
-        return this.headerColor
-            ? 'background-color: ' + this.headerColor + '; border-color: ' + this.headerColor + 'border-style: solid'
-            : '';
-    }
-
-    get tableHeaderStyle() {
-        return 'width: 100%; max-height: ' + this.maxHeight.toString() + 'em';
+        return this.headerColor ? 'background-color: ' + this.headerColor + ';' : '';
     }
 
     get scrollableStyle() {
-        return 'max-height: ' + this.maxHeight.toString() + 'em';
+        return this.maxHeight != 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
     }
 
-    get fieldLabels() {
-        let labels = this.columnLabels != null ? this.columnLabels.replace(/\s/g, '').split(',') : [];
-        return labels;
-    }
-
-    get fieldList() {
-        let fieldList = this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
-        return fieldList;
+    get usedFields() {
+        return this.displayedFields != null ? this.displayedFields.replace(/\s/g, '').split(',') : [];
     }
 
     get icon() {
@@ -133,14 +103,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         return nameString;
     }
 
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
-    resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || self);
+    get showCard() {
+        return !this.hideEmptyList || (this.relatedRecords != null && this.relatedRecords.length > 0);
     }
 }
