@@ -17,6 +17,7 @@ public class NKS_RelatedListController_Test {
             'CRM_Person__c',
             'Id',
             'Person__c',
+            null,
             null
         );
         Test.stopTest();
