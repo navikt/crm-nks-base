@@ -776,11 +776,8 @@ public with sharing class NKS_FamilyViewController {
                     }
                 );
         childAddress1Match &= compareAddressPartsRequired(parentResidentialAddress, child.INT_ResidentialAddress__c);
-        
         childAddress1Match &= compareAddressPartsRequired(parentAddress.kommunenummer, child?.INT_AddressMunicipalityNumber__c);
-        
         childAddress1Match &= compareAddressParts(parentAddress.bydelsnummer, child?.INT_AddressDistrictNumber__c);
-        
         childAddress1Match &= compareAddressPartsRequired(parentAddress.postnummer, child?.INT_ResidentialZipCode__c);
         
         return childAddress1Match;
@@ -789,41 +786,38 @@ public with sharing class NKS_FamilyViewController {
     private static Boolean hasSameAddress(Person__c parent, PDL_API_Response child){
         PDL_Vegadresse childAddress1;
         PDL_Vegadresse childAddress2;
+        Boolean childAddress1Match = false;
+        Boolean childAddress2Match = false;
         if (child?.data?.hentPerson?.bostedsadresse != null && !child.data.hentPerson.bostedsadresse.isEmpty()) {
             childAddress1 = child.data.hentPerson.bostedsadresse[0].vegadresse;
+            String childResidentialAddress1 = addressCreator(
+                    new List<String>{
+                        childAddress1?.adressenavn,
+                        childAddress1?.husnummer,
+                        childAddress1?.husbokstav
+                    }
+                );
+            childAddress1Match = true;
+            childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialAddress__c, childResidentialAddress1);
+            childAddress1Match &= compareAddressPartsRequired(parent.INT_AddressMunicipalityNumber__c, childAddress1.kommunenummer);
+            childAddress1Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress1.bydelsnummer);
+            childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialZipCode__c, childAddress1.postnummer);
         }
         if (child?.data?.hentPerson?.deltBosted != null && !child.data.hentPerson.deltBosted.isEmpty()) {
             childAddress2 = child.data.hentPerson.deltBosted[0].vegadresse;
+            String childResidentialAddress2 = addressCreator(
+                new List<String>{
+                    childAddress2?.adressenavn,
+                    childAddress2?.husnummer,
+                    childAddress2?.husbokstav
+                }
+            );
+            childAddress2Match = true;
+            childAddress2Match &= compareAddressPartsRequired(parent.INT_ResidentialAddress__c, childResidentialAddress2);
+            childAddress2Match &= compareAddressPartsRequired(parent.INT_AddressMunicipalityNumber__c, childAddress2.kommunenummer);
+            childAddress2Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress2.bydelsnummer);
+            childAddress2Match &= compareAddressPartsRequired(parent.INT_ResidentialZipCode__c, childAddress2.postnummer);
         }
-        Boolean childAddress1Match = true;
-        Boolean childAddress2Match = true;
-
-        String childResidentialAddress1 = addressCreator(
-                    new List<String>{
-                        childAddress1.adressenavn,
-                        childAddress1.husnummer,
-                        childAddress1.husbokstav
-                    }
-                );
-        String childResidentialAddress2 = addressCreator(
-                    new List<String>{
-                        childAddress2.adressenavn,
-                        childAddress2.husnummer,
-                        childAddress2.husbokstav
-                    }
-                );
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialAddress__c, childResidentialAddress1);
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialAddress__c, childResidentialAddress2);
-        
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_AddressMunicipalityNumber__c, childAddress1.kommunenummer);
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_AddressMunicipalityNumber__c, childAddress2.kommunenummer);
-        
-        childAddress1Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress1.bydelsnummer);
-        childAddress1Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress2.bydelsnummer);
-        
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialZipCode__c, childAddress1.postnummer);
-        childAddress1Match &= compareAddressPartsRequired(parent.INT_ResidentialZipCode__c, childAddress2.postnummer);
-
         return childAddress1Match || childAddress2Match;
     }
     // part of Address could be missing
