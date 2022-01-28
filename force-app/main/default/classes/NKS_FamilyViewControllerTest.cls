@@ -143,10 +143,43 @@ private class NKS_FamilyViewControllerTest {
                       '"bruksenhetsnummer" : "555",' +
                       '"adressenavn" : "Plassavegen"' +
                     '}' +
+                  '} ],' +
+                  '"deltbosted" : [ {' +
+                    '"vegadresse" : {' +
+                      '"tilleggsnavn" : "abrakadabra",' +
+                      '"postnummer" : "6636",' +
+                      '"matrikkelId" : 130534152,' +
+                      '"koordinater" : {' +
+                        '"z" : 0.0,' +
+                        '"y" : 6974511.0,' +
+                        '"x" : 453529.0,' +
+                        '"kvalitet" : null' +
+                      '},' +
+                      '"kommunenummer" : "1557",' +
+                      '"husnummer" : "1",' +
+                      '"husbokstav" : "A",' +
+                      '"bydelsnummer" : "2435",' +
+                      '"bruksenhetsnummer" : "555",' +
+                      '"adressenavn" : "Plassavegen"' +
+                    '}' +
                   '} ]' +
                 '}' +
               '}' +
             '}';
+            Person__c p =
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter',
+                INT_DateOfDeath__c = Date.valueOf('2022-12-31'),
+                INT_ResidentialAddress__c = 'Plassavegen 1 A',
+                INT_AddressMunicipalityNumber__c = '1557',
+                INT_AddressDistrictNumber__c = '2435',
+                INT_ResidentialZipCode__c = '6636'
+            );
             String PersonWithoutAddress = 
             '{' +
               '"errors" : null,' +
@@ -174,7 +207,34 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(woAddress,wAddress));
         System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(woAddress,woAddress));
         System.assertEquals(true, NKS_FamilyViewController.hasSameAddress(wAddress,wAddress));
-
+        System.assertEquals(true, NKS_FamilyViewController.hasSameAddress(wAddress,p));
+        System.assertEquals(true, NKS_FamilyViewController.hasSameAddress(p,wAddress));
+        PDL_API_Response n;
+        System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(wAddress,n));
+        System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(n,wAddress));
+        System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(n,p));
+        System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(p,n));
+    }
+    @isTest
+    private static void compareDatesTest(){
+        Date d1 = Date.valueOf('2022-01-01');
+        Date d2 = Date.valueOf('2000-01-01');
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(d1,d2) > 0);
+        d1 = Date.valueOf('2000-01-01');
+        d2 = Date.valueOf('2022-01-01');
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(d1,d2) < 0);
+        d1 = Date.valueOf('2000-01-01');
+        d2 = Date.valueOf('2000-01-01');
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(d1,d2) == 0);
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(null,null) == 0);
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(d1,null) > 0);
+        System.assertEquals(true, NKS_FamilyViewController.compareDates(null,d2) < 0);
+    }
+    @isTest
+    private static void formatDateTest(){
+        Date d = Date.valueOf('2022-01-01');
+        System.assertEquals('01.01.2022', NKS_FamilyViewController.formatDate(d));
+        System.assertEquals(null, NKS_FamilyViewController.formatDate(null));
     }
     @isTest
     private static void getAnsvarligSetTest(){
@@ -275,12 +335,20 @@ private class NKS_FamilyViewControllerTest {
               '"data" : {' +
                 '"hentIdenter" : {' +
                   '"identer" : [ { "ident" : "12345678901" } ]' +
+                '},' +
+                '"hentPerson" : {' +
+                  '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
                 '}' +
               '}' +
             '}';
         PDL_API_Response parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
         PDL_API_Response child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
         System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent,child));
+        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent,'12345678901'));
+        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent,'12345678911'));
+        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility('12345678901',child));
+        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility('12345678911',child));
+
         childString = 
             '{' +
               '"errors" : null,' +
@@ -371,6 +439,97 @@ private class NKS_FamilyViewControllerTest {
         dead = (PDL_API_Response) System.JSON.deserialize(deadNullPerson, PDL_API_Response.class);
         r = NKS_FamilyViewController.getDateOfDeath(dead);
         System.assertEquals(null, r);
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter',
+                INT_DateOfDeath__c = Date.valueOf('2022-12-31')
+            );
+        r = NKS_FamilyViewController.getDateOfDeath(p);
+        System.assertEquals('31.12.2022', r);
+    }
+    @isTest 
+    private static void getAgeDateTest(){
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"foedsel" : [{"foedselsaar":"2023"}],"doedsfall" : [{"doedsdato" : "2023-01-2"}]}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        Date result = NKS_FamilyViewController.getAgeDate(response);
+        System.assertEquals(Date.valueOf('0001-01-02'), result);
+        person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"foedsel" : [{}]}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        result = NKS_FamilyViewController.getAgeDate(response);
+        System.assertEquals(null, result);
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter',
+                INT_DateOfBirth__c = '2021-12-31',
+                INT_DateOfDeath__c = Date.valueOf('2022-12-31')
+            );
+        result = NKS_FamilyViewController.getAgeDate(p);
+        System.assertEquals(Date.valueOf('0002-01-01'), result);
+    }
+    @isTest
+    private static void getAgeStringTest(){
+        Date d = Date.valueOf('0001-01-02');
+        String result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('1 d', result);
+        d = Date.valueOf('0001-02-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('1 mnd', result);
+        d = Date.valueOf('0002-01-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('1 år', result);
+    }
+    @isTest
+    private static void getConfidentialStatusTest(){
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"adressebeskyttelse" : [{"gradering" : "UGRADERT"}]}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        String result = NKS_FamilyViewController.getConfidentialStatus(response);
+        System.assertEquals('UGRADERT', result);
+    }
+    @isTest
+    private static void isConfidentialRelationTest(){
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"adressebeskyttelse" : [{"gradering" : "UGRADERT"}]}' +
+              '}' +
+            '}';
+        PDL_API_Response personResponse = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        String relation = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"adressebeskyttelse" : [{"gradering" : "UGRADERT"}]}' +
+              '}' +
+            '}';
+        PDL_API_Response relationResponse = (PDL_API_Response) System.JSON.deserialize(relation, PDL_API_Response.class);
+        Boolean result = NKS_FamilyViewController.isConfidentialRelation(personResponse, relationResponse);
+        System.assertEquals(false, result);
+        result = NKS_FamilyViewController.isConfidentialRelation('UGRADERT', 'FORTROLIG');
+        System.assertEquals(true, result);
     }
     @isTest
     private static void fillRelationFromResponseTest(){
@@ -448,6 +607,107 @@ private class NKS_FamilyViewControllerTest {
         response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
         result = NKS_FamilyViewController.getFullName(response);
         System.assertEquals(null, result);
+        person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"navn" : [{"fornavn" : " "}]}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        result = NKS_FamilyViewController.getFullName(response);
+        System.assertEquals(null, result);
+    }
+    @isTest
+    private static void getBirthdateTest(){
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"foedsel" : []}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        String result = NKS_FamilyViewController.getBirthdate(response);
+        System.assertEquals(null, result);
+        person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"foedsel" : [{}]}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        result = NKS_FamilyViewController.getBirthdate(response);
+        System.assertEquals(null, result);
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter',
+                INT_DateOfBirth__c = '2022-12-31'
+            );
+        result = NKS_FamilyViewController.getBirthdate(p);
+        System.assertEquals('31.12.2022', result);
+    }
+    @isTest
+    private static void isNavEmployeeTest(){
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '2762473496911',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter'
+            );
+        insert p;
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {},' +
+                '"hentIdenter" : {' +
+                    '"identer" : [ {' +
+                        '"ident" : "12345678910",' +
+                        '"historisk" : false,' +
+                        '"gruppe" : "FOLKEREGISTERIDENT"' +
+                    '}, {' +
+                        '"ident" : "2762473496911",' +
+                        '"historisk" : false,' +
+                        '"gruppe" : "AKTORID"' +
+                    '} ]' +
+                '}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        Boolean result = NKS_FamilyViewController.isNavEmployee(response);
+        System.assertEquals(true, result);
+        result = NKS_FamilyViewController.isNavEmployee('12345678910');
+        System.assertEquals(true, result);
+        result = NKS_FamilyViewController.isNavEmployee('12345678911');
+        System.assertEquals(false, result);
+    }
+    @isTest
+    private static void isVisibleTest(){
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '2762473496911',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter'
+            );
+        insert p;
+        NKS_FamilyViewController.Relation r = new NKS_FamilyViewController.Relation();
+        r.confidentialStatus = 'UGRADERT';
+        Boolean result = NKS_FamilyViewController.isVisible(r,p);
+        System.assertEquals(true, result);
+        result = NKS_FamilyViewController.isVisible(r,null);
+        System.assertEquals(false, result);
+        p.INT_Confidential__c = 'FORTROLIG';
+        result = NKS_FamilyViewController.isVisible(r,p);
+        System.assertEquals(false, result);
     }
     @isTest
     private static void getParentsTest(){
