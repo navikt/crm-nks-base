@@ -8,17 +8,18 @@ public class NKS_RelatedListController {
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @param parentObjectApiName [String : Object API name of the record the LWC is displayed on]
      * @param filterConditions [String : Optional filter conditions]
-     * @param removeSelf [Boolean : Removes itself from the list ]
+     * @param orderConditions [String : Optional order conditions ]
      * @return List<sObject>
      **/
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<sObject> getRelatedList(
         String parentId,
         String objectApiName,
         String relationField,
         String parentRelationField,
         String parentObjectApiName,
-        String filterConditions
+        String filterConditions,
+        String orderConditions
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
         if (parentRelationIds.isEmpty()) {
@@ -29,7 +30,8 @@ public class NKS_RelatedListController {
         query = 'SELECT Id FROM ' + objectApiName + ' WHERE ';
         query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
-        query += relationField + ' IN :parentRelationIds ORDER BY ID DESC';
+        query += relationField + ' IN :parentRelationIds ';
+        query += 'ORDER BY ' + (orderConditions != null ? orderConditions : 'ID DESC');
 
         List<sObject> returnList = Database.query(query);
         return returnList;

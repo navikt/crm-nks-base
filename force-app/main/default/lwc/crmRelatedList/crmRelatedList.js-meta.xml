@@ -66,6 +66,14 @@
               default=""
           />
           <property
+              name="orderConditions"
+              label="Order conditions"
+              description="I.e. Id DESC'"
+              type="String"
+              required="false"
+              default=""
+          />
+          <property
               name="dynamicUpdate"
               label="Dynamic Update"
               description="Set to true if an update to the parent record should trigger a list refresh"
