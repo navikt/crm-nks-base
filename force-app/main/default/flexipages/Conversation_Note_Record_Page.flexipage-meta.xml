@@ -186,6 +186,10 @@
                     <value>0</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>orderConditions</name>
+                    <value>CRM_Date_Time_Registered__c DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>parentRelationField</name>
                     <value>CRM_Henvendelse_BehandlingskjedeId__c</value>
                 </componentInstanceProperties>
