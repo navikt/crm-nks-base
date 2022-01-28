@@ -15,6 +15,7 @@ export default class CrmRelatedList extends LightningElement {
     @api relationField; //Field API name of the lookup/master-detail connecting the parent
     @api parentRelationField; //Field API name of hos the parent is related in the junction
     @api filterConditions; //Optional filter conditions (i.e. Name != 'TEST')
+    @api orderConditions; //Optional ordering conditions (i.e. Id DESC)
     @api headerColor; // Color for the component header
     @api dynamicUpdate = false; // Flag to set if component should automatically refresh if the an update is triggered on the parent record page
     @api wireFields;
@@ -50,7 +51,8 @@ export default class CrmRelatedList extends LightningElement {
             relationField: this.relationField,
             parentRelationField: this.parentRelationField,
             parentObjectApiName: this.objectApiName,
-            filterConditions: this.filterConditions
+            filterConditions: this.filterConditions,
+            orderConditions: this.orderConditions
         })
             .then((data) => {
                 this.relatedRecords = data && data.length > 0 ? data : null;

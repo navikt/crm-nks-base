@@ -28,12 +28,12 @@
                         <table class="slds-table slds-table_cell-buffer">
                             <tbody>
                                 <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
-                                    <c-nks-related-list-item
+                                    <c-crm-related-list-item
                                         key={record.Id}
                                         record={record}
                                         used-fields={usedFields}
                                         related-object-api-name={relatedObjectApiName}
-                                    ></c-nks-related-list-item>
+                                    ></c-crm-related-list-item>
                                 </template>
                             </tbody>
                         </table>
