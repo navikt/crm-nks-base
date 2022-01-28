@@ -33,6 +33,33 @@ private class NKS_FamilyViewControllerTest {
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
         l = NKS_FamilyViewController.getMaritalPerson(response,new NKS_FamilyViewController.Relation());
         System.assertEquals('GIFT', l[0].role);
+        giftPerson = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"sivilstand" : []' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
+        l = NKS_FamilyViewController.getMaritalPerson(response,new NKS_FamilyViewController.Relation());
+        System.assertEquals('UOPPGITT', l[0].role);
+        giftPerson = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {' +
+                  '"sivilstand" : [ {' +
+                    '"type" : "SKILT",' +
+                    '"relatertVedSivilstand" : "02091379875",' +
+                    '"gyldigFraOgMed" : "2021-09-02",' +
+                    '"bekreftelsesdato" : null' +
+                  '} ]' +
+                '}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
+        l = NKS_FamilyViewController.getMaritalPerson(response,new NKS_FamilyViewController.Relation());
+        System.assertEquals('02.09.2021', l[0].eventDate);
     }
     @isTest
     private static void isOver21Test(){
@@ -356,6 +383,71 @@ private class NKS_FamilyViewControllerTest {
         response = (PDL_API_Response) System.JSON.deserialize(testPerson1, PDL_API_Response.class);
         NKS_FamilyViewController.fillRelationFromResponse(r,response);
         System.assertEquals('MANN', r.sex);
+        r = null;
+        response = null;
+        NKS_FamilyViewController.fillRelationFromResponse(r,response);
+        System.assertEquals(null, r);
+    }
+    @isTest
+    private static void fillRelationFromPersonTest(){
+        NKS_FamilyViewController.Relation r = new NKS_FamilyViewController.Relation();
+        Person__c p = new Person__c();
+        p.INT_AddressMunicipalityNumber__c = null;
+        p.INT_AddressDistrictNumber__c = null;
+        p.INT_IsNavEmployee__c = null;
+        p.INT_Confidential__c = null;
+        p.INT_DateOfBirth__c = null;
+        p.INT_DateOfDeath__c = null;
+        p.INT_FirstName__c = 'Name';
+        p.INT_ResidentialZipCode__c = '6868';
+        p.INT_Sex__c = 'Kvinne';
+        p.INT_ResidentialAddress__c = null;
+        NKS_FamilyViewController.fillRelationFromPerson(r,p);
+        System.assertEquals('Kvinne', r.sex);
+        System.assertEquals(false, r.employee);
+        p = null;
+        NKS_FamilyViewController.fillRelationFromPerson(r,p);
+        System.assertEquals('Kvinne', r.sex);
+    }
+    @isTest
+    private static void getPersonTest(){
+        Person__c p =
+            new Person__c(
+                INT_ActorId__c = '100003000120',
+                Name = '12345678910',
+                INT_Confidential__c = 'UGRADERT',
+                INT_FirstName__c = 'Harry',
+                INT_IsNavEmployee__c = true,
+                INT_LastName__c = 'Potter'
+            );
+        insert p;
+        Set<String> identsList = new Set<String>();
+        identsList.add(p.Name);
+        Person__c result = NKS_FamilyViewController.getPerson(identsList);
+        System.assertEquals(p.INT_Confidential__c, result.INT_Confidential__c);
+        result = NKS_FamilyViewController.getPerson(null);
+        System.assertEquals(null, result);
+    }
+    @isTest
+    private static void getFullNameTest(){
+        String person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {}' +
+              '}' +
+            '}';
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        String result = NKS_FamilyViewController.getFullName(response);
+        System.assertEquals(null, result);
+        person = 
+            '{' +
+              '"data" : {' +
+                '"hentPerson" : {"navn" : [{}]}' +
+              '}' +
+            '}';
+        response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
+        result = NKS_FamilyViewController.getFullName(response);
+        System.assertEquals(null, result);
     }
     @isTest
     private static void getParentsTest(){
