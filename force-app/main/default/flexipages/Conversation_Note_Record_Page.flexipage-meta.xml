@@ -8,18 +8,6 @@
                     <valueList>
                         <valueListItems>
                             <value>Conversation_Note__c.NKS_Journal</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NKS_Journal_Status__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Journal Completed</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NKS_Henvendelse_BehandlingsId__c}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Conversation_Note__c.Set_To_Redaction</value>
