@@ -1,16 +1,8 @@
 <template>
     <template if:true={showCard}>
-        <lightning-layout
-            multiple-rows="true"
-            class="slds-card"
-            style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
-        >
+        <lightning-layout multiple-rows="true" class="slds-card slds-box" style="overflow: hidden">
             <!--HEADER-->
-            <lightning-layout-item
-                size="12"
-                class="slds-p-around_small slds-card__header slds-border_bottom"
-                style={headerBackground}
-            >
+            <lightning-layout-item size="12" class="slds-var-p-bottom_medium" style={headerBackground}>
                 <lightning-layout vertical-align="center">
                     <template if:true={icon}>
                         <lightning-icon icon-name={icon} size="small"></lightning-icon>
