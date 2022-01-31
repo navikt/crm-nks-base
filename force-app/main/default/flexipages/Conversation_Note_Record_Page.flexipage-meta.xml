@@ -47,6 +47,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -56,6 +57,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CRM_Conversation_Note__c</fieldItem>
+                <identifier>RecordCRM_Conversation_Note__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-33b0f45c-07e2-4959-b8e6-55bd499d93e6</name>
@@ -69,6 +71,7 @@
                     <value>Facet-33b0f45c-07e2-4959-b8e6-55bd499d93e6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-3b938874-acf3-42a4-b989-474f60b87b8c</name>
@@ -86,6 +89,7 @@
                     <value>Referat</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
@@ -93,25 +97,12 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.Name</fieldItem>
-            </fieldInstance>
+            <componentInstance>
+                <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel1</identifier>
+            </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.CRM_Date_Registered__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.CRM_Account__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</name>
+        <name>Facet-76a92e72-ab99-4fe9-b203-c290236c88c9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -119,35 +110,28 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</value>
+                    <value>Facet-76a92e72-ab99-4fe9-b203-c290236c88c9</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</value>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-bab5275a-691a-4750-a8c7-9cdf7fff0141</name>
+        <name>Facet-57950728-09b1-475d-9891-02c173ddb3d3</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-bab5275a-691a-4750-a8c7-9cdf7fff0141</value>
+                    <name>tabs</name>
+                    <value>Facet-57950728-09b1-475d-9891-02c173ddb3d3</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Detaljer</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset1</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -173,6 +157,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>
