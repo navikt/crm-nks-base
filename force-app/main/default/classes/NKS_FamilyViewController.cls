@@ -178,7 +178,7 @@ public with sharing class NKS_FamilyViewController {
                         parent.livesWith = hasSameAddress(parentPerson,relationsData);
                         parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
                     }else{
-                        fillRelationFromResponse(parent, parentResponse, person);
+                        fillRelationFromResponse(parent, parentResponse);
                         parent.livesWith = hasSameAddress(parentResponse, relationsData);
                         parent.responsibility = hasResponsibility(parentResponse, relationsData);
                     }
@@ -217,7 +217,7 @@ public with sharing class NKS_FamilyViewController {
                 child.livesWith = hasSameAddress(relationsData, childPerson);
                 child.responsibility = hasResponsibility(relationsData,child.personIdent);
             }else{
-                fillRelationFromResponse(child, childResponse, person);
+                fillRelationFromResponse(child, childResponse);
                 if (isOver21(child)) {
                     continue;
                 }
@@ -281,7 +281,7 @@ public with sharing class NKS_FamilyViewController {
                         fillRelationFromPerson(r, relationPerson);
                     }
                 }else{
-                    fillRelationFromResponse(r, response, person);
+                    fillRelationFromResponse(r, response);
                 }
             }
             r.role = sivilstand[0].type.name();
@@ -308,7 +308,7 @@ public with sharing class NKS_FamilyViewController {
         return query.execute();
     }
     @TestVisible
-    private static void fillRelationFromResponse(Relation relation, PDL_API_Response response, Relation person) {
+    private static void fillRelationFromResponse(Relation relation, PDL_API_Response response) {
         if (relation == null || response == null)
             return;
         relation.name = getFullName(response);
