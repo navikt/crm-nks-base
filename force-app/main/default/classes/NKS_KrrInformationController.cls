@@ -16,7 +16,7 @@ public without sharing class NKS_KrrInformationController {
                             INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
                             INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
                             INT_LastUpdatedFromKRR__c = Datetime.now(),
-                            INT_VerifisertFromKRR__c = sistVerifisertDato(personer[0]),
+                            INT_VerifiedFromKRR__c = sistVerifisertDato(personer[0]),
                             INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
                         )
                     );
