@@ -113,36 +113,6 @@ global class NKS_ChatTranscriptService {
     }
 
     /**
-     * @description: Generates the heading for the human chat part of the log
-     * @author Stian Ruud Schikora | 10-30-2020
-     * @param chatTranscript
-     * @param chatStart
-     * @param chatEnd
-     * @return String
-     **/
-    private static String generateConversationHeading(
-        LiveChatTranscript chatTranscript,
-        DateTime chatStart,
-        DateTime chatEnd
-    ) {
-        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
-
-        String heading = '<br><div style="text-align: center">';
-        heading +=
-            '<p align="center"><b>' +
-            conversationText +
-            ' - Chat: ' +
-            chatStart.format('dd/MM/yyyy') +
-            ', ' +
-            chatStart.format('HH:mm:ss') +
-            ' - ' +
-            chatEnd.format('HH:mm:ss') +
-            '</b></p>';
-        heading += '</div><br>';
-        return heading;
-    }
-
-    /**
      * @description: Appends conversation between frida ane end user to the log
      * @author Stian Ruud Schikora | 10-30-2020
      * @param botConversation
@@ -228,44 +198,6 @@ global class NKS_ChatTranscriptService {
 
         private string getMessageSource(String language) {
             return isAgentMessage() ? name : language == 'en_US' ? 'You' : 'Du';
-        }
-
-        public String getFormattedMsg(String language) {
-            //Log: NKS-246 Conversation store fails on contentless message i.e. on transfer
-            if (String.isBlank(content)) {
-                return '';
-            }
-            String formattedMessage;
-
-            //Formatting a transfer message
-            if (type.equalsIgnoreCase('OperatorTransferred')) {
-                formattedMessage = '<div style="text-align: center">';
-                DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-                String transferText = language == 'en_US' ? 'Transferred to {to}' : 'Overført til {to}';
-                formattedMessage +=
-                    '<p align="center"><b>' +
-                    transferText.replace('{to}', name) +
-                    ': ' +
-                    '</b> - ' +
-                    convertedTimestamp.format('HH:mm:ss') +
-                    '</p>';
-                formattedMessage += '</div><br>';
-            } else {
-                formattedMessage = '<div>';
-                DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-                formattedMessage +=
-                    '<p>' +
-                    '<b>' +
-                    getMessageSource(language) +
-                    ': ' +
-                    '</b> - ' +
-                    convertedTimestamp.format('HH:mm:ss') +
-                    '</p>';
-                formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
-                formattedMessage += '</div><br>';
-            }
-
-            return formattedMessage;
         }
     }
 
