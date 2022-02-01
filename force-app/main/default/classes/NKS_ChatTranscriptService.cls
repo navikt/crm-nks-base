@@ -37,8 +37,9 @@ global class NKS_ChatTranscriptService {
         List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         messageList.sort();
         LiveChatTranscript chatTranscript = getChatDetails(chatId);
+        if (chatTranscript.NKS_Thread__c == null)
+            return; //If no thread is created the session was not authenticated and the messages cannot be related to end users
         List<Message__c> threadMessages = new List<Message__c>();
-        DateTime authTimestamp = chatTranscript.NKS_Authentication_Timestamp__c; //Should we use this to generate an authentication event message?
 
         if (
             // Compare last message timestamp from thread to handle issues with multiple EndEvents
@@ -49,7 +50,8 @@ global class NKS_ChatTranscriptService {
         }
 
         try {
-            converToThreadMessages(messageList, chatTranscript);
+            threadMessages = converToThreadMessages(messageList, chatTranscript);
+            insert threadMessages;
         } catch (Exception ex) {
             logger.exception(ex, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
@@ -61,6 +63,7 @@ global class NKS_ChatTranscriptService {
         LiveChatTranscript chatTrans
     ) {
         List<Message__c> returnMessages = new List<Message__c>();
+        returnMessages.add(createAuthEventMessage(chatTrans));
         for (Message msg : wrapperMessages) {
             returnMessages.add(convertToThreadMessage(msg, chatTrans));
         }
@@ -96,9 +99,7 @@ global class NKS_ChatTranscriptService {
         convertedMessage.CRM_Sent_date__c = DateTime.newInstance(Long.valueOf(wrapperMessage.timestamp));
         if (wrapperMessage.isAgentMessage()) {
             //Agent name is designed to include the NAV ident in parenthesis i.e. (<NAV_IDENT>)
-            pattern navIdentPattern = pattern.compile('([a-zA-Z]\\d+)');
-            matcher navIdentMatcher = navIdentPattern.matcher(wrapperMessage.name);
-            String navIdent = navIdentMatcher.group(0);
+            String navIdent = wrapperMessage.name.substringBetween('(', ')');
             if (!navIdentUserMap.containsKey(navIdent)) {
                 logger.error('Could not find user record for agent', chatTrans, CRM_ApplicationDomain.Domain.NKS);
             } else {
@@ -109,17 +110,6 @@ global class NKS_ChatTranscriptService {
         }
 
         return convertedMessage;
-    }
-
-    private static void setIdentifiers(Message wrapperMessage, Message__c convertedMessage) {
-        pattern navIdentPattern = pattern.compile('([a-zA-Z]\\d+)');
-        pattern navUnitPattern = pattern.compile('(,.(\\d{4}))');
-        matcher navIdentMatcher = navIdentPattern.matcher(wrapperMessage.name);
-        matcher navUnitMatcher = navUnitPattern.matcher(wrapperMessage.name);
-        String navIdent = navIdentMatcher.group(0);
-        String navUnit = navUnitMatcher.group(0);
-        convertedMessage.CRM_From_Ident__c = navIdent;
-        convertedMessage.CRM_From_NAV_Unit__c = navUnit;
     }
 
     /**
@@ -185,6 +175,7 @@ global class NKS_ChatTranscriptService {
             SELECT
                 AccountId,
                 ContactId,
+                NKS_Last_Message_Datetime__c,
                 NKS_Thread__c,
                 NKS_Agent_Greeting_Name__c,
                 Body,
