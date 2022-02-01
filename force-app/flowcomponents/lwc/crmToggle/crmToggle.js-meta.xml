@@ -9,6 +9,7 @@
         <targetConfig targets="lightning__FlowScreen">
             <property name="label" type="String" label="Label" default="Opprett oppgave:" />
             <property name="togglechecked" type="Boolean" />
+            <property name="isDisabled" type="Boolean" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
