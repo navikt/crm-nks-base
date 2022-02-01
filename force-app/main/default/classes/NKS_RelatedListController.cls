@@ -2,37 +2,36 @@ public class NKS_RelatedListController {
     /**
      * @description: Returns a list of records
      * @author Stian Ruud Schikora | 09-29-2020
-     * @param fieldNames [List<String : Fields to retrieve from the returned records]
      * @param parentId [String : Id of the record the LWC is displayed on]
      * @param objectApiName  [String : API name of object to return]
      * @param relationField  [String : Field API name relating the record to the parent]
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @param parentObjectApiName [String : Object API name of the record the LWC is displayed on]
      * @param filterConditions [String : Optional filter conditions]
+     * @param orderConditions [String : Optional order conditions ]
      * @return List<sObject>
      **/
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<sObject> getRelatedList(
-        List<String> fieldNames,
         String parentId,
         String objectApiName,
         String relationField,
         String parentRelationField,
         String parentObjectApiName,
-        String filterConditions
+        String filterConditions,
+        String orderConditions
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
-        String query = 'SELECT ';
-
-        //Appending fields to query string
-        for (String field : fieldNames) {
-            query += field + ', ';
+        if (parentRelationIds.isEmpty()) {
+            return new List<SObject>();
         }
 
-        query = query.removeEndIgnoreCase(', ') + ' FROM ' + objectApiName + ' WHERE ';
+        String query;
+        query = 'SELECT Id FROM ' + objectApiName + ' WHERE ';
         query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
-        query += relationField + ' IN :parentRelationIds ORDER BY ID DESC';
+        query += relationField + ' IN :parentRelationIds ';
+        query += 'ORDER BY ' + (orderConditions != null ? orderConditions : 'ID DESC');
 
         List<sObject> returnList = Database.query(query);
         return returnList;
@@ -54,8 +53,11 @@ public class NKS_RelatedListController {
         Set<String> parentRelationIds = new Set<String>();
         String query = 'SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = :parentId';
 
+        String relationId;
         for (SObject sObj : Database.query(query)) {
-            parentRelationIds.add(getParentRelationId(sObj, parentRelationField));
+            relationId = getParentRelationId(sObj, parentRelationField);
+            if (relationId != null)
+                parentrelationIds.add(relationId);
         }
 
         return parentRelationIds;
