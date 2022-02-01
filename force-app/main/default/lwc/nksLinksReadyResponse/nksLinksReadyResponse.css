@@ -5,3 +5,7 @@
 .horizontal-list li {
     padding-right: 1em;
 }
+
+.button {
+    width: 100%;
+}
