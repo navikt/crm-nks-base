@@ -95,7 +95,7 @@ global class NKS_ChatTranscriptService {
         convertedMessage.CRM_Type__c = wrapperMessage.getThreadMessageType();
         convertedMessage.CRM_Sent_date__c = DateTime.newInstance(Long.valueOf(wrapperMessage.timestamp));
         if (wrapperMessage.isAgentMessage()) {
-            //Agent name is designed to inklude the NAV ident in parenthesis i.e. (<NAV_IDENT>)
+            //Agent name is designed to include the NAV ident in parenthesis i.e. (<NAV_IDENT>)
             pattern navIdentPattern = pattern.compile('([a-zA-Z]\\d+)');
             matcher navIdentMatcher = navIdentPattern.matcher(wrapperMessage.name);
             String navIdent = navIdentMatcher.group(0);
