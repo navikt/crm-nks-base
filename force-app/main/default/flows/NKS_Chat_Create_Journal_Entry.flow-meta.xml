@@ -1981,13 +1981,6 @@ TODAY())</expression>
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>Security_Incident</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -2029,10 +2022,10 @@ TODAY())</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Security_Incident</leftValueReference>
+                    <leftValueReference>createtasktoggle.togglechecked</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
