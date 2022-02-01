@@ -561,25 +561,13 @@ public with sharing class NKS_FamilyViewController {
     }
     @TestVisible
     private static Boolean isNavEmployee(PDL_API_Response response) {
-        Set<String> idents = getIdentsSet(response);
-        if (idents == null) {
-            return false;
-        }
-        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]
-        ?.INT_IsNavEmployee__c;
-        if(isNavEmployee == null){
-            return false;
-        }
-        return isNavEmployee;
+        return NKS_FamilyViewControllerHelper.isNavEmployee(getIdentsSet(response));
     }
     @TestVisible
     private static Boolean isNavEmployee(String id){
-        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name = :id LIMIT 1]
-        ?.INT_IsNavEmployee__c;
-        if(isNavEmployee == null){
-            return false;
-        }
-        return isNavEmployee;
+        Set<String> idents = new Set<String>();
+        idents.add(id);
+        return  NKS_FamilyViewControllerHelper.isNavEmployee(idents);
     }
     @TestVisible
     private static Boolean isVisible(Relation person, Person__c relation){
