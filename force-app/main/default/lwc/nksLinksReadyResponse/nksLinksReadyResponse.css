@@ -1,0 +1,7 @@
+.link-icon {
+    --sds-c-icon-color-foreground-default: rgb(1, 118, 211);
+}
+
+.horizontal-list li {
+    padding-right: 2em;
+}

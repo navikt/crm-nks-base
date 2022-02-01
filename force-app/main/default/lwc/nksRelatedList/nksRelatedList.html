@@ -1,35 +1,73 @@
 <template>
-    <template if:true={showCard}>
-        <lightning-layout multiple-rows="true" class="slds-card">
+    <article class="slds-card">
+        <lightning-layout multiple-rows="true">
             <!--HEADER-->
-            <lightning-layout-item
-                size="12"
-                class="slds-p-around_small slds-card__header slds-m-bottom_none custom-no-bottom-radius slds-box"
-                style={headerBackground}
-            >
+            <lightning-layout-item size="12" class="slds-p-around_small" style={headerBackground}>
                 <lightning-layout vertical-align="center">
                     <template if:true={icon}>
-                        <lightning-icon icon-name={icon} size="small"></lightning-icon>
+                        <lightning-icon icon-name={icon}></lightning-icon>
                     </template>
-                    <h3 class="slds-p-left_x-small slds-text-heading_small">{cardTitle}</h3>
+                    <h1 class="slds-p-left_x-small slds-text-heading_medium">{cardTitle}</h1>
                 </lightning-layout>
             </lightning-layout-item>
             <template if:true={relatedRecords}>
-                <div
-                    class="slds-grow slds-listbox_vertical slds-card__body slds-m-bottom_none slds-m-top_none"
-                    role="list"
-                >
+                <div class="slds-table--header-fixed_container" style={tableHeaderStyle}>
                     <div class="slds-scrollable_y" style={scrollableStyle}>
-                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <table
+                            class="slds-table slds-table_cell-buffer slds-table--header-fixed slds-table_bordered slds-max-medium-table_stacked-horizontal"
+                        >
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <template iterator:it={fieldLabels}>
+                                        <template if:true={it.first}>
+                                            <th key={it.value} scope="col">
+                                                <div
+                                                    class="slds-truncate slds-cell-fixed slds-align_absolute-center"
+                                                    title={it.value}
+                                                >
+                                                    {it.value}
+                                                </div>
+                                            </th>
+                                        </template>
+                                        <template if:false={it.first}>
+                                            <th key={it.value} scope="col">
+                                                <div
+                                                    class="slds-truncate slds-cell-fixed slds-align_absolute-center slds-p-left_x-small"
+                                                    title={it.value}
+                                                >
+                                                    {it.value}
+                                                </div>
+                                            </th>
+                                        </template>
+                                    </template>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
-                                    <c-nks-related-list-item
-                                        key={record}
-                                        record={record}
-                                        used-fields={usedFields}
-                                        row-index={rowIndex}
-                                        related-object-api-name={relatedObjectApiName}
-                                    ></c-nks-related-list-item>
+                                <template for:each={listRecords} for:item="record" for:index="rowIndex">
+                                    <template if:true={clickableRows}>
+                                        <tr
+                                            key={record}
+                                            data-value={rowIndex}
+                                            class="slds-hint-parent"
+                                            onclick={handleRowClick}
+                                            style="cursor: pointer"
+                                        >
+                                            <template for:each={record.recordFields} for:item="field">
+                                                <th key={field.value} scope="row">
+                                                    <div class="slds-truncate slds-cell-wrap">{field.value}</div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                    <template if:false={clickableRows}>
+                                        <tr key={record} data-value={rowIndex} class="slds-hint-parent">
+                                            <template for:each={record.recordFields} for:item="field">
+                                                <th key={field.value} scope="row">
+                                                    <div class="slds-truncate slds-cell-wrap">{field.value}</div>
+                                                </th>
+                                            </template>
+                                        </tr>
+                                    </template>
                                 </template>
                             </tbody>
                         </table>
@@ -37,5 +75,5 @@
                 </div>
             </template>
         </lightning-layout>
-    </template>
+    </article>
 </template>

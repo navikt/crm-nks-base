@@ -29,7 +29,7 @@
                 label="List Max Height"
                 description="The maximum height the list is allowed to consume on the layout (in em)"
                 type="String"
-                datasource="0, 10, 20, 30, 40"
+                datasource="10, 20, 30, 40"
                 default="20"
             />
         <property
@@ -56,7 +56,7 @@
                 type="String"
                 required="true"
                 default="Name"
-        />
+            />
         <property
                 name="columnLabels"
                 label="Labels for the table columns (match the order of the displayed fields input)"
@@ -83,13 +83,6 @@
                 name="clickableRows"
                 label="Clickable Rows"
                 description="Enables row clicks to navigate to the record in the list"
-                type="Boolean"
-                default="false"
-            />
-            <property
-                name="hideEmptyList"
-                label="Hide empty list"
-                description="Hides the list if there are no related records"
                 type="Boolean"
                 default="false"
             />

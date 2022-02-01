@@ -1,8 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
-export default class NksRelatedListItem extends LightningElement {
+export default class CrmRelatedListItem extends LightningElement {
     @api record;
     @api usedFields;
-    @api rowIndex;
     @api relatedObjectApiName;
 }
