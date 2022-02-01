@@ -49,17 +49,8 @@
                             classes={genderIconClass}
                         ></c-nks-custom-svg>
                     </lightning-layout-item>
-
                     <ul class="slds-list_vertical">
-                        <template if:true={showUrl}>
-                            <li class="tileListItem">
-                                <lightning-formatted-url value={recordPageUrl} label={getTileName} onclick={navigateToSObject}></lightning-formatted-url>
-                            </li>
-                        </template>
-                        <template if:false={showUrl}>
                             <li class="tileListItem">{getTileName}</li>
-                        </template>
-
                         <template if:true={showInfoCard}>
                             <li class="tileListItem">{getBirthDate}&nbsp;
                                 <template if:true={relation.deceased}>

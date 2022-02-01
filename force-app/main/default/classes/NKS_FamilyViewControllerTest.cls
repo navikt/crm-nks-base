@@ -532,13 +532,16 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(true, result);
     }
     @isTest
+    private static void isUnauthrizedTest(){
+        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(unauthorizedPerson, PDL_API_Response.class);
+        System.assertEquals(true, NKS_FamilyViewController.isUnauthorized(response));
+        response = (PDL_API_Response) System.JSON.deserialize(testPerson1, PDL_API_Response.class);
+        System.assertEquals(false, NKS_FamilyViewController.isUnauthorized(response));
+    }
+    @isTest
     private static void fillRelationFromResponseTest(){
         NKS_FamilyViewController.Relation r = new NKS_FamilyViewController.Relation();
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(unauthorizedPerson, PDL_API_Response.class);
-        NKS_FamilyViewController.fillRelationFromResponse(r,response);
-        System.assertEquals(true, r.unauthorized);
-        System.assertEquals(null, r.name);
-        r = new NKS_FamilyViewController.Relation();
         response = (PDL_API_Response) System.JSON.deserialize(testPerson1, PDL_API_Response.class);
         NKS_FamilyViewController.fillRelationFromResponse(r,response);
         System.assertEquals('MANN', r.sex);

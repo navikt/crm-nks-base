@@ -1,8 +1,6 @@
 public with sharing class NKS_FamilyViewController {
     public class Relation {
         @AuraEnabled
-        public String accountId; //link to Account object
-        @AuraEnabled
         public String personIdent; //personal identification number(FNR/DNR)
         @AuraEnabled
         public String recordType; //record type marital/child/parent/stillborn/error
@@ -90,7 +88,6 @@ public with sharing class NKS_FamilyViewController {
             return relations;
         }
         Relation person = new Relation();
-        person.accountId = getAccountIdFromPersonId(getIdentsSet(relationsData));
         person.employee = isNavEmployee(relationsData);
         person.confidentialStatus = getConfidentialStatus(relationsData);
         person.confidential = isConfidential(person.confidentialStatus);
@@ -138,13 +135,20 @@ public with sharing class NKS_FamilyViewController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+    /**
+    * Getting list of parents for person
+    * @param relationsData - data queried from PDL with info about relations for person
+    @ @param person - Relation object, where employee, confidential and confidentialStatus should be filled
+    */
     @TestVisible
     private static List<Relation> getParents(PDL_API_Response relationsData, Relation person) {
         List<Relation> parents = new List<Relation>();
         if (getAge(getAgeDate(relationsData)) >= 21) {
+            // if person is 21 or older, then return empty list
             return parents;
         }
         if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
+            // if person does not have relations, return empty list
             return parents;
         }
         Set<String> uniqRelations = new Set<String>();
@@ -158,17 +162,14 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     PDL_API_Response parentResponse = queryChild(relation.relatertpersonsident);
-                    if (isConfidentialRelation(relationsData, parentResponse)) {
-                        parent.unauthorized = true;
-                        parents.add(parent);
-                        continue;
-                    }
-
-                    parent.accountId = getAccountIdFromPersonId(getIdentsSet(parentResponse));
-                    fillRelationFromResponse(parent, parentResponse);
-                    if(parent.unauthorized){
+                    if(isUnauthorized(parentResponse)){
                         Person__c parentPerson = getPerson(getIdentsSet(parentResponse));
+                        // checking reason for unauthorized status
+                        // if because of employee status
+                        // then show relation
                         if(!isVisible(person, parentPerson)){
+                            person.unauthorized = true;
+                            parents.add(parent);
                             continue;
                         }
                         parent.unauthorized = false;
@@ -177,6 +178,7 @@ public with sharing class NKS_FamilyViewController {
                         parent.livesWith = hasSameAddress(parentPerson,relationsData);
                         parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
                     }else{
+                        fillRelationFromResponse(parent, parentResponse);
                         parent.livesWith = hasSameAddress(parentResponse, relationsData);
                         parent.responsibility = hasResponsibility(parentResponse, relationsData);
                     }
@@ -189,28 +191,24 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relationsData, Relation person) {
         List<Relation> children = new List<Relation>();
+        // query PDL for child relations
         List<PDL_API_Response> childrenResponse = getChildrenList(getChildrenIdentsSet(relationsData));
+        // sort responses by birthdate
         childrenResponse = sortResponseByBirthdate(childrenResponse);
         for(PDL_API_Response childResponse : childrenResponse){
             Relation child = new Relation();
             child.recordType = 'child';
             child.role = PDL_ForelderBarnRelasjonRolle.BARN.name();
-            if (isConfidentialRelation(relationsData, childResponse)) {
-                if (isOver21(childResponse))
-                    continue;
-                child.unauthorized = true;
-                children.add(child);
-                continue;
-            }
-            child.accountId = getAccountIdFromPersonId(getIdentsSet(childResponse));
-            fillRelationFromResponse(child, childResponse);
-            if(child.unauthorized){
+            if(isUnauthorized(childResponse)){
                 Person__c childPerson = getPerson(getIdentsSet(childResponse));
+                // cheking reason for unauthorized response from pdl
+                // if the reason was employee status
+                // then show relation
                 if(!isVisible(person, childPerson)){
+                    child.unauthorized = true;
                     children.add(child);
                     continue;
                 }
-                child.unauthorized = false;
                 child.personIdent = getPersonIdent(childResponse);
                 fillRelationFromPerson(child, childPerson);
                 if (isOver21(child)) {
@@ -219,6 +217,7 @@ public with sharing class NKS_FamilyViewController {
                 child.livesWith = hasSameAddress(relationsData, childPerson);
                 child.responsibility = hasResponsibility(relationsData,child.personIdent);
             }else{
+                fillRelationFromResponse(child, childResponse);
                 if (isOver21(child)) {
                     continue;
                 }
@@ -273,11 +272,15 @@ public with sharing class NKS_FamilyViewController {
         } else if (maritalStatusOfInterest.contains(sivilstand[0].type)) {
             if (sivilstand[0].relatertVedSivilstand != null) {
                 PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
-                r.accountId = getAccountIdFromPersonId(getIdentsSet(response));
-                if (isConfidentialRelation(relationsData, response)) {
-                    r.accountId = null;
-                    r.unauthorized = true;
-                } else {
+                if(isUnauthorized(response)){
+                    Person__c relationPerson = getPerson(getIdentsSet(response));
+                    if(!isVisible(person, relationPerson)){
+                        r.unauthorized = true;
+                    }else{
+                        r.personIdent = getPersonIdent(response);
+                        fillRelationFromPerson(r, relationPerson);
+                    }
+                }else{
                     fillRelationFromResponse(r, response);
                 }
             }
@@ -308,11 +311,6 @@ public with sharing class NKS_FamilyViewController {
     private static void fillRelationFromResponse(Relation relation, PDL_API_Response response) {
         if (relation == null || response == null)
             return;
-
-        if (isUnauthorized(response)) {
-            relation.unauthorized = true;
-            return;
-        }
         relation.name = getFullName(response);
         relation.birthDate = getBirthdate(response);
         relation.age = getAge(getAgeDate(response));
@@ -324,7 +322,6 @@ public with sharing class NKS_FamilyViewController {
         relation.confidential = isConfidential(relation.confidentialStatus);
         relation.employee = isNavEmployee(response);
         relation.personIdent = getPersonIdent(response);
-        //relation.accountId = getAccountIdFromPersonId(getIdentsSet(response));
         return;
     }
     @TestVisible
@@ -564,25 +561,13 @@ public with sharing class NKS_FamilyViewController {
     }
     @TestVisible
     private static Boolean isNavEmployee(PDL_API_Response response) {
-        Set<String> idents = getIdentsSet(response);
-        if (idents == null) {
-            return false;
-        }
-        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]
-        ?.INT_IsNavEmployee__c;
-        if(isNavEmployee == null){
-            return false;
-        }
-        return isNavEmployee;
+        return NKS_FamilyViewControllerHelper.isNavEmployee(getIdentsSet(response));
     }
     @TestVisible
     private static Boolean isNavEmployee(String id){
-        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name = :id LIMIT 1]
-        ?.INT_IsNavEmployee__c;
-        if(isNavEmployee == null){
-            return false;
-        }
-        return isNavEmployee;
+        Set<String> idents = new Set<String>();
+        idents.add(id);
+        return  NKS_FamilyViewControllerHelper.isNavEmployee(idents);
     }
     @TestVisible
     private static Boolean isVisible(Relation person, Person__c relation){
@@ -600,13 +585,6 @@ public with sharing class NKS_FamilyViewController {
             return null;
         }
         return DateTime.newInstance(d, Time.newInstance(0, 0, 0, 0)).format('dd.MM.yyyy');
-    }
-    @TestVisible
-    private static String getAccountIdFromPersonId(Set<String> idents) {
-        if (idents == null) {
-            return null;
-        }
-        return [SELECT Id FROM Account WHERE CRM_Person__r.Name IN :idents LIMIT 1]?.Id;
     }
     @TestVisible
     private static String getPersonIdent(PDL_API_Response response) {
