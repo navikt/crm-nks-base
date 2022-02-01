@@ -34,20 +34,18 @@ global class NKS_ChatTranscriptService {
      **/
     @AuraEnabled
     public static void storeConversation(String chatId, String jsonConversation) {
+        LiveChatTranscript chatTranscript = getChatDetails(chatId);
         List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         messageList.sort();
-        LiveChatTranscript chatTranscript = getChatDetails(chatId);
-        if (chatTranscript.NKS_Thread__c == null)
-            return; //If no thread is created the session was not authenticated and the messages cannot be related to end users
-        List<Message__c> threadMessages = new List<Message__c>();
-
         if (
-            // Compare last message timestamp from thread to handle issues with multiple EndEvents
-            chatTranscript.NKS_Last_Message_Datetime__c ==
-            Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp))
+            chatTranscript.NKS_Thread__c == null ||
+            (chatTranscript.NKS_Last_Message_Datetime__c ==
+            Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp)))
         ) {
-            return; //Chat ended event is sent multiple times, handle not performing unnecesary DML
+            // Compare last message timestamp from thread to handle issues with multiple EndEvents
+            return; //If no thread is created the session was not authenticated and the messages cannot be related to end users
         }
+        List<Message__c> threadMessages = new List<Message__c>();
 
         try {
             threadMessages = converToThreadMessages(messageList, chatTranscript);
