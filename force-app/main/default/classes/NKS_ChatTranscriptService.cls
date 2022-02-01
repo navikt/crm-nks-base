@@ -43,7 +43,8 @@ global class NKS_ChatTranscriptService {
             Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp)))
         ) {
             // Compare last message timestamp from thread to handle issues with multiple EndEvents
-            return; //If no thread is created the session was not authenticated and the messages cannot be related to end users
+            //If no thread is created the session was not authenticated and the messages cannot be related to end users
+            return;
         }
         List<Message__c> threadMessages = new List<Message__c>();
 
