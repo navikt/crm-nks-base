@@ -58,14 +58,15 @@ public without sharing class ChatAuthController {
             CRM_Account__c = chatTrans.AccountId,
             CRM_Contact__c = chatTrans.ContactId,
             CRM_isActive__c = false,
-            CRM_Related_Object__c = chatTrans.Id
+            CRM_Related_Object__c = chatTrans.Id,
+            CRM_Theme_Group__c = chatTrans.NKS_Theme_Group__c
         );
         insert chatThread;
         return chatThread.Id;
     }
 
     private static LiveChatTranscript getChatTranscript(Id chatTranscriptId) {
-        return [SELECT Id, CaseId FROM LiveChatTranscript WHERE Id = :chatTranscriptId];
+        return [SELECT Id, CaseId, NKS_Theme_Group__c FROM LiveChatTranscript WHERE Id = :chatTranscriptId];
     }
 
     /**
