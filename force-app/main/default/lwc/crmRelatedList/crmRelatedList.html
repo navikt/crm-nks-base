@@ -13,22 +13,19 @@
             <template if:true={relatedRecords}>
                 <div
                     class="slds-grow slds-listbox_vertical slds-card__body"
-                    role="list"
                     style="margin-top: 0px; margin-bottom: 0px; overflow: hidden"
                 >
                     <div class="slds-scrollable_y" style={scrollableStyle}>
-                        <table class="slds-table slds-table_cell-buffer">
-                            <tbody>
-                                <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
-                                    <c-crm-related-list-item
-                                        key={record.Id}
-                                        record={record}
-                                        used-fields={usedFields}
-                                        related-object-api-name={relatedObjectApiName}
-                                    ></c-crm-related-list-item>
-                                </template>
-                            </tbody>
-                        </table>
+                        <div class="slds-table slds-table_cell-buffer">
+                            <template for:each={relatedRecords} for:item="record" for:index="rowIndex">
+                                <c-crm-related-list-item
+                                    key={record.Id}
+                                    record={record}
+                                    used-fields={usedFields}
+                                    related-object-api-name={relatedObjectApiName}
+                                ></c-crm-related-list-item>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </template>
