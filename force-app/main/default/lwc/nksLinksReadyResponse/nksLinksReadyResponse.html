@@ -3,12 +3,13 @@
         <template if:true={showReadyResponse}>
             <lightning-layout-item size="4" class="slds-border_right slds-var-p-right_large">
                 <h2 class="slds-text-heading_medium slds-truncate">Svarberedskap</h2>
-                <button
-                    class="slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
-                >
-                    Svarberedskap - Korona
-                </button>
-                <span>Oppdatert: 30.01.2022, 18:46</span>
+                <ul>
+                    <template for:each={records} for:item="record">
+                        <li class="slds-item" key={record.Id}>
+                            <c-nks-ready-response-list-entry record={record}></c-nks-ready-response-list-entry>
+                        </li>
+                    </template>
+                </ul>
             </lightning-layout-item>
             <lightning-layout-item size="8" class="slds-var-p-left_large">
                 <h2 class="slds-text-heading_medium slds-truncate">Nyttige lenker</h2>
