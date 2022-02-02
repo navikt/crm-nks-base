@@ -126,7 +126,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.INT_VerifisertFromKRR__c</field>
+        <field>Person__c.INT_VerifiedFromKRR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
