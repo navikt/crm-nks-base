@@ -6,23 +6,7 @@
                 <ul>
                     <template for:each={records} for:item="record">
                         <li class="slds-item" key={record.Id}>
-                            <button
-                                class="slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small button"
-                            >
-                                {record.Title}
-                            </button>
-                            <span
-                                >Oppdatert:&nbsp;
-                                <lightning-formatted-date-time
-                                    class="slds-wrap"
-                                    value={record.LastModifiedDate}
-                                    year="numeric"
-                                    month="2-digit"
-                                    day="2-digit"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                ></lightning-formatted-date-time>
-                            </span>
+                            <c-nks-ready-response-list-entry record={record}></c-nks-ready-response-list-entry>
                         </li>
                     </template>
                 </ul>
