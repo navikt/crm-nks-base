@@ -12,12 +12,12 @@ public class NKS_RelatedListController_Test {
 
         Test.startTest();
         List<sObject> retList = NKS_RelatedListController.getRelatedList(
-            new List<String>{ 'Name' },
             person.Id,
             'Account',
             'CRM_Person__c',
             'Id',
             'Person__c',
+            null,
             null
         );
         Test.stopTest();
