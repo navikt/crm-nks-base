@@ -7,17 +7,37 @@ public class NKS_RelatedListController_Test {
     }
 
     @isTest
-    static void testGetRelatesList() {
+    static void testGetCRMRelatesList() {
         Person__c person = [SELECT Id FROM Person__c LIMIT 1];
 
         Test.startTest();
-        List<sObject> retList = NKS_RelatedListController.getRelatedList(
+        List<sObject> retList = NKS_RelatedListController.getCRMRelatedList(
             person.Id,
             'Account',
             'CRM_Person__c',
             'Id',
             'Person__c',
             null,
+            null,
+            null
+        );
+        Test.stopTest();
+
+        System.assertEquals(1, retList.size());
+    }
+
+    @isTest
+    static void testGetRelatesList() {
+        Person__c person = [SELECT Id FROM Person__c LIMIT 1];
+
+        Test.startTest();
+        List<sObject> retList = NKS_RelatedListController.getRelatedList(
+            new List<String>{ 'Name' },
+            person.Id,
+            'Account',
+            'CRM_Person__c',
+            'Id',
+            'Person__c',
             null
         );
         Test.stopTest();
