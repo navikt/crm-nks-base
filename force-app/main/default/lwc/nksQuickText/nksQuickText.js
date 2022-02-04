@@ -66,7 +66,6 @@ export default class nksQuickText extends LightningElement {
     hideModal(event) {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
         event.stopPropagation();
-        //this.toggleModal();
     }
 
     outsideClickListener = (e) => {
