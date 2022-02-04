@@ -12,7 +12,7 @@ public class NKS_RelatedListController {
      * @return List<sObject>
      **/
     @AuraEnabled(cacheable=true)
-    public static List<sObject> getRelatedList(
+    public static List<sObject> getCRMRelatedList(
         String parentId,
         String objectApiName,
         String relationField,
@@ -32,6 +32,33 @@ public class NKS_RelatedListController {
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
         query += relationField + ' IN :parentRelationIds ';
         query += 'ORDER BY ' + (orderConditions != null ? orderConditions : 'ID DESC');
+
+        List<sObject> returnList = Database.query(query);
+        return returnList;
+    }
+
+    @AuraEnabled
+    public static List<sObject> getRelatedList(
+        List<String> fieldNames,
+        String parentId,
+        String objectApiName,
+        String relationField,
+        String parentRelationField,
+        String parentObjectApiName,
+        String filterConditions
+    ) {
+        Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
+        String query = 'SELECT ';
+
+        //Appending fields to query string
+        for (String field : fieldNames) {
+            query += field + ', ';
+        }
+
+        query = query.removeEndIgnoreCase(', ') + ' FROM ' + objectApiName + ' WHERE ';
+        query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
+        // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
+        query += relationField + ' IN :parentRelationIds ORDER BY ID DESC';
 
         List<sObject> returnList = Database.query(query);
         return returnList;
