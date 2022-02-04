@@ -9,7 +9,7 @@ export default class NksKrrInformation extends LightningElement {
     @api cardLabel;
     @api numCols;
     isLoading = false;
-    krrFields = 'INT_KrrEmail__c, INT_KrrMobilePhone__c, INT_KRR_Reservation__c, INT_VerifiedFromKRR';
+    krrFields = 'INT_KrrEmail__c, INT_KrrMobilePhone__c, INT_KRR_Reservation__c, INT_VerifiedFromKRR__c';
     updated = false;
 
     get recordCmp() {
