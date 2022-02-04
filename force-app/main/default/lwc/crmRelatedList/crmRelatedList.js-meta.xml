@@ -74,6 +74,13 @@
               default=""
           />
           <property
+              name="objectName"
+              label="Name of object (for UU header)"
+              description="We use invisible headers for UU navigation, this is the name of each 'row'"
+              type="String"
+              default=""
+          />
+          <property
               name="dynamicUpdate"
               label="Dynamic Update"
               description="Set to true if an update to the parent record should trigger a list refresh"
