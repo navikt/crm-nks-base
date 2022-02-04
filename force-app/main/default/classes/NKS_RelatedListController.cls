@@ -19,15 +19,16 @@ public class NKS_RelatedListController {
         String parentRelationField,
         String parentObjectApiName,
         String filterConditions,
-        String orderConditions
+        String orderConditions,
+        String dateField
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
         if (parentRelationIds.isEmpty()) {
             return new List<SObject>();
         }
 
-        String query;
-        query = 'SELECT Id FROM ' + objectApiName + ' WHERE ';
+        String query = 'SELECT Id' + (String.isBlank(dateField) ? '' : ', ' + dateField);
+        query += ' FROM ' + objectApiName + ' WHERE ';
         query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
         // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
         query += relationField + ' IN :parentRelationIds ';

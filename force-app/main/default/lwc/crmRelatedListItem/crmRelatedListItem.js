@@ -1,3 +1,4 @@
+import { getFieldDisplayValue } from 'lightning/uiRecordApi';
 import { LightningElement, api } from 'lwc';
 
 export default class CrmRelatedListItem extends LightningElement {
@@ -6,8 +7,5 @@ export default class CrmRelatedListItem extends LightningElement {
     @api relatedObjectApiName;
     @api index;
     @api objectName;
-
-    get number() {
-        return this.index + 1;
-    }
+    @api dateField;
 }
