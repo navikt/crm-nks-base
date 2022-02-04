@@ -22,6 +22,7 @@ export default class CrmRelatedList extends LightningElement {
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
     @api hideEmptyList; // Hides the list if there are no related records.
+    @api objectName;
 
     @api displayedFields;
 

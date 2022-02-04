@@ -186,6 +186,10 @@
                     <value>0</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>Referat</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>orderConditions</name>
                     <value>CRM_Date_Time_Registered__c DESC</value>
                 </componentInstanceProperties>
