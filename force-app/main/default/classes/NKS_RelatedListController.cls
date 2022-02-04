@@ -7,6 +7,7 @@ public class NKS_RelatedListController {
      * @param relationField  [String : Field API name relating the record to the parent]
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @param parentObjectApiName [String : Object API name of the record the LWC is displayed on]
+     * @param dateField [String : The date field to include in the UU header]
      * @param filterConditions [String : Optional filter conditions]
      * @param orderConditions [String : Optional order conditions ]
      * @return List<sObject>
@@ -18,9 +19,9 @@ public class NKS_RelatedListController {
         String relationField,
         String parentRelationField,
         String parentObjectApiName,
+        String dateField,
         String filterConditions,
-        String orderConditions,
-        String dateField
+        String orderConditions
     ) {
         Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
         if (parentRelationIds.isEmpty()) {
