@@ -81,6 +81,13 @@
               default=""
           />
           <property
+              name="dateField"
+              label="Date field of child object (for UU header)"
+              description="We use invisible headers for UU navigation, this is used in the name of each 'row'"
+              type="String"
+              default=""
+          />
+          <property
               name="dynamicUpdate"
               label="Dynamic Update"
               description="Set to true if an update to the parent record should trigger a list refresh"

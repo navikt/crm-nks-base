@@ -1,6 +1,9 @@
 <template>
     <lightning-record-view-form record-id={record.Id} object-api-name={relatedObjectApiName}>
-        <h4 class="sr-only">{objectName} {number}</h4>
+        <h4 class="sr-only">
+            {objectName}
+            <lightning-output-field variant="label-hidden" field-name={dateField}> </lightning-output-field>
+        </h4>
         <div class="slds-grid slds-wrap slds-border_top slds-var-p-top_small" style="border-collapse: collapse">
             <ul class="hide-list">
                 <template iterator:it={usedFields}>
