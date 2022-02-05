@@ -138,6 +138,7 @@ public with sharing class NKS_HomePageController {
             SELECT Id, Title, LastModifiedDate
             FROM Knowledge__kav
             WHERE Type__c = 'Svarberedskap'
+            ORDER BY LastModifiedDate DESC
         ];
         return records;
     }
