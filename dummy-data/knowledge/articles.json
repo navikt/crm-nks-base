@@ -30,7 +30,7 @@
         {
             "attributes": {
                 "type": "Knowledge__kav",
-                "referenceId": "Knowledge__kavRef3"
+                "referenceId": "Knowledge__kavRef4"
             },
             "Summary": "Det har kommet nye lokale regler ift. Korona situasjonen; dette vil påvirke arbeidsdager...",
             "Title": "Svarberedskap - Korona",
@@ -40,7 +40,7 @@
         {
             "attributes": {
                 "type": "Knowledge__kav",
-                "referenceId": "Knowledge__kavRef3"
+                "referenceId": "Knowledge__kavRef5"
             },
             "Summary": "Det har funnet sted en knivstikking i Bergen, ...",
             "Title": "Svarberedskap - Knivstikkingen i Bergen",

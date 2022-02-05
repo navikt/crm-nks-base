@@ -3,8 +3,7 @@ import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyRe
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class nksLinksReadyResponse extends NavigationMixin(LightningElement) {
-    @api showReadyResponse;
-    @track records;
+    @track records = [];
 
     isInitiated = false;
 
@@ -21,5 +20,9 @@ export default class nksLinksReadyResponse extends NavigationMixin(LightningElem
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    get showReadyResponse() {
+        return this.records.length > 0 ? true : false;
     }
 }
