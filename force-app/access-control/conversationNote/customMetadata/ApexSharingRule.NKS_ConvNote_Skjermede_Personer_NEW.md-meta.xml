@@ -16,6 +16,14 @@
     </values>
     <values>
         <field>Field4__c</field>
+        <value xsi:type="xsd:string">Office Restriction</value>
+    </values>
+    <values>
+        <field>Field5__c</field>
+        <value xsi:type="xsd:string">Theme</value>
+    </values>
+    <values>
+        <field>Field6__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
@@ -36,6 +44,14 @@
     </values>
     <values>
         <field>Operator4__c</field>
+        <value xsi:type="xsd:string">equals</value>
+    </values>
+    <values>
+        <field>Operator5__c</field>
+        <value xsi:type="xsd:string">not equal to</value>
+    </values>
+    <values>
+        <field>Operator6__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
@@ -60,6 +76,14 @@
     </values>
     <values>
         <field>Values4__c</field>
+        <value xsi:type="xsd:string">FALSE</value>
+    </values>
+    <values>
+        <field>Values5__c</field>
+        <value xsi:type="xsd:string">Bidrag</value>
+    </values>
+    <values>
+        <field>Values6__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
