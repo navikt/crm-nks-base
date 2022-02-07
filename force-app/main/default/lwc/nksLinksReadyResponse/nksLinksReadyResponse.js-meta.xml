@@ -9,7 +9,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage">
-            <property name="showReadyResponse" label="Show Ready Response" type="Boolean" default="false" />
+            <property name="showReadyResponse" label="Vis svarberedskaper" type="Boolean" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
