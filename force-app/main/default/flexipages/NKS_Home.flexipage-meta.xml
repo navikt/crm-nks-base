@@ -205,10 +205,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>showReadyResponse</name>
-                    <value>false</value>
-                </componentInstanceProperties>
                 <componentName>nksLinksReadyResponse</componentName>
             </componentInstance>
         </itemInstances>
