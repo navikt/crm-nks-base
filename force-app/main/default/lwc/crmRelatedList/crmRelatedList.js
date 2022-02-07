@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getRelatedList from '@salesforce/apex/NKS_RelatedListController.getRelatedList';
+import getCRMRelatedList from '@salesforce/apex/NKS_RelatedListController.getCRMRelatedList';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
 
@@ -22,6 +22,8 @@ export default class CrmRelatedList extends LightningElement {
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
     @api hideEmptyList; // Hides the list if there are no related records.
+    @api objectName; // Used for the hidden header of each item.
+    @api dateField; // Used for the hidden header of each item.
 
     @api displayedFields;
 
@@ -45,14 +47,15 @@ export default class CrmRelatedList extends LightningElement {
 
     //Calls apex to retrieve related records
     getList() {
-        getRelatedList({
+        getCRMRelatedList({
             parentId: this.recordId,
             objectApiName: this.relatedObjectApiName,
             relationField: this.relationField,
             parentRelationField: this.parentRelationField,
             parentObjectApiName: this.objectApiName,
             filterConditions: this.filterConditions,
-            orderConditions: this.orderConditions
+            orderConditions: this.orderConditions,
+            dateField: this.dateField
         })
             .then((data) => {
                 this.relatedRecords = data && data.length > 0 ? data : null;

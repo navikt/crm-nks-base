@@ -406,7 +406,7 @@
                     <name>relationshipField</name>
                     <value>Id</value>
                 </componentInstanceProperties>
-                <componentName>nksSafJournalpostList</componentName>
+                <componentName>nksSakOgDokumentListeNarrow</componentName>
             </componentInstance>
         </itemInstances>
         <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>
