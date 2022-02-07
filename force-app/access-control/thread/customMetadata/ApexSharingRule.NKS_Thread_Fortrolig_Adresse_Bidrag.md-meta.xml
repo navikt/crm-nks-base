@@ -16,15 +16,15 @@
     </values>
     <values>
         <field>Field4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Field5__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Field6__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>FilterLogic__c</field>
@@ -44,15 +44,15 @@
     </values>
     <values>
         <field>Operator4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Operator5__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Operator6__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Order__c</field>
@@ -72,19 +72,19 @@
     </values>
     <values>
         <field>Values3__c</field>
-        <value xsi:type="xsd:string">Bidrag</value>
+        <value xsi:type="xsd:string">BID</value>
     </values>
     <values>
         <field>Values4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Values5__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Values6__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>sObjectType__c</field>
