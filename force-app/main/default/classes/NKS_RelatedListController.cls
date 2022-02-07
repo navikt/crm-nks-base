@@ -2,15 +2,43 @@ public class NKS_RelatedListController {
     /**
      * @description: Returns a list of records
      * @author Stian Ruud Schikora | 09-29-2020
-     * @param fieldNames [List<String : Fields to retrieve from the returned records]
      * @param parentId [String : Id of the record the LWC is displayed on]
      * @param objectApiName  [String : API name of object to return]
      * @param relationField  [String : Field API name relating the record to the parent]
      * @param parentRelationField [String : Field API name relating the parent to the child(s)]
      * @param parentObjectApiName [String : Object API name of the record the LWC is displayed on]
+     * @param dateField [String : The date field to include in the UU header]
      * @param filterConditions [String : Optional filter conditions]
+     * @param orderConditions [String : Optional order conditions ]
      * @return List<sObject>
      **/
+    @AuraEnabled(cacheable=true)
+    public static List<sObject> getCRMRelatedList(
+        String parentId,
+        String objectApiName,
+        String relationField,
+        String parentRelationField,
+        String parentObjectApiName,
+        String dateField,
+        String filterConditions,
+        String orderConditions
+    ) {
+        Set<String> parentRelationIds = getParentRelation(parentId, parentRelationField, parentObjectApiName);
+        if (parentRelationIds.isEmpty()) {
+            return new List<SObject>();
+        }
+
+        String query = 'SELECT Id' + (String.isBlank(dateField) ? '' : ', ' + dateField);
+        query += ' FROM ' + objectApiName + ' WHERE ';
+        query += String.isNotBlank(filterConditions) ? filterConditions.trim() + ' AND ' : '';
+        // query +=  relationField + ' IN (SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = \'' + parentId + '\')';
+        query += relationField + ' IN :parentRelationIds ';
+        query += 'ORDER BY ' + (orderConditions != null ? orderConditions : 'ID DESC');
+
+        List<sObject> returnList = Database.query(query);
+        return returnList;
+    }
+
     @AuraEnabled
     public static List<sObject> getRelatedList(
         List<String> fieldNames,
@@ -54,8 +82,11 @@ public class NKS_RelatedListController {
         Set<String> parentRelationIds = new Set<String>();
         String query = 'SELECT ' + parentRelationField + ' FROM ' + parentObjectApiName + ' WHERE Id = :parentId';
 
+        String relationId;
         for (SObject sObj : Database.query(query)) {
-            parentRelationIds.add(getParentRelationId(sObj, parentRelationField));
+            relationId = getParentRelationId(sObj, parentRelationField);
+            if (relationId != null)
+                parentrelationIds.add(relationId);
         }
 
         return parentRelationIds;
