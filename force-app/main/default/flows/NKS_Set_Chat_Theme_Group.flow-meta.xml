@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
     <assignments>
-        <description
-        >Defines the chat theme group based on the original queue.</description>
+        <description>Defines the chat theme group based on the original queue.</description>
         <name>Set_Theme_Group</name>
         <label>Set Theme Group</label>
         <locationX>50</locationX>
-        <locationY>493</locationY>
+        <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -20,7 +20,7 @@
         <name>Common_Code_Check</name>
         <label>Common Code Check</label>
         <locationX>182</locationX>
-        <locationY>373</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Common_Code_Not_Null</name>
@@ -38,25 +38,22 @@
             <label>Common Code Not Null</label>
         </rules>
     </decisions>
-    <description
-    >Automatically populates the theme group value for the chat based on which queue it originates from.</description>
+    <description>Automatically populates the theme group value for the chat based on which queue it originates from.</description>
     <formulas>
-        <description
-        >Maps the incoming queue names to a theme group.</description>
+        <description>Maps the incoming queue names to a theme group.</description>
         <name>Queue_Theme_Mapping</name>
         <dataType>String</dataType>
         <expression>CASE({!$Record.LiveChatButton.Queue.DeveloperName},
     &apos;NKS_Chat_Familie&apos;, &apos;FMLI&apos;,
     &apos;NKS_Chat_Arbeid&apos;, &apos;ARBD&apos;,
-    &apos;NKS_Chat_Ufoere&apos;, &apos;HLSE&apos;,
-    &apos;NKS_Chat_Helse&apos;, &apos;HLSE&apos;,
+    &apos;NKS_Chat_Ufoere&apos;, &apos;HELSE&apos;,
+    &apos;NKS_Chat_Helse&apos;, &apos;HELSE&apos;,
     &apos;NKS_Chat_Arbeidsgiver_og_Samhandler&apos;, &apos;ARBD&apos;,
-    &apos;NKS_Chat_Pensjon&apos;, &apos;PNSJ&apos;,
+    &apos;NKS_Chat_Pensjon&apos;, &apos;PENS&apos;,
     null
 )</expression>
     </formulas>
-    <interviewLabel
-    >Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Set Chat Theme Group {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Set Chat Theme Group</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -82,12 +79,12 @@
         <name>Get_theme_groups</name>
         <label>Get theme groups</label>
         <locationX>182</locationX>
-        <locationY>253</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <locationY>311</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Common_Code_Check</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Active__c</field>
             <operator>EqualTo</operator>
@@ -122,6 +119,7 @@
         <connector>
             <targetReference>Get_theme_groups</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_Theme_Group__c</field>
             <operator>IsNull</operator>
