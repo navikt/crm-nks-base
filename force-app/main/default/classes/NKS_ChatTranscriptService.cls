@@ -38,12 +38,12 @@ global class NKS_ChatTranscriptService {
         List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         messageList.sort();
         if (
-            chatTranscript.NKS_Thread__c == null ||
+            chatTranscript.NKS_Authentication_Timestamp__c == null ||
             (chatTranscript.NKS_Last_Message_Datetime__c ==
             Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp)))
         ) {
-            // Compare last message timestamp from thread to handle issues with multiple EndEvents
-            //If no thread is created the session was not authenticated and the messages cannot be related to end users
+            //Compare last message timestamp from thread to handle issues with multiple EndEvents
+            //If the chat was not authenticated, the messages cannot be related to end users
             return;
         }
         List<Message__c> threadMessages = new List<Message__c>();
@@ -197,10 +197,6 @@ global class NKS_ChatTranscriptService {
 
         private boolean isAgentMessage() {
             return type.equalsIgnoreCase('agent');
-        }
-
-        private string getMessageSource(String language) {
-            return isAgentMessage() ? name : language == 'en_US' ? 'You' : 'Du';
         }
     }
 
