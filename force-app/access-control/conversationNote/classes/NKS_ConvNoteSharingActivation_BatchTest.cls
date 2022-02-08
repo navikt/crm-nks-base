@@ -2,9 +2,9 @@
 private class NKS_ConvNoteSharingActivation_BatchTest {
     @TestSetup
     static void makeData() {
-        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
-        TestDataFactory.getPublicGroup('Fortrolig Adresse', 'group_999907');
-        TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410098');
+        TestDataFactory.getPublicGroup('Veiledere', 'group_41003');
+        TestDataFactory.getPublicGroup('Fortrolig Adresse', 'group_999909');
+        TestDataFactory.getPublicGroup('Skjermet', 'group_410097');
 
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
         TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
