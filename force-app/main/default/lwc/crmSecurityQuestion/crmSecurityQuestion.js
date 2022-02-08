@@ -27,6 +27,7 @@ export default class CrmSecurityQuestion extends LightningElement {
                 this.question = 'Brukeren har ingen gyldige spørsmål.';
                 this.answer = '';
                 this.useErrorColor = true;
+                return;
             } else {
                 this.question = data.question;
                 this.answer = data.answer;
