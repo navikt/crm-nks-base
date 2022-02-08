@@ -34,7 +34,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         List<Person__c> personList = [
-            SELECT Id, INT_ActorId__c, INT_fnr__c
+            SELECT Id, INT_ActorId__c
             FROM Person__c
             WHERE CRM_Account__c = :accountId
             LIMIT 1
@@ -43,32 +43,49 @@ public with sharing class CRM_SecurityQuestionPicker {
             return noPersonError();
         }
         String ident = personList[0].INT_ActorId__c;
-        String fnr = personList[0].INT_fnr__c;
 
         usedQuestions.add(random);
         String returnAnswer = null;
-        switch on random {
-            when 0 {
-                //Fra TPS
-                returnAnswer = getBankAccount(fnr);
+        try {
+            switch on random {
+                when 0 {
+                    //Fra TPS
+                    returnAnswer = getBankAccount(ident);
+                }
+                when 1 {
+                    //Fra KRR
+                    returnAnswer = getEmail(ident, accountId);
+                }
+                when 2 {
+                    //Fra PDL
+                    returnAnswer = getChildBirthday(ident);
+                }
+                when 3 {
+                    //Fra PDL
+                    returnAnswer = getMarriageDate(ident);
+                }
+                when else {
+                    returnAnswer = null;
+                }
             }
-            when 1 {
-                //Fra KRR
-                returnAnswer = getEmail(ident, accountId);
-            }
-            when 2 {
-                //Fra PDL
-                returnAnswer = getChildBirthday(ident);
-            }
-            when 3 {
-                //Fra PDL
-                returnAnswer = getMarriageDate(ident);
-            }
-            when else {
-                returnAnswer = null;
-            }
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            System.debug(e);
+            logger.error(
+                'Feil ved henting av kontrollspørsmål for account ' +
+                accountId +
+                ':\n' +
+                e +
+                '\n trace:' +
+                e.getStackTraceString() +
+                '\n message:' +
+                e.getLineNumber(),
+                personList[0],
+                CRM_ApplicationDomain.Domain.NKS
+            );
+            logger.publish();
+            return getRecursiveQuestion(accountId, usedQuestions);
         }
-
         if (returnAnswer == null) {
             return getRecursiveQuestion(accountId, usedQuestions);
         }
@@ -80,9 +97,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String fnr) {
+    private static String getBankAccount(String ident) {
         try {
-            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(fnr);
+            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
@@ -110,6 +127,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
+            return null;
+        }
+        if (personer == null) {
             return null;
         }
         return personer[0]?.kontaktinformasjon?.epostadresse;
