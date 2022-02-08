@@ -146,9 +146,10 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         NKS_Announcement__c campaign = [
-            SELECT Id, Name, NKS_ImageURL__c, From_Date__c, To_Date__c
+            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
             FROM NKS_Announcement__c
             WHERE NKS_Type__c = 'Kampanje'
+            ORDER BY CreatedDate DESC
             LIMIT 1
         ];
         campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);

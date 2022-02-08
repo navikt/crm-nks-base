@@ -13,6 +13,16 @@ export default class nksCampaignBanner extends NavigationMixin(LightningElement)
         this.showCampaign();
     }
 
+    get altText() {
+        if (this.record !== null) {
+            if (this.record.Image_Alt__c == null || this.record.Image_Alt__c === '') {
+                return this.record.Name;
+            } else {
+                return this.record.Image_Alt__c;
+            }
+        }
+    }
+
     navigateToRecord(event) {
         event.preventDefault();
         event.stopPropagation();

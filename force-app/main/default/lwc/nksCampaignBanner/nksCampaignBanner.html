@@ -1,7 +1,11 @@
 <template>
     <template if:true={isValid}>
-        <div class="">
-            <img class="image" aria-hidden="true" src={record.NKS_ImageURL__c} onclick={navigateToRecord} />
+        <div class="banner">
+            <figure>
+                <a href="#" onclick={navigateToRecord}>
+                    <img src={record.NKS_ImageURL__c} alt={altText} />
+                </a>
+            </figure>
         </div>
     </template>
 </template>

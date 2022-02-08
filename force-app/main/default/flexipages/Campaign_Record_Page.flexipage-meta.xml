@@ -73,6 +73,16 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.NKS_Type__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Image_Alt__c</fieldItem>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.From_Date__c</fieldItem>
             </fieldInstance>
         </itemInstances>
