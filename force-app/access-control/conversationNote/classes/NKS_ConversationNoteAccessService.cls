@@ -15,6 +15,8 @@ public without sharing class NKS_ConversationNoteAccessService {
                 wrapper.isNavEmployee = person.INT_IsNavEmployee__c;
                 wrapper.incorrectlySent=note.NKS_Incorrectly_Sent__c;
                 wrapper.externalId=note.CRM_Henvendelse_BehandlingsId__c;
+                wrapper.officeRestriction=note.CRM_Office_Restriction__c;
+                wrapper.theme=note.CRM_Theme_Code__c;
                 sobjects.add(wrapper);
             }
 
