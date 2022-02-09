@@ -6,6 +6,7 @@ import { publish, MessageContext } from 'lightning/messageService';
 export default class CRM_Toggle extends LightningElement {
     @track checked = false;
     @api label;
+    @api isDisabled = false;
 
     @wire(MessageContext)
     messageContext;
@@ -17,6 +18,11 @@ export default class CRM_Toggle extends LightningElement {
     @api
     set togglechecked(value) {
         this._togglechecked = value;
+    }
+
+    renderedCallback() {
+        const attributeChangeEvent = new FlowAttributeChangeEvent('togglechecked', this.checked);
+        this.dispatchEvent(attributeChangeEvent);
     }
 
     handleChange() {

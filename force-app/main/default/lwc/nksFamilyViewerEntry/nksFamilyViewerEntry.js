@@ -4,31 +4,7 @@ import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
 
 export default class nksFamilyViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
-    recordPageUrl;
 
-    navigateToSObject(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.relation.accountId,
-                actionName: 'view'
-            }
-        });
-    }
-
-    connectedCallback() {
-        this[NavigationMixin.GenerateUrl]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.relation.accountId,
-                actionName: 'view'
-            }
-        }).then((url) => {
-            this.recordPageUrl = url;
-        });
-    }
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
         hiddenInput.value = this.relation.personIdent;
@@ -43,12 +19,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
 
         document.body.removeChild(hiddenInput);
-    }
-    get getUrl(){
-        if(this.relation.unauthorized === true || this.relation.confidential === true || this.relation.accountId == null){
-            return '#';
-        }
-        return this.recordPageUrl;
     }
     get isMarital(){
         if(this.relation.recordType === 'marital') return true; 
@@ -138,12 +108,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return 'UKJENT ALDER'
     }
-    hasAccount(){
-        if(this.relation.accountId != null){
-            return true;
-        }
-        return false;
-    }
     get getSex(){
         if(this.relation.sex != null){
             return this.relation.sex;
@@ -195,18 +159,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     get showInfoCard(){
         if(this.relation.unauthorized === true) return false;
         return true;
-    }
-    get showUrl(){
-        return false;
-        /*
-            Link to account should be opened in an separate workspace tab.
-            Link disabled until there will be a solution for such behavior.
-        */
-        /*
-        if(this.relation.unauthorized === true) return false;
-        if(this.relation.accountId == null) return false;
-        return this.hasAccount();
-        */
     }
     get getRole(){
         if(this.relation.recordType === 'stillborn'){

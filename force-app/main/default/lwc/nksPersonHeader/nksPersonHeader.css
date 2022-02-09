@@ -2,10 +2,6 @@
     padding: 6px;
 }
 
-.slds-grid {
-    align-items: center;
-}
-
 .gender {
     display: flex;
     width: 2rem;
@@ -15,10 +11,12 @@
 
 .personIdent {
     float: left;
+    padding-top: 8px;
 }
 
 .copy-icon {
     float: right;
+    padding-top: 8px;
 }
 
 .MaleFilled {
@@ -64,11 +62,13 @@
 .blue-icon {
     float: right;
     --lwc-colorTextIconDefault: #3386e0;
+    padding-top: 8px;
 }
 
 .grey-icon {
     float: right;
     --lwc-colorTextIconDefault: grey;
+    padding-top: 8px;
 }
 
 .close {
