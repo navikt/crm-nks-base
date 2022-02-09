@@ -2,9 +2,9 @@
 private class NKS_ConversationNoteAccessHandlerTest {
     @TestSetup
     static void makeData() {
-        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
-        TestDataFactory.getPublicGroup('Fortrolig Adresse', 'group_999907');
-        TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410098');
+        TestDataFactory.getPublicGroup('Veiledere', 'group_41003');
+        TestDataFactory.getPublicGroup('Fortrolig Adresse', 'group_999909');
+        TestDataFactory.getPublicGroup('Skjermet', 'group_410097');
 
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
         TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
@@ -22,7 +22,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
     @IsTest
     private static void grantAccess_whenUgradertAndNotNavEmployee() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id globalGroup = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id globalGroup = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
         Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
         .Id;
 
@@ -34,7 +34,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :globalGroup],
-            'Expected conversation note to be shared with group 41001'
+            'Expected conversation note to be shared with group 41003'
         );
         System.assertEquals(
             0,
@@ -51,7 +51,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
     private static void grantAccess_whenUgradertAndNotNavEmployeeWithBehId() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
         Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
-        Id globalGroup = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id globalGroup = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
 
         Test.startTest();
         Conversation_Note__c note = new Conversation_Note__c(
@@ -69,14 +69,14 @@ private class NKS_ConversationNoteAccessHandlerTest {
         System.assertEquals(
             0,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :globalGroup],
-            'Expected conversation note NOT to be shared with group 41001'
+            'Expected conversation note NOT to be shared with group 41003'
         );
     }
 
     @IsTest
     private static void removeAccess_whenIncorrectlySentIsTrue() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
         insert note;
@@ -96,7 +96,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
     @IsTest
     private static void grantAccess_whenIncorrectlySentIsSetToFalse() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
         note.NKS_Incorrectly_Sent__c = true;
@@ -110,7 +110,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to be shared with group 41001'
+            'Expected conversation note to be shared with group 41003'
         );
     }
 
@@ -121,7 +121,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id veiledereGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id veiledereGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
         Id code7GroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_999907' LIMIT 1].Id;
 
         Test.startTest();
@@ -149,7 +149,7 @@ private class NKS_ConversationNoteAccessHandlerTest {
         person.INT_IsNavEmployee__c = true;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id veiledereGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id veiledereGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
         Id skjermetGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_410098' LIMIT 1].Id;
 
         Test.startTest();
