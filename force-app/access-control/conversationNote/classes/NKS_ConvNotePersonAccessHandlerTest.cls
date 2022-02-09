@@ -2,7 +2,7 @@
 private class NKS_ConvNotePersonAccessHandlerTest {
     @TestSetup
     static void makeData() {
-        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
+        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41003');
 
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
         TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
@@ -19,7 +19,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
         insert note;
@@ -27,7 +27,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to be shared with group 41001'
+            'Expected conversation note to be shared with group 41003'
         );
 
         Test.startTest();
@@ -38,7 +38,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         System.assertEquals(
             0,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to not be shared with group 41001'
+            'Expected conversation note to not be shared with group 41003'
         );
     }
 
@@ -52,7 +52,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id veilederGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id veilederGroupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
         Id dialogGroupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
         .Id;
         Id dialogSkjermet = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.SKJERMET_GROUP_NAME LIMIT 1]
@@ -112,7 +112,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         person.INT_IsNavEmployee__c = true;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41003' LIMIT 1].Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
         insert note;
@@ -120,7 +120,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         System.assertEquals(
             0,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to not be shared with group 41001'
+            'Expected conversation note to not be shared with group 41003'
         );
 
         Test.startTest();
@@ -131,7 +131,7 @@ private class NKS_ConvNotePersonAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to be shared with group 41001'
+            'Expected conversation note to be shared with group 41003'
         );
     }
 }
