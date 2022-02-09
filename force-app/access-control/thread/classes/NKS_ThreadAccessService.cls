@@ -14,8 +14,8 @@ public without sharing class NKS_ThreadAccessService {
                 wrapper.confidential = person.INT_Confidential__c;
                 wrapper.isNavEmployee = person.INT_IsNavEmployee__c;
                 wrapper.externalId = thread.CRM_Henvendelse_BehandlingsId__c;
-                wrapper.officeRestriction=thread.CRM_Office_Restriction__c;
-                wrapper.theme=thread.CRM_Theme_Code__c;
+                wrapper.officeRestriction = thread.CRM_Office_Restriction__c;
+                wrapper.theme = thread.CRM_Theme_Code__c;
                 sobjects.add(wrapper);
             }
 

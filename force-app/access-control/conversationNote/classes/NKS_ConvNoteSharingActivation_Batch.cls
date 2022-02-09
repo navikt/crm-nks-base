@@ -5,7 +5,7 @@ global class NKS_ConvNoteSharingActivation_Batch implements Database.Batchable<s
     }
 
     global NKS_ConvNoteSharingActivation_Batch(String query) {
-        this.query=query;
+        this.query = query;
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
