@@ -26,6 +26,11 @@
                 <label>Trafikkstyrers hjørne</label>
             </value>
             <value>
+                <fullName>Kampanje</fullName>
+                <default>false</default>
+                <label>Kampanje</label>
+            </value>
+            <value>
                 <fullName>Glamelding</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
