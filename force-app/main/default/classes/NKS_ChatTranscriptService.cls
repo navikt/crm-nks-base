@@ -50,28 +50,100 @@ global class NKS_ChatTranscriptService {
 
         try {
             threadMessages = converToThreadMessages(messageList, chatTranscript);
-            insert threadMessages;
+            if (threadMessages.size() > 0)
+                insert threadMessages;
+            updateThreadClosedate(chatTranscript.NKS_Thread__c, System.now());
         } catch (Exception ex) {
             logger.exception(ex, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
         }
     }
 
+    /**
+     * @description: Handles conversion of a list of message wrappers into thread messages.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param wrapperMessages
+     * @param chatTrans
+     * @return List<Message__c>
+     **/
     private static List<Message__c> converToThreadMessages(
         List<Message> wrapperMessages,
         LiveChatTranscript chatTrans
     ) {
         List<Message__c> returnMessages = new List<Message__c>();
-        returnMessages.add(createAuthEventMessage(chatTrans));
-        for (Message msg : wrapperMessages) {
-            returnMessages.add(convertToThreadMessage(msg, chatTrans));
+        Map<Datetime, Message__c> existingMessageMap = getExistingMessages(chatTrans.NKS_Thread__c);
+        if (!hasAuthEvent(existingMessageMap.values(), chatTrans.NKS_Authentication_Timestamp__c))
+            //If the authentication event has not been added to the thread we create the event
+            returnMessages.add(createAuthEventMessage(chatTrans));
+
+        for (Integer i = wrapperMessages.size() - 1; i >= 0; i--) {
+            //As message list is sorted we only add messages that does not already exist and stop when we hit an existing entry
+            if (!existingMessageMap.containsKey(DateTime.newInstance(Long.valueOf(wrapperMessages[i].timestamp)))) {
+                returnMessages.add(convertToThreadMessage(wrapperMessages[i], chatTrans));
+            } else {
+                break;
+            }
         }
 
         return returnMessages;
     }
 
+    /**
+     * @description: Iterates a list of chat messages on a thread and returns true if an event is included.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadMessages
+     * @return Boolean
+     **/
+    private static Boolean hasAuthEvent(List<Message__c> threadMessages, Datetime authTimestamp) {
+        Boolean hasAuthEvent = false;
+        for (Message__c msg : threadMessages) {
+            if (msg.CRM_Type__c.equalsIgnoreCase('Event') && msg.CRM_Sent_date__c == authTimestamp) {
+                hasAuthEvent = true;
+                break;
+            }
+        }
+
+        return hasAuthEvent;
+    }
+
+    /**
+     * @description: Gets a map of messages sent times to their message record
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadId
+     * @return List<Message__c>
+     **/
+    private static Map<Datetime, Message__c> getExistingMessages(String threadId) {
+        Map<DateTime, Message__c> returnMap = new Map<DateTime, Message__c>();
+        for (Message__c msg : [
+            SELECT Id, CRM_Type__c, CRM_Sent_date__c
+            FROM Message__c
+            WHERE CRM_Thread__c = :threadId
+            ORDER BY CRM_Sent_date__c DESC
+        ]) {
+            returnMap.put(msg.CRM_Sent_date__c, msg);
+        }
+
+        return returnMap;
+    }
+
+    /**
+     * @description: Updating the thread close date. In future context to prevent issue with i.e. record lock when inserting new messages
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadId
+     * @param closeDate
+     **/
+    @future
+    private static void updateThreadClosedate(String threadId, Datetime closeDate) {
+        update new Thread__c(Id = threadId, CRM_Closed_Date__c = closeDate);
+    }
+
+    /**
+     * @description: Creates a message of type event to properly display the authentication event in the thread.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param chatTrans
+     * @return Message__c
+     **/
     private static Message__c createAuthEventMessage(LiveChatTranscript chatTrans) {
-        //How should we handle auth message with language?
         String authText = chatTrans.LiveChatButton?.WindowLanguage == 'en_US'
             ? 'Started authenticated chat: '
             : 'Startet innlogget chat: ';
