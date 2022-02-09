@@ -131,4 +131,15 @@ public with sharing class NKS_HomePageController {
         }
         return skills;
     }
+
+    @AuraEnabled
+    public static List<Knowledge__kav> getReadyResponse() {
+        List<Knowledge__kav> records = [
+            SELECT Id, Title, LastModifiedDate
+            FROM Knowledge__kav
+            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
+            ORDER BY LastModifiedDate DESC
+        ];
+        return records;
+    }
 }
