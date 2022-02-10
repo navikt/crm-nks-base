@@ -14,6 +14,9 @@ global class NKS_ChatTranscriptService {
                             FROM PermissionSetAssignment
                             WHERE PermissionSetGroup.DeveloperName = 'Kontaktsenter'
                         )
+                        AND IsActive = TRUE
+                        AND CRM_NAV_Ident__c != NULL
+                        AND CRM_NAV_Ident__c != ''
                 ]) {
                     navIdentUserMap.put(usr.CRM_NAV_Ident__c, usr.Id);
                 }
