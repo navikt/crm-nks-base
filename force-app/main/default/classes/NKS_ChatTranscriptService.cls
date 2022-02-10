@@ -34,42 +34,116 @@ global class NKS_ChatTranscriptService {
      **/
     @AuraEnabled
     public static void storeConversation(String chatId, String jsonConversation) {
+        LiveChatTranscript chatTranscript = getChatDetails(chatId);
         List<Message> messageList = (List<Message>) JSON.deserialize(jsonConversation, List<Message>.class);
         messageList.sort();
-        LiveChatTranscript chatTranscript = getChatDetails(chatId);
-        List<Message__c> threadMessages = new List<Message__c>();
-        DateTime authTimestamp = chatTranscript.NKS_Authentication_Timestamp__c; //Should we use this to generate an authentication event message?
-
         if (
-            // Compare last message timestamp from thread to handle issues with multiple EndEvents
-            chatTranscript.NKS_Last_Message_Datetime__c ==
-            Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp))
+            chatTranscript.NKS_Authentication_Timestamp__c == null ||
+            (chatTranscript.NKS_Last_Message_Datetime__c ==
+            Datetime.newInstance(Long.valueOf(messageList[messageList.size() - 1].timestamp)))
         ) {
-            return; //Chat ended event is sent multiple times, handle not performing unnecesary DML
+            //Compare last message timestamp from thread to handle issues with multiple EndEvents
+            //If the chat was not authenticated, the messages cannot be related to end users
+            return;
         }
+        List<Message__c> threadMessages = new List<Message__c>();
 
         try {
-            converToThreadMessages(messageList, chatTranscript);
+            threadMessages = converToThreadMessages(messageList, chatTranscript);
+            if (threadMessages.size() > 0)
+                insert threadMessages;
+            updateThreadClosedate(chatTranscript.NKS_Thread__c, System.now());
         } catch (Exception ex) {
             logger.exception(ex, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
         }
     }
 
+    /**
+     * @description: Handles conversion of a list of message wrappers into thread messages.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param wrapperMessages
+     * @param chatTrans
+     * @return List<Message__c>
+     **/
     private static List<Message__c> converToThreadMessages(
         List<Message> wrapperMessages,
         LiveChatTranscript chatTrans
     ) {
         List<Message__c> returnMessages = new List<Message__c>();
-        for (Message msg : wrapperMessages) {
-            returnMessages.add(convertToThreadMessage(msg, chatTrans));
+        Map<Datetime, Message__c> existingMessageMap = getExistingMessages(chatTrans.NKS_Thread__c);
+        if (!hasAuthEvent(existingMessageMap.values(), chatTrans.NKS_Authentication_Timestamp__c))
+            //If the authentication event has not been added to the thread we create the event
+            returnMessages.add(createAuthEventMessage(chatTrans));
+
+        for (Integer i = wrapperMessages.size() - 1; i >= 0; i--) {
+            //As message list is sorted we only add messages that does not already exist and stop when we hit an existing entry
+            if (!existingMessageMap.containsKey(DateTime.newInstance(Long.valueOf(wrapperMessages[i].timestamp)))) {
+                returnMessages.add(convertToThreadMessage(wrapperMessages[i], chatTrans));
+            } else {
+                break;
+            }
         }
 
         return returnMessages;
     }
 
+    /**
+     * @description: Iterates a list of chat messages on a thread and returns true if an event is included.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadMessages
+     * @return Boolean
+     **/
+    private static Boolean hasAuthEvent(List<Message__c> threadMessages, Datetime authTimestamp) {
+        Boolean hasAuthEvent = false;
+        for (Message__c msg : threadMessages) {
+            if (msg.CRM_Type__c.equalsIgnoreCase('Event') && msg.CRM_Sent_date__c == authTimestamp) {
+                hasAuthEvent = true;
+                break;
+            }
+        }
+
+        return hasAuthEvent;
+    }
+
+    /**
+     * @description: Gets a map of messages sent times to their message record
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadId
+     * @return List<Message__c>
+     **/
+    private static Map<Datetime, Message__c> getExistingMessages(String threadId) {
+        Map<DateTime, Message__c> returnMap = new Map<DateTime, Message__c>();
+        for (Message__c msg : [
+            SELECT Id, CRM_Type__c, CRM_Sent_date__c
+            FROM Message__c
+            WHERE CRM_Thread__c = :threadId
+            ORDER BY CRM_Sent_date__c DESC
+        ]) {
+            returnMap.put(msg.CRM_Sent_date__c, msg);
+        }
+
+        return returnMap;
+    }
+
+    /**
+     * @description: Updating the thread close date. In future context to prevent issue with i.e. record lock when inserting new messages
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param threadId
+     * @param closeDate
+     **/
+    @future
+    private static void updateThreadClosedate(String threadId, Datetime closeDate) {
+        update new Thread__c(Id = threadId, CRM_Closed_Date__c = closeDate);
+    }
+
+    /**
+     * @description: Creates a message of type event to properly display the authentication event in the thread.
+     * @author Stian Ruud Schikora | 02-09-2022
+     * @param chatTrans
+     * @return Message__c
+     **/
     private static Message__c createAuthEventMessage(LiveChatTranscript chatTrans) {
-        //How should we handle auth message with language?
         String authText = chatTrans.LiveChatButton?.WindowLanguage == 'en_US'
             ? 'Started authenticated chat: '
             : 'Startet innlogget chat: ';
@@ -77,6 +151,8 @@ global class NKS_ChatTranscriptService {
             CRM_Thread__c = chatTrans.NKS_Thread__c,
             CRM_Type__c = 'Event',
             CRM_Sent_date__c = chatTrans.NKS_Authentication_Timestamp__c,
+            CRM_Read__c = true,
+            CRM_Read_Datetime__c = chatTrans.NKS_Authentication_Timestamp__c,
             CRM_Message_Text__c = authText
         );
     }
@@ -94,11 +170,11 @@ global class NKS_ChatTranscriptService {
         convertedMessage.CRM_Message_Text__c = wrapperMessage.content;
         convertedMessage.CRM_Type__c = wrapperMessage.getThreadMessageType();
         convertedMessage.CRM_Sent_date__c = DateTime.newInstance(Long.valueOf(wrapperMessage.timestamp));
+        convertedMessage.CRM_Read__c = true;
+        convertedMessage.CRM_Read_Datetime__c = convertedMessage.CRM_Sent_date__c;
         if (wrapperMessage.isAgentMessage()) {
             //Agent name is designed to include the NAV ident in parenthesis i.e. (<NAV_IDENT>)
-            pattern navIdentPattern = pattern.compile('([a-zA-Z]\\d+)');
-            matcher navIdentMatcher = navIdentPattern.matcher(wrapperMessage.name);
-            String navIdent = navIdentMatcher.group(0);
+            String navIdent = wrapperMessage.name.substringBetween('(', ')');
             if (!navIdentUserMap.containsKey(navIdent)) {
                 logger.error('Could not find user record for agent', chatTrans, CRM_ApplicationDomain.Domain.NKS);
             } else {
@@ -109,47 +185,6 @@ global class NKS_ChatTranscriptService {
         }
 
         return convertedMessage;
-    }
-
-    private static void setIdentifiers(Message wrapperMessage, Message__c convertedMessage) {
-        pattern navIdentPattern = pattern.compile('([a-zA-Z]\\d+)');
-        pattern navUnitPattern = pattern.compile('(,.(\\d{4}))');
-        matcher navIdentMatcher = navIdentPattern.matcher(wrapperMessage.name);
-        matcher navUnitMatcher = navUnitPattern.matcher(wrapperMessage.name);
-        String navIdent = navIdentMatcher.group(0);
-        String navUnit = navUnitMatcher.group(0);
-        convertedMessage.CRM_From_Ident__c = navIdent;
-        convertedMessage.CRM_From_NAV_Unit__c = navUnit;
-    }
-
-    /**
-     * @description: Generates the heading for the human chat part of the log
-     * @author Stian Ruud Schikora | 10-30-2020
-     * @param chatTranscript
-     * @param chatStart
-     * @param chatEnd
-     * @return String
-     **/
-    private static String generateConversationHeading(
-        LiveChatTranscript chatTranscript,
-        DateTime chatStart,
-        DateTime chatEnd
-    ) {
-        String conversationText = chatTranscript.LiveChatButton?.WindowLanguage == 'en_US' ? 'Conversation' : 'Samtale';
-
-        String heading = '<br><div style="text-align: center">';
-        heading +=
-            '<p align="center"><b>' +
-            conversationText +
-            ' - Chat: ' +
-            chatStart.format('dd/MM/yyyy') +
-            ', ' +
-            chatStart.format('HH:mm:ss') +
-            ' - ' +
-            chatEnd.format('HH:mm:ss') +
-            '</b></p>';
-        heading += '</div><br>';
-        return heading;
     }
 
     /**
@@ -185,6 +220,7 @@ global class NKS_ChatTranscriptService {
             SELECT
                 AccountId,
                 ContactId,
+                NKS_Last_Message_Datetime__c,
                 NKS_Thread__c,
                 NKS_Agent_Greeting_Name__c,
                 Body,
@@ -233,48 +269,6 @@ global class NKS_ChatTranscriptService {
 
         private boolean isAgentMessage() {
             return type.equalsIgnoreCase('agent');
-        }
-
-        private string getMessageSource(String language) {
-            return isAgentMessage() ? name : language == 'en_US' ? 'You' : 'Du';
-        }
-
-        public String getFormattedMsg(String language) {
-            //Log: NKS-246 Conversation store fails on contentless message i.e. on transfer
-            if (String.isBlank(content)) {
-                return '';
-            }
-            String formattedMessage;
-
-            //Formatting a transfer message
-            if (type.equalsIgnoreCase('OperatorTransferred')) {
-                formattedMessage = '<div style="text-align: center">';
-                DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-                String transferText = language == 'en_US' ? 'Transferred to {to}' : 'Overført til {to}';
-                formattedMessage +=
-                    '<p align="center"><b>' +
-                    transferText.replace('{to}', name) +
-                    ': ' +
-                    '</b> - ' +
-                    convertedTimestamp.format('HH:mm:ss') +
-                    '</p>';
-                formattedMessage += '</div><br>';
-            } else {
-                formattedMessage = '<div>';
-                DateTime convertedTimestamp = DateTime.newInstance(Long.valueOf(timestamp));
-                formattedMessage +=
-                    '<p>' +
-                    '<b>' +
-                    getMessageSource(language) +
-                    ': ' +
-                    '</b> - ' +
-                    convertedTimestamp.format('HH:mm:ss') +
-                    '</p>';
-                formattedMessage += '<p>' + content.escapeXml() + '</p>'; //Escaping any xml tags sent by the end user in the chat
-                formattedMessage += '</div><br>';
-            }
-
-            return formattedMessage;
         }
     }
 
