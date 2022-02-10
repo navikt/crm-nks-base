@@ -5,7 +5,7 @@ public without sharing class NKS_ConversationNoteAccessService {
         Map<Id, Person__c> personByConversationNoteId = getPersonByConversationNoteId(notes, persons);
         if (personByConversationNoteId != null && personByConversationNoteId.size() > 0) {
             for (Integer index : conversationNoteByIndex.keySet()) {
-                Conversation_Note__c note =conversationNoteByIndex.get(index);
+                Conversation_Note__c note = conversationNoteByIndex.get(index);
                 Person__c person = personByConversationNoteId.get(note.Id);
                 if (person == null)
                     continue;
@@ -13,8 +13,10 @@ public without sharing class NKS_ConversationNoteAccessService {
                 wrapper.recordIndex = index;
                 wrapper.confidential = person.INT_Confidential__c;
                 wrapper.isNavEmployee = person.INT_IsNavEmployee__c;
-                wrapper.incorrectlySent=note.NKS_Incorrectly_Sent__c;
-                wrapper.externalId=note.CRM_Henvendelse_BehandlingsId__c;
+                wrapper.incorrectlySent = note.NKS_Incorrectly_Sent__c;
+                wrapper.externalId = note.CRM_Henvendelse_BehandlingsId__c;
+                wrapper.officeRestriction = note.CRM_Office_Restriction__c;
+                wrapper.theme = note.CRM_Theme_Code__c;
                 sobjects.add(wrapper);
             }
 
@@ -23,7 +25,7 @@ public without sharing class NKS_ConversationNoteAccessService {
             for (ShareWrapper share : shareWrappers) {
                 Conversation_Note__Share noteShare = new Conversation_Note__Share();
                 Conversation_Note__c note = ConversationNoteByIndex.get(share.recordIndex);
-                noteShare.ParentId=note.Id; 
+                noteShare.ParentId = note.Id;
                 noteShare.UserOrGroupId = share.publicGroupId;
                 noteShare.AccessLevel = 'Edit';
                 noteShare.RowCause = 'Manual';
@@ -43,7 +45,10 @@ public without sharing class NKS_ConversationNoteAccessService {
         return conversationNoteByIndex;
     }
 
-    private Map<Id, Person__c> getPersonByConversationNoteId(List<Conversation_Note__c> notes, List<Person__c> persons) {
+    private Map<Id, Person__c> getPersonByConversationNoteId(
+        List<Conversation_Note__c> notes,
+        List<Person__c> persons
+    ) {
         Set<Id> accountIds = new Set<id>();
         for (Conversation_Note__c note : notes) {
             accountIds.add(note.CRM_Account__c);

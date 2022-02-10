@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>NKS_Thread_Veiledere</label>
+    <label>NKS_ConvNote_Veiledere_Bidrag</label>
     <protected>false</protected>
     <values>
         <field>Field1__c</field>
@@ -12,15 +12,15 @@
     </values>
     <values>
         <field>Field3__c</field>
-        <value xsi:type="xsd:string">Office Restriction</value>
+        <value xsi:type="xsd:string">External Id</value>
     </values>
     <values>
         <field>Field4__c</field>
-        <value xsi:type="xsd:string">Theme</value>
+        <value xsi:type="xsd:string">Office Restriction</value>
     </values>
     <values>
         <field>Field5__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string">Theme</value>
     </values>
     <values>
         <field>Field6__c</field>
@@ -40,15 +40,15 @@
     </values>
     <values>
         <field>Operator3__c</field>
-        <value xsi:type="xsd:string">equals</value>
-    </values>
-    <values>
-        <field>Operator4__c</field>
         <value xsi:type="xsd:string">not equal to</value>
     </values>
     <values>
+        <field>Operator4__c</field>
+        <value xsi:type="xsd:string">equals</value>
+    </values>
+    <values>
         <field>Operator5__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string">equals</value>
     </values>
     <values>
         <field>Operator6__c</field>
@@ -60,7 +60,7 @@
     </values>
     <values>
         <field>UnitNumber__c</field>
-        <value xsi:type="xsd:string">41002</value>
+        <value xsi:type="xsd:string">41004</value>
     </values>
     <values>
         <field>Values1__c</field>
@@ -72,15 +72,15 @@
     </values>
     <values>
         <field>Values3__c</field>
-        <value xsi:type="xsd:string">FALSE</value>
+        <value xsi:nil="true" />
     </values>
     <values>
         <field>Values4__c</field>
-        <value xsi:type="xsd:string">BID</value>
+        <value xsi:type="xsd:string">FALSE</value>
     </values>
     <values>
         <field>Values5__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string">BID</value>
     </values>
     <values>
         <field>Values6__c</field>
@@ -88,6 +88,6 @@
     </values>
     <values>
         <field>sObjectType__c</field>
-        <value xsi:type="xsd:string">Thread__c</value>
+        <value xsi:type="xsd:string">Conversation_Note__c</value>
     </values>
 </CustomMetadata>
