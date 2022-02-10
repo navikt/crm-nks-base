@@ -1,6 +1,4 @@
-
 global class NKS_ConversationNoteAccessHandler extends MyTriggers {
-    
     global override void onAfterInsert() {
         new NKS_ConversationNoteAccessService().grantAccess((List<Conversation_Note__c>) records, getPersons(records));
     }
@@ -19,23 +17,19 @@ global class NKS_ConversationNoteAccessHandler extends MyTriggers {
     }
 
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
-        List<String> fieldNamesToCheck = new List<String>{
-            'NKS_Incorrectly_Sent__c'
-        };
+        List<String> fieldNamesToCheck = new List<String>{ 'NKS_Incorrectly_Sent__c', 'CRM_Theme__c' };
 
         List<Id> parentIdToDelete = new List<Id>();
-        List<Conversation_Note__c> notesWithNewSharing=new List<Conversation_Note__c>();
+        List<Conversation_Note__c> notesWithNewSharing = new List<Conversation_Note__c>();
 
         for (Conversation_Note__c note : (List<Conversation_Note__c>) records) {
             Conversation_Note__c oldRecord = (Conversation_Note__c) triggerOldMap.get(note.Id);
             if (MyTriggers.hasChangedFields(fieldNamesToCheck, note, oldRecord)) {
-                if(note.NKS_Incorrectly_Sent__c){
+                if (note.NKS_Incorrectly_Sent__c) {
                     parentIdToDelete.add(note.Id);
-                }
-                else{
+                } else {
                     notesWithNewSharing.add(note);
                 }
-                
             }
         }
 
@@ -46,10 +40,10 @@ global class NKS_ConversationNoteAccessHandler extends MyTriggers {
                 WHERE RowCause = 'Manual' AND ParentId IN :parentIdToDelete
             ];
             delete toDelete;
-    }
+        }
 
-    if(notesWithNewSharing.size()>0){
-        new NKS_ConversationNoteAccessService().grantAccess(notesWithNewSharing, getPersons(notesWithNewSharing));
+        if (notesWithNewSharing.size() > 0) {
+            new NKS_ConversationNoteAccessService().grantAccess(notesWithNewSharing, getPersons(notesWithNewSharing));
+        }
     }
-}
 }
