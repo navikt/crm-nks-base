@@ -210,6 +210,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>nksLinksReadyResponse</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
                     <value>Trafikkstyrers hjørne</value>
