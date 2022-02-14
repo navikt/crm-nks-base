@@ -34,7 +34,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         List<Person__c> personList = [
-            SELECT Id, INT_ActorId__c
+            SELECT Id, INT_ActorId__c, Name
             FROM Person__c
             WHERE CRM_Account__c = :accountId
             LIMIT 1
@@ -43,6 +43,7 @@ public with sharing class CRM_SecurityQuestionPicker {
             return noPersonError();
         }
         String ident = personList[0].INT_ActorId__c;
+        String personIdentifikasjon = personList[0].Name;
 
         usedQuestions.add(random);
         String returnAnswer = null;
@@ -54,7 +55,7 @@ public with sharing class CRM_SecurityQuestionPicker {
                 }
                 when 1 {
                     //Fra KRR
-                    returnAnswer = getEmail(ident, accountId);
+                    returnAnswer = getEmail(personIdentifikasjon, accountId);
                 }
                 when 2 {
                     //Fra PDL
@@ -108,7 +109,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
     }
 
-    private static String getEmail(String ident, String accountId) {
+    private static String getEmail(String personIdentifikasjon, String accountId) {
         Person__c emailInfo = [
             SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
             FROM Person__c
@@ -123,7 +124,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
         List<KrrCalloutService.Personer> personer;
         try {
-            personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+            personer = KrrCalloutService.doPersonOppslag(new List<String>{ personIdentifikasjon });
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
