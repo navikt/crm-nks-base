@@ -1,0 +1,19 @@
+<template>
+    <button
+        class="slds-large-size_8-of-8 slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
+        onclick={navigateToRecord}
+    >
+        {record.Title}
+    </button>
+    <span class="date"
+        >Oppdatert:&nbsp;
+        <lightning-formatted-date-time
+            value={record.LastModifiedDate}
+            year="numeric"
+            month="2-digit"
+            day="2-digit"
+            hour="2-digit"
+            minute="2-digit"
+        ></lightning-formatted-date-time>
+    </span>
+</template>

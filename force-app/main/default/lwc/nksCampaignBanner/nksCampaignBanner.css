@@ -1,0 +1,7 @@
+.banner img {
+    width: 100%;
+    height: auto;
+}
+.banner a:hover img {
+    border: solid 1px white;
+}
