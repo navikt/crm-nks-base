@@ -8,18 +8,9 @@
                     <valueList>
                         <valueListItems>
                             <value>Conversation_Note__c.NKS_Journal</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.NKS_Journal_Status__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Journal Completed</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.NKS_Henvendelse_BehandlingsId__c}</leftValue>
-                                    <operator>NE</operator>
-                                </criteria>
-                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Conversation_Note__c.Set_To_Redaction</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -90,25 +81,11 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.Name</fieldItem>
-            </fieldInstance>
+            <componentInstance>
+                <componentName>force:detailPanel</componentName>
+            </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NKS_Date_Time_Registered__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.CRM_Account__c</fieldItem>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</name>
+        <name>Facet-76a92e72-ab99-4fe9-b203-c290236c88c9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -116,35 +93,51 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</value>
+                    <value>Facet-76a92e72-ab99-4fe9-b203-c290236c88c9</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</value>
+                    <name>title</name>
+                    <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
+                <componentName>flexipage:tab</componentName>
             </componentInstance>
         </itemInstances>
-        <name>Facet-bab5275a-691a-4750-a8c7-9cdf7fff0141</name>
+        <name>Facet-57950728-09b1-475d-9891-02c173ddb3d3</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-bab5275a-691a-4750-a8c7-9cdf7fff0141</value>
+                    <name>tabs</name>
+                    <value>Facet-57950728-09b1-475d-9891-02c173ddb3d3</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Conversation_Note__c.Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Detaljer</value>
+                    <name>relatedListApiName</name>
+                    <value>Journal_Entries__r</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -152,6 +145,10 @@
                 <componentInstanceProperties>
                     <name>clickableRows</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>dateField</name>
+                    <value>CRM_Date_Time_Registered__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>

@@ -30,7 +30,7 @@ global class NKS_ThreadPersonAccessHandler extends MyTriggers {
 
     private List<Thread__c> getThreadsFromPersonIds(Set<Id> personIds) {
         return [
-            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c
+            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
             FROM Thread__c
             WHERE CRM_Account__r.CRM_Person__c IN :personIds
         ];
