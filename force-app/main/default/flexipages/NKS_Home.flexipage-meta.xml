@@ -79,6 +79,58 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
+                    <value>Manglende journalføring</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>content</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>datefield</name>
+                    <value>CreatedDate</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND NKS_Journal_Entry_Created__c = false AND OwnerId=:userId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:live_chat</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle chatter med manglende journalføring</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>NKS_Chat_Missing_Journals</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>LiveChatTranscript</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>NKS_Theme_Group__c</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
                     <value>Sist oppdaterte kunnskapsartikler</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

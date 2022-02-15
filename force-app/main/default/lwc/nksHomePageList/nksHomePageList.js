@@ -21,9 +21,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     channelName = '/topic/Announcement_Updates';
     subscription = {};
 
-    @track records;
+    @track records = [];
     error;
     pageurl;
+
+    @api index;
 
     connectedCallback() {
         this.isInitiated = true;
@@ -92,4 +94,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Thread__c' ? true : false;
+    }
+
+    get hasRecord() {
+        return this.records.length > 0 ? true : false;
+    }
 }

@@ -1,6 +1,6 @@
 <template>
     <section class="slds-box slds-theme_default" aria-labelledby="nav1">
-        <lightning-layout vertical-align="center" class="slds-p-bottom_small">
+        <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
             <div class="slds-media__figure">
                 <lightning-icon
                     aria-hidden="true"
@@ -12,15 +12,26 @@
             <h2 id="nav1" class="slds-text-heading_medium slds-truncate">{cardLabel}</h2>
         </lightning-layout>
         <div>
-            <ul class="slds-list_vertical-space-medium">
-                <template for:each={records} for:item="record">
-                    <li class="slds-item" key={record.personId}>
-                        <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
-                    </li>
-                </template>
-            </ul>
+            <template if:false={isStripedList}>
+                <ul class="slds-list_vertical-space-medium">
+                    <template for:each={records} for:item="record">
+                        <li class="slds-item" key={record.personId}>
+                            <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:true={isStripedList}>
+                <ul class="stripedList">
+                    <template for:each={records} for:item="record" for:index="index">
+                        <li class="slds-item" key={record.Id}>
+                            <c-nks-striped-list-entry record={record} index={index}></c-nks-striped-list-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
         </div>
-        <div class="slds-p-top_small">
+        <div class="slds-var-p-top_small">
             <lightning-formatted-url value={pageUrl} label={linklabel} onclick={navigateToList}>
             </lightning-formatted-url>
         </div>

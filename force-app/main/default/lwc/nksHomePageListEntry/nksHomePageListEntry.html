@@ -2,7 +2,7 @@
     <div class="slds-grid slds-gutters">
         <template if:true={record.imageurl}>
             <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
-                <img aria-hidden="true" src={record.imageurl} style="max-height:180px;"/>
+                <img aria-hidden="true" src={record.imageurl} style="max-height: 180px" />
             </div>
         </template>
 
@@ -20,7 +20,7 @@
                     ></lightning-formatted-date-time>
                 </p>
             </div>
-            <div class="slds-p-horizontal_small">
+            <div class="slds-var-p-horizontal_small">
                 <h3>
                     <lightning-formatted-url
                         value={recordPageUrl}
