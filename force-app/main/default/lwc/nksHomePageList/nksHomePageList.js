@@ -17,11 +17,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+
+    @track records = [];
+
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-
-    @track records;
     error;
     pageurl;
 
@@ -92,4 +93,16 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
+    }
+
+    get hasRecord() {
+        return this.records.length > 0 ? true : false;
+    }
+
+    get setEmptyState() {
+        return !this.hasRecord && this.isStripedList ? true : false;
+    }
 }
