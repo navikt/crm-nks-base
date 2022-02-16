@@ -4,6 +4,8 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksLinksReadyResponse extends NavigationMixin(LightningElement) {
     @track records = [];
+    size;
+    className;
 
     isInitiated = false;
 
@@ -23,6 +25,14 @@ export default class NksLinksReadyResponse extends NavigationMixin(LightningElem
     }
 
     get showReadyResponse() {
-        return this.records.length > 0 ? true : false;
+        if (this.records.length > 0) {
+            this.size = 8;
+            this.className = 'slds-var-p-left_large';
+            return true;
+        } else {
+            this.size = 12;
+            this.className = '';
+            return false;
+        }
     }
 }
