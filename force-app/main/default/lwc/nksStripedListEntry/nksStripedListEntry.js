@@ -5,7 +5,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
     @api record;
     @api index;
 
-    recordPageUrl;
+    recordUrl;
 
     get className() {
         return this.index % 2 == 0
@@ -13,7 +13,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             : 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem';
     }
 
-    navigateToSObject(event) {
+    navigateToPage(event) {
         event.preventDefault();
         event.stopPropagation();
         this[NavigationMixin.Navigate]({
@@ -33,7 +33,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
                 actionName: 'view'
             }
         }).then((url) => {
-            this.recordPageUrl = url;
+            this.recordUrl = url;
         });
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class={className}>
         <div class="slds-col slds-size_4-of-12">
-            <a href={recordPageUrl} onclick={navigateToSObject}>
+            <a href={recordUrl} onclick={navigateToPage}>
                 <lightning-formatted-date-time
                     class="slds-text-link"
                     value={record.CreatedDate}
@@ -14,7 +14,7 @@
             </a>
         </div>
         <div class="slds-col slds-size_8-of-12 slds-var-p-left_medium">
-            <a href={recordPageUrl}>{record.NKS_Theme_Group__c}</a>
+            <a href={recordUrl} onclick={navigateToPage}>{record.NKS_Theme_Group__c}</a>
         </div>
     </div>
 </template>
