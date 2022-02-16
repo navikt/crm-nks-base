@@ -1,8 +1,8 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class nksLinksReadyResponse extends NavigationMixin(LightningElement) {
+export default class NksLinksReadyResponse extends NavigationMixin(LightningElement) {
     @track records = [];
 
     isInitiated = false;

@@ -2,7 +2,7 @@ import { LightningElement, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getCampaign from '@salesforce/apex/NKS_HomePageController.getCampaign';
 
-export default class nksCampaignBanner extends NavigationMixin(LightningElement) {
+export default class NksCampaignBanner extends NavigationMixin(LightningElement) {
     @track record;
 
     isInitiated = false;
