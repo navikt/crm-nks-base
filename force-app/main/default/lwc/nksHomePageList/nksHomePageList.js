@@ -17,15 +17,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+
+    @track records = [];
+
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-
-    @track records = [];
     error;
     pageurl;
-
-    @api index;
 
     connectedCallback() {
         this.isInitiated = true;
@@ -96,10 +95,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     };
 
     get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Thread__c' ? true : false;
+        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
     }
 
     get hasRecord() {
         return this.records.length > 0 ? true : false;
+    }
+
+    get setEmptyState() {
+        return !this.hasRecord && this.isStripedList ? true : false;
     }
 }
