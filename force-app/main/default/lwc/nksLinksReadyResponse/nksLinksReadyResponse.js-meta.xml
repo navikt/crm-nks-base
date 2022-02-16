@@ -8,4 +8,9 @@
         <target>lightning__HomePage</target>
     </targets>
 
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property name="showReadyResponse" type="Boolean" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
