@@ -11,13 +11,25 @@
             </div>
             <h2 id="nav1" class="slds-text-heading_small slds-truncate">{cardLabel}</h2>
         </lightning-layout>
-        <div>
+        <div if:false={cardFlag}>
             <ul class="slds-list_vertical-space-medium">
                 <template for:each={records} for:item="record">
                     <li class="slds-item" key={record.personId}>
                         <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
                     </li>
                 </template>
+            </ul>
+        </div>
+        <div if:true={cardFlag} class="slds-box slds-p-vertical_none slds-p-horizontal_none slds-theme_default">
+            <ul class="slds-list_vertical-space-small">
+                <template for:each={records} for:item="record">
+                    <li class="slds-item slds-border_bottom slds-p-vertical_x-small" key={record.personId}>
+                        <c-nks-home-page-list-entry record={record} card-label={cardLabel}></c-nks-home-page-list-entry>
+                    </li>
+                </template>
+                <div class="slds-text-align_center">
+                    <button class="slds-button" onclick={lastFlereList}>Last flere</button>
+                </div>
             </ul>
         </div>
         <div class="slds-p-top_small">

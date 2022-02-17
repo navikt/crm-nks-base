@@ -28,8 +28,12 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-        if (filterbyskills)
-            userskills = getUserSkills(userId);
+        if (filterbyskills) {
+            if (objectName == 'Knowledge__kav')
+                userskills = getUserSkillsKnowledge(userId);
+            else
+                userskills = getUserSkills(userId);
+        }
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
         if (content != null)
             query += ' , ' + content;
@@ -128,6 +132,18 @@ public with sharing class NKS_HomePageController {
                 AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
         ]) {
             skills.add(g.DeveloperName);
+        }
+        return skills;
+    }
+
+    private static Set<String> getUserSkillsKnowledge(Id userId) {
+        Set<String> skills = new Set<String>();
+        for (ServiceResourceSkill s : [
+            SELECT Id, ServiceResourceId, Skill.DeveloperName
+            FROM ServiceResourceSkill
+            WHERE ServiceResource.RelatedRecordId = :userId
+        ]) {
+            skills.add(s.Skill.DeveloperName);
         }
         return skills;
     }

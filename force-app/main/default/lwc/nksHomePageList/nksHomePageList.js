@@ -22,11 +22,17 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     subscription = {};
 
     @track records;
+    @track listCount;
+    @api cardFlag = false;
     error;
     pageurl;
 
     connectedCallback() {
         this.isInitiated = true;
+        this.listCount = 3;
+        this.cardFlag = this.cardLabel === 'Sist oppdaterte kunnskapsartikler';
+        if (this.cardFlag) this.limit = this.listCount;
+
         this.loadList();
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
@@ -92,4 +98,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    lastFlereList(event) {
+        this.listCount += 3;
+        this.limit = this.listCount;
+        this.loadList();
+    }
 }
