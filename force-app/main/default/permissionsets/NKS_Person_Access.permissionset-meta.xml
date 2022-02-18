@@ -96,6 +96,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Person__c.INT_IsHasTombstone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Person__c.INT_IsNavEmployee__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -196,12 +201,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.INT_ResidentialZipCode__c</field>
+        <field>Person__c.INT_ResidentialPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Person__c.INT_ResidentialPlace__c</field>
+        <field>Person__c.INT_ResidentialZipCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -237,6 +242,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.INT_TemporaryZipCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_dnr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_fnr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Person__c.INT_npid__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
