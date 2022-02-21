@@ -15,7 +15,12 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
     _themeGroup;
 
     get themeGroup() {
-        return this._themeGroup;
+        if (this._themeGroup == '' || this._themeGroup == null) {
+            console.log('Theme group is null!');
+            return '';
+        } else {
+            return this._themeGroup;
+        }
     }
 
     get fieldName() {
@@ -71,6 +76,18 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    @wire(getRecord, {
+        recordId: this.record.recordId,
+        fields: this.record.objectName.Id
+    })
+    wiredRecord({ error, data }) {
+        if (error) {
+            console.log(error);
+        } else if (data) {
+            this.getThemeGroupId();
+        }
     }
 
     @wire(getRecord, {
