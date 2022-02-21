@@ -28,18 +28,33 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-        if (filterbyskills)
+        if (filterbyskills) {
             userskills = getUserSkills(userId);
-        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
-        if (content != null)
-            query += ' , ' + content;
-        if (filterbyskills && objectName == 'NKS_Announcement__c')
-            query += ' , Skills__c ';
-        query += ' FROM ' + objectName;
+        }
+
+        if (objectName == 'LiveChatTranscript') {
+            title = getLiveChatTranscriptThemeGroup();
+        }
+
         if (objectName == 'Case') {
-            filter += 'IsClosed=false AND OwnerId=:userId AND RecordTypeId=\'' + getCaseRecordTypeId() + '\'';
+            title = getCaseThemeGroup(userId);
+        }
+
+        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
+        if (content != null) {
+            query += ' , ' + content;
+        }
+
+        if (filterbyskills && objectName == 'NKS_Announcement__c') {
+            query += ' , Skills__c ';
+        }
+        query += ' FROM ' + objectName;
+
+        if (objectName == 'Case') {
+            filter += 'IsClosed=false AND OwnerId=' + userId + ' AND RecordTypeId=\'' + getCaseRecordTypeId() + '\'';
         }
         query += ' WHERE ' + filter;
+
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -47,6 +62,7 @@ public with sharing class NKS_HomePageController {
             }
             query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
+
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -54,8 +70,10 @@ public with sharing class NKS_HomePageController {
             }
             query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
+
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
+
         if (limitNumber != null)
             query += ' LIMIT ' + limitNumber;
 
@@ -159,8 +177,42 @@ public with sharing class NKS_HomePageController {
         return campaign;
     }
 
-    private static Id getCaseRecordTypeId() {
+    @AuraEnabled
+    public static Id getCaseRecordTypeId() {
         Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('STO_Case').getRecordTypeId();
         return recordTypeId;
+    }
+
+    @AuraEnabled
+    public static String getLiveChatTranscriptThemeGroup() {
+        Id themeGroupId = [
+            SELECT Id, NKS_Theme_Group__c
+            FROM LiveChatTranscript
+            WHERE
+                CRM_Authentication_Status__c = 'Completed'
+                AND NKS_Journal_Entry_Status__c != 'Completed'
+                AND NKS_Journal_Entry_Created__c = FALSE
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ]
+        .NKS_Theme_Group__c;
+
+        String themeGroup = [SELECT Id, Name FROM Common_Code__c WHERE Id = :themeGroupId].Name;
+        return themeGroup;
+    }
+
+    @AuraEnabled
+    public static String getCaseThemeGroup(Id userId) {
+        Id themeGroupId = [
+            SELECT Id, NKS_Theme_Group__c
+            FROM Case
+            WHERE IsClosed = FALSE AND OwnerId = :userId AND RecordTypeId = :getCaseRecordTypeId()
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ]
+        .NKS_Theme_Group__c;
+
+        String themeGroup = [SELECT Id, Name FROM Common_Code__c WHERE Id = :themeGroupId].Name;
+        return themeGroup;
     }
 }
