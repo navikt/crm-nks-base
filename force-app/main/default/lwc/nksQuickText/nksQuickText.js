@@ -67,7 +67,7 @@ export default class nksQuickText extends LightningElement {
         this.template.querySelector('lightning-input').focus();
     }
 
-    hideModal(event) {
+    hideModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
     }
 
