@@ -43,7 +43,12 @@ public with sharing class NKS_HomePageController {
         query += ' FROM ' + objectName;
 
         if (objectName == 'Case') {
-            filter += 'IsClosed=false AND OwnerId=' + userId + ' AND RecordTypeId=\'' + getCaseRecordTypeId() + '\'';
+            filter +=
+                'IsClosed=false AND OwnerId=\'' +
+                userId +
+                '\' AND RecordTypeId=\'' +
+                getCaseRecordTypeId() +
+                '\'';
         }
         query += ' WHERE ' + filter;
 
