@@ -42,7 +42,7 @@ public without sharing virtual class KafkaBrukernotifikasjonHandler implements I
                     mapNotificationToAccount(userNotificationMap.get(key));
                 } catch (Exception ex) {
                     //Set message to error and remove from message map, remove notification from notification map
-                    this.logger.error(
+                    this.logger.warning(
                         'Error creating User Notification, actor not found. ' +
                         '\n Kafka key reference: ' +
                         messageMap.get(key).CRM_Key__c,
