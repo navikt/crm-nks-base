@@ -24,6 +24,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -37,6 +38,7 @@
                     <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -46,6 +48,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Comments__c</fieldItem>
+                <identifier>RecordNKS_Comments__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6fe406e7-434d-4765-ab67-549ee78a5706</name>
@@ -59,6 +62,7 @@
                     <value>Facet-6fe406e7-434d-4765-ab67-549ee78a5706</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-ff3ef588-e928-43a4-acc9-d962f60bf72a</name>
@@ -76,6 +80,7 @@
                     <value>Kommentarhistorikk</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
@@ -85,6 +90,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>detailTabContent</name>
@@ -106,6 +112,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>maintabs</name>
@@ -130,6 +137,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksFlowStarter</componentName>
+                <identifier>nksFlowStarter</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_External_Reference__c}</leftValue>
@@ -146,6 +154,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>

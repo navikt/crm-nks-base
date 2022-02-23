@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>nksCampaignBanner</componentName>
+                <identifier>nksCampaignBanner</identifier>
             </componentInstance>
         </itemInstances>
         <name>top</name>
@@ -69,6 +70,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomLeft</name>
@@ -133,8 +135,8 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList2</identifier>
             </componentInstance>
-
         </itemInstances>
         <itemInstances>
             <componentInstance>
@@ -151,7 +153,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>''</value>
+                    <value>&apos;&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -183,9 +185,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>NKS_Theme_Group__c</value>
+                    <value>Subject</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -246,6 +249,7 @@
                     <value>Title</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -263,6 +267,7 @@
                     <value>Salesforce oppdatering</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -315,6 +320,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList5</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomRight</name>
@@ -324,6 +330,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>nksLinksReadyResponse</componentName>
+                <identifier>nksLinksReadyResponse</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -341,6 +348,7 @@
                     <value>Trafikkstyrers hjørne</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText2</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

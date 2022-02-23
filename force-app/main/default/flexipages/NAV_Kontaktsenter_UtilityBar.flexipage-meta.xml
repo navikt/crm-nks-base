@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -34,12 +34,13 @@
                     <value>340</value>
                 </componentInstanceProperties>
                 <componentName>opencti:softPhone</componentName>
+                <identifier>opencti_softPhone</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName
-                >runtime_service_omnichannel:omniWidget</componentName>
+                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+                <identifier>runtime_service_omnichannel_omniWidget</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>
@@ -49,11 +50,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>nksChatConversationHandler</componentName>
+                <identifier>nksChatConversationHandler</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>nksBackgroundTabUpdator</componentName>
+                <identifier>nksBackgroundTabUpdator</identifier>
             </componentInstance>
         </itemInstances>
         <name>backgroundComponents</name>
