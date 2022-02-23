@@ -4,6 +4,7 @@ import getPostAddress from '@salesforce/apex/NKS_PostAddressController.getPostAd
 
 export default class NksPostAddress extends LightningElement {
     open = false;
+    showbutton = false;
     addressString;
     get iconName(){
         return this.open ? 'utility:chevrondown' : 'utility:chevronright';
@@ -16,6 +17,7 @@ export default class NksPostAddress extends LightningElement {
             case '200':
                 if (!this.addressString) 
                     this.addressString = this.formattedAddress();
+                    this.showbutton = true;
                 console.log(this.addressString);
                 return this.addressString;
             case '400':
