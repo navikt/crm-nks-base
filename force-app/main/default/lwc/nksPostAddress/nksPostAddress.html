@@ -1,21 +1,21 @@
 <template>
     <article class="slds-card slds-card_narrow">
     <div class="slds-card__header">
-        <header
-            class="slds-media slds-media_center"
-        >
-                <div class="slds-media__figure">
-                    <lightning-icon icon-name="standard:email" size="normal"></lightning-icon>
-                </div>
-            <div class="slds-media__body">
-                <h2 class="slds-card__header-title slds-accordion__summary-heading">
-                    <span class="slds-text-heading_small">
-                        <button type="button" onclick={onclickHandler} slot="title" class="section-control slds-button slds-button_reset" style="width:100%">
-                            <lightning-icon icon-name={iconName} size="x-small" class="slds-current-color slds-p-horizontal_small"></lightning-icon>
-                            <span title="Postadresse">Postadresse</span>
-                    </button>
-                    </span>
-                </h2>
+        <header class="slds-media slds-media_center">
+            <div class="slds-media__figure">
+                <lightning-icon icon-name="standard:email" size="small"></lightning-icon>
+            </div>
+            <div class="slds-accordion__summary-heading">
+                 <button type="button" onclick={onclickHandler} slot="title" class="section-control slds-button slds-button_reset" style="width:100%">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <span class="slds-text-heading_small">
+                                <lightning-icon icon-name={iconName} size="x-small" class="slds-current-color"></lightning-icon>
+                                <span title="Postadresse" class="slds-p-horizontal_x-small">Postadresse</span>
+                            </span>
+                        </h2>
+                    </div>
+                </button>
             </div>
         </header>
     </div>
@@ -25,8 +25,10 @@
             <lightning-formatted-text value={address}></lightning-formatted-text>
         </div>
         <div class="slds-p-horizontal_small">
-            <button class="slds-button slds-button_outline-brand slds-button_stretch">
-                <lightning-icon icon-name="utility:copy" size="x-small" class="slds-current-color slds-p-horizontal_small"></lightning-icon>Kopier postadresse</button>
+            <template if:true={showbutton}>
+                <button class="slds-button slds-button_outline-brand slds-button_stretch">
+                    <lightning-icon icon-name="utility:copy" size="x-small" class="slds-current-color slds-p-horizontal_small"></lightning-icon>Kopier postadresse</button>
+            </template>
         </div>
     </div>
     </template>
