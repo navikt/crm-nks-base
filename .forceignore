@@ -2,7 +2,7 @@
 # profiles
 # ----------------------------------------------------------------------------------------
 **/profiles/*
-
+**/fieldRestrictionRules/*.rule-meta.xml
 Topic.datacategorygroup
 
 # NOTE!! Do NOT use **/ before

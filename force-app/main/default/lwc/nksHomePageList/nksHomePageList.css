@@ -1,0 +1,7 @@
+.stripedList li:first-child {
+    border-top: solid 1px #e7e7e7;
+}
+
+.stripedList li:last-child {
+    border-bottom: solid 1px #e7e7e7;
+}

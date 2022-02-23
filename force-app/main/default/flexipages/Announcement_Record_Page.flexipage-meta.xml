@@ -24,6 +24,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -51,6 +52,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -61,11 +63,13 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Information__c</fieldItem>
+                <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Skills__c</fieldItem>
+                <identifier>RecordSkills__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-34n8i5b9q9o</name>
@@ -79,6 +83,7 @@
                     <value>Facet-34n8i5b9q9o</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-2e4jw5vz9qe</name>
@@ -95,6 +100,7 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
@@ -112,21 +118,25 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Type__c</fieldItem>
+                <identifier>RecordNKS_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-60381bf8-0abe-41ad-80f8-bad135a31215</name>
@@ -140,6 +150,7 @@
                     <value>Facet-60381bf8-0abe-41ad-80f8-bad135a31215</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-657b2e34-38bd-45fb-9baa-9856e840d90a</name>
@@ -169,6 +180,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -194,6 +206,7 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>

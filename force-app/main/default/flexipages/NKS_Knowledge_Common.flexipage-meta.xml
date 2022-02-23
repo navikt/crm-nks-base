@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>
+                <identifier>forceKnowledge_articleVersionHistory</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -20,6 +21,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6639652b-9ef6-48df-a6e2-872c971e079e</name>
@@ -29,6 +31,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionCompare</componentName>
+                <identifier>forceKnowledge_articleVersionCompare</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-a25c72d9-c5cd-43b4-9692-83bcae635472</name>
@@ -50,6 +53,7 @@
                     <value>Redaktør info</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -63,6 +67,7 @@
                     <value>Rediger artikkel</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -76,6 +81,7 @@
                     <value>Sammenlign versjoner</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-2787ed2f-e698-43b0-9487-36edcb062964</name>
@@ -131,6 +137,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -140,6 +147,7 @@
                     <value>Facet-2787ed2f-e698-43b0-9487-36edcb062964</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
@@ -171,6 +179,7 @@
                     <value>Sammendrag</value>
                 </componentInstanceProperties>
                 <componentName>nksHeader</componentName>
+                <identifier>nksHeader</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -201,6 +210,7 @@
                     <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -214,6 +224,7 @@
                     <value>Mer informasjon</value>
                 </componentInstanceProperties>
                 <componentName>nksHeader</componentName>
+                <identifier>nksHeader2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -241,6 +252,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-5f56da46-fdb7-4f55-b86f-1a8fc7292f28</name>
@@ -275,6 +287,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7db93b34-b16d-41f5-a321-bf892b5a85f7</name>
@@ -296,6 +309,7 @@
                     <value>accordionSection1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -313,6 +327,7 @@
                     <value>accordionSection--hgoi8egj0fs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-49d364f9-985e-48bc-b33a-4646fce47882</name>
@@ -330,6 +345,7 @@
                     <value>accordionSection1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordion</componentName>
+                <identifier>flexipage_accordion</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -362,6 +378,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo4</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-97dc061c-9ee0-4980-9827-a3305cc5c49c</name>
@@ -393,6 +410,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo5</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-2533569e-bc63-4b99-a135-f74ae5051800</name>
@@ -414,6 +432,7 @@
                     <value>accordionSection2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -431,6 +450,7 @@
                     <value>accordionSection1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection4</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-b38dd136-bf7a-48f3-a959-f14ef96555ea</name>
@@ -448,6 +468,7 @@
                     <value>accordionSection2</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordion</componentName>
+                <identifier>flexipage_accordion2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-b3074ef3-8901-42db-9d2a-00bf0b8ec3dc</name>
@@ -461,6 +482,7 @@
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -477,6 +499,7 @@
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6e462054-a1cd-4c11-bcf2-b3fef77b731e</name>
@@ -498,6 +521,7 @@
                     <value>Generelt</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -511,6 +535,7 @@
                     <value>Oversettelser</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -524,6 +549,7 @@
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>feedTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -538,6 +564,7 @@
                     <value>maintabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -573,6 +600,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo6</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-147072ae-a5b9-4869-a082-aafc8681ff8f</name>
@@ -604,6 +632,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo7</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-cc50d135-9399-4a0a-a916-47758043fa31</name>
@@ -635,6 +664,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo8</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7e40u8l58n</name>
@@ -666,6 +696,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo9</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-980f514b-1016-4ad4-8371-ac7769939d18</name>
@@ -687,6 +718,7 @@
                     <value>accordionSection1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -704,6 +736,7 @@
                     <value>accordionSection--8b2evfvqmt</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection6</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -721,6 +754,7 @@
                     <value>accordionSection--cevkziykywq</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -738,6 +772,7 @@
                     <value>accordionSection--ade6leflpeh</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection8</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-bc9f6dce-fbd7-41dd-80b9-3cb9d8616867</name>
@@ -755,6 +790,7 @@
                     <value>accordionSection1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordion</componentName>
+                <identifier>flexipage_accordion3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -772,11 +808,13 @@
                     <value>Emner</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:topicsOnRecordWrapper</componentName>
+                <identifier>forceChatter_topicsOnRecordWrapper</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>
+                <identifier>forceKnowledge_articleVersionHistory2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -789,6 +827,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleDataCategoryViewer</componentName>
+                <identifier>forceKnowledge_articleDataCategoryViewer</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -821,6 +860,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -833,6 +873,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <identifier>forceKnowledge_articleSearchDesktop</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.PublishStatus}</leftValue>

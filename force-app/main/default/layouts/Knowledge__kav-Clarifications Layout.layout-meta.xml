@@ -27,6 +27,9 @@
             <layoutItems>
                 <field>UrlName</field>
             </layoutItems>
+            <layoutItems>
+                <field>Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

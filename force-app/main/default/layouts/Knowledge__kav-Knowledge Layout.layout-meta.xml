@@ -126,6 +126,9 @@
             <layoutItems>
                 <field>PublishStatus</field>
             </layoutItems>
+            <layoutItems>
+                <field>Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

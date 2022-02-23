@@ -35,12 +35,25 @@ public with sharing class NKS_HomePageController {
                 userskills = getUserSkills(userId);
         }
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
-        if (content != null)
+        if (content != null) {
             query += ' , ' + content;
-        if (filterbyskills && objectName == 'NKS_Announcement__c')
+        }
+
+        if (filterbyskills && objectName == 'NKS_Announcement__c') {
             query += ' , Skills__c ';
+        }
         query += ' FROM ' + objectName;
+
+        if (objectName == 'Case') {
+            filter +=
+                'IsClosed=false AND OwnerId=\'' +
+                userId +
+                '\' AND RecordTypeId=\'' +
+                getCaseRecordTypeId() +
+                '\'';
+        }
         query += ' WHERE ' + filter;
+
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -48,6 +61,7 @@ public with sharing class NKS_HomePageController {
             }
             query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
+
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -56,14 +70,17 @@ public with sharing class NKS_HomePageController {
 
             query += ' AND Skills__c INCLUDES (' + skillstring.removeEnd(',') + ')';
         }
+
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
+
         if (limitNumber != null)
             query += ' LIMIT ' + limitNumber;
 
         System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
+        System.debug(records.size());
         return records;
     }
 
@@ -147,5 +164,35 @@ public with sharing class NKS_HomePageController {
             skills.add(s.Skill.DeveloperName);
         }
         return skills;
+    }
+  
+    @AuraEnabled
+    public static List<Knowledge__kav> getReadyResponse() {
+        List<Knowledge__kav> records = [
+            SELECT Id, Title, LastModifiedDate
+            FROM Knowledge__kav
+            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
+            ORDER BY LastModifiedDate DESC
+        ];
+        return records;
+    }
+
+    @AuraEnabled
+    public static NKS_Announcement__c getCampaign() {
+        NKS_Announcement__c campaign = [
+            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            FROM NKS_Announcement__c
+            WHERE NKS_Type__c = 'Kampanje'
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
+        return campaign;
+    }
+
+    @AuraEnabled
+    public static Id getCaseRecordTypeId() {
+        Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('STO_Case').getRecordTypeId();
+        return recordTypeId;
     }
 }
