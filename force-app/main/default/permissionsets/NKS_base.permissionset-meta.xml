@@ -770,6 +770,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.INT_IsHasTombstone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.INT_IsInForcedSettlementOrResolution__c</field>
         <readable>true</readable>
     </fieldPermissions>

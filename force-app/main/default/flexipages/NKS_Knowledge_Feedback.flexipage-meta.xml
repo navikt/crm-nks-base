@@ -58,6 +58,7 @@
                     <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -78,6 +79,7 @@
                     <value>non-linear</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_pathassistant:pathAssistant</componentName>
+                <identifier>runtime_sales_pathassistant_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -119,6 +121,7 @@
                     <value>Knowledge__kav</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -140,6 +143,7 @@
                     <value>Case.UpdateFeedback</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -169,6 +173,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo2</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -198,6 +203,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>
@@ -211,6 +217,7 @@
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -227,6 +234,7 @@
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftsidebar</name>

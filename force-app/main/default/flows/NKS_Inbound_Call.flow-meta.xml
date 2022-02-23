@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Check_Theme_Group</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>sessionIds</name>
             <value>
@@ -37,6 +38,7 @@
         <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -53,6 +55,7 @@
         <locationY>1094</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -69,6 +72,7 @@
         <locationY>1094</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
             <value>
@@ -77,6 +81,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Case_Assignment</name>
         <label>Case Assignment</label>
@@ -401,6 +406,7 @@
         <connector>
             <targetReference>Verify_Account</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>INT_OrganizationNumber__c</field>
             <operator>EqualTo</operator>
@@ -423,11 +429,19 @@
         <connector>
             <targetReference>Case_Assignment</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>INT_PersonIdent__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Search</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>INT_IsHasTombstone__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <object>Account</object>
@@ -446,6 +460,7 @@
         <connector>
             <targetReference>Check_Identifier</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_Code_Set__c</field>
             <operator>EqualTo</operator>
@@ -477,6 +492,7 @@
     <status>Active</status>
     <textTemplates>
         <name>ORG_NO_MATCH_TEXT</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>Ingen virksomhet funnet for virksomhetsnummer: {!Search}</text>
     </textTemplates>
     <variables>

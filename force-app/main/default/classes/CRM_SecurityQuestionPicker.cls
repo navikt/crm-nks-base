@@ -51,7 +51,7 @@ public with sharing class CRM_SecurityQuestionPicker {
             switch on random {
                 when 0 {
                     //Fra TPS
-                    returnAnswer = getBankAccount(ident);
+                    returnAnswer = getBankAccount(personIdentifikasjon);
                 }
                 when 1 {
                     //Fra KRR
@@ -98,9 +98,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String ident) {
+    private static String getBankAccount(String personIdentifikasjon) {
         try {
-            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
+            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(personIdentifikasjon);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
@@ -173,7 +173,10 @@ public with sharing class CRM_SecurityQuestionPicker {
             query.hentPerson.sivilstand.type = true;
             query.hentPerson.sivilstand.gyldigFraOgMed = true;
             PDL_API_Response resp = query.execute();
-            if (resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT) {
+            if (
+                resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT &&
+                resp?.data?.hentPerson?.sivilstand[0]?.gyldigFraOgMed != null
+            ) {
                 return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
             }
             return null;

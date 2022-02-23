@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.184.0.NEXT",
+            "versionNumber": "0.187.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -60,7 +60,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "51.0",
+    "sourceApiVersion": "53.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
