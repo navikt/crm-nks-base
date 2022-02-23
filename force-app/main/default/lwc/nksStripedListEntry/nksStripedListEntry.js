@@ -2,17 +2,18 @@ import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import LIVE_CHAT_TRANSCRIPT_THEME_GROUP from '@salesforce/schema/LiveChatTranscript.NKS_Theme_Group__c';
-import CASE_THEME_GROUP from '@salesforce/schema/Case.NKS_Theme_Group__c';
+import THEME_GROUP from '@salesforce/schema/Common_Code__c.Name';
 export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api index;
 
     recordUrl;
     themeGroupId;
-    chatThemeGroup = LIVE_CHAT_TRANSCRIPT_THEME_GROUP;
-    caseThemeGroup = CASE_THEME_GROUP;
     _themeGroup;
+    recordId;
+    objectApiName;
+    wireField;
+    themeGroupField;
 
     get themeGroup() {
         if (this._themeGroup == '' || this._themeGroup == null) {
@@ -61,6 +62,10 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         }).then((url) => {
             this.recordUrl = url;
         });
+        this.recordId = this.record.recordId;
+        this.objectApiName = this.record.objectName;
+        this.wireField = [this.objectApiName + '.Id'];
+        this.themeGroupField = THEME_GROUP;
     }
 
     getThemeGroupId() {
@@ -71,7 +76,6 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         })
             .then((record) => {
                 this.themeGroupId = this.resolve('NKS_Theme_Group__c', record);
-                console.log(this.themeGroupId);
             })
             .catch((error) => {
                 console.log(error);
@@ -79,8 +83,8 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
     }
 
     @wire(getRecord, {
-        recordId: this.record.recordId,
-        fields: this.record.objectName.Id
+        recordId: '$recordId',
+        fields: '$wireField'
     })
     wiredRecord({ error, data }) {
         if (error) {
@@ -91,15 +95,14 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
     }
 
     @wire(getRecord, {
-        recordId: this.themeGroupId,
-        fields: [this.fieldName]
+        recordId: '$themeGroupId',
+        fields: '$themeGroupField'
     })
     wiredThemeGroup({ error, data }) {
         if (error) {
             console.log(error);
         } else if (data) {
             this._themeGroup = getFieldValue(data, this.fieldName);
-            console.log(this._themeGroup);
         }
     }
 
