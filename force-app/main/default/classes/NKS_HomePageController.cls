@@ -51,9 +51,10 @@ public with sharing class NKS_HomePageController {
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
-                skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
+                skillstring += '\'' + u + '\',';
             }
-            query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
+
+            query += ' AND Skills__c INCLUDES (' + skillstring.removeEnd(',') + ')';
         }
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
@@ -139,7 +140,7 @@ public with sharing class NKS_HomePageController {
     private static Set<String> getUserSkillsKnowledge(Id userId) {
         Set<String> skills = new Set<String>();
         for (ServiceResourceSkill s : [
-            SELECT Id, ServiceResourceId, Skill.DeveloperName
+            SELECT Id, ServiceResourceId, Skill.DeveloperName, Skill.MasterLabel
             FROM ServiceResourceSkill
             WHERE ServiceResource.RelatedRecordId = :userId
         ]) {
