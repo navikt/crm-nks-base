@@ -40,17 +40,7 @@ public with sharing class NKS_HomePageController {
         if (filterbyskills && objectName == 'NKS_Announcement__c') {
             query += ' , Skills__c ';
         }
-        query += ' FROM ' + objectName;
-
-        if (objectName == 'Case') {
-            filter +=
-                'IsClosed=false AND OwnerId=\'' +
-                userId +
-                '\' AND RecordTypeId=\'' +
-                getCaseRecordTypeId() +
-                '\'';
-        }
-        query += ' WHERE ' + filter;
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
 
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
@@ -173,11 +163,5 @@ public with sharing class NKS_HomePageController {
         ];
         campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
         return campaign;
-    }
-
-    @AuraEnabled
-    public static Id getCaseRecordTypeId() {
-        Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('STO_Case').getRecordTypeId();
-        return recordTypeId;
     }
 }
