@@ -1,7 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import THEME_ID from '@salesforce/schema/Common_Code__c.Id';
 import THEME_GROUP from '@salesforce/schema/Common_Code__c.Name';
 export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
@@ -9,20 +9,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
 
     recordUrl;
     themeGroupId;
-    _themeGroup;
-    recordId;
-    objectApiName;
-    wireField;
-    themeGroupField;
-
-    get themeGroup() {
-        if (this._themeGroup == '' || this._themeGroup == null) {
-            console.log('Theme group is null!');
-            return '';
-        } else {
-            return this._themeGroup;
-        }
-    }
+    themeGroup;
 
     get className() {
         return this.index % 2 == 0
@@ -36,7 +23,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.recordId,
+                recordId: this.record.recordId,
                 actionName: 'view'
             }
         });
@@ -46,54 +33,26 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.recordId,
+                recordId: this.record.recordId,
                 actionName: 'view'
             }
         }).then((url) => {
             this.recordUrl = url;
         });
-        this.recordId = this.record.recordId;
-        this.objectApiName = this.record.objectName;
-        this.wireField = [this.objectApiName + '.Id'];
-        this.themeGroupField = ['Common_Code__c.Id'];
-    }
-
-    getThemeGroupId() {
-        getRelatedRecord({
-            parentId: this.recordId,
-            relationshipField: 'NKS_Theme_Group__c',
-            objectApiName: this.objectApiName
-        })
-            .then((record) => {
-                this.themeGroupId = this.resolve('NKS_Theme_Group__c', record);
-                console.log(this.themeGroupId);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    @wire(getRecord, {
-        recordId: '$recordId',
-        fields: '$wireField'
-    })
-    wiredRecord({ error, data }) {
-        if (error) {
-            console.log(error);
-        } else if (data) {
-            this.getThemeGroupId();
-        }
+        this.themeGroupId = this.record.name;
     }
 
     @wire(getRecord, {
         recordId: '$themeGroupId',
-        fields: '$themeGroupField'
+        fields: [THEME_ID, THEME_GROUP]
     })
     wiredThemeGroup({ error, data }) {
         if (error) {
             console.log(error);
         } else if (data) {
-            this._themeGroup = getFieldValue(data, THEME_GROUP);
+            if (this.themeGroupId) {
+                this.themeGroup = getFieldValue(data, THEME_GROUP);
+            }
         }
     }
 
