@@ -1,6 +1,7 @@
 .banner img {
     width: 100%;
     height: auto;
+    border-radius: 0.25rem;
 }
 .banner a:hover img {
     border: solid 1px white;

@@ -46,6 +46,25 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     loadList() {
+        if (this.isCase) {
+            getList({
+                title: 'NKS_Theme_Group__c',
+                content: null,
+                objectName: 'Case',
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
+                orderby: 'CreatedDate DESC',
+                limitNumber: 3,
+                datefield: 'CreatedDate',
+                showimage: false,
+                filterbyskills: false
+            })
+                .then((result) => {
+                    this.records = result;
+                })
+                .catch((error) => {
+                    this.error = error;
+                });
+        }
         getList({
             title: this.title,
             content: this.content,
@@ -93,6 +112,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    get isCase() {
+        return this.objectName === 'Case' ? true : false;
+    }
 
     get isStripedList() {
         return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
