@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Links and Ready Response</masterLabel>
+    <description>Component to display list of useful links and most important articles' links</description>
+    <targets>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property name="showReadyResponse" type="Boolean" default="false" label="Vis svarberedskaper" description="Vise svarberedskaper?" />
+            <property name="titleInput" type="String" required="true" default="Title" label="Title" description="Skriv tittel til svarberedskapen her. Dersom du ønsker å legge til flere svarberedskaper skill titlene med ','" />
+            <property name="urlInput" type="String" required="true" default="URL" label="URL" description="Skriv URL til svarberedskapen her. Dersom du ønsker å legge til flere svarberedskaper skill URL-ene med ','" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

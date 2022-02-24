@@ -16,11 +16,17 @@ public class NKS_ChatTranscriptService_Test {
                     NKS_Journal_Entry_Created__c = true,
                     Body = 'TESTBODY',
                     CaseId = botCase.Id,
-                    NKS_Journal_Entry_ID__c = UTIL_TestDataFactory.generateRandomNumberString(10)
+                    NKS_Journal_Entry_ID__c = UTIL_TestDataFactory.generateRandomNumberString(10),
+                    CRM_Authentication_Status__c = 'Completed',
+                    NKS_Authentication_Timestamp__c = Datetime.now()
                 )
             );
         }
-        UTIL_TestDataFactory.createRecordList(transcripts);
+        UTIL_TestDataFactory.createRecord(
+            new Thread__c(
+                CRM_Related_Object__c = (String) UTIL_TestDataFactory.createRecordList(transcripts)[0].get('Id')
+            )
+        );
     }
 
     @isTest
@@ -38,18 +44,6 @@ public class NKS_ChatTranscriptService_Test {
         NKS_ChatTranscriptService.storeConversation(transcript.Id, conversation);
         Test.stopTest();
 
-        transcript = [
-            SELECT Id, NKS_Conversation__c, NKS_Conversation_Stored__c
-            FROM LiveChatTranscript
-            WHERE Id = :transcript.Id
-        ];
-
-        Case testCase = [SELECT Id, NKS_Conversation__c, NKS_Conversation_Stored__c FROM Case LIMIT 1];
-
-        System.assert(String.isBlank(transcript.NKS_Conversation__c));
-        System.assert(false == transcript.NKS_Conversation_Stored__c);
-
-        System.assert(String.isNotBlank(testCase.NKS_Conversation__c));
-        System.assert(testCase.NKS_Conversation_Stored__c);
+        System.assertEquals(1, [SELECT COUNT() FROM Thread__c WHERE CRM_Related_Object__c = :transcript.Id]);
     }
 }

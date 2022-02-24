@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -20,6 +20,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -33,6 +34,7 @@
                     <value>700</value>
                 </componentInstanceProperties>
                 <componentName>runtime_service_liveagent:chatBody</componentName>
+                <identifier>runtime_service_liveagent_chatBody</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7d1e621f-7d5d-4422-a5ba-d2e5c9190ffb</name>
@@ -42,6 +44,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-44839958-232d-4095-83a3-1c0a6e9370d9</name>
@@ -81,6 +84,7 @@
                     <value>Case</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-34b13a44-af0f-4275-b219-6cddd628c27d</name>
@@ -98,6 +102,7 @@
                     <value>Standard.Tab.chat</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>chatTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -111,6 +116,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -124,6 +130,7 @@
                     <value>Frida logg</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-1fdd009c-cbdc-49a7-b544-d0c8501af993</name>
@@ -137,6 +144,7 @@
                     <value>Facet-1fdd009c-cbdc-49a7-b544-d0c8501af993</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
@@ -162,10 +170,10 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksFlowStarter</componentName>
+                <identifier>nksFlowStarter</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -191,10 +199,10 @@
                     <value>Name, INT_Sex__c, INT_Citizenships__c</value>
                 </componentInstanceProperties>
                 <componentName>nksChatAuthenticationInfoContainer</componentName>
+                <identifier>nksChatAuthenticationInfoContainer</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue
-                        >{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Secure_Chat_Permission}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -204,6 +212,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
