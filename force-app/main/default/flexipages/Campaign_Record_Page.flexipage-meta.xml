@@ -24,6 +24,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -55,6 +56,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -64,26 +66,31 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Information__c</fieldItem>
+                <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Type__c</fieldItem>
+                <identifier>RecordNKS_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.From_Date__c</fieldItem>
+                <identifier>RecordFrom_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.To_Date__c</fieldItem>
+                <identifier>RecordTo_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5aa7ce49-5d71-4d8b-b540-8a0eddf7b8a1</name>
@@ -97,6 +104,7 @@
                     <value>Facet-5aa7ce49-5d71-4d8b-b540-8a0eddf7b8a1</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-9e80be86-d88c-43fb-b53c-48f531641cc4</name>
@@ -113,6 +121,7 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
@@ -129,6 +138,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Image_Alt__c</fieldItem>
+                <identifier>RecordImage_Alt__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</name>
@@ -142,6 +152,7 @@
                     <value>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-e1fbf8d6-1114-456b-94c5-e277179ac426</name>
@@ -151,11 +162,13 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d33ecb1c-a2b9-4196-a6d1-b5c9edbadb48</name>
@@ -169,6 +182,7 @@
                     <value>Facet-d33ecb1c-a2b9-4196-a6d1-b5c9edbadb48</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-37005545-1795-4164-b922-fd610c1f412b</name>
@@ -198,6 +212,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
@@ -217,6 +232,7 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection1</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
@@ -236,6 +252,7 @@
                     <name>label</name>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>

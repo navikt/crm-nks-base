@@ -44,6 +44,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -53,6 +54,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CRM_Conversation_Note__c</fieldItem>
+                <identifier>RecordCRM_Conversation_Note__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-33b0f45c-07e2-4959-b8e6-55bd499d93e6</name>
@@ -66,6 +68,7 @@
                     <value>Facet-33b0f45c-07e2-4959-b8e6-55bd499d93e6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-3b938874-acf3-42a4-b989-474f60b87b8c</name>
@@ -83,6 +86,7 @@
                     <value>Referat</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftcol</name>
@@ -92,11 +96,13 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Date_Time_Registered__c</fieldItem>
+                <identifier>RecordNKS_Date_Time_Registered__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</name>
@@ -106,6 +112,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CRM_Account__c</fieldItem>
+                <identifier>RecordCRM_Account__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</name>
@@ -119,6 +126,7 @@
                     <value>Facet-20b12803-0cbc-4289-890b-222eed41b6b0</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -128,6 +136,7 @@
                     <value>Facet-69a9698c-2923-48cd-b435-aa0b4471a628</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-bab5275a-691a-4750-a8c7-9cdf7fff0141</name>
@@ -145,6 +154,7 @@
                     <value>Detaljer</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -210,6 +220,7 @@
                     <value>CRM_Henvendelse_BehandlingskjedeId__c</value>
                 </componentInstanceProperties>
                 <componentName>crmRelatedList</componentName>
+                <identifier>crmRelatedList</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightcol</name>

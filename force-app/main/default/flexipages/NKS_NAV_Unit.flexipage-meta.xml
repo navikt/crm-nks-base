@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
         <itemInstances>
@@ -24,6 +24,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -57,6 +58,7 @@
                     <value>UNIT_NUMBER</value>
                 </componentInstanceProperties>
                 <componentName>nksNavUnitSingle</componentName>
+                <identifier>nksNavUnitSingle</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.INT_UnitNumber__c}</leftValue>
