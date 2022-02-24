@@ -26,7 +26,8 @@
         </div>
         <div class="slds-p-horizontal_small">
             <template if:true={showbutton}>
-                <button class="slds-button slds-button_outline-brand slds-button_stretch">
+                <textarea hidden disabled class="clipboardInput" style="position:fixed;top:-5rem;height:1px;width:10px;"></textarea>
+                <button type="button" class="slds-button slds-button_outline-brand slds-button_stretch" onclick={copyHandler}>
                     <lightning-icon icon-name="utility:copy" size="x-small" class="slds-current-color slds-p-horizontal_small"></lightning-icon>Kopier postadresse</button>
             </template>
         </div>
