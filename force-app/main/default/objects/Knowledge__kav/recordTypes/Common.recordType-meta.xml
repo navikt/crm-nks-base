@@ -1,6 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Common</fullName>
     <active>true</active>
     <label>Knowledge Article - Common</label>
+    <picklistValues>
+        <picklist>Skills__c</picklist>
+        <values>
+            <fullName>Arbeid</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Familie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pensjon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ufoer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

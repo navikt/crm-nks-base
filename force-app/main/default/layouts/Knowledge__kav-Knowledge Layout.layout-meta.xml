@@ -15,6 +15,9 @@
             <layoutItems>
                 <field>Article__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>Skills__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

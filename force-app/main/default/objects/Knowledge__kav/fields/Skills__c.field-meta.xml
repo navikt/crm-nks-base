@@ -46,24 +46,6 @@
                 <isActive>false</isActive>
                 <label>Internasjonal</label>
             </value>
-            <value>
-                <fullName>Pleiepenger</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Pleiepenger</label>
-            </value>
-            <value>
-                <fullName>Sosiale tjenester</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Sosiale tjenester</label>
-            </value>
-            <value>
-                <fullName>Teknisk brukerstøtte</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Teknisk brukerstøtte</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
