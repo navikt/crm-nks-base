@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Skills__c</fullName>
+    <externalId>false</externalId>
+    <label>Skills</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Arbeid</fullName>
+                <default>false</default>
+                <label>Arbeid</label>
+            </value>
+            <value>
+                <fullName>Familie</fullName>
+                <default>false</default>
+                <label>Familie</label>
+            </value>
+            <value>
+                <fullName>Helse</fullName>
+                <default>false</default>
+                <label>Helse</label>
+            </value>
+            <value>
+                <fullName>Pensjon</fullName>
+                <default>false</default>
+                <label>Pensjon</label>
+            </value>
+            <value>
+                <fullName>Ufoer</fullName>
+                <default>false</default>
+                <label>Ufoer</label>
+            </value>
+            <value>
+                <fullName>Gjeldsrådgivning</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gjeldsrådgivning</label>
+            </value>
+            <value>
+                <fullName>Internasjonal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Internasjonal</label>
+            </value>
+            <value>
+                <fullName>Pleiepenger</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pleiepenger</label>
+            </value>
+            <value>
+                <fullName>Sosiale tjenester</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sosiale tjenester</label>
+            </value>
+            <value>
+                <fullName>Teknisk brukerstøtte</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Teknisk brukerstøtte</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
