@@ -20,9 +20,13 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api required = false;
 
+    get textArea() {
+        return this.template.querySelector('.conversationNoteTextArea');
+    }
+
     renderedCallback() {
         if (this.initialRender === true) {
-            let inputField = this.template.querySelector('.conversationNoteTextArea');
+            let inputField = this.textArea;
             inputField.focus();
             inputField.blur();
             this.initialRender = false;
@@ -63,9 +67,8 @@ export default class nksQuickText extends LightningElement {
         this.template.querySelector('lightning-input').focus();
     }
 
-    hideModal(event) {
+    hideModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalHide';
-        event.stopPropagation();
     }
 
     outsideClickListener = (e) => {
@@ -184,7 +187,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     handlePaste(evt) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
+        const editor = this.textArea;
         editor.setRangeText(
             this.toPlainText((evt.clipboardData || window.clipboardData).getData('text')),
             editor.selectionStart,
@@ -194,7 +197,7 @@ export default class nksQuickText extends LightningElement {
         evt.preventDefault();
         evt.stopImmediatePropagation();
 
-        this.conversationNote = editor.value;
+        this._conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -227,7 +230,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertText(event) {
-        const editor = this.template.querySelector('.conversationNoteTextArea');
+        const editor = this.textArea;
         editor.focus();
         editor.setRangeText(
             this.toPlainText(event.currentTarget.dataset.message),
@@ -237,7 +240,7 @@ export default class nksQuickText extends LightningElement {
         );
 
         this.hideModal(undefined);
-        this.conversationNote = editor.value;
+        this._conversationNote = editor.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -246,7 +249,7 @@ export default class nksQuickText extends LightningElement {
 
     handleChange(event) {
         this[event.target.name] = event.target.value;
-        this.conversationNote = event.target.value;
+        this._conversationNote = event.target.value;
         const attributeChangeEvent = new CustomEvent('commentschange', {
             detail: this.conversationNote
         });
@@ -255,7 +258,7 @@ export default class nksQuickText extends LightningElement {
 
     insertquicktext(event) {
         if (event.keyCode === 32) {
-            const editor = this.template.querySelector('.conversationNoteTextArea');
+            const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
             const lastItem = editor.value
                 .substring(0, carretPositionEnd)

@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.186.0.NEXT",
+            "versionNumber": "0.187.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.144.0.LATEST"
+                    "versionNumber": "0.146.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -37,7 +37,7 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.9.0.LATEST"
+                    "versionNumber": "0.12.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -60,7 +60,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "51.0",
+    "sourceApiVersion": "53.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",

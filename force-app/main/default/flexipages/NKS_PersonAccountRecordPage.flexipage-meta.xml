@@ -44,6 +44,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CRM_Person__r.INT_IsDeceased__c}</leftValue>
@@ -92,6 +93,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -133,6 +135,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -154,6 +157,7 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksKrrInformation</componentName>
+                <identifier>nksKrrInformation</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -195,6 +199,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo4</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CRM_Person__r.INT_TemporaryAddress__c}</leftValue>
@@ -242,6 +247,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo5</identifier>
                 <visibilityRule>
                     <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                     <criteria>
@@ -290,11 +296,13 @@
                     <value>PERSON_LOCATION</value>
                 </componentInstanceProperties>
                 <componentName>nksNavUnitSingle</componentName>
+                <identifier>nksNavUnitSingle</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>nksFamilyViewer</componentName>
+                <identifier>nksFamilyViewer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-d9b946a9-9b97-48bc-a177-4a24a8c6c56f</name>
@@ -348,6 +356,7 @@
                     <value>Id</value>
                 </componentInstanceProperties>
                 <componentName>timeline</componentName>
+                <identifier>timeline</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -393,6 +402,7 @@
                     <value>Id</value>
                 </componentInstanceProperties>
                 <componentName>timeline</componentName>
+                <identifier>timeline2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -402,6 +412,7 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksBrukervarselList</componentName>
+                <identifier>nksBrukervarselList</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-9744652f-92bd-4ad7-a2b0-b3a6705c9075</name>
@@ -431,6 +442,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-64554126-722e-4e8c-8c74-a69278277ffc</name>
@@ -452,6 +464,7 @@
                     <value>Id</value>
                 </componentInstanceProperties>
                 <componentName>nksSakOgDokumentListeNarrow</componentName>
+                <identifier>nksSakOgDokumentListeNarrow</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>
@@ -465,6 +478,7 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksPersonPaymentList</componentName>
+                <identifier>nksPersonPaymentList</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-fb3d097d-2ddf-4458-b4b2-8daa8c50ce28</name>
@@ -482,6 +496,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -495,6 +510,7 @@
                     <value>Kommunikasjon</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -508,6 +524,7 @@
                     <value>Standard.Tab.tasks</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>tasksTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -521,6 +538,7 @@
                     <value>Saker</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -534,6 +552,7 @@
                     <value>Standard.Tab.rebateMemberPayout</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>rebateMemberPayoutTab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</name>
@@ -567,6 +586,7 @@
                     <value>2</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -580,6 +600,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksPersonHeader</componentName>
+                <identifier>nksPersonHeader</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -589,6 +610,7 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksAccessErrorMessage</componentName>
+                <identifier>nksAccessErrorMessage</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -598,6 +620,7 @@
                     <value>Facet-1883c864-938f-4fc7-a5b3-ec35ea48841e</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CRM_Person__r.INT_ActorId__c}</leftValue>
@@ -628,6 +651,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>nksFlowStarter</componentName>
+                <identifier>nksFlowStarter</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -669,6 +693,7 @@
                     <value>Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo6</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -678,6 +703,7 @@
                     <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksDataSyncher</componentName>
+                <identifier>nksDataSyncher</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CRM_Person__r.INT_ActorId__c}</leftValue>
@@ -689,6 +715,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>

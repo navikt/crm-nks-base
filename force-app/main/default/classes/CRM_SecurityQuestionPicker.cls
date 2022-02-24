@@ -173,7 +173,10 @@ public with sharing class CRM_SecurityQuestionPicker {
             query.hentPerson.sivilstand.type = true;
             query.hentPerson.sivilstand.gyldigFraOgMed = true;
             PDL_API_Response resp = query.execute();
-            if (resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT) {
+            if (
+                resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT &&
+                resp?.data?.hentPerson?.sivilstand[0]?.gyldigFraOgMed != null
+            ) {
                 return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
             }
             return null;
