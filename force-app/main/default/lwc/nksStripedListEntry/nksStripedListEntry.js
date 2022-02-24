@@ -9,12 +9,21 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
 
     recordUrl;
     themeGroupId;
-    themeGroup;
+    _themeGroup;
 
     get className() {
         return this.index % 2 == 0
             ? 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem isEven'
             : 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem';
+    }
+
+    get themeGroup() {
+        if (this._themeGroup === '' || this._themeGroup == null) {
+            console.log('Theme group is not defined for this record.');
+            return '';
+        } else {
+            return this._themeGroup;
+        }
     }
 
     navigateToPage(event) {
@@ -51,7 +60,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             console.log(error);
         } else if (data) {
             if (this.themeGroupId) {
-                this.themeGroup = getFieldValue(data, THEME_GROUP);
+                this._themeGroup = getFieldValue(data, THEME_GROUP);
             }
         }
     }
