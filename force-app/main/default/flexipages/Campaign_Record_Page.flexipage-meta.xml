@@ -83,12 +83,6 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Image_Alt__c</fieldItem>
-                <identifier>RecordImage_Alt__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
                 <fieldItem>Record.From_Date__c</fieldItem>
                 <identifier>RecordFrom_Date__cField</identifier>
             </fieldInstance>
@@ -139,6 +133,30 @@
         </itemInstances>
         <name>main</name>
         <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Image_Alt__c</fieldItem>
+                <identifier>RecordImage_Alt__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e1fbf8d6-1114-456b-94c5-e277179ac426</name>
+        <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
@@ -195,6 +213,26 @@
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-e1fbf8d6-1114-456b-94c5-e277179ac426</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection1</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>

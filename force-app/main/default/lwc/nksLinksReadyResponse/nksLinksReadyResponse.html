@@ -1,130 +1,261 @@
 <template>
     <lightning-layout class="slds-box slds-theme_default slds-var-m-top_small">
         <template if:true={showReadyResponse}>
-            <lightning-layout-item size="4" class="slds-border_right slds-var-p-right_large">
+            <lightning-layout-item size="5" class="slds-border_right slds-var-p-right_large">
                 <h2 class="slds-text-heading_medium slds-truncate">Svarberedskap</h2>
                 <ul>
                     <template for:each={records} for:item="record">
-                        <li class="slds-item" key={record.Id}>
-                            <c-nks-ready-response-list-entry record={record}></c-nks-ready-response-list-entry>
+                        <li class="slds-item" key={record.title}>
+                            <form action={record.url}>
+                                <button
+                                    class="slds-large-size_8-of-8 slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
+                                >
+                                    {record.title}
+                                </button>
+                            </form>
                         </li>
                     </template>
                 </ul>
             </lightning-layout-item>
+
+            <lightning-layout-item size="7" class="slds-var-p-left_large">
+                <h2 class="slds-text-heading_medium slds-truncate">Nyttige lenker</h2>
+                <div class="slds-grid slds-grid_vertical slds-var-m-top_small">
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:people"
+                            alternative-text="Samspillet"
+                            title="Samspillet"
+                        >
+                        </lightning-icon>
+                        <a href="https://www.survey-xact.dk/LinkCollector?key=8JKQDD2C1N92" class="slds-text-link">
+                            Samspillet
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:multi_picklist"
+                            alternative-text="Norsk-engelsk ordliste"
+                            title="Norsk-engelsk ordliste"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Ordliste-Norsk-Engelsk.aspx"
+                            class="slds-text-link"
+                        >
+                            Norsk-engelsk ordliste
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:expand"
+                            alternative-text="Snarveier på nav.no"
+                            title="Snarveier på nav.no"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Snarveier-p%C3%A5-nav.no.aspx"
+                            class="slds-text-link"
+                        >
+                            Snarveier på nav.no
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:incident"
+                            alternative-text="Sikkerhetsrutinen"
+                            title="Sikkerhetsrutinen"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navdialog.lightning.force.com/lightning/r/Knowledge__kav/ka07U000000PCOeQAO/view"
+                            class="slds-text-link"
+                        >
+                            Sikkerhetsrutinen
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:sms"
+                            alternative-text="Send SMS til bruker"
+                            title="Send SMS til bruker"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Send-SMS.aspx"
+                            class="slds-text-link"
+                        >
+                            Send SMS til bruker
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:video"
+                            alternative-text="Video- og webinarbibliotek"
+                            title="Video- og webinarbibliotek"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navno.sharepoint.com/sites/fag-og-ytelser/SitePages/Video--og-webinarbibliotek.aspx"
+                            class="slds-text-link"
+                        >
+                            Video- og webinarbibliotek
+                        </a>
+                    </div>
+                    <div class="slds-col slds-var-p-vertical_xx-small">
+                        <lightning-icon
+                            class="slds-var-m-right_x-small link-icon"
+                            size="x-small"
+                            icon-name="utility:button_choice"
+                            alternative-text="Testbaser"
+                            title="Testbaser"
+                        >
+                        </lightning-icon>
+                        <a
+                            href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Opplaering-Testbaser.aspx"
+                            class="slds-text-link"
+                        >
+                            Testbaser
+                        </a>
+                    </div>
+                </div>
+            </lightning-layout-item>
         </template>
-        <lightning-layout-item size={size} class={className}>
-            <h2 class="slds-text-heading_medium slds-truncate">Nyttige lenker</h2>
-            <ul class="slds-wrap slds-var-m-top_small slds-list_horizontal horizontal-list">
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:people"
-                        alternative-text="Samspillet"
-                        title="Samspillet"
-                    >
-                    </lightning-icon>
-                    <a href="https://www.survey-xact.dk/LinkCollector?key=8JKQDD2C1N92" class="slds-text-link">
-                        Samspillet
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:multi_picklist"
-                        alternative-text="Norsk-engelsk ordliste"
-                        title="Norsk-engelsk ordliste"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Ordliste-Norsk-Engelsk.aspx"
-                        class="slds-text-link"
-                    >
-                        Norsk-engelsk ordliste
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:expand"
-                        alternative-text="Snarveier på nav.no"
-                        title="Snarveier på nav.no"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Snarveier-p%C3%A5-nav.no.aspx"
-                        class="slds-text-link"
-                    >
-                        Snarveier på nav.no
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:incident"
-                        alternative-text="Sikkerhetsrutinen"
-                        title="Sikkerhetsrutinen"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navdialog.lightning.force.com/lightning/r/Knowledge__kav/ka07U000000PCOeQAO/view"
-                        class="slds-text-link"
-                    >
-                        Sikkerhetsrutinen
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:sms"
-                        alternative-text="Send SMS til bruker"
-                        title="Send SMS til bruker"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Send-SMS.aspx"
-                        class="slds-text-link"
-                    >
-                        Send SMS til bruker
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:button_choice"
-                        alternative-text="Testbaser"
-                        title="Testbaser"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Opplaering-Testbaser.aspx"
-                        class="slds-text-link"
-                    >
-                        Testbaser
-                    </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
-                    <lightning-icon
-                        class="slds-var-m-right_x-small link-icon"
-                        size="x-small"
-                        icon-name="utility:video"
-                        alternative-text="Video- og webinarbibliotek"
-                        title="Video- og webinarbibliotek"
-                    >
-                    </lightning-icon>
-                    <a
-                        href="https://navno.sharepoint.com/sites/fag-og-ytelser/SitePages/Video--og-webinarbibliotek.aspx"
-                        class="slds-text-link"
-                    >
-                        Video- og webinarbibliotek
-                    </a>
-                </li>
-            </ul>
-        </lightning-layout-item>
+        <template if:false={showReadyResponse}>
+            <lightning-layout size="12" multiple-rows="true">
+                <h2 class="slds-text-heading_medium slds-truncate">Nyttige lenker</h2>
+                <div class="slds-grid slds-wrap slds-var-m-top_small">
+                    <div class="slds-col slds-grid slds-size_2-of-2">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:people"
+                                alternative-text="Samspillet"
+                                title="Samspillet"
+                            >
+                            </lightning-icon>
+                            <a href="https://www.survey-xact.dk/LinkCollector?key=8JKQDD2C1N92" class="slds-text-link">
+                                Samspillet
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:multi_picklist"
+                                alternative-text="Norsk-engelsk ordliste"
+                                title="Norsk-engelsk ordliste"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Ordliste-Norsk-Engelsk.aspx"
+                                class="slds-text-link"
+                            >
+                                Norsk-engelsk ordliste
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-grid slds-size_2-of-2">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:expand"
+                                alternative-text="Snarveier på nav.no"
+                                title="Snarveier på nav.no"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Snarveier-p%C3%A5-nav.no.aspx"
+                                class="slds-text-link"
+                            >
+                                Snarveier på nav.no
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:incident"
+                                alternative-text="Sikkerhetsrutinen"
+                                title="Sikkerhetsrutinen"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navdialog.lightning.force.com/lightning/r/Knowledge__kav/ka07U000000PCOeQAO/view"
+                                class="slds-text-link"
+                            >
+                                Sikkerhetsrutinen
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-grid slds-size_2-of-2">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:sms"
+                                alternative-text="Send SMS til bruker"
+                                title="Send SMS til bruker"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navno.sharepoint.com/sites/intranett-it/SitePages/Send-SMS.aspx"
+                                class="slds-text-link"
+                            >
+                                Send SMS til bruker
+                            </a>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:video"
+                                alternative-text="Video- og webinarbibliotek"
+                                title="Video- og webinarbibliotek"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navno.sharepoint.com/sites/fag-og-ytelser/SitePages/Video--og-webinarbibliotek.aspx"
+                                class="slds-text-link"
+                            >
+                                Video- og webinarbibliotek
+                            </a>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-grid slds-size_2-of-2">
+                        <div class="slds-col slds-size_1-of-2 slds-var-p-vertical_xx-small">
+                            <lightning-icon
+                                class="slds-var-m-right_x-small link-icon"
+                                size="x-small"
+                                icon-name="utility:button_choice"
+                                alternative-text="Testbaser"
+                                title="Testbaser"
+                            >
+                            </lightning-icon>
+                            <a
+                                href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Opplaering-Testbaser.aspx"
+                                class="slds-text-link"
+                            >
+                                Testbaser
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout>
+        </template>
     </lightning-layout>
 </template>
