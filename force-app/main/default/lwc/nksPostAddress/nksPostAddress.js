@@ -68,11 +68,16 @@ export default class NksPostAddress extends LightningElement {
     }
     onclickHandler(){
         this.open = !this.open;
-        console.log("click");
-        console.log(this.address());
     }
     copyHandler(){
-
+        let clipboardInput = this.template.querySelector(".clipboardInput");
+        clipboardInput.disabled = false;
+        clipboardInput.hidden = false;
+        clipboardInput.value = this.addressString;
+        clipboardInput.select();
+        console.log(document.execCommand("copy"));
+        clipboardInput.hidden = true;
+        clipboardInput.disabled = true;
     }
     @wire(getPostAddress) _address;
 }
