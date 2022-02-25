@@ -30,7 +30,6 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         });
     }
 
-    /* Check for Card Label */
     get cardKunnskap() {
         return this.cardLabel === 'Sist oppdaterte kunnskapsartikler';
     }

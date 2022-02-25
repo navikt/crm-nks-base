@@ -99,7 +99,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.loadList();
     };
 
-    /*Action called on button click to load more Kunnskap Articles*/
     lastFlereList(event) {
         this.listCount += 3;
         this.limit = this.listCount;
