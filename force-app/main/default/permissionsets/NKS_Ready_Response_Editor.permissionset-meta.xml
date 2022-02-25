@@ -11,8 +11,4 @@
         <object>ReadyResponse__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <tabSettings>
-        <tab>ReadyResponse__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
