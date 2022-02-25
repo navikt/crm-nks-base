@@ -3,7 +3,6 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
     @api record;
-    @api cardLabel;
     recordPageUrl;
 
     navigateToSObject(event) {
@@ -28,9 +27,5 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         }).then((url) => {
             this.recordPageUrl = url;
         });
-    }
-
-    get cardKunnskap() {
-        return this.cardLabel === 'Sist oppdaterte kunnskapsartikler';
     }
 }
