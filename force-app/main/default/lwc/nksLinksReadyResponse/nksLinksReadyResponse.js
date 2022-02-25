@@ -1,27 +1,27 @@
-import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
-
-export default class NksLinksReadyResponse extends NavigationMixin(LightningElement) {
+import { LightningElement, api, track } from 'lwc';
+import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
+export default class NksLinksReadyResponse extends LightningElement {
     @api showReadyResponse;
-    @api titleInput;
-    @api urlInput;
+    @track records = [];
 
     isInitiated = false;
-    titleList = [];
-    urlList = [];
 
     connectedCallback() {
         this.isInitiated = true;
-        this.titleList = this.titleInput.split(',');
-        this.urlList = this.urlInput.split(',');
+        this.loadList();
     }
 
-    get records() {
-        let records = [];
-        for (var i = 0; i < this.titleList.length; i++) {
-            let record = { title: this.titleList[i], url: this.urlList[i] };
-            records.push(record);
-        }
-        return records;
+    loadList() {
+        getReadyResponse()
+            .then((result) => {
+                this.records = result;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
+    /*
+    get showReadyResponse() {
+        return this.records.length > 0 ? true : false;
+    } */
 }
