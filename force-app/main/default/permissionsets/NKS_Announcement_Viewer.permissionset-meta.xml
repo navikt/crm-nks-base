@@ -6,6 +6,11 @@
     </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.From_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_ImageURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29,6 +34,11 @@
         <field>NKS_Announcement__c.Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.To_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Announcement Viewer</label>
     <objectPermissions>
@@ -41,11 +51,19 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Campaign</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.Operational</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Traffic_Controller</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 </PermissionSet>
