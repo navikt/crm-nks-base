@@ -153,4 +153,15 @@ public with sharing class NKS_HomePageController {
         campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
         return campaign;
     }
+
+    @AuraEnabled
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> records = [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+        return records;
+    }
 }

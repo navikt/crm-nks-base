@@ -5,12 +5,12 @@
                 <h2 class="slds-text-heading_medium slds-truncate">Svarberedskap</h2>
                 <ul>
                     <template for:each={records} for:item="record">
-                        <li class="slds-item" key={record.title}>
-                            <form action={record.url}>
+                        <li class="slds-item" key={record.Id}>
+                            <form action={record.URL__c}>
                                 <button
                                     class="slds-large-size_8-of-8 slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
                                 >
-                                    {record.title}
+                                    {record.Name}
                                 </button>
                             </form>
                         </li>
