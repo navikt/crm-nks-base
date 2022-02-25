@@ -60,7 +60,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "53.0",
+    "sourceApiVersion": "54.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
