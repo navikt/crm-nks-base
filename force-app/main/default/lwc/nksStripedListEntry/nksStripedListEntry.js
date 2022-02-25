@@ -6,24 +6,22 @@ import THEME_GROUP from '@salesforce/schema/Common_Code__c.Name';
 export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api index;
+    @api lastIndex;
 
     recordUrl;
-    themeGroupId;
-    _themeGroup;
 
     get className() {
-        return this.index % 2 == 0
-            ? 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem isEven'
-            : 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem';
-    }
-
-    get themeGroup() {
-        if (this._themeGroup === '' || this._themeGroup == null) {
-            console.log('Theme group is not defined for this record.');
-            return '';
-        } else {
-            return this._themeGroup;
+        let cssClass = 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem';
+        if (this.index % 2 == 0) {
+            cssClass += ' isEven';
         }
+        if (this.index == 0) {
+            cssClass += ' isFirst';
+        }
+        if (this.index == this.lastIndex) {
+            cssClass += ' isLast';
+        }
+        return cssClass;
     }
 
     navigateToPage(event) {
@@ -60,7 +58,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             console.log(error);
         } else if (data) {
             if (this.themeGroupId) {
-                this._themeGroup = getFieldValue(data, THEME_GROUP);
+                this.themeGroup = getFieldValue(data, THEME_GROUP);
             }
         }
     }
