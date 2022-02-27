@@ -17,12 +17,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
-
-    @track records = [];
-
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
+
+    @track records;
     error;
     pageurl;
 
@@ -46,25 +45,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     loadList() {
-        if (this.isCase) {
-            getList({
-                title: 'STO_Category__c',
-                content: null,
-                objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
-                orderby: 'CreatedDate DESC',
-                limitNumber: 3,
-                datefield: 'CreatedDate',
-                showimage: false,
-                filterbyskills: false
-            })
-                .then((result) => {
-                    this.records = result;
-                })
-                .catch((error) => {
-                    this.error = error;
-                });
-        }
         getList({
             title: this.title,
             content: this.content,
@@ -112,26 +92,4 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
-
-    get isCase() {
-        return this.objectName === 'Case' ? true : false;
-    }
-
-    get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
-    }
-
-    get hasRecord() {
-        return this.records.length > 0 ? true : false;
-    }
-
-    get setEmptyState() {
-        return !this.hasRecord && this.isStripedList ? true : false;
-    }
-
-    get lastIndex() {
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            return this.records.length - 1;
-        }
-    }
 }

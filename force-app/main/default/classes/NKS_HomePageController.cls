@@ -67,15 +67,12 @@ public with sharing class NKS_HomePageController {
         System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
-        System.debug(records.size());
         return records;
     }
 
     public class Record {
         @AuraEnabled
         public String recordId;
-        @AuraEnabled
-        public String objectApiName;
         @AuraEnabled
         public String name;
         @AuraEnabled
@@ -100,7 +97,6 @@ public with sharing class NKS_HomePageController {
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
-            record.objectApiName = objectName;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if (showimage)
@@ -142,20 +138,6 @@ public with sharing class NKS_HomePageController {
             skills.add(g.DeveloperName);
         }
         return skills;
-    }
-
-    @AuraEnabled
-    public static String getQueue(Id userId) {
-        Group g = [
-            SELECT DeveloperName, Name, Type, Id
-            FROM Group
-            WHERE Group.Type = 'Queue' AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
-        ];
-        List<String> queueName = g.Name.split(' ');
-        if (queueName[0] == 'Chat' || queueName[0] == 'chat') {
-            queueName.remove(0);
-        }
-        return string.join(queueName, ' ');
     }
 
     @AuraEnabled
