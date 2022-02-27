@@ -1,21 +1,28 @@
 <template>
     <lightning-layout class="slds-box slds-theme_default slds-var-m-top_small">
         <template if:true={showReadyResponse}>
-            <lightning-layout-item size="4" class="slds-border_right slds-var-p-right_large">
+            <lightning-layout-item size="5" class="slds-border_right slds-var-p-right_large">
                 <h2 class="slds-text-heading_medium slds-truncate">Svarberedskap</h2>
                 <ul>
                     <template for:each={records} for:item="record">
                         <li class="slds-item" key={record.Id}>
-                            <c-nks-ready-response-list-entry record={record}></c-nks-ready-response-list-entry>
+                            <form action={record.URL__c}>
+                                <button
+                                    class="slds-large-size_8-of-8 slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
+                                >
+                                    {record.Name}
+                                </button>
+                            </form>
                         </li>
                     </template>
                 </ul>
             </lightning-layout-item>
         </template>
+
         <lightning-layout-item size={size} class={className}>
-            <h2 class="slds-text-heading_medium slds-truncate">Nyttige lenker</h2>
-            <ul class="slds-wrap slds-var-m-top_small slds-list_horizontal horizontal-list">
-                <li class="slds-item slds-var-p-vertical_xx-small">
+            <h2 class="slds-text-heading_medium slds-truncate slds-var-p-bottom_x-small">Nyttige lenker</h2>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -27,8 +34,8 @@
                     <a href="https://www.survey-xact.dk/LinkCollector?key=8JKQDD2C1N92" class="slds-text-link">
                         Samspillet
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-col slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -43,8 +50,8 @@
                     >
                         Norsk-engelsk ordliste
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -59,8 +66,8 @@
                     >
                         Snarveier på nav.no
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -75,8 +82,8 @@
                     >
                         Sikkerhetsrutinen
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -91,8 +98,8 @@
                     >
                         Send SMS til bruker
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -107,8 +114,8 @@
                     >
                         Testbaser
                     </a>
-                </li>
-                <li class="slds-item slds-var-p-vertical_xx-small">
+                </div>
+                <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small">
                     <lightning-icon
                         class="slds-var-m-right_x-small link-icon"
                         size="x-small"
@@ -123,8 +130,8 @@
                     >
                         Video- og webinarbibliotek
                     </a>
-                </li>
-            </ul>
+                </div>
+            </div>
         </lightning-layout-item>
     </lightning-layout>
 </template>

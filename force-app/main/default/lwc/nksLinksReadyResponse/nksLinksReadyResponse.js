@@ -1,14 +1,15 @@
 import { LightningElement, api, track } from 'lwc';
 import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
-import { NavigationMixin } from 'lightning/navigation';
+export default class NksLinksReadyResponse extends LightningElement {
+    @api showReadyResponse;
+    @api urlInput; // this will be removed
+    @api titleInput; // this will be removed
 
-export default class NksLinksReadyResponse extends NavigationMixin(LightningElement) {
-    @api showReadyResponse; // this api will be removed before merging to master
     @track records = [];
-    size;
-    className;
 
     isInitiated = false;
+    size;
+    className;
 
     connectedCallback() {
         this.isInitiated = true;
@@ -27,7 +28,7 @@ export default class NksLinksReadyResponse extends NavigationMixin(LightningElem
 
     get showReadyResponse() {
         if (this.records.length > 0) {
-            this.size = 8;
+            this.size = 7;
             this.className = 'slds-var-p-left_large';
             return true;
         } else {

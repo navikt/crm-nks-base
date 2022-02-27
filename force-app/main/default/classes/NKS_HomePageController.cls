@@ -75,6 +75,8 @@ public with sharing class NKS_HomePageController {
         @AuraEnabled
         public String recordId;
         @AuraEnabled
+        public String objectApiName;
+        @AuraEnabled
         public String name;
         @AuraEnabled
         public String content;
@@ -98,6 +100,7 @@ public with sharing class NKS_HomePageController {
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
+            record.objectApiName = objectName;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if (showimage)
@@ -142,14 +145,17 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<Knowledge__kav> getReadyResponse() {
-        List<Knowledge__kav> records = [
-            SELECT Id, Title, LastModifiedDate
-            FROM Knowledge__kav
-            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
-            ORDER BY LastModifiedDate DESC
+    public static String getQueue(Id userId) {
+        Group g = [
+            SELECT DeveloperName, Name, Type, Id
+            FROM Group
+            WHERE Group.Type = 'Queue' AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
         ];
-        return records;
+        List<String> queueName = g.Name.split(' ');
+        if (queueName[0] == 'Chat' || queueName[0] == 'chat') {
+            queueName.remove(0);
+        }
+        return string.join(queueName, ' ');
     }
 
     @AuraEnabled
@@ -163,5 +169,16 @@ public with sharing class NKS_HomePageController {
         ];
         campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
         return campaign;
+    }
+
+    @AuraEnabled
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> records = [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+        return records;
     }
 }

@@ -26,7 +26,11 @@
                     <ul class="stripedList">
                         <template for:each={records} for:item="record" for:index="index">
                             <li class="slds-item" key={record.recordId}>
-                                <c-nks-striped-list-entry record={record} index={index}></c-nks-striped-list-entry>
+                                <c-nks-striped-list-entry
+                                    record={record}
+                                    index={index}
+                                    last-index={lastIndex}
+                                ></c-nks-striped-list-entry>
                             </li>
                         </template>
                     </ul>
