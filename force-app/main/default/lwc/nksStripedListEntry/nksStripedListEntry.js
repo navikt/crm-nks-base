@@ -1,15 +1,12 @@
 import { LightningElement, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import THEME_ID from '@salesforce/schema/Common_Code__c.Id';
-import THEME_GROUP from '@salesforce/schema/Common_Code__c.Name';
-
 export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api index;
     @api lastIndex;
 
     recordUrl;
+    theme;
 
     connectedCallback() {
         this[NavigationMixin.GenerateUrl]({
@@ -21,7 +18,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         }).then((url) => {
             this.recordUrl = url;
         });
-        //this.themeGroupId = this.record.name;
+        this.getTheme();
     }
 
     get className() {
@@ -50,37 +47,18 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         });
     }
 
-    /*
-    themeGroupId;
-    _themeGroup;
-
-    get themeGroup() {
-        if (this._themeGroup === '' || this._themeGroup == null) {
-            console.log('Theme group is not defined for this record.');
-            return '';
-        } else {
-            return this._themeGroup;
-        }
-    }
-
-    @wire(getRecord, {
-        recordId: '$themeGroupId',
-        fields: [THEME_ID, THEME_GROUP]
-    })
-    wiredThemeGroup({ error, data }) {
-        if (error) {
-            console.log(error);
-        } else if (data) {
-            if (this.themeGroupId) {
-                this._themeGroup = getFieldValue(data, THEME_GROUP);
+    getTheme() {
+        if (this.record.objectName === 'LiveChatTranscript') {
+            let list = this.record.name.split(' ');
+            if (list[0].toLowerCase() === 'chat') {
+                list.removeChild(list[0]);
             }
+            this.theme = list.join(' ');
+        } else if (this.record.objectName === 'Case') {
+            this.theme = this.record.name;
+        } else {
+            this.theme = '';
+            console.log('Theme is not found!');
         }
     }
-
-    resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || self);
-    }
-    */
 }
