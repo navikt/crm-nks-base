@@ -44,20 +44,4 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             }
         });
     }
-    /*
-    getTheme() {
-        if (this.record.objectName === 'LiveChatTranscript') {
-            let list = this.record.name.split(' ');
-            if (list[0].toLowerCase() === 'chat') {
-                list.splice(0, 1);
-            }
-            this.theme = list.join(' ');
-        } else if (this.record.objectName === 'Case') {
-            this.theme = this.record.name;
-        } else {
-            this.theme = '';
-            console.log('Theme is not found!');
-        }
-    }
-    */
 }
