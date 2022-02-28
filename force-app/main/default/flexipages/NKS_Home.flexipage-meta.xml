@@ -60,6 +60,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList</identifier>
             </componentInstance>
         </itemInstances>
         <name>top</name>
@@ -81,6 +82,7 @@
                     <value>Glamelding</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomLeft</name>
@@ -102,6 +104,7 @@
                     <value>Salesforce oppdatering</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -162,6 +165,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList2</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomRight</name>
@@ -227,6 +231,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -287,6 +292,7 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -347,6 +353,7 @@
                     <value>Title</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList5</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
