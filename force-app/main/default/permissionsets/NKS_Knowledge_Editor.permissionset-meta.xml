@@ -100,11 +100,7 @@
         <field>Knowledge__kav.NKS_UserInformation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Knowledge__kav.Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
+
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.WhoDoesWhat__c</field>
