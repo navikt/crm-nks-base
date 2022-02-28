@@ -18,8 +18,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api filterbyskills;
     @api refreshPageAutomatically;
 
-    @api cardFlag; // added api to pass validation
-
     @track records = [];
 
     isInitiated = false;
