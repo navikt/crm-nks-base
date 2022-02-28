@@ -132,7 +132,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Name</value>
+                    <value>NKS_Chat_Queue__c</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
                 <identifier>nksHomePageList2</identifier>
@@ -153,7 +153,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>&apos;&apos;</value>
+                    <value>IsClosed=false AND RecordType.DeveloperName=&apos;STO_Case&apos; AND OwnerId= :userId</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>iconName</name>
@@ -185,7 +185,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Subject</value>
+                    <value>STO_Category__c</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
                 <identifier>nksHomePageList3</identifier>
