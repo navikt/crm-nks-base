@@ -3,19 +3,13 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import THEME_ID from '@salesforce/schema/Common_Code__c.Id';
 import THEME_GROUP from '@salesforce/schema/Common_Code__c.Name';
-import userId from '@salesforce/user/Id';
-import getQueue from '@salesforce/apex/NKS_HomePageController.getQueue';
+
 export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api index;
     @api lastIndex;
 
     recordUrl;
-    userId;
-    theme;
-
-    themeGroupId;
-    _themeGroup;
 
     connectedCallback() {
         this[NavigationMixin.GenerateUrl]({
@@ -27,9 +21,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         }).then((url) => {
             this.recordUrl = url;
         });
-        this.themeGroupId = this.record.name;
-        this.userId = userId;
-        this.getTheme();
+        //this.themeGroupId = this.record.name;
     }
 
     get className() {
@@ -46,23 +38,6 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         return cssClass;
     }
 
-    getTheme() {
-        if (this.record.objectApiName === 'LiveChatTranscript') {
-            getQueue({ userId: this.userId })
-                .then((result) => {
-                    this.theme = result;
-                })
-                .catch((error) => {
-                    this.error = error;
-                });
-        }
-        if (this.record.objectApiName === 'Case') {
-            this.theme = this.record.name;
-        } else {
-            console.log('Something went wrong while getting theme!');
-        }
-    }
-
     navigateToPage(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -74,6 +49,10 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             }
         });
     }
+
+    /*
+    themeGroupId;
+    _themeGroup;
 
     get themeGroup() {
         if (this._themeGroup === '' || this._themeGroup == null) {
@@ -103,4 +82,5 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             return prev ? prev[curr] : null;
         }, obj || self);
     }
+    */
 }
