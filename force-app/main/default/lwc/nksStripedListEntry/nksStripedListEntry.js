@@ -51,7 +51,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         if (this.record.objectName === 'LiveChatTranscript') {
             let list = this.record.name.split(' ');
             if (list[0].toLowerCase() === 'chat') {
-                list.removeChild(list[0]);
+                list.splice(0, 1);
             }
             this.theme = list.join(' ');
         } else if (this.record.objectName === 'Case') {
