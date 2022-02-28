@@ -25,23 +25,23 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.71.0.LATEST"
+                    "versionNumber": "0.73.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.209.0.LATEST"
+                    "versionNumber": "1.215.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.10.0.LATEST"
+                    "versionNumber": "0.13.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.12.0.LATEST"
+                    "versionNumber": "0.13.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.3.0.LATEST"
+                    "versionNumber": "0.4.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -49,11 +49,11 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.41.0.LATEST"
+                    "versionNumber": "0.47.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
-                    "versionNumber": "0.14.0.LATEST"
+                    "versionNumber": "0.22.0.LATEST"
                 }
             ]
         }
