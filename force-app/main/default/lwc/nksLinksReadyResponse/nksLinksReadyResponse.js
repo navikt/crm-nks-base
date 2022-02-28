@@ -1,10 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
 export default class NksLinksReadyResponse extends LightningElement {
-    @api showReadyResponse;
-    @api urlInput; // this will be removed
-    @api titleInput; // this will be removed
-
     @track records = [];
 
     isInitiated = false;

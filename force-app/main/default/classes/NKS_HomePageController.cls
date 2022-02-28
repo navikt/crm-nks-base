@@ -75,6 +75,8 @@ public with sharing class NKS_HomePageController {
         @AuraEnabled
         public String recordId;
         @AuraEnabled
+        public String objectName;
+        @AuraEnabled
         public String name;
         @AuraEnabled
         public String content;
@@ -98,6 +100,7 @@ public with sharing class NKS_HomePageController {
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
+            record.objectName = objectName;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if (showimage)
