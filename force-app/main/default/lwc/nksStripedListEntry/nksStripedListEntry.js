@@ -6,7 +6,6 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
     @api lastIndex;
 
     recordUrl;
-    theme;
 
     connectedCallback() {
         this[NavigationMixin.GenerateUrl]({
@@ -18,7 +17,6 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
         }).then((url) => {
             this.recordUrl = url;
         });
-        this.getTheme();
     }
 
     get className() {
@@ -46,7 +44,7 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             }
         });
     }
-
+    /*
     getTheme() {
         if (this.record.objectName === 'LiveChatTranscript') {
             let list = this.record.name.split(' ');
@@ -61,4 +59,5 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
             console.log('Theme is not found!');
         }
     }
+    */
 }
