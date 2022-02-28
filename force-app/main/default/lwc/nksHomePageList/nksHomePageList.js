@@ -50,7 +50,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     loadList() {
         if (this.isCase) {
             getList({
-                title: 'NKS_Theme_Group__c',
+                title: 'STO_Category__c',
                 content: null,
                 objectName: 'Case',
                 filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
@@ -129,5 +129,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     get setEmptyState() {
         return !this.hasRecord && this.isStripedList ? true : false;
+    }
+
+    get lastIndex() {
+        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
+            return this.records.length - 1;
+        }
     }
 }

@@ -8,6 +8,8 @@ export default class NksLinksReadyResponse extends LightningElement {
     @track records = [];
 
     isInitiated = false;
+    size;
+    className;
 
     connectedCallback() {
         this.isInitiated = true;
@@ -23,8 +25,16 @@ export default class NksLinksReadyResponse extends LightningElement {
                 console.log(error);
             });
     }
-    /*
+
     get showReadyResponse() {
-        return this.records.length > 0 ? true : false;
-    } */
+        if (this.records.length > 0) {
+            this.size = 7;
+            this.className = 'slds-var-p-left_large';
+            return true;
+        } else {
+            this.size = 12;
+            this.className = '';
+            return false;
+        }
+    }
 }
