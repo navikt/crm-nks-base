@@ -34,7 +34,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         List<Person__c> personList = [
-            SELECT Id, INT_ActorId__c, INT_fnr__c
+            SELECT Id, INT_ActorId__c, Name
             FROM Person__c
             WHERE CRM_Account__c = :accountId
             LIMIT 1
@@ -43,32 +43,50 @@ public with sharing class CRM_SecurityQuestionPicker {
             return noPersonError();
         }
         String ident = personList[0].INT_ActorId__c;
-        String fnr = personList[0].INT_fnr__c;
+        String personIdentifikasjon = personList[0].Name;
 
         usedQuestions.add(random);
         String returnAnswer = null;
-        switch on random {
-            when 0 {
-                //Fra TPS
-                returnAnswer = getBankAccount(fnr);
+        try {
+            switch on random {
+                when 0 {
+                    //Fra TPS
+                    returnAnswer = getBankAccount(personIdentifikasjon);
+                }
+                when 1 {
+                    //Fra KRR
+                    returnAnswer = getEmail(personIdentifikasjon, accountId);
+                }
+                when 2 {
+                    //Fra PDL
+                    returnAnswer = getChildBirthday(ident);
+                }
+                when 3 {
+                    //Fra PDL
+                    returnAnswer = getMarriageDate(ident);
+                }
+                when else {
+                    returnAnswer = null;
+                }
             }
-            when 1 {
-                //Fra KRR
-                returnAnswer = getEmail(ident, accountId);
-            }
-            when 2 {
-                //Fra PDL
-                returnAnswer = getChildBirthday(ident);
-            }
-            when 3 {
-                //Fra PDL
-                returnAnswer = getMarriageDate(ident);
-            }
-            when else {
-                returnAnswer = null;
-            }
+        } catch (Exception e) {
+            LoggerUtility logger = new LoggerUtility();
+            System.debug(e);
+            logger.error(
+                'Feil ved henting av kontrollspørsmål for account ' +
+                accountId +
+                ':\n' +
+                e +
+                '\n trace:' +
+                e.getStackTraceString() +
+                '\n message:' +
+                e.getLineNumber(),
+                personList[0],
+                CRM_ApplicationDomain.Domain.NKS
+            );
+            logger.publish();
+            return getRecursiveQuestion(accountId, usedQuestions);
         }
-
         if (returnAnswer == null) {
             return getRecursiveQuestion(accountId, usedQuestions);
         }
@@ -80,9 +98,9 @@ public with sharing class CRM_SecurityQuestionPicker {
         return securityQuestion;
     }
 
-    private static String getBankAccount(String fnr) {
+    private static String getBankAccount(String personIdentifikasjon) {
         try {
-            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(fnr);
+            TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(personIdentifikasjon);
             return bankkonto?.bankkontoNorge?.bankkontonummer;
         } catch (TPS_Persons.TPS_PersonsException e) {
             // TPS_PersonsException betyr at vi fikk en annen response enn 200,
@@ -91,7 +109,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
     }
 
-    private static String getEmail(String ident, String accountId) {
+    private static String getEmail(String personIdentifikasjon, String accountId) {
         Person__c emailInfo = [
             SELECT INT_KrrEmail__c, INT_LastUpdatedFromKRR__c
             FROM Person__c
@@ -106,10 +124,13 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
         List<KrrCalloutService.Personer> personer;
         try {
-            personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
+            personer = KrrCalloutService.doPersonOppslag(new List<String>{ personIdentifikasjon });
         } catch (SecurityException e) {
             // This means that we have an invalid crypto key,
             // most likely because of KRR callout key not in test env.
+            return null;
+        }
+        if (personer == null) {
             return null;
         }
         return personer[0]?.kontaktinformasjon?.epostadresse;
@@ -152,7 +173,10 @@ public with sharing class CRM_SecurityQuestionPicker {
             query.hentPerson.sivilstand.type = true;
             query.hentPerson.sivilstand.gyldigFraOgMed = true;
             PDL_API_Response resp = query.execute();
-            if (resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT) {
+            if (
+                resp?.data?.hentPerson?.sivilstand[0]?.type == PDL_Sivilstandstype.GIFT &&
+                resp?.data?.hentPerson?.sivilstand[0]?.gyldigFraOgMed != null
+            ) {
                 return resp.data.hentPerson.sivilstand[0].gyldigFraOgMed.format();
             }
             return null;

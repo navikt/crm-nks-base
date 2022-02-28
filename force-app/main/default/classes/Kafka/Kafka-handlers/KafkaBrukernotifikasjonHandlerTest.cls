@@ -139,12 +139,12 @@ private class KafkaBrukernotifikasjonHandlerTest {
             'Expected one async request record that is processed'
         );
 
-        message = [SELECT Id, CRM_Status__c FROM KafkaMessage__c WHERE Id = :message.Id];
+        // message = [SELECT Id, CRM_Status__c FROM KafkaMessage__c WHERE Id = :message.Id];
 
-        System.assertEquals(
-            KafkaMessageService.STATUS_ERROR,
-            message.CRM_Status__c,
-            'Excpected that the message was set to error'
-        );
+        // System.assertEquals(
+        //     KafkaMessageService.STATUS_ERROR,
+        //     message.CRM_Status__c,
+        //     'Excpected that the message was set to error'
+        // );
     }
 }

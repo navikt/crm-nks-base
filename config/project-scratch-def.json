@@ -81,6 +81,10 @@
         },
         "pathAssistantSettings": {
             "pathAssistantEnabled": true
+        },
+        "quickTextSettings": {
+            "lightningQuickTextEnabled": true,
+            "quickTextsInFolders": true
         }
     }
 }
