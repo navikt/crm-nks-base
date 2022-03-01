@@ -16,7 +16,7 @@ export default class CrmSecurityQuestion extends LightningElement {
     fetchData({ error, data }) {
         if (error && error != null) {
             this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
-            this.answer = error.body.message;
+            this.answer = '';
             this.useErrorColor = true;
         } else if (data && data != null) {
             if (
@@ -26,13 +26,13 @@ export default class CrmSecurityQuestion extends LightningElement {
             ) {
                 this.question = 'Brukeren har ingen gyldige spørsmål.';
                 this.answer = '';
-                this.useErrorColor = this.questionsAsked == null;
+                this.useErrorColor = true;
                 return;
             } else {
                 this.question = data.question;
                 this.answer = data.answer;
                 this.questionsAsked = data.usedQuestions;
-                this.useErrorColor = this.questionsAsked == null;
+                this.useErrorColor = false;
             }
         }
         this.disabled = false;

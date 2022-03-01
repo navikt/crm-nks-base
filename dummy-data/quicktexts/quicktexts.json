@@ -265,7 +265,32 @@
             "Channel": "Phone",
             "Message": "Arbeidsavklaringspenger",
             "nksAbbreviationKey__c": "AAP",
-            "nksType__c": "Abbreviation"
+            "nksType__c": "Abbreviation",
+            "Case_sensitive__c": true
+        },
+        {
+            "attributes": {
+                "type": "QuickText",
+                "referenceId": "QuickTextRef30"
+            },
+            "Name": "NAY",
+            "Channel": "Phone",
+            "Message": "NAV Arbeid og ytelser",
+            "nksAbbreviationKey__c": "NAY",
+            "nksType__c": "Abbreviation",
+            "Case_sensitive__c": false
+        },
+        {
+            "attributes": {
+                "type": "QuickText",
+                "referenceId": "QuickTextRef31"
+            },
+            "Name": "NFP",
+            "Channel": "Phone",
+            "Message": "NAV familie- og pensjonsytelser",
+            "nksAbbreviationKey__c": "NFP",
+            "nksType__c": "Abbreviation",
+            "Case_sensitive__c": false
         }
     ]
 }
