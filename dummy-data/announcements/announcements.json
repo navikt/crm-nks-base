@@ -76,9 +76,9 @@
                 "referenceId": "NKS_Announcement__cRef8"
             },
             "Name": "Ros uke 46",
-            "RecordTypeId": "$R{RecordType.NKS_Announcement__c.Traffic_Controller}",
-            "NKS_Type__c": "Trafikkstyrers hjørne",
-            "NKS_Information__c": "<p>OBS: Dette er en viktig melding om dagen i dag.\nDet er viktig at alle leser denne superviktige meldingen. Hvis du lurer på noe ta kontakt med superbrukeren din.\n\nOvertid\nOvertid mandag 1. oktober.\n\nVi åpner for overtid fra kl 15.30 til 18.00 i dag. Du melder deg til overtidi i Calabrio før kl 14 i dag.\n\nStengtmeldinger\nOppdatert kl. 10. 31\n\n01. januar - problemene ser ut til å være løst og vi åpner telefon kl 10.45. Chat åpnes kl 11.\n\nDriftsmeldinger\nTVD-P i FSS utilgjengelig\n01.11.2021, kl. 10.47\nTDV-P i FSS blir utilgjengelig i dag mandag 01. november i forbindelse med en restart mellom klokken 16.30 og 17.30.\n\nProblemer med treghet på nettverk og tilgang til NAV apps\n01.11.2021, kl. 08.24 - Oppdatert kl. 10.49\nDet er oppdaget tregheter på vårt nettverk grunnet høy last som følge av programvareoppdateringer for våre maskiner.\n\nDette påvirker også tilgang til NAV-applikasjoner vis Citrix fra hjemmekontor.\n\nNettverksavdelingen jobber med saken.</p>"
+            "RecordTypeId": "$R{RecordType.NKS_Announcement__c.News}",
+            "NKS_Type__c": "Glamelding",
+            "NKS_Information__c": "<p>&quot;Jeg vil gi ros til Tina som svarte meg i dag 16.10 på mitt spørsmål! Snakk om overlevering av forventninger. Ble veldig veldig glad og satt stor pris på at du tok deg tid til et så flott svar. God helg!&quot;</p>"
         }
     ]
 }
