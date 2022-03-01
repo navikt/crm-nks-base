@@ -30,7 +30,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     connectedCallback() {
         this.isInitiated = true;
         this.listCount = 3;
-        this.cardFlag = this.cardLabel === 'Sist oppdaterte kunnskapsartikler';
+        this.cardFlag = this.objectName === 'Knowledge__kav';
         if (this.cardFlag) this.limit = this.listCount;
 
         this.loadList();
@@ -51,6 +51,25 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     loadList() {
+        if (this.isCase) {
+            getList({
+                title: 'STO_Category__c',
+                content: null,
+                objectName: 'Case',
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
+                orderby: 'CreatedDate DESC',
+                limitNumber: 3,
+                datefield: 'CreatedDate',
+                showimage: false,
+                filterbyskills: false
+            })
+                .then((result) => {
+                    this.records = result;
+                })
+                .catch((error) => {
+                    this.error = error;
+                });
+        }
         getList({
             title: this.title,
             content: this.content,
@@ -103,5 +122,27 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.listCount += 3;
         this.limit = this.listCount;
         this.loadList();
+    }
+
+    get isCase() {
+        return this.objectName === 'Case' ? true : false;
+    }
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
+    }
+
+    get hasRecord() {
+        return this.records.length > 0 ? true : false;
+    }
+
+    get setEmptyState() {
+        return !this.hasRecord && this.isStripedList ? true : false;
+    }
+
+    get lastIndex() {
+        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
+            return this.records.length - 1;
+        }
     }
 }

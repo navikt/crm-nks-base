@@ -13,8 +13,8 @@
                         class="slds-text-align_right slds-text-title_caps"
                         value={record.modifiedDate}
                         year="numeric"
-                        month="numeric"
-                        day="numeric"
+                        month="2-digit"
+                        day="2-digit"
                         hour="2-digit"
                         minute="2-digit"
                     ></lightning-formatted-date-time>
@@ -34,28 +34,31 @@
             </div>
         </div>
     </div>
-    <div class="slds-grid slds-gutters" if:true={cardKunnskap}>
-        <div class="slds-col slds-size_3-of-12 slds-p-horizontal_x-small">
+
+    <div if:true={cardKunnskap}>
+        <div class="slds-float_left slds-col">
             <p>
                 <lightning-formatted-date-time
-                    class="slds-text-title_caps"
+                    class="slds-text-align_left slds-text-title_caps"
                     value={record.modifiedDate}
                     year="numeric"
-                    month="numeric"
-                    day="numeric"
+                    month="2-digit"
+                    day="2-digit"
                     hour="2-digit"
                     minute="2-digit"
                 ></lightning-formatted-date-time>
             </p>
         </div>
-        <div class="slds-p-horizontal_none slds-col">
-            <h3>
-                <lightning-formatted-url
-                    value={recordPageUrl}
-                    label={record.name}
-                    onclick={navigateToSObject}
-                ></lightning-formatted-url>
-            </h3>
+        <div class="slds-grid">
+            <div class="slds-col slds-var-p-left_medium">
+                <h3>
+                    <lightning-formatted-url
+                        value={recordPageUrl}
+                        label={record.name}
+                        onclick={navigateToSObject}
+                    ></lightning-formatted-url>
+                </h3>
+            </div>
         </div>
     </div>
 </template>
