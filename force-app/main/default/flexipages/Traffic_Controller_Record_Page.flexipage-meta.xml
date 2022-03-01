@@ -24,6 +24,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -33,6 +34,7 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Information__c</fieldItem>
+                <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c34d3163-7403-4841-80d5-80b985c8aceb</name>
@@ -42,16 +44,19 @@
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.LastModifiedById</fieldItem>
+                <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Type__c</fieldItem>
+                <identifier>RecordNKS_Type__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</name>
@@ -65,6 +70,7 @@
                     <value>Facet-c34d3163-7403-4841-80d5-80b985c8aceb</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -74,6 +80,7 @@
                     <value>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-bd873de5-2899-46c5-8841-6f0b9550f4fd</name>
@@ -91,13 +98,7 @@
                     <value>Details</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
+                <identifier>flexipage_fieldSection</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
