@@ -51,4 +51,17 @@ public class NKS_TestDataFactoryTest {
 
         System.assertEquals(5, after - before, 'New NavUnit__c should have been created');
     }
+
+    @isTest
+    static void testCreateKnowledgeArtikkler() {
+        Integer before = [SELECT Id FROM Knowledge__kav].size();
+
+        Test.StartTest();
+        NKS_TestDataFactory.createKunnskap(1);
+        Test.StopTest();
+
+        Integer after = [SELECT Id FROM Knowledge__kav].size();
+
+        System.assertEquals(1, after - before, 'New Knowledge__kav should have been created');
+    }
 }

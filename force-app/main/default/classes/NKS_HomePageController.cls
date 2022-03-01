@@ -28,8 +28,6 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-        if (filterbyskills)
-            userskills = getUserSkills(userId);
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
         if (content != null)
             query += ' , ' + content;
@@ -37,19 +35,18 @@ public with sharing class NKS_HomePageController {
             query += ' , Skills__c ';
         query += ' FROM ' + objectName;
         query += ' WHERE ' + filter;
-        if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
-            String skillstring = '';
-            for (String u : userskills) {
-                skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
+
+        if (filterbyskills && objectName == 'NKS_Announcement__c') {
+            String skillstring = getUserSkills(userId);
+            if (skillstring != null) {
+                query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
             }
-            query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
-        if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
-            String skillstring = '';
-            for (String u : userskills) {
-                skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
+        if (filterbyskills && objectName == 'Knowledge__kav') {
+            String skillstring = getUserSkillsKnowledge(userId);
+            if (skillstring != null) {
+                query += ' AND Skills__c INCLUDES (' + skillstring + ')';
             }
-            query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
         if (orderby != null)
             query += ' ORDER BY ' + orderby;
@@ -117,8 +114,9 @@ public with sharing class NKS_HomePageController {
         return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 
-    private static Set<String> getUserSkills(Id userId) {
+    private static String getUserSkills(Id userId) {
         Set<String> skills = new Set<String>();
+        String skillstring = '';
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
             FROM Group
@@ -129,6 +127,31 @@ public with sharing class NKS_HomePageController {
         ]) {
             skills.add(g.DeveloperName);
         }
-        return skills;
+        if (skills.size() > 0) {
+            for (String u : skills) {
+                skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
+            }
+            return skillstring.removeEnd(',');
+        } else
+            return null;
+    }
+
+    private static String getUserSkillsKnowledge(Id userId) {
+        Set<String> skills = new Set<String>();
+        String skillstring = '';
+        for (ServiceResourceSkill s : [
+            SELECT Id, ServiceResourceId, Skill.DeveloperName, Skill.MasterLabel
+            FROM ServiceResourceSkill
+            WHERE ServiceResource.RelatedRecordId = :userId
+        ]) {
+            skills.add(s.Skill.DeveloperName);
+        }
+        if (skills.size() > 0) {
+            for (String u : skills) {
+                skillstring += '\'' + u + '\',';
+            }
+            return skillstring.removeEnd(',');
+        } else
+            return null;
     }
 }

@@ -3,6 +3,7 @@ public with sharing class NKS_HomePageControllerTest {
     @TestSetup
     static void makeData() {
         NKS_TestDataFactory.createAnnouncements(1);
+        NKS_TestDataFactory.createKunnskap(1);
     }
 
     @isTest
@@ -26,7 +27,26 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             true,
-            false
+            true
+        );
+        Test.stopTest();
+
+        System.assertEquals(1, recordlist.size());
+    }
+
+    @isTest
+    static void testGetListKunnskap() {
+        Test.startTest();
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+            'Title',
+            null,
+            'Knowledge__kav',
+            'Title != null',
+            'LastModifiedDate DESC',
+            '3',
+            'CreatedDate',
+            false,
+            true
         );
         Test.stopTest();
 

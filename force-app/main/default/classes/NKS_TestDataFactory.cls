@@ -108,6 +108,16 @@ public without sharing class NKS_TestDataFactory {
         return announcements;
     }
 
+    public static List<Knowledge__kav> createKunnskap(Integer amount) {
+        List<Knowledge__kav> knowledge = new List<Knowledge__kav>();
+        for (Integer i = 0; i < amount; i++) {
+            Knowledge__kav a = new Knowledge__kav(Title = 'TestK' + i, UrlName = 'TestK-' + i, Skills__c = 'Helse');
+            knowledge.add(a);
+        }
+        insert knowledge;
+        return knowledge;
+    }
+
     public static Account getAccount(String lastname) {
         Account a = [SELECT Id FROM Account WHERE LastName = :lastname];
         return a;
