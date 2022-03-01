@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Validate_Date_Interval</fullName>
-    <active>false</active>
-    <description>Check if inserted dates are valid.</description>
-    <errorConditionFormula>OR( From_Date__c  &gt;=  TODAY() , To_Date__c  &gt;  From_Date__c )</errorConditionFormula>
-    <errorMessage>Check if you have entered a non-logical date. From Date must be after or equal today, and To Date must be after From Date.</errorMessage>
-</ValidationRule>

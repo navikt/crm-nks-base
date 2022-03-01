@@ -17,10 +17,6 @@
             <fullName>Salesforce oppdatering</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Trafikkstyrers hjørne</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Skills__c</picklist>
