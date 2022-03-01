@@ -69,6 +69,16 @@
             "RecordTypeId": "$R{RecordType.NKS_Announcement__c.News}",
             "NKS_Type__c": "Nyhet",
             "NKS_Information__c": "<p><b>Hurtigtaster i Teams! </b></p><p><br></p><p>Enten du er lat eller ikke er hurtigtaster en effektiv måte å jobbe på. Visste du at du kan slå av og på lyden og videokameraet ved hjelp av tastaturet? </p><p><br></p><p>Bruk CTRL + M for å slå av og på lyden. </p><p>Bruk CTRL + O for å slå av og på lyden. </p>"
+        },
+        {
+            "attributes": {
+                "type": "NKS_Announcement__c",
+                "referenceId": "NKS_Announcement__cRef8"
+            },
+            "Name": "Ros uke 46",
+            "RecordTypeId": "$R{RecordType.NKS_Announcement__c.News}",
+            "NKS_Type__c": "Glamelding",
+            "NKS_Information__c": "<p>&quot;Jeg vil gi ros til Tina som svarte meg i dag 16.10 på mitt spørsmål! Snakk om overlevering av forventninger. Ble veldig veldig glad og satt stor pris på at du tok deg tid til et så flott svar. God helg!&quot;</p>"
         }
     ]
 }

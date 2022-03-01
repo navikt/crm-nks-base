@@ -27,9 +27,7 @@
             <layoutItems>
                 <field>UrlName</field>
             </layoutItems>
-            <layoutItems>
-                <field>Type__c</field>
-            </layoutItems>
+
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -43,9 +41,9 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
+        <layoutColumns />
+        <layoutColumns />
+        <layoutColumns />
         <style>CustomLinks</style>
     </layoutSections>
     <platformActionList>
