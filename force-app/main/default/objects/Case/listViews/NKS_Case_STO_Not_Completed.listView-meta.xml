@@ -6,7 +6,9 @@
     <columns>CASES.SUBJECT</columns>
     <columns>CASES.STATUS</columns>
     <columns>CASES.PRIORITY</columns>
+    <!--
     <columns>STO_Category__c</columns>
+    -->
     <filterScope>Mine</filterScope>
     <filters>
         <field>CASES.CLOSED</field>
