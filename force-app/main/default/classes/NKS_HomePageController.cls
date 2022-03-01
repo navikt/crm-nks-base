@@ -133,12 +133,12 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<Knowledge__kav> getReadyResponse() {
-        List<Knowledge__kav> records = [
-            SELECT Id, Title, LastModifiedDate
-            FROM Knowledge__kav
-            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
-            ORDER BY LastModifiedDate DESC
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> records = [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
         ];
         return records;
     }
