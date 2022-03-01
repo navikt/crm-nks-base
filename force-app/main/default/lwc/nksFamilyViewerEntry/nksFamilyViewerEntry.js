@@ -212,8 +212,15 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
         alertText += 'Bruker';
         alertText += this.relation.employee ? navEmployeeText : '';
-        alertText +=
-            this.relation.employee && this.relation.confidential ? ' og' : this.relation.confidential ? ' er' : '';
+        if (this.relation.employee && this.relation.confidential) {
+            alertText += ' og';
+        } else {
+            if (this.relation.confidential) {
+                alertText += ' er';
+            } else {
+                alertText += '';
+            }
+        }
         alertText += this.relation.confidential ? isConfidentialText : '';
         alertText += '.';
 
