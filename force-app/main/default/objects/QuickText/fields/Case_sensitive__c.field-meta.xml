@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_sensitive__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Check if quick text should be case sensitive.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if quick text should be case sensitive.</inlineHelpText>
+    <label>Case-sensitive</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

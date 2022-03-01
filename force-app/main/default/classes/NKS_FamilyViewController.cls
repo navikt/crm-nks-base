@@ -1,8 +1,6 @@
 public with sharing class NKS_FamilyViewController {
     public class Relation {
         @AuraEnabled
-        public String accountId; //link to Account object
-        @AuraEnabled
         public String personIdent; //personal identification number(FNR/DNR)
         @AuraEnabled
         public String recordType; //record type marital/child/parent/stillborn/error
@@ -90,8 +88,9 @@ public with sharing class NKS_FamilyViewController {
             return relations;
         }
         Relation person = new Relation();
-        person.accountId = getAccountIdFromPersonId(getIdentsList(relationsData));
         person.employee = isNavEmployee(relationsData);
+        person.confidentialStatus = getConfidentialStatus(relationsData);
+        person.confidential = isConfidential(person.confidentialStatus);
         relations.addAll(getMaritalPerson(relationsData, person));
         relations.addAll(getStillBorns(relationsData));
         relations.addAll(getChildren(relationsData, person));
@@ -136,13 +135,20 @@ public with sharing class NKS_FamilyViewController {
         query.hentIdenter.selectAll();
         return query.execute();
     }
+    /**
+    * Getting list of parents for person
+    * @param relationsData - data queried from PDL with info about relations for person
+    @ @param person - Relation object, where employee, confidential and confidentialStatus should be filled
+    */
     @TestVisible
     private static List<Relation> getParents(PDL_API_Response relationsData, Relation person) {
         List<Relation> parents = new List<Relation>();
-        if (getAge(relationsData) >= 21) {
+        if (getAge(getAgeDate(relationsData)) >= 21) {
+            // if person is 21 or older, then return empty list
             return parents;
         }
         if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
+            // if person does not have relations, return empty list
             return parents;
         }
         Set<String> uniqRelations = new Set<String>();
@@ -156,23 +162,26 @@ public with sharing class NKS_FamilyViewController {
                         continue;
                     }
                     PDL_API_Response parentResponse = queryChild(relation.relatertpersonsident);
-                    if (isConfidentialRelation(relationsData, parentResponse)) {
-                        parent.unauthorized = true;
-                        parents.add(parent);
-                        continue;
+                    if (isUnauthorized(parentResponse)) {
+                        Person__c parentPerson = getPerson(getIdentsSet(parentResponse));
+                        // checking reason for unauthorized status
+                        // if because of employee status
+                        // then show relation
+                        if (!isVisible(person, parentPerson)) {
+                            person.unauthorized = true;
+                            parents.add(parent);
+                            continue;
+                        }
+                        parent.unauthorized = false;
+                        parent.personIdent = getPersonIdent(parentResponse);
+                        fillRelationFromPerson(parent, parentPerson);
+                        parent.livesWith = hasSameAddress(parentPerson, relationsData);
+                        parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
+                    } else {
+                        fillRelationFromResponse(parent, parentResponse);
+                        parent.livesWith = hasSameAddress(parentResponse, relationsData);
+                        parent.responsibility = hasResponsibility(parentResponse, relationsData);
                     }
-
-                    parent.accountId = getAccountIdFromPersonId(getIdentsList(parentResponse));
-                    parent.employee = isNavEmployee(parentResponse);
-                    if (isConfidentialEmployeeRelation(person.employee, parent.employee)) {
-                        parent.accountId = null;
-                        parent.unauthorized = true;
-                        parents.add(parent);
-                        continue;
-                    }
-                    fillRelationFromResponse(parent, parentResponse);
-                    parent.livesWith = hasSameAddress(parentResponse, relationsData);
-                    parent.responsibility = hasResponsibility(parentResponse, relationsData);
                 }
                 parents.add(parent);
             }
@@ -182,46 +191,40 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static List<Relation> getChildren(PDL_API_Response relationsData, Relation person) {
         List<Relation> children = new List<Relation>();
-        if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
-            return children;
-        }
-        Set<String> uniqRelations = new Set<String>();
-        for (PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon) {
-            if (relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN) {
-                Relation child = new Relation();
-                child.recordType = 'child';
-                child.role = relation.relatertpersonsrolle.name();
-                if (relation.relatertpersonsident != null) {
-                    if (!uniqRelations.add(relation.relatertpersonsident)) {
-                        continue;
-                    }
-                    PDL_API_Response childResponse = queryChild(relation.relatertpersonsident);
-                    if (isConfidentialRelation(relationsData, childResponse)) {
-                        if (isOver21(childResponse))
-                            continue;
-                        child.unauthorized = true;
-                        children.add(child);
-                        continue;
-                    }
-
-                    child.accountId = getAccountIdFromPersonId(getIdentsList(childResponse));
-                    child.employee = isNavEmployee(childResponse);
-                    if (isConfidentialEmployeeRelation(person.employee, child.employee)) {
-                        child.accountId = null;
-                        child.unauthorized = true;
-                        children.add(child);
-                        continue;
-                    }
-
-                    fillRelationFromResponse(child, childResponse);
-                    if (isOver21(child)) {
-                        continue;
-                    }
-                    child.livesWith = hasSameAddress(relationsData, childResponse);
-                    child.responsibility = hasResponsibility(relationsData, childResponse);
+        // query PDL for child relations
+        List<PDL_API_Response> childrenResponse = getChildrenList(getChildrenIdentsSet(relationsData));
+        // sort responses by birthdate
+        childrenResponse = sortResponseByBirthdate(childrenResponse);
+        for (PDL_API_Response childResponse : childrenResponse) {
+            Relation child = new Relation();
+            child.recordType = 'child';
+            child.role = PDL_ForelderBarnRelasjonRolle.BARN.name();
+            if (isUnauthorized(childResponse)) {
+                Person__c childPerson = getPerson(getIdentsSet(childResponse));
+                // cheking reason for unauthorized response from pdl
+                // if the reason was employee status
+                // then show relation
+                if (!isVisible(person, childPerson)) {
+                    child.unauthorized = true;
+                    children.add(child);
+                    continue;
                 }
-                children.add(child);
+                child.personIdent = getPersonIdent(childResponse);
+                fillRelationFromPerson(child, childPerson);
+                if (isOver21(child)) {
+                    continue;
+                }
+                child.livesWith = hasSameAddress(relationsData, childPerson);
+                child.responsibility = hasResponsibility(relationsData, child.personIdent);
+            } else {
+                fillRelationFromResponse(child, childResponse);
+                if (isOver21(child)) {
+                    continue;
+                }
+                child.livesWith = hasSameAddress(relationsData, childResponse);
+                child.responsibility = hasResponsibility(relationsData, childResponse);
             }
+            children.add(child);
         }
         return children;
     }
@@ -269,14 +272,14 @@ public with sharing class NKS_FamilyViewController {
         } else if (maritalStatusOfInterest.contains(sivilstand[0].type)) {
             if (sivilstand[0].relatertVedSivilstand != null) {
                 PDL_API_Response response = queryMaritalPerson(sivilstand[0].relatertVedSivilstand);
-                r.accountId = getAccountIdFromPersonId(getIdentsList(response));
-                r.employee = isNavEmployee(response);
-                if (isConfidentialRelation(relationsData, response)) {
-                    r.accountId = null;
-                    r.unauthorized = true;
-                } else if (isConfidentialEmployeeRelation(person.employee, r.employee)) {
-                    r.accountId = null;
-                    r.unauthorized = true;
+                if (isUnauthorized(response)) {
+                    Person__c relationPerson = getPerson(getIdentsSet(response));
+                    if (!isVisible(person, relationPerson)) {
+                        r.unauthorized = true;
+                    } else {
+                        r.personIdent = getPersonIdent(response);
+                        fillRelationFromPerson(r, relationPerson);
+                    }
                 } else {
                     fillRelationFromResponse(r, response);
                 }
@@ -308,25 +311,40 @@ public with sharing class NKS_FamilyViewController {
     private static void fillRelationFromResponse(Relation relation, PDL_API_Response response) {
         if (relation == null || response == null)
             return;
-
-        if (isUnauthorized(response)) {
-            relation.unauthorized = true;
-            return;
-        }
         relation.name = getFullName(response);
-        relation.birthdate = getBirthdate(response);
-        relation.age = getAge(response);
-        relation.ageString = getAgeString(response);
+        relation.birthDate = getBirthdate(response);
+        relation.age = getAge(getAgeDate(response));
+        relation.ageString = getAgeString(getAgeDate(response));
         relation.sex = getSex(response);
         relation.dateOfDeath = getDateOfDeath(response);
         relation.deceased = (relation.dateOfDeath != null) ? true : false;
         relation.confidentialStatus = getConfidentialStatus(response);
         relation.confidential = isConfidential(relation.confidentialStatus);
-        //relation.employee = isNavEmployee(response);
+        relation.employee = isNavEmployee(response);
         relation.personIdent = getPersonIdent(response);
-        //relation.accountId = getAccountIdFromPersonId(getIdentsList(response));
         return;
     }
+    @TestVisible
+    private static void fillRelationFromPerson(Relation relation, Person__c relationPerson) {
+        if (relationPerson == null) {
+            return;
+        }
+        relation.name = getFullName(relationPerson);
+        relation.birthDate = getBirthdate(relationPerson);
+        relation.age = getAge(getAgeDate(relationPerson));
+        relation.ageString = getAgeString(getAgeDate(relationPerson));
+        relation.sex = getSex(relationPerson);
+        relation.dateOfDeath = getDateOfDeath(relationPerson);
+        relation.deceased = (relation.dateOfDeath != null);
+        relation.employee = relationPerson.INT_IsNavEmployee__c;
+        relation.confidentialStatus = relationPerson.INT_Confidential__c;
+        relation.confidential = isConfidential(relation.confidentialStatus);
+    }
+    @TestVisible
+    private static Person__c getPerson(Set<String> identsList) {
+        return NKS_FamilyViewControllerHelper.getPerson(identsList);
+    }
+    @TestVisible
     private static String getFullName(PDL_API_Response response) {
         List<PDL_Navn> navn = response.data?.hentPerson?.navn;
         if (navn == null || navn.isEmpty()) {
@@ -351,6 +369,11 @@ public with sharing class NKS_FamilyViewController {
         }
         return fullName;
     }
+    @TestVisible
+    private static String getFullName(Person__c p) {
+        return p.NKS_Full_Name__c;
+    }
+    @TestVisible
     private static String getBirthdate(PDL_API_Response response) {
         List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
         if (foedsel == null || foedsel.isEmpty()) {
@@ -360,6 +383,18 @@ public with sharing class NKS_FamilyViewController {
             return null;
         }
         return formatDate(foedsel[0].foedselsdato);
+    }
+    @TestVisible
+    private static String getBirthdate(Person__c p) {
+        if (p?.INT_DateOfBirth__c == null)
+            return null;
+        return formatDate(Date.valueOf(p.INT_DateOfBirth__c));
+    }
+    @TestVisible
+    private static String getDateOfDeath(Person__c p) {
+        if (p?.INT_DateOfDeath__c == null)
+            return null;
+        return formatDate(Date.valueOf(p.INT_DateOfDeath__c));
     }
     @TestVisible
     private static String getDateOfDeath(PDL_API_Response response) {
@@ -372,6 +407,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return formatDate(doedsfall[0].doedsdato);
     }
+    @TestVisible
     private static Date getAgeDate(PDL_API_Response response) {
         Date birthDate;
         List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
@@ -395,15 +431,24 @@ public with sharing class NKS_FamilyViewController {
         // dates starts form 0001.01.01, so doing some math
         return d.addDays(-birthDate.day() + 1).addMonths(-birthDate.month() + 1).addYears(-birthDate.year() + 1);
     }
-    private static Integer getAge(PDL_API_Response response) {
-        Date d = getAgeDate(response);
+    @TestVisible
+    private static Date getAgeDate(Person__c p) {
+        Date birthDate = p?.INT_DateOfBirth__c != null ? Date.valueOf(p.INT_DateOfBirth__c) : null;
+        if (birthDate == null) {
+            return null;
+        }
+        Date d = p?.INT_DateOfDeath__c != null ? Date.valueOf(p.INT_DateOfDeath__c) : Date.today();
+        return d.addDays(-birthDate.day() + 1).addMonths(-birthDate.month() + 1).addYears(-birthDate.year() + 1);
+    }
+    @TestVisible
+    private static Integer getAge(Date d) {
         if (d == null) {
             return null;
         }
         return d.year() - 1;
     }
-    private static String getAgeString(PDL_API_Response response) {
-        Date d = getAgeDate(response);
+    @TestVisible
+    private static String getAgeString(Date d) {
         if (d == null) {
             return null;
         }
@@ -415,6 +460,10 @@ public with sharing class NKS_FamilyViewController {
         }
         return String.valueOf(d.day() - 1) + ' d';
     }
+    private static String getSex(Person__c p) {
+        return p.INT_Sex__c;
+    }
+    @TestVisible
     private static String getSex(PDL_API_Response response) {
         List<PDL_Kjoenn> kjoenn = response.data?.hentPerson?.kjoenn;
         if (kjoenn == null || kjoenn.isEmpty()) {
@@ -425,21 +474,23 @@ public with sharing class NKS_FamilyViewController {
         }
         return kjoenn[0].kjoenn.name();
     }
+
     @TestVisible
     private static Boolean isOver21(PDL_API_Response response) {
-        Integer age = getAge(response);
+        Integer age = getAge(getAgeDate(response));
         if (age == null || age < 21) {
             return false;
         }
         return true;
     }
+    @TestVisible
     private static Boolean isOver21(Relation r) {
         if (!r.deceased && r.age >= 21) {
             return true;
         }
         return false;
     }
-
+    @TestVisible
     public static String getConfidentialStatus(PDL_API_Response response) {
         List<PDL_Adressebeskyttelse> adressebeskyttelse = response.data?.hentPerson?.adressebeskyttelse;
         if (adressebeskyttelse == null || adressebeskyttelse.isEmpty()) {
@@ -450,12 +501,14 @@ public with sharing class NKS_FamilyViewController {
         }
         return null;
     }
+    @TestVisible
     private static Boolean isConfidential(String status) {
         if (status == null || status == 'UGRADERT') {
             return false;
         }
         return true;
     }
+    @TestVisible
     private static Boolean isUnauthorized(PDL_API_Response response) {
         if (response.errors != null) {
             for (PDL_Error error : response.errors) {
@@ -464,71 +517,78 @@ public with sharing class NKS_FamilyViewController {
                 }
             }
         }
-        /*
-        if(isNavEmployee(response) == true){
-            return true;
-        }
-        */
         return false;
     }
+    @TestVisible
     private static Boolean isConfidentialRelation(PDL_API_Response person, PDL_API_Response relation) {
-        Integer personGrade = 0;
+        PDL_AdressebeskyttelseGradering personGradering;
+        PDL_AdressebeskyttelseGradering relationGradering;
         if (
-            person?.data?.hentPerson?.adressebeskyttelse != null &&
-            !person.data.hentPerson.adressebeskyttelse.isEmpty() &&
-            person.data.hentPerson.adressebeskyttelse[0].gradering != null
+            person?.data?.hentPerson?.adressebeskyttelse != null && !person.data.hentPerson.adressebeskyttelse.isEmpty()
         ) {
-            personGrade = gradeWeight.get(person.data.hentPerson.adressebeskyttelse[0].gradering);
+            personGradering = person.data.hentPerson.adressebeskyttelse[0].gradering;
         }
-        Integer relationGrade = 0;
         if (
             relation?.data?.hentPerson?.adressebeskyttelse != null &&
-            !relation.data.hentPerson.adressebeskyttelse.isEmpty() &&
-            relation.data.hentPerson.adressebeskyttelse[0].gradering != null
+            !relation.data.hentPerson.adressebeskyttelse.isEmpty()
         ) {
-            relationGrade = gradeWeight.get(relation.data.hentPerson.adressebeskyttelse[0].gradering);
+            relationGradering = relation.data.hentPerson.adressebeskyttelse[0].gradering;
         }
-        if (personGrade < relationGrade) {
-            return true;
-        }
-        /*
-        Boolean isPersonNavEmployee = isNavEmployee(person);
-        Boolean isRelationNavEmployee = isNavEmployee(relation);
-        if(isRelationNavEmployee == true){
-            if(isPersonNavEmployee != true){
-                return true;
-            }
-        }
-		*/
-        return false;
+        return isConfidentialRelation(personGradering, relationGradering);
     }
-    private static Boolean isConfidentialEmployeeRelation(Boolean person, Boolean relation) {
-        if (relation && !person) {
-            return true;
+    @TestVisible
+    private static Boolean isConfidentialRelation(String person, String relation) {
+        PDL_AdressebeskyttelseGradering personGradering = null;
+        PDL_AdressebeskyttelseGradering relationGradering = null;
+        try {
+            personGradering = PDL_AdressebeskyttelseGradering.valueOf(person);
+        } catch (Exception e) {
+            // keep value as null
         }
-        return false;
+        try {
+            relationGradering = PDL_AdressebeskyttelseGradering.valueOf(relation);
+        } catch (Exception e) {
+            // keep value as null
+        }
+        return isConfidentialRelation(personGradering, relationGradering);
     }
+    @TestVisible
+    private static Boolean isConfidentialRelation(
+        PDL_AdressebeskyttelseGradering person,
+        PDL_AdressebeskyttelseGradering relation
+    ) {
+        Integer personGrade = (person != null) ? gradeWeight.get(person) : 0;
+        Integer relationGrade = (relation != null) ? gradeWeight.get(relation) : 0;
+        return (personGrade < relationGrade);
+    }
+    @TestVisible
     private static Boolean isNavEmployee(PDL_API_Response response) {
-        Set<String> idents = getIdentsList(response);
-        if (idents == null) {
-            return false;
-        }
-        Boolean isNavEmployee = [SELECT Id, INT_IsNavEmployee__c FROM Person__c WHERE Name IN :idents LIMIT 1]
-        ?.INT_IsNavEmployee__c;
-        return (isNavEmployee == null) ? false : isNavEmployee;
+        return NKS_FamilyViewControllerHelper.isNavEmployee(getIdentsSet(response));
     }
+    @TestVisible
+    private static Boolean isNavEmployee(String id) {
+        Set<String> idents = new Set<String>();
+        idents.add(id);
+        return NKS_FamilyViewControllerHelper.isNavEmployee(idents);
+    }
+    @TestVisible
+    private static Boolean isVisible(Relation person, Person__c relation) {
+        if (relation == null || !relation.INT_IsNavEmployee__c) {
+            return false; //if the reason for unauthorized is not because of 'employee'
+        }
+        if (isConfidentialRelation(person.confidentialStatus, relation.INT_Confidential__c)) {
+            return false; //if employee, but confidential
+        }
+        return true;
+    }
+    @TestVisible
     private static String formatDate(Date d) {
         if (d == null) {
             return null;
         }
         return DateTime.newInstance(d, Time.newInstance(0, 0, 0, 0)).format('dd.MM.yyyy');
     }
-    private static String getAccountIdFromPersonId(Set<String> idents) {
-        if (idents == null) {
-            return null;
-        }
-        return [SELECT Id FROM Account WHERE CRM_Person__r.Name IN :idents LIMIT 1]?.Id;
-    }
+    @TestVisible
     private static String getPersonIdent(PDL_API_Response response) {
         if (response.data?.hentIdenter?.identer == null) {
             return null;
@@ -544,7 +604,8 @@ public with sharing class NKS_FamilyViewController {
         }
         return null;
     }
-    private static Set<String> getIdentsList(PDL_API_Response response) {
+    @TestVisible
+    private static Set<String> getIdentsSet(PDL_API_Response response) {
         if (response.data?.hentIdenter?.identer == null) {
             return null;
         }
@@ -562,7 +623,7 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static Boolean hasResponsibility(PDL_API_Response parent, PDL_API_Response child) {
         Set<String> responsibleSet = getAnsvarligSet(child);
-        Set<String> idents = getIdentsList(parent);
+        Set<String> idents = getIdentsSet(parent);
         if (responsibleSet != null && idents != null) {
             responsibleSet.retainAll(idents);
             if (!responsibleSet.isEmpty()) {
@@ -570,12 +631,28 @@ public with sharing class NKS_FamilyViewController {
             }
         }
         responsibleSet = getAnsvarssubjektSet(parent);
-        idents = getIdentsList(child);
+        idents = getIdentsSet(child);
         if (responsibleSet != null && idents != null) {
             responsibleSet.retainAll(idents);
             if (!responsibleSet.isEmpty()) {
                 return true;
             }
+        }
+        return false;
+    }
+    @TestVisible
+    private static Boolean hasResponsibility(PDL_API_Response parent, String childId) {
+        Set<String> responsibleSet = getAnsvarssubjektSet(parent);
+        if (responsibleSet != null && responsibleSet.contains(childId)) {
+            return true;
+        }
+        return false;
+    }
+    @TestVisible
+    private static Boolean hasResponsibility(String parentId, PDL_API_Response child) {
+        Set<String> responsibleSet = getAnsvarligSet(child);
+        if (responsibleSet != null && responsibleSet.contains(parentId)) {
+            return true;
         }
         return false;
     }
@@ -611,7 +688,7 @@ public with sharing class NKS_FamilyViewController {
         }
         return ansvarssubjektSet;
     }
-
+    @TestVisible
     public static Boolean hasSameAddress(PDL_API_Response parent, PDL_API_Response child) {
         if (parent?.data?.hentPerson?.bostedsadresse == null || parent.data.hentPerson.bostedsadresse.isEmpty()) {
             return false;
@@ -630,129 +707,200 @@ public with sharing class NKS_FamilyViewController {
         }
         Boolean childAddress1Match = true;
         Boolean childAddress2Match = true;
-        if (parentAddress.matrikkelId != null) {
-            if (parentAddress.matrikkelId != childAddress1?.matrikkelId) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.matrikkelId != childAddress2?.matrikkelId) {
-                childAddress2Match = false;
-            }
-        } else {
-            if (childAddress1?.matrikkelId != null) {
-                childAddress1Match = false;
-            }
-            if (childAddress2?.matrikkelId != null) {
-                childAddress2Match = false;
-            }
+
+        childAddress1Match &= (parentAddress.matrikkelId == childAddress1?.matrikkelId);
+        childAddress2Match &= (parentAddress.matrikkelId == childAddress2?.matrikkelId);
+
+        childAddress1Match &= compareAddressPartsRequired(parentAddress.husnummer, childAddress1?.husnummer);
+        childAddress2Match &= compareAddressPartsRequired(parentAddress.husnummer, childAddress2?.husnummer);
+
+        childAddress1Match &= compareAddressParts(parentAddress.husbokstav, childAddress1?.husbokstav);
+        childAddress2Match &= compareAddressParts(parentAddress.husbokstav, childAddress2?.husbokstav);
+
+        childAddress1Match &= compareAddressParts(parentAddress.bruksenhetsnummer, childAddress1?.bruksenhetsnummer);
+        childAddress2Match &= compareAddressParts(parentAddress.bruksenhetsnummer, childAddress2?.bruksenhetsnummer);
+
+        childAddress1Match &= compareAddressPartsRequired(parentAddress.adressenavn, childAddress1?.adressenavn);
+        childAddress2Match &= compareAddressPartsRequired(parentAddress.adressenavn, childAddress2?.adressenavn);
+
+        childAddress1Match &= compareAddressPartsRequired(parentAddress.kommunenummer, childAddress1?.kommunenummer);
+        childAddress2Match &= compareAddressPartsRequired(parentAddress.kommunenummer, childAddress2?.kommunenummer);
+
+        childAddress1Match &= compareAddressParts(parentAddress.bydelsnummer, childAddress1?.bydelsnummer);
+        childAddress2Match &= compareAddressParts(parentAddress.bydelsnummer, childAddress2?.bydelsnummer);
+
+        childAddress1Match &= compareAddressPartsRequired(parentAddress.postnummer, childAddress1?.postnummer);
+        childAddress2Match &= compareAddressPartsRequired(parentAddress.postnummer, childAddress2?.postnummer);
+
+        childAddress1Match &= compareAddressParts(parentAddress.tilleggsnavn, childAddress1?.tilleggsnavn);
+        childAddress2Match &= compareAddressParts(parentAddress.tilleggsnavn, childAddress2?.tilleggsnavn);
+
+        return childAddress1Match || childAddress2Match;
+    }
+    @TestVisible
+    private static Boolean hasSameAddress(PDL_API_Response parent, Person__c child) {
+        if (parent?.data?.hentPerson?.bostedsadresse == null || parent.data.hentPerson.bostedsadresse.isEmpty()) {
+            return false;
         }
-        if (parentAddress.husnummer != null) {
-            if (parentAddress.husnummer != childAddress1?.husnummer) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.husnummer != childAddress2?.husnummer) {
-                childAddress2Match = false;
-            }
-        } else {
-            childAddress1Match = false;
-            childAddress2Match = false;
+        PDL_Vegadresse parentAddress = parent.data.hentPerson.bostedsadresse[0]?.vegadresse;
+        if (parentAddress == null) {
+            return false;
         }
-        if (parentAddress.husbokstav != null) {
-            if (parentAddress.husbokstav != childAddress1?.husbokstav) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.husbokstav != childAddress2?.husbokstav) {
-                childAddress2Match = false;
-            }
-        } else {
-            if (childAddress1?.husbokstav != null) {
-                childAddress1Match = false;
-            }
-            if (childAddress2?.husbokstav != null) {
-                childAddress2Match = false;
-            }
+        Boolean childAddress1Match = true;
+
+        String parentResidentialAddress = addressCreator(
+            new List<String>{ parentAddress.adressenavn, parentAddress.husnummer, parentAddress.husbokstav }
+        );
+        childAddress1Match &= compareAddressPartsRequired(parentResidentialAddress, child.INT_ResidentialAddress__c);
+        childAddress1Match &= compareAddressPartsRequired(
+            parentAddress.kommunenummer,
+            child?.INT_AddressMunicipalityNumber__c
+        );
+        childAddress1Match &= compareAddressParts(parentAddress.bydelsnummer, child?.INT_AddressDistrictNumber__c);
+        childAddress1Match &= compareAddressPartsRequired(parentAddress.postnummer, child?.INT_ResidentialZipCode__c);
+
+        return childAddress1Match;
+    }
+    @TestVisible
+    private static Boolean hasSameAddress(Person__c parent, PDL_API_Response child) {
+        PDL_Vegadresse childAddress1;
+        PDL_Vegadresse childAddress2;
+        Boolean childAddress1Match = false;
+        Boolean childAddress2Match = false;
+        if (child?.data?.hentPerson?.bostedsadresse != null && !child.data.hentPerson.bostedsadresse.isEmpty()) {
+            childAddress1 = child.data.hentPerson.bostedsadresse[0].vegadresse;
+            String childResidentialAddress1 = addressCreator(
+                new List<String>{ childAddress1?.adressenavn, childAddress1?.husnummer, childAddress1?.husbokstav }
+            );
+            childAddress1Match = true;
+            childAddress1Match &= compareAddressPartsRequired(
+                parent.INT_ResidentialAddress__c,
+                childResidentialAddress1
+            );
+            childAddress1Match &= compareAddressPartsRequired(
+                parent.INT_AddressMunicipalityNumber__c,
+                childAddress1.kommunenummer
+            );
+            childAddress1Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress1.bydelsnummer);
+            childAddress1Match &= compareAddressPartsRequired(
+                parent.INT_ResidentialZipCode__c,
+                childAddress1.postnummer
+            );
         }
-        if (parentAddress.bruksenhetsnummer != null) {
-            if (parentAddress.bruksenhetsnummer != childAddress1?.bruksenhetsnummer) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.bruksenhetsnummer != childAddress2?.bruksenhetsnummer) {
-                childAddress2Match = false;
-            }
-        } else {
-            if (childAddress1?.bruksenhetsnummer != null) {
-                childAddress1Match = false;
-            }
-            if (childAddress2?.bruksenhetsnummer != null) {
-                childAddress2Match = false;
-            }
+        if (child?.data?.hentPerson?.deltBosted != null && !child.data.hentPerson.deltBosted.isEmpty()) {
+            childAddress2 = child.data.hentPerson.deltBosted[0].vegadresse;
+            String childResidentialAddress2 = addressCreator(
+                new List<String>{ childAddress2?.adressenavn, childAddress2?.husnummer, childAddress2?.husbokstav }
+            );
+            childAddress2Match = true;
+            childAddress2Match &= compareAddressPartsRequired(
+                parent.INT_ResidentialAddress__c,
+                childResidentialAddress2
+            );
+            childAddress2Match &= compareAddressPartsRequired(
+                parent.INT_AddressMunicipalityNumber__c,
+                childAddress2.kommunenummer
+            );
+            childAddress2Match &= compareAddressParts(parent.INT_AddressDistrictNumber__c, childAddress2.bydelsnummer);
+            childAddress2Match &= compareAddressPartsRequired(
+                parent.INT_ResidentialZipCode__c,
+                childAddress2.postnummer
+            );
         }
-        if (parentAddress.adressenavn != null) {
-            if (parentAddress.adressenavn != childAddress1?.adressenavn) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.adressenavn != childAddress2?.adressenavn) {
-                childAddress2Match = false;
-            }
-        } else {
-            childAddress1Match = false;
-            childAddress2Match = false;
-        }
-        if (parentAddress.kommunenummer != null) {
-            if (parentAddress.kommunenummer != childAddress1?.kommunenummer) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.kommunenummer != childAddress2?.kommunenummer) {
-                childAddress2Match = false;
-            }
-        } else {
-            childAddress1Match = false;
-            childAddress2Match = false;
-        }
-        if (parentAddress.bydelsnummer != null) {
-            if (parentAddress.bydelsnummer != childAddress1?.bydelsnummer) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.bydelsnummer != childAddress2?.bydelsnummer) {
-                childAddress2Match = false;
-            }
-        } else {
-            if (childAddress1?.bydelsnummer != null) {
-                childAddress1Match = false;
-            }
-            if (childAddress2?.bydelsnummer != null) {
-                childAddress2Match = false;
-            }
-        }
-        if (parentAddress.postnummer != null) {
-            if (parentAddress.postnummer != childAddress1?.postnummer) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.postnummer != childAddress2?.postnummer) {
-                childAddress2Match = false;
-            }
-        } else {
-            childAddress1Match = false;
-            childAddress2Match = false;
-        }
-        if (parentAddress.tilleggsnavn != null) {
-            if (parentAddress.tilleggsnavn != childAddress1?.tilleggsnavn) {
-                childAddress1Match = false;
-            }
-            if (parentAddress.tilleggsnavn != childAddress2?.tilleggsnavn) {
-                childAddress2Match = false;
-            }
-        } else {
-            if (childAddress1?.tilleggsnavn != null) {
-                childAddress1Match = false;
-            }
-            if (childAddress2?.tilleggsnavn != null) {
-                childAddress2Match = false;
-            }
-        }
-        if (childAddress1Match || childAddress2Match) {
+        return childAddress1Match || childAddress2Match;
+    }
+    // part of Address could be missing
+    @TestVisible
+    private static Boolean compareAddressParts(String parent, String child) {
+        if (parent == child)
+            return true;
+        return false;
+    }
+    // part of Address is required
+    @TestVisible
+    private static Boolean compareAddressPartsRequired(String parent, String child) {
+        if (parent != null && parent == child) {
             return true;
         }
         return false;
+    }
+    @TestVisible
+    private static String stringValidator(String stringToCheck) {
+        return String.isBlank(stringToCheck) || stringToCheck == null ? '' : stringToCheck.left(255);
+    }
+    @TestVisible
+    private static String addressCreator(List<String> addressFields) {
+        String addressString = '';
+        for (String addressField : addressFields) {
+            if (stringValidator(addressField) != '') {
+                addressString += stringValidator(addressField) + ' ';
+            }
+        }
+        return addressString.removeEnd(' ');
+    }
+    private static List<PDL_API_Response> getChildrenList(Set<String> identsList) {
+        List<PDL_API_Response> relationsList = new List<PDL_API_Response>();
+        for (String ident : identsList) {
+            relationsList.add(queryChild(ident));
+        }
+        return relationsList;
+    }
+    private static Set<String> getChildrenIdentsSet(PDL_API_Response relationsData) {
+        Set<String> children = new Set<String>();
+        if (relationsData?.data?.hentPerson?.forelderbarnrelasjon == null) {
+            return children;
+        }
+        for (PDL_Forelderbarnrelasjon relation : relationsData.data.hentPerson.forelderbarnrelasjon) {
+            if (
+                relation.relatertpersonsrolle == PDL_ForelderBarnRelasjonRolle.BARN &&
+                relation.relatertpersonsident != null
+            ) {
+                children.add(relation.relatertpersonsident);
+            }
+        }
+        return children;
+    }
+    @TestVisible
+    private static List<PDL_API_Response> sortResponseByBirthdate(List<PDL_API_Response> relations) {
+        List<PDL_API_Response> result = new List<PDL_API_Response>();
+        while (relations.size() > 0) {
+            Integer youngest = getYoungest(relations);
+            result.add(relations[youngest]);
+            relations.remove(youngest);
+        }
+        return result;
+    }
+    @TestVisible
+    private static Integer getYoungest(List<PDL_API_Response> relations) {
+        Integer index = 0;
+        for (Integer i = 0; i < relations.size(); i++) {
+            if (compareBirthdayDates(relations[index], relations[i]) < 0)
+                index = i;
+        }
+        return index;
+    }
+    @TestVisible
+    private static Integer compareDates(Date d1, Date d2) {
+        if (d1 == null && d2 == null)
+            return 0;
+        if (d1 == null && d2 != null)
+            return -1;
+        if (d1 != null && d2 == null)
+            return 1;
+        return d2.daysBetween(d1);
+    }
+    private static Integer compareBirthdayDates(PDL_API_Response r1, PDL_API_Response r2) {
+        return compareDates(getBirthdayDate(r1), getBirthdayDate(r2));
+    }
+    private static Date getBirthdayDate(PDL_API_Response response) {
+        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
+        if (foedsel == null || foedsel.isEmpty()) {
+            return null;
+        }
+        if (foedsel[0]?.foedselsdato == null) {
+            return null;
+        }
+        return foedsel[0].foedselsdato;
     }
     private static final List<PDL_Sivilstandstype> maritalStatusOfInterest = new List<PDL_Sivilstandstype>{
         PDL_Sivilstandstype.GIFT,

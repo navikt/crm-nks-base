@@ -43,7 +43,7 @@ public with sharing class NKS_QuickTextSearchController {
     public static List<QuickText> getQuicktexts() {
         try {
             List<QuickText> qTextList = [
-                SELECT Message, nksAbbreviationKey__c
+                SELECT Message, nksAbbreviationKey__c, Case_sensitive__c
                 FROM QuickText
                 WHERE nksType__c = 'Abbreviation'
             ];

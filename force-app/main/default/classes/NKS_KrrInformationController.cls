@@ -16,6 +16,7 @@ public without sharing class NKS_KrrInformationController {
                             INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
                             INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
                             INT_LastUpdatedFromKRR__c = Datetime.now(),
+                            INT_VerifiedFromKRR__c = sistVerifisertDato(personer[0]),
                             INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
                         )
                     );
@@ -29,5 +30,21 @@ public without sharing class NKS_KrrInformationController {
             logger.publish();
             throw new AuraHandledException('Failed to refresh KRR information.');
         }
+    }
+
+    private static Datetime sistVerifisertDato(KrrCalloutService.Personer pers) {
+        Datetime emailVerifisertDato = pers?.kontaktinformasjon?.epostadresse_sist_verifisert;
+        Datetime mobileVerifisertDato = pers?.kontaktinformasjon?.mobiltelefonnummer_sist_verifisert;
+        if (emailVerifisertDato != null && mobileVerifisertDato != null) {
+            if (emailVerifisertDato < mobileVerifisertDato) {
+                return mobileVerifisertDato;
+            }
+            return emailVerifisertDato;
+        } else if (emailVerifisertDato != null)
+            return emailVerifisertDato;
+        else if (mobileVerifisertDato != null)
+            return mobileVerifisertDato;
+        else
+            return null;
     }
 }

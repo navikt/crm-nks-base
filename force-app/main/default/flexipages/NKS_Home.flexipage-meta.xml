@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
-        <name>top</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -33,7 +29,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>limit</name>
-                    <value>8</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
@@ -64,12 +60,241 @@
                     <value>Name</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>top</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                    <value>Ukas gladmelding</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>type</name>
+                    <value>Glamelding</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText</identifier>
             </componentInstance>
         </itemInstances>
         <name>bottomLeft</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                    <value>Oppdateringer i Salesforce</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom11</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>type</name>
+                    <value>Salesforce oppdatering</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageText2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Tidligere oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>content</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>datefield</name>
+                    <value>CreatedDate</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>NKS_Type__c = &apos;Salesforce oppdatering&apos; AND RecordType.Name = &apos;News&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>utility:salesforce1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Se alle Salesforce oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>Salesforce_oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>NKS_Announcement__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showimage</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>bottomRight</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Driftsmeldinger</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>content</name>
+                    <value>NKS_Information__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>datefield</name>
+                    <value>CreatedDate</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>RecordType.Name = &apos;Operational&apos;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom82</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle driftsmeldinger</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>Teknisk_og_drift</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>NKS_Announcement__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showimage</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Manglende journalføring</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>content</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>datefield</name>
+                    <value>CreatedDate</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filter</name>
+                    <value>CRM_Authentication_Status__c = &apos;Completed&apos; AND NKS_Journal_Entry_Status__c != &apos;Completed&apos; AND NKS_Journal_Entry_Created__c = false AND OwnerId=:userId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterbyskills</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>standard:live_chat</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>limit</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linklabel</name>
+                    <value>Vis alle chatter med manglende journalføring</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listviewname</name>
+                    <value>NKS_Chat_Missing_Journals</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>objectName</name>
+                    <value>LiveChatTranscript</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>orderby</name>
+                    <value>CreatedDate DESC</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>refreshPageAutomatically</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showimage</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Name</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageList</componentName>
+                <identifier>nksHomePageList4</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -128,101 +353,7 @@
                     <value>Title</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardTitle</name>
-                    <value>Oppdateringer i Salesforce</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>custom:custom11</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>type</name>
-                    <value>Salesforce oppdatering</value>
-                </componentInstanceProperties>
-                <componentName>nksHomePageText</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardLabel</name>
-                    <value>Tidligere oppdateringer i Salesforce</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>content</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>datefield</name>
-                    <value>CreatedDate</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filter</name>
-                    <value>NKS_Type__c = &apos;Salesforce oppdatering&apos; AND RecordType.Name = &apos;News&apos;</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>custom:custom1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>limit</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>linklabel</name>
-                    <value>Se alle Salesforce oppdateringer</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>listviewname</name>
-                    <value>Salesforce_oppdateringer</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>objectName</name>
-                    <value>NKS_Announcement__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>orderby</name>
-                    <value>CreatedDate DESC</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>refreshPageAutomatically</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Name</value>
-                </componentInstanceProperties>
-                <componentName>nksHomePageList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <name>bottomRight</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>nksLinksReadyResponse</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardTitle</name>
-                    <value>Trafikkstyrers hjørne</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                    <value>standard:announcement</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>type</name>
-                    <value>Trafikkstyrers hjørne</value>
-                </componentInstanceProperties>
-                <componentName>nksHomePageText</componentName>
+                <identifier>nksHomePageList5</identifier>
             </componentInstance>
         </itemInstances>
         <name>sidebar</name>
