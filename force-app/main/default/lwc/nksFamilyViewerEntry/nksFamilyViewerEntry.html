@@ -4,23 +4,23 @@
         <template if:false={isError}>
             <template if:true={isMarital}>
                 <p>
-                    <b> Sivilstand: {getRole} </b>
+                    <strong> Sivilstand: {getRole} </strong>
                     <template if:true={hasEventDate}> &nbsp;- Fra: {relation.eventDate} </template>
                 </p>
             </template>
             <template if:true={isChild}>
                 <p>
-                    <b> {getRole} </b>
+                    <strong> {getRole} </strong>
                 </p>
             </template>
             <template if:true={isParent}>
                 <p>
-                    <b> {getRole} </b>
+                    <strong> {getRole} </strong>
                 </p>
             </template>
             <template if:true={isStillBorn}>
                 <p>
-                    <b> {getRole} </b>
+                    <strong> {getRole} </strong>
                     <template if:true={hasEventDate}> &nbsp;- Dato: {relation.eventDate} </template>
                 </p>
             </template>
@@ -39,7 +39,9 @@
                         <template if:true={showInfoCard}>
                             <li class="tileListItem">
                                 {getBirthDate}&nbsp;
-                                <template if:true={relation.deceased}> - <b>{getDateOfDeath}</b> &nbsp; </template>
+                                <template if:true={relation.deceased}>
+                                    - <strong>{getDateOfDeath}</strong> &nbsp;
+                                </template>
                             </li>
                             <template if:true={relation.personIdent}>
                                 <li class="tileListItem">
