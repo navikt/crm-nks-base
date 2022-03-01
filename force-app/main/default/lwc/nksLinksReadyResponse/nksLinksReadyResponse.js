@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
 export default class NksLinksReadyResponse extends LightningElement {
     @track records = [];
