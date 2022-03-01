@@ -13,7 +13,7 @@ public class NKS_HistorikkViewController_Test {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
 
         Test.startTest();
-        List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(a.Id, 'Account');        
+        List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(a.Id, 'Account');
         Test.stopTest();
         System.debug(hData);
     }
@@ -42,7 +42,7 @@ public class NKS_HistorikkViewController_Test {
     private static void nullTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_HistorikkViewController.Historikk> l = NKS_HistorikkViewController.getFullmakt(query.execute());       
+        List<NKS_HistorikkViewController.Historikk> l = NKS_HistorikkViewController.getFullmakt(query.execute());
         String fullmaktPerson =
             '{' +
             '"data" : {' +
