@@ -13,7 +13,6 @@
                     //Filtering out all messages of type supervisor and AgentWhisper as these are "whispers" and should not be added to the journal
                     return message.type !== 'Supervisor' && message.type !== 'AgentWhisper';
                 });
-
                 helper.callStoreConversation(component, filteredConversation, eventRecordId);
             })
             .catch((error) => {

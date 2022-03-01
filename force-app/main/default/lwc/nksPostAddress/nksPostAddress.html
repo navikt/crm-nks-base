@@ -1,0 +1,37 @@
+<template>
+    <article class="slds-card slds-card_narrow">
+    <div class="slds-card__header">
+        <header class="slds-media slds-media_center">
+            <div class="slds-media__figure">
+                <lightning-icon icon-name="standard:email" size="small"></lightning-icon>
+            </div>
+            <div class="slds-accordion__summary-heading">
+                 <button type="button" onclick={onclickHandler} slot="title" class="section-control slds-button slds-button_reset" style="width:100%">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <span class="slds-text-heading_small">
+                                <lightning-icon icon-name={iconName} size="x-small" class="slds-current-color"></lightning-icon>
+                                <span title="Postadresse" class="slds-p-horizontal_x-small">Postadresse</span>
+                            </span>
+                        </h2>
+                    </div>
+                </button>
+            </div>
+        </header>
+    </div>
+    <template if:true={open}>
+        <div class="slds-card__body">
+        <div class="slds-p-horizontal_small slds-p-vertical_small">
+            <lightning-formatted-text value={address}></lightning-formatted-text>
+        </div>
+        <div class="slds-p-horizontal_small">
+            <template if:true={showbutton}>
+                <textarea hidden disabled class="clipboardInput" style="position:fixed;top:-5rem;height:1px;width:10px;"></textarea>
+                <button type="button" class="slds-button slds-button_outline-brand slds-button_stretch" onclick={copyHandler}>
+                    <lightning-icon icon-name="utility:copy" size="x-small" class="slds-current-color slds-p-horizontal_small"></lightning-icon>Kopier postadresse</button>
+            </template>
+        </div>
+    </div>
+    </template>
+</article>
+</template>

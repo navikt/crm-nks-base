@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Chat_Missing_Journals</fullName>
+    <booleanFilter>1 AND 2 AND 3</booleanFilter>
     <columns>Name</columns>
     <columns>LiveChatVisitor</columns>
     <columns>Status</columns>
     <columns>StartTime</columns>
     <columns>EndTime</columns>
+    <columns>NKS_Chat_Queue__c</columns>
     <filterScope>Mine</filterScope>
     <filters>
         <field>CRM_Authentication_Status__c</field>
