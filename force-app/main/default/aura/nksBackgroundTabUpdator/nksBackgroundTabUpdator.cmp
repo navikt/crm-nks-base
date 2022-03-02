@@ -1,7 +1,0 @@
-<aura:component implements="lightning:backgroundUtilityItem, flexipage:availableForAllPageTypes" access="global"
-    controller="nksUtilityBackgroundController">
-    <lightning:omniToolkitAPI aura:id="omniToolkit" />
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-    <aura:handler event="lightning:tabCreated" action="{! c.onTabCreated }" />
-    <lightning:workspaceAPI aura:id="workspace" />
-</aura:component>
