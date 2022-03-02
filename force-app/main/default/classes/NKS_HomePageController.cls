@@ -35,8 +35,7 @@ public with sharing class NKS_HomePageController {
             query += ' , ' + content;
         if (filterbyskills && objectName == 'NKS_Announcement__c')
             query += ' , Skills__c ';
-        query += ' FROM ' + objectName;
-        query += ' WHERE ' + filter;
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -130,5 +129,18 @@ public with sharing class NKS_HomePageController {
             skills.add(g.DeveloperName);
         }
         return skills;
+    }
+
+    @AuraEnabled
+    public static NKS_Announcement__c getCampaign() {
+        NKS_Announcement__c campaign = [
+            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            FROM NKS_Announcement__c
+            WHERE NKS_Type__c = 'Kampanje'
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
+        return campaign;
     }
 }

@@ -21,6 +21,11 @@
                 <label>Salesforce oppdatering</label>
             </value>
             <value>
+                <fullName>Kampanje</fullName>
+                <default>false</default>
+                <label>Kampanje</label>
+            </value>
+            <value>
                 <fullName>Trafikkstyrers hjørne</fullName>
                 <default>false</default>
                 <label>Trafikkstyrers hjørne</label>
