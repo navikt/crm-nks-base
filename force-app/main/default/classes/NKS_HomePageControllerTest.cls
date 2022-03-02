@@ -2,13 +2,8 @@
 public with sharing class NKS_HomePageControllerTest {
     @TestSetup
     static void makeData() {
-        NKS_TestDataFactory.createAnnouncements(1);
-        NKS_Announcement__c campaign = new NKS_Announcement__c(
-            Name = 'Kampanje',
-            NKS_Information__c = 'Husk empatisk kommunikasjon...',
-            NKS_Type__c = 'Kampanje'
-        );
-        insert campaign;
+        NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
+        NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
     }
 
     @isTest
@@ -37,6 +32,17 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(0, recordlist.size());
+    }
+
+    @isTest
+    static void testGetUserSkills() {
+        User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
+
+        Test.startTest();
+        NKS_HomePageController.getUserSkills(testUser.Id);
+        Test.stopTest();
+
+        System.assertNotEquals(null, testUser.Id);
     }
 
     @isTest
