@@ -35,8 +35,7 @@ public with sharing class NKS_HomePageController {
             query += ' , ' + content;
         if (filterbyskills && objectName == 'NKS_Announcement__c')
             query += ' , Skills__c ';
-        query += ' FROM ' + objectName;
-        query += ' WHERE ' + filter;
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
