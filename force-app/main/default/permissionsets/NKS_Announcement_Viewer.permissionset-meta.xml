@@ -6,6 +6,16 @@
     </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.From_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.Image_Alt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_ImageURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -29,6 +39,11 @@
         <field>NKS_Announcement__c.Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.To_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Announcement Viewer</label>
     <objectPermissions>
@@ -40,6 +55,10 @@
         <object>NKS_Announcement__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Campaign</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
