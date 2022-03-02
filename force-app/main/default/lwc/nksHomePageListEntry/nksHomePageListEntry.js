@@ -31,6 +31,7 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         });
     }
 
+    /*kunnskap*/
     get cardKunnskap() {
         if (this.objectName === 'Knowledge__kav') this.cardLabel = true;
         else this.cardLabel = false;
