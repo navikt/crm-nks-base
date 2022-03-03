@@ -326,7 +326,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
-                    <value>Vis alle kunnskapsartikler</value>
+                    <value>Vis alle nylig oppdaterte kunnskapsartikler</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>listviewname</name>

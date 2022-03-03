@@ -118,6 +118,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.loadList();
     };
 
+    lastFlereList(event) {
+        this.limit += 3;
+        this.loadList();
+    }
+
+    get isKnowledge() {
+        return this.objectName === 'Knowledge__kav' ? true : false;
+    }
+
     get isStripedList() {
         return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
     }
