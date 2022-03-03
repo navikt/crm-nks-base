@@ -2,7 +2,6 @@ import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
-import userId from '@salesforce/user/Id';
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -18,23 +17,17 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
-
-    @track records = [];
-
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-    @track listCount;
-    @api cardFlag = false;
 
+    @track records = [];
+    @track listCount;
     error;
     pageurl;
 
     connectedCallback() {
         this.isInitiated = true;
-        this.listCount = 3;
-        this.cardFlag = this.objectName === 'Knowledge__kav';
-        if (this.cardFlag) this.limit = this.listCount;
 
         this.loadList();
         this[NavigationMixin.GenerateUrl]({
@@ -51,19 +44,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         });
 
         this.handleSubscribe();
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            this.filter += ' AND OwnerId =' + userId;
-            console.log(this.filter);
-        }
     }
 
     loadList() {
-        if (this.objectName === 'Case') {
+        if (this.isCase) {
             getList({
                 title: 'STO_Category__c',
                 content: null,
                 objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case'",
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
                 orderby: 'CreatedDate DESC',
                 limitNumber: 3,
                 datefield: 'CreatedDate',
@@ -126,9 +115,16 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     };
 
     lastFlereList(event) {
-        this.listCount += 3;
-        this.limit = this.listCount;
+        this.limit += 3;
         this.loadList();
+    }
+
+    get isKnowledge() {
+        return this.objectName === 'Knowledge__kav' ? true : false;
+    }
+
+    get isCase() {
+        return this.objectName === 'Case' ? true : false;
     }
 
     get isStripedList() {

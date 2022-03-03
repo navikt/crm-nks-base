@@ -3,8 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
     @api record;
-    @api cardLabel;
-    @api objectName;
+    @api isKnowledge;
     recordPageUrl;
 
     navigateToSObject(event) {
@@ -29,11 +28,5 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         }).then((url) => {
             this.recordPageUrl = url;
         });
-    }
-
-    get cardKunnskap() {
-        if (this.objectName === 'Knowledge__kav') this.cardLabel = true;
-        else this.cardLabel = false;
-        return this.cardLabel;
     }
 }

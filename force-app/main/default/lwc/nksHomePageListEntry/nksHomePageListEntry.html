@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-grid slds-gutters" if:false={cardKunnskap}>
+    <div class="slds-grid slds-gutters" if:false={isKnowledge}>
         <template if:true={record.imageurl}>
             <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
                 <img aria-hidden="true" src={record.imageurl} style="max-height: 180px" />
@@ -20,7 +20,7 @@
                     ></lightning-formatted-date-time>
                 </p>
             </div>
-            <div class="slds-var-p-horizontal_small">
+            <div class="slds-p-horizontal_small">
                 <h3>
                     <lightning-formatted-url
                         value={recordPageUrl}
@@ -34,8 +34,7 @@
             </div>
         </div>
     </div>
-<!-- kunnskap -->
-    <div if:true={cardKunnskap}>
+    <div if:true={isKnowledge}>
         <div class="slds-float_left slds-col">
             <p>
                 <lightning-formatted-date-time
