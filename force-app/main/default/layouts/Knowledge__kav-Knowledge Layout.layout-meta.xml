@@ -126,7 +126,6 @@
             <layoutItems>
                 <field>PublishStatus</field>
             </layoutItems>
-
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
