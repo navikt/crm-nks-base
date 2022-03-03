@@ -4,6 +4,8 @@ public with sharing class NKS_HomePageControllerTest {
     static void makeData() {
         NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
         NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
+        ReadyResponse__c svarberedskap = new ReadyResponse__c(Name = 'Test Svarberedskap', URL__c = 'Test-URL');
+        insert svarberedskap;
     }
 
     @isTest
@@ -52,5 +54,14 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(null, testCampain.NKS_ImageURL__c);
+    }
+
+    @isTest
+    static void testGetReadyResponse() {
+        Test.startTest();
+        List<ReadyResponse__c> testList = NKS_HomePageController.getReadyResponse();
+        Test.stopTest();
+
+        System.assertEquals(1, testList.size());
     }
 }
