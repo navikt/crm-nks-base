@@ -20,7 +20,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api refreshPageAutomatically;
 
     @track records = [];
-    @track listCount;
 
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
