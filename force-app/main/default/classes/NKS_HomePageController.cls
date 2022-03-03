@@ -116,7 +116,7 @@ public with sharing class NKS_HomePageController {
         return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 
-    private static Set<String> getUserSkills(Id userId) {
+    public static Set<String> getUserSkills(Id userId) {
         Set<String> skills = new Set<String>();
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
