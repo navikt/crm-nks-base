@@ -24,8 +24,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-
-    @track records = [];
     @track listCount;
     @api cardFlag = false;
 
