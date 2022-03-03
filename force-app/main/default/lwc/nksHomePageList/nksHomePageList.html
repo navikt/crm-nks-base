@@ -16,7 +16,7 @@
                 <template if:false={isStripedList}>
                     <ul class="slds-list_vertical-space-medium">
                         <template for:each={records} for:item="record">
-                            <li class="slds-item" key={record.personId}>
+                            <li class="slds-item" key={record.recordId}>
                                 <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
                             </li>
                         </template>
@@ -41,7 +41,7 @@
                     <template for:each={records} for:item="record">
                         <li
                             class="slds-item slds-border_bottom slds-p-vertical_x-small slds-p-horizontal_medium"
-                            key={record.personId}
+                            key={record.recordId}
                         >
                             <c-nks-home-page-list-entry
                                 record={record}
