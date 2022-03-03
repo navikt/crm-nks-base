@@ -132,6 +132,17 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> records = [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+        return records;
+    }
+
+    @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         NKS_Announcement__c campaign = [
             SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
