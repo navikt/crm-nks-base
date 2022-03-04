@@ -3,9 +3,18 @@ import { refreshApex } from '@salesforce/apex';
 import getPostAddress from '@salesforce/apex/NKS_PostAddressController.getPostAddress';
 
 export default class NksPostAddress extends LightningElement {
+    
+    @api objectApiName;
+    @api recordId;
+    
     open = false;
     showbutton = false;
     addressString;
+
+    connectedCallback() {
+        this.wireFields = [this.objectApiName + '.Id'];
+    }
+
     get iconName(){
         return this.open ? 'utility:chevrondown' : 'utility:chevronright';
     }
@@ -79,5 +88,8 @@ export default class NksPostAddress extends LightningElement {
         clipboardInput.hidden = true;
         clipboardInput.disabled = true;
     }
-    @wire(getPostAddress) _address;
+    @wire(getPostAddress,{
+        recordId: '$recordId',
+        objectApiName: '$objectApiName'
+    }) _address;
 }

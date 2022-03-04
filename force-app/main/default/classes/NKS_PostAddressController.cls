@@ -23,22 +23,31 @@ public with sharing class NKS_PostAddressController {
         public String landkode;
         @AuraEnabled
         public String land;
+
+        public PostAddress(NKS_PostAddressResponse response){
+            navn = response.navn;
+            status = response.status;
+            type = response.adresse.type;
+            adresselinje1 = response.adresse.adresselinje1;
+            adresselinje2 = response.adresse.adresselinje2;
+            adresselinje3 = response.adresse.adresselinje3;
+            postummer = response.adresse.postnummer;
+            poststed = response.adresse.poststed;
+            landkode = response.adresse.landkode;
+            land = response.adresse.land;
+        }
     }
     @AuraEnabled(cacheable=true)
-    public static PostAddress getPostAddress() {
-        NKS_PostAddressResponse response = queryRegoppslag('123');
-        PostAddress addr = new PostAddress();
-        addr.navn = response.navn;
-        addr.status = response.status;
-        addr.type = response.adresse.type;
-        addr.adresselinje1 = response.adresse.adresselinje1;
-        addr.adresselinje2 = response.adresse.adresselinje2;
-        addr.adresselinje3 = response.adresse.adresselinje3;
-        addr.postummer = response.adresse.postnummer;
-        addr.poststed = response.adresse.poststed;
-        addr.landkode = response.adresse.landkode;
-        addr.land = response.adresse.land;
-        return addr;
+    public static PostAddress getPostAddress(Id recordId, String objectApiName) {
+        String ident;
+        if (objectApiName == 'Case')
+            ident = [SELECT Account.CRM_Person__r.Name FROM Case WHERE Id = :recordId LIMIT 1].Account.CRM_Person__r.Name;
+        else if (objectApiName == 'Account')
+            ident = [SELECT CRM_Person__r.Name FROM Account WHERE Id = :recordId LIMIT 1].CRM_Person__r.Name;
+        else
+            return null;
+        NKS_PostAddressResponse response = queryRegoppslag(ident);
+        return new PostAddress(response);
     }
     public class NKS_PostAddressResponse{
         String navn;
