@@ -20,6 +20,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api refreshPageAutomatically;
 
     @track records = [];
+    @track listCount = 3;
 
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
@@ -118,8 +119,9 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.loadList();
     };
 
-    lastFlereList(event) {
-        this.limit += 3;
+    loadMoreList() {
+        this.listCount += 3;
+        this.limit = this.listCount;
         this.loadList();
     }
 
