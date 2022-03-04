@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
+import userId from '@salesforce/user/Id';
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -19,6 +20,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api refreshPageAutomatically;
 
     @track records = [];
+    @track listCount = 3;
 
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
@@ -43,15 +45,19 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         });
 
         this.handleSubscribe();
+        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
+            this.filter += ' AND OwnerId =' + userId;
+            console.log(this.filter);
+        }
     }
 
     loadList() {
-        if (this.isCase) {
+        if (this.objectName === 'Case') {
             getList({
                 title: 'STO_Category__c',
                 content: null,
                 objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId=:userId",
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case'",
                 orderby: 'CreatedDate DESC',
                 limitNumber: 3,
                 datefield: 'CreatedDate',
@@ -113,8 +119,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.loadList();
     };
 
-    get isCase() {
-        return this.objectName === 'Case' ? true : false;
+    loadMoreList() {
+        this.listCount += 3;
+        this.limit = this.listCount;
+        this.loadList();
+    }
+
+    get isKnowledge() {
+        return this.objectName === 'Knowledge__kav' ? true : false;
     }
 
     get isStripedList() {
