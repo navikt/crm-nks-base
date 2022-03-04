@@ -60,6 +60,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Traffic_Controller</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

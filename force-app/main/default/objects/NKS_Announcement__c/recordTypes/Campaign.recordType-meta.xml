@@ -5,16 +5,21 @@
     <label>Campaign</label>
     <picklistValues>
         <picklist>NKS_Type__c</picklist>
-        <values>
-            <fullName>Kampanje</fullName>
-            <default>false</default>
-        </values>
+
         <values>
             <fullName>Nyhet</fullName>
             <default>true</default>
         </values>
         <values>
             <fullName>Salesforce oppdatering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kampanje</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trafikkstyrers hjørne</fullName>
             <default>false</default>
         </values>
     </picklistValues>

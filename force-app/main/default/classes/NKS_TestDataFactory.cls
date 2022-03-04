@@ -94,13 +94,13 @@ public without sharing class NKS_TestDataFactory {
         return units;
     }
 
-    public static List<NKS_Announcement__c> createAnnouncements(Integer amount) {
+    public static List<NKS_Announcement__c> createAnnouncements(Integer amount, String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         for (Integer i = 0; i < amount; i++) {
             NKS_Announcement__c a = new NKS_Announcement__c(
                 Name = 'Test ' + i,
                 NKS_Information__c = 'Leveransen lørdag 31. oktober ble levert som planlagt, og NAV Arbeid og ytelser kan derfor nå innvilge dagpenger til personer også fra den 1. november eller senere. Opprinnelig melding 29.10.20: Hvis bruker har søkt om dagpenger med virkningstidspunkt fra 1.november eller senere, så kan vi få henvendelser hvor bruker etterlyser svar på søknaden. NAV Arbeid og ytelser behandler for tiden ingen søknader om dagpenger med virkningstidspunkt (startdato) fra 1. november eller senere. Årsaken er regelverksendringer fra den datoen, som vi må få oppdatert i fagsystemene først, for at utfall i saken skal bli rett.Informer gjerne bruker om dette, og henvis eller til saksbehandlingstidene på nav.no.!!!!',
-                NKS_Type__c = 'Salesforce oppdatering' 
+                NKS_Type__c = type
             );
             announcements.add(a);
         }

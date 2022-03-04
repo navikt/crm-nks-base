@@ -20,6 +20,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api refreshPageAutomatically;
 
     @track records = [];
+    @track listCount = 3;
 
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
@@ -117,6 +118,16 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    loadMoreList() {
+        this.listCount += 3;
+        this.limit = this.listCount;
+        this.loadList();
+    }
+
+    get isKnowledge() {
+        return this.objectName === 'Knowledge__kav' ? true : false;
+    }
 
     get isStripedList() {
         return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
