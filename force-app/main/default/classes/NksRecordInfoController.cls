@@ -11,7 +11,9 @@ public class NksRecordInfoController {
     public static sObject getRelatedRecord(String parentId, String relationshipField, String objectApiName) {
         String query = 'SELECT ' + relationshipField + ' FROM ' + objectApiName;
         query += ' WHERE Id =\'' + parentId + '\'';
+
         sObject returnObject = Database.query(query)[0];
+
         return returnObject;
     }
 }

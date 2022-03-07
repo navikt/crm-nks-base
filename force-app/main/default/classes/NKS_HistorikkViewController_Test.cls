@@ -15,7 +15,9 @@ public class NKS_HistorikkViewController_Test {
         Test.startTest();
         List<NKS_HistorikkViewController.Historikk> hData = NKS_HistorikkViewController.getHistorikk(a.Id, 'Account');
         Test.stopTest();
+
         System.debug(hData);
+        System.assertEquals(false, hData.isEmpty());
     }
 
     @isTest

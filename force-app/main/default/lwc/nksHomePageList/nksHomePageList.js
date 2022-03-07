@@ -18,10 +18,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+    @api enableRefresh = false;
 
     @track records = [];
     @track listCount = 3;
 
+    showSpinner = false;
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
@@ -46,7 +48,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
         this.handleSubscribe();
         if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            this.filter += ' AND OwnerId =' + userId;
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter += " AND OwnerId = '" + userId + "'";
             console.log(this.filter);
         }
     }
@@ -121,8 +124,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     loadMoreList() {
         this.listCount += 3;
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit = this.listCount;
         this.loadList();
+    }
+
+    refreshComponent() {
+        this.showSpinner = true;
+        this.loadList();
+        this.showSpinner = false;
     }
 
     get isKnowledge() {

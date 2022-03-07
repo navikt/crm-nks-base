@@ -9,24 +9,10 @@ public without sharing class ChatAuthController {
             recordsToUpdate.add(lct);
 
             if (status == 'Completed') {
-                Id accountId = getPersonAccountId();
-                Id contactId = getPersonContactId();
-                lct.AccountId = accountId;
-                lct.ContactId = contactId;
-                lct.NKS_Authentication_Timestamp__c = DateTime.now();
-
-                if (String.isNotBlank(accountId)) {
-                    Account personAcc = getPersonAccount(accountId);
-                    if (
-                        !personAcc.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT') ||
-                        personAcc.CRM_Person__r.INT_IsNavEmployee__c
-                    )
-                        //Persons tagged as confidential or is NAV employees cannot be journaled - NKS-430
-                        lct.NKS_Journal_Entry_Status__c = 'Completed';
-                }
+                handleChatAuthentication(lct);
 
                 if (String.isNotBlank(lct.CaseId)) {
-                    Case casy = new Case(Id = lct.CaseId, AccountId = accountId, ContactId = contactId);
+                    Case casy = new Case(Id = lct.CaseId, AccountId = lct.accountId, ContactId = lct.contactId);
                     recordsToUpdate.add(casy);
                 }
             }
@@ -36,8 +22,51 @@ public without sharing class ChatAuthController {
         }
     }
 
+    /**
+     * @description: Performs necesary steps to related the chat and case to the authenticated individual
+     * @author Stian Ruud Schikora | 01-31-2022
+     * @param chatTrans
+     **/
+    private static void handleChatAuthentication(LiveChatTranscript chatTrans) {
+        Id accountId = getPersonAccountId();
+        Id contactId = getPersonContactId();
+        chatTrans.AccountId = accountId;
+        chatTrans.ContactId = contactId;
+        chatTrans.NKS_Authentication_Timestamp__c = DateTime.now();
+        chatTrans.NKS_Thread__c = createChatThread(chatTrans);
+
+        if (String.isNotBlank(accountId)) {
+            Account personAcc = getPersonAccount(accountId);
+            if (
+                !personAcc.CRM_Person__r.INT_Confidential__c.equalsIgnoreCase('UGRADERT') ||
+                personAcc.CRM_Person__r.INT_IsNavEmployee__c
+            )
+                //Persons tagged as confidential or is NAV employees cannot be journaled - NKS-430
+                chatTrans.NKS_Journal_Entry_Status__c = 'Completed';
+        }
+    }
+
+    /**
+     * @description: Created the thread equivalent of an authenticated chat
+     * @author Stian Ruud Schikora | 01-31-2022
+     * @param chatTrans
+     * @return Id
+     **/
+    private static Id createChatThread(LiveChatTranscript chatTrans) {
+        Thread__c chatThread = new Thread__c(
+            CRM_Thread_Type__c = 'CHAT',
+            CRM_Account__c = chatTrans.AccountId,
+            CRM_Contact__c = chatTrans.ContactId,
+            CRM_isActive__c = false,
+            CRM_Related_Object__c = chatTrans.Id,
+            CRM_Theme_Group__c = chatTrans.NKS_Theme_Group__c
+        );
+        insert chatThread;
+        return chatThread.Id;
+    }
+
     private static LiveChatTranscript getChatTranscript(Id chatTranscriptId) {
-        return [SELECT Id, CaseId FROM LiveChatTranscript WHERE Id = :chatTranscriptId];
+        return [SELECT Id, CaseId, NKS_Theme_Group__c FROM LiveChatTranscript WHERE Id = :chatTranscriptId];
     }
 
     /**
@@ -171,10 +200,10 @@ public without sharing class ChatAuthController {
         ?.ContactId;
     }
 
-    @AuraEnabled 
+    @AuraEnabled
     public static string getCouncellorName(String recordId) {
-        Id ownerId = [SELECT OwnerId FROM LiveChatTranscript WHERE Id = :recordId LIMIT 1]?.OwnerId; 
-        String fullname = [SELECT NKS_FullName__c FROM User WHERE Id = :ownerId LIMIT 1]?.NKS_FullName__c; 
-        return fullname; 
+        Id ownerId = [SELECT OwnerId FROM LiveChatTranscript WHERE Id = :recordId LIMIT 1]?.OwnerId;
+        String fullname = [SELECT NKS_FullName__c FROM User WHERE Id = :ownerId LIMIT 1]?.NKS_FullName__c;
+        return fullname;
     }
 }
