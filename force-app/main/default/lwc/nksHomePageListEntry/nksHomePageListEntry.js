@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
     @api record;
-    @api isKnowledge;
+    @api isKnowledge = false;
     recordPageUrl;
 
     navigateToSObject(event) {
