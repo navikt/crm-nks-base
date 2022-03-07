@@ -340,6 +340,10 @@
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>filterIsActive</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>headerIcon</name>
                     <value>standard:all</value>
                 </componentInstanceProperties>
@@ -384,6 +388,10 @@
                 <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON_NOTIFICATION</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterIsActive</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>headerIcon</name>
@@ -452,19 +460,30 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdField</name>
-                    <value>CRM_Person__c</value>
+                    <name>brukerIdentField</name>
+                    <value>CRM_Person__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>nmbOfJournalPosts</name>
-                    <value>50</value>
+                    <name>brukerIdentType</name>
+                    <value>FNR</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Id</value>
+                    <name>logDomain</name>
+                    <value>NKS</value>
                 </componentInstanceProperties>
-                <componentName>nksSakOgDokumentListeNarrow</componentName>
-                <identifier>nksSakOgDokumentListeNarrow</identifier>
+                <componentInstanceProperties>
+                    <name>logException</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logRequests</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>themeGroupField</name>
+                </componentInstanceProperties>
+                <componentName>safDocumentByUser</componentName>
+                <identifier>c_safDocumentByUser1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>
