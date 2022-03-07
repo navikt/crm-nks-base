@@ -25,7 +25,7 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.71.0.LATEST"
+                    "versionNumber": "0.74.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
@@ -54,6 +54,10 @@
                 {
                     "package": "crm-platform-oppgave",
                     "versionNumber": "0.14.0.LATEST"
+                },
+                {
+                    "package": "crm-sf-saf",
+                    "versionNumber": "0.1.0.LATEST"
                 }
             ]
         }
@@ -74,6 +78,7 @@
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
         "crm-shared-flowComponents": "0Ho2o000000fxYJCAY",
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
-        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
+        "crm-sf-saf": "0Ho7U0000000001SAA"
     }
 }
