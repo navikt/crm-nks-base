@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
@@ -18,10 +19,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+    @api enableRefresh = false;
 
     @track records = [];
     @track listCount = 3;
 
+    showSpinner = false;
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
@@ -123,6 +126,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.listCount += 3;
         this.limit = this.listCount;
         this.loadList();
+    }
+
+    refreshComponent() {
+        this.showSpinner = true;
+        this.loadList();
+        this.showSpinner = false;
     }
 
     get isKnowledge() {
