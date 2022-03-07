@@ -1,5 +1,4 @@
 import { LightningElement, api, track } from 'lwc';
-import { refreshApex } from '@salesforce/apex';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
@@ -49,7 +48,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
         this.handleSubscribe();
         if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            this.filter += ' AND OwnerId =' + userId;
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter += " AND OwnerId = '" + userId + "'";
             console.log(this.filter);
         }
     }
@@ -124,6 +124,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     loadMoreList() {
         this.listCount += 3;
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit = this.listCount;
         this.loadList();
     }
