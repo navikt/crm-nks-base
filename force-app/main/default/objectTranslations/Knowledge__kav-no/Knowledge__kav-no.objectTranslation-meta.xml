@@ -1,79 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <caseValues>
-        <article>Definite</article>
-        <plural>false</plural>
-        <value>Kunnskapsartikkelen</value>
-    </caseValues>
-    <caseValues>
-        <article>Indefinite</article>
-        <plural>false</plural>
-        <value>Kunnskapsartikkel</value>
-    </caseValues>
-    <caseValues>
-        <article>None</article>
-        <plural>false</plural>
-        <value>Kunnskapsartikkel</value>
-    </caseValues>
-    <caseValues>
-        <article>Definite</article>
-        <plural>true</plural>
-        <value>Kunnskapsartiklene</value>
-    </caseValues>
-    <caseValues>
-        <article>Indefinite</article>
-        <plural>true</plural>
-        <value>Kunnskapsbase</value>
-    </caseValues>
-    <caseValues>
-        <article>None</article>
-        <plural>true</plural>
-        <value>Kunnskapsbase</value>
-    </caseValues>
-    <gender>Masculine</gender>
-    <layouts>
-        <layout>Clarifications Layout</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Faglige avklaringer --></label>
-            <section>Faglige avklaringer</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>Knowledge Layout</layout>
-        <sections>
-            <label><!-- Arbeidgiver --></label>
-            <section>Arbeidgiver</section>
-        </sections>
-        <sections>
-            <label><!-- Bruker / Generelt --></label>
-            <section>Bruker / Generelt</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-        <sections>
-            <label><!-- Internasjonalt --></label>
-            <section>Internasjonalt</section>
-        </sections>
-        <sections>
-            <label><!-- Lege og behandler --></label>
-            <section>Lege og behandler</section>
-        </sections>
-        <sections>
-            <label><!-- Oversettelser --></label>
-            <section>Oversettelser</section>
-        </sections>
-        <sections>
-            <label><!-- Til høyre --></label>
-            <section>Til høyre</section>
-        </sections>
-    </layouts>
-    <nameFieldLabel><!-- Knowledge Name --></nameFieldLabel>
     <quickActions>
         <aspect>Master</aspect>
         <label>Kopier sammendrag</label>
@@ -83,16 +9,4 @@
         <label><!-- Gi tilbakemelding --></label>
         <name>Gi_tilbakemelding</name>
     </quickActions>
-    <recordTypes>
-        <label>Faglig avklaring</label>
-        <name>Clarifications</name>
-    </recordTypes>
-    <recordTypes>
-        <label>Kunnskapsartikkel - felles</label>
-        <name>Common</name>
-    </recordTypes>
-    <recordTypes>
-        <label>Kunnskapsartikkel - fag</label>
-        <name>Servicerutine</name>
-    </recordTypes>
 </CustomObjectTranslation>

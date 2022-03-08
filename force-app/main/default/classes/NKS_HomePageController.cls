@@ -35,8 +35,7 @@ public with sharing class NKS_HomePageController {
             query += ' , ' + content;
         if (filterbyskills && objectName == 'NKS_Announcement__c')
             query += ' , Skills__c ';
-        query += ' FROM ' + objectName;
-        query += ' WHERE ' + filter;
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -117,7 +116,7 @@ public with sharing class NKS_HomePageController {
         return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 
-    private static Set<String> getUserSkills(Id userId) {
+    public static Set<String> getUserSkills(Id userId) {
         Set<String> skills = new Set<String>();
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
@@ -130,5 +129,29 @@ public with sharing class NKS_HomePageController {
             skills.add(g.DeveloperName);
         }
         return skills;
+    }
+
+    @AuraEnabled
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> records = [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ];
+        return records;
+    }
+
+    @AuraEnabled
+    public static NKS_Announcement__c getCampaign() {
+        NKS_Announcement__c campaign = [
+            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            FROM NKS_Announcement__c
+            WHERE NKS_Type__c = 'Kampanje'
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
+        return campaign;
     }
 }

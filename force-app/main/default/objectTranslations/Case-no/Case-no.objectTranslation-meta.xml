@@ -52,13 +52,4 @@
         <label><!-- Update Case --></label>
         <name>UpdateFeedback</name>
     </quickActions>
-    <recordTypes>
-        <description><!-- Used for internal cases for feedback on knowledge articles --></description>
-        <label><!-- Feedback --></label>
-        <name>Feedback</name>
-    </recordTypes>
-    <recordTypes>
-        <label><!-- Phone Case --></label>
-        <name>NKS_Phone_Case</name>
-    </recordTypes>
 </CustomObjectTranslation>
