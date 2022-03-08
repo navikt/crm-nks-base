@@ -1,0 +1,17 @@
+<!-- Conatiner component as LWC not yet supports the conversation toolkit API and lacks the force:refreshView functionality-->
+<aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId"
+    controller="NKS_ChatTranscriptService">
+    <aura:attribute name="loggingEnabled" type="boolean" default="true" />
+    <aura:attribute name="accountFields" type="String" />
+    <aura:attribute name="caseFields" type="String" />
+    <aura:attribute name="personFields" type="String" />
+    <aura:attribute name="conversation" type="object[]" />
+
+    <lightning:conversationToolkitApi aura:id="chatToolkit" />
+
+    <c:nksChatAuthenticationInfo recordId="{!v.recordId}" loggingEnabled="{!v.loggingEnabled}"
+        caseFields="{!v.caseFields}" accountFields="{!v.accountFields}" personFields="{!v.personFields}"
+        onrequestauthentication="{!c.requestAuthentication}" onauthenticationcomplete="{!c.showLoginMsg}"
+        aura:id="chatAuthInfo">
+    </c:nksChatAuthenticationInfo>
+</aura:component>
