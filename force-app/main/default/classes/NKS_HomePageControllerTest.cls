@@ -18,6 +18,15 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
+    static void testGetFieldWithNullValue() {
+        Test.startTest();
+        String info = NKS_HomePageController.getField('Nyhet');
+        Test.stopTest();
+
+        System.assertEquals(null, info);
+    }
+
+    @isTest
     static void testGetList() {
         Test.startTest();
         List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
@@ -37,23 +46,57 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetUserSkills() {
-        User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
-
+    static void testGetListWithNullValue() {
         Test.startTest();
-        NKS_HomePageController.getUserSkills(testUser.Id);
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+            'Title',
+            null,
+            'Knowledge__kav',
+            'publishStatus=\'Online\'',
+            'LastModifiedDate DESC',
+            '3',
+            'CreatedDate',
+            false,
+            false
+        );
         Test.stopTest();
 
-        System.assertNotEquals(null, testUser.Id);
+        System.assertEquals(0, recordlist.size());
+    }
+
+    @isTest
+    static void testGetUserSkills() {
+        User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
+        Set<String> testSkills = new Set<String>();
+        Test.startTest();
+        testSkills = NKS_HomePageController.getUserSkills(testUser.Id);
+        Test.stopTest();
+
+        if (testSkills.size() > 0) {
+            System.assertNotEquals(0, testSkills.size());
+        } else {
+            System.assertEquals(0, testSkills.size());
+        }
     }
 
     @isTest
     static void testGetCampaign() {
         Test.startTest();
-        NKS_Announcement__c testCampain = NKS_HomePageController.getCampaign();
+        NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
         Test.stopTest();
 
-        System.assertNotEquals(null, testCampain.NKS_ImageURL__c);
+        System.assertNotEquals(null, testCampaign.NKS_ImageURL__c);
+    }
+
+    @isTest
+    static void testGetCampaignWithNullValue() {
+        Test.startTest();
+        NKS_Announcement__c testCampaign1 = NKS_HomePageController.getCampaign();
+        delete testCampaign1;
+        NKS_Announcement__c testCampaign2 = NKS_HomePageController.getCampaign();
+        Test.stopTest();
+
+        System.assertEquals(null, testCampaign2);
     }
 
     @isTest
@@ -63,5 +106,20 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertEquals(1, testList.size());
+    }
+
+    @isTest
+    static void testGetReadyResponseWithNullValue() {
+        List<ReadyResponse__c> testList = new List<ReadyResponse__c>();
+
+        Test.startTest();
+        testList = NKS_HomePageController.getReadyResponse();
+        for (ReadyResponse__c obj : testList) {
+            delete obj;
+        }
+        testList = NKS_HomePageController.getReadyResponse();
+        Test.stopTest();
+
+        System.assertEquals(0, testList.size());
     }
 }

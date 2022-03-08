@@ -27,7 +27,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-    error;
     pageurl;
 
     connectedCallback() {
@@ -65,7 +64,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                     this.records = result;
                 })
                 .catch((error) => {
-                    this.error = error;
+                    console.log(error);
                 });
         }
         if (this.objectName === 'LiveChatTranscript') {
@@ -91,7 +90,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 this.records = result;
             })
             .catch((error) => {
-                this.error = error;
+                console.log(error);
             });
     }
 
