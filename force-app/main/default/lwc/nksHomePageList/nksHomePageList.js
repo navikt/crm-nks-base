@@ -18,14 +18,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+    @api enableRefresh = false;
 
     @track records = [];
     @track listCount = 3;
 
+    showSpinner = false;
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-    error;
     pageurl;
 
     connectedCallback() {
@@ -43,12 +44,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-
         this.handleSubscribe();
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            this.filter += ' AND OwnerId =' + userId;
-            console.log(this.filter);
-        }
     }
 
     loadList() {
@@ -57,7 +53,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 title: 'STO_Category__c',
                 content: null,
                 objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case'",
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId='" + userId + "'",
                 orderby: 'CreatedDate DESC',
                 limitNumber: 3,
                 datefield: 'CreatedDate',
@@ -68,8 +64,16 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                     this.records = result;
                 })
                 .catch((error) => {
-                    this.error = error;
+                    console.log(error);
                 });
+        }
+        if (this.objectName === 'LiveChatTranscript') {
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter =
+                "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
+                userId +
+                "'";
+            console.log(this.filter);
         }
         getList({
             title: this.title,
@@ -86,7 +90,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 this.records = result;
             })
             .catch((error) => {
-                this.error = error;
+                console.log(error);
             });
     }
 
@@ -121,8 +125,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     loadMoreList() {
         this.listCount += 3;
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit = this.listCount;
         this.loadList();
+    }
+
+    refreshComponent() {
+        this.showSpinner = true;
+        this.loadList();
+        this.showSpinner = false;
     }
 
     get isKnowledge() {
