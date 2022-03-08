@@ -107,19 +107,4 @@ public with sharing class NKS_HomePageControllerTest {
 
         System.assertEquals(1, testList.size());
     }
-
-    @isTest
-    static void testGetReadyResponseWithNullValue() {
-        List<ReadyResponse__c> testList = new List<ReadyResponse__c>();
-
-        Test.startTest();
-        testList = NKS_HomePageController.getReadyResponse();
-        for (ReadyResponse__c obj : testList) {
-            delete obj;
-        }
-        testList = NKS_HomePageController.getReadyResponse();
-        Test.stopTest();
-
-        System.assertEquals(0, testList.size());
-    }
 }
