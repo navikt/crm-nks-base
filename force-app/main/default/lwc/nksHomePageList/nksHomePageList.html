@@ -54,10 +54,10 @@
                 </template>
             </div>
             <div if:true={isKnowledge} class="slds-box slds-p-vertical_none slds-p-horizontal_none slds-theme_default">
-                <ul class="slds-list_vertical-space-small">
+                <ul class="">
                     <template for:each={records} for:item="record">
                         <li
-                            class="slds-item slds-border_bottom slds-p-vertical_x-small slds-p-horizontal_medium"
+                            class="slds-item slds-border_bottom slds-var-p-vertical_x-small slds-var-p-horizontal_medium"
                             key={record.recordId}
                         >
                             <c-nks-home-page-list-entry
@@ -67,7 +67,9 @@
                         </li>
                     </template>
                     <div class="slds-text-align_center">
-                        <button class="slds-button slds-p-vertical_xxx-small" onclick={loadMoreList}>Last flere</button>
+                        <button class="slds-button slds-var-p-vertical_xxx-small" onclick={loadMoreList}>
+                            Last flere
+                        </button>
                     </div>
                 </ul>
             </div>
