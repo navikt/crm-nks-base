@@ -45,13 +45,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-
         this.handleSubscribe();
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.filter += " AND OwnerId = '" + userId + "'";
-            console.log(this.filter);
-        }
     }
 
     loadList() {
@@ -60,7 +54,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 title: 'STO_Category__c',
                 content: null,
                 objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case'",
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId='" + userId + "'",
                 orderby: 'CreatedDate DESC',
                 limitNumber: 3,
                 datefield: 'CreatedDate',
@@ -73,6 +67,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 .catch((error) => {
                     this.error = error;
                 });
+        }
+        if (this.objectName === 'LiveChatTranscript') {
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter =
+                "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
+                userId +
+                "'";
+            console.log(this.filter);
         }
         getList({
             title: this.title,
