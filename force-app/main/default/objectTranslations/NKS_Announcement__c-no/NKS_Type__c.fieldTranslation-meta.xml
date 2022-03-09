@@ -15,7 +15,7 @@
         <translation><!-- Salesforce oppdatering --></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Trafikkstyrers hjørne</masterLabel>
-        <translation><!-- Trafikkstyrers hjørne --></translation>
+        <masterLabel>Trafikk</masterLabel>
+        <translation><!-- Trafikk --></translation>
     </picklistValues>
 </CustomFieldTranslation>
