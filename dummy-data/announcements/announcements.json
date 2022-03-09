@@ -76,8 +76,8 @@
                 "referenceId": "NKS_Announcement__cRef8"
             },
             "Name": "Trafikkstyrers hjørne",
-            "RecordTypeId": "$R{RecordType.NKS_Announcement__c.Traffic_Controller}",
-            "NKS_Type__c": "Trafikkstyrers hjørne",
+            "RecordTypeId": "$R{RecordType.NKS_Announcement__c.Traffic}",
+            "NKS_Type__c": "Trafikk",
             "NKS_Information__c": "<p>OBS: Dette er en viktig melding om dagen i dag.<br>Det er viktig at alle leser denne superviktige meldingen. Hvis du lurer på noe ta kontakt med superbrukeren din.<br><br> Overtid<br>Overtid mandag 1. oktober.<br><br>Vi åpner for overtid fra kl 15.30 til 18.00 i dag. Du melder deg til overtid i Calabrio før kl 14 i dag.<br><br>Stengtmeldinger<br>Oppdatert kl. 10. 31<br><br>01. januar - problemene ser ut til å være løst og vi åpner telefon kl 10.45. Chat åpnes kl 11.<br><br>Driftsmeldinger<br>TVD-P i FSS utilgjengelig<br>01.11.2021, kl. 10.47<br>TDV-P i FSS blir utilgjengelig i dag mandag 01. november i forbindelse med en restart mellom klokken 16.30 og 17.30.<br><br>Problemer med treghet på nettverk og tilgang til NAV apps<br>01.11.2021, kl. 08.24 - Oppdatert kl. 10.49<br>Det er oppdaget tregheter på vårt nettverk grunnet høy last som følge av programvareoppdateringer for våre maskiner.<br><br>Dette påvirker også tilgang til NAV-applikasjoner vis Citrix fra hjemmekontor.<br><br>Nettverksavdelingen jobber med saken.</p>"
         }
     ]

@@ -15,7 +15,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>NKS - Announcement Traffic Controller Editor</label>
+    <label>NKS - Announcement Traffic Editor</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -26,7 +26,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>NKS_Announcement__c.Traffic_Controller</recordType>
+        <recordType>NKS_Announcement__c.Traffic</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
