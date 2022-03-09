@@ -17,46 +17,6 @@
         <name>TAG_NAV_default</name>
     </customApplications>
     <customLabels>
-        <label/>
-        <name>CRM_Chat_Authentication_Init_Failed</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>CRM_Chat_Authentication_Requested</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>CRM_Chat_Authentication_Started</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>CRM_Chat_Identity_Confirmed</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>CRM_Chat_Identity_Confirmed_Disclaimer</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>CRM_Chat_Unconfirmed_Identity_Warning</name>
-    </customLabels>
-    <customLabels>
-        <label>Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</label>
-        <name>NAV_Unit_Error_person_location_missing</name>
-    </customLabels>
-    <customLabels>
-        <label>Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</label>
-        <name>NAV_Unit_Error_person_not_accessible</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>NKS_Chat_Login_Message_EN</name>
-    </customLabels>
-    <customLabels>
-        <label/>
-        <name>NKS_Chat_Login_Message_NO</name>
-    </customLabels>
-    <customLabels>
         <label>Samtalereferatet kan ikke være tomt!</label>
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
@@ -1222,15 +1182,6 @@
         <sections>
             <label/>
             <name>Konto</name>
-        </sections>
-    </reportTypes>
-    <reportTypes>
-        <description/>
-        <label/>
-        <name>Chat_Transcript</name>
-        <sections>
-            <label/>
-            <name>Chat Transcripts</name>
         </sections>
     </reportTypes>
     <reportTypes>
