@@ -29,4 +29,8 @@
         <recordType>NKS_Announcement__c.Traffic_Controller</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>NKS_Announcement__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
