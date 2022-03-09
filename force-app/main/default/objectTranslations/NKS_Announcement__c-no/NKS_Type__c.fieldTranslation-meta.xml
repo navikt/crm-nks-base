@@ -1,23 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>Type</label>
     <name>NKS_Type__c</name>
     <picklistValues>
+        <masterLabel>Kampanje</masterLabel>
+        <translation><!-- Kampanje --></translation>
+    </picklistValues>
+    <picklistValues>
         <masterLabel>Nyhet</masterLabel>
-        <translation>
-            <!-- News -->
-        </translation>
+        <translation><!-- Nyhet --></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Glamelding</masterLabel>
-        <translation>
-            <!-- Operational Messages -->
-        </translation>
+        <masterLabel>Salesforce oppdatering</masterLabel>
+        <translation><!-- Salesforce oppdatering --></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Tips</masterLabel>
-        <translation>
-            <!-- Operational Messages -->
-        </translation>
+        <masterLabel>Trafikkstyrers hjørne</masterLabel>
+        <translation><!-- Trafikkstyrers hjørne --></translation>
     </picklistValues>
 </CustomFieldTranslation>

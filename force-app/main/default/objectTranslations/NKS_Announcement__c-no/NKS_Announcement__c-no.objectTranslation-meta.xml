@@ -38,7 +38,25 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <layouts>
+        <layout>Campaign Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Traffic Controller Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <nameFieldLabel>Tittel</nameFieldLabel>
+    <recordTypes>
+        <label>Kampanje</label>
+        <name>Campaign</name>
+    </recordTypes>
     <recordTypes>
         <label>Nyheter</label>
         <name>News</name>
@@ -46,5 +64,9 @@
     <recordTypes>
         <label>Teknisk og drift</label>
         <name>Operational</name>
+    </recordTypes>
+    <recordTypes>
+        <label>Trafikkstyrers hjørne</label>
+        <name>Traffic_Controller</name>
     </recordTypes>
 </CustomObjectTranslation>
