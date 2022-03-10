@@ -149,7 +149,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Traffic Controller Record Page</masterLabel>
+    <masterLabel>Traffic Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSimpleViewTemplate</name>
