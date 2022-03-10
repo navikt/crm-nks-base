@@ -26,9 +26,9 @@
                 <label>Kampanje</label>
             </value>
             <value>
-                <fullName>Trafikkstyrers hjørne</fullName>
+                <fullName>Trafikk</fullName>
                 <default>false</default>
-                <label>Trafikkstyrers hjørne</label>
+                <label>Trafikk</label>
             </value>
             <value>
                 <fullName>Glamelding</fullName>
