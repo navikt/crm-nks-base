@@ -16,6 +16,10 @@
                     <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c, INT_BankAccountNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -52,6 +56,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c,NKS_County__c, INT_ResidentialPlace__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -114,6 +122,10 @@
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -156,6 +168,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -267,6 +283,10 @@
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>filterIsActive</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>headerIcon</name>
                     <value>standard:all</value>
                 </componentInstanceProperties>
@@ -311,6 +331,10 @@
                 <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON_NOTIFICATION</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterIsActive</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>headerIcon</name>
@@ -379,23 +403,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdField</name>
-                    <value>Account.CRM_Person__c</value>
+                    <name>brukerIdentField</name>
+                    <value>Account.CRM_Person__r.Name</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>nmbOfJournalPosts</name>
-                    <value>50</value>
+                    <name>brukerIdentType</name>
+                    <value>FNR</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                    <value>Id</value>
+                    <name>logDomain</name>
+                    <value>NKS</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logException</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logRequests</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>themeGroupField</name>
                     <value>NKS_Theme_Group__c</value>
                 </componentInstanceProperties>
-                <componentName>nksSakOgDokumentListeNarrow</componentName>
-                <identifier>nksSakOgDokumentListeNarrow</identifier>
+                <componentName>safDocumentByUser</componentName>
+                <identifier>c_safDocumentByUser1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-8db1e5ff-c0a3-4ee0-ae75-06abd0a5eed3</name>
@@ -588,6 +620,10 @@
                     <value>ModiaURL__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -625,6 +661,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_DateOfDeath__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
