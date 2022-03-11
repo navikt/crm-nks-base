@@ -31,7 +31,5 @@
         <value>Svarberedskaper</value>
     </caseValues>
     <gender>Masculine</gender>
-    <nameFieldLabel>
-        <!-- ReadyResponse Name -->
-    </nameFieldLabel>
+    <nameFieldLabel>Svarberedskap tittel</nameFieldLabel>
 </CustomObjectTranslation>
