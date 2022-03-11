@@ -64,10 +64,6 @@
                     <value>INT_Phone1__c, INT_ResidentialAddress__c,INT_Phone2__c,INT_ResidentialZipCode__c,NKS_County__c,INT_ResidentialPlace__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -128,10 +124,6 @@
                     <value>INT_TemporaryAddress__c, INT_TemporaryZipCode__c, 	INT_TemporaryCountryCode__c, INT_TemporaryMunicipalityNumber__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -174,10 +166,6 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -297,10 +285,6 @@
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>filterIsActive</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>headerIcon</name>
                     <value>standard:all</value>
                 </componentInstanceProperties>
@@ -345,10 +329,6 @@
                 <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON_NOTIFICATION</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterIsActive</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>headerIcon</name>
@@ -417,30 +397,23 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdentField</name>
-                    <value>Account.CRM_Person__r.Name</value>
+                    <name>brukerIdField</name>
+                    <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>brukerIdentType</name>
-                    <value>FNR</value>
+                    <name>nmbOfJournalPosts</name>
+                    <value>50</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>logDomain</name>
-                    <value>NKS</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>logException</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>logRequests</name>
-                    <value>true</value>
+                    <name>relationshipField</name>
+                    <value>Id</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>themeGroupField</name>
+                    <value>NKS_Theme_Group__c</value>
                 </componentInstanceProperties>
-                <componentName>safDocumentByUser</componentName>
-                <identifier>c_safDocumentByUser1</identifier>
+                <componentName>nksSafJournalpostList</componentName>
+                <identifier>nksSafJournalpostList</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-8a77a1e9-2943-4a11-af46-55c01977e2ba</name>
@@ -576,10 +549,6 @@
                     <value>INT_DateOfDeath__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -623,10 +592,6 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c, INT_Citizenships__c, INT_BankAccountNumber__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>

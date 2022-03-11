@@ -6,13 +6,7 @@
                 <ul>
                     <template for:each={records} for:item="record">
                         <li class="slds-item" key={record.Id}>
-                            <form action={record.URL__c}>
-                                <button
-                                    class="slds-large-size_8-of-8 slds-button slds-button_brand slds-p-horizontal_x-small slds-var-m-top_small slds-var-m-bottom_xx-small"
-                                >
-                                    {record.Name}
-                                </button>
-                            </form>
+                            <c-nks-ready-response-list-entry record={record}></c-nks-ready-response-list-entry>
                         </li>
                     </template>
                 </ul>

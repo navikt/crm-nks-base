@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
-import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponse';
-export default class NksLinksReadyResponse extends LightningElement {
+import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponses';
+export default class nksLinksReadyResponse extends LightningElement {
     @track records = [];
 
     isInitiated = false;
@@ -23,14 +23,16 @@ export default class NksLinksReadyResponse extends LightningElement {
     }
 
     get showReadyResponse() {
+        let show;
         if (this.records.length > 0) {
             this.size = 7;
             this.className = 'slds-var-p-left_large';
-            return true;
+            show = true;
         } else {
             this.size = 12;
             this.className = '';
-            return false;
+            show = false;
         }
+        return show;
     }
 }

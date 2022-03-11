@@ -137,20 +137,6 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled
-    public static List<ReadyResponse__c> getReadyResponse() {
-        List<ReadyResponse__c> readyResponses = new List<ReadyResponse__c>();
-        for (ReadyResponse__c readyresponse : [
-            SELECT Id, Name, URL__c
-            FROM ReadyResponse__c
-            ORDER BY CreatedDate DESC
-            LIMIT 3
-        ]) {
-            readyResponses.add(readyresponse);
-        }
-        return readyResponses;
-    }
-
-    @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
             SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
@@ -163,6 +149,24 @@ public with sharing class NKS_HomePageController {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
             return campaign;
+        } else {
+            System.debug('The list in empty!');
+            return null;
+        }
+    }
+
+    @AuraEnabled
+    public static List<Knowledge__kav> getReadyResponses() {
+        List<Knowledge__kav> readyResponses = [
+            SELECT Id, Title, LastModifiedDate
+            FROM Knowledge__kav
+            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
+            ORDER BY LastModifiedDate DESC
+            LIMIT 3
+        ];
+
+        if (readyResponses.size() > 0) {
+            return readyResponses;
         } else {
             System.debug('The list in empty!');
             return null;

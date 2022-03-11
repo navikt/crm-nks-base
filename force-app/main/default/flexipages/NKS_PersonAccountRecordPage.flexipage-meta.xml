@@ -340,10 +340,6 @@
                     <value>NKS_PERSON</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>filterIsActive</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>headerIcon</name>
                     <value>standard:all</value>
                 </componentInstanceProperties>
@@ -388,10 +384,6 @@
                 <componentInstanceProperties>
                     <name>configId</name>
                     <value>NKS_PERSON_NOTIFICATION</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>filterIsActive</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>headerIcon</name>
@@ -460,30 +452,19 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdentField</name>
-                    <value>CRM_Person__r.Name</value>
+                    <name>brukerIdField</name>
+                    <value>CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>brukerIdentType</name>
-                    <value>FNR</value>
+                    <name>nmbOfJournalPosts</name>
+                    <value>50</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>logDomain</name>
-                    <value>NKS</value>
+                    <name>relationshipField</name>
+                    <value>Id</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>logException</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>logRequests</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>themeGroupField</name>
-                </componentInstanceProperties>
-                <componentName>safDocumentByUser</componentName>
-                <identifier>c_safDocumentByUser1</identifier>
+                <componentName>nksSakOgDokumentListeNarrow</componentName>
+                <identifier>nksSakOgDokumentListeNarrow</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-af59adac-42fb-4a3b-9541-99832cdf4589</name>

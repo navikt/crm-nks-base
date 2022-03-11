@@ -4,8 +4,13 @@ public with sharing class NKS_HomePageControllerTest {
     static void makeData() {
         NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
         NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
-        ReadyResponse__c svarberedskap = new ReadyResponse__c(Name = 'Test Svarberedskap', URL__c = 'Test-URL');
-        insert svarberedskap;
+        Knowledge__kav testKnowledge = new Knowledge__kav(
+            Title = 'Test Svarberedskap',
+            UrlName = 'Test-Svarberedskap',
+            Summary = 'Informasjon for test svarberedskap',
+            Type__c = 'Svarberedskap'
+        );
+        insert testKnowledge;
     }
 
     @isTest
@@ -52,7 +57,7 @@ public with sharing class NKS_HomePageControllerTest {
             'Title',
             null,
             'Knowledge__kav',
-            'publishStatus=\'Online\'',
+            'Type__c=\'Standard\'',
             'LastModifiedDate DESC',
             '3',
             'CreatedDate',
@@ -102,9 +107,9 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetReadyResponse() {
         Test.startTest();
-        List<ReadyResponse__c> testList = NKS_HomePageController.getReadyResponse();
+        List<Knowledge__kav> testList = NKS_HomePageController.getReadyResponses();
         Test.stopTest();
 
-        System.assertEquals(1, testList.size());
+        System.assertEquals(null, testList);
     }
 }
