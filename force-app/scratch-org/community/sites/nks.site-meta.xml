@@ -19,9 +19,6 @@
     <indexPage>CommunitiesLanding</indexPage>
     <masterLabel>nks</masterLabel>
     <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
-    <!--
-    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
-    -->
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
     <siteType>ChatterNetwork</siteType>
     <subdomain>navdialog</subdomain>
