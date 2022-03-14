@@ -6,6 +6,16 @@
     </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.From_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.Image_Alt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_ImageURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27,6 +37,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Announcement__c.Skills__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.To_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

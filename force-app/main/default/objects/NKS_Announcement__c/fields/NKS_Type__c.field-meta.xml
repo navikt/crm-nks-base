@@ -16,14 +16,25 @@
                 <label>Nyhet</label>
             </value>
             <value>
-                <fullName>Glamelding</fullName>
-                <default>false</default>
-                <label>Glamelding</label>
-            </value>
-            <value>
                 <fullName>Salesforce oppdatering</fullName>
                 <default>false</default>
                 <label>Salesforce oppdatering</label>
+            </value>
+            <value>
+                <fullName>Kampanje</fullName>
+                <default>false</default>
+                <label>Kampanje</label>
+            </value>
+            <value>
+                <fullName>Trafikk</fullName>
+                <default>false</default>
+                <label>Trafikk</label>
+            </value>
+            <value>
+                <fullName>Glamelding</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Glamelding</label>
             </value>
             <value>
                 <fullName>Tips</fullName>

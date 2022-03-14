@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.187.0.NEXT",
+            "versionNumber": "0.188.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.146.0.LATEST"
+                    "versionNumber": "0.149.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -25,7 +25,11 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.73.0.LATEST"
+                    "versionNumber": "0.74.0.LATEST"
+                },
+                {
+                    "package": "crm-nks-base-components",
+                    "versionNumber": "0.1.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
@@ -54,6 +58,10 @@
                 {
                     "package": "crm-platform-oppgave",
                     "versionNumber": "0.22.0.LATEST"
+                },
+                {
+                    "package": "crm-sf-saf",
+                    "versionNumber": "0.1.0.LATEST"
                 }
             ]
         }
@@ -65,6 +73,7 @@
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
         "crm-platform-access-control": "0Ho2o0000008OR3CAM",
+        "crm-nks-base-components": "0Ho7U000000000LSAQ",
         "crm-shared-timeline": "0Ho2o000000fxXBCAY",
         "crm-shared-base": "0Ho2o000000fxXLCAY",
         "crm-arbeidsgiver-base": "0Ho2o0000008OQtCAM",
@@ -74,6 +83,7 @@
         "crm-shared-user-notification": "0Ho2o000000fxY4CAI",
         "crm-shared-flowComponents": "0Ho2o000000fxYJCAY",
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
-        "crm-platform-oppgave": "0Ho2o000000fxXzCAI"
+        "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
+        "crm-sf-saf": "0Ho7U0000000001SAA"
     }
 }

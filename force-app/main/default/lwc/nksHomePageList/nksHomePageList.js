@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
+import userId from '@salesforce/user/Id';
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -17,12 +18,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api showimage;
     @api filterbyskills;
     @api refreshPageAutomatically;
+    @api enableRefresh = false;
+
+    @track records = [];
+    @track listCount = 3;
+
+    showSpinner = false;
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-
-    @track records;
-    error;
     pageurl;
 
     connectedCallback() {
@@ -40,11 +44,37 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-
         this.handleSubscribe();
     }
 
     loadList() {
+        if (this.objectName === 'Case') {
+            getList({
+                title: 'STO_Category__c',
+                content: null,
+                objectName: 'Case',
+                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId='" + userId + "'",
+                orderby: 'CreatedDate DESC',
+                limitNumber: 3,
+                datefield: 'CreatedDate',
+                showimage: false,
+                filterbyskills: false
+            })
+                .then((result) => {
+                    this.records = result;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        if (this.objectName === 'LiveChatTranscript') {
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter =
+                "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
+                userId +
+                "'";
+            console.log(this.filter);
+        }
         getList({
             title: this.title,
             content: this.content,
@@ -60,7 +90,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 this.records = result;
             })
             .catch((error) => {
-                this.error = error;
+                console.log(error);
             });
     }
 
@@ -92,4 +122,43 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
         this.loadList();
     };
+
+    loadMoreList() {
+        this.listCount += 3;
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+        this.limit = this.listCount;
+        this.loadList();
+    }
+
+    refreshComponent() {
+        this.showSpinner = true;
+        this.loadList();
+        this.showSpinner = false;
+    }
+
+    get isKnowledge() {
+        return this.objectName === 'Knowledge__kav' ? true : false;
+    }
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
+    }
+
+    get hasRecord() {
+        return this.records.length > 0 ? true : false;
+    }
+
+    get setEmptyStateForCase() {
+        return !this.hasRecord && this.objectName === 'Case' ? true : false;
+    }
+
+    get setEmptyStateForChat() {
+        return !this.hasRecord && this.objectName === 'LiveChatTranscript' ? true : false;
+    }
+
+    get lastIndex() {
+        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
+            return this.records.length - 1;
+        }
+    }
 }

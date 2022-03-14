@@ -1,16 +1,21 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static string getField(String type) {
-        String information = [
+        List<NKS_Announcement__c> announcements = [
             SELECT NKS_Information__c
             FROM NKS_Announcement__c
             WHERE NKS_Type__c = :type
             ORDER BY LastModifiedDate DESC
             LIMIT 1
-        ]
-        .NKS_Information__c;
-        information = information.replace('<img', '<img style="max-height: 100px"');
-        return information;
+        ];
+        if (announcements.size() > 0) {
+            NKS_Announcement__c announcement = announcements[0];
+            String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+            return information;
+        } else {
+            System.debug('There was problem to fetch Announcement!');
+            return null;
+        }
     }
 
     @AuraEnabled
@@ -35,8 +40,7 @@ public with sharing class NKS_HomePageController {
             query += ' , ' + content;
         if (filterbyskills && objectName == 'NKS_Announcement__c')
             query += ' , Skills__c ';
-        query += ' FROM ' + objectName;
-        query += ' WHERE ' + filter;
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -117,7 +121,7 @@ public with sharing class NKS_HomePageController {
         return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
     }
 
-    private static Set<String> getUserSkills(Id userId) {
+    public static Set<String> getUserSkills(Id userId) {
         Set<String> skills = new Set<String>();
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
@@ -130,5 +134,38 @@ public with sharing class NKS_HomePageController {
             skills.add(g.DeveloperName);
         }
         return skills;
+    }
+
+    @AuraEnabled
+    public static List<ReadyResponse__c> getReadyResponse() {
+        List<ReadyResponse__c> readyResponses = new List<ReadyResponse__c>();
+        for (ReadyResponse__c readyresponse : [
+            SELECT Id, Name, URL__c
+            FROM ReadyResponse__c
+            ORDER BY CreatedDate DESC
+            LIMIT 3
+        ]) {
+            readyResponses.add(readyresponse);
+        }
+        return readyResponses;
+    }
+
+    @AuraEnabled
+    public static NKS_Announcement__c getCampaign() {
+        List<NKS_Announcement__c> campaigns = [
+            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            FROM NKS_Announcement__c
+            WHERE NKS_Type__c = 'Kampanje'
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        if (campaigns.size() > 0) {
+            NKS_Announcement__c campaign = campaigns[0];
+            campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
+            return campaign;
+        } else {
+            System.debug('The list in empty!');
+            return null;
+        }
     }
 }
