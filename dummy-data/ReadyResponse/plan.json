@@ -1,8 +1,0 @@
-[
-    {
-        "sobject": "ReadyResponse__c",
-        "saveRefs": true,
-        "resolveRefs": false,
-        "files": ["articles.json"]
-    }
-]
