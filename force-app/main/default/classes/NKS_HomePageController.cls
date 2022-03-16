@@ -154,22 +154,4 @@ public with sharing class NKS_HomePageController {
             return null;
         }
     }
-
-    @AuraEnabled
-    public static List<Knowledge__kav> getReadyResponses() {
-        List<Knowledge__kav> readyResponses = [
-            SELECT Id, Title, LastModifiedDate
-            FROM Knowledge__kav
-            WHERE Type__c = 'Svarberedskap' AND PublishStatus = 'Online'
-            ORDER BY LastModifiedDate DESC
-            LIMIT 3
-        ];
-
-        if (readyResponses.size() > 0) {
-            return readyResponses;
-        } else {
-            System.debug('The list in empty!');
-            return null;
-        }
-    }
 }
