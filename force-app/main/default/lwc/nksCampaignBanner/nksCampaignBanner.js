@@ -14,13 +14,15 @@ export default class NksCampaignBanner extends NavigationMixin(LightningElement)
     }
 
     get altText() {
+        let alt = '';
         if (this.record !== null) {
             if (this.record.Image_Alt__c == null || this.record.Image_Alt__c === '') {
-                return this.record.Name;
+                alt = this.record.Name;
             } else {
-                return this.record.Image_Alt__c;
+                alt = this.record.Image_Alt__c;
             }
         }
+        return alt;
     }
 
     navigateToRecord(event) {
