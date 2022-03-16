@@ -3,15 +3,4 @@
     <fullName>Clarifications</fullName>
     <active>true</active>
     <label>Clarifications</label>
-    <picklistValues>
-        <picklist>Type__c</picklist>
-        <values>
-            <fullName>Standard</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Svarberedskap</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>

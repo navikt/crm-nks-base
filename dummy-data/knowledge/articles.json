@@ -26,26 +26,6 @@
             "Summary": "Tjenestene på Arbeidsplassen har cirka 700 000 unike brukere i måneden. Hver dag åpner arbeidsgivere rundt 8000 CV-er. 45 000 nye stillinger blir registrert hver måned.",
             "Title": "Hvor mange bruker Arbeidsplassen i dag?",
             "UrlName": "Hvor-mange-bruker-Arbeidsplassen-i-dag"
-        },
-        {
-            "attributes": {
-                "type": "Knowledge__kav",
-                "referenceId": "Knowledge__kavRef4"
-            },
-            "Type__c": "Svarberedskap",
-            "Summary": "Det har kommet nye lokale regler ift. Korona situasjonen; dette vil påvirke arbeidsdager...",
-            "Title": "Svarberedskap - Korona",
-            "UrlName": "Svarberedskap-Korona"
-        },
-        {
-            "attributes": {
-                "type": "Knowledge__kav",
-                "referenceId": "Knowledge__kavRef5"
-            },
-            "Type__c": "Svarberedskap",
-            "Summary": "Det har funnet sted en knivstikking i Bergen, ...",
-            "Title": "Svarberedskap - Knivstikkingen i Bergen",
-            "UrlName": "Svarberedskap-Knivstikkingen-i-Bergen"
         }
     ]
 }

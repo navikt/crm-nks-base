@@ -7,9 +7,6 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <field>Type__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
@@ -22,7 +19,7 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <layoutColumns/>
+        <layoutColumns />
         <style>CustomLinks</style>
     </layoutSections>
 </Layout>
