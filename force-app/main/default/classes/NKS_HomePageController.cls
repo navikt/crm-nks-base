@@ -136,19 +136,7 @@ public with sharing class NKS_HomePageController {
         return skills;
     }
 
-    @AuraEnabled
-    public static List<ReadyResponse__c> getReadyResponse() {
-        List<ReadyResponse__c> readyResponses = new List<ReadyResponse__c>();
-        for (ReadyResponse__c readyresponse : [
-            SELECT Id, Name, URL__c
-            FROM ReadyResponse__c
-            ORDER BY CreatedDate DESC
-            LIMIT 3
-        ]) {
-            readyResponses.add(readyresponse);
-        }
-        return readyResponses;
-    }
+   
 
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
