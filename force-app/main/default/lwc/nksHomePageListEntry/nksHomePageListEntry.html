@@ -1,39 +1,40 @@
 <template>
-    <div class="slds-grid slds-gutters" if:false={isKnowledge}>
-        <template if:true={record.imageurl}>
-            <div class="slds-col slds-size_1-of-3 slds-align_absolute-center">
-                <img aria-hidden="true" src={record.imageurl} style="max-height: 180px" />
-            </div>
-        </template>
+    <template if:false={isKnowledge}>
+        <lightning-layout size="12" class="slds-grid slds-gutters">
+            <template if:true={record.imageurl}>
+                <lightning-layout-item class="slds-col slds-size_4-of-12">
+                    <img aria-hidden="true" src={record.imageurl} />
+                </lightning-layout-item>
+            </template>
 
-        <div class="slds-col">
-            <div class="slds-float_right slds-col">
-                <p>
-                    <lightning-formatted-date-time
-                        class="slds-text-align_right slds-text-title_caps"
-                        value={record.modifiedDate}
-                        year="numeric"
-                        month="2-digit"
-                        day="2-digit"
-                        hour="2-digit"
-                        minute="2-digit"
-                    ></lightning-formatted-date-time>
-                </p>
-            </div>
-            <div class="slds-p-horizontal_small">
-                <h3>
-                    <lightning-formatted-url
-                        value={recordPageUrl}
-                        label={record.name}
-                        onclick={navigateToSObject}
-                    ></lightning-formatted-url>
-                </h3>
-                <p>
-                    <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
-                </p>
-            </div>
-        </div>
-    </div>
+            <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-left_none firstLine">
+                <lightning-layout multiple-rows="true" size="12">
+                    <lightning-layout-item class="slds-size_12-of-12 slds-text-title_bold">
+                        <lightning-formatted-url
+                            value={recordPageUrl}
+                            label={record.name}
+                            onclick={navigateToSObject}
+                        ></lightning-formatted-url>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
+                        <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+                    </lightning-layout-item>
+                    <lightning-layout-item class="slds-size_12-of-12 lastLine">
+                        <lightning-formatted-date-time
+                            class=""
+                            value={record.modifiedDate}
+                            year="numeric"
+                            month="long"
+                            day="numeric"
+                            hour="2-digit"
+                            minute="2-digit"
+                        ></lightning-formatted-date-time>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+
     <div if:true={isKnowledge}>
         <div class="slds-float_left slds-col">
             <p>

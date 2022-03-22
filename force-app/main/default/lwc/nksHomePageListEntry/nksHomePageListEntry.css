@@ -1,0 +1,15 @@
+img {
+    width: 12.125em;
+    height: 6.875em;
+}
+
+.firstLine {
+    position: relative;
+    height: 6.875em;
+}
+
+.lastLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
