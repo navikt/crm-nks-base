@@ -21,8 +21,8 @@
             <property name="listviewname" label="List view" description="API Name of list view to redirect to" default="Recent" type="String" required="true" />
             <property name="linklabel" label="Link Label" description="Label of link to redirect to list view" default="Vis alle" type="String" required="false" />
             <property name="datefield" label="Date field" description="API Name of date field. Supported: LastModifiedDate, CreatedDate" default="CreatedDate" type="String" required="true" />
-            <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" />
-            <property name="filterbyskills" label="Filter by user skills?" description="Show only posts which are related to user skills" type="Boolean" required="false" />
+            <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" default="false" />
+            <property name="filterbyskills" label="Filter by user skills?" description="Show only posts which are related to user skills" type="Boolean" required="false" default="false" />
             <property name="refreshPageAutomatically" label="Refresh Page Automatically" description="The page will refresh automatically" type="Boolean" required="false" default="false" />
             <property name="enableRefresh" label="Show refresh button" type="Boolean" default="false" />
         </targetConfig>
@@ -38,8 +38,8 @@
             <property name="listviewname" label="List view" description="API Name of list view to redirect to" default="Recent" type="String" required="true" />
             <property name="linklabel" label="Link Label" description="Label of link to redirect to list view" default="Vis alle" type="String" required="false" />
             <property name="datefield" label="Date field" description="API Name of date field. Supported: LastModifiedDate, CreatedDate" default="CreatedDate" type="String" required="true" />
-            <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" />
-            <property name="filterbyskills" label="Filter by user skills?" description="Show only posts which are related to user skills" type="Boolean" required="false" />
+            <property name="showimage" label="Show image?" description="Show the latest related image of the record" type="Boolean" required="false" default="false" />
+            <property name="filterbyskills" label="Filter by user skills?" description="Show only posts which are related to user skills" type="Boolean" required="false" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
