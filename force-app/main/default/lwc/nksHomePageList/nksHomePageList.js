@@ -73,7 +73,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
                 userId +
                 "'";
-            console.log(this.filter);
         }
         getList({
             title: this.title,
@@ -136,6 +135,16 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.showSpinner = false;
     }
 
+    get isNews() {
+        let isNews = false;
+        if (this.objectName === 'NKS_Announcement__c') {
+            if (this.filter.includes('Nyhet')) {
+                isNews = true;
+            }
+        }
+        return isNews;
+    }
+
     get isKnowledge() {
         return this.objectName === 'Knowledge__kav' ? true : false;
     }
@@ -157,8 +166,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
+        let index = 0;
         if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            return this.records.length - 1;
+            index = this.records.length - 1;
         }
+        return index;
     }
 }

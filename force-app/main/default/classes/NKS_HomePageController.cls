@@ -118,7 +118,9 @@ public with sharing class NKS_HomePageController {
             LIMIT 1
         ]
         ?.ContentDocument.LatestPublishedVersionId;
-        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
+        return contentversionid != null
+            ? '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid
+            : '';
     }
 
     public static Set<String> getUserSkills(Id userId) {
@@ -135,8 +137,6 @@ public with sharing class NKS_HomePageController {
         }
         return skills;
     }
-
-   
 
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {

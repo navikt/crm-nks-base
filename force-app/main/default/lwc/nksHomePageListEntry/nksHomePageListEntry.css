@@ -13,3 +13,7 @@ img {
     bottom: 0;
     left: 0;
 }
+
+.pinned {
+    --sds-c-icon-color-foreground-default: rgb(1, 118, 211);
+}
