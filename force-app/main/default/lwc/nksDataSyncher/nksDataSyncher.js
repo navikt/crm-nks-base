@@ -6,6 +6,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
+import syncActorOppgaver from 'c/crmOppgaveSyncher';
 
 const syncStatus = {
     SYNCING: 'SYNCING',
@@ -28,6 +29,7 @@ export default class NksDataSyncher extends LightningElement {
         //Initial synch performed in connected callback to prevent boxcaring due to many events triggered at the same time.
         this.addSyncStatus('bankAccount', 'Bankkontonummer', syncStatus.SYNCING);
         this.addSyncStatus('henvendelse', 'Henvendelse', syncStatus.SYNCING);
+        this.addSyncStatus('oppgave', 'Oppgave', syncStatus.SYNCING);
         this.getRelatedRecordId(this.relationshipField, this.objectApiName);
     }
 
@@ -65,11 +67,31 @@ export default class NksDataSyncher extends LightningElement {
 
     async doSynch(personIdent, personActorId, personAccountId) {
         await Promise.all([
-            this.bankAccountNumberSync(personIdent)
+            this.bankAccountNumberSync(personIdent),
+            this.oppgaveSync(personActorId)
             //this.conversationNoteSynch(personIdent, personAccountId) Disabling this for henvendelse migration
         ]);
         this.initialized = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
+    }
+
+    oppgaveSync(personActorId) {
+        return new Promise(async (resolve, reject) => {
+            if (this.getSyncStatus('oppgave').status != syncStatus.SYNCING) {
+                return resolve();
+            }
+            syncActorOppgaver(personActorId)
+                .then(() => {
+                    this.setSyncStatus('oppgave', syncStatus.SYNCED);
+                })
+                .catch((error) => {
+                    this.setSyncStatus('oppgave', syncStatus.ERROR);
+                    console.log(JSON.stringify(error, null, 2));
+                })
+                .finally(() => {
+                    resolve();
+                });
+        });
     }
 
     conversationNoteSynch(personIdent, personAccountId) {
