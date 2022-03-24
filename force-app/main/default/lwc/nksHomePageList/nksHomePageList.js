@@ -16,8 +16,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api linklabel;
     @api datefield;
     @api showimage;
-    @api filterbyskills;
-    @api refreshPageAutomatically;
+    @api filterbyskills = false;
+    @api refreshPageAutomatically = false;
     @api enableRefresh = false;
 
     @track records = [];
@@ -49,31 +49,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     loadList() {
         if (this.objectName === 'Case') {
-            getList({
-                title: 'STO_Category__c',
-                content: null,
-                objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId='" + userId + "'",
-                orderby: 'CreatedDate DESC',
-                limitNumber: 3,
-                datefield: 'CreatedDate',
-                showimage: false,
-                filterbyskills: false
-            })
-                .then((result) => {
-                    this.records = result;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter += " AND OwnerId='" + userId + "'";
+            console.log('STO filter:' + this.filter);
         }
+
         if (this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.filter =
-                "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
-                userId +
-                "'";
-            console.log(this.filter);
+            this.filter += " AND OwnerId='" + userId + "'";
+            console.log('Chat filter:' + this.filter);
         }
         getList({
             title: this.title,
@@ -157,8 +141,13 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            return this.records.length - 1;
+        let index = 0;
+        if (this.objectName === 'LiveChatTranscript') {
+            index = this.records.length - 1;
         }
+        if (this.objectName === 'Case') {
+            index = this.records.length - 1;
+        }
+        return index;
     }
 }
