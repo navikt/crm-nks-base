@@ -55,12 +55,24 @@
         <value xsi:type="xsd:string">CRM_Conversation_Summary__c, CRM_Journal_Status_Formula__c</value>
     </values>
     <values>
+        <field>FilterableCheckbox__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>FilterablePicklist1__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>FilterablePicklist2__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>SLDS_Dropdown_Icon__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
         <field>SLDS_Icon__c</field>
-        <value xsi:type="xsd:string">standard:messaging_user</value>
+        <value xsi:type="xsd:string">CRM_Timeline_Icon__c</value>
     </values>
     <values>
         <field>SLDS_Timeline_Color__c</field>
