@@ -21,13 +21,13 @@ export default class NksStripedListEntry extends NavigationMixin(LightningElemen
 
     get className() {
         let cssClass = 'slds-grid slds-var-p-horizontal_medium slds-var-p-vertical_x-small listItem';
-        if (this.index % 2 == 0) {
+        if (this.index % 2 === 0) {
             cssClass += ' isEven';
         }
-        if (this.index == 0) {
+        if (this.index === 0) {
             cssClass += ' isFirst';
         }
-        if (this.index == this.lastIndex) {
+        if (this.index === this.lastIndex) {
             cssClass += ' isLast';
         }
         return cssClass;
