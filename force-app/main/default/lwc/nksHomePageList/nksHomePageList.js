@@ -16,8 +16,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api linklabel;
     @api datefield;
     @api showimage;
-    @api filterbyskills;
-    @api refreshPageAutomatically;
+    @api filterbyskills = false;
+    @api refreshPageAutomatically = false;
     @api enableRefresh = false;
 
     @track records = [];
@@ -157,8 +157,13 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            return this.records.length - 1;
+        let index = 0;
+        if (this.objectName === 'LiveChatTranscript') {
+            index = this.records.length - 1;
         }
+        if (this.objectName === 'Case') {
+            index = this.records.length - 1;
+        }
+        return index;
     }
 }
