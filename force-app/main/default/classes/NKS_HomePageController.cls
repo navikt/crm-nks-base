@@ -33,14 +33,26 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-        if (filterbyskills)
+
+        if (filterbyskills) {
             userskills = getUserSkills(userId);
+        }
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
-        if (content != null)
+
+        if (content != null) {
             query += ' , ' + content;
-        if (filterbyskills && objectName == 'NKS_Announcement__c')
+        }
+
+        if (filterbyskills && objectName == 'NKS_Announcement__c') {
             query += ' , Skills__c ';
+        }
+
+        if (objectName == 'NKS_Announcement__c') {
+            query += ' , NKS_News_Pin__c';
+        }
+
         query += ' FROM ' + objectName + ' WHERE ' + filter;
+
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -48,6 +60,7 @@ public with sharing class NKS_HomePageController {
             }
             query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
+
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -55,13 +68,18 @@ public with sharing class NKS_HomePageController {
             }
             query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
-        if (orderby != null)
+
+        if (orderby != null) {
             query += ' ORDER BY ' + orderby;
-        if (limitNumber != null)
+        }
+
+        if (limitNumber != null) {
             query += ' LIMIT ' + limitNumber;
+        }
 
         System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
+
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
@@ -79,6 +97,8 @@ public with sharing class NKS_HomePageController {
         public Datetime modifiedDate;
         @AuraEnabled
         public String imageurl;
+        @AuraEnabled
+        public Boolean pin;
     }
 
     private static List<Record> createRecords(
@@ -95,14 +115,25 @@ public with sharing class NKS_HomePageController {
             record.recordId = r.Id;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
-            if (showimage)
+
+            if (showimage) {
                 record.imageurl = getImageUrl(r.Id);
+            }
+
             if (content != null) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
                 if (record.content.length() > 600) {
                     record.summary = record.content.mid(0, 600) + '...';
-                } else
+                } else {
                     record.summary = record.content;
+                }
+            }
+
+            if (objectName == 'NKS_Announcement__c') {
+                NKS_Announcement__c news = (NKS_Announcement__c) r;
+                record.pin = news.NKS_News_Pin__c;
+            } else {
+                record.pin = false;
             }
             records.add(record);
         }

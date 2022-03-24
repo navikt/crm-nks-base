@@ -46,18 +46,16 @@
                 <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-left_none firstLine">
                     <lightning-layout multiple-rows="true" size="12">
                         <lightning-layout-item class="slds-size_12-of-12 slds-text-title_bold">
-                            <!--
-                            <lightning-button-icon
-                                class={iconClass}
-                                size="small"
-                                title="Fest"
-                                alternative-text="Fest"
-                                icon-name={iconName}
-                                onclick={toggle}
-                                variant="bare"
-                            >
-                            </lightning-button-icon>
-                            -->
+                            <template if:true={isPinned}>
+                                <lightning-icon
+                                    icon-name="utility:pinned"
+                                    class="slds-float_right pinned"
+                                    size="x-small"
+                                    title="Festet"
+                                >
+                                </lightning-icon>
+                            </template>
+
                             <lightning-formatted-url
                                 value={recordPageUrl}
                                 label={record.name}
@@ -69,7 +67,6 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-size_12-of-12 lastLine">
                             <lightning-formatted-date-time
-                                class=""
                                 value={record.modifiedDate}
                                 year="numeric"
                                 month="long"

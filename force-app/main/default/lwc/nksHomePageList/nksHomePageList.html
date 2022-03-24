@@ -42,11 +42,12 @@
                     </template>
                     <template if:true={isNews}>
                         <ul>
-                            <template for:each={records} for:item="record">
+                            <template for:each={newsRecords} for:item="record">
                                 <li class="slds-item slds-var-p-vertical_medium slds-border_top" key={record.recordId}>
                                     <c-nks-home-page-list-entry
                                         record={record}
                                         is-news={isNews}
+                                        is-pinned={record.pin}
                                     ></c-nks-home-page-list-entry>
                                 </li>
                             </template>

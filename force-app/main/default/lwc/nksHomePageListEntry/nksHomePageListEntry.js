@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
@@ -6,9 +6,6 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
     @api isKnowledge = false;
     @api isNews = false;
     @api isPinned = false;
-
-    @track iconName = 'utility:pin';
-    @track iconClass = 'slds-float_right';
 
     recordPageUrl;
 
@@ -34,20 +31,6 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         }).then((url) => {
             this.recordPageUrl = url;
         });
-    }
-
-    toggle() {
-        if (this.isPinned === false) {
-            this.iconClass = 'slds-float_right pinned';
-            this.iconName = 'utility:pinned';
-            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.isPinned = true;
-            localStorage.setItem('id', this.index);
-        } else {
-            this.iconClass = 'slds-float_right';
-            this.iconName = 'utility:pin';
-            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.isPinned = false;
-        }
+        console.log(this.isPinned);
     }
 }
