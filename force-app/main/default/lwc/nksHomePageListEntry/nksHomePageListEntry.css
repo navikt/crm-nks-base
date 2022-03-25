@@ -1,19 +1,13 @@
 img {
     width: 12.125em;
-    height: 6.875em;
-}
-
-.firstLine {
-    position: relative;
-    height: 6.875em;
-}
-
-.lastLine {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    height: 6.75em;
+    border: solid var(--lwc-borderWidthThin, 1px) #f3f3f3;
 }
 
 .pinned {
     --sds-c-icon-color-foreground-default: rgb(1, 118, 211);
+}
+
+.title {
+    font-size: 1.25rem;
 }

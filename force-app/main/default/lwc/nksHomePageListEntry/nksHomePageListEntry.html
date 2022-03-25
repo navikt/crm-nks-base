@@ -39,13 +39,13 @@
         </template>
         <template if:true={isNews}>
             <lightning-layout size="12" class="slds-grid slds-gutters">
-                <lightning-layout-item class="slds-col slds-size_4-of-12">
+                <lightning-layout-item class="slds-col slds-size_3-of-12">
                     <img aria-hidden="true" src={record.imageurl} />
                 </lightning-layout-item>
 
-                <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-left_none firstLine">
+                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none">
                     <lightning-layout multiple-rows="true" size="12">
-                        <lightning-layout-item class="slds-size_12-of-12 slds-text-title_bold">
+                        <lightning-layout-item class="slds-size_12-of-12 slds-text-heading_medium">
                             <template if:true={isPinned}>
                                 <lightning-icon
                                     icon-name="utility:pinned"
@@ -62,10 +62,7 @@
                                 onclick={navigateToSObject}
                             ></lightning-formatted-url>
                         </lightning-layout-item>
-                        <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
-                            <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
-                        </lightning-layout-item>
-                        <lightning-layout-item class="slds-size_12-of-12 lastLine">
+                        <lightning-layout-item class="slds-size_12-of-12">
                             <lightning-formatted-date-time
                                 value={record.modifiedDate}
                                 year="numeric"
@@ -74,6 +71,9 @@
                                 hour="2-digit"
                                 minute="2-digit"
                             ></lightning-formatted-date-time>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
+                            <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
