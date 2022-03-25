@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Trafikk_List_View</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>NKS_Announcement__c.Traffic</value>
+    </filters>
+    <filters>
+        <field>NKS_Type__c</field>
+        <operation>equals</operation>
+        <value>Trafikk</value>
+    </filters>
+    <label>Trafikk</label>
+</ListView>
