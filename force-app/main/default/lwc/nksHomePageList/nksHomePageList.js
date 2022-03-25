@@ -17,7 +17,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api listviewname;
     @api linklabel;
     @api datefield;
-    @api showimage;
+    @api showimage = false;
     @api filterbyskills = false;
     @api refreshPageAutomatically = false;
     @api enableRefresh = false;
