@@ -1,7 +1,8 @@
 img {
-    width: 12.125em;
-    height: 6.75em;
+    width: 100%;
+    height: 108px;
     border: solid var(--lwc-borderWidthThin, 1px) #f3f3f3;
+    object-fit: cover;
 }
 
 .pinned {
@@ -10,4 +11,15 @@ img {
 
 .title {
     font-size: 1.25rem;
+}
+
+.firstLine {
+    position: relative;
+    height: 108px;
+}
+
+.lastLine {
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }

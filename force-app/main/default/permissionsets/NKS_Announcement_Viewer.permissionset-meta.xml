@@ -31,6 +31,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_News_Likes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_News_Pin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>

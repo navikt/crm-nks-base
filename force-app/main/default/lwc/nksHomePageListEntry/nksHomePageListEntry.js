@@ -31,6 +31,5 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
         }).then((url) => {
             this.recordPageUrl = url;
         });
-        console.log(this.isPinned);
     }
 }

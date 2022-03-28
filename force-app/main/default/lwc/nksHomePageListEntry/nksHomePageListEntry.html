@@ -44,7 +44,7 @@
                         <img aria-hidden="true" src={record.imageurl} />
                     </a>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none">
+                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none firstLine">
                     <lightning-layout multiple-rows="true" size="12">
                         <lightning-layout-item class="slds-size_12-of-12 slds-text-heading_medium">
                             <template if:true={isPinned}>
@@ -74,6 +74,10 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
                             <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-size_12-of-12 lastLine">
+                            <lightning-icon icon-name="utility:like" size="x-small" title="Likes"></lightning-icon>
+                            &ensp;<span>{record.likes} likerklikk</span>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>

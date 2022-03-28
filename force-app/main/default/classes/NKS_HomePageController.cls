@@ -46,8 +46,11 @@ public with sharing class NKS_HomePageController {
             query += ' , Skills__c ';
         }
 
-        if (objectName == 'NKS_Announcement__c') {
-            query += ' , NKS_News_Pin__c';
+        if (
+            objectName == 'NKS_Announcement__c' &&
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
+        ) {
+            query += ' , NKS_News_Pin__c, NKS_News_Likes__c';
         }
 
         query += ' FROM ' + objectName + ' WHERE ' + filter;
@@ -98,6 +101,8 @@ public with sharing class NKS_HomePageController {
         public String imageurl;
         @AuraEnabled
         public Boolean pin;
+        @AuraEnabled
+        public Integer likes;
     }
 
     private static List<Record> createRecords(
@@ -130,8 +135,10 @@ public with sharing class NKS_HomePageController {
             if (objectName == 'NKS_Announcement__c') {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
+                record.likes = Integer.valueOf(news.NKS_News_Likes__c);
             } else {
                 record.pin = false;
+                record.likes = 0;
             }
             records.add(record);
         }
