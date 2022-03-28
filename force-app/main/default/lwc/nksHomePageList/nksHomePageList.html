@@ -1,7 +1,7 @@
 <template>
     <template if:true={hasRecord}>
-        <section class="slds-box slds-theme_default" aria-labelledby="nav1">
-            <lightning-layout class="slds-grid slds-var-p-bottom_small">
+        <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
+            <lightning-layout size="12" class="slds-grid slds-wrap slds-var-p-bottom_small">
                 <template if:true={iconName}>
                     <lightning-layout-item class="slds-media__figure">
                         <lightning-icon
@@ -24,9 +24,9 @@
                             onclick={refreshComponent}
                         ></lightning-button-icon>
                     </lightning-layout-item>
-
-                    <lightning-spinner if:true={showSpinner} title="Loading" size="medium" type="brand">
-                    </lightning-spinner>
+                    <template if:true={showSpinner} class="slds-spinner_container">
+                        <lightning-spinner title="Loading" size="medium" type="brand"></lightning-spinner>
+                    </template>
                 </template>
             </lightning-layout>
             <div if:false={isKnowledge}>
