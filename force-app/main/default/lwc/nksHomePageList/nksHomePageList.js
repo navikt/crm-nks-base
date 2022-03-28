@@ -1,10 +1,9 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
-import { refreshApex } from '@salesforce/apex';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { subscribe, onError } from 'lightning/empApi';
 import userId from '@salesforce/user/Id';
+
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -22,9 +21,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api refreshPageAutomatically = false;
     @api enableRefresh = false;
 
-    @track records = [];
     @track listCount = 3;
-    @track wiredList;
+    @track records = [];
 
     showSpinner = false;
     isInitiated = false;
@@ -34,12 +32,18 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
         this.isInitiated = true;
+
+        // Add userId to filter for STO and Chat
         if (this.objectName === 'Case' || this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
             this.filter += " AND OwnerId='" + userId + "'";
-            console.log(this.filter);
+            console.log(this.objectName + ': ' + this.filter);
         }
 
+        // Get list
+        this.loadList();
+
+        // Navigate to list
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
             attributes: {
@@ -53,47 +57,32 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.pageUrl = url;
         });
 
+        // Refresh list for Announcement automatically
         this.handleSubscribe();
-    }
-
-    @wire(getList, {
-        title: '$title',
-        content: '$content',
-        objectName: '$objectName',
-        filter: '$filter',
-        orderby: '$orderby',
-        limitNumber: '$limit',
-        datefield: '$datefield',
-        showimage: '$showimage',
-        filterbyskills: '$filterbyskills'
-    })
-    wireData(result) {
-        this.wiredList = result;
-        this.loadList();
     }
 
     loadList() {
         this.showSpinner = true;
-        const { error, data } = this.wiredList;
-        if (error) {
-            let message = 'Unknown error';
-            if (Array.isArray(error.body)) {
-                message = error.body.map((e) => e.message).join(', ');
-            } else if (typeof error.body.message === 'string') {
-                message = error.body.message;
-            }
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error loading person record',
-                    message,
-                    variant: 'error'
-                })
-            );
-        } else if (data) {
-            this.records = data;
-            console.log(this.records.length);
-        }
-        this.showSpinner = false;
+        getList({
+            title: this.title,
+            content: this.content,
+            objectName: this.objectName,
+            filter: this.filter,
+            orderby: this.orderby,
+            limitNumber: this.limit,
+            datefield: this.datefield,
+            showimage: this.showimage,
+            filterbyskills: this.filterbyskills
+        })
+            .then((result) => {
+                this.records = result;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                this.showSpinner = false;
+            });
     }
 
     navigateToList() {
@@ -121,16 +110,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     refreshList = () => {
-        refreshApex(this.wiredList).then(() => {
-            this.loadList();
-        });
+        this.isInitiated = true;
+        this.loadList();
     };
 
     loadMoreList() {
         this.listCount += 3;
         // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit = this.listCount;
-        this.refreshList();
+        this.loadList();
     }
 
     get isKnowledge() {
@@ -155,10 +143,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     get lastIndex() {
         let index = 0;
-        if (this.objectName === 'LiveChatTranscript') {
-            index = this.records.length - 1;
-        }
-        if (this.objectName === 'Case') {
+        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
             index = this.records.length - 1;
         }
         return index;
