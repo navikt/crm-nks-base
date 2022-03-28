@@ -33,12 +33,11 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-
         if (filterbyskills) {
             userskills = getUserSkills(userId);
         }
-        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
 
+        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
         if (content != null) {
             query += ' , ' + content;
         }
@@ -115,7 +114,6 @@ public with sharing class NKS_HomePageController {
             record.recordId = r.Id;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
-
             if (showimage) {
                 record.imageurl = getImageUrl(r.Id);
             }
