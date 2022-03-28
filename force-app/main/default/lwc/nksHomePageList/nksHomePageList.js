@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import userId from '@salesforce/user/Id';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
@@ -29,6 +30,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
+    initRun = false;
 
     connectedCallback() {
         this.isInitiated = true;
@@ -39,9 +41,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.filter += " AND OwnerId='" + userId + "'";
             console.log(this.objectName + ': ' + this.filter);
         }
-
-        // Get list
-        this.loadList();
 
         // Navigate to list
         this[NavigationMixin.GenerateUrl]({
@@ -61,8 +60,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.handleSubscribe();
     }
 
+    renderedCallback() {
+        if (this.initRun === false) {
+            this.initRun = true;
+            this.loadList();
+        }
+    }
+
     loadList() {
-        this.showSpinner = true;
         getList({
             title: this.title,
             content: this.content,
@@ -74,11 +79,24 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             showimage: this.showimage,
             filterbyskills: this.filterbyskills
         })
-            .then((result) => {
-                this.records = result;
+            .then((data) => {
+                this.records = data;
+                return this.records;
             })
             .catch((error) => {
-                console.log(error);
+                let message = 'Unknown error';
+                if (Array.isArray(error.body)) {
+                    message = error.body.map((e) => e.message).join(', ');
+                } else if (typeof error.body.message === 'string') {
+                    message = error.body.message;
+                }
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error loading person record',
+                        message,
+                        variant: 'error'
+                    })
+                );
             })
             .finally(() => {
                 this.showSpinner = false;
@@ -118,6 +136,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.listCount += 3;
         // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit = this.listCount;
+        this.loadList();
+    }
+
+    refreshComponent() {
+        this.showSpinner = true;
         this.loadList();
     }
 

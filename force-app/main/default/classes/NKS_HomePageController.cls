@@ -18,7 +18,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Record> getList(
         String title,
         String content,
