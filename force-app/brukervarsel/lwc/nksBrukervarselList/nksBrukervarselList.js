@@ -12,7 +12,7 @@ export default class NksBrukervarselList extends LightningElement {
     @api objectApiName;
     @api relationshipField;
     showAll = false;
-    // personId;
+    personId;
     // personIdent;
     // personIdent;
     wireFields;
