@@ -8,9 +8,15 @@ export default class NksBrukervarsel extends LightningElement {
 
     get showVarselListe() {
         let retValue = this.hasMessageList && this.showDetails === true;
-        if(retValue && this.sortedVarselList == null)
-            this.sortedVarselList = [...this.brukervarsel.varselListe].sort((a,b) => (a.sendt < b.sendt) - (a.sendt > b.sendt));
+        if (retValue && this.sortedVarselList == null)
+            this.sortedVarselList = [...this.brukervarsel.varselListe].sort(
+                (a, b) => (a.sendt < b.sendt) - (a.sendt > b.sendt)
+            );
         return retValue;
+    }
+
+    get showNotifikasjon() {
+        return this.brukervarsel.brukernotifikasjon && this.showDetails === true;
     }
 
     get hasMessageList() {
