@@ -42,21 +42,34 @@ export default class NksBrukervarselList extends LightningElement {
         if (this.notifications.length < 1) {
             this.filteredNotificationList = [];
         }
+
+        let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
+        let getLatestDate = (e) => {
+            return e.sisteVarselutsendelse != null
+                ? e.sisteVarselutsendelse
+                : e.varselListe.reduce(reduceToMaxDate).sendt;
+        };
+
         /*
          * sort list descending by date in sisteVarselutsendelse
          * if missing, then looking for the latest date in varselListe.sendt
          */
-        let n = [...this.notifications].sort((a, b) => {
-            let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
-            let getLatestDate = (e) => {
-                return e.sisteVarselutsendelse != null
-                    ? e.sisteVarselutsendelse
-                    : e.varselListe.reduce(reduceToMaxDate).sendt;
-            };
-            let ad = getLatestDate(a);
-            let bd = getLatestDate(b);
-            return (ad < bd) - (ad > bd);
-        });
+        let n = [...this.notifications]
+            .filter(
+                (notification) =>
+                    getLatestDate(notification) >= this.fromDate && getLatestDate(notification) <= this.toDate
+            )
+            .sort((a, b) => {
+                // let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
+                // let getLatestDate = (e) => {
+                //     return e.sisteVarselutsendelse != null
+                //         ? e.sisteVarselutsendelse
+                //         : e.varselListe.reduce(reduceToMaxDate).sendt;
+                // };
+                let ad = getLatestDate(a);
+                let bd = getLatestDate(b);
+                return (ad < bd) - (ad > bd);
+            });
         this.filteredNotificationList = this.showAll ? n : n.slice(0, 1);
     }
 
