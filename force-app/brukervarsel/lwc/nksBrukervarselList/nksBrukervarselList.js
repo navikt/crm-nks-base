@@ -1,5 +1,4 @@
 import { LightningElement, api, track, wire } from 'lwc';
-// import { refreshApex } from '@salesforce/apex';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import getBrukerVarsel from '@salesforce/apex/NKS_BrukervarselController.getBrukerVarselFromActorId';
 import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.getBrukerNotifikasjonFromIdent';
@@ -60,12 +59,6 @@ export default class NksBrukervarselList extends LightningElement {
                     getLatestDate(notification) >= this.fromDate && getLatestDate(notification) <= this.toDate
             )
             .sort((a, b) => {
-                // let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
-                // let getLatestDate = (e) => {
-                //     return e.sisteVarselutsendelse != null
-                //         ? e.sisteVarselutsendelse
-                //         : e.varselListe.reduce(reduceToMaxDate).sendt;
-                // };
                 let ad = getLatestDate(a);
                 let bd = getLatestDate(b);
                 return (ad < bd) - (ad > bd);
