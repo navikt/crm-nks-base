@@ -41,7 +41,7 @@ public with sharing class NKS_BrukervarselController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<NKS_BrukervarslingBestilling> getBrukerNotifikasjon(String fnr) {
+    public static List<NKS_BrukervarslingBestilling> getBrukerNotifikasjonFromIdent(String fnr) {
         List<NKS_BrukervarslingBestilling> brukernotifikasjoner = new List<NKS_BrukervarslingBestilling>();
 
         try {
@@ -52,9 +52,10 @@ public with sharing class NKS_BrukervarselController {
                 bestilling.bestilt = notification.eventTidspunktDT;
                 bestilling.sisteVarselutsendelse = notification.eventTidspunktDT;
                 bestilling.brukernotifikasjon = notification;
+                brukernotifikasjoner.add(bestilling);
             }
         } catch (Exception e) {
-            throw new AuraHandledException('Feil ved henting av brukernotifikasjoner');
+            throw new AuraHandledException('Feil ved henting av brukernotifikasjoner: ' + e.getMessage());
         }
 
         return brukernotifikasjoner;

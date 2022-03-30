@@ -2,7 +2,7 @@ import { LightningElement, api, track, wire } from 'lwc';
 // import { refreshApex } from '@salesforce/apex';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import getBrukerVarsel from '@salesforce/apex/NKS_BrukervarselController.getBrukerVarselFromActorId';
-import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.getBrukerNotifikasjon';
+import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.getBrukerNotifikasjonFromIdent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
@@ -18,11 +18,12 @@ export default class NksBrukervarselList extends LightningElement {
     wireFields;
     isLoaded = false;
     @track notifications = [];
+    @track filteredNotificationList = [];
 
     wiredPerson = null;
 
     varsler = [];
-    brukernotifikasjon = null;
+    brukernotifikasjon = [];
 
     @track errorMessages = [];
     fromDate;
@@ -36,12 +37,12 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     get showNotifications() {
-        return this.notifications.length > 0;
+        return this.filteredNotificationList.length > 0;
     }
 
-    get filteredNotificationList() {
+    filterNotificationList() {
         if (this.notifications.length < 1) {
-            return [];
+            this.filteredNotificationList = [];
         }
         /*
          * sort list descending by date in sisteVarselutsendelse
@@ -49,13 +50,16 @@ export default class NksBrukervarselList extends LightningElement {
          */
         let n = [...this.notifications].sort((a, b) => {
             let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
-            let getLatestDate = (e) =>
-                e.sisteVarselutsendelse != null ? e.sisteVarselutsendelse : e.varselListe.reduce(reduceToMaxDate).sendt;
+            let getLatestDate = (e) => {
+                return e.sisteVarselutsendelse != null
+                    ? e.sisteVarselutsendelse
+                    : e.varselListe.reduce(reduceToMaxDate).sendt;
+            };
             let ad = getLatestDate(a);
             let bd = getLatestDate(b);
             return (ad < bd) - (ad > bd);
         });
-        return this.showAll ? n : n.slice(0, 1);
+        this.filteredNotificationList = this.showAll ? n : n.slice(0, 1);
     }
 
     get numberOfNotifications() {
@@ -103,6 +107,7 @@ export default class NksBrukervarselList extends LightningElement {
         if (data) {
             // this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
             this.usernotificationsLoaded = false;
+            this.brukernotifikasjon = [];
             this.getNotifications();
         }
 
@@ -152,7 +157,6 @@ export default class NksBrukervarselList extends LightningElement {
     getNotifications() {
         this.isLoaded = false;
         this.errorMessages = [];
-        this.brukernotifikasjon = [];
         this.varsler = [];
 
         const brukervarsler = new Promise((resolve, reject) => {
@@ -172,23 +176,26 @@ export default class NksBrukervarselList extends LightningElement {
         });
 
         const brukernotifikasjoner = new Promise((resolve, reject) => {
-            if (this.usernotificationsLoaded === false) {
-                getBrukernotifikasjon(this.personIdent)
+            if (this.usernotificationsLoaded === true) {
+                resolve();
+            } else {
+                getBrukernotifikasjon({ fnr: this.personIdent })
                     .then((data) => {
                         this.brukernotifikasjon = data;
                         this.usernotificationsLoaded = true;
+                        resolve();
                     })
                     .catch((error) => {
                         this.addError(error);
                         reject();
                     });
             }
-            resolve();
         });
 
-        Promise.allSettled([brukernotifikasjoner, brukervarsler]).finally(() => {
+        Promise.allSettled([brukervarsler, brukernotifikasjoner]).finally(() => {
             this.notifications = new Array().concat(this.varsler).concat(this.brukernotifikasjon);
             this.isLoaded = true;
+            this.filterNotificationList();
         });
     }
 
