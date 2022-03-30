@@ -13,8 +13,6 @@ export default class NksBrukervarselList extends LightningElement {
     @api relationshipField;
     showAll = false;
     personId;
-    // personIdent;
-    // personIdent;
     wireFields;
     isLoaded = false;
     @track notifications = [];
@@ -105,7 +103,6 @@ export default class NksBrukervarselList extends LightningElement {
         this.wiredPerson = value;
 
         if (data) {
-            // this.personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
             this.usernotificationsLoaded = false;
             this.brukernotifikasjon = [];
             this.getNotifications();
@@ -131,28 +128,6 @@ export default class NksBrukervarselList extends LightningElement {
             this.addError(error);
         }
     }
-
-    // @wire(getBrukerVarsel, {
-    //     actorId: '$personIdent',
-    //     fromDate: '$fromDate',
-    //     toDate: '$toDate'
-    // })
-    // wiredGetBrukerVarsel(value) {
-    //     this.wiredBrukerVarsel = value;
-    //     this.setWiredBrukerVarsel();
-    // }
-    // setWiredBrukerVarsel() {
-    //     const { error, data } = this.wiredBrukerVarsel;
-    //     if (data) {
-    //         this.errorMessages = [];
-    //         this.notifications = data;
-    //         this.isLoaded = true;
-    //     }
-
-    //     if (error) {
-    //         this.addError(error);
-    //     }
-    // }
 
     getNotifications() {
         this.isLoaded = false;
@@ -202,9 +177,6 @@ export default class NksBrukervarselList extends LightningElement {
     refreshNotificationList() {
         this.isLoaded = false;
         this.getNotifications();
-        // return refreshApex(this.wiredBrukerVarsel).then(() => {
-        //     this.setWiredBrukerVarsel();
-        // });
     }
 
     onDateFilterChange(event) {
@@ -213,13 +185,11 @@ export default class NksBrukervarselList extends LightningElement {
 
         switch (eventName) {
             case 'fromDate':
-                // this.isLoaded = this.fromDate === eventValue;
                 this.fromDate = eventValue;
                 if (this.fromDate > this.toDate) this.toDate = this.fromDate;
                 this.getNotifications();
                 break;
             case 'toDate':
-                // this.isLoaded = this.toDate === eventValue;
                 this.toDate = eventValue;
                 if (this.toDate < this.fromDate) this.fromDate = this.toDate;
                 this.getNotifications();
@@ -238,6 +208,7 @@ export default class NksBrukervarselList extends LightningElement {
 
     showAllNotifications() {
         this.showAll = true;
+        this.filterNotificationList();
     }
 
     addError(error) {
