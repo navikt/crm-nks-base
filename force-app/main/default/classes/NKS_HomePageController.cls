@@ -177,7 +177,13 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
-            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            SELECT
+                Id,
+                Name,
+                NKS_Campaign_Image_Alt__c,
+                NKS_ImageURL__c,
+                NKS_Campaign_From_Date__c,
+                NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
             WHERE NKS_Type__c = 'Kampanje'
             ORDER BY CreatedDate DESC

@@ -4,6 +4,17 @@
     <active>true</active>
     <label>Campaign</label>
     <picklistValues>
+        <picklist>NKS_News_Status__c</picklist>
+        <values>
+            <fullName>Draft</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Published</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NKS_Type__c</picklist>
         <values>
             <fullName>Kampanje</fullName>

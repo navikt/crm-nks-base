@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Image_Alt__c</fullName>
+    <fullName>NKS_Campaign_Image_Alt__c</fullName>
     <description>Alternative text for image.</description>
     <externalId>false</externalId>
     <inlineHelpText>Alternative text for image.</inlineHelpText>

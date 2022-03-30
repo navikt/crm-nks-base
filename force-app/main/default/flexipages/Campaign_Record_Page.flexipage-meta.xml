@@ -83,14 +83,14 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.From_Date__c</fieldItem>
-                <identifier>RecordFrom_Date__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_From_Date__c</fieldItem>
+                <identifier>RecordNKS_Campaign_From_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.To_Date__c</fieldItem>
-                <identifier>RecordTo_Date__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_To_Date__c</fieldItem>
+                <identifier>RecordNKS_Campaign_To_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5aa7ce49-5d71-4d8b-b540-8a0eddf7b8a1</name>
@@ -137,8 +137,8 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Image_Alt__c</fieldItem>
-                <identifier>RecordImage_Alt__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_Image_Alt__c</fieldItem>
+                <identifier>RecordNKS_Campaign_Image_Alt__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</name>

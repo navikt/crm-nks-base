@@ -16,10 +16,10 @@ export default class NksCampaignBanner extends NavigationMixin(LightningElement)
     get altText() {
         let alt = '';
         if (this.record !== null) {
-            if (this.record.Image_Alt__c == null || this.record.Image_Alt__c === '') {
+            if (this.record.NKS_Campaign_Image_Alt__c == null || this.record.NKS_Campaign_Image_Alt__c === '') {
                 alt = this.record.Name;
             } else {
-                alt = this.record.Image_Alt__c;
+                alt = this.record.NKS_Campaign_Image_Alt__c;
             }
         }
         return alt;
@@ -42,8 +42,8 @@ export default class NksCampaignBanner extends NavigationMixin(LightningElement)
             .then((result) => {
                 this.record = result;
                 if (this.record) {
-                    const fromDate = this.record.From_Date__c;
-                    const toDate = this.record.To_Date__c;
+                    const fromDate = this.record.NKS_Campaign_From_Date__c;
+                    const toDate = this.record.NKS_Campaign_To_Date__c;
                     this.isValid = new Date(toDate) - new Date(fromDate) > 0 ? true : false;
                 }
             })

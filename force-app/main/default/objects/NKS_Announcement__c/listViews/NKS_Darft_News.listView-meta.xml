@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Darft_News</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>NKS_Announcement__c.News</value>
+    </filters>
+    <filters>
+        <field>NKS_Type__c</field>
+        <operation>equals</operation>
+        <value>Nyhet</value>
+    </filters>
+    <filters>
+        <field>NKS_News_Status__c</field>
+        <operation>equals</operation>
+        <value>Draft</value>
+    </filters>
+    <label>Nyheter utkast</label>
+</ListView>
