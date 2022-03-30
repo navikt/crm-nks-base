@@ -9,7 +9,7 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.150.0.LATEST"
+                    "versionNumber": "0.151.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -45,7 +45,7 @@
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.7.0.LATEST"
+                    "versionNumber": "0.8.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
