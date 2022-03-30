@@ -161,7 +161,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'NaermesteLederMoteAvbrutt':
                 return 'Møteforespørsel avbrutt';
             default:
-                return brukervarsel.varseltypeId;
+                return this.brukervarsel.varseltypeId;
         }
     }
 
