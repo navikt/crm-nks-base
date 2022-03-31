@@ -13,4 +13,6 @@ public with sharing class NKS_BrukervarslingBestilling {
     public List<NKS_Brukervarsel> varselListe;
     @AuraEnabled
     public String varseltypeId;
+    @AuraEnabled
+    public UN_TmsEventApiEvent brukernotifikasjon;
 }
