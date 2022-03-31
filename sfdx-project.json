@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.189.0.NEXT",
+            "versionNumber": "0.191.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.150.0.LATEST"
+                    "versionNumber": "0.151.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -45,7 +45,7 @@
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.7.0.LATEST"
+                    "versionNumber": "0.8.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",

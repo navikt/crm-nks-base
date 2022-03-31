@@ -45,6 +45,11 @@ export default class NksBrukervarsel extends LightningElement {
                 }
             });
         }
+
+        if (this.brukervarsel.brukernotifikasjon) {
+            channels.push(`NOTIFIKASJON${this.brukervarsel.brukernotifikasjon.aktiv === true ? '' : ' (Inaktiv)'}`);
+        }
+
         return channels;
     }
 
