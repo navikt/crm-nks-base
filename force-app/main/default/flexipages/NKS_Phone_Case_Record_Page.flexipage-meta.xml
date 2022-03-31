@@ -91,6 +91,12 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>nksPostAddress</componentName>
+                <identifier>c_nksPostAddress1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
                     <value>Kontaktinformasjon KRR</value>
