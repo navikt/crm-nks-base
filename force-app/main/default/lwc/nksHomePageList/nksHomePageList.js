@@ -157,7 +157,13 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get setEmptyStateForCase() {
-        return !this.hasRecord && this.objectName === 'Case' ? true : false;
+        let setEmptyState = false;
+        if (!this.hasRecord && this.objectName === 'Case') {
+            if (this.filter.includes('STO_Case')) {
+                setEmptyState = true;
+            }
+        }
+        return  setEmptyState;
     }
 
     get setEmptyStateForChat() {
