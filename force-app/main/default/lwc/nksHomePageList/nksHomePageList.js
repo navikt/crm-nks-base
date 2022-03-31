@@ -36,7 +36,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
 
         // Add userId to filter for STO and Chat
-        if (this.objectName === 'Case' || this.objectName === 'LiveChatTranscript') {
+        if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
             this.filter += " AND OwnerId='" + userId + "'";
             console.log(this.objectName + ': ' + this.filter);
