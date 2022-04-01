@@ -156,19 +156,14 @@ public with sharing class NKS_HomePageController {
         List<NKS_Announcement__c> campaigns = [
             SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = 'Kampanje'
+            WHERE NKS_Type__c = 'Kampanje' AND To_Date__c >= TODAY
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];
         if (campaigns.size() > 0) {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
-            if(campaign.To_Date__c >= Date.today()) {
-                return campaign;
-            } else {
-                System.debug('Duration has expired!');
-                return null;
-            }
+            return campaign;
             
         } else {
             System.debug('The list in empty!');
