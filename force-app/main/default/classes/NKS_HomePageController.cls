@@ -163,7 +163,13 @@ public with sharing class NKS_HomePageController {
         if (campaigns.size() > 0) {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
-            return campaign;
+            if(campaign.To_Date__c >= Date.today()) {
+                return campaign;
+            } else {
+                System.debug('Duration has expired!');
+                return null;
+            }
+            
         } else {
             System.debug('The list in empty!');
             return null;
