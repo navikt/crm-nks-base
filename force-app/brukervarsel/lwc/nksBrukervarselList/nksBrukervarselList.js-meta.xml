@@ -4,11 +4,9 @@
     <isExposed>true</isExposed>
     <description>Display the result from the BrukerVarsel API</description>
     <masterLabel>Brukervarsel</masterLabel>
-
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
-
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <property name="relationshipField" label="Relationship field" description="Field pointing to the Person ID" type="String" />

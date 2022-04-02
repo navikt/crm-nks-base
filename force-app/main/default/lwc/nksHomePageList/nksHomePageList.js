@@ -36,7 +36,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isInitiated = true;
 
         // Add userId to filter for STO and Chat
-        if (this.objectName === 'Case' || this.objectName === 'LiveChatTranscript') {
+        if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
             this.filter += " AND OwnerId='" + userId + "'";
             console.log(this.objectName + ': ' + this.filter);
@@ -148,16 +148,20 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         return this.objectName === 'Knowledge__kav' ? true : false;
     }
 
-    get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
-    }
-
     get hasRecord() {
         return this.records.length > 0 ? true : false;
     }
 
+    get isSTO() {
+        return this.objectName === 'Case' && this.filter.includes('STO_Case') ? true : false;
+    }
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.isSTO ? true : false;
+    }
+
     get setEmptyStateForCase() {
-        return !this.hasRecord && this.objectName === 'Case' ? true : false;
+        return !this.hasRecord && this.isSTO ? true : false;
     }
 
     get setEmptyStateForChat() {
@@ -166,7 +170,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     get lastIndex() {
         let index = 0;
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
+        if (this.objectName === 'LiveChatTranscript' || this.isSTO) {
             index = this.records.length - 1;
         }
         return index;

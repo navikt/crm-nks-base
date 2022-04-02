@@ -1211,7 +1211,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <stringValue/>
+                    <stringValue />
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1557,7 +1557,7 @@
                     <leftValueReference>Account_Relation.value</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <stringValue/>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1655,7 +1655,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue />
         </value>
     </variables>
     <variables>
