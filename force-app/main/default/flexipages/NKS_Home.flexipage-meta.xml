@@ -58,7 +58,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>orderby</name>
-                    <value>CreatedDate DESC</value>
+                    <value>NKS_News_Publish_Date__c DESC</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>refreshPageAutomatically</name>
@@ -84,7 +84,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
-                    <value>Ikke ferdigstilte Skrive til oss</value>
+                    <value>Ikke ferdigstilte Skriv til oss</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>content</name>
@@ -99,7 +99,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>IsClosed=false AND RecordType.DeveloperName=&apos;STO_Case&apos;</value>
+                    <value>Status IN (&apos;New&apos;, &apos;In progress&apos;) AND RecordType.DeveloperName=&apos;STO_Case&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>

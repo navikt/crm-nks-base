@@ -30,7 +30,7 @@
                 <leftValueReference>$Record.NKS_News_Publish_Date__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
                 </rightValue>
             </conditions>
             <connector>

@@ -26,7 +26,7 @@
             <assignToReference>Get_News.NKS_News_Publish_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Publication_Date</elementReference>
+                <elementReference>PublishDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -42,7 +42,7 @@
             <assignToReference>Get_News.NKS_News_Publish_Date__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -92,10 +92,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Publication_Date</leftValueReference>
+                <leftValueReference>PublishDate</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
+                    <elementReference>$Flow.CurrentDateTime</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -193,8 +193,8 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Publication_Date</name>
-            <dataType>Date</dataType>
+            <name>PublishDate</name>
+            <dataType>DateTime</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
