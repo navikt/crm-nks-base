@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NKS_Campaign_Image_Alt__c</fullName>
-    <description>Alternative text for image.</description>
+    <fullName>Comment_Author__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>Alternative text for image.</inlineHelpText>
-    <label>Image Alt</label>
-    <length>255</length>
+    <formula>CreatedBy.NKS_FullName__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Author</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

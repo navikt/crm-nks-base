@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
         <fullName>Arbeid</fullName>
@@ -50,8 +50,17 @@
         <default>false</default>
         <label>Permittering og rekruttering</label>
     </customValue>
-    <description
-    >Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
+    <customValue>
+        <fullName>Felles</fullName>
+        <default>false</default>
+        <label>Felles</label>
+    </customValue>
+    <customValue>
+        <fullName>Pleiepenger</fullName>
+        <default>false</default>
+        <label>Pleiepenger</label>
+    </customValue>
+    <description>Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
     <masterLabel>Skills</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

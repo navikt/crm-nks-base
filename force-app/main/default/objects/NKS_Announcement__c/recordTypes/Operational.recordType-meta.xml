@@ -15,6 +15,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>NKS_News_Theme__c</picklist>
+        <values>
+            <fullName>Arbeid</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NKS_Type__c</picklist>
         <values>
             <fullName>Kampanje</fullName>
@@ -48,6 +55,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Felles</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gjeldsraadgivning</fullName>
             <default>false</default>
         </values>
@@ -61,6 +72,10 @@
         </values>
         <values>
             <fullName>Permittering_og_rekruttering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pleiepenger</fullName>
             <default>false</default>
         </values>
         <values>

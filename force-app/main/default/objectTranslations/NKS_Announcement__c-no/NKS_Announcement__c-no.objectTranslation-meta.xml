@@ -34,31 +34,41 @@
     <layouts>
         <layout>Announcement Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label/>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Campaign Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label/>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>News Layout</layout>
+        <sections>
+            <label><!-- Custom Fields --></label>
+            <section>Custom Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Traffic Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label/>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <nameFieldLabel>Tittel</nameFieldLabel>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Publiser</label>
+        <name>Publish</name>
+    </quickActions>
     <recordTypes>
         <label>Kampanje</label>
         <name>Campaign</name>
