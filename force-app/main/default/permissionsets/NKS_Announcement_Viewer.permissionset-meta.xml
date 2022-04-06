@@ -26,22 +26,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Announcement__c.NKS_News_Author__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_News_Likes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -53,11 +43,6 @@
         <editable>false</editable>
         <field>NKS_Announcement__c.NKS_News_Publish_Date__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_News_Status__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -103,8 +88,8 @@
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>NKS_Announcement__c.Operational</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    <tabSettings>
+        <tab>NKS_Announcement__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

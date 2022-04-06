@@ -10,11 +10,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NKS_Announcement__c.NKS_Information__c</field>
         <readable>true</readable>

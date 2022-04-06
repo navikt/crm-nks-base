@@ -16,12 +16,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NKS_Announcement__c.NKS_ImageURL__c</field>
+        <field>NKS_Announcement__c.NKS_Campaign_To_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Image__c</field>
+        <editable>true</editable>
+        <field>NKS_Announcement__c.NKS_ImageURL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -37,11 +37,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NKS_Announcement__c.Skills__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_Announcement__c.NKS_Campaign_To_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

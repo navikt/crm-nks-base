@@ -2,6 +2,11 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Trafikk_List_View</fullName>
     <columns>NAME</columns>
+    <columns>NKS_Information__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>
@@ -14,4 +19,7 @@
         <value>Trafikk</value>
     </filters>
     <label>Trafikk</label>
+    <sharedTo>
+        <group>NKS_Trafikk</group>
+    </sharedTo>
 </ListView>

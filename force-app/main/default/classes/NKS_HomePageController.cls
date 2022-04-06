@@ -50,7 +50,7 @@ public with sharing class NKS_HomePageController {
             objectName == 'NKS_Announcement__c' &&
             Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
         ) {
-            query += ' , NKS_News_Pin__c, NKS_News_Likes__c, NKS_News_Publish_Date__c';
+            query += ' , NKS_News_Pin__c, NKS_News_Num_Likes__c, NKS_News_Publish_Date__c';
         }
 
         query += ' FROM ' + objectName + ' WHERE ' + filter;
@@ -134,10 +134,12 @@ public with sharing class NKS_HomePageController {
                 }
             }
 
-            if (objectName == 'NKS_Announcement__c') {
+            if (objectName == 'NKS_Announcement__c' &&
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
+        ) {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
-                record.likes = Integer.valueOf(news.NKS_News_Likes__c);
+                record.likes = Integer.valueOf(news.NKS_News_Num_Likes__c);
                 record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
             } else {
                 record.pin = false;
