@@ -4,7 +4,6 @@ public with sharing class NKS_HomePageControllerTest {
     static void makeData() {
         NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
         NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
-       
     }
 
     @isTest

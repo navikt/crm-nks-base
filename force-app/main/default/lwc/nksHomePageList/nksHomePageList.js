@@ -144,6 +144,35 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.loadList();
     }
 
+    get newsRecords() {
+        let sortedList = [];
+        if (this.isNews) {
+            sortedList = this.records.sort(function (x, y) {
+                // pinned items first
+                if (x.pin === y.pin) {
+                    return 0;
+                } else {
+                    if (x.pin === true) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                } 
+            });
+        }
+        return sortedList;
+    }
+
+    get isNews() {
+        let isNews = false;
+        if (this.objectName === 'NKS_Announcement__c') {
+            if (this.filter.includes('Nyhet')) {
+                isNews = true;
+            }
+        }
+        return isNews;
+    }
+
     get isKnowledge() {
         return this.objectName === 'Knowledge__kav' ? true : false;
     }

@@ -46,6 +46,13 @@ public with sharing class NKS_HomePageController {
             query += ' , Skills__c ';
         }
 
+        if (
+            objectName == 'NKS_Announcement__c' && 
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
+        ) {
+            query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
+        }
+
         query += ' FROM ' + objectName + ' WHERE ' + filter;
 
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
@@ -65,7 +72,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (orderby != null) {
-            query += ' ORDER BY ' + orderby;
+            query += ' ORDER BY ' + orderby; 
         }
 
         if (limitNumber != null) {
@@ -74,6 +81,7 @@ public with sharing class NKS_HomePageController {
 
         System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
+
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
@@ -91,6 +99,10 @@ public with sharing class NKS_HomePageController {
         public Datetime modifiedDate;
         @AuraEnabled
         public String imageurl;
+        @AuraEnabled
+        public Boolean pin;
+        @AuraEnabled
+        public Datetime publishDate;
     }
 
     private static List<Record> createRecords(
@@ -106,7 +118,7 @@ public with sharing class NKS_HomePageController {
             Record record = new Record();
             record.recordId = r.Id;
             record.name = r.get(title).toString();
-            record.modifiedDate = Datetime.valueOf(r.get(datefield));
+            record.modifiedDate = Datetime.valueOf(r.get(datefield)); 
             if (showimage) {
                 record.imageurl = getImageUrl(r.Id);
             }
@@ -118,6 +130,17 @@ public with sharing class NKS_HomePageController {
                 } else {
                     record.summary = record.content;
                 }
+            }
+
+            if (objectName == 'NKS_Announcement__c' &&
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
+        ) {
+                NKS_Announcement__c news = (NKS_Announcement__c) r;
+                record.pin = news.NKS_News_Pin__c;
+                record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
+            } else {
+                record.pin = false;
+                record.publishDate = null;
             }
             records.add(record);
         }
@@ -133,7 +156,9 @@ public with sharing class NKS_HomePageController {
             LIMIT 1
         ]
         ?.ContentDocument.LatestPublishedVersionId;
-        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
+        return contentversionid != null
+            ? '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid
+            : '';
     }
 
     public static Set<String> getUserSkills(Id userId) {
@@ -154,7 +179,13 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
-            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            SELECT
+                Id,
+                Name,
+                NKS_Campaign_Image_Alt__c,
+                NKS_ImageURL__c,
+                NKS_Campaign_From_Date__c,
+                NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
             WHERE NKS_Type__c = 'Kampanje' AND To_Date__c >= TODAY
             ORDER BY CreatedDate DESC

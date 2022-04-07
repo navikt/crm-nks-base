@@ -2,6 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Kampanjer_List_View</fullName>
     <columns>NAME</columns>
+    <columns>NKS_Information__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>

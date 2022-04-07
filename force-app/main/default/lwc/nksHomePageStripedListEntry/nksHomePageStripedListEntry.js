@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-export default class NksStripedListEntry extends NavigationMixin(LightningElement) {
+export default class NksHomePageStripedListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api index;
     @api lastIndex;
