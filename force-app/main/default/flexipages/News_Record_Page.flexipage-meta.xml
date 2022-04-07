@@ -76,6 +76,10 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
                 <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
             </fieldInstance>
