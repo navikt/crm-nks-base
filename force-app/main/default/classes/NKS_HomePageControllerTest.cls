@@ -82,7 +82,6 @@ public with sharing class NKS_HomePageControllerTest {
         Test.startTest();
         NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
         Test.stopTest();
-
         System.assertEquals(null, testCampaign);
     }
 }
