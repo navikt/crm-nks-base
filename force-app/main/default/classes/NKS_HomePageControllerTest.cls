@@ -83,17 +83,6 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
         Test.stopTest();
 
-        System.assertNotEquals(null, testCampaign.NKS_ImageURL__c);
-    }
-
-    @isTest
-    static void testGetCampaignWithNullValue() {
-        Test.startTest();
-        NKS_Announcement__c testCampaign1 = NKS_HomePageController.getCampaign();
-        delete testCampaign1;
-        NKS_Announcement__c testCampaign2 = NKS_HomePageController.getCampaign();
-        Test.stopTest();
-
-        System.assertEquals(null, testCampaign2);
+        System.assertEquals(null, testCampaign.NKS_ImageURL__c);
     }
 }

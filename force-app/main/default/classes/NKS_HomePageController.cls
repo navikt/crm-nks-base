@@ -187,7 +187,7 @@ public with sharing class NKS_HomePageController {
                 NKS_Campaign_From_Date__c,
                 NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = 'Kampanje'
+            WHERE NKS_Type__c = 'Kampanje' AND To_Date__c >= TODAY
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];
@@ -195,6 +195,7 @@ public with sharing class NKS_HomePageController {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
             return campaign;
+            
         } else {
             System.debug('The list in empty!');
             return null;
