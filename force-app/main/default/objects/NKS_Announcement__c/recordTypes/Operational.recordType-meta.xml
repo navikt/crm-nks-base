@@ -15,13 +15,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NKS_News_Theme__c</picklist>
-        <values>
-            <fullName>Arbeid</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NKS_Type__c</picklist>
         <values>
             <fullName>Kampanje</fullName>

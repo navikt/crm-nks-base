@@ -12,14 +12,3 @@ img {
 .title {
     font-size: 1.25rem;
 }
-
-.firstLine {
-    position: relative;
-    height: 108px;
-}
-
-.lastLine {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}

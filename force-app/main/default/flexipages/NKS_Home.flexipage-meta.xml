@@ -3,8 +3,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksCampaignBanner</componentName>
-                <identifier>c_nksCampaignBanner1</identifier>
+                <componentName>nksHomePageCampaignBanner</componentName>
+                <identifier>c_nksHomePageCampaignBanner1</identifier>
             </componentInstance>
         </itemInstances>
         <name>top</name>
