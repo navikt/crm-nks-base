@@ -149,7 +149,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         if (this.isNews) {
             sortedList = this.records.sort(function (x, y) {
                 // pinned items first
-                return x.pin === y.pin ? 0 : x ? -1 : 1;
+                if (x.pin === y.pin) {
+                    return 0;
+                } else {
+                    if (x.pin === true) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                } 
             });
         }
         return sortedList;
