@@ -47,7 +47,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (
-            objectName == 'NKS_Announcement__c' &&
+            objectName == 'NKS_Announcement__c' && 
             Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
         ) {
             query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
@@ -72,7 +72,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (orderby != null) {
-            query += ' ORDER BY ' + orderby;
+            query += ' ORDER BY ' + orderby; 
         }
 
         if (limitNumber != null) {

@@ -34,32 +34,28 @@
     <layouts>
         <layout>Announcement Layout</layout>
         <sections>
-            <label/>
+            <label />
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Campaign Layout</layout>
         <sections>
-            <label/>
+            <label />
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>News Layout</layout>
         <sections>
-            <label><!-- Custom Fields --></label>
-            <section>Custom Fields</section>
-        </sections>
-        <sections>
-            <label><!-- Custom Links --></label>
+            <label></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Traffic Layout</layout>
         <sections>
-            <label/>
+            <label />
             <section>Custom Links</section>
         </sections>
     </layouts>

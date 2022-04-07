@@ -39,11 +39,6 @@
         <field>NKS_Announcement__c.Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_News_Comment__c.Comment_Content__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Announcement News Editor</label>
     <objectPermissions>
@@ -55,15 +50,6 @@
         <object>NKS_Announcement__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>NKS_News_Comment__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Case.Feedback</recordType>
         <visible>true</visible>
@@ -74,10 +60,6 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>NKS_Announcement__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>NKS_News_Comment__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
