@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Campaign</fullName>
+    <fullName>Salesforce_oppdatering</fullName>
     <active>true</active>
-    <label>Campaign</label>
+    <label>Salesforce oppdatering</label>
     <picklistValues>
         <picklist>NKS_Type__c</picklist>
         <values>

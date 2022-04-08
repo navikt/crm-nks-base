@@ -58,6 +58,10 @@
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Salesforce_oppdatering</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <tabSettings>
         <tab>NKS_Announcement__c</tab>
         <visibility>Visible</visibility>
