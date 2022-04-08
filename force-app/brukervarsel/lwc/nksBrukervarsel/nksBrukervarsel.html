@@ -55,6 +55,11 @@
                     </template>
                 </ol>
             </lightning-layout-item>
+            <lightning-layout-item size="12" if:true={showNotifikasjon} class="slds-box">
+                <c-nks-brukervarsel-notifikasjon
+                    usernotification={brukervarsel.brukernotifikasjon}
+                ></c-nks-brukervarsel-notifikasjon>
+            </lightning-layout-item>
         </lightning-layout>
     </article>
 </template>
