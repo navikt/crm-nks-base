@@ -12,7 +12,7 @@
     <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>NKS_Announcement__c.Salesforce_oppdatering</value>
+        <value>NKS_Announcement__c.Salesforce_Update</value>
     </filters>
     <label>Salesforce oppdateringer</label>
 </ListView>
