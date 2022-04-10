@@ -28,6 +28,9 @@
                         <valueListItems>
                             <value>Delete</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>PrintableView</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -70,18 +73,20 @@
                 <identifier>RecordNKS_News_Author_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-a106db51-57dd-4799-9f6d-6da3bf8be3b3</name>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
+                <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-0e2df5f1-d03a-4d7c-85e4-06abb745fbc6</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
-                <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
+                <fieldItem>Record.CreatedById</fieldItem>
+                <identifier>RecordCreatedByIdField1</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -90,7 +95,7 @@
                 <identifier>RecordLastModifiedByIdField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-fea405f6-7985-456c-b701-eb7964de051d</name>
+        <name>Facet-2a72731b-17f4-488d-94dc-316316f7ae14</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -98,7 +103,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-a106db51-57dd-4799-9f6d-6da3bf8be3b3</value>
+                    <value>Facet-0e2df5f1-d03a-4d7c-85e4-06abb745fbc6</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column1</identifier>
@@ -108,13 +113,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-fea405f6-7985-456c-b701-eb7964de051d</value>
+                    <value>Facet-2a72731b-17f4-488d-94dc-316316f7ae14</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-9855e891-fa29-48e7-af78-569848854987</name>
+        <name>Facet-200aedb3-f5fb-4f24-abae-76674a4cd55e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -124,7 +129,7 @@
                 <identifier>RecordNKS_Information_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-e56f02eb-bc8e-496e-a8dc-b916e657228e</name>
+        <name>Facet-3d3df548-b158-40f2-9297-f4b942572e59</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -132,13 +137,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-e56f02eb-bc8e-496e-a8dc-b916e657228e</value>
+                    <value>Facet-3d3df548-b158-40f2-9297-f4b942572e59</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column3</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-f726de9c-4603-4406-a8ea-ee93d3dd2dce</name>
+        <name>Facet-5fa52f06-c118-4a7a-bfa4-2934c1d7de5e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -148,7 +153,7 @@
                 <identifier>RecordSkills_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-f3500b12-a7e6-471e-9d64-70b49e4b2c40</name>
+        <name>Facet-96215850-eda3-450f-b0bd-b427876679be</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -156,13 +161,13 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-f3500b12-a7e6-471e-9d64-70b49e4b2c40</value>
+                    <value>Facet-96215850-eda3-450f-b0bd-b427876679be</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
                 <identifier>flexipage_column4</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-7fe39892-b1e8-40ff-9190-9f9d3ff40981</name>
+        <name>Facet-bca78ec9-1ac5-4dc6-b8ad-c8e3c9b809e0</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -232,7 +237,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-9855e891-fa29-48e7-af78-569848854987</value>
+                    <value>Facet-200aedb3-f5fb-4f24-abae-76674a4cd55e</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -252,7 +257,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-f726de9c-4603-4406-a8ea-ee93d3dd2dce</value>
+                    <value>Facet-5fa52f06-c118-4a7a-bfa4-2934c1d7de5e</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -272,7 +277,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-7fe39892-b1e8-40ff-9190-9f9d3ff40981</value>
+                    <value>Facet-bca78ec9-1ac5-4dc6-b8ad-c8e3c9b809e0</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -344,10 +349,20 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>sidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
     <masterLabel>News Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <name>flexipage:recordHomeTemplateDesktop</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>
