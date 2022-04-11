@@ -73,26 +73,14 @@
                 <identifier>RecordNKS_News_Author_cField1</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
-                <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-0e2df5f1-d03a-4d7c-85e4-06abb745fbc6</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.CreatedById</fieldItem>
-                <identifier>RecordCreatedByIdField1</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.LastModifiedById</fieldItem>
-                <identifier>RecordLastModifiedByIdField1</identifier>
+                <fieldItem>Record.NKS_News_Delete_Date__c</fieldItem>
+                <identifier>RecordNKS_News_Delete_Date_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a72731b-17f4-488d-94dc-316316f7ae14</name>

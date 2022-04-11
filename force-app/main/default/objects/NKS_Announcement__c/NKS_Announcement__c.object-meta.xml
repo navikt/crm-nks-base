@@ -162,7 +162,7 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Announcements</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts />
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

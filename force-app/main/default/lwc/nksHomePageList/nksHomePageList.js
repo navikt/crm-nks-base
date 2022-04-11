@@ -29,7 +29,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-    pageurl;
+    pageurl; 
     initRun = false;
 
     connectedCallback() {
