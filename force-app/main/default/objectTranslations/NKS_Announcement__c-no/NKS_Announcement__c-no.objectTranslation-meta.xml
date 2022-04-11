@@ -34,28 +34,28 @@
     <layouts>
         <layout>Announcement Layout</layout>
         <sections>
-            <label />
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Campaign Layout</layout>
         <sections>
-            <label />
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>News Layout</layout>
         <sections>
-            <label></label>
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Traffic Layout</layout>
         <sections>
-            <label />
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
@@ -76,6 +76,10 @@
     <recordTypes>
         <label>Teknisk og drift</label>
         <name>Operational</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Salesforce Update --></label>
+        <name>Salesforce_Update</name>
     </recordTypes>
     <recordTypes>
         <label>Trafikk</label>

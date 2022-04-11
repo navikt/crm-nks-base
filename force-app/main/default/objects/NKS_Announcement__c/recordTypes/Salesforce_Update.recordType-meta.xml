@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Salesforce_oppdatering</fullName>
+    <fullName>Salesforce_Update</fullName>
     <active>true</active>
-    <label>Salesforce oppdatering</label>
+    <label>Salesforce Update</label>
+    <picklistValues>
+        <picklist>NKS_News_Status__c</picklist>
+        <values>
+            <fullName>Draft</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Published</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>NKS_Type__c</picklist>
         <values>

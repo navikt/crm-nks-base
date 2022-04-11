@@ -2,6 +2,9 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Felles_News</fullName>
     <columns>NAME</columns>
+    <columns>NKS_News_Publish_Date__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>Skills__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>NKS_News_Status__c</field>

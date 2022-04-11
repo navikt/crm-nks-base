@@ -2,8 +2,13 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Scheduled_News</fullName>
     <columns>NAME</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
     <columns>NKS_News_Author__c</columns>
     <columns>NKS_News_Publish_Date__c</columns>
+    <columns>Skills__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>NKS_News_Status__c</field>

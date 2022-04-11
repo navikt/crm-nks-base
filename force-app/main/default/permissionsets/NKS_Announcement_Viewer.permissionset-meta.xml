@@ -36,6 +36,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_News_Delete_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_News_Pin__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -75,7 +80,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>NKS_Announcement__c.Salesforce_oppdatering</recordType>
+        <recordType>NKS_Announcement__c.Salesforce_Update</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
