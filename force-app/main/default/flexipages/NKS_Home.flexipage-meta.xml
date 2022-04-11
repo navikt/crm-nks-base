@@ -281,8 +281,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksUsefulLinks</componentName>
-                <identifier>c_nksUsefulLinks1</identifier>
+                <componentName>nksHomePageUsefulLinks</componentName>
+                <identifier>c_nksHomePageUsefulLinks1</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
