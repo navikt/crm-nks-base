@@ -1,3 +1,3 @@
 import { LightningElement } from 'lwc';
 
-export default class NksUsefulLinks extends LightningElement {}
+export default class NksHomePageUsefulLinks extends LightningElement {}

@@ -47,7 +47,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (
-            objectName == 'NKS_Announcement__c' && 
+            objectName == 'NKS_Announcement__c' &&
             Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
         ) {
             query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
@@ -72,7 +72,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (orderby != null) {
-            query += ' ORDER BY ' + orderby; 
+            query += ' ORDER BY ' + orderby;
         }
 
         if (limitNumber != null) {
@@ -118,7 +118,7 @@ public with sharing class NKS_HomePageController {
             Record record = new Record();
             record.recordId = r.Id;
             record.name = r.get(title).toString();
-            record.modifiedDate = Datetime.valueOf(r.get(datefield)); 
+            record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if (showimage) {
                 record.imageurl = getImageUrl(r.Id);
             }
@@ -132,9 +132,11 @@ public with sharing class NKS_HomePageController {
                 }
             }
 
-            if (objectName == 'NKS_Announcement__c' &&
-            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
-        ) {
+            if (
+                objectName == 'NKS_Announcement__c' &&
+                Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() ==
+                'News'
+            ) {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
                 record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
@@ -195,9 +197,31 @@ public with sharing class NKS_HomePageController {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
             return campaign;
-            
         } else {
             System.debug('The list in empty!');
+            return null;
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static NKS_Announcement__c getNews(Id recordId) {
+        NKS_Announcement__c news = [
+            SELECT
+                Id,
+                Name,
+                NKS_News_Author__c,
+                NKS_News_Publish_Date__c,
+                LastModifiedDate,
+                NKS_Information__c,
+                NKS_ImageURL__c
+            FROM NKS_Announcement__c
+            WHERE Id = :recordId
+        ];
+        if (news != null) {
+            news.NKS_ImageURL__c = getImageUrl(news.Id);
+            return news;
+        } else {
+            System.debug('Record was not found!');
             return null;
         }
     }
