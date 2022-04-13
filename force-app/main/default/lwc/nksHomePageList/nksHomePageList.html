@@ -50,7 +50,7 @@
                                         is-pinned={record.pin}
                                     ></c-nks-home-page-list-entry>
                                 </li>
-                            </template> 
+                            </template>
                         </ul>
                     </template>
                 </template>
@@ -95,7 +95,20 @@
         </section>
     </template>
     <template if:true={setEmptyStateForCase}>
-        <section class="slds-box slds-theme_default" aria-labelledby="nav1">
+        <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
+            <template if:true={enableRefresh}>
+                <lightning-layout-item class="slds-col">
+                    <lightning-button-icon
+                        class="slds-float_right"
+                        alternative-text="Oppdater"
+                        icon-name="utility:refresh"
+                        onclick={refreshComponent}
+                    ></lightning-button-icon>
+                </lightning-layout-item>
+                <template if:true={showSpinner} class="slds-spinner_container">
+                    <lightning-spinner title="Loading" size="medium" type="brand"></lightning-spinner>
+                </template>
+            </template>
             <div class="slds-illustration slds-illustration_small">
                 <svg
                     class="slds-illustration__svg"
@@ -490,7 +503,20 @@
         </section>
     </template>
     <template if:true={setEmptyStateForChat}>
-        <section class="slds-box slds-theme_default" aria-labelledby="nav1">
+        <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
+            <template if:true={enableRefresh}>
+                <lightning-layout-item class="slds-col">
+                    <lightning-button-icon
+                        class="slds-float_right"
+                        alternative-text="Oppdater"
+                        icon-name="utility:refresh"
+                        onclick={refreshComponent}
+                    ></lightning-button-icon>
+                </lightning-layout-item>
+                <template if:true={showSpinner} class="slds-spinner_container">
+                    <lightning-spinner title="Loading" size="medium" type="brand"></lightning-spinner>
+                </template>
+            </template>
             <div class="slds-illustration slds-illustration_small">
                 <svg
                     class="slds-illustration__svg"
