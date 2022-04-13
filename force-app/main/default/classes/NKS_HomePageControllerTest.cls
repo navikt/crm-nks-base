@@ -4,6 +4,7 @@ public with sharing class NKS_HomePageControllerTest {
     static void makeData() {
         NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
         NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
+        NKS_TestDataFactory.createAnnouncements(1, 'Nyhet');
     }
 
     @isTest
@@ -18,7 +19,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetFieldWithNullValue() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Nyhet');
+        String info = NKS_HomePageController.getField('Trafikk');
         Test.stopTest();
 
         System.assertEquals(null, info);
@@ -83,5 +84,14 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
         Test.stopTest();
         System.assertEquals(null, testCampaign);
+    }
+
+    @isTest
+    static void testGetNews() {
+        NKS_Announcement__c obj = [SELECT Id FROM NKS_Announcement__c WHERE NKS_Type__c = 'Nyhet' LIMIT 1];
+        Test.startTest();
+        NKS_Announcement__c testNews = NKS_HomePageController.getNews(obj.Id);
+        Test.stopTest();
+        System.assertNotEquals(null, testNews);
     }
 }
