@@ -48,7 +48,7 @@ public with sharing class NKS_HomePageController {
 
         if (
             objectName == 'NKS_Announcement__c' &&
-            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() == 'News'
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
         ) {
             query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
         }
@@ -134,8 +134,7 @@ public with sharing class NKS_HomePageController {
 
             if (
                 objectName == 'NKS_Announcement__c' &&
-                Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName().get('News').getDeveloperName() ==
-                'News'
+                Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
             ) {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;

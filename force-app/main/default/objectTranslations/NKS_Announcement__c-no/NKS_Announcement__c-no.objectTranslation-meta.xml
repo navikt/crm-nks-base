@@ -78,7 +78,7 @@
         <name>Operational</name>
     </recordTypes>
     <recordTypes>
-        <label><!-- Salesforce Update --></label>
+        <label>Salesforce oppdatering</label>
         <name>Salesforce_Update</name>
     </recordTypes>
     <recordTypes>
