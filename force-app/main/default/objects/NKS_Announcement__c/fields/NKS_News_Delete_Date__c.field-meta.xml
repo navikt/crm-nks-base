@@ -8,5 +8,5 @@
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>DateTime</type>
+    <type>Date</type>
 </CustomField>

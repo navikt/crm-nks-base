@@ -29,7 +29,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
-    pageurl; 
+    pageurl;
     initRun = false;
 
     connectedCallback() {
@@ -146,18 +146,22 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     get newsRecords() {
         let sortedList = [];
+
         if (this.isNews) {
             sortedList = this.records.sort(function (x, y) {
+                let index = 0;
+
                 // pinned items first
                 if (x.pin === y.pin) {
-                    return 0;
+                    index = 0;
                 } else {
                     if (x.pin === true) {
-                        return -1;
+                        index = -1;
                     } else {
-                        return 1;
+                        index = 1;
                     }
-                } 
+                }
+                return index;
             });
         }
         return sortedList;
