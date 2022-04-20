@@ -39,14 +39,14 @@
         </template>
         <template if:true={isNews}>
             <lightning-layout size="12" class="slds-grid slds-gutters">
-                <lightning-layout-item class="slds-col slds-size_3-of-12">
+                <lightning-layout-item aria-hidden="true" class="slds-col slds-size_3-of-12">
                     <a href="#" onclick={navigateToSObject}>
-                        <img aria-hidden="true" src={record.imageurl} />
+                        <img src={record.imageurl} />
                     </a>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none ">
+                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none">
                     <lightning-layout multiple-rows="true" size="12">
-                        <lightning-layout-item class="slds-size_12-of-12 slds-text-heading_medium">
+                        <lightning-layout-item class="slds-size_12-of-12">
                             <template if:true={isPinned}>
                                 <lightning-icon
                                     icon-name="utility:pinned"
@@ -56,11 +56,14 @@
                                 >
                                 </lightning-icon>
                             </template>
-                            <lightning-formatted-url
-                                value={recordPageUrl}
-                                label={record.name}
-                                onclick={navigateToSObject}
-                            ></lightning-formatted-url>
+                            <h3>
+                                <lightning-formatted-url
+                                    class="title"
+                                    value={recordPageUrl}
+                                    label={record.name}
+                                    onclick={navigateToSObject}
+                                ></lightning-formatted-url>
+                            </h3>
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-size_12-of-12">
                             <lightning-formatted-date-time
@@ -75,7 +78,6 @@
                         <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
                             <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
                         </lightning-layout-item>
-                       
                     </lightning-layout>
                 </lightning-layout-item>
             </lightning-layout>

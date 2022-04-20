@@ -2,6 +2,7 @@ img {
     width: 100%;
     height: 108px;
     border: solid var(--lwc-borderWidthThin, 1px) #f3f3f3;
+    background-color: #f3f3f3;
     object-fit: cover;
 }
 
@@ -10,5 +11,5 @@ img {
 }
 
 .title {
-    font-size: 1.25rem;
+    font-size: 1.17rem;
 }

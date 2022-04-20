@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Information</label>
     <length>130768</length>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Html</type>
     <visibleLines>25</visibleLines>

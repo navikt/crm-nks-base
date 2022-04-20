@@ -79,8 +79,27 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
+                <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.NKS_News_Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Draft</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.NKS_News_Delete_Date__c</fieldItem>
                 <identifier>RecordNKS_News_Delete_Date_cField1</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NKS_News_Archive__c</fieldItem>
+                <identifier>RecordNKS_News_Archive_cField1</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a72731b-17f4-488d-94dc-316316f7ae14</name>

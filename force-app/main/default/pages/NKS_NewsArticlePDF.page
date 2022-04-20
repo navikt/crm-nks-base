@@ -1,0 +1,32 @@
+<apex:page
+controller="NKS_NewsPDFController"
+title="{!title}"
+sidebar="false"
+
+standardStylesheets="false"
+renderAs="pdf"
+>
+
+
+<style>
+      #col1,#col2{width:30%;display:inline-block;}
+</style>
+
+<h1 class="articleHeader">{!title}</h1>
+<h2>Forfatter: {!author}</h2>
+<hr/>
+<h3>Publisert: {!publishDate}. Oppdatert: {!lastModifiedDate}</h3>
+
+<apex:form >
+    <div id="col1"> 
+        <apex:outputText value="{!information}" escape="false"/>
+        </div>
+        <div id="col2"> 
+            <apex:image id="theImage"  value="{!imageURL}" height="180"/>
+       
+        </div>
+
+        </apex:form>
+
+
+</apex:page>

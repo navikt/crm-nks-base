@@ -70,7 +70,7 @@
         <name>Campaign</name>
     </recordTypes>
     <recordTypes>
-        <label>Nyheter</label>
+        <label>Nyhetsartikkel</label>
         <name>News</name>
     </recordTypes>
     <recordTypes>

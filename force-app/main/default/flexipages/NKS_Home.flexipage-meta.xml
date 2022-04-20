@@ -23,7 +23,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>datefield</name>
-                    <value>CreatedDate</value>
+                    <value>NKS_News_Publish_Date__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
