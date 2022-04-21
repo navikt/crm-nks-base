@@ -3,8 +3,8 @@
     <fullName>NKS_News_Delete_Date__c</fullName>
     <description>Date for automatic deletion.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Select if you want the news to be deleted automatically.</inlineHelpText>
-    <label>Delete Date</label>
+    <inlineHelpText>Velg hivs artikkelen skal slettes automatisk.</inlineHelpText>
+    <label>Date of deletion</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>

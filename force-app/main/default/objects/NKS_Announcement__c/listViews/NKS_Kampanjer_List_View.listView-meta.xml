@@ -9,10 +9,5 @@
         <operation>equals</operation>
         <value>NKS_Announcement__c.Campaign</value>
     </filters>
-    <filters>
-        <field>NKS_Type__c</field>
-        <operation>equals</operation>
-        <value>Kampanje</value>
-    </filters>
     <label>Kampanjer</label>
 </ListView>

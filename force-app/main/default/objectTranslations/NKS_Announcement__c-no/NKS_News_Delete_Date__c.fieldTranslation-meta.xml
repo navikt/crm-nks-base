@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help><!-- Select if you want the news to be deleted automatically. --></help>
-    <label>Slettings dato</label>
+    <help><!-- Velg hivs artikkelen skal slettes automatisk. --></help>
+    <label>Dato for sletting</label>
     <name>NKS_News_Delete_Date__c</name>
 </CustomFieldTranslation>

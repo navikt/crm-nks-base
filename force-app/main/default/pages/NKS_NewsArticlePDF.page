@@ -1,0 +1,15 @@
+<apex:page 
+controller="NKS_NewsPDFController"
+title="{!title}"
+standardStylesheets="false"
+sidebar="false"
+showHeader="false"
+renderAs="pdf"
+>
+    <h1 class="articleHeader">{!title}</h1>
+    <h3>Forfatter: {!author}</h3>
+    <hr/> 
+    <h5>Publisert: {!publishDate}. Oppdatert: {!lastModifiedDate}</h5>
+    <apex:outputText value="{!information}" escape="false"/>
+    <apex:image value="{!imageURL}" height="180" />      
+</apex:page>
