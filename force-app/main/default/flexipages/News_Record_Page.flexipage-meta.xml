@@ -81,13 +81,6 @@
             <fieldInstance>
                 <fieldItem>Record.NKS_News_Publish_Date__c</fieldItem>
                 <identifier>RecordNKS_News_Publish_Date_cField1</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NKS_News_Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Draft</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

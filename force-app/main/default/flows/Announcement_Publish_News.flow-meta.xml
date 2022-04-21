@@ -121,7 +121,7 @@
     </decisions>
     <description>Flow to set publish date for news and set publish status as Published.</description>
     <interviewLabel>Announcement - publish {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Announcement - Publish News</label>
+    <label>Announcement Publish News</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
