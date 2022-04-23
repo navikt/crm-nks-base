@@ -12,6 +12,7 @@ export default class NksHomePageNews extends LightningElement {
     wiredNews;
     publishDate;
     lastModifiedDate;
+    otherAuthors;
     information;
     imageURL;
 
@@ -32,6 +33,7 @@ export default class NksHomePageNews extends LightningElement {
             if (this.news) {
                 this.publishDate = this.news.NKS_News_Publish_Date__c;
                 this.lastModifiedDate = this.news.LastModifiedDate;
+                this.otherAuthors = this.news.NKS_News_Other_Authors__c;
                 this.information = this.news.NKS_Information__c;
                 this.imageURL = this.news.NKS_ImageURL__c;
             }

@@ -6,6 +6,11 @@
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NKS_Announcement__c.NKS_ImageURL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NKS_Announcement__c.NKS_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14,8 +19,13 @@
         <field>NKS_Announcement__c.NKS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Announcement__c.Skills__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>NKS - Announcement Traffic Editor</label>
+    <label>NKS - Announcement SF-Update Editor</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -26,7 +36,11 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>NKS_Announcement__c.Traffic</recordType>
+        <recordType>Case.Feedback</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Salesforce_Update</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

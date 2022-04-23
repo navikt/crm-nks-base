@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Author_News_Validation_Rule</fullName>
+    <active>false</active>
+    <description>Check if author-field is empty.</description>
+    <errorConditionFormula>ISBLANK( NKS_News_Author__c )</errorConditionFormula>
+    <errorDisplayField>NKS_News_Author__c</errorDisplayField>
+    <errorMessage>Dette feltet kan ikke være tomt, vennligst oppgi forfatterens navn.</errorMessage>
+</ValidationRule>

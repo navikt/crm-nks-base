@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Publish_Date_News_Validation_Rule</fullName>
+    <active>false</active>
+    <description>Check if the date of publication is a valid date.</description>
+    <errorConditionFormula>DATEVALUE( NKS_News_Publish_Date__c )   &lt;   TODAY()</errorConditionFormula>
+    <errorDisplayField>NKS_News_Publish_Date__c</errorDisplayField>
+    <errorMessage>Dato for publisering må være større enn dagens dato. Velg &quot;Publiser nå&quot;-knappen hvis du ønsker å publisere nyhetsartikkelen nå.</errorMessage>
+</ValidationRule>

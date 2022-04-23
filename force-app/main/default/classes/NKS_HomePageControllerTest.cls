@@ -2,9 +2,18 @@
 public with sharing class NKS_HomePageControllerTest {
     @TestSetup
     static void makeData() {
-        NKS_TestDataFactory.createAnnouncements(1, 'Salesforce oppdatering');
-        NKS_TestDataFactory.createAnnouncements(1, 'Kampanje');
-        NKS_TestDataFactory.createAnnouncements(1, 'Nyhet');
+        Id SFUpdateRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+            .get('Salesforce Update')
+            .getRecordTypeId();
+        Id campaignRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+            .get('Campaign')
+            .getRecordTypeId();
+        Id newsRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+            .get('News')
+            .getRecordTypeId();
+        NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
+        NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
+        NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
     }
 
     @isTest

@@ -14,11 +14,7 @@
         <operation>equals</operation>
         <value>NKS_Announcement__c.News</value>
     </filters>
-    <filters>
-        <field>NKS_Type__c</field>
-        <operation>equals</operation>
-        <value>Nyhet</value>
-    </filters>
+
     <filters>
         <field>NKS_News_Status__c</field>
         <operation>equals</operation>

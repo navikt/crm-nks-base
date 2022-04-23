@@ -209,6 +209,7 @@ public with sharing class NKS_HomePageController {
                 Id,
                 Name,
                 NKS_News_Author__c,
+                NKS_News_Other_Authors__c,
                 NKS_News_Publish_Date__c,
                 LastModifiedDate,
                 NKS_Information__c,

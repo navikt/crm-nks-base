@@ -31,7 +31,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>NKS_Type__c = &apos;Nyhet&apos; AND RecordType.DeveloperName = &apos;News&apos; AND NKS_News_Status__c = &apos;Published&apos;</value>
+                    <value>RecordType.DeveloperName = &apos;News&apos; AND NKS_News_Status__c = &apos;Published&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>
@@ -340,7 +340,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filter</name>
-                    <value>NKS_Type__c = &apos;Salesforce oppdatering&apos; AND RecordType.DeveloperName = &apos;Salesforce_Update&apos;</value>
+                    <value>RecordType.DeveloperName = &apos;Salesforce_Update&apos;</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterbyskills</name>

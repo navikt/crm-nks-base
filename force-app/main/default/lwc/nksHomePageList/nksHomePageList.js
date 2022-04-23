@@ -170,7 +170,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     get isNews() {
         let isNews = false;
         if (this.objectName === 'NKS_Announcement__c') {
-            if (this.filter.includes('Nyhet')) {
+            if (this.filter.includes('News')) {
                 isNews = true;
             }
         }

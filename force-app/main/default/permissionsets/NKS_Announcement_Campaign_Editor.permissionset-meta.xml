@@ -30,7 +30,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+
         <field>NKS_Announcement__c.NKS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>

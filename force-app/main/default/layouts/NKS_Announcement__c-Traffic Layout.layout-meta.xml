@@ -12,12 +12,7 @@
                 <field>Name</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NKS_Type__c</field>
-            </layoutItems>
-        </layoutColumns>
+
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>

@@ -75,12 +75,7 @@
                 <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NKS_Type__c</fieldItem>
-                <identifier>RecordNKS_Type__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
+
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Campaign_From_Date__c</fieldItem>

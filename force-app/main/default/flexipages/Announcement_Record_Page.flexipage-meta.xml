@@ -125,12 +125,7 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NKS_Type__c</fieldItem>
-                <identifier>RecordNKS_Type__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
+
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
@@ -186,12 +181,8 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.NKS_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Nyhet</rightValue>
-                    </criteria>
+
+
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
                         <operator>EQUAL</operator>

@@ -7,18 +7,34 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>NKS_Announcement__c.Publish</value>
+                            <value>NKS_Announcement__c.Publish_Now</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
                                 <criteria>
                                     <leftValue>{!Record.NKS_News_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Draft</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.NKS_Manage_News}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>NKS_Announcement__c.Undo_publishing</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.NKS_News_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Published</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.NKS_Manage_News}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -27,9 +43,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Delete</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>PrintableView</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -77,7 +90,7 @@
                 <identifier>force_detailPanel1</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Manage_News}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -110,7 +123,7 @@
                 <identifier>force_relatedListSingleContainer1</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.NKS_Manage_News}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

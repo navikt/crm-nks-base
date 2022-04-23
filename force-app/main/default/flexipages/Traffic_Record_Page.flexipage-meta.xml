@@ -53,12 +53,7 @@
                 <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.NKS_Type__c</fieldItem>
-                <identifier>RecordNKS_Type__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
+
         <name>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</name>
         <type>Facet</type>
     </flexiPageRegions>

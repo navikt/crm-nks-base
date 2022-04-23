@@ -75,6 +75,13 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
+            <field>NKS_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Nyhet</stringValue>
+            </value>
+        </filters>
+        <filters>
             <field>NKS_News_Status__c</field>
             <operator>EqualTo</operator>
             <value>

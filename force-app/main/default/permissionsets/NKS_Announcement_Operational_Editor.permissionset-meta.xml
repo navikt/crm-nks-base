@@ -15,7 +15,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31,12 +31,16 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>NKS_Announcement__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.Operational</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>NKS_Announcement__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

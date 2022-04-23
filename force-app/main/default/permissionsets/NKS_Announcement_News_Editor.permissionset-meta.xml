@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Manage_Announcements</name>
+        <name>NKS_Manage_News</name>
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -31,6 +31,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NKS_Announcement__c.NKS_News_Other_Authors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NKS_Announcement__c.NKS_News_Publish_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -40,7 +45,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -66,10 +71,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.News</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>NKS_Announcement__c.Salesforce_Update</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
