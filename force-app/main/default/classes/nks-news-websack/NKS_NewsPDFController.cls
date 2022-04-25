@@ -3,6 +3,7 @@ public with sharing class NKS_NewsPDFController {
     public string author { get; set; }
     public String publishDate { get; set; }
     public string lastModifiedDate { get; set; }
+    public string otherAuthors { get; set; }
     public string information { get; set; }
     public string imageURL { get; set; }
 
@@ -15,6 +16,7 @@ public with sharing class NKS_NewsPDFController {
         author = [SELECT Name FROM User WHERE Id = :userId].Name;
         publishDate = news.NKS_News_Publish_Date__c.format('dd. MMMMM yyyy, HH:mm');
         lastModifiedDate = news.LastModifiedDate.format('dd. MMMMM yyyy, HH:mm');
+        otherAuthors = news.NKS_News_Other_Authors__c;
         information = news.NKS_Information__c;
         imageURL = news.NKS_ImageURL__c;
     }

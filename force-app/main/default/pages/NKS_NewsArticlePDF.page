@@ -8,6 +8,7 @@ renderAs="pdf"
 >
     <h1 class="articleHeader">{!title}</h1>
     <h3>Forfatter: {!author}</h3>
+    <h4>Andre forfattere: {!otherAuthors}</h4>
     <hr/> 
     <h5>Publisert: {!publishDate}. Oppdatert: {!lastModifiedDate}</h5>
     <apex:outputText value="{!information}" escape="false"/>
