@@ -1,11 +1,7 @@
-name: "[PR MERGE] UAT Quick Package Create"
+name: "[HELPER] Quick Package Create"
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - UAT
-    paths:
-      - "force-app/**"
+
 jobs:
   # ################################################################# #
   # ######################## CREATE PACKAGE ######################### #
@@ -58,10 +54,10 @@ jobs:
       alphaVersionNumber: ${{ steps.package-version-create.outputs.alphaVersionNumber }}
 
   # ################################################################# # 
-  # ####################### VALIDATE IN UAT ######################### #
+  # ####################### VALIDATE IN DEV ######################### #
   # ################################################################# #
-  validate-in-uat:
-    name: Validate install in UAT Sandbox
+  validate-in-dev:
+    name: Validate install in DEV Sandbox
     needs: [create-package]
     runs-on: ubuntu-latest
     steps:
@@ -80,25 +76,25 @@ jobs:
           sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
           rm -f ./PROD_SFDX_URL.txt
 
-      # Authenticate uat-sandbox
-      - name: Authenticate uat-sandbox
+      # Authenticate dev-sandbox
+      - name: Authenticate dev-sandbox
         run: |
-          echo ${{ secrets.UAT_SFDX_URL}} > ./UAT_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./UAT_SFDX_URL.txt -a uat-sandbox -s
-          rm -f ./UAT_SFDX_URL.txt
+          echo ${{ secrets.DEV_SFDX_URL}} > ./DEV_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./DEV_SFDX_URL.txt -a dev-sandbox -s
+          rm -f ./DEV_SFDX_URL.txt
 
-      # Install new package version into UAT org
-      - name: Install new package version into UAT org
-        id: uat-installation
+      # Install new package version into DEV org
+      - name: Install new package version into DEV org
+        id: dev-installation
         run: |
-          sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u uat-sandbox -r -k ${{ secrets.PACKAGE_KEY }} --json | tee output
+          sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u dev-sandbox -r -k ${{ secrets.PACKAGE_KEY }} --json | tee output
 
           echo "::set-output name=installOutput::$(cat output | jq '.message')"
           if [ $(cat output | jq '.status') == "0" ]; then
             echo "::set-output name=successfullyInstalled::true"
           else
             echo
-            echo FAILED TO INSTALL PACKAGE IN UAT SANDBOX
+            echo FAILED TO INSTALL PACKAGE IN DEV SANDBOX
             echo
 
             exit 125
@@ -112,15 +108,15 @@ jobs:
             sfdx force:source:deploy -p ./force-app/unpackagable-with-auto-deploy -l RunLocalTests
           fi
     outputs:
-      successfullyInstalled: ${{ steps.uat-installation.outputs.successfullyInstalled }}
-      installOutput: ${{ steps.uat-installation.outputs.installOutput }}
+      successfullyInstalled: ${{ steps.dev-installation.outputs.successfullyInstalled }}
+      installOutput: ${{ steps.dev-installation.outputs.installOutput }}
 
   # ################################################################# #
   # ######################### CREATE RELEASE ######################## #
   # ################################################################# #
   create-release:
     name: Create alpha release
-    needs: [create-package, validate-in-uat]
+    needs: [create-package, validate-in-dev]
     runs-on: ubuntu-latest
     steps:
       # Checkout source code
@@ -141,10 +137,10 @@ jobs:
 
           echo "::set-output name=packageCreation::✅ Package Creation"
 
-           if [ ${{ needs.validate-in-uat.outputs.successfullyInstalled }} == "true" ]; then
-            echo "::set-output name=integrationInstallation::✅ Package Installation (UAT)"
+           if [ ${{ needs.validate-in-dev.outputs.successfullyInstalled }} == "true" ]; then
+            echo "::set-output name=integrationInstallation::✅ Package Installation (DEV)"
           else
-            echo "::set-output name=integrationInstallation::❌ Package Installation (UAT)"
+            echo "::set-output name=integrationInstallation::❌ Package Installation (DEV)"
           fi
 
       # Generate changelog from commits
