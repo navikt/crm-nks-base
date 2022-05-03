@@ -2,7 +2,7 @@ global class NKS_ArchiveSelectedNews implements Schedulable, Database.Batchable<
     private String query = '';
 
     public NKS_ArchiveSelectedNews() {
-        this.query = 'SELECT Id, Name FROM NKS_Announcement__c WHERE NKS_Type__c=\'Nyhet\' AND NKS_News_Archive__c = true AND NKS_News_Delete_Date__c=TOMORROW AND NKS_News_Status__c=\'Published\'';
+        this.query = 'SELECT Id, Name FROM NKS_Announcement__c WHERE NKS_TypeFormula__c=\'Nyhet\' AND NKS_News_Archive__c = true AND NKS_News_Delete_Date__c=TOMORROW AND NKS_News_Status__c=\'Published\'';
     }
 
     public NKS_ArchiveSelectedNews(String query) {

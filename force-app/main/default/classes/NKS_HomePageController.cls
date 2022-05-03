@@ -4,7 +4,7 @@ public with sharing class NKS_HomePageController {
         List<NKS_Announcement__c> announcements = [
             SELECT NKS_Information__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = :type
+            WHERE NKS_TypeFormula__c = :type
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
@@ -188,7 +188,7 @@ public with sharing class NKS_HomePageController {
                 NKS_Campaign_From_Date__c,
                 NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = 'Kampanje' AND NKS_Campaign_To_Date__c >= TODAY
+            WHERE NKS_TypeFormula__c = 'Kampanje' AND NKS_Campaign_To_Date__c >= TODAY
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];

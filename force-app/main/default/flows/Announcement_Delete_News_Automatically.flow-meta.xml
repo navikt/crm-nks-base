@@ -59,7 +59,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>NKS_Type__c</field>
+            <field>NKS_TypeFormula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Nyhet</stringValue>

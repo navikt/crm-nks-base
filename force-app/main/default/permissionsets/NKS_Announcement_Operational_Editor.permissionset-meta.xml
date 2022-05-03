@@ -16,7 +16,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Type__c</field>
+        <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
