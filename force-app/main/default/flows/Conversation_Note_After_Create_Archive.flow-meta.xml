@@ -87,7 +87,7 @@
             <field>CRM_Journal_Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Journal Started</stringValue>
+                <stringValue>Not Journaled</stringValue>
             </value>
         </filters>
         <object>Conversation_Note__c</object>
