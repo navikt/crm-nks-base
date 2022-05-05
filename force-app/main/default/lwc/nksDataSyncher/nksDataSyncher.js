@@ -23,12 +23,14 @@ export default class NksDataSyncher extends LightningElement {
     personId;
     personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
     initialized = false;
+    synced = false;
 
     connectedCallback() {
         //Initial synch performed in connected callback to prevent boxcaring due to many events triggered at the same time.
         this.addSyncStatus('bankAccount', 'Bankkontonummer', syncStatus.SYNCING);
         this.addSyncStatus('oppgave', 'Oppgave', syncStatus.SYNCING);
         this.getRelatedRecordId(this.relationshipField, this.objectApiName);
+        this.initialized = true;
     }
 
     @wire(getRecord, {
@@ -64,8 +66,9 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     async doSynch(personIdent, personActorId, personAccountId) {
+        this.synced = false;
         await Promise.all([this.bankAccountNumberSync(personIdent), this.oppgaveSync(personActorId)]);
-        this.initialized = true;
+        this.synced = true;
         eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
     }
 
