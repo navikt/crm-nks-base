@@ -77,4 +77,8 @@
         <tab>NKS_Announcement__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterInternalUser</name>
+    </userPermissions>
 </PermissionSet>

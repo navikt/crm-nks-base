@@ -52,7 +52,9 @@
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Details --></label>
+            <label>
+               Detaljer
+            </label>
             <section>Details</section>
         </sections>
     </layouts>
