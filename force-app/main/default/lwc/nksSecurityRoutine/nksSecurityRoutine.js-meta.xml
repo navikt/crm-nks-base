@@ -3,6 +3,7 @@
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Security Routine</masterLabel>
+    <description>Component to display security routine on record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
