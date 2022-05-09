@@ -936,6 +936,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Thread__c.Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>User.CRM_NAV_Ident__c</field>
         <readable>true</readable>
     </fieldPermissions>

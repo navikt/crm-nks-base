@@ -1,14 +1,18 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class NksSecurityRoutine extends NavigationMixin(LightningElement) {
-    handleSecurity(){
-        const config = {
-            type: 'standard__webPage',
+    @api articleId;
+
+    handleSecurity() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
             attributes: {
-                url: 'https://navdialog.lightning.force.com/lightning/r/Knowledge__kav/ka02o000000MWhPAAW/view'
+                recordId: this.articleId,
+                actionName: 'view'
             }
-        };
-        this[NavigationMixin.Navigate](config);
+        }).then((url) => {
+            this.recordPageUrl = url;
+        });
     }
 }

@@ -3,7 +3,20 @@
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Security Routine</masterLabel>
+    <description>Component to display security routine on record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
+     <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property
+                name="articleId"
+                label="Article ID"
+                description="Unique ID of the knowledge article to navigate to on click"
+                type="String"
+                required="true"
+                default="ka02o000000MWhPAAW"
+            />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
