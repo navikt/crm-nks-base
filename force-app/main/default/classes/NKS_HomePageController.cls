@@ -53,6 +53,10 @@ public with sharing class NKS_HomePageController {
             query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
         }
 
+        if (objectName == 'Case') {
+            query += ' , Status';
+        }
+
         query += ' FROM ' + objectName + ' WHERE ' + filter;
 
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
@@ -103,6 +107,8 @@ public with sharing class NKS_HomePageController {
         public Boolean pin;
         @AuraEnabled
         public Datetime publishDate;
+        @AuraEnabled
+        public String status;
     }
 
     private static List<Record> createRecords(
@@ -142,6 +148,13 @@ public with sharing class NKS_HomePageController {
             } else {
                 record.pin = false;
                 record.publishDate = null;
+            }
+
+            if (objectName == 'Case') {
+                Case enCase = (Case) r;
+                record.status = enCase.Status;
+            } else {
+                record.status = '';
             }
             records.add(record);
         }
