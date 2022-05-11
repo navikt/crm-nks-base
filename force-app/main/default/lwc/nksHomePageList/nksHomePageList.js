@@ -92,7 +92,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 }
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error loading person record',
+                        title: 'Error',
                         message,
                         variant: 'error'
                     })
