@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 export default class NksHomePageUsefulLinks extends NavigationMixin(LightningElement) {
-    test() {
+    navigateToKnowledge() {
         this[NavigationMixin.Navigate]({
             type: 'standard__knowledgeArticlePage',
             attributes: {
