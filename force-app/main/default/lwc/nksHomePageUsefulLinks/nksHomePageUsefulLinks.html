@@ -10,8 +10,7 @@
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:multi_picklist"
-                    alternative-text="Norsk-engelsk ordliste"
-                    title="Norsk-engelsk ordliste"
+                    aria-hide="true"
                 >
                 </lightning-icon>
                 <a
@@ -28,8 +27,7 @@
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:people"
-                    alternative-text="Samspillet"
-                    title="Samspillet"
+                    aria-hide="true"
                 >
                 </lightning-icon>
                 <a
@@ -46,26 +44,24 @@
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:incident"
-                    alternative-text="Sikkerhetsrutinen"
-                    title="Sikkerhetsrutinen"
+                    aria-hide="true"
                 >
                 </lightning-icon>
-                <a
-                    href="https://navdialog.lightning.force.com/lightning/r/Knowledge__kav/ka07U000000PCOeQAO/view"
+                <button
+                    role="link"
                     class="slds-text-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    style="background: none; border: none; padding: 0"
+                    onclick={test}
                 >
                     Sikkerhetsrutinen
-                </a>
+                </button>
             </div>
             <div class="slds-item slds-var-p-vertical_xx-small slds-size_x-small slds-var-m-right_x-small">
                 <lightning-icon
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:expand"
-                    alternative-text="Snarveier på nav.no"
-                    title="Snarveier på nav.no"
+                    aria-hide="true"
                 >
                 </lightning-icon>
                 <a
@@ -82,8 +78,7 @@
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:button_choice"
-                    alternative-text="Testbaser"
-                    title="Testbaser"
+                    aria-hide="true"
                 >
                 </lightning-icon>
                 <a
@@ -100,8 +95,7 @@
                     class="slds-var-m-right_x-small link-icon"
                     size="x-small"
                     icon-name="utility:video"
-                    alternative-text="Video- og webinarbibliotek"
-                    title="Video- og webinarbibliotek"
+                    aria-hide="true"
                 >
                 </lightning-icon>
                 <a
