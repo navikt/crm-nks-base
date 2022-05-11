@@ -13,6 +13,13 @@
                 <stringValue>Draft</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_News.NKS_News_Publish_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NullValue</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_News</targetReference>
         </connector>
@@ -36,12 +43,24 @@
                     <stringValue>Draft</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_News.NKS_News_Publish_Date__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NullValue</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Success_Screen</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>NullValue</name>
+        <dataType>DateTime</dataType>
+        <expression>DATETIMEVALUE(&apos;&apos;)</expression>
+    </formulas>
     <interviewLabel>Announcement Undo Publishing News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Undo Publishing News</label>
     <processMetadataValues>
