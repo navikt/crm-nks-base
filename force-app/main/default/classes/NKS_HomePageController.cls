@@ -138,6 +138,33 @@ public with sharing class NKS_HomePageController {
 
     public static Set<String> getUserSkills(Id userId) {
         Set<String> skills = new Set<String>();
+        skills.addAll(getChatSkills(userId));
+        skills.addAll(getServiceResourceSkills(userId));
+        return skills;
+    }
+
+    /**
+     * @Get the assigned service resource skills for the given user ID
+     * @author Stian Ruud Schikora | 05-10-2022
+     * @param userId
+     * @return Set<String>
+     **/
+    public static Set<String> getServiceResourceSkills(Id userId) {
+        Set<String> skills = new Set<String>();
+
+        for (ServiceResourceSkill srSkill : [
+            SELECT Id, Skill.DeveloperName
+            FROM ServiceResourceSkill
+            WHERE ServiceResource.RelatedRecordId = :userId
+        ]) {
+            skills.add(srSkill.Skill.DeveloperName);
+        }
+
+        return skills;
+    }
+
+    public static Set<String> getChatSkills(Id userId) {
+        Set<String> skills = new Set<String>();
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
             FROM Group
@@ -164,7 +191,6 @@ public with sharing class NKS_HomePageController {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
             return campaign;
-            
         } else {
             System.debug('The list in empty!');
             return null;
