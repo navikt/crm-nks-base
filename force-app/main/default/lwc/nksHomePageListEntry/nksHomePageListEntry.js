@@ -4,6 +4,9 @@ import { NavigationMixin } from 'lightning/navigation';
 export default class NksHomePageListEntry extends NavigationMixin(LightningElement) {
     @api record;
     @api isKnowledge = false;
+    @api isNews = false;
+    @api isPinned = false;
+
     recordPageUrl;
 
     navigateToSObject(event) {

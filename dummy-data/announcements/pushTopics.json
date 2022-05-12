@@ -6,7 +6,7 @@
                 "referenceId": "PushTopicRef2"
             },
             "Name": "Announcement_Updates",
-            "Query": "SELECT Id, Name, NKS_Type__c FROM NKS_Announcement__c",
+            "Query": "SELECT Id, Name, NKS_TypeFormula__c FROM NKS_Announcement__c",
             "ApiVersion": 52.0,
             "NotifyForOperationCreate": true,
             "NotifyForOperationUpdate": true,

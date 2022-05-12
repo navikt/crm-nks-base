@@ -2,16 +2,12 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Kampanjer_List_View</fullName>
     <columns>NAME</columns>
+    <columns>NKS_Information__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
         <value>NKS_Announcement__c.Campaign</value>
-    </filters>
-    <filters>
-        <field>NKS_Type__c</field>
-        <operation>equals</operation>
-        <value>Kampanje</value>
     </filters>
     <label>Kampanjer</label>
 </ListView>
