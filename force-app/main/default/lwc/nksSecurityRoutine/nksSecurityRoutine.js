@@ -6,13 +6,12 @@ export default class NksSecurityRoutine extends NavigationMixin(LightningElement
 
     handleSecurity() {
         this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
+            type: 'standard__knowledgeArticlePage',
             attributes: {
-                recordId: this.articleId,
-                actionName: 'view'
+                actionName: 'view',
+                articleType: 'Knowledge',
+                urlName: encodeURIComponent(this.articleId)
             }
-        }).then((url) => {
-            this.recordPageUrl = url;
         });
     }
 }
