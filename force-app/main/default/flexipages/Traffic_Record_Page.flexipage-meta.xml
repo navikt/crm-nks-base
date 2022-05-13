@@ -53,7 +53,6 @@
                 <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
-
         <name>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -128,7 +127,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Details</value>
+                    <value>Detaljer</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>

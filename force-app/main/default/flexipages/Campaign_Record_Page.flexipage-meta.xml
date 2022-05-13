@@ -75,7 +75,6 @@
                 <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
-
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.NKS_Campaign_From_Date__c</fieldItem>
@@ -119,7 +118,7 @@
                 <identifier>flexipage_fieldSection</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -210,7 +209,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -230,7 +229,7 @@
                 <identifier>flexipage_fieldSection1</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -250,7 +249,7 @@
                 <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
