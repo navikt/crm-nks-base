@@ -54,7 +54,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (objectName == 'Case') {
-            query += ' , Status';
+            query += ' , toLabel(Status)';
         }
 
         query += ' FROM ' + objectName + ' WHERE ' + filter;
