@@ -34,37 +34,54 @@
     <layouts>
         <layout>Announcement Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Campaign Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>News Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>
+               Detaljer
+            </label>
+            <section>Details</section>
         </sections>
     </layouts>
     <layouts>
         <layout>Traffic Layout</layout>
         <sections>
-            <label>
-                <!-- Custom Links -->
-            </label>
+            <label><!-- Custom Links --></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <nameFieldLabel>Tittel</nameFieldLabel>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Publiser nå</label>
+        <name>Publish_Now</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
+        <label>Angre publisering</label>
+        <name>Undo_publishing</name>
+    </quickActions>
     <recordTypes>
         <label>Kampanje</label>
         <name>Campaign</name>
     </recordTypes>
     <recordTypes>
-        <label>Nyheter</label>
+        <label>Nyhetsartikkel</label>
         <name>News</name>
     </recordTypes>
     <recordTypes>
@@ -72,7 +89,19 @@
         <name>Operational</name>
     </recordTypes>
     <recordTypes>
+        <label>Salesforce oppdatering</label>
+        <name>Salesforce_Update</name>
+    </recordTypes>
+    <recordTypes>
         <label>Trafikk</label>
         <name>Traffic</name>
     </recordTypes>
+    <validationRules>
+        <errorMessage><!-- Dette feltet kan ikke være tomt, vennligst oppgi forfatterens navn. --></errorMessage>
+        <name>Author_News_Validation_Rule</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Dato for publisering må være større enn dagens dato. Velg &quot;Publiser nå&quot;-knappen hvis du ønsker å publisere nyhetsartikkelen nå. --></errorMessage>
+        <name>Publish_Date_News_Validation_Rule</name>
+    </validationRules>
 </CustomObjectTranslation>

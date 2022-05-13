@@ -29,30 +29,45 @@
                     </template>
                 </template>
             </lightning-layout>
-            <div if:false={isKnowledge}>
+            <template if:false={isKnowledge}>
                 <template if:false={isStripedList}>
-                    <ul class="slds-list_vertical-space-medium">
-                        <template for:each={records} for:item="record">
-                            <li class="slds-item" key={record.recordId}>
-                                <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
-                            </li>
-                        </template>
-                    </ul>
+                    <template if:false={isNews}>
+                        <ul class="slds-list_vertical-space-medium">
+                            <template for:each={records} for:item="record">
+                                <li class="slds-item" key={record.recordId}>
+                                    <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:true={isNews}>
+                        <ul>
+                            <template for:each={newsRecords} for:item="record">
+                                <li class="slds-item slds-var-p-vertical_small slds-border_top" key={record.recordId}>
+                                    <c-nks-home-page-list-entry
+                                        record={record}
+                                        is-news={isNews}
+                                        is-pinned={record.pin}
+                                    ></c-nks-home-page-list-entry>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
                 </template>
                 <template if:true={isStripedList}>
                     <ul class="stripedList">
                         <template for:each={records} for:item="record" for:index="index">
                             <li class="slds-item" key={record.recordId}>
-                                <c-nks-striped-list-entry
+                                <c-nks-home-page-striped-list-entry
                                     record={record}
                                     index={index}
                                     last-index={lastIndex}
-                                ></c-nks-striped-list-entry>
+                                ></c-nks-home-page-striped-list-entry>
                             </li>
                         </template>
                     </ul>
                 </template>
-            </div>
+            </template>
             <div if:true={isKnowledge} class="slds-box slds-p-vertical_none slds-p-horizontal_none slds-theme_default">
                 <ul>
                     <template for:each={records} for:item="record">
@@ -80,7 +95,20 @@
         </section>
     </template>
     <template if:true={setEmptyStateForCase}>
-        <section class="slds-box slds-theme_default" aria-labelledby="nav1">
+        <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
+            <template if:true={enableRefresh}>
+                <lightning-layout-item class="slds-col">
+                    <lightning-button-icon
+                        class="slds-float_right"
+                        alternative-text="Oppdater"
+                        icon-name="utility:refresh"
+                        onclick={refreshComponent}
+                    ></lightning-button-icon>
+                </lightning-layout-item>
+                <template if:true={showSpinner} class="slds-spinner_container">
+                    <lightning-spinner title="Loading" size="medium" type="brand"></lightning-spinner>
+                </template>
+            </template>
             <div class="slds-illustration slds-illustration_small">
                 <svg
                     class="slds-illustration__svg"
@@ -475,7 +503,20 @@
         </section>
     </template>
     <template if:true={setEmptyStateForChat}>
-        <section class="slds-box slds-theme_default" aria-labelledby="nav1">
+        <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
+            <template if:true={enableRefresh}>
+                <lightning-layout-item class="slds-col">
+                    <lightning-button-icon
+                        class="slds-float_right"
+                        alternative-text="Oppdater"
+                        icon-name="utility:refresh"
+                        onclick={refreshComponent}
+                    ></lightning-button-icon>
+                </lightning-layout-item>
+                <template if:true={showSpinner} class="slds-spinner_container">
+                    <lightning-spinner title="Loading" size="medium" type="brand"></lightning-spinner>
+                </template>
+            </template>
             <div class="slds-illustration slds-illustration_small">
                 <svg
                     class="slds-illustration__svg"

@@ -2,26 +2,20 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>News</fullName>
     <active>true</active>
+    <compactLayoutAssignment>News_Compact_Layout</compactLayoutAssignment>
     <label>News</label>
     <picklistValues>
-        <picklist>NKS_Type__c</picklist>
+        <picklist>NKS_News_Status__c</picklist>
         <values>
-            <fullName>Kampanje</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nyhet</fullName>
+            <fullName>Draft</fullName>
             <default>true</default>
         </values>
         <values>
-            <fullName>Salesforce oppdatering</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trafikk</fullName>
+            <fullName>Published</fullName>
             <default>false</default>
         </values>
     </picklistValues>
+
     <picklistValues>
         <picklist>Skills__c</picklist>
         <values>
@@ -34,6 +28,10 @@
         </values>
         <values>
             <fullName>Familie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Felles</fullName>
             <default>false</default>
         </values>
         <values>
@@ -50,6 +48,10 @@
         </values>
         <values>
             <fullName>Permittering_og_rekruttering</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pleiepenger</fullName>
             <default>false</default>
         </values>
         <values>

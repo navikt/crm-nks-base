@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Fyll inn hvis nyhetsartikkelen har flere forfattere. --></help>
+    <label>Andre forfattere</label>
+    <name>NKS_News_Other_Authors__c</name>
+</CustomFieldTranslation>
