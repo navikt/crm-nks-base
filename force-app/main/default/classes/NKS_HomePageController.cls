@@ -219,7 +219,7 @@ public with sharing class NKS_HomePageController {
 
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
-        List<NKS_Announcement__c> campaigns = [
+        NKS_Announcement__c campaign = [
             SELECT
                 Id,
                 Name,
@@ -232,10 +232,14 @@ public with sharing class NKS_HomePageController {
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];
-        if (campaigns.size() > 0) {
-            NKS_Announcement__c campaign = campaigns[0];
+        if (campaign != null) {
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
-            return campaign;
+            if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
+                return campaign;
+            } else {
+                System.debug('You may have not uploaded any image for the campaign.');
+                return null;
+            }
         } else {
             System.debug('The list in empty!');
             return null;
