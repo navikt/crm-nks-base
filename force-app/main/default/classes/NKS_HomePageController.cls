@@ -233,7 +233,7 @@ public with sharing class NKS_HomePageController {
             LIMIT 1
         ];
         if (campaigns.size() > 0) {
-            NKS_Announcement__c Campaign = campaigns[0];
+            NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
             if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
                 return campaign;
