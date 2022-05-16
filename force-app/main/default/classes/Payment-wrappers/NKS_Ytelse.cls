@@ -1,6 +1,11 @@
 global class NKS_Ytelse {
     @AuraEnabled
-    public Ytelsestype ytelsestype;
+    public String ytelsestype {
+        get;
+        set {
+            ytelsestype = String.isNotBlank(value) ? value.trim() : value;
+        }
+    }
     @AuraEnabled
     public Ytelsesperiode ytelsesperiode;
     @AuraEnabled
@@ -42,21 +47,9 @@ global class NKS_Ytelse {
             }
         }
         @AuraEnabled
-        public Double satsantall;
+        public Integer satsantall;
         @AuraEnabled
         public Double ytelseskomponentbeloep;
-    }
-
-    global class Ytelsestype {
-        @AuraEnabled
-        public String value {
-            get;
-            set {
-                this.value = String.isNotBlank(value) ? value.trim() : value;
-            }
-        }
-        public String kodeRef;
-        public String kodeverksRef;
     }
 
     global class Ytelsesperiode {
