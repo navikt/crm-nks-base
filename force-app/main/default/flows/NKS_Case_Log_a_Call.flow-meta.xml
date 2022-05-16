@@ -198,6 +198,13 @@
                 <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Started</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Conversation_Note</targetReference>
         </connector>
