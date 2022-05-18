@@ -54,7 +54,7 @@ public with sharing class NKS_HomePageController {
         }
 
         if (objectName == 'Case') {
-            query += ' , Status';
+            query += ' , toLabel(Status)';
         }
 
         query += ' FROM ' + objectName + ' WHERE ' + filter;
@@ -235,7 +235,12 @@ public with sharing class NKS_HomePageController {
         if (campaigns.size() > 0) {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
-            return campaign;
+            if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
+                return campaign;
+            } else {
+                System.debug('You may have not uploaded any image for the campaign.');
+                return null;
+            }
         } else {
             System.debug('The list in empty!');
             return null;
