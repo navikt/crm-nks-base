@@ -1,25 +1,26 @@
 //Service class for retrieving payments for a person
 public without sharing class NKS_PaymentService {
-    private static final String BASE_CONFIG = 'UTBETALING_API';
+    private static final String BASE_CONFIG = 'SOKOS_UTBETALING_API';
 
-    public static HttpResponse getPayments(String ident, DateTime startDate, DateTime endDate){
+    public static HttpResponse getPayments(String ident, Datetime startDate, Datetime endDate){
         ApiController apiCtrl = new ApiController();
-        String serviceName = 'GET_PERSON_UTBETALINGER';
+        String serviceName = 'POST_HENT_UTBETALINGSINFORMASJON';
         apiCtrl.initRequest(BASE_CONFIG, serviceName);
-        apiCtrl.setBody(new PaymentRequest(ident, startDate, endDate).getJSON());
+        apiCtrl.addServiceAuthHeader('SokosUtbetaling');
+        apiCtrl.setBody(new PaymentRequest(ident, startDate.date(), endDate.date()).getJSON());
         apiCtrl.doCallout();
 
         return apiCtrl.getResponse();
     }
     class PaymentRequest {
         String ident;
-        PaymenRequestRolle rolle;
+        PaymentRequestRolle rolle;
         PaymentRequestPeriode periode;
         PaymentRequestPeriodetype periodetype;
         PaymentRequest(String ident, Date fom, Date tom){
-            this(ident, fom, tom, PaymenRequestRolle.RETTIGHETSHAVER, PaymentRequestPeriodetype.UTBETALINGSPERIODE);
+            this(ident, fom, tom, PaymentRequestRolle.RETTIGHETSHAVER, PaymentRequestPeriodetype.UTBETALINGSPERIODE);
         }
-        PaymentRequest(String ident, Date fom, Date tom, PaymenRequestRolle rolle, PaymentRequestPeriodetype periodetype){
+        PaymentRequest(String ident, Date fom, Date tom, PaymentRequestRolle rolle, PaymentRequestPeriodetype periodetype){
             this.ident = ident;
             this.rolle = rolle;
             this.periode = new PaymentRequestPeriode(fom,tom);

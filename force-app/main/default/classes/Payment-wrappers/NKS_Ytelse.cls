@@ -47,7 +47,7 @@ global class NKS_Ytelse {
             }
         }
         @AuraEnabled
-        public Integer satsantall;
+        public Double satsantall;
         @AuraEnabled
         public Double ytelseskomponentbeloep;
     }
