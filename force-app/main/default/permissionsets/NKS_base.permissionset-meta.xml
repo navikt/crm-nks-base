@@ -229,14 +229,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ChatAuthController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ChatAuthController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Contact_InvalidEmailRemoval</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -322,14 +314,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatTranscriptService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatTranscriptService_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
