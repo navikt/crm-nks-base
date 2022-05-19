@@ -19,7 +19,72 @@
         <value xsi:type="xsd:string">{
 &quot;200&quot;: {
 &quot;headers&quot;: null,
-&quot;body&quot;: null
+&quot;body&quot;: 
+[
+  {
+    &quot;posteringsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
+    &quot;utbetaltTil&quot;: {
+      &quot;aktoertype&quot;: &quot;PERSON&quot;,
+      &quot;ident&quot;: &quot;string&quot;,
+      &quot;navn&quot;: &quot;string&quot;
+    },
+    &quot;utbetalingNettobeloep&quot;: 999.5,
+    &quot;utbetalingsmelding&quot;: &quot;string&quot;,
+    &quot;utbetalingsdato&quot;: &quot;2020-06-25T22:00:00.000Z&quot;,
+    &quot;forfallsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
+    &quot;utbetaltTilKonto&quot;: {
+      &quot;kontonummer&quot;: &quot;string&quot;,
+      &quot;kontotype&quot;: &quot;string&quot;
+    },
+    &quot;utbetalingsmetode&quot;: &quot;string&quot;,
+    &quot;utbetalingsstatus&quot;: &quot;string&quot;,
+    &quot;ytelseListe&quot;: [
+      {
+        &quot;ytelsestype&quot;: &quot;string&quot;,
+        &quot;ytelsesperiode&quot;: {
+          &quot;fom&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
+          &quot;tom&quot;: &quot;2020-03-30T22:00:00.000Z&quot;
+        },
+        &quot;ytelseskomponentListe&quot;: [
+          {
+            &quot;ytelseskomponenttype&quot;: &quot;string&quot;,
+            &quot;satsbeloep&quot;: 999.0,
+            &quot;satstype&quot;: &quot;string&quot;,
+            &quot;satsantall&quot;: 2.0,
+            &quot;ytelseskomponentbeloep&quot;: 42.0
+          }
+        ],
+        &quot;ytelseskomponentersum&quot;: 111.22,
+        &quot;trekkListe&quot;: [
+          {
+            &quot;trekktype&quot;: &quot;string&quot;,
+            &quot;trekkbeloep&quot;: 100.0,
+            &quot;kreditor&quot;: &quot;string&quot;
+          }
+        ],
+        &quot;trekksum&quot;: 1000.0,
+        &quot;skattListe&quot;: [
+          {
+            &quot;skattebeloep&quot;: 99.9
+          }
+        ],
+        &quot;skattsum&quot;: 1000.5,
+        &quot;ytelseNettobeloep&quot;: 1999.0,
+        &quot;bilagsnummer&quot;: &quot;string&quot;,
+        &quot;rettighetshaver&quot;: {
+          &quot;aktoertype&quot;: &quot;PERSON&quot;,
+          &quot;ident&quot;: &quot;string&quot;,
+          &quot;navn&quot;: &quot;string&quot;
+        },
+        &quot;refundertForOrg&quot;: {
+          &quot;aktoertype&quot;: &quot;PERSON&quot;,
+          &quot;ident&quot;: &quot;string&quot;,
+          &quot;navn&quot;: &quot;string&quot;
+        }
+      }
+    ]
+  }
+]
 },
 &quot;401&quot;: {
 &quot;headers&quot;: null,
