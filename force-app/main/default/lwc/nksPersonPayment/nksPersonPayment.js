@@ -37,7 +37,7 @@ export default class NksPersonPayment extends LightningElement {
         if (this.multipleYtelser === true) {
             return 'Diverse ytelser';
         } else {
-            return this.payment.ytelseListe[0].ytelsestype.value;
+            return this.payment.ytelseListe[0].ytelsestype;
         }
     }
 
