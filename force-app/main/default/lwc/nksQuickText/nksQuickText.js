@@ -211,7 +211,7 @@ export default class nksQuickText extends LightningElement {
             return;
         }
 
-        if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData == false)) {
+        if (evt.key === 'Enter' || (queryTerm.length > 2 && this.loadingData === false)) {
             this.loadingData = true;
             searchRecords({
                 search: queryTerm

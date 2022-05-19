@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help><!-- Date to start showing campaign banner. --></help>
-    <label>Fra dato</label>
-    <name>From_Date__c</name>
-</CustomFieldTranslation>

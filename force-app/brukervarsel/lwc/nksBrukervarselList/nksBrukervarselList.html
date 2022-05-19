@@ -65,7 +65,7 @@
                             </template>
                         </ul>
                     </div>
-                    <ol if:true={filteredNotificationList} class="slds-has-dividers_around-space">
+                    <ol if:true={showNotifications} class="slds-has-dividers_around-space">
                         <template for:each={filteredNotificationList} for:item="notification">
                             <li class="slds-item slds-theme_default" key={notification.bestilt}>
                                 <c-nks-brukervarsel brukervarsel={notification}></c-nks-brukervarsel>

@@ -13,19 +13,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>From_Date__c</field>
+                <field>NKS_Campaign_From_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>To_Date__c</field>
+                <field>NKS_Campaign_To_Date__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NKS_Type__c</field>
-            </layoutItems>
-        </layoutColumns>
+
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -40,7 +35,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Image_Alt__c</field>
+                <field>NKS_Campaign_Image_Alt__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>

@@ -4,7 +4,7 @@ public with sharing class NKS_HomePageController {
         List<NKS_Announcement__c> announcements = [
             SELECT NKS_Information__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = :type
+            WHERE NKS_TypeFormula__c = :type
             ORDER BY LastModifiedDate DESC
             LIMIT 1
         ];
@@ -33,14 +33,32 @@ public with sharing class NKS_HomePageController {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
-        if (filterbyskills)
+        if (filterbyskills) {
             userskills = getUserSkills(userId);
+        }
+
         String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
-        if (content != null)
+        if (content != null) {
             query += ' , ' + content;
-        if (filterbyskills && objectName == 'NKS_Announcement__c')
+        }
+
+        if (filterbyskills && objectName == 'NKS_Announcement__c') {
             query += ' , Skills__c ';
+        }
+
+        if (
+            objectName == 'NKS_Announcement__c' &&
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
+        ) {
+            query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
+        }
+
+        if (objectName == 'Case') {
+            query += ' , toLabel(Status)';
+        }
+
         query += ' FROM ' + objectName + ' WHERE ' + filter;
+
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -48,6 +66,7 @@ public with sharing class NKS_HomePageController {
             }
             query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
+
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
@@ -55,13 +74,18 @@ public with sharing class NKS_HomePageController {
             }
             query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
-        if (orderby != null)
+
+        if (orderby != null) {
             query += ' ORDER BY ' + orderby;
-        if (limitNumber != null)
+        }
+
+        if (limitNumber != null) {
             query += ' LIMIT ' + limitNumber;
+        }
 
         System.debug('QUERY: ' + query);
         List<SObject> listtoreturn = Database.query(query);
+
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
     }
@@ -79,6 +103,12 @@ public with sharing class NKS_HomePageController {
         public Datetime modifiedDate;
         @AuraEnabled
         public String imageurl;
+        @AuraEnabled
+        public Boolean pin;
+        @AuraEnabled
+        public Datetime publishDate;
+        @AuraEnabled
+        public String status;
     }
 
     private static List<Record> createRecords(
@@ -95,14 +125,36 @@ public with sharing class NKS_HomePageController {
             record.recordId = r.Id;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
-            if (showimage)
+            if (showimage) {
                 record.imageurl = getImageUrl(r.Id);
+            }
+
             if (content != null) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
                 if (record.content.length() > 600) {
                     record.summary = record.content.mid(0, 600) + '...';
-                } else
+                } else {
                     record.summary = record.content;
+                }
+            }
+
+            if (
+                objectName == 'NKS_Announcement__c' &&
+                Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
+            ) {
+                NKS_Announcement__c news = (NKS_Announcement__c) r;
+                record.pin = news.NKS_News_Pin__c;
+                record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
+            } else {
+                record.pin = false;
+                record.publishDate = null;
+            }
+
+            if (objectName == 'Case') {
+                Case enCase = (Case) r;
+                record.status = enCase.Status;
+            } else {
+                record.status = '';
             }
             records.add(record);
         }
@@ -118,10 +170,39 @@ public with sharing class NKS_HomePageController {
             LIMIT 1
         ]
         ?.ContentDocument.LatestPublishedVersionId;
-        return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid;
+        return contentversionid != null
+            ? '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid
+            : '';
     }
 
     public static Set<String> getUserSkills(Id userId) {
+        Set<String> skills = new Set<String>();
+        skills.addAll(getChatSkills(userId));
+        skills.addAll(getServiceResourceSkills(userId));
+        return skills;
+    }
+
+    /**
+     * @Get the assigned service resource skills for the given user ID
+     * @author Stian Ruud Schikora | 05-10-2022
+     * @param userId
+     * @return Set<String>
+     **/
+    public static Set<String> getServiceResourceSkills(Id userId) {
+        Set<String> skills = new Set<String>();
+
+        for (ServiceResourceSkill srSkill : [
+            SELECT Id, Skill.DeveloperName
+            FROM ServiceResourceSkill
+            WHERE ServiceResource.RelatedRecordId = :userId
+        ]) {
+            skills.add(srSkill.Skill.DeveloperName);
+        }
+
+        return skills;
+    }
+
+    public static Set<String> getChatSkills(Id userId) {
         Set<String> skills = new Set<String>();
         for (Group g : [
             SELECT DeveloperName, Name, Type, Id
@@ -136,23 +217,56 @@ public with sharing class NKS_HomePageController {
         return skills;
     }
 
-   
-
     @AuraEnabled
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
-            SELECT Id, Name, Image_Alt__c, NKS_ImageURL__c, From_Date__c, To_Date__c
+            SELECT
+                Id,
+                Name,
+                NKS_Campaign_Image_Alt__c,
+                NKS_ImageURL__c,
+                NKS_Campaign_From_Date__c,
+                NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
-            WHERE NKS_Type__c = 'Kampanje'
+            WHERE NKS_TypeFormula__c = 'Kampanje' AND NKS_Campaign_To_Date__c >= TODAY
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];
         if (campaigns.size() > 0) {
             NKS_Announcement__c campaign = campaigns[0];
             campaign.NKS_ImageURL__c = getImageUrl(campaign.Id);
-            return campaign;
+            if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
+                return campaign;
+            } else {
+                System.debug('You may have not uploaded any image for the campaign.');
+                return null;
+            }
         } else {
             System.debug('The list in empty!');
+            return null;
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static NKS_Announcement__c getNews(Id recordId) {
+        NKS_Announcement__c news = [
+            SELECT
+                Id,
+                Name,
+                NKS_News_Author__c,
+                NKS_News_Other_Authors__c,
+                NKS_News_Publish_Date__c,
+                LastModifiedDate,
+                NKS_Information__c,
+                NKS_ImageURL__c
+            FROM NKS_Announcement__c
+            WHERE Id = :recordId
+        ];
+        if (news != null) {
+            news.NKS_ImageURL__c = getImageUrl(news.Id);
+            return news;
+        } else {
+            System.debug('Record was not found!');
             return null;
         }
     }

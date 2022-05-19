@@ -4,20 +4,45 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Edit</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Delete</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsInNative</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
@@ -77,20 +102,14 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.NKS_Type__c</fieldItem>
-                <identifier>RecordNKS_Type__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_From_Date__c</fieldItem>
+                <identifier>RecordNKS_Campaign_From_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.From_Date__c</fieldItem>
-                <identifier>RecordFrom_Date__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.To_Date__c</fieldItem>
-                <identifier>RecordTo_Date__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_To_Date__c</fieldItem>
+                <identifier>RecordNKS_Campaign_To_Date__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-5aa7ce49-5d71-4d8b-b540-8a0eddf7b8a1</name>
@@ -124,7 +143,7 @@
                 <identifier>flexipage_fieldSection</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -137,8 +156,8 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Image_Alt__c</fieldItem>
-                <identifier>RecordImage_Alt__cField</identifier>
+                <fieldItem>Record.NKS_Campaign_Image_Alt__c</fieldItem>
+                <identifier>RecordNKS_Campaign_Image_Alt__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-eafa7cad-d8fd-4327-a0cc-69ee4ffe48d0</name>
@@ -215,7 +234,7 @@
                 <identifier>force_relatedListSingleContainer</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -235,7 +254,7 @@
                 <identifier>flexipage_fieldSection1</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -255,7 +274,7 @@
                 <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Campaigns}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>

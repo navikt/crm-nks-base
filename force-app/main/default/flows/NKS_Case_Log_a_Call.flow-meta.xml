@@ -198,6 +198,13 @@
                 <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Started</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Conversation_Note</targetReference>
         </connector>
@@ -1166,7 +1173,7 @@
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>976</locationX>
-        <locationY>978</locationY>
+        <locationY>977</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1211,7 +1218,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <stringValue></stringValue>
+                    <stringValue />
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1219,36 +1226,63 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Create_Journal_Entry</name>
-            <extensionName>flowruntime:toggle</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Journalfør?</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleActive</name>
-                <value>
-                    <stringValue>Ja</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>messageToggleInactive</name>
-                <value>
-                    <stringValue>Nei</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <name>Log_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Log_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Create_Journal_Entry</name>
+                    <extensionName>flowruntime:toggle</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Journalfør?</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value>
+                            <stringValue>Ja</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value>
+                            <stringValue>Nei</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Log_Screen_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Conversation_Theme_Categorization</name>
@@ -1331,10 +1365,10 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Log_Screen_Section1</name>
+            <name>Log_Screen_Section2</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Log_Screen_Section1_Column1</name>
+                <name>Log_Screen_Section2_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>back_button</name>
@@ -1377,7 +1411,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>Log_Screen_Section1_Column2</name>
+                <name>Log_Screen_Section2_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Complete_BTN</name>
@@ -1628,7 +1662,7 @@ Du har fått informasjon om
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue />
         </value>
     </variables>
     <variables>

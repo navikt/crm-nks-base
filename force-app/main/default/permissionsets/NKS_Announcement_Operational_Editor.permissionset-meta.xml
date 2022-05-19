@@ -10,18 +10,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>NKS_Announcement__c.NKS_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_Announcement__c.NKS_Type__c</field>
+        <editable>false</editable>
+        <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -44,4 +39,8 @@
         <recordType>NKS_Announcement__c.Operational</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>NKS_Announcement__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>

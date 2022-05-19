@@ -229,14 +229,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ChatAuthController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ChatAuthController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>Contact_InvalidEmailRemoval</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -322,14 +314,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatTranscriptService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_ChatTranscriptService_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -906,17 +890,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NKS_Announcement__c.NKS_Information__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Type__c</field>
+
+        <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -932,6 +911,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NavUnit__c.INT_UnitNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Thread__c.Cause__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

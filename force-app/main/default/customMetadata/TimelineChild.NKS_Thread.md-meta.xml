@@ -95,6 +95,10 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>SObjectSubtitle__c</field>
+        <value xsi:type="xsd:string">CRM_Conversation_Summary__c</value>
+    </values>
+    <values>
         <field>SObjectTitle__c</field>
         <value xsi:type="xsd:string">CRM_Timeline_Name__c</value>
     </values>

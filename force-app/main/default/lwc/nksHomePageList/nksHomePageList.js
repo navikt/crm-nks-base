@@ -2,7 +2,9 @@ import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import userId from '@salesforce/user/Id';
+
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel;
     @api iconName;
@@ -15,23 +17,32 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api listviewname;
     @api linklabel;
     @api datefield;
-    @api showimage;
-    @api filterbyskills;
-    @api refreshPageAutomatically;
+    @api showimage = false;
+    @api filterbyskills = false;
+    @api refreshPageAutomatically = false;
     @api enableRefresh = false;
 
-    @track records = [];
     @track listCount = 3;
+    @track records = [];
 
     showSpinner = false;
     isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
+    initRun = false;
 
     connectedCallback() {
         this.isInitiated = true;
-        this.loadList();
+
+        // Add userId to filter for STO and Chat
+        if (this.isSTO || this.objectName === 'LiveChatTranscript') {
+            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+            this.filter += " AND OwnerId='" + userId + "'";
+            console.log(this.objectName + ': ' + this.filter);
+        }
+
+        // Navigate to list
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
             attributes: {
@@ -44,37 +55,19 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
+
+        // Refresh list for Announcement automatically
         this.handleSubscribe();
     }
 
+    renderedCallback() {
+        if (this.initRun === false) {
+            this.initRun = true;
+            this.loadList();
+        }
+    }
+
     loadList() {
-        if (this.objectName === 'Case') {
-            getList({
-                title: 'STO_Category__c',
-                content: null,
-                objectName: 'Case',
-                filter: "IsClosed=false AND recordType.DeveloperName='STO_Case' AND OwnerId='" + userId + "'",
-                orderby: 'CreatedDate DESC',
-                limitNumber: 3,
-                datefield: 'CreatedDate',
-                showimage: false,
-                filterbyskills: false
-            })
-                .then((result) => {
-                    this.records = result;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        if (this.objectName === 'LiveChatTranscript') {
-            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.filter =
-                "CRM_Authentication_Status__c = 'Completed' AND NKS_Journal_Entry_Status__c != 'Completed' AND NKS_Journal_Entry_Created__c = false AND OwnerId='" +
-                userId +
-                "'";
-            console.log(this.filter);
-        }
         getList({
             title: this.title,
             content: this.content,
@@ -86,11 +79,27 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             showimage: this.showimage,
             filterbyskills: this.filterbyskills
         })
-            .then((result) => {
-                this.records = result;
+            .then((data) => {
+                this.records = data;
+                return this.records;
             })
             .catch((error) => {
-                console.log(error);
+                let message = 'Unknown error';
+                if (Array.isArray(error.body)) {
+                    message = error.body.map((e) => e.message).join(', ');
+                } else if (typeof error.body.message === 'string') {
+                    message = error.body.message;
+                }
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message,
+                        variant: 'error'
+                    })
+                );
+            })
+            .finally(() => {
+                this.showSpinner = false;
             });
     }
 
@@ -133,23 +142,59 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     refreshComponent() {
         this.showSpinner = true;
         this.loadList();
-        this.showSpinner = false;
+    }
+
+    get newsRecords() {
+        let sortedList = [];
+
+        if (this.isNews) {
+            sortedList = this.records.sort(function (x, y) {
+                let index = 0;
+
+                // pinned items first
+                if (x.pin === y.pin) {
+                    index = 0;
+                } else {
+                    if (x.pin === true) {
+                        index = -1;
+                    } else {
+                        index = 1;
+                    }
+                }
+                return index;
+            });
+        }
+        return sortedList;
+    }
+
+    get isNews() {
+        let isNews = false;
+        if (this.objectName === 'NKS_Announcement__c') {
+            if (this.filter.includes('News')) {
+                isNews = true;
+            }
+        }
+        return isNews;
     }
 
     get isKnowledge() {
         return this.objectName === 'Knowledge__kav' ? true : false;
     }
 
-    get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.objectName === 'Case' ? true : false;
-    }
-
     get hasRecord() {
         return this.records.length > 0 ? true : false;
     }
 
+    get isSTO() {
+        return this.objectName === 'Case' && this.filter.includes('STO_Case') ? true : false;
+    }
+
+    get isStripedList() {
+        return this.objectName === 'LiveChatTranscript' || this.isSTO ? true : false;
+    }
+
     get setEmptyStateForCase() {
-        return !this.hasRecord && this.objectName === 'Case' ? true : false;
+        return !this.hasRecord && this.isSTO ? true : false;
     }
 
     get setEmptyStateForChat() {
@@ -157,8 +202,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
-        if (this.objectName === 'LiveChatTranscript' || this.objectName === 'Case') {
-            return this.records.length - 1;
+        let index = 0;
+        if (this.objectName === 'LiveChatTranscript' || this.isSTO) {
+            index = this.records.length - 1;
         }
+        return index;
     }
 }
