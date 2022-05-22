@@ -6,7 +6,7 @@ public without sharing class NKS_PaymentService {
         ApiController apiCtrl = new ApiController();
         String serviceName = 'POST_HENT_UTBETALINGSINFORMASJON';
         apiCtrl.initRequest(BASE_CONFIG, serviceName);
-        apiCtrl.addServiceAuthHeader('SokosUtbetaling');
+        apiCtrl.addServiceAuthHeader('SokosUtbetaling').addHeader('Content-Type', 'application/json');
         apiCtrl.setBody(new PaymentRequest(ident, startDate.date(), endDate.date()).getJSON());
         apiCtrl.doCallout();
 
