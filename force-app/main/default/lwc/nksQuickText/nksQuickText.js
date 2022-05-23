@@ -8,6 +8,8 @@ const ESC_KEY_STRING = 'Escape';
 const TAB_KEY_CODE = 9;
 const TAB_KEY_STRING = 'Tab';
 const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
+
+const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', '.', ','];
 export default class nksQuickText extends LightningElement {
     labels = { BLANK_ERROR };
     _conversationNote;
@@ -257,7 +259,7 @@ export default class nksQuickText extends LightningElement {
     }
 
     insertquicktext(event) {
-        if (event.keyCode === 32) {
+        if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
             const carretPositionEnd = editor.selectionEnd;
             const lastItem = editor.value
@@ -266,27 +268,28 @@ export default class nksQuickText extends LightningElement {
                 .trim()
                 .split(' ')
                 .pop();
-            const abbreviation = lastItem.toUpperCase();
+
+            const abbreviation = lastItem.toUpperCase().replace(event.key, '');
             const obj = this.qmap.get(abbreviation);
             const quickText = obj.message;
             const isCaseSensitive = obj.isCaseSensitive;
 
             if (this.qmap.has(abbreviation)) {
-                const startindex = carretPositionEnd - lastItem.length - 1;
-
+                const startindex = carretPositionEnd - abbreviation.length - 1;
+                const lastChar = event.key === 'Enter' ? '\n' : event.key;
                 if (isCaseSensitive) {
                     const words = quickText.split(' ');
 
                     if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
                         words[0] = words[0].toLowerCase();
                         const lowerCaseQuickText = words.join(' ');
-                        editor.setRangeText(lowerCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
+                        editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
                     } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
                         const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        editor.setRangeText(upperCaseQuickText + ' ', startindex, carretPositionEnd, 'end');
+                        editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
                     }
                 } else {
-                    editor.setRangeText(quickText + ' ', startindex, carretPositionEnd, 'end');
+                    editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
                 }
             }
         }

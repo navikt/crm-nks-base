@@ -19,6 +19,48 @@
                 key={ytelse.ytelsestype}
             ></lightning-formatted-date-time>
         </lightning-layout-item>
+        <lightning-layout-item size="6" padding="horizontal-medium"></lightning-layout-item>
+        <lightning-layout-item size="2" padding="horizontal-medium"
+            ><strong class="slds-float_right">{labels.GROSS_AMOUNT}</strong></lightning-layout-item
+        >
+        <lightning-layout-item size="2" padding="horizontal-medium"
+            ><strong class="slds-float_right">{labels.DEDUCTIONS}</strong></lightning-layout-item
+        >
+        <lightning-layout-item size="2" padding="horizontal-medium"
+            ><strong class="slds-float_right">{labels.PAYOUT}</strong></lightning-layout-item
+        >
+        <lightning-layout-item
+            size="6"
+            class="slds-var-p-bottom_large"
+            padding="horizontal-medium"
+        ></lightning-layout-item>
+        <lightning-layout-item size="2" class="slds-var-p-bottom_large" padding="horizontal-medium"
+            ><p class="slds-float_right">
+                <lightning-formatted-number
+                    value={grossPayment}
+                    maximum-fraction-digits="2"
+                    minimum-fraction-digits="1"
+                    class="slds-float_right"
+                ></lightning-formatted-number></p
+        ></lightning-layout-item>
+        <lightning-layout-item size="2" class="slds-var-p-bottom_large" padding="horizontal-medium"
+            ><p class="slds-float_right"></p>
+            <p class="slds-float_right">
+                <lightning-formatted-number
+                    value={totalDeductions}
+                    maximum-fraction-digits="2"
+                    minimum-fraction-digits="1"
+                    class="slds-float_right"
+                ></lightning-formatted-number></p
+        ></lightning-layout-item>
+        <lightning-layout-item size="2" class="slds-var-p-bottom_large" padding="horizontal-medium"
+            ><lightning-formatted-number
+                value={ytelse.ytelseNettobeloep}
+                maximum-fraction-digits="2"
+                minimum-fraction-digits="1"
+                class="slds-float_right"
+            ></lightning-formatted-number
+        ></lightning-layout-item>
         <lightning-layout-item class="slds-border_bottom" size="6" padding="horizontal-medium">
             <b class="slds-text-title_bold">{labels.COL_DETAILS}</b>
         </lightning-layout-item>
@@ -117,13 +159,6 @@
         <lightning-layout-item size="6" class="slds-border_top"> </lightning-layout-item>
         <lightning-layout-item size="2" class="slds-border_top"> </lightning-layout-item>
         <lightning-layout-item size="2" class="slds-border_top"> </lightning-layout-item>
-        <lightning-layout-item size="2" padding="horizontal-medium" class="slds-border_top">
-            <lightning-formatted-number
-                value={ytelse.ytelseNettobeloep}
-                maximum-fraction-digits="2"
-                minimum-fraction-digits="1"
-                class="slds-float_right"
-            ></lightning-formatted-number>
-        </lightning-layout-item>
+        <lightning-layout-item size="2" padding="horizontal-medium" class="slds-border_top"> </lightning-layout-item>
     </lightning-layout>
 </template>
