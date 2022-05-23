@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Manage_Announcements</name>
+        <name>Manage_Campaigns</name>
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -30,7 +30,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-
         <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -46,9 +45,9 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>NKS_Announcement__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.Campaign</recordType>

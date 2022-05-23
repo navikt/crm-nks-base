@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
-    <assignments>
-        <name>Set_Values</name>
-        <label>Set Values</label>
-        <locationX>50</locationX>
-        <locationY>396</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.NKS_News_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Published</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_News</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_Publication_Date</name>
-        <label>Check Publication Date</label>
-        <locationX>182</locationX>
-        <locationY>276</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>IsNow</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.NKS_News_Publish_Date__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDateTime</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Values</targetReference>
-            </connector>
-            <label>IsNow</label>
-        </rules>
-    </decisions>
     <interviewLabel>Announcement Publish Scheduled News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Publish Scheduled News</label>
     <processMetadataValues>
@@ -61,18 +23,30 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_News</name>
-        <label>Update News</label>
-        <locationX>50</locationX>
-        <locationY>516</locationY>
+        <name>Update_Scheduled_News</name>
+        <label>Update Scheduled News</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NKS_News_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>NKS_News_Status__c</field>
+            <value>
+                <stringValue>Published</stringValue>
+            </value>
+        </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Check_Publication_Date</targetReference>
-        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_TypeFormula__c</field>
@@ -89,12 +63,19 @@
             </value>
         </filters>
         <object>NKS_Announcement__c</object>
-        <schedule>
-            <frequency>Daily</frequency>
-            <startDate>2022-03-30</startDate>
-            <startTime>00:00:00.000Z</startTime>
-        </schedule>
-        <triggerType>Scheduled</triggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Publish_Scheduled_News</name>
+            <connector>
+                <targetReference>Update_Scheduled_News</targetReference>
+            </connector>
+            <label>Publish Scheduled News</label>
+            <offsetNumber>0</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <recordField>NKS_News_Publish_Date__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
 </Flow>
