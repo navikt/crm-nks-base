@@ -195,6 +195,10 @@
                     <value>NKS_Summary__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -240,6 +244,10 @@
                     <value>NKS_UserInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -270,6 +278,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>Article__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -366,6 +378,10 @@
                     <value>NKS_English__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -396,6 +412,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Nynorsk__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -488,6 +508,10 @@
                     <value>EmployerInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -518,6 +542,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>EmployerInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -606,6 +634,10 @@
                     <value>InternationalInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -636,6 +668,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>InternationalInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -724,6 +760,10 @@
                     <value>AdvisorInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -754,6 +794,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>AdvisorInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -835,37 +879,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>context</name>
-                    <value>RECORD</value>
-                </componentInstanceProperties>
-                <componentName>forceChatter:publisher</componentName>
-                <identifier>forceChatter_publisher</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>context</name>
-                    <value>RECORD</value>
-                </componentInstanceProperties>
-                <componentName>forceChatter:exposedFeed</componentName>
-                <identifier>forceChatter_exposedFeed</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-ea7447d6-ad26-4b8e-a7c6-8d3fa05d5177</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -937,20 +950,6 @@
                 <identifier>customTab8</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-ea7447d6-ad26-4b8e-a7c6-8d3fa05d5177</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.feed</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>feedTab</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>maintabs</name>
         <type>Facet</type>
@@ -979,6 +978,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Nav_no__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -1016,6 +1019,10 @@
                     <value>NKS_Legislation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1048,6 +1055,10 @@
                     <value>NKS_Resources__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1078,6 +1089,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>WhoDoesWhat__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -1212,6 +1227,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <identifier>forceKnowledge_articleSearchDesktop</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PublishStatus}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Online</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleVersionHistory</componentName>
                 <identifier>forceKnowledge_articleVersionHistory2</identifier>
                 <visibilityRule>
@@ -1265,19 +1293,6 @@
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
-                <identifier>forceKnowledge_articleSearchDesktop</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.PublishStatus}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Online</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
