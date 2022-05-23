@@ -2,42 +2,6 @@
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customLabels>
         <label>
-            <!-- Chat Authentication Init Failed -->
-        </label>
-        <name>CRM_Chat_Authentication_Init_Failed</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Authentication Requested -->
-        </label>
-        <name>CRM_Chat_Authentication_Requested</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Authentication Started -->
-        </label>
-        <name>CRM_Chat_Authentication_Started</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Identity Confirmed -->
-        </label>
-        <name>CRM_Chat_Identity_Confirmed</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Identity Confirmed Disclaimer -->
-        </label>
-        <name>CRM_Chat_Identity_Confirmed_Disclaimer</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Unconfirmed Identity Warning -->
-        </label>
-        <name>CRM_Chat_Unconfirmed_Identity_Warning</name>
-    </customLabels>
-    <customLabels>
-        <label>
             <!-- Errors_CannotFindTriggerHandlerClass -->
         </label>
         <name>Errors_CannotFindTriggerHandlerClass</name>
@@ -53,18 +17,6 @@
             <!-- Errors_InvalidSettingConfiguration -->
         </label>
         <name>Errors_InvalidSettingConfiguration</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Login Message EN -->
-        </label>
-        <name>NKS_Chat_Login_Message_EN</name>
-    </customLabels>
-    <customLabels>
-        <label>
-            <!-- Chat Login Message NO -->
-        </label>
-        <name>NKS_Chat_Login_Message_NO</name>
     </customLabels>
     <customLabels>
         <label>Vennligst fullfør kategorisering.</label>
@@ -184,10 +136,6 @@
     <flowDefinitions>
         <flows />
         <fullName>POST_JOURNAL_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>NKS_Set_Chat_Theme_Group</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows />
