@@ -7,7 +7,6 @@
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
     <permissionSets>NKS_Beta_Permission</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
-    <permissionSets>NKS_Chat_Permissions</permissionSets>
     <permissionSets>NKS_Config</permissionSets>
     <permissionSets>NKS_Conversation_Note</permissionSets>
     <permissionSets>NKS_Edit_User</permissionSets>
@@ -19,9 +18,7 @@
     <permissionSets>NKS_Quick_Text_Editor</permissionSets>
     <permissionSets>NKS_Quick_Text_Reader</permissionSets>
     <permissionSets>NKS_Screen_Reader</permissionSets>
-    <permissionSets>NKS_Secure_Chat_Access</permissionSets>
     <permissionSets>NKS_Topics</permissionSets>
-    <permissionSets>NKS_Traffic_Chat_Permissions</permissionSets>
     <permissionSets>NKS_View_Saf_Journalpost</permissionSets>
     <permissionSets>NKS_base</permissionSets>
     <permissionSets>NavUnit_Admin</permissionSets>
