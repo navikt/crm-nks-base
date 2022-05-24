@@ -29,11 +29,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NKS_Theme__c</field>
+                <field>CRM_Theme__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NKS_Subtheme__c</field>
+                <field>CRM_Subtheme__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

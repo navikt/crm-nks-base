@@ -30,7 +30,6 @@
                     </template>
                 </lightning-layout>
             </lightning-layout-item>
-
             <lightning-layout-item class="slds-col slds-size_4-of-12">
                 <template if:true={enableRefresh}>
                     <lightning-button-icon
@@ -49,7 +48,7 @@
             <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-right_none">
                 <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
             </lightning-layout-item>
-            <lightning-layout-item class="slds-col slds-size_4-of-12 slds-align-top">
+            <lightning-layout-item class="slds-col slds-size_4-of-12 slds-align-top slds-text-align_right slds-m-right_none">
                 <img aria-hidden="true" src={imageURL} style="max-height: 180px" />
             </lightning-layout-item>
         </lightning-layout>

@@ -613,11 +613,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_Timeline_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Thread__c.CRM_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
