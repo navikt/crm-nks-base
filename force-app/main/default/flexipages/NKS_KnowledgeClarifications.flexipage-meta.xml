@@ -100,7 +100,7 @@
                 <identifier>c_nksRecordInfo1</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-8b294e0c-ff03-4c15-8d1d-0db3ade4eeec</name>
+        <name>Facet-511fdff9-e605-4bbf-b2a5-47137118d760</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -129,20 +129,14 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <identifier>c_nksRecordInfo2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-17854e48-c1d0-4907-b5ab-ece988b35101</name>
+        <name>Facet-aaa147de-418f-4f5a-b5e2-c749e07ffe0d</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -150,7 +144,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-8b294e0c-ff03-4c15-8d1d-0db3ade4eeec</value>
+                    <value>Facet-511fdff9-e605-4bbf-b2a5-47137118d760</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -168,7 +162,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-17854e48-c1d0-4907-b5ab-ece988b35101</value>
+                    <value>Facet-aaa147de-418f-4f5a-b5e2-c749e07ffe0d</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -182,7 +176,7 @@
                 <identifier>flexipage_accordionSection2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-14e38421-78d4-4abf-b562-d50af78bb15d</name>
+        <name>Facet-4c54d118-8203-4033-982b-5874ff264cc8</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -190,7 +184,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>accordionSections</name>
-                    <value>Facet-14e38421-78d4-4abf-b562-d50af78bb15d</value>
+                    <value>Facet-4c54d118-8203-4033-982b-5874ff264cc8</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>defaultSectionName</name>
@@ -200,7 +194,38 @@
                 <identifier>flexipage_accordion1</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-c3f53108-0c6a-49ee-8043-938c72564293</name>
+        <name>Facet-jn984vmxnu</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher1</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-e1d34712-5770-4d22-81c4-e1777703ecf4</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -226,11 +251,25 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-c3f53108-0c6a-49ee-8043-938c72564293</value>
+                    <value>Facet-jn984vmxnu</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Oversettelser</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e1d34712-5770-4d22-81c4-e1777703ecf4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab1</identifier>
@@ -271,12 +310,6 @@
                 </componentInstanceProperties>
                 <componentName>forceChatter:topicsOnRecordWrapper</componentName>
                 <identifier>forceChatter_topicsOnRecordWrapper</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>forceKnowledge:articleSearchDesktop</componentName>
-                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -328,6 +361,12 @@
                         <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceKnowledge:articleSearchDesktop</componentName>
+                <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
