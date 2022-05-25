@@ -31,7 +31,7 @@
         <label>Internasjonalt</label>
     </customValue>
     <customValue>
-        <fullName>Lege og behandler</fullName>
+        <fullName>LegeOgBehandler</fullName>
         <default>false</default>
         <label>Lege og behandler</label>
     </customValue>
