@@ -195,6 +195,10 @@
                     <value>NKS_Summary__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -240,6 +244,10 @@
                     <value>NKS_UserInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -270,6 +278,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>Article__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -366,6 +378,10 @@
                     <value>NKS_English__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -396,6 +412,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Nynorsk__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -488,6 +508,10 @@
                     <value>EmployerInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -518,6 +542,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>EmployerInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -606,6 +634,10 @@
                     <value>InternationalInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -636,6 +668,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>InternationalInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -724,6 +760,10 @@
                     <value>AdvisorInformation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -754,6 +794,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>AdvisorInformationInternal__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>
@@ -981,6 +1025,10 @@
                     <value>NKS_Nav_no__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1016,6 +1064,10 @@
                     <value>NKS_Legislation__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1048,6 +1100,10 @@
                     <value>NKS_Resources__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>hideLabels</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1078,6 +1134,10 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>WhoDoesWhat__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideLabels</name>

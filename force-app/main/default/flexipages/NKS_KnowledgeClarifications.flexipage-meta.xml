@@ -71,11 +71,141 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_English__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>c_nksRecordInfo1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-511fdff9-e605-4bbf-b2a5-47137118d760</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Nynorsk__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>c_nksRecordInfo2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-aaa147de-418f-4f5a-b5e2-c749e07ffe0d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-511fdff9-e605-4bbf-b2a5-47137118d760</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Engelsk</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection1</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-aaa147de-418f-4f5a-b5e2-c749e07ffe0d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Nynorsk</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection2</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-4c54d118-8203-4033-982b-5874ff264cc8</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>accordionSections</name>
+                    <value>Facet-4c54d118-8203-4033-982b-5874ff264cc8</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>defaultSectionName</name>
+                    <value>accordionSection1</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordion</componentName>
+                <identifier>flexipage_accordion1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-jn984vmxnu</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>context</name>
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:publisher</componentName>
-                <identifier>forceChatter_publisher</identifier>
+                <identifier>forceChatter_publisher1</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
@@ -92,10 +222,10 @@
                     <value>RECORD</value>
                 </componentInstanceProperties>
                 <componentName>forceChatter:exposedFeed</componentName>
-                <identifier>forceChatter_exposedFeed</identifier>
+                <identifier>forceChatter_exposedFeed1</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-00bc6145-0e04-449b-862d-6131b821301d</name>
+        <name>Facet-e1d34712-5770-4d22-81c4-e1777703ecf4</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -121,14 +251,28 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-00bc6145-0e04-449b-862d-6131b821301d</value>
+                    <value>Facet-jn984vmxnu</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Oversettelser</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-e1d34712-5770-4d22-81c4-e1777703ecf4</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>feedTab</identifier>
+                <identifier>flexipage_tab1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-75d43d82-eb80-4612-8468-47b49a447d51</name>
