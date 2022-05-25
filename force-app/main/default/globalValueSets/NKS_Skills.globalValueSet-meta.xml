@@ -26,24 +26,19 @@
         <label>Helse</label>
     </customValue>
     <customValue>
+        <fullName>Internasjonalt</fullName>
+        <default>false</default>
+        <label>Internasjonalt</label>
+    </customValue>
+    <customValue>
+        <fullName>Lege og behandler</fullName>
+        <default>false</default>
+        <label>Lege og behandler</label>
+    </customValue>
+    <customValue>
         <fullName>Pensjon</fullName>
         <default>false</default>
         <label>Pensjon</label>
-    </customValue>
-    <customValue>
-        <fullName>SosialeTjenester</fullName>
-        <default>false</default>
-        <label>Sosiale Tjenester</label>
-    </customValue>
-    <customValue>
-        <fullName>Ufoeretrygd</fullName>
-        <default>false</default>
-        <label>Uføretrygd</label>
-    </customValue>
-    <customValue>
-        <fullName>Sykefravaersoppfolging</fullName>
-        <default>false</default>
-        <label>Sykefraværsoppfølging</label>
     </customValue>
     <customValue>
         <fullName>Permittering_og_rekruttering</fullName>
@@ -51,24 +46,30 @@
         <label>Permittering og rekruttering</label>
     </customValue>
     <customValue>
-        <fullName>Felles</fullName>
-        <default>false</default>
-        <label>Felles</label>
-    </customValue>
-    <customValue>
         <fullName>Pleiepenger</fullName>
         <default>false</default>
         <label>Pleiepenger</label>
     </customValue>
     <customValue>
-        <fullName>Internasjonal</fullName>
+        <fullName>SosialeTjenester</fullName>
         <default>false</default>
-        <label>Internasjonal</label>
+        <label>Sosiale Tjenester</label>
     </customValue>
     <customValue>
-        <fullName>Lege_og_behandler</fullName>
+        <fullName>Sykefravaersoppfolging</fullName>
         <default>false</default>
-        <label>Lege og behandler</label>
+        <label>Sykefraværsoppfølging</label>
+    </customValue>
+    <customValue>
+        <fullName>Ufoeretrygd</fullName>
+        <default>false</default>
+        <label>Uføretrygd</label>
+    </customValue>
+    <customValue>
+        <fullName>Felles</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Felles</label>
     </customValue>
     <description>Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
     <masterLabel>Skills</masterLabel>
