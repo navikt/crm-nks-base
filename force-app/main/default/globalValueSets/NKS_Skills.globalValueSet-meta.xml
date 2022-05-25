@@ -65,12 +65,6 @@
         <default>false</default>
         <label>Uføretrygd</label>
     </customValue>
-    <customValue>
-        <fullName>Felles</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Felles</label>
-    </customValue>
     <description>Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
     <masterLabel>Skills</masterLabel>
     <sorted>true</sorted>
