@@ -14,7 +14,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-
     <picklistValues>
         <picklist>Skills__c</picklist>
         <values>
@@ -30,15 +29,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Felles</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gjeldsraadgivning</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Helse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internasjonal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lege_og_behandler</fullName>
             <default>false</default>
         </values>
         <values>
