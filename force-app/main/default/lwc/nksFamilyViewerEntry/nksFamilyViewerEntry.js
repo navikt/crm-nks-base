@@ -7,12 +7,14 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
+        var successful = false;
+        var msg = '';
         hiddenInput.value = this.relation.personIdent;
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
+            successful = document.execCommand('copy');
+            msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
         } catch (err) {
             console.log('Oops, unable to copy');
@@ -20,22 +22,27 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
         document.body.removeChild(hiddenInput);
     }
+
     get isMarital() {
         if (this.relation.recordType === 'marital') return true;
         return false;
     }
+
     get isChild() {
         if (this.relation.recordType === 'child') return true;
         return false;
     }
+
     get isParent() {
         if (this.relation.recordType === 'parent') return true;
         return false;
     }
+
     get isStillBorn() {
         if (this.relation.recordType === 'stillborn') return true;
         return false;
     }
+
     get isError() {
         if (
             this.relation.recordType === 'marital' ||
@@ -46,16 +53,20 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             return false;
         return true;
     }
+
     get getErrorMsg() {
         if (this.relation.name != null) return this.relation.name;
         return '';
     }
+
     get genderIcon() {
         switch (this.relation.sex) {
             case 'MANN':
                 return 'MaleFilled';
             case 'KVINNE':
                 return 'FemaleFilled';
+            default:
+            // do nothing
         }
         return 'NeutralFilled';
     }
@@ -67,26 +78,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     get genderIconClass() {
         return this.genderIcon;
     }
+
     get hasEventDate() {
         if (this.relation.eventDate != null) return true;
         return false;
     }
-    getName() {
-        if (this.relation.unauthorized == true) {
-            return 'SKJERMET';
-        }
-        if (this.relation.name == null) {
-            return 'UKJENT NAVN';
-        }
-        return this.capitalize(this.relation.name);
-    }
-    capitalize(input) {
-        return input
-            .toLowerCase()
-            .split(' ')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    }
+
     get getTileName() {
         if (this.relation.unauthorized === true) {
             return this.getName();
@@ -96,60 +93,42 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.getName() + ' (' + this.getAge() + ')';
     }
+
     get getDateOfDeath() {
         if (this.relation.dateOfDeath != null) {
             return this.relation.dateOfDeath;
         }
         return 'UKJENT DATE';
     }
+
     get getBirthDate() {
         if (this.relation.birthDate != null) {
             return this.relation.birthDate;
         }
         return 'UKJENT DATE';
     }
-    getAge() {
-        if (this.relation.ageString != null) {
-            return this.relation.ageString;
-        }
-        return 'UKJENT ALDER';
-    }
+
     get getSex() {
         if (this.relation.sex != null) {
             return this.relation.sex;
         }
         return 'UKJENT KJØNN';
     }
+
     get getChildText() {
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
         return this.getLiveWithText() + this.getResponsibilityChildText();
     }
+
     get getParentText() {
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
         return this.getLiveWithText() + this.getResponsibilityParentText();
     }
-    getLiveWithText() {
-        if (this.relation.livesWith === true) {
-            return 'Bor med bruker. ';
-        }
-        return '';
-    }
-    getResponsibilityChildText() {
-        if (this.relation.responsibility === true) {
-            return 'Bruker har foreldreansvar.';
-        }
-        return '';
-    }
-    getResponsibilityParentText() {
-        if (this.relation.responsibility === true) {
-            return 'Har foreldreansvar.';
-        }
-        return '';
-    }
+
     get showCardTile() {
         if (
             this.relation.recordType === 'marital' &&
@@ -162,10 +141,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if (this.relation.recordType === 'stillborn') return false;
         return true;
     }
+
     get showInfoCard() {
         if (this.relation.unauthorized === true) return false;
         return true;
     }
+
     get getRole() {
         if (this.relation.recordType === 'stillborn') {
             return 'DØDFØDT BARN';
@@ -204,6 +185,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return this.relation.role;
     }
+
     get uuAlertText() {
         let alertText = '';
 
@@ -226,6 +208,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
         return alertText;
     }
+
     get badges() {
         let badgesArray = [];
         if (this.relation.employee === true) {
@@ -258,10 +241,69 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
         return badgesArray;
     }
+
     get hasBadges() {
         if (this.relation.employee === true || this.relation.confidential === true) {
             return true;
         }
         return false;
+    }
+
+    getName() {
+        if (this.relation.unauthorized === true) {
+            return 'SKJERMET';
+        }
+        if (this.relation.name == null) {
+            return 'UKJENT NAVN';
+        }
+        return this.capitalize(this.relation.name);
+    }
+
+    capitalize(input) {
+        return input
+            .toLowerCase()
+            .split(' ')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+    getAge() {
+        if (this.relation.ageString != null) {
+            return this.relation.ageString;
+        }
+        return 'UKJENT ALDER';
+    }
+
+    getLiveWithText() {
+        var res = '';
+        if (this.relation.livesWith === true) {
+            res += 'Bor med bruker.';
+        } else {
+            res += 'Bor ikke med bruker.';
+        }
+        return res;
+    }
+
+    getResponsibilityChildText() {
+        var res = '';
+        if (
+            this.relation.responsible === 'far' ||
+            this.relation.responsible === 'mor' ||
+            this.relation.responsible === 'medmor'
+        ) {
+            res += 'Bruker har foreldreansvar alene.';
+        } else if (this.relation.responsible === 'felles') {
+            res += 'Bruker har felles foreldreansvar.';
+        } else {
+            res += 'Bruker har ikke foreldreansvar.';
+        }
+        return res;
+    }
+
+    getResponsibilityParentText() {
+        if (this.relation.responsibility === true) {
+            return 'Har foreldreansvar.';
+        }
+        return '';
     }
 }
