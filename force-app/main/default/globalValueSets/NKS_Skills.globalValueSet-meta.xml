@@ -26,12 +26,12 @@
         <label>Helse</label>
     </customValue>
     <customValue>
-        <fullName>Internasjonalt</fullName>
+        <fullName>Internasjonal</fullName>
         <default>false</default>
-        <label>Internasjonalt</label>
+        <label>Internasjonal</label>
     </customValue>
     <customValue>
-        <fullName>Lege og behandler</fullName>
+        <fullName>Lege_og_behandler</fullName>
         <default>false</default>
         <label>Lege og behandler</label>
     </customValue>

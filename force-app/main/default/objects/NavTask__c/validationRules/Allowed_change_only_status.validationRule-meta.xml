@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>AND(TAG_Is_My_NAV_Region__c = False,
 			NOT($Permission.Validation_Override),
-			ISBLANK(RecordType.Id),
+			CRM_Account__r.IsPersonAccount = false,
 			NOT($User.Alias == 'autoproc'),
 OR(
 ISCHANGED( CRM_Account__c ), ISCHANGED (CRM_AdditionalInformation__c ),
