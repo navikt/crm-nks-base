@@ -86,8 +86,7 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.forelderbarnrelasjon.selectAll();
         query.hentPerson.doedfoedtBarn.selectAll();
         query.hentPerson.adressebeskyttelse.gradering = true;
-        query.hentPerson.foreldreansvar.ansvarlig = true;
-        query.hentPerson.foreldreansvar.ansvarssubjekt = true;
+        query.hentPerson.foreldreansvar.selectAll();
         query.hentPerson.foedsel.foedselsdato = true;
         query.hentPerson.foedsel.foedselsaar = true;
         query.hentPerson.bostedsadresse.vegadresse.selectAll();
@@ -265,7 +264,6 @@ public with sharing class NKS_FamilyViewController {
             Relation child = new Relation();
             child.recordType = 'child';
             child.role = PDL_ForelderBarnRelasjonRolle.BARN.name();
-            child.responsible = getResponsible(childResponse);
 
             if (isUnauthorized(childResponse)) {
                 Person__c childPerson = getPerson(getIdentsSet(childResponse));
@@ -285,6 +283,7 @@ public with sharing class NKS_FamilyViewController {
                 }
                 child.livesWith = hasSameAddress(relationsData, childPerson);
                 child.responsibility = hasResponsibility(relationsData, child.personIdent);
+                child.responsible = getResponsible(relationsData, child.personIdent);
             } else {
                 fillRelationFromResponse(child, childResponse);
                 if (isOver21(child)) {
@@ -292,6 +291,7 @@ public with sharing class NKS_FamilyViewController {
                 }
                 child.livesWith = hasSameAddress(relationsData, childResponse);
                 child.responsibility = hasResponsibility(relationsData, childResponse);
+                child.responsible = getResponsible(relationsData, child.personIdent);
             }
             children.add(child);
         }
@@ -1009,9 +1009,37 @@ public with sharing class NKS_FamilyViewController {
         return ansvarssubjektSet;
     }
 
+    public class Responsible {
+        public String responsible;
+        public String subjectId;
+
+        public Responsible(String responsible, String subjectId) {
+            this.responsible = responsible;
+            this.subjectId = subjectId;
+        }
+    }
+
     @TestVisible
-    private static String getResponsible(PDL_API_Response response) {
-        List<PDL_Foreldreansvar> fa = response.data?.hentPerson?.foreldreansvar;
-        return (fa != null || !fa.isEmpty()) ? fa[0].ansvar : null;
+    private static String getResponsible(PDL_API_Response response, String id) {
+        if (response?.data?.hentPerson?.foreldreansvar == null) {
+            return null;
+        }
+        Set<Responsible> responsibleSet = new Set<Responsible>();
+        for (PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar) {
+            if (foreldreansvar.ansvar != null) {
+                responsibleSet.add(new Responsible(foreldreansvar.ansvar, foreldreansvar.ansvarssubjekt));
+            }
+        }
+        if (responsibleSet.isEmpty()) {
+            return null;
+        } else {
+            List<String> results = new List<String>();
+            for (Responsible res : responsibleSet) {
+                if (res.subjectId == id) {
+                    results.add(res.responsible);
+                }
+            }
+            return results[0];
+        }
     }
 }

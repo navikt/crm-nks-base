@@ -289,7 +289,8 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
-            this.relation.responsible === 'medmor'
+            this.relation.responsible === 'medmor' ||
+            this.relation.responsible === 'andre'
         ) {
             res += 'Bruker har foreldreansvar alene.';
         } else if (this.relation.responsible === 'felles') {
