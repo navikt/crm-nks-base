@@ -119,14 +119,14 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
-        return this.getLiveWithText() + this.getResponsibilityChildText();
+        return this.getLiveWithText() + '\n' + this.getResponsibilityChildText();
     }
 
     get getParentText() {
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
-        return this.getLiveWithText() + this.getResponsibilityParentText();
+        return this.getLiveWithText() + '\n' + this.getResponsibilityParentText();
     }
 
     get showCardTile() {
@@ -298,6 +298,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         } else {
             res += 'Bruker har ikke foreldreansvar.';
         }
+        console.log(res);
         return res;
     }
 

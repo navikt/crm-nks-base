@@ -283,7 +283,7 @@ public with sharing class NKS_FamilyViewController {
                 }
                 child.livesWith = hasSameAddress(relationsData, childPerson);
                 child.responsibility = hasResponsibility(relationsData, child.personIdent);
-                child.responsible = getResponsible(relationsData, child.personIdent);
+                child.responsible = getResponsibility(relationsData, child.personIdent);
             } else {
                 fillRelationFromResponse(child, childResponse);
                 if (isOver21(child)) {
@@ -291,7 +291,7 @@ public with sharing class NKS_FamilyViewController {
                 }
                 child.livesWith = hasSameAddress(relationsData, childResponse);
                 child.responsibility = hasResponsibility(relationsData, childResponse);
-                child.responsible = getResponsible(relationsData, child.personIdent);
+                child.responsible = getResponsibility(relationsData, childResponse);
             }
             children.add(child);
         }
@@ -376,10 +376,12 @@ public with sharing class NKS_FamilyViewController {
                         fillRelationFromPerson(parent, parentPerson);
                         parent.livesWith = hasSameAddress(parentPerson, relationsData);
                         parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
+                        parent.responsible = getResponsibility (parent.personIdent, relationsData);
                     } else {
                         fillRelationFromResponse(parent, parentResponse);
                         parent.livesWith = hasSameAddress(parentResponse, relationsData);
                         parent.responsibility = hasResponsibility(parentResponse, relationsData);
+                        parent.responsible = getResponsibility (parentResponse, relationsData);                    
                     }
                 }
                 parents.add(parent);
@@ -1009,37 +1011,41 @@ public with sharing class NKS_FamilyViewController {
         return ansvarssubjektSet;
     }
 
-    public class Responsible {
-        public String responsible;
-        public String subjectId;
-
-        public Responsible(String responsible, String subjectId) {
-            this.responsible = responsible;
-            this.subjectId = subjectId;
+    /*Funcitons to get responsible from Foreldreansvar-table */
+    @TestVisible
+    private static String getResponsibility (PDL_API_Response parent, PDL_API_Response child) {
+        String res = '';
+        Set<String> idents = getIdentsSet(parent);
+        for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
+           if (idents.contains(foreldreansvar.ansvarlig)) {
+               res += foreldreansvar.ansvar;
+               break;
+           }
         }
+        return res;
     }
 
     @TestVisible
-    private static String getResponsible(PDL_API_Response response, String id) {
-        if (response?.data?.hentPerson?.foreldreansvar == null) {
-            return null;
+    private static String getResponsibility (PDL_API_Response parent, String childId) {
+        String res = '';
+        for (PDL_Foreldreansvar foreldreansvar : parent.data.hentPerson.foreldreansvar) {
+           if (foreldreansvar.ansvarssubjekt == childId) {
+               res += foreldreansvar.ansvar;
+               break;
+           }
         }
-        Set<Responsible> responsibleSet = new Set<Responsible>();
-        for (PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar) {
-            if (foreldreansvar.ansvar != null) {
-                responsibleSet.add(new Responsible(foreldreansvar.ansvar, foreldreansvar.ansvarssubjekt));
-            }
+        return res;
+    }
+
+    @TestVisible
+    private static String getResponsibility (String parentId, PDL_API_Response child) {
+        String res = '';
+        for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
+           if (foreldreansvar.ansvarlig == parentId) {
+               res +=  foreldreansvar.ansvar;
+               break;
+           }
         }
-        if (responsibleSet.isEmpty()) {
-            return null;
-        } else {
-            List<String> results = new List<String>();
-            for (Responsible res : responsibleSet) {
-                if (res.subjectId == id) {
-                    results.add(res.responsible);
-                }
-            }
-            return results[0];
-        }
+        return res;
     }
 }
