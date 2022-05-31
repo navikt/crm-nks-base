@@ -3,7 +3,12 @@ global class NKS_Ytelse {
     public String ytelsestype {
         get;
         set {
-            ytelsestype = String.isNotBlank(value) ? value.trim() : value;
+            ytelsestype = 
+                (String.isNotBlank(value) ? 
+                    value.trim()
+                    : 
+                    value
+                ).replace('_', ' ');
         }
     }
     @AuraEnabled
