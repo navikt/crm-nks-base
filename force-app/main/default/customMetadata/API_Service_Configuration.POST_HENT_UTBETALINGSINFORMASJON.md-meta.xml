@@ -17,87 +17,1892 @@
     <values>
         <field>Mock_Response__c</field>
         <value xsi:type="xsd:string">{
-&quot;200&quot;: {
-&quot;headers&quot;: null,
-&quot;body&quot;: 
-[
-  {
-    &quot;posteringsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
-    &quot;utbetaltTil&quot;: {
-      &quot;aktoertype&quot;: &quot;PERSON&quot;,
-      &quot;ident&quot;: &quot;string&quot;,
-      &quot;navn&quot;: &quot;string&quot;
-    },
-    &quot;utbetalingNettobeloep&quot;: 999.5,
-    &quot;utbetalingsmelding&quot;: &quot;string&quot;,
-    &quot;utbetalingsdato&quot;: &quot;2020-06-25T22:00:00.000Z&quot;,
-    &quot;forfallsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
-    &quot;utbetaltTilKonto&quot;: {
-      &quot;kontonummer&quot;: &quot;string&quot;,
-      &quot;kontotype&quot;: &quot;string&quot;
-    },
-    &quot;utbetalingsmetode&quot;: &quot;string&quot;,
-    &quot;utbetalingsstatus&quot;: &quot;string&quot;,
-    &quot;ytelseListe&quot;: [
-      {
-        &quot;ytelsestype&quot;: &quot;string&quot;,
-        &quot;ytelsesperiode&quot;: {
-          &quot;fom&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
-          &quot;tom&quot;: &quot;2020-03-30T22:00:00.000Z&quot;
-        },
-        &quot;ytelseskomponentListe&quot;: [
-          {
-            &quot;ytelseskomponenttype&quot;: &quot;string&quot;,
-            &quot;satsbeloep&quot;: 999.0,
-            &quot;satstype&quot;: &quot;string&quot;,
-            &quot;satsantall&quot;: 2.0,
-            &quot;ytelseskomponentbeloep&quot;: 42.0
-          }
-        ],
-        &quot;ytelseskomponentersum&quot;: 111.22,
-        &quot;trekkListe&quot;: [
-          {
-            &quot;trekktype&quot;: &quot;string&quot;,
-            &quot;trekkbeloep&quot;: 100.0,
-            &quot;kreditor&quot;: &quot;string&quot;
-          }
-        ],
-        &quot;trekksum&quot;: 1000.0,
-        &quot;skattListe&quot;: [
-          {
-            &quot;skattebeloep&quot;: 99.9
-          }
-        ],
-        &quot;skattsum&quot;: 1000.5,
-        &quot;ytelseNettobeloep&quot;: 1999.0,
-        &quot;bilagsnummer&quot;: &quot;string&quot;,
-        &quot;rettighetshaver&quot;: {
-          &quot;aktoertype&quot;: &quot;PERSON&quot;,
-          &quot;ident&quot;: &quot;string&quot;,
-          &quot;navn&quot;: &quot;string&quot;
-        },
-        &quot;refundertForOrg&quot;: {
-          &quot;aktoertype&quot;: &quot;PERSON&quot;,
-          &quot;ident&quot;: &quot;string&quot;,
-          &quot;navn&quot;: &quot;string&quot;
-        }
-      }
-    ]
-  }
-]
-},
-&quot;401&quot;: {
-&quot;headers&quot;: null,
-&quot;body&quot;: null
-},
-&quot;404&quot;: {&quot;headers&quot;: null,
-&quot;body&quot;: null
-},
-&quot;500&quot;: {
-&quot;headers&quot;: null,
-&quot;body&quot;: null
-}
-}</value>
+            &quot;200&quot;: {
+                &quot;headers&quot;: null,
+                &quot;body&quot;: [
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;06101122093&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                            &quot;aktoertype&quot;: &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 17144.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt tabell: 7100,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Lønnskompensasjon &quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-03-19T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-03-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Permiterte &quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 11926.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 11926.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -6708.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -6708.0,
+                                &quot;ytelseNettobeloep&quot;: 5218.0,
+                                &quot;bilagsnummer&quot;: &quot;643251028&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;06101122093&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;:&quot;Lønnskompensasjon &quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-03-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-04-09T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Permiterte &quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 11926.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 11926.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [],
+                                &quot;skattsum&quot;: -0.0,
+                                &quot;ytelseNettobeloep&quot;: 11926.0,
+                                &quot;bilagsnummer&quot;: &quot;643251028&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;06101122093&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                                    &quot;aktoertype&quot;: &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot;: null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-06-25T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-06-24T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;45444429053 &quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto &quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto &quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt &quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-06-12T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;06101122093&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                            &quot;aktoertype&quot;: &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 4213.0,
+                        &quot;utbetalingsmelding&quot;: &quot;102 uker igjen av stønadsperioden&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Dagpenger&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-05-03T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-05-09T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Dagpenger 04.05.2020-10.05.2020&quot;,
+                                        &quot;satsbeloep&quot;: 1095.0,
+                                        &quot;satstype&quot;: &quot;Dag&quot;,
+                                        &quot;satsantall&quot;: 5.0,
+                                        &quot;ytelseskomponentbeloep&quot;: 5475.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 5475.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -1262.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -1262.0,
+                                &quot;ytelseNettobeloep&quot;: 4213.0,
+                                &quot;bilagsnummer&quot;: &quot;58497603&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;06101122093&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                                    &quot;aktoertype&quot;: &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: null
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-06-12T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: null,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;45444429053&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-06-11T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;06101122093&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                            &quot;aktoertype&quot;: &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 3614.0,
+                        &quot;utbetalingsmelding&quot;: &quot;103 uker igjen av stønadsperioden&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Dagpenger&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-03-29T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-04-04T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Dagpenger 30.03.2020-05.04.2020&quot;,
+                                        &quot;satsbeloep&quot;: 1095.0,
+                                        &quot;satstype&quot;: &quot;Dag&quot;,
+                                        &quot;satsantall&quot;: 5.0,
+                                        &quot;ytelseskomponentbeloep&quot;: 5475.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 5475.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -1861.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -1861.0,
+                                &quot;ytelseNettobeloep&quot;: 3614.0,
+                                &quot;bilagsnummer&quot;: &quot;58489301&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;06101122093&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0005718148 &quot;,
+                                    &quot;aktoertype&quot;: &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: null
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-06-11T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: null,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;45444429053&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-12-02T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot;: &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 27716.0,
+                        &quot;utbetalingsmelding&quot;: null,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Alderspensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-11-30T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-12-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [],
+                                &quot;skattsum&quot;: -0.0,
+                                &quot;ytelseNettobeloep&quot;: 27716.0,
+                                &quot;bilagsnummer&quot;: &quot;626312142&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-12-10T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-12-10T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-02-09T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-01-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-02-28T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;631253622&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-02-18T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-02-18T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-06-10T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00, Som følge av økning i folketrygdens grunnbeløp og regulering av tjenestepensjon, vil pensjoner fra Statens pensjonskasse (SPK) bli omregnet med virkning fra, 1.mai 2019, og etterbetalt i juli.,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-05-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-06-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;610935882&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-06-18T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-06-18T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-01-07T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-12-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-01-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;598069648&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-01-16T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-01-17T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-01-08T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-12-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-01-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;628765337&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;actoertype&quot;: null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-01-19T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-01-16T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-08-05T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-07-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-08-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;616266038&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-08-18T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-08-18T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-12-04T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 27132.0,
+                        &quot;utbetalingsmelding&quot;: null,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-11-30T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-12-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [],
+                                &quot;skattsum&quot;: -0.0,
+                                &quot;ytelseNettobeloep&quot;: 27132.0,
+                                &quot;bilagsnummer&quot;: &quot;595476168&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-12-09T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-12-11T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-03-11T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-02-28T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-03-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;603175044&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-03-18T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-03-19T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-02-11T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-01-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-02-27T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;600640796&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-02-18T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-02-19T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-06-08T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-05-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-06-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;641759454&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-06-17T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-06-17T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-09-09T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-08-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-09-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;618842485&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-09-18T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-09-18T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-04-08T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;,
+                            &quot;diskresjonskode&quot;: null
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-03-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-04-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;605735735&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-04-15T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-04-16T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-08-09T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-07-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-08-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;647171183&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-08-18T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-08-18T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-05-04T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-04-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-05-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;638902198&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-05-13T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-05-13T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-10-08T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 23392.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00, Som følge av økning i folketrygdens grunnbeløp og regulering av tjenestepensjon, er pensjoner fra Statens pensjonskasse (SPK) omregnet med virkning fra 1. mai, 2020 og etterbetalt i oktober. Dersom din pensjon ikke er omregnet, skjer det, fortløpende.,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-04-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-05-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 193.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 193.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -36.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -36.0,
+                                &quot;ytelseNettobeloep&quot;: 157.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-05-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-06-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 193.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 193.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -36.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -36.0,
+                                &quot;ytelseNettobeloep&quot;: 157.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-06-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-07-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 193.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 193.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -36.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -36.0,
+                                &quot;ytelseNettobeloep&quot;: 157.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-07-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-08-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 193.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 193.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -36.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -36.0,
+                                &quot;ytelseNettobeloep&quot;: 157.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-08-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-09-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 193.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 193.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -36.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -36.0,
+                                &quot;ytelseNettobeloep&quot;: 157.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-09-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-10-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27909.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27909.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5302.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5302.0,
+                                &quot;ytelseNettobeloep&quot;: 22607.0,
+                                &quot;bilagsnummer&quot;: &quot;652362380&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-10-18T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-10-18T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-07-08T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 23398.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00, Som følge av økning i folketrygdens grunnbeløp og regulering av tjenestepensjon, er pensjoner fra Statens pensjonskasse (SPK) omregnet med virkning fra 1. mai, 2019. Skulle din pensjon ikke være omregnet, vil dette skje i løpet av høsten.,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-06-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-07-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;613735194&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-05-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-06-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 584.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 584.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -110.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -110.0,
+                                &quot;ytelseNettobeloep&quot;: 474.0,
+                                &quot;bilagsnummer&quot;: &quot;613735194&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-04-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-05-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 584.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 584.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -110.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -110.0,
+                                &quot;ytelseNettobeloep&quot;: 474.0,
+                                &quot;bilagsnummer&quot;: &quot;613735194&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-07-17T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-07-17T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-11-11T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-10-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-11-29T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;623884111&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-11-18T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-11-18T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-05-06T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 21977.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-04-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-05-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27132.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27132.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21977.0,
+                                &quot;bilagsnummer&quot;: &quot;608115510&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-05-14T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-05-14T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-04-02T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-03-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-04-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;636272642&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-04-16T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-04-16T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2019-10-07T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2019-09-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2019-10-30T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;621414478&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2019-10-16T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2019-10-16T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-09-07T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-08-31T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-09-29T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;649679233&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-09-16T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-09-16T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-07-07T22:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-06-30T22:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-07-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;644655483&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2020-07-16T22:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2020-07-16T22:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2018-11-05T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 23332.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2018-10-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2018-11-29T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP-tillegg&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 1700.0
+                                    },
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Grunnpensjon&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 7139.0
+                                    },
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Tilleggspensjon&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 18294.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27133.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5155.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5155.0,
+                                &quot;ytelseNettobeloep&quot;: 21978.0,
+                                &quot;bilagsnummer&quot;: &quot;592893430&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            },
+                            {
+                                &quot;ytelsestype&quot;: &quot;Barnetrygd&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2018-10-31T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2018-11-29T23:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;Banretrygd&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 1354.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 1354.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [],
+                                &quot;skattsum&quot;: -0.0,
+                                &quot;ytelseNettobeloep&quot;: 1354.0,
+                                &quot;bilagsnummer&quot;: &quot;592893430&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: &quot;2021-03-03T23:00:00.000Z&quot;,
+                        &quot;forfallsdato&quot;: &quot;2018-11-19T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Utbetalt&quot;
+                    },
+                    {
+                        &quot;posteringsdato&quot;: &quot;2020-03-09T23:00:00.000Z&quot;,
+                        &quot;utbetaltTil&quot;: {
+                            &quot;ident&quot;: &quot;27115335557&quot;,
+                            &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                            &quot;aktoertype&quot; : &quot;PERSON&quot;
+                        },
+                        &quot;utbetalingNettobeloep&quot;: 22450.0,
+                        &quot;utbetalingsmelding&quot;: &quot;Skatt %: 19,00,&quot;,
+                        &quot;ytelseListe&quot;: [
+                            {
+                                &quot;ytelsestype&quot;: &quot;Avtalefestet pensjon&quot;,
+                                &quot;ytelsesperiode&quot;: {
+                                    &quot;fom&quot;: &quot;2020-02-29T23:00:00.000Z&quot;,
+                                    &quot;tom&quot;: &quot;2020-03-30T22:00:00.000Z&quot;
+                                },
+                                &quot;ytelseskomponentListe&quot;: [
+                                    {
+                                        &quot;ytelseskomponenttype&quot;: &quot;AFP&quot;,
+                                        &quot;satsbeloep&quot;: 0.0,
+                                        &quot;satstype&quot;: null,
+                                        &quot;satsantall&quot;: null,
+                                        &quot;ytelseskomponentbeloep&quot;: 27716.0
+                                    }
+                                ],
+                                &quot;ytelseskomponentersum&quot;: 27716.0,
+                                &quot;trekkListe&quot;: [],
+                                &quot;trekksum&quot;: -0.0,
+                                &quot;skattListe&quot;: [
+                                    {
+                                        &quot;skattebeloep&quot;: -5266.0
+                                    }
+                                ],
+                                &quot;skattsum&quot;: -5266.0,
+                                &quot;ytelseNettobeloep&quot;: 22450.0,
+                                &quot;bilagsnummer&quot;: &quot;633730775&quot;,
+                                &quot;rettighetshaver&quot;: {
+                                    &quot;ident&quot;: &quot;27115335557&quot;,
+                                    &quot;navn&quot;: &quot;TESTMOTTAKER 0004102035&quot;,
+                                    &quot;aktoertype&quot; : &quot;PERSON&quot;
+                                },
+                                &quot;refundertForOrg&quot;: {
+                                    &quot;ident&quot;: &quot;000000000&quot;,
+                                    &quot;navn&quot;: null,
+                                    &quot;aktoertype&quot; : null
+                                }
+                            }
+                        ],
+                        &quot;utbetalingsdato&quot;: null,
+                        &quot;forfallsdato&quot;: &quot;2021-06-18T23:00:00.000Z&quot;,
+                        &quot;utbetaltTilKonto&quot;: {
+                            &quot;kontonummer&quot;: &quot;90433333556&quot;,
+                            &quot;kontotype&quot;: &quot;Norsk bankkonto&quot;
+                        },
+                        &quot;utbetalingsmetode&quot;: &quot;Norsk bankkonto&quot;,
+                        &quot;utbetalingsstatus&quot;: &quot;Ligger klar i banken. Utbetales på fastsatt dato&quot;
+                    }
+                ]
+            },
+            &quot;401&quot;: {
+                &quot;headers&quot;: null,
+                &quot;body&quot;: null
+            },
+            &quot;404&quot;: {
+                &quot;headers&quot;: null,
+                &quot;body&quot;: null
+            },
+            &quot;500&quot;: {
+                &quot;headers&quot;: null,
+                &quot;body&quot;: null
+            }
+        }</value>
     </values>
     <values>
         <field>Service_Path__c</field>
