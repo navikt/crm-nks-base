@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>NKS_Beta</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>SAF_BetaAccess</name>
+    </customPermissions>
     <description>Permission set with custom permission granting access to beta functionality.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Beta Permission</label>
