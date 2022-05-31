@@ -278,7 +278,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         var res = '';
         if (this.relation.livesWith === true) {
             res += 'Bor med bruker.';
-        } else {
+        } else if (this.relation.livesWith === false && this.relation.recordType === 'child') {
             res += 'Bor ikke med bruker.';
         }
         return res;
@@ -286,11 +286,14 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
     getResponsibilityChildText() {
         var res = '';
+
+        if (this.relation.responsible === '' || this.relation.responsible === null) {
+            return '';
+        }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
-            this.relation.responsible === 'medmor' ||
-            this.relation.responsible === 'andre'
+            this.relation.responsible === 'medmor'
         ) {
             res += 'Bruker har foreldreansvar alene.';
         } else if (this.relation.responsible === 'felles') {
@@ -298,7 +301,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         } else {
             res += 'Bruker har ikke foreldreansvar.';
         }
-        console.log(res);
         return res;
     }
 

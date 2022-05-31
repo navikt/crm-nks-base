@@ -376,12 +376,12 @@ public with sharing class NKS_FamilyViewController {
                         fillRelationFromPerson(parent, parentPerson);
                         parent.livesWith = hasSameAddress(parentPerson, relationsData);
                         parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
-                        parent.responsible = getResponsibility (parent.personIdent, relationsData);
+                        parent.responsible = getResponsibility(parent.personIdent, relationsData);
                     } else {
                         fillRelationFromResponse(parent, parentResponse);
                         parent.livesWith = hasSameAddress(parentResponse, relationsData);
                         parent.responsibility = hasResponsibility(parentResponse, relationsData);
-                        parent.responsible = getResponsibility (parentResponse, relationsData);                    
+                        parent.responsible = getResponsibility(parentResponse, relationsData);
                     }
                 }
                 parents.add(parent);
@@ -1013,39 +1013,48 @@ public with sharing class NKS_FamilyViewController {
 
     /*Funcitons to get responsible from Foreldreansvar-table */
     @TestVisible
-    private static String getResponsibility (PDL_API_Response parent, PDL_API_Response child) {
-        String res = '';
+    private static String getResponsibility(PDL_API_Response parent, PDL_API_Response child) {
         Set<String> idents = getIdentsSet(parent);
-        for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
-           if (idents.contains(foreldreansvar.ansvarlig)) {
-               res += foreldreansvar.ansvar;
-               break;
-           }
+        if (child?.data?.hentPerson?.foreldreansvar != null) {
+            for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
+                if (idents.contains(foreldreansvar.ansvarlig)) {
+                    return foreldreansvar.ansvar;
+                }
+            }
         }
-        return res;
+
+        idents = getIdentsSet(child);
+        if (parent?.data?.hentPerson?.foreldreansvar != null) {
+            for (PDL_Foreldreansvar foreldreansvar : parent.data.hentPerson.foreldreansvar) {
+                if (idents.contains(foreldreansvar.ansvarssubjekt)) {
+                    return foreldreansvar.ansvar;
+                }
+            }
+        }
+        return null;
     }
 
     @TestVisible
-    private static String getResponsibility (PDL_API_Response parent, String childId) {
-        String res = '';
-        for (PDL_Foreldreansvar foreldreansvar : parent.data.hentPerson.foreldreansvar) {
-           if (foreldreansvar.ansvarssubjekt == childId) {
-               res += foreldreansvar.ansvar;
-               break;
-           }
+    public static String getResponsibility(PDL_API_Response parent, String childId) {
+        if (parent?.data?.hentPerson?.foreldreansvar != null) {
+            for (PDL_Foreldreansvar foreldreansvar : parent.data.hentPerson.foreldreansvar) {
+                if (foreldreansvar.ansvarssubjekt == childId) {
+                    return foreldreansvar.ansvar;
+                }
+            }
         }
-        return res;
+        return null;
     }
 
     @TestVisible
-    private static String getResponsibility (String parentId, PDL_API_Response child) {
-        String res = '';
-        for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
-           if (foreldreansvar.ansvarlig == parentId) {
-               res +=  foreldreansvar.ansvar;
-               break;
-           }
+    private static String getResponsibility(String parentId, PDL_API_Response child) {
+        if (child?.data?.hentPerson?.foreldreansvar != null) {
+            for (PDL_Foreldreansvar foreldreansvar : child.data.hentPerson.foreldreansvar) {
+                if (foreldreansvar.ansvarlig == parentId) {
+                    return foreldreansvar.ansvar;
+                }
+            }
         }
-        return res;
+        return null;
     }
 }
