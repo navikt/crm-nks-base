@@ -58,12 +58,22 @@
                             </template>
                             <template if:true={isChild}>
                                 <template if:true={getChildText}>
-                                    <li class="tileListItem">{getChildText}</li>
+                                    <li>
+                                        <lightning-formatted-text
+                                            class="tileListItem"
+                                            value={getChildText}
+                                        ></lightning-formatted-text>
+                                    </li>
                                 </template>
                             </template>
                             <template if:true={isParent}>
                                 <template if:true={getParentText}>
-                                    <li class="tileListItem">{getParentText}</li>
+                                    <li>
+                                        <lightning-formatted-text
+                                            class="tileListItem"
+                                            value={getParentText}
+                                        ></lightning-formatted-text>
+                                    </li>
                                 </template>
                             </template>
                             <template if:true={hasBadges}>
