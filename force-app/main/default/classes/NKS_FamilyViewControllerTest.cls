@@ -16,10 +16,10 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(false, rl.isEmpty());
     }
     @isTest
-    private static void getMaritalPersonTest() {
+    private static void getMaritalStatusTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalStatus(
             query.execute(),
             new NKS_FamilyViewController.Relation()
         );
@@ -38,11 +38,11 @@ private class NKS_FamilyViewControllerTest {
             '}' +
             '}';
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('GIFT', l[0].role);
         giftPerson = '{' + '"data" : {' + '"hentPerson" : {' + '"sivilstand" : []' + '}' + '}' + '}';
         response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('UOPPGITT', l[0].role);
         giftPerson =
             '{' +
@@ -58,7 +58,7 @@ private class NKS_FamilyViewControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('02.09.2021', l[0].eventDate);
     }
     @isTest
@@ -112,9 +112,9 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(1965, r.data?.hentPerson?.foedsel[0]?.foedselsaar);
     }
     @isTest
-    private static void queryMaritalPerson() {
+    private static void queryMaritalStatusFromPDL() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_Response r = NKS_FamilyViewController.queryMaritalPerson('12106519356');
+        PDL_API_Response r = NKS_FamilyViewController.queryMaritalStatusFromPDL('12106519356');
         System.assertEquals(1965, r.data?.hentPerson?.foedsel[0]?.foedselsaar);
     }
     @isTest
