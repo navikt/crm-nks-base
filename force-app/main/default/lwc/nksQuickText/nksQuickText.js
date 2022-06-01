@@ -163,12 +163,12 @@ export default class nksQuickText extends LightningElement {
         if (error) {
             console.log(error);
         } else if (data) {
-            this.qmap = new Map(
-                data.map((key) => [
-                    key.nksAbbreviationKey__c.toUpperCase(),
-                    { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
-                ])
-            );
+            this.qmap = data.map((key) => {
+                return {
+                    abbreviation: key.nksAbbreviationKey__c,
+                    content: { message: key.Message, isCaseSensitive: key.Case_sensitive__c }
+                };
+            });
         }
     }
 
@@ -269,28 +269,39 @@ export default class nksQuickText extends LightningElement {
                 .split(' ')
                 .pop();
 
-            const abbreviation = lastItem.toUpperCase().replace(event.key, '');
-            const obj = this.qmap.get(abbreviation);
-            const quickText = obj.message;
-            const isCaseSensitive = obj.isCaseSensitive;
+            const abbreviation = lastItem.replace(event.key, '');
 
-            if (this.qmap.has(abbreviation)) {
-                const startindex = carretPositionEnd - abbreviation.length - 1;
-                const lastChar = event.key === 'Enter' ? '\n' : event.key;
-                if (isCaseSensitive) {
-                    const words = quickText.split(' ');
-
-                    if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
-                        words[0] = words[0].toLowerCase();
-                        const lowerCaseQuickText = words.join(' ');
-                        editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
-                    } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
-                        const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+            let obj;
+            for (const item of this.qmap) {
+                if (item.content.isCaseSensitive) {
+                    item.abbreviation = item.abbreviation.toUpperCase();
+                    if (item.abbreviation === abbreviation.toUpperCase()) {
+                        obj = item;
                     }
-                } else {
-                    editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
                 }
+                if (item.abbreviation === abbreviation) {
+                    obj = item;
+                }
+            }
+
+            const quickText = obj.content.message;
+            const isCaseSensitive = obj.content.isCaseSensitive;
+            const startindex = carretPositionEnd - abbreviation.length - 1;
+            const lastChar = event.key === 'Enter' ? '\n' : event.key;
+
+            if (isCaseSensitive) {
+                const words = quickText.split(' ');
+
+                if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
+                    words[0] = words[0].toLowerCase();
+                    const lowerCaseQuickText = words.join(' ');
+                    editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
+                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                    editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                }
+            } else {
+                editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
             }
         }
     }
