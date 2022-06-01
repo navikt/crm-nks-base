@@ -9,11 +9,11 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.157.0.LATEST"
+                    "versionNumber": "0.154.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.95.0.LATEST"
+                    "versionNumber": "0.83.0.LATEST"
                 },
                 {
                     "package": "crm-shared-base",
@@ -21,23 +21,27 @@
                 },
                 {
                     "package": "crm-shared-timeline",
-                    "versionNumber": "1.15.0.LATEST"
+                    "versionNumber": "1.13.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.79.0.LATEST"
+                    "versionNumber": "0.74.0.LATEST"
                 },
                 {
                     "package": "crm-nks-base-components",
-                    "versionNumber": "0.3.0.LATEST"
+                    "versionNumber": "0.1.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.234.0.LATEST"
+                    "versionNumber": "1.215.0.LATEST"
+                },
+                {
+                    "package": "crm-nks-integration",
+                    "versionNumber": "0.14.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.15.0.LATEST"
+                    "versionNumber": "0.14.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -49,19 +53,15 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.63.0.LATEST"
-                },
-                {
-                    "package": "crm-nks-integration",
-                    "versionNumber": "0.20.0.LATEST"
+                    "versionNumber": "0.58.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
-                    "versionNumber": "0.25.0.LATEST"
+                    "versionNumber": "0.23.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
-                    "versionNumber": "0.8.0.LATEST"
+                    "versionNumber": "0.7.0.LATEST"
                 }
             ]
         }
