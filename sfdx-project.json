@@ -36,10 +36,6 @@
                     "versionNumber": "1.234.0.LATEST"
                 },
                 {
-                    "package": "crm-nks-integration",
-                    "versionNumber": "0.20.0.LATEST"
-                },
-                {
                     "package": "crm-journal-utilities",
                     "versionNumber": "0.15.0.LATEST"
                 },
@@ -50,6 +46,10 @@
                 {
                     "package": "crm-shared-flowComponents",
                     "versionNumber": "0.2.0.LATEST"
+                },
+                {
+                    "package": "crm-nks-integration",
+                    "versionNumber": "0.20.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
