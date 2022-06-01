@@ -48,12 +48,12 @@
                     "versionNumber": "0.2.0.LATEST"
                 },
                 {
-                    "package": "crm-henvendelse",
-                    "versionNumber": "0.63.0.LATEST"
-                },
-                {
                     "package": "crm-nks-integration",
                     "versionNumber": "0.20.0.LATEST"
+                },
+                {
+                    "package": "crm-henvendelse",
+                    "versionNumber": "0.63.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
