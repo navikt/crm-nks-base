@@ -127,7 +127,7 @@ export default class NksPersonPaymentList extends LightningElement {
             this.payments.forEach((payment) => {
                 if (payment.ytelseListe && Object.keys(payment.ytelseListe).length !== 0) {
                     payment.ytelseListe.forEach((ytelse) => {
-                        ytelseSet.add(ytelse.ytelsestype.value);
+                        ytelseSet.add(ytelse.ytelsestype);
                     });
                 }
             });
@@ -290,7 +290,7 @@ export default class NksPersonPaymentList extends LightningElement {
         let hasYtelse = false;
         if (payment.ytelseListe) {
             for (let index = 0; index < payment.ytelseListe.length; index++) {
-                let ytelse = payment.ytelseListe[index].ytelsestype.value;
+                let ytelse = payment.ytelseListe[index].ytelsestype;
                 hasYtelse = this.selectedYtelser.includes(ytelse);
                 if (hasYtelse === true) break;
             }
@@ -300,7 +300,7 @@ export default class NksPersonPaymentList extends LightningElement {
 
     filterYtelse(payment) {
         let filteredYtelser = payment.ytelseListe.filter((ytelse) => {
-            return this.selectedYtelser.includes(ytelse.ytelsestype.value);
+            return this.selectedYtelser.includes(ytelse.ytelsestype);
         });
         payment.ytelseListe = filteredYtelser;
     }
