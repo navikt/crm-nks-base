@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Conversation_Note_Compact</fullName>
-    <fields>Name</fields>
+    <fields>CRM_Account__c</fields>
     <fields>CRM_Created_By_Ident__c</fields>
     <fields>CRM_Theme__c</fields>
     <fields>CRM_Journal_Status_Formula__c</fields>
