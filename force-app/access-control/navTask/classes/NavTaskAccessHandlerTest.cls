@@ -2,7 +2,7 @@
 private class NavTaskAccessHandlerTest {
     @TestSetup
     static void makeData() {
-        TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
+        TestDataFactory.getPublicGroup('Dialog', 'group_41002');
         TestDataFactory.getPublicGroup('HMS Agder', 'group_47001');
     }
 
@@ -13,7 +13,7 @@ private class NavTaskAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Test.startTest();
         NavTask__c task = new NavTask__c(CRM_Account__c = accountId);
@@ -23,7 +23,7 @@ private class NavTaskAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM NavTask__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected task to be shared with group 41001'
+            'Expected task to be shared with group 41002'
         );
     }
 
@@ -34,7 +34,7 @@ private class NavTaskAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Test.startTest();
         NavTask__c task = new NavTask__c(CRM_Account__c = accountId);
@@ -55,7 +55,7 @@ private class NavTaskAccessHandlerTest {
         person.INT_IsNavEmployee__c = true;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Test.startTest();
         NavTask__c task = new NavTask__c(CRM_Account__c = accountId);
@@ -72,7 +72,7 @@ private class NavTaskAccessHandlerTest {
     @IsTest
     private static void grantAccess_whenRelatedAccointIsCompany() {
         Account company = TestDataFactory.getAccounts(1, true)[0];
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Test.startTest();
         NavTask__c task = new NavTask__c(CRM_Account__c = company.Id);
@@ -94,7 +94,7 @@ private class NavTaskAccessHandlerTest {
         insert person;
         Id personAccountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
         Account company = TestDataFactory.getAccounts(1, true)[0];
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Test.startTest();
         List<NavTask__c> tasks = new List<NavTask__c>();
@@ -106,7 +106,7 @@ private class NavTaskAccessHandlerTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM NavTask__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected one task to be shared with group 41001'
+            'Expected one task to be shared with group 41002'
         );
     }
 
@@ -118,7 +118,7 @@ private class NavTaskAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41001' LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = 'group_41002' LIMIT 1].Id;
 
         Common_Code__c code=new Common_Code__c();
         code.Name='SERVICEKLAGER';

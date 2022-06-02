@@ -2,7 +2,7 @@
 private class NavTaskActivation_BatchTest {
     @TestSetup
     static void makeData() {
-        Group publicGroup = TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410098');
+        Group publicGroup = TestDataFactory.getPublicGroup('Dialog Skjermet', 'group_410099');
         //we don't want to run triggers on test data creating
         myTriggers.disable(PersonHandler.class);
         myTriggers.disable(PersonAccessHandler.class);
@@ -20,7 +20,7 @@ private class NavTaskActivation_BatchTest {
 
     @IsTest
     private static void activateMunicipalityRuleWith2000Persons() {
-        Group publicGroup = TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410098');
+        Group publicGroup = TestDataFactory.getPublicGroup('NKS Skjermet', 'group_410099');
         ApexSharingRule__mdt apexSharingRule = [
             SELECT Id
             FROM ApexSharingRule__mdt
