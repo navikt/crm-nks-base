@@ -305,7 +305,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getResponsibilityParentText() {
-        if (this.relation.responsibility === true) {
+        if (
+            this.relation.responsible === 'far' ||
+            this.relation.responsible === 'mor' ||
+            this.relation.responsible === 'medmor' ||
+            this.relation.responsible === 'felles'
+        ) {
             return 'Har foreldreansvar.';
         }
         return '';

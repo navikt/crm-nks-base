@@ -49,8 +49,6 @@ public with sharing class NKS_FamilyViewController {
         @AuraEnabled
         public String responsible;
         @AuraEnabled
-        public Boolean responsibility = false;
-        @AuraEnabled
         public Boolean livesWith = false;
         @AuraEnabled
         public Boolean unauthorized = false;
@@ -282,7 +280,6 @@ public with sharing class NKS_FamilyViewController {
                     continue;
                 }
                 child.livesWith = hasSameAddress(relationsData, childPerson);
-                child.responsibility = hasResponsibility(relationsData, child.personIdent);
                 child.responsible = getResponsibility(relationsData, child.personIdent);
             } else {
                 fillRelationFromResponse(child, childResponse);
@@ -290,7 +287,6 @@ public with sharing class NKS_FamilyViewController {
                     continue;
                 }
                 child.livesWith = hasSameAddress(relationsData, childResponse);
-                child.responsibility = hasResponsibility(relationsData, childResponse);
                 child.responsible = getResponsibility(relationsData, childResponse);
             }
             children.add(child);
@@ -375,12 +371,10 @@ public with sharing class NKS_FamilyViewController {
                         parent.personIdent = getPersonIdent(parentResponse);
                         fillRelationFromPerson(parent, parentPerson);
                         parent.livesWith = hasSameAddress(parentPerson, relationsData);
-                        parent.responsibility = hasResponsibility(parent.personIdent, relationsData);
                         parent.responsible = getResponsibility(parent.personIdent, relationsData);
                     } else {
                         fillRelationFromResponse(parent, parentResponse);
                         parent.livesWith = hasSameAddress(parentResponse, relationsData);
-                        parent.responsibility = hasResponsibility(parentResponse, relationsData);
                         parent.responsible = getResponsibility(parentResponse, relationsData);
                     }
                 }
@@ -936,79 +930,6 @@ public with sharing class NKS_FamilyViewController {
             return null;
         }
         return identer;
-    }
-
-    @TestVisible
-    private static Boolean hasResponsibility(PDL_API_Response parent, PDL_API_Response child) {
-        Set<String> responsibleSet = getAnsvarligSet(child);
-        Set<String> idents = getIdentsSet(parent);
-        if (responsibleSet != null && idents != null) {
-            responsibleSet.retainAll(idents);
-            if (!responsibleSet.isEmpty()) {
-                return true;
-            }
-        }
-        responsibleSet = getAnsvarssubjektSet(parent);
-        idents = getIdentsSet(child);
-        if (responsibleSet != null && idents != null) {
-            responsibleSet.retainAll(idents);
-            if (!responsibleSet.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @TestVisible
-    private static Boolean hasResponsibility(PDL_API_Response parent, String childId) {
-        Set<String> responsibleSet = getAnsvarssubjektSet(parent);
-        if (responsibleSet != null && responsibleSet.contains(childId)) {
-            return true;
-        }
-        return false;
-    }
-
-    @TestVisible
-    private static Boolean hasResponsibility(String parentId, PDL_API_Response child) {
-        Set<String> responsibleSet = getAnsvarligSet(child);
-        if (responsibleSet != null && responsibleSet.contains(parentId)) {
-            return true;
-        }
-        return false;
-    }
-
-    @TestVisible
-    private static Set<String> getAnsvarligSet(PDL_API_Response response) {
-        if (response?.data?.hentPerson?.foreldreansvar == null) {
-            return null;
-        }
-        Set<String> ansvarligSet = new Set<String>();
-        for (PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar) {
-            if (foreldreansvar.ansvarlig != null) {
-                ansvarligSet.add(foreldreansvar.ansvarlig);
-            }
-        }
-        if (ansvarligSet.isEmpty()) {
-            return null;
-        }
-        return ansvarligSet;
-    }
-
-    @TestVisible
-    private static Set<String> getAnsvarssubjektSet(PDL_API_Response response) {
-        if (response?.data?.hentPerson?.foreldreansvar == null) {
-            return null;
-        }
-        Set<String> ansvarssubjektSet = new Set<String>();
-        for (PDL_Foreldreansvar foreldreansvar : response.data.hentPerson.foreldreansvar) {
-            if (foreldreansvar.ansvarssubjekt != null) {
-                ansvarssubjektSet.add(foreldreansvar.ansvarssubjekt);
-            }
-        }
-        if (ansvarssubjektSet.isEmpty()) {
-            return null;
-        }
-        return ansvarssubjektSet;
     }
 
     /*Funcitons to get responsible from Foreldreansvar-table */
