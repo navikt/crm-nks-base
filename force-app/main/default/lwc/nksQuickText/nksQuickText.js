@@ -273,7 +273,7 @@ export default class nksQuickText extends LightningElement {
 
             let obj;
             for (const item of this.qmap) {
-                if (item.content.isCaseSensitive) {
+                if (item.abbreviation.toUpperCase() !== item.content.message) {
                     item.abbreviation = item.abbreviation.toUpperCase();
                     if (item.abbreviation === abbreviation.toUpperCase()) {
                         obj = item;
