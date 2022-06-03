@@ -15,11 +15,12 @@ private class NKS_FamilyViewControllerTest {
         System.debug(rl);
         System.assertEquals(false, rl.isEmpty());
     }
+
     @isTest
-    private static void getMaritalPersonTest() {
+    private static void getMaritalStatusTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalPerson(
+        List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalStatus(
             query.execute(),
             new NKS_FamilyViewController.Relation()
         );
@@ -38,11 +39,11 @@ private class NKS_FamilyViewControllerTest {
             '}' +
             '}';
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('GIFT', l[0].role);
         giftPerson = '{' + '"data" : {' + '"hentPerson" : {' + '"sivilstand" : []' + '}' + '}' + '}';
         response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('UOPPGITT', l[0].role);
         giftPerson =
             '{' +
@@ -58,9 +59,10 @@ private class NKS_FamilyViewControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(giftPerson, PDL_API_Response.class);
-        l = NKS_FamilyViewController.getMaritalPerson(response, new NKS_FamilyViewController.Relation());
+        l = NKS_FamilyViewController.getMaritalStatus(response, new NKS_FamilyViewController.Relation());
         System.assertEquals('02.09.2021', l[0].eventDate);
     }
+
     @isTest
     private static void isOver21Test() {
         String personWithAge =
@@ -95,6 +97,7 @@ private class NKS_FamilyViewControllerTest {
         response = (PDL_API_Response) System.JSON.deserialize(personWithAge, PDL_API_Response.class);
         System.assertEquals(false, NKS_FamilyViewController.isOver21(response));
     }
+
     @isTest
     private static void getChildrenTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
@@ -105,18 +108,21 @@ private class NKS_FamilyViewControllerTest {
         );
         System.assertEquals(0, l.size());
     }
+
     @isTest
     private static void queryRelationsFromPDL() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_Response r = NKS_FamilyViewController.queryRelationsFromPDL('12106519356');
         System.assertEquals(1965, r.data?.hentPerson?.foedsel[0]?.foedselsaar);
     }
+
     @isTest
-    private static void queryMaritalPerson() {
+    private static void queryMaritalStatusFromPDL() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_Response r = NKS_FamilyViewController.queryMaritalPerson('12106519356');
+        PDL_API_Response r = NKS_FamilyViewController.queryMaritalStatusFromPDL('12106519356');
         System.assertEquals(1965, r.data?.hentPerson?.foedsel[0]?.foedselsaar);
     }
+
     @isTest
     private static void hasSameAddressTest() {
         String PersonWithAddress =
@@ -219,6 +225,7 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(n, p));
         System.assertEquals(false, NKS_FamilyViewController.hasSameAddress(p, n));
     }
+
     @isTest
     private static void compareDatesTest() {
         Date d1 = Date.valueOf('2022-01-01');
@@ -234,195 +241,66 @@ private class NKS_FamilyViewControllerTest {
         System.assertEquals(true, NKS_FamilyViewController.compareDates(d1, null) > 0);
         System.assertEquals(true, NKS_FamilyViewController.compareDates(null, d2) < 0);
     }
+
     @isTest
     private static void formatDateTest() {
         Date d = Date.valueOf('2022-01-01');
         System.assertEquals('01.01.2022', NKS_FamilyViewController.formatDate(d));
         System.assertEquals(null, NKS_FamilyViewController.formatDate(null));
     }
+
     @isTest
-    private static void getAnsvarligSetTest() {
-        String responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
-            '}' +
-            '}' +
-            '}';
-        PDL_API_Response responsible = (PDL_API_Response) System.JSON.deserialize(
-            responsiblePerson,
-            PDL_API_Response.class
-        );
-        Set<String> responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
-        System.assertEquals(true, responsibleSet.contains('12345678901'));
-
-        responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [  ]' +
-            '}' +
-            '}' +
-            '}';
-        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
-        responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
-        System.assertEquals(null, responsibleSet);
-
-        responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"bostedsadresse" : [  ]' +
-            '}' +
-            '}' +
-            '}';
-        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
-        responsibleSet = NKS_FamilyViewController.getAnsvarligSet(responsible);
-        System.assertEquals(null, responsibleSet);
-    }
-    @isTest
-    private static void getAnsvarssubjektSetTest() {
-        String responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarssubjekt" : "12345678901" } ]' +
-            '}' +
-            '}' +
-            '}';
-        PDL_API_Response responsible = (PDL_API_Response) System.JSON.deserialize(
-            responsiblePerson,
-            PDL_API_Response.class
-        );
-        Set<String> responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
-        System.assertEquals(true, responsibleSet.contains('12345678901'));
-
-        responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [  ]' +
-            '}' +
-            '}' +
-            '}';
-        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
-        responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
-        System.assertEquals(null, responsibleSet);
-
-        responsiblePerson =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"bostedsadresse" : [  ]' +
-            '}' +
-            '}' +
-            '}';
-        responsible = (PDL_API_Response) System.JSON.deserialize(responsiblePerson, PDL_API_Response.class);
-        responsibleSet = NKS_FamilyViewController.getAnsvarssubjektSet(responsible);
-        System.assertEquals(null, responsibleSet);
-    }
-    @isTest
-    private static void hasResponsibilityTest() {
+    private static void getResponsibilityTest() {
         String parentString =
             '{' +
             '"errors" : null,' +
             '"data" : {' +
+            '"hentIdenter" : {' +
+            '"identer" : [ { "ident" : "10987654321" },  { "ident" : "11109876543" } ]' +
+            '},' +
             '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarssubjekt" : "12345678901" } ]' +
+            '"foreldreansvar" : [ {"ansvar":"far","ansvarlig":null,"ansvarssubjekt":"12345678910"}, {"ansvar":"felles","ansvarlig":null,"ansvarssubjekt":"11122233345"} ]' +
             '}' +
             '}' +
             '}';
-        String childString =
+        String childString1 =
             '{' +
             '"errors" : null,' +
             '"data" : {' +
             '"hentIdenter" : {' +
-            '"identer" : [ { "ident" : "12345678901" } ]' +
+            '"identer" : [ { "ident" : "12345678910" }, { "ident" : "34567891011" } ]' +
             '},' +
             '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
+            '"foreldreansvar" : [ {"ansvar":"far","ansvarlig":10987654321,"ansvarssubjekt":null} ]' +
+            '}' +
+            '}' +
+            '}';
+
+        String childString2 =
+            '{' +
+            '"errors" : null,' +
+            '"data" : {' +
+            '"hentIdenter" : {' +
+            '"identer" : [ { "ident" : "90876543212" }, { "ident" : "11122233345" } ]' +
+            '},' +
+            '"hentPerson" : {' +
+            '"foreldreansvar" : [ {"ansvar":"felles","ansvarlig":11109876543,"ansvarssubjekt":"null"} ]' +
             '}' +
             '}' +
             '}';
         PDL_API_Response parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
-        PDL_API_Response child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
-        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent, child));
-        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent, '12345678901'));
-        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent, '12345678911'));
-        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility('12345678901', child));
-        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility('12345678911', child));
+        PDL_API_Response child1 = (PDL_API_Response) System.JSON.deserialize(childString1, PDL_API_Response.class);
+        PDL_API_Response child2 = (PDL_API_Response) System.JSON.deserialize(childString2, PDL_API_Response.class);
 
-        childString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
-            '}' +
-            '}' +
-            '}';
-        parentString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentIdenter" : {' +
-            '"identer" : [ { "ident" : "12345678901" },{ "ident" : "111111111" } ]' +
-            '}' +
-            '}' +
-            '}';
-        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
-        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
-        System.assertEquals(true, NKS_FamilyViewController.hasResponsibility(parent, child));
-        childString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : [ { "ansvarlig" : "12345678901" } ]' +
-            '}' +
-            '}' +
-            '}';
-        parentString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentIdenter" : {' +
-            '"identer" : [ { "ident" : "11111111111" } ]' +
-            '}' +
-            '}' +
-            '}';
-        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
-        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
-        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent, child));
-        childString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"foreldreansvar" : []' +
-            '}' +
-            '}' +
-            '}';
-        parentString =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentIdenter" : {' +
-            '"identer" : [ { "ident" : "11111111111" } ]' +
-            '}' +
-            '}' +
-            '}';
-        parent = (PDL_API_Response) System.JSON.deserialize(parentString, PDL_API_Response.class);
-        child = (PDL_API_Response) System.JSON.deserialize(childString, PDL_API_Response.class);
-        System.assertEquals(false, NKS_FamilyViewController.hasResponsibility(parent, child));
+        System.assertEquals('far', NKS_FamilyViewController.getResponsibility(parent, child1));
+        System.assertEquals('far', NKS_FamilyViewController.getResponsibility(parent, '12345678910'));
+        System.assertEquals('felles', NKS_FamilyViewController.getResponsibility(parent, '11122233345'));
+        System.assertEquals(null, NKS_FamilyViewController.getResponsibility(parent, '12345678911'));
+        System.assertEquals('far', NKS_FamilyViewController.getResponsibility('10987654321', child1));
+        System.assertEquals('felles', NKS_FamilyViewController.getResponsibility('11109876543', child2));
+        System.assertEquals(null, NKS_FamilyViewController.getResponsibility('23450987612', child2));
     }
+
     @isTest
     private static void getDateOfDeathTest() {
         String deadPerson =
@@ -461,6 +339,7 @@ private class NKS_FamilyViewControllerTest {
         r = NKS_FamilyViewController.getDateOfDeath(p);
         System.assertEquals('31.12.2022', r);
     }
+
     @isTest
     private static void getAgeDateTest() {
         String person =
@@ -489,6 +368,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.getAgeDate(p);
         System.assertEquals(Date.valueOf('0002-01-01'), result);
     }
+
     @isTest
     private static void getAgeStringTest() {
         Date d = Date.valueOf('0001-01-02');
@@ -501,6 +381,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.getAgeString(d);
         System.assertEquals('1 år', result);
     }
+
     @isTest
     private static void getConfidentialStatusTest() {
         String person =
@@ -513,6 +394,7 @@ private class NKS_FamilyViewControllerTest {
         String result = NKS_FamilyViewController.getConfidentialStatus(response);
         System.assertEquals('UGRADERT', result);
     }
+
     @isTest
     private static void isConfidentialRelationTest() {
         String person =
@@ -537,6 +419,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.isConfidentialRelation('UGRADERT', 'FORTROLIG');
         System.assertEquals(true, result);
     }
+
     @isTest
     private static void isUnauthrizedTest() {
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(
@@ -547,6 +430,7 @@ private class NKS_FamilyViewControllerTest {
         response = (PDL_API_Response) System.JSON.deserialize(testPerson1, PDL_API_Response.class);
         System.assertEquals(false, NKS_FamilyViewController.isUnauthorized(response));
     }
+
     @isTest
     private static void fillRelationFromResponseTest() {
         NKS_FamilyViewController.Relation r = new NKS_FamilyViewController.Relation();
@@ -562,6 +446,7 @@ private class NKS_FamilyViewControllerTest {
         NKS_FamilyViewController.fillRelationFromResponse(r, response);
         System.assertEquals(null, r);
     }
+
     @isTest
     private static void fillRelationFromPersonTest() {
         NKS_FamilyViewController.Relation r = new NKS_FamilyViewController.Relation();
@@ -583,6 +468,7 @@ private class NKS_FamilyViewControllerTest {
         NKS_FamilyViewController.fillRelationFromPerson(r, p);
         System.assertEquals('Kvinne', r.sex);
     }
+
     @isTest
     private static void getPersonTest() {
         Person__c p = new Person__c(
@@ -601,6 +487,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.getPerson(null);
         System.assertEquals(null, result);
     }
+
     @isTest
     private static void getFullNameTest() {
         String person = '{' + '"data" : {' + '"hentPerson" : {}' + '}' + '}';
@@ -616,6 +503,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.getFullName(response);
         System.assertEquals(null, result);
     }
+
     @isTest
     private static void getBirthdateTest() {
         String person = '{' + '"data" : {' + '"hentPerson" : {"foedsel" : []}' + '}' + '}';
@@ -638,6 +526,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.getBirthdate(p);
         System.assertEquals('31.12.2022', result);
     }
+
     @isTest
     private static void isNavEmployeeTest() {
         Person__c p = new Person__c(
@@ -674,6 +563,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.isNavEmployee('12345678911');
         System.assertEquals(false, result);
     }
+
     @isTest
     private static void isVisibleTest() {
         Person__c p = new Person__c(
@@ -695,6 +585,7 @@ private class NKS_FamilyViewControllerTest {
         result = NKS_FamilyViewController.isVisible(r, p);
         System.assertEquals(false, result);
     }
+
     @isTest
     private static void getParentsTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
@@ -708,6 +599,7 @@ private class NKS_FamilyViewControllerTest {
         );
         System.assertEquals(1, parents.size());
     }
+
     @isTest
     private static void getStillBornsTest() {
         String hasStillBorn =
@@ -735,6 +627,7 @@ private class NKS_FamilyViewControllerTest {
         l = NKS_FamilyViewController.getStillBorns(response);
         System.assertEquals(0, l.size());
     }
+
     /*
     @isTest
     private static void testjson(){
