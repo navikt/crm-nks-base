@@ -100,7 +100,6 @@
         <field>Knowledge__kav.NKS_UserInformation__c</field>
         <readable>true</readable>
     </fieldPermissions>
-
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.WhoDoesWhat__c</field>
@@ -126,6 +125,10 @@
         <object>Knowledge__kav</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Case.Feedback</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Knowledge__kav.Clarifications</recordType>
         <visible>true</visible>
