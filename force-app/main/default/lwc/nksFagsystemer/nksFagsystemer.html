@@ -1,0 +1,122 @@
+<template>
+    <lightning-card title={title} icon-name="standard:link">
+        <lightning-button-icon
+            alternative-text="Oppdater"
+            icon-name="utility:refresh"
+            onclick={refreshRecord}
+            slot="actions"
+        ></lightning-button-icon>
+        <div class="slds-p-horizontal_small">
+            <template if:true={showContent}>
+                <lightning-record-view-form record-id={personId} object-api-name="Person__c" onload={handleLoaded}>
+                    <lightning-layout class="slds-wrap">
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_ModiaURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_GoSysURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_AktivitetsplanURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><div
+                                role="link"
+                                onclick={handleAAClickOrKey}
+                                onkeydown={handleAAClickOrKey}
+                                class="slds-text-link"
+                                style="cursor: pointer"
+                                if:true={showLinks}
+                                tabindex="0"
+                            >
+                                AA-register
+                            </div></lightning-layout-item
+                        >
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_PSELVPensjonURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_PSELVUfoeretrygdURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_PESYSURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_SpeilURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_ForeldrepengerURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_K9URL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_BarnetrygdURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                        <lightning-layout-item size={size}
+                            ><lightning-output-field
+                                variant="label-hidden"
+                                class="fieldStyle"
+                                field-name="NKS_EnsligForsorgerURL__c"
+                            >
+                            </lightning-output-field
+                        ></lightning-layout-item>
+                    </lightning-layout>
+                </lightning-record-view-form>
+            </template>
+            <template if:false={showContent}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

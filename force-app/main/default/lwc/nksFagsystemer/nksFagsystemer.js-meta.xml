@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <description>Shows links to all related fagsoner for a person account</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Fagsystemer</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="title" label="The title to display" type="String" default="Fagsystemer"/>
+            <property name="relatedField" label="The field with the id of the relevant account" type="String" default="Id"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
