@@ -1,18 +1,28 @@
 <template>
-    <section class="slds-box slds-theme_default">
-        <lightning-layout vertical-align="center" class="slds-p-bottom_small">
-            <div class="slds-media__figure">
-                <lightning-icon
-                    aria-hidden="true"
-                    icon-name={iconName}
-                    class="slds-icon_container"
-                    size="small"
-                ></lightning-icon>
-            </div>
-            <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
-        </lightning-layout>
-        <p class="slds-var-p-horizontal_medium">
-            <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
-        </p>
-    </section>
+    <template if:false={isOperational}>
+        <section class="slds-box slds-theme_default slds-m-bottom_none">
+            <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
+                <div class="slds-media__figure">
+                    <lightning-icon
+                        aria-hidden="true"
+                        icon-name={iconName}
+                        class="slds-icon_container"
+                        size="small"
+                    ></lightning-icon>
+                </div>
+                <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+            </lightning-layout>
+            <p class="slds-var-p-horizontal_medium">
+                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            </p>
+        </section>
+    </template>
+    <template if:true={isOperational}>
+        <section class="slds-box slds-theme_default">
+            <p class="slds-var-p-horizontal_medium">
+                <strong>Driftsmeldinger</strong>
+                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            </p>
+        </section>
+    </template>
 </template>

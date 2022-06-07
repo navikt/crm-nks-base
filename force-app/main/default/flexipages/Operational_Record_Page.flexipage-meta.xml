@@ -174,7 +174,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Traffic Record Page</masterLabel>
+    <masterLabel>Operational Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSimpleViewTemplate</name>

@@ -238,7 +238,7 @@ public with sharing class NKS_HomePageController {
             if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
                 return campaign;
             } else {
-                System.debug('You may have not uploaded any image for the campaign.');
+                System.debug('You may not have uploaded any images for the campaign.');
                 return null;
             }
         } else {
