@@ -49,8 +49,8 @@ public with sharing class NKS_BrukervarselController {
                 NKS_BrukervarslingBestilling bestilling = new NKS_BrukervarslingBestilling();
                 bestilling.personIdent = fnr;
                 bestilling.varseltypeId = notification.typeLabel + ': ' + notification.tekst;
-                bestilling.bestilt = notification.eventTidspunktDT;
-                bestilling.sisteVarselutsendelse = notification.eventTidspunktDT;
+                bestilling.bestilt = notification.forstBehandletDT;
+                bestilling.sisteVarselutsendelse = notification.forstBehandletDT;
                 bestilling.brukernotifikasjon = notification;
                 brukernotifikasjoner.add(bestilling);
             }
