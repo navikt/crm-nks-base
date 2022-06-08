@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_SpeilURL__c</fullName>
     <externalId>false</externalId>
-    <formula
-    >IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://syfomodiaperson.dev.intern.nav.no/sykefravaer/&quot;&amp;Name , &quot;SYFO&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://syfomodiaperson.intern.nav.no/sykefravaer/&quot;&amp;Name, &quot;SYFO&quot;, &quot;_self&quot;)
+    <formula>IF( $Organization.Id = &quot;00D1l0000008jAa&quot;, HYPERLINK(&quot;https://syfomodiaperson.dev.intern.nav.no/sykefravaer/personsok&quot;, &quot;SYFO&quot;, &quot;_self&quot;), HYPERLINK(&quot;https://syfomodiaperson.intern.nav.no/sykefravaer/personsok&quot;, &quot;SYFO&quot;, &quot;_self&quot;)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>SPEIL</label>
