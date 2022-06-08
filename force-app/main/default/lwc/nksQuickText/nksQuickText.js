@@ -9,7 +9,7 @@ const TAB_KEY_CODE = 9;
 const TAB_KEY_STRING = 'Tab';
 const LIGHTNING_INPUT_FIELD = 'LIGHTNING-INPUT-FIELD';
 
-const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', '.', ','];
+const QUICK_TEXT_TRIGGER_KEYS = ['Enter', ' ', ','];
 export default class nksQuickText extends LightningElement {
     labels = { BLANK_ERROR };
     _conversationNote;
