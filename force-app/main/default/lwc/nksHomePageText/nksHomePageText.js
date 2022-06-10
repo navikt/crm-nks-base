@@ -31,7 +31,11 @@ export default class NksHomePageText extends LightningElement {
         return nameString;
     }
 
+    get isEmpty() {
+        return this.text === null || this.text === '' ? true : false;
+    }
+
     get isOperational() {
-        return this.type === 'Teknisk og drift' && (this.text !== null || this.text !== '') ? true : false;
+        return this.type === 'Teknisk og drift' ? true : false;
     }
 }
