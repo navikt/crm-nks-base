@@ -6,7 +6,7 @@ export default class NksHomePageText extends LightningElement {
     @api iconName;
     @api type;
 
-    text;
+    text = '';
 
     connectedCallback() {
         this.getField();
