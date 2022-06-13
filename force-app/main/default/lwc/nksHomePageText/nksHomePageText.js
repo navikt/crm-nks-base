@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import getField from '@salesforce/apex/NKS_HomePageController.getField';
+import { subscribe, onError } from 'lightning/empApi';
 
 export default class NksHomePageText extends LightningElement {
     @api cardTitle;
@@ -7,12 +8,17 @@ export default class NksHomePageText extends LightningElement {
     @api type;
 
     text = '';
+    channelName = '/topic/Announcement_Updates';
+    subscription = {};
+    isInitiated = false;
 
     connectedCallback() {
-        this.getField();
+        this.isInitiated = true;
+        this.loadField();
+        this.handleSubscribe();
     }
 
-    getField() {
+    loadField() {
         getField({
             type: this.type
         })
@@ -38,4 +44,19 @@ export default class NksHomePageText extends LightningElement {
     get isOperational() {
         return this.type === 'Teknisk og drift' ? true : false;
     }
+
+    handleSubscribe() {
+        subscribe(this.channelName, -1, this.refreshField).then((response) => {
+            console.log('Subscription request sent to: ', JSON.stringify(response.channel));
+            this.subscription = response;
+        });
+        onError((error) => {
+            console.error('Received error from server: ', JSON.stringify(error));
+        });
+    }
+
+    refreshField = () => {
+        this.isInitiated = true;
+        this.loadField();
+    };
 }
