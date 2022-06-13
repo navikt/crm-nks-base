@@ -62,6 +62,19 @@
                 <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.NKS_Operational_Send_Notification__c</fieldItem>
+                <identifier>RecordNKS_Operational_Send_Notification_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Operational_Updates}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c34d3163-7403-4841-80d5-80b985c8aceb</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -168,7 +181,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Traffic Record Page</masterLabel>
+    <masterLabel>Operational Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSimpleViewTemplate</name>

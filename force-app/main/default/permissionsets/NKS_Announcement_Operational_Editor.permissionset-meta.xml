@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>Manage_Announcements</name>
     </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Manage_Operational_Updates</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NKS_Announcement__c.NKS_ImageURL__c</field>
