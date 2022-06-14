@@ -1,21 +1,26 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static string getField(String type) {
-        List<NKS_Announcement__c> announcements = [
-            SELECT NKS_Information__c
-            FROM NKS_Announcement__c
-            WHERE NKS_TypeFormula__c = :type
-            ORDER BY LastModifiedDate DESC
-            LIMIT 1
-        ];
-        if (announcements.size() > 0) {
-            NKS_Announcement__c announcement = announcements[0];
-            String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
-            return information;
-        } else {
-            System.debug('There was problem to fetch Announcement!');
-            return null;
+        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
+        String res = null;
+        try {
+            announcements = [
+                SELECT NKS_Information__c
+                FROM NKS_Announcement__c
+                WHERE NKS_TypeFormula__c = :type
+                ORDER BY LastModifiedDate DESC
+                LIMIT 1
+            ];
+
+            if (announcements.size() > 0) {
+                NKS_Announcement__c announcement = announcements[0];
+                String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+                res = information;
+            }
+        } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
         }
+        return res;
     }
 
     @AuraEnabled
