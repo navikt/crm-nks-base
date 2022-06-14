@@ -26,15 +26,16 @@ export default class NksHomePageUsefulLinks extends NavigationMixin(LightningEle
 
     get showReadyResponse() {
         let show;
-        if (this.records.length > 0) {
-            this.size = 7;
-            this.className = 'slds-var-p-left_large';
-            show = true;
-        } else {
+        if (this.records == null) {
+            show = false;
             this.size = 12;
             this.className = '';
-            show = false;
+        } else {
+            show = true;
+            this.size = 7;
+            this.className = 'slds-var-p-left_large';
         }
+
         return show;
     }
 
