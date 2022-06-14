@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customPermissions>
         <enabled>true</enabled>
-        <name>Manage_Announcements</name>
+        <name>Manage_Traffic_Updates</name>
     </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
