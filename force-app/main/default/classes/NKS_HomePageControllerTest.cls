@@ -14,6 +14,13 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
+
+        Knowledge__kav testKnowledge = new Knowledge__kav(
+            Title = 'Svarberedskap - Korona',
+            UrlName = 'Svarberedskap-Korona',
+            Summary = 'Informasjon for test svarberedskap'
+        );
+        insert testKnowledge;
     }
 
     @isTest
@@ -102,5 +109,14 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_Announcement__c testNews = NKS_HomePageController.getNews(obj.Id);
         Test.stopTest();
         System.assertNotEquals(null, testNews);
+    }
+
+    @isTest
+    static void testGetReadyResponse() {
+        Test.startTest();
+        List<Knowledge__kav> testList = NKS_HomePageController.getReadyResponses();
+        Test.stopTest();
+
+        System.assertEquals(null, testList);
     }
 }
