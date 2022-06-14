@@ -20,22 +20,24 @@ public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
     }
 
     public override void onBeforeUpdate(Map<Id, SObject> triggerOldMap) {
-        Id defaultOwnerId = getOrgDefaultOwner();
+        String defaultOwnerId = getOrgDefaultOwner();
         List<String> fieldNamesToCheck = new List<String>{ 'NKS_Assignee__c' };
 
-        List<NavTask__c> triggerTasks = (List<NavTask__c>) records;
-        Set<String> assigneeIdents = getAssigneeIdents(triggerTasks);
-        Map<String, Id> navIdentIdMap = getSfUserMapByNavIdents(assigneeIdents);
+        if (String.isNotBlank(defaultOwnerId)) {
+            List<NavTask__c> triggerTasks = (List<NavTask__c>) records;
+            Set<String> assigneeIdents = getAssigneeIdents(triggerTasks);
+            Map<String, Id> navIdentIdMap = getSfUserMapByNavIdents(assigneeIdents);
 
-        for (NavTask__c navTask : triggerTasks) {
-            NavTask__c oldRecord = (NavTask__c) triggerOldMap.get(navTask.Id);
-            if (MyTriggers.hasChangedFields(fieldNamesToCheck, navTask, oldRecord)) {
-                if (String.isBlank(navTask.NKS_Assignee__c)) {
-                    navTask.OwnerId = defaultOwnerId;
-                } else {
-                    navTask.OwnerId = !navIdentIdMap.containsKey(navTask.NKS_Assignee__c)
-                        ? defaultOwnerId
-                        : navIdentIdMap.get(navTask.NKS_Assignee__c);
+            for (NavTask__c navTask : triggerTasks) {
+                NavTask__c oldRecord = (NavTask__c) triggerOldMap.get(navTask.Id);
+                if (MyTriggers.hasChangedFields(fieldNamesToCheck, navTask, oldRecord)) {
+                    if (String.isBlank(navTask.NKS_Assignee__c)) {
+                        navTask.OwnerId = defaultOwnerId;
+                    } else {
+                        navTask.OwnerId = !navIdentIdMap.containsKey(navTask.NKS_Assignee__c)
+                            ? defaultOwnerId
+                            : navIdentIdMap.get(navTask.NKS_Assignee__c);
+                    }
                 }
             }
         }
@@ -46,9 +48,9 @@ public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
      * @author Stian Ruud Schikora | 06-14-2022
      * @return Id
      **/
-    private Id getOrgDefaultOwner() {
+    private String getOrgDefaultOwner() {
         DefaultRecordOwner__c orgDefault = DefaultRecordOwner__c.getOrgDefaults();
-        return orgDefault.UserOrQueueId__c;
+        return orgDefault != null ? orgDefault.UserOrQueueId__c : null;
     }
 
     /**
