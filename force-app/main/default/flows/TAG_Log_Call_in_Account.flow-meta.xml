@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Flow
-    xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
->
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <name>Get_account_nav_unit</name>
         <label>Get account&apos;s nav unit</label>
@@ -13,6 +10,7 @@
         <connector>
             <targetReference>Screen_to_Log_a_Call</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountIds</name>
             <value>
@@ -31,6 +29,7 @@
         <locationY>587</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>message</name>
             <value>
@@ -53,10 +52,11 @@
     <actionCalls>
         <name>ShowToastTask</name>
         <label>ShowToastTask</label>
-        <locationX>1169</locationX>
-        <locationY>481</locationY>
+        <locationX>1489</locationX>
+        <locationY>535</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>message</name>
             <value>
@@ -76,6 +76,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Set_unit_error_message</name>
         <label>Set unit error message</label>
@@ -181,8 +182,7 @@
                 <operator>EqualTo</operator>
             </conditions>
             <connector>
-                <targetReference
-                >Setconversationnoteerrormessage</targetReference>
+                <targetReference>Setconversationnoteerrormessage</targetReference>
             </connector>
             <label>Has conversation note errors</label>
         </rules>
@@ -210,6 +210,7 @@
         <name>navEnhetRecords</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_QueueId__c</field>
             <operator>IsNull</operator>
@@ -229,8 +230,8 @@
     <dynamicChoiceSets>
         <name>themePicklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Theme__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -245,8 +246,7 @@
   TODAY() + 2
 )</expression>
     </formulas>
-    <interviewLabel
-    >TAG Log Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>TAG Log Call in Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TAG Log Call in Account</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -270,8 +270,8 @@
     <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>1051</locationX>
-        <locationY>261</locationY>
+        <locationX>1473</locationX>
+        <locationY>235</locationY>
         <connector>
             <targetReference>ShowToastTask</targetReference>
         </connector>
@@ -333,6 +333,12 @@
             <field>OwnerId</field>
             <value>
                 <elementReference>queueId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Task_Record_Type.Id</elementReference>
             </value>
         </inputAssignments>
         <object>NavTask__c</object>
@@ -406,11 +412,11 @@
         <label>Get Selected NAV unit</label>
         <locationX>871</locationX>
         <locationY>232</locationY>
-        <assignNullValuesIfNoRecordsFound
-        >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_New_Call_Task</targetReference>
+            <targetReference>Get_Task_Record_Type</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>CRM_QueueId__c</field>
             <operator>EqualTo</operator>
@@ -423,6 +429,34 @@
             <assignToReference>navUnitID</assignToReference>
             <field>Id</field>
         </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Task_Record_Type</name>
+        <label>Get Task Record Type</label>
+        <locationX>1239</locationX>
+        <locationY>253</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_New_Call_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NavTask__c</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Employer</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
         <name>Screen_to_Log_a_Call</name>
@@ -437,14 +471,12 @@
         </connector>
         <fields>
             <name>ShowIfNote</name>
-            <fieldText
-            >&lt;p&gt;&lt;b&gt;Opprett et samtalenotat&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Opprett et samtalenotat&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>error</name>
-            <fieldText
-            >&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -493,6 +525,7 @@
                     <elementReference>themeValue</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>conversationNote</assignToReference>
@@ -525,8 +558,7 @@
         </fields>
         <fields>
             <name>UnitInfo</name>
-            <fieldText
-            >&lt;p&gt;&lt;b&gt;Virksomhetens lokale NAV-enhet kan ikke ta imot oppgaver i Salesforce ennå.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b&gt;Virksomhetens lokale NAV-enhet kan ikke ta imot oppgaver i Salesforce ennå.&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -534,7 +566,7 @@
                     <leftValueReference>queueId</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue />
+                        <stringValue/>
                     </rightValue>
                 </conditions>
             </visibilityRule>
