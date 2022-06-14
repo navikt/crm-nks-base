@@ -11,7 +11,7 @@ public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
             for (NavTask__c task : triggerTasks) {
                 //Do not change owner for AG task
                 //Do not change owner for tasks assigned to Salesforce users
-                if (task.CRM_Theme__c == null && !navIdentIdMap.containsKey(task.NKS_Assignee__c))
+                if (task.CRM_Theme__c == null)
                     task.OwnerId = !navIdentIdMap.containsKey(task.NKS_Assignee__c)
                         ? newOwnerId
                         : navIdentIdMap.get(task.NKS_Assignee__c);
