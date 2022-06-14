@@ -10,6 +10,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Announcement__c.NKS_Operational_Send_Notification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
         <readable>true</readable>
@@ -25,6 +30,10 @@
         <object>NKS_Announcement__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Operational</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.Traffic</recordType>
         <visible>true</visible>
