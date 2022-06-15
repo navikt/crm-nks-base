@@ -26,7 +26,7 @@ private class NKS_TaskOwnerHandler_Test {
         Account acc = [SELECT Id FROM Account LIMIT 1];
         Test.startTest();
 
-        NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id);
+        NavTask__c task = new NavTask__c(CRM_Account__c = acc.Id, NKS_Assignee__c = 'Z999999');
         insert task;
         Test.stopTest();
 
