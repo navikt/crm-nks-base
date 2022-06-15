@@ -63,7 +63,11 @@ public without sharing class NKS_TaskOwnerHandler extends MyTriggers {
         Map<String, Id> navIdentUserIdMap = new Map<String, Id>();
 
         if (!navIdents.isEmpty()) {
-            for (User usr : [SELECT Id, CRM_NAV_Ident__c FROM User WHERE CRM_NAV_Ident__c IN :navIdents]) {
+            for (User usr : [
+                SELECT Id, CRM_NAV_Ident__c
+                FROM User
+                WHERE CRM_NAV_Ident__c IN :navIdents AND isActive = TRUE
+            ]) {
                 navIdentUserIdMap.put(usr.CRM_NAV_Ident__c, usr.Id);
             }
         }
