@@ -277,7 +277,7 @@ public with sharing class NKS_HomePageController {
             List<Knowledge__kav> readyResponses = [
                 SELECT Id, Title, LastModifiedDate
                 FROM Knowledge__kav
-                WHERE Title LIKE 'Svarberedskap%' AND PublishStatus = 'Online'
+                WHERE Title LIKE '%Svarberedskap%' AND PublishStatus = 'Online'
                 ORDER BY LastModifiedDate DESC
                 LIMIT 3
             ];
