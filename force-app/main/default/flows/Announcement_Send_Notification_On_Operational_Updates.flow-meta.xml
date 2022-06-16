@@ -195,7 +195,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>NKS_Veiledere</stringValue>
+                <stringValue>group_41001</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
