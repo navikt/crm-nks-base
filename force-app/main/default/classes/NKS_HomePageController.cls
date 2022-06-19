@@ -1,11 +1,10 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled
-    public static string getField(String type) {
+    public static NKS_Announcement__c getAnnouncement(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
-        String res = null;
         try {
             announcements = [
-                SELECT NKS_Information__c
+                SELECT Id, LastModifiedDate, NKS_Information__c
                 FROM NKS_Announcement__c
                 WHERE NKS_TypeFormula__c = :type
                 ORDER BY LastModifiedDate DESC
@@ -14,13 +13,12 @@ public with sharing class NKS_HomePageController {
 
             if (announcements.size() > 0) {
                 NKS_Announcement__c announcement = announcements[0];
-                String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
-                res = information;
+                return announcement;
             }
         } catch (Exception ex) {
             System.debug(ex.getStackTraceString());
         }
-        return res;
+        return null;
     }
 
     @AuraEnabled
@@ -283,5 +281,20 @@ public with sharing class NKS_HomePageController {
         richText = richText.stripHtmlTags();
         plainTextList.add(richText);
         return plainTextList;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static NKS_Announcement__c getRecord(Id recordId, Datetime lastModifiedDate) {
+        NKS_Announcement__c record = [
+            SELECT Id, LastModifiedDate, NKS_Information__c
+            FROM NKS_Announcement__c
+            WHERE Id = :recordId AND LastModifiedDate = :lastModifiedDate
+        ];
+        if (record != null) {
+            return record;
+        } else {
+            System.debug('Record was not found!');
+            return null;
+        }
     }
 }

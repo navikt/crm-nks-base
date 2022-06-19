@@ -18,9 +18,10 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetField() {
+    static void testGetAnnouncement() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Salesforce oppdatering');
+        NKS_Announcement__c SFUpdate = NKS_HomePageController.getAnnouncement('Salesforce oppdatering');
+        String info = SFUpdate.NKS_Information__c;
         Test.stopTest();
 
         System.assertEquals(700, info.length());
@@ -29,10 +30,10 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetFieldWithNullValue() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Trafikk');
+        NKS_Announcement__c traffic = NKS_HomePageController.getAnnouncement('Trafikk');
         Test.stopTest();
 
-        System.assertEquals(null, info);
+        System.assertEquals(null, traffic);
     }
 
     @isTest
@@ -115,5 +116,21 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertEquals('Test String', res[0]);
+    }
+
+    @isTest
+    static void testGetRecord() {
+        NKS_Announcement__c obj = [
+            SELECT Id, LastModifiedDate
+            FROM NKS_Announcement__c
+            WHERE NKS_TypeFormula__c = 'Salesforce oppdatering'
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        NKS_Announcement__c announcement = NKS_HomePageController.getRecord(obj.Id, obj.LastModifiedDate);
+        Test.stopTest();
+
+        System.assertEquals(obj.LastModifiedDate, announcement.LastModifiedDate);
     }
 }
