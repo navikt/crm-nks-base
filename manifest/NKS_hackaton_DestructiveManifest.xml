@@ -235,6 +235,7 @@
         <members>nksSafJournalpost</members>
         <members>nksSafJournalpostList</members>
         <members>nksSafVerticalNavigation</members>
+        <members>nksSakOgDokumentListeNarrow</members>
         <members>nksNavTaskWorkAllocation</members>
         <members>nksNavCaseItem</members>
         <members>nksNavCaseList</members>
