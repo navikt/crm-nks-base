@@ -47,6 +47,18 @@
         <members>NKS_SafTilleggsopplysning</members>
         <members>NKS_SafViewDocumentController</members>
         <members>NKS_SafViewDocumentController_Test</members>
+        <members>NKS_AvsenderMottaker</members>
+        <members>NKS_Bruker</members>
+        <members>NKS_Dokumenter</members>
+        <members>NKS_Dokumentvarianter</members>
+        <members>NKS_JournalEntryWrapper</members>
+        <members>NKS_JournalUtilities</members>
+        <members>NKS_JournalUtilities_Test</members>
+        <members>NKS_NavSakService</members>
+        <members>NKS_NavSakService_Test</members>
+        <members>NKS_Sak</members>
+        <members>NKS_ThemeUtils</members>
+        <members>NKS_ThemeUtils_Test</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -73,7 +85,15 @@
         <members>nksSafJournalpost</members>
         <members>nksSafJournalpostList</members>
         <members>nksSafVerticalNavigation</members>
+        <members>nksNavCaseItem</members>
+        <members>nksNavCaseList</members>
+        <members>nksPersonCaseOverview</members>
+        <members>nksThemeCategorization</members>
         <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>nksSingleValueUpdate</members>
+        <name>LightningMessageChannel</name>
     </types>
     <types>
         <members>NKS_View_Saf_Journalpost</members>
