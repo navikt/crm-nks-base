@@ -11,10 +11,10 @@ export default class NksHomePageText extends LightningElement {
 
     connectedCallback() {
         this.isInitiated = true;
-        this.loadData();
+        this.getField();
     }
 
-    loadData() {
+    getField() {
         getField({
             type: this.type
         })
