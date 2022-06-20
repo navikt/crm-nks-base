@@ -241,6 +241,8 @@
         <members>nksNavCaseList</members>
         <members>nksPersonCaseOverview</members>
         <members>nksThemeCategorization</members>
+        <members>nksTaskTypePicklist</members>
+        <members>nksThemesPicklists</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
