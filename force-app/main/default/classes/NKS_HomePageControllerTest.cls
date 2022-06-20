@@ -11,6 +11,7 @@ public with sharing class NKS_HomePageControllerTest {
         Id newsRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
             .get('News')
             .getRecordTypeId();
+
         NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
@@ -118,5 +119,16 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertEquals(null, testList);
+    }
+
+    static void testRemoveHtmlTags() {
+        String info = '<p><span style="color:rgb(0,0,0);font-size:14px;">Test String</span></p>';
+        List<String> testList = new List<String>();
+        testList.add(info);
+        Test.startTest();
+        List<String> res = NKS_HomePageController.removeHtmlTags(testList);
+        Test.stopTest();
+
+        System.assertEquals('Test String', res[0]);
     }
 }

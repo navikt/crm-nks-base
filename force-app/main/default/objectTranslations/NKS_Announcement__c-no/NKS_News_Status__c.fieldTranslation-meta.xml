@@ -4,10 +4,10 @@
     <name>NKS_News_Status__c</name>
     <picklistValues>
         <masterLabel>Draft</masterLabel>
-        <translation><!-- Draft --></translation>
+        <translation>Utkast</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Published</masterLabel>
-        <translation><!-- Published --></translation>
+        <translation>Publisert</translation>
     </picklistValues>
 </CustomFieldTranslation>
