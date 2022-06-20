@@ -17,6 +17,9 @@
         <members>KafkaBrukernotifikasjonStatusHandler</members>
         <members>KafkaBrukernotifikasjonStatusTest</members>
         <members>KafkaBrukernotifikasjonStatusoppdatering</members>
+        <members>KafkaOppgave</members>
+        <members>KafkaOppgaveHandler</members>
+        <members>KafkaOppgaveHandler_Test</members>
         <members>NKS_SafAvsenderMottaker</members>
         <members>NKS_SafBruker</members>
         <members>NKS_SafBrukerIdInput</members>
