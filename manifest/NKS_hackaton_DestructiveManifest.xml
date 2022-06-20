@@ -20,6 +20,25 @@
         <members>KafkaOppgave</members>
         <members>KafkaOppgaveHandler</members>
         <members>KafkaOppgaveHandler_Test</members>
+        <members>NKS_HenvendelseController</members>
+        <members>NKS_HenvendelseController_Test</members>
+        <members>NKS_HenvendelseListController</members>
+        <members>NKS_HenvendelseListController_Test</members>
+        <members>NKS_HenvendelseRetry</members>
+        <members>NKS_HenvendelseRetry_Test</members>
+        <members>NKS_HenvendelseUtil</members>
+        <members>NKS_Henvendelse</members>
+        <members>NKS_HenvendelseList</members>
+        <members>NKS_HenvendelseMetadataListe</members>
+        <members>NKS_JournalfortInformasjon</members>
+        <members>NKS_Markering</members>
+        <members>NKS_Markeringer</members>
+        <members>NKS_NavTaskManager</members>
+        <members>NKS_NavTaskManager_Test</members>
+        <members>NKS_NAVTaskTypeController</members>
+        <members>NKS_NAVTaskTypeControllerTest</members>
+        <members>nksDueDateUtility</members>
+        <members>nksDueDateUtility_Test</members>
         <members>NKS_SafAvsenderMottaker</members>
         <members>NKS_SafBruker</members>
         <members>NKS_SafBrukerIdInput</members>
