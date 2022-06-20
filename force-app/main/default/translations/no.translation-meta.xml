@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
-        <label/>
+        <label />
         <name>NAV_Kontaktsenter</name>
     </customApplications>
     <customApplications>
@@ -9,7 +9,9 @@
         <name>Permitteringsvarsler</name>
     </customApplications>
     <customApplications>
-        <label><!-- Sladding --></label>
+        <label>
+            <!-- Sladding -->
+        </label>
         <name>Sladding</name>
     </customApplications>
     <customApplications>
@@ -27,38 +29,6 @@
     <customLabels>
         <label>Opprett samtalereferat</label>
         <name>NKS_Create_Conversation_Note</name>
-    </customLabels>
-    <customLabels>
-        <label>Saks-id</label>
-        <name>NKS_Journal_Case_List_Col_Case_Id</name>
-    </customLabels>
-    <customLabels>
-        <label>Opprettet dato</label>
-        <name>NKS_Journal_Case_List_Col_Created_Date</name>
-    </customLabels>
-    <customLabels>
-        <label>Ingen saker registrert på bruker.</label>
-        <name>NKS_Journal_Case_List_No_Cases_Error</name>
-    </customLabels>
-    <customLabels>
-        <label>Ferdigstill</label>
-        <name>NKS_Journal_Flow_Complete_Button</name>
-    </customLabels>
-    <customLabels>
-        <label>Ny journalføring</label>
-        <name>NKS_Journal_Flow_New_Journal</name>
-    </customLabels>
-    <customLabels>
-        <label>Det oppsto en feil ved uthenting av brukerens saker.</label>
-        <name>NKS_NAV_Case_Retrieve_Error</name>
-    </customLabels>
-    <customLabels>
-        <label>Saker</label>
-        <name>NKS_NAV_Case_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Velg minst en sak for journalføring.</label>
-        <name>NKS_NAV_Case_Validation_Error</name>
     </customLabels>
     <customLabels>
         <label>Oppgavetype er påkrevd</label>
@@ -317,7 +287,7 @@
         <name>fbc_Users</name>
     </customLabels>
     <customTabs>
-        <label/>
+        <label />
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
@@ -349,7 +319,7 @@
             <screens>
                 <fields>
                     <name>Task_Due_Date</name>
-                    <validationRule/>
+                    <validationRule />
                 </fields>
                 <fields>
                     <name>Task_Priority</name>
@@ -372,7 +342,7 @@
         <fullName>CRM_Patch_Update_NAV_Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>CRM_Retry_NAV_Task_Post</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -417,7 +387,7 @@
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>NKS_Account_Create_New_Case</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -614,7 +584,7 @@
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>NKS_Close_Case_and_Tab</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -800,36 +770,15 @@
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>Opportunity</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
-        <fullName>POST_JOURNAL_AUTO_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <screens>
-                <fields>
-                    <name>Error_Message</name>
-                </fields>
-                <name>Error_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Journal_Case_Overview</name>
-                </fields>
-                <name>Theme_Input_Screen</name>
-            </screens>
-        </flows>
-        <fullName>POST_JOURNAL_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>Remove_Old_TopicAssignment</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>Reset_Account_Warning_After_6_Months</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -908,15 +857,15 @@
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows/>
+        <flows />
         <fullName>Temporary_Layoff_Update</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -997,7 +946,7 @@
     </flowDefinitions>
     <quickActions>
         <aspect>Master</aspect>
-        <label/>
+        <label />
         <name>LogACall</name>
     </quickActions>
     <quickActions>
@@ -1007,62 +956,62 @@
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
-        <label/>
+        <label />
         <name>SendEmail</name>
     </quickActions>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Admin_dashboard_Rapport</name>
         <sections>
-            <label/>
+            <label />
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Dashboards</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Admin_rapport_over_Rapporter</name>
         <sections>
-            <label/>
+            <label />
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Reports</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Bedriftskampanjemedlemmer_med_Konto</name>
         <sections>
-            <label/>
+            <label />
             <name>Activities</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kampanjer_med_kontoer_og_kontakter</name>
         <sections>
-            <label/>
+            <label />
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Custom Campaigns</name>
         </sections>
         <sections>
@@ -1138,11 +1087,11 @@
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontakter_i_kampanje</name>
         <sections>
-            <label/>
+            <label />
             <name>Account Relationships</name>
         </sections>
         <sections>
@@ -1150,140 +1099,142 @@
             <name>Contacts</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Felter fra konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontakter_med_Arbeidsgivere_som_har_Arena_Aktivite</name>
         <sections>
-            <label/>
+            <label />
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Arena Aktiviteter</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontoer_med_NAV_Kontaktperson</name>
         <sections>
-            <label/>
+            <label />
             <name>Account Team</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontoer_med_eller_uten_kontakter</name>
         <sections>
-            <label/>
+            <label />
             <name>Accounts</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontoer_med_eller_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label/>
+            <label />
             <name>Account Team</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Kontoer_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label/>
+            <label />
             <name>Account Team</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>Muligheter_med_konto_og_NAV_Kontor</name>
         <sections>
-            <label/>
+            <label />
             <name>Custom Opportunities</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>
+                <!-- Opportunities -->
+            </label>
             <name>Opportunities</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Virksomhet</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>NKS_Agent_Work</name>
         <sections>
-            <label/>
+            <label />
             <name>Agent Work</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>TAG_Permitteringsvarsler_med_konto_og_NAV_kontor</name>
         <sections>
-            <label/>
+            <label />
             <name>Konto</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Temporary Layoffs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description/>
-        <label/>
+        <description />
+        <label />
         <name>screen_flows_prebuilt_crt</name>
         <sections>
-            <label/>
+            <label />
             <name>Flow Interview Log Entries</name>
         </sections>
         <sections>
-            <label/>
+            <label />
             <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
