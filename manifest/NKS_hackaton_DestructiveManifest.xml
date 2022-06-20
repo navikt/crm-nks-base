@@ -209,6 +209,7 @@
         <members>NAV_Task_Due_Date.VUR_KONS_YTE_TSO</members>
         <members>NAV_Task_Due_Date.VUR_KONS_YTE_TSR</members>
         <members>NAV_Task_Due_Date.VUR_KONS_YTE_YRK</members>
+        <members>ApiRetryHandlerBinding.Retry_Henvendelse_Callouts</members>
         <name>CustomMetadata</name>
     </types>
     <types>
