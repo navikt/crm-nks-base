@@ -6,15 +6,15 @@ export default class NksHomePageText extends LightningElement {
     @api iconName;
     @api type;
 
-    text = '';
     isInitiated = false;
+    text;
 
     connectedCallback() {
         this.isInitiated = true;
-        this.loadField();
+        this.loadData();
     }
 
-    loadField() {
+    loadData() {
         getField({
             type: this.type
         })
@@ -34,7 +34,7 @@ export default class NksHomePageText extends LightningElement {
     }
 
     get isEmpty() {
-        return this.text === null || this.text === '' ? true : false;
+        return this.isOperational && !this.text ? true : false;
     }
 
     get isOperational() {
