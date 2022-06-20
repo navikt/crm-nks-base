@@ -246,6 +246,26 @@
         <name>LightningComponentBundle</name>
     </types>
     <types>
+        <members>Conversation_Note__c.NKS_Created_By__c</members>
+        <members>Conversation_Note__c.NKS_Date_Registered__c</members>
+        <members>Conversation_Note__c.NKS_Date_Time_Registered__c</members>
+        <members>Conversation_Note__c.NKS_Henvendelse_BehandlingsId__c</members>
+        <members>Conversation_Note__c.NKS_Incorrectly_Sent__c</members>
+        <members>Conversation_Note__c.NKS_Is_Read__c</members>
+        <members>Conversation_Note__c.NKS_Journal_Status_Formula__c</members>
+        <members>Conversation_Note__c.NKS_Journal_Status__c</members>
+        <members>Conversation_Note__c.NKS_Legacy_Case_Id__c</members>
+        <members>Conversation_Note__c.NKS_Number_of_API_Retries__c</members>
+        <members>Conversation_Note__c.NKS_Sent__c</members>
+        <members>Conversation_Note__c.NKS_Subtheme_Code__c</members>
+        <members>Conversation_Note__c.NKS_Subtheme__c</members>
+        <members>Conversation_Note__c.NKS_Theme_Code__c</members>
+        <members>Conversation_Note__c.NKS_Theme_Group_Code__c</members>
+        <members>Conversation_Note__c.NKS_Theme_Group__c</members>
+        <members>Conversation_Note__c.NKS_Theme__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
         <members>nksSingleValueUpdate</members>
         <name>LightningMessageChannel</name>
     </types>
