@@ -243,6 +243,7 @@
         <members>nksThemeCategorization</members>
         <members>nksTaskTypePicklist</members>
         <members>nksThemesPicklists</members>
+        <members>stoThemeItem</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
