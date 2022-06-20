@@ -235,14 +235,11 @@
         <members>nksSafJournalpost</members>
         <members>nksSafJournalpostList</members>
         <members>nksSafVerticalNavigation</members>
-<<<<<<< HEAD
         <members>nksNavTaskWorkAllocation</members>
-=======
         <members>nksNavCaseItem</members>
         <members>nksNavCaseList</members>
         <members>nksPersonCaseOverview</members>
         <members>nksThemeCategorization</members>
->>>>>>> 968121772e7aa1bcbbe80c0463886c58f5eb0a7a
         <name>LightningComponentBundle</name>
     </types>
     <types>
