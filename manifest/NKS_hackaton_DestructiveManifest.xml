@@ -244,6 +244,7 @@
         <members>nksTaskTypePicklist</members>
         <members>nksThemesPicklists</members>
         <members>stoThemeItem</members>
+        <members>stoComponent</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
