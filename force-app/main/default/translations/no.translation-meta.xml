@@ -785,47 +785,6 @@
         <flows>
             <screens>
                 <fields>
-                    <name>Error_Header</name>
-                </fields>
-                <fields>
-                    <name>Error_Screen_Message</name>
-                </fields>
-                <name>Error_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Task_Description</name>
-                </fields>
-                <fields>
-                    <name>Task_Due_Date</name>
-                </fields>
-                <fields>
-                    <name>Task_NAV_Unit</name>
-                </fields>
-                <fields>
-                    <name>Task_Priority</name>
-                </fields>
-                <fields>
-                    <name>Task_Type_Picklist</name>
-                </fields>
-                <fields>
-                    <name>Theme_Categorization</name>
-                </fields>
-                <name>NAV_Task_Input_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Success_Screen_Text</name>
-                </fields>
-                <name>Success_Screen</name>
-            </screens>
-        </flows>
-        <fullName>SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <screens>
-                <fields>
                     <name>Info</name>
                 </fields>
                 <name>DeleteTopicAssignmentsScreen</name>
