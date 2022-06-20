@@ -66,6 +66,8 @@
         <members>NKS_SafTilleggsopplysning</members>
         <members>NKS_SafViewDocumentController</members>
         <members>NKS_SafViewDocumentController_Test</members>
+        <members>NKSNavTaskWorkAllocationController</members>
+        <members>NKSNavTaskWorkAllocationControllerTest</members>
         <name>ApexClass</name>
     </types>
     <types>
