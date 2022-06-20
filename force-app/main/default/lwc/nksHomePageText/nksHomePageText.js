@@ -6,9 +6,11 @@ export default class NksHomePageText extends LightningElement {
     @api iconName;
     @api type;
 
-    @api text;
+    isInitiated = false;
+    text;
 
     connectedCallback() {
+        this.isInitiated = true;
         this.getField();
     }
 
@@ -26,8 +28,16 @@ export default class NksHomePageText extends LightningElement {
 
     get icon() {
         let nameString = null;
-        if (this.iconName && this.iconName != '') nameString = this.iconName;
+        if (this.iconName && this.iconName !== '') nameString = this.iconName;
 
         return nameString;
+    }
+
+    get isEmpty() {
+        return this.isOperational && !this.text ? true : false;
+    }
+
+    get isOperational() {
+        return this.type === 'Teknisk og drift' ? true : false;
     }
 }
