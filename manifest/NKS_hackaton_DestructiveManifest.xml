@@ -221,6 +221,7 @@
         <members>nksSafJournalpost</members>
         <members>nksSafJournalpostList</members>
         <members>nksSafVerticalNavigation</members>
+        <members>nksNavTaskWorkAllocation</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
