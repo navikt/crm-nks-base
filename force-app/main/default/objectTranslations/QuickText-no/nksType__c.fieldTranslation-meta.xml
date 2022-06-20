@@ -4,10 +4,10 @@
     <name>nksType__c</name>
     <picklistValues>
         <masterLabel>Abbreviation</masterLabel>
-        <translation><!-- Abbreviation --></translation>
+        <translation>Forkortelse</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Regular</masterLabel>
-        <translation><!-- Regular --></translation>
+        <translation>Regulær</translation>
     </picklistValues>
 </CustomFieldTranslation>

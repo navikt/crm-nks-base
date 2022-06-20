@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QuickText_Validation_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(nksType__c, &quot;Abbreviation&quot;), ISBLANK(nksAbbreviationKey__c))</errorConditionFormula>
+    <errorDisplayField>nksAbbreviationKey__c</errorDisplayField>
+    <errorMessage>Abbreviation key cannot be empty for quick text of type Abbreviation.</errorMessage>
+</ValidationRule>
