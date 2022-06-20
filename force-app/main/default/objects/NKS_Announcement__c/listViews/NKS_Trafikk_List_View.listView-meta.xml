@@ -3,9 +3,6 @@
     <fullName>NKS_Trafikk_List_View</fullName>
     <columns>NAME</columns>
     <columns>NKS_Information__c</columns>
-    <columns>CREATEDBY_USER</columns>
-    <columns>CREATED_DATE</columns>
-    <columns>UPDATEDBY_USER</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
