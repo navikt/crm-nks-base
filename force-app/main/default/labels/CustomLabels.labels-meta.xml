@@ -25,30 +25,6 @@
         <value>Opprett samtalereferat</value>
     </labels>
     <labels>
-        <fullName>NKS_NAV_Task_Type_Validation_Error</fullName>
-        <categories>NAV Task, UI, nksNavTaskWorkAllocation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NAV Task Type Validation Error</shortDescription>
-        <value>Oppgavetype er påkrevd</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</fullName>
-        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Nav Task Work Allocation Delegate to Self</shortDescription>
-        <value>Send til meg</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Nav_Task_Work_Allocation_Validation_Error</fullName>
-        <categories>NAV Unit, NAV Task, UI, nksNavTaskWorkAllocation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Nav Task Work Allocation Validation Error</shortDescription>
-        <value>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</value>
-    </labels>
-    <labels>
         <fullName>NKS_No_Cases_for_Selected_Theme_Group</fullName>
         <categories>UI, NKS, Journal, nksCaseOverview</categories>
         <language>en_US</language>
@@ -279,14 +255,6 @@
         <protected>false</protected>
         <shortDescription>Single Record Input Validation Error</shortDescription>
         <value>Vennligst fyll ut feltet.</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Theme_Categorization_Validation_Error</fullName>
-        <categories>UI, Chat, Categorization, nksThemeCategorization</categories>
-        <language>no</language>
-        <protected>false</protected>
-        <shortDescription>Theme Categorization Validation Error</shortDescription>
-        <value>Vennligst fullfør kategoriseringen.</value>
     </labels>
     <labels>
         <fullName>fbc_AccessLevel</fullName>
