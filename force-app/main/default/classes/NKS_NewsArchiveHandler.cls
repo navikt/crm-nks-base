@@ -1,5 +1,5 @@
 // NKS_Announcement__c
-public with sharing class NKS_NewsArchiveHandler extends AsyncJob {
+public with sharing class NKS_NewsArchiveHandler {
     private static final String JOURNAL_POST_STATUS = 'J';
     private static final String INCOMING_POST = 'X';
     private static final String BUSINESS_UNIT = 'NAV Styringsenhet Kontaktsenter';
