@@ -15,9 +15,9 @@ public with sharing class NKS_NewsArchiveHandler {
     private string errorMessage='';
     private Boolean isSandbox;
 
-    public override void execute(NKS_Announcement__c article) {
+    public void execute(NKS_Announcement__c article) {
         String ftpsCatalouge = getFtpsCatalouge();
-        String caseNumber = !isSandbox ? NEW_CASE_NUMBER : '';
+        String caseNumber = !isSandbox ? NEWS_CASE_NUMBER : '';
         archiveArticle(article,caseNumber,ftpsCatalouge); //archiveArticle(article,caseNumber,ftpsCatalouge);
     }
 
@@ -34,7 +34,7 @@ public with sharing class NKS_NewsArchiveHandler {
         Map<String, Blob> filesToSend = new Map<String, Blob>();
         Map<String, String> fileNameFormatMap = new Map<String, String>();
         
-        String manifestName = getManifestName(article.Name, article.NKS_News_Publish_Date__c);
+        String manifestName = getManifestName(article.Name, article.NKS_News_Publish_Date__c.date());
         filesToSend.put(articleFileName, articlePdf);
         fileNameFormatMap.put(articleFileName, DEFAULT_FILE_FORMAT);
         
@@ -112,7 +112,7 @@ public with sharing class NKS_NewsArchiveHandler {
       ) {
         // TODO: Add NewsWebsakXMLGenerator  
         //KnowledgeWebsakXMLGenerator generator = new KnowledgeWebsakXMLGenerator();
-        NewsWebsakXMLGenerator generator = new NewsWebsakXMLGenerator();
+        NKS_NewsXMLGenerator generator = new NKS_NewsXMLGenerator();
           generator.businessUnitId=BUSINESS_UNIT_ID;
           generator.businessUnitName=BUSINESS_UNIT;
           generator.journalPostStatus=JOURNAL_POST_STATUS;
