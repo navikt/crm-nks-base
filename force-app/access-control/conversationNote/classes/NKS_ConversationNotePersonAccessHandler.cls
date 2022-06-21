@@ -1,6 +1,6 @@
 global class NKS_ConversationNotePersonAccessHandler extends MyTriggers {
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
-        List<String> fieldNamesToCheck = new List<String>{ 'INT_Confidential__c', 'INT_IsNavEmployee__c' };
+        List<String> fieldNamesToCheck = new List<String>{ 'INT_Confidential__c', 'INT_IsNavEmployee__c', 'CRM_ManuallyRecalculatedSharing__c' };
         Set<Id> personIdsWithNewSharing = new Set<Id>();
 
         for (Person__c person : (List<Person__c>) records) {
