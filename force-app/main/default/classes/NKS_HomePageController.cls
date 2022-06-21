@@ -276,6 +276,26 @@ public with sharing class NKS_HomePageController {
         }
     }
 
+    @AuraEnabled
+    public static List<Knowledge__kav> getReadyResponses() {
+        try {
+            List<Knowledge__kav> readyResponses = [
+                SELECT Id, Title, LastModifiedDate
+                FROM Knowledge__kav
+                WHERE Title LIKE 'Felles - Svarberedskap%' AND PublishStatus = 'Online'
+                ORDER BY LastModifiedDate DESC
+                LIMIT 3
+            ];
+
+            if (readyResponses.size() > 0) {
+                return readyResponses;
+            }
+        } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
+        }
+        return null;
+    }
+
     @invocableMethod(label='Remove HTML Tags')
     public static List<String> removeHtmlTags(List<String> richTextList) {
         String richText = richTextList[0];
