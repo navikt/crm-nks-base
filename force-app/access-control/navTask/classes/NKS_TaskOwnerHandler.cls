@@ -1,4 +1,5 @@
-public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
+public without sharing class NKS_TaskOwnerHandler extends MyTriggers {
+    private static final Set<String> assigneeTriggerProfiles = new Set<String>{ 'NAV ATA', 'NAV YTA' };
     public override void onBeforeInsert() {
         Id newOwnerId = RecordOwnerService.getDefaultOwner();
 
@@ -63,7 +64,11 @@ public with sharing class NKS_TaskOwnerHandler extends MyTriggers {
         Map<String, Id> navIdentUserIdMap = new Map<String, Id>();
 
         if (!navIdents.isEmpty()) {
-            for (User usr : [SELECT Id, CRM_NAV_Ident__c FROM User WHERE CRM_NAV_Ident__c IN :navIdents]) {
+            for (User usr : [
+                SELECT Id, CRM_NAV_Ident__c
+                FROM User
+                WHERE CRM_NAV_Ident__c IN :navIdents AND isActive = TRUE AND Profile.Name IN :assigneeTriggerProfiles
+            ]) {
                 navIdentUserIdMap.put(usr.CRM_NAV_Ident__c, usr.Id);
             }
         }
