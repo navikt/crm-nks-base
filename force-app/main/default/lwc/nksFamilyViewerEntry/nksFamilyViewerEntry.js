@@ -275,13 +275,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getLiveWithText() {
-        var res = '';
         if (this.relation.livesWith === true) {
-            res += 'Bor med bruker.';
-        } else {
-            res += 'Bor ikke med bruker.';
+            return 'Bor med bruker.';
         }
-        return res;
+        return 'Bor ikke med bruker.';
     }
 
     getResponsibilityChildText() {
