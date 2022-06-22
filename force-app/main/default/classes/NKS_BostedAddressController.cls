@@ -31,15 +31,6 @@ public with sharing class NKS_BostedAddressController {
         return query.execute();
     }
 
-    /* Queries */
-    /*@TestVisible
-    private static PDL_API_Response queryOppholdsAddressFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
-        query.hentPerson.oppholdsadresse.selectAll(true);
-        //query.hentIdenter.selectAll();
-        return query.execute();
-    }*/
-
     /*
      * @brief  Function to get Bosted Address for a person
      * @param recordId:Id
@@ -58,7 +49,6 @@ public with sharing class NKS_BostedAddressController {
         List<BostedAddress> boAddress = new List<BostedAddress>();
 
         String personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
-        system.debug('Person Ident at start after query>>>>>>' + personIdent);
         if (personIdent == null) {
             return boAddress;
         }
@@ -67,12 +57,10 @@ public with sharing class NKS_BostedAddressController {
         try {
             addressData = queryBostedAddressFromPDL(personIdent);
             boAddress = getAddressData(addressData);
-            System.debug('PDL_API_Response Data::::::' + addressData);
         } catch (Exception e) {
             BostedAddress b = new BostedAddress();
             b.recId = e.getMessage();
             boAddress.add(b);
-            System.debug('Inside Error message::::::' + boAddress);
             return boAddress;
         }
         return boAddress;
@@ -87,18 +75,14 @@ public with sharing class NKS_BostedAddressController {
                 addressData.data.hentPerson.bostedsadresse[0]?.vegadresse != null ||
                 addressData.data.hentPerson.bostedsadresse[0]?.matrikkeladresse != null
             ) {
-                system.debug('Inside adress data not null from queryBostedAddressFromPDL' + addressData);
                 addrData.addAll(getBostedVegMatrikkAddress(addressData, boAddr));
                 return addrData;
             }
         }
-        //addresssData = oppholdsAddressData;
         if (addressData.data.hentPerson.oppholdsadresse.size() > 0) {
-            System.debug('Inside If from queryOppholdsAddressFromPDL' + addressData);
             addrData.addAll(getOppholdsAddress(addressData, boAddr));
             return addrData;
         }
-        //BostedAddress noAddress = new BostedAddress();
         boAddr.adressenavn = 'Ikke registrert';
         addrData.add(boAddr);
         return addrData;

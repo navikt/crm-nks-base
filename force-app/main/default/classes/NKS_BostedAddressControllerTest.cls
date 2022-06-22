@@ -19,60 +19,8 @@ public with sharing class NKS_BostedAddressControllerTest {
         insert c;
         addr = NKS_BostedAddressController.getBostedAddress(c.Id, 'Case');
         System.debug(addr);
-        //System.assertEquals(false, addr.isEmpty());
+        System.assertEquals(false, addr.isEmpty());
     }
-
-    /*@isTest
-    private static void getAddressTestCase() {
-        Person__c p = new Person__c(
-            Name = '12106519356',
-            INT_LastName__c = 'TestName',
-            INT_FirstName__c = 'TestLastname'
-        );
-        insert p;
-        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
-        insert a;
-        Case c = new Case(AccountId = a.Id);
-        insert c;
-        List<NKS_BostedAddressController.BostedAddress> addr = NKS_BostedAddressController.getBostedAddress(
-            c.Id,
-            'Case'
-        );
-        System.debug(addr);
-        //System.assertEquals(false, addr.isEmpty());
-    }*/
-
-    /* @isTest
-    private static void getDataMethodTest() {
-        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_BostedAddressController.BostedAddress> l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
-            query.execute(),
-            new NKS_BostedAddressController.BostedAddress()
-        );
-        String boVegAdd =
-            '{' +
-            '"errors" : null,' +
-            '"data" : {' +
-            '"hentPerson" : {' +
-            '"bostedsadresse" : [],' +
-            '"oppholdsadresse" : [ {' +
-            '"matrikkeladresse" : {' +
-            '"tilleggsnavn" : "GRIMSTADGata OppMatrikkel",' +
-            '"postnummer" : "1200",' +
-            '"matrikkelId" : 130534000,' +
-            '"bruksenhetsnummer" : "303"' +
-            '}' +
-            '} ]' +
-            '}' +
-            '}' +
-            '}';
-        PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        system.debug('response from PDL_API_Response data method:::::>>' + response);
-        List<NKS_BostedAddressController.BostedAddress> l = NKS_BostedAddressController.getAddressData(response);
-        system.debug('List of address from test data::::::' + l);
-        //System.assertEquals('1200', l[0].postnummer);
-    }*/
 
     @isTest
     private static void getBostedVegAddressTest() {
@@ -82,7 +30,6 @@ public with sharing class NKS_BostedAddressControllerTest {
             query.execute(),
             new NKS_BostedAddressController.BostedAddress()
         );
-        //System.assertEquals('UGIFT', l[0].role);
         String boVegAdd =
             '{' +
             '"errors" : null,' +
