@@ -1,6 +1,5 @@
 import { LightningElement, api } from 'lwc';
 import getField from '@salesforce/apex/NKS_HomePageController.getField';
-import { subscribe, onError } from 'lightning/empApi';
 
 export default class NksHomePageText extends LightningElement {
     @api cardTitle;
@@ -9,23 +8,13 @@ export default class NksHomePageText extends LightningElement {
 
     isInitiated = false;
     text;
-    channelName = '/topic/Announcement_Updates';
-    subscription = {};
 
     connectedCallback() {
         this.isInitiated = true;
-        this.loadField();
-        this.handleError();
+        this.getField();
     }
 
-    handleError() {
-        onError((error) => {
-            console.log('Received error from empApi: ', JSON.stringify(error));
-            this.handleSubscribe();
-        });
-    }
-
-    loadField() {
+    getField() {
         getField({
             type: this.type
         })
@@ -35,26 +24,6 @@ export default class NksHomePageText extends LightningElement {
             .catch((error) => {
                 console.log('An error occurred: ' + JSON.stringify(error, null, 2));
             });
-
-        if (!this.isEmpSubscribed) {
-            this.handleSubscribe();
-        }
-    }
-
-    handleSubscribe() {
-        subscribe(this.channelName, -1, this.refreshField).then((response) => {
-            this.subscription = response;
-            console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
-        });
-    }
-
-    refreshField = () => {
-        this.isInitiated = true;
-        this.loadField();
-    };
-
-    get isEmpSubscribed() {
-        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
     get icon() {

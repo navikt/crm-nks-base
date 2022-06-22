@@ -56,7 +56,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.pageUrl = url;
         });
 
-        this.handleError();
+        // Refresh list for Announcement automatically
+        this.handleSubscribe();
     }
 
     renderedCallback() {
@@ -64,13 +65,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.initRun = true;
             this.loadList();
         }
-    }
-
-    handleError() {
-        onError((error) => {
-            console.log('Received error from empApi: ', JSON.stringify(error));
-            this.handleSubscribe();
-        });
     }
 
     loadList() {
@@ -107,10 +101,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             .finally(() => {
                 this.showSpinner = false;
             });
-
-        if (!this.isEmpSubscribed) {
-            this.handleSubscribe();
-        }
     }
 
     navigateToList() {
@@ -132,6 +122,9 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
                 console.log('Subscription request sent to: ', JSON.stringify(response.channel));
                 this.subscription = response;
             });
+        onError((error) => {
+            console.error('Received error from server: ', JSON.stringify(error));
+        });
     }
 
     refreshList = () => {
@@ -149,10 +142,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     refreshComponent() {
         this.showSpinner = true;
         this.loadList();
-    }
-
-    get isEmpSubscribed() {
-        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
     get newsRecords() {
