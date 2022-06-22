@@ -1,12 +1,11 @@
-// NKS_Announcement__c
 public with sharing class NKS_NewsArchiveHandler {
     private static final String JOURNAL_POST_STATUS = 'J';
     private static final String INCOMING_POST = 'X';
     private static final String BUSINESS_UNIT = 'NAV Styringsenhet Kontaktsenter';
-    private static final String BUSINESS_UNIT_ID = '410000';
+    private static final String BUSINESS_UNIT_ID = '2530003'; //'410000';
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
-    private static final String NAV_IDENT = 'A117995';
+    private static final String NAV_IDENT = 'A133191'; //'A117995';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
     private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_NKS';
     private static final String FTPS_CATALOUGE_TEST = 'ftpmottakP1SF_NKS';
@@ -17,19 +16,18 @@ public with sharing class NKS_NewsArchiveHandler {
 
     public void execute(NKS_Announcement__c article) {
         String ftpsCatalouge = getFtpsCatalouge();
-        String caseNumber = !isSandbox ? NEWS_CASE_NUMBER : '';
-        archiveArticle(article,caseNumber,ftpsCatalouge); //archiveArticle(article,caseNumber,ftpsCatalouge);
+        String caseNumber = NEWS_CASE_NUMBER;
+        archiveArticle(article,caseNumber,ftpsCatalouge);
     }
 
     @TestVisible
-    //private Boolean archiveArticle(Knowledge__kav article, String caseNumber, String ftpsCatalouge) {
     private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String ftpsCatalouge){
         String articleFileName=formatFileName(article.Name + DEFAULT_FILE_FORMAT);
         Blob articlePdf;
         if(Test.isRunningTest()) { 
             articlePdf = blob.valueOf('Unit.Test');
         } else {
-            articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id); //KnowledgeArticlePdfGenerator.getPdf(article.Id);
+            articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id);
         }
         Map<String, Blob> filesToSend = new Map<String, Blob>();
         Map<String, String> fileNameFormatMap = new Map<String, String>();
@@ -47,6 +45,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 article,
                 INCOMING_POST,
                 getJournalPostName(JOURNAL_POST_TYPE, article.Name),
+                article.Skills__c.replaceAll(';', ' '),
                 Date.today(),
                 caseNumber
               );
@@ -107,17 +106,17 @@ public with sharing class NKS_NewsArchiveHandler {
         NKS_Announcement__c article,
         String postType,
         String journalPostName,
+        String category,
         Date referenceDate,
         String caseNumber
       ) {
-        // TODO: Add NewsWebsakXMLGenerator  
-        //KnowledgeWebsakXMLGenerator generator = new KnowledgeWebsakXMLGenerator();
         NKS_NewsXMLGenerator generator = new NKS_NewsXMLGenerator();
           generator.businessUnitId=BUSINESS_UNIT_ID;
           generator.businessUnitName=BUSINESS_UNIT;
           generator.journalPostStatus=JOURNAL_POST_STATUS;
           generator.journalPostType=postType;
           generator.journalPostName=journalPostName;
+          generator.journalPostCategory=category;
           generator.journalCaseNumber=caseNumber;
           generator.userNavIdent=NAV_IDENT;
           generator.submissionDate=referenceDate;
