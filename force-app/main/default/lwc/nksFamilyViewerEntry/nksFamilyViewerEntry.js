@@ -275,13 +275,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getLiveWithText() {
-        var res = '';
         if (this.relation.livesWith === true) {
-            res += 'Bor med bruker.';
-        } else if (this.relation.livesWith === false && this.relation.recordType === 'child') {
-            res += 'Bor ikke med bruker.';
+            return 'Bor med bruker.';
         }
-        return res;
+        return 'Bor ikke med bruker.';
     }
 
     getResponsibilityChildText() {
@@ -313,6 +310,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         ) {
             return 'Har foreldreansvar.';
         }
-        return '';
+        return 'Har ikke foreldreansvar.';
     }
 }

@@ -1,21 +1,26 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static string getField(String type) {
-        List<NKS_Announcement__c> announcements = [
-            SELECT NKS_Information__c
-            FROM NKS_Announcement__c
-            WHERE NKS_TypeFormula__c = :type
-            ORDER BY LastModifiedDate DESC
-            LIMIT 1
-        ];
-        if (announcements.size() > 0) {
-            NKS_Announcement__c announcement = announcements[0];
-            String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
-            return information;
-        } else {
-            System.debug('There was problem to fetch Announcement!');
-            return null;
+        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
+        String res = null;
+        try {
+            announcements = [
+                SELECT NKS_Information__c
+                FROM NKS_Announcement__c
+                WHERE NKS_TypeFormula__c = :type
+                ORDER BY LastModifiedDate DESC
+                LIMIT 1
+            ];
+
+            if (announcements.size() > 0) {
+                NKS_Announcement__c announcement = announcements[0];
+                String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+                res = information;
+            }
+        } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
         }
+        return res;
     }
 
     @AuraEnabled
@@ -238,7 +243,7 @@ public with sharing class NKS_HomePageController {
             if (campaign.NKS_ImageURL__c != null && campaign.NKS_ImageURL__c != '') {
                 return campaign;
             } else {
-                System.debug('You may have not uploaded any image for the campaign.');
+                System.debug('You may not have uploaded any images for the campaign.');
                 return null;
             }
         } else {
@@ -269,5 +274,34 @@ public with sharing class NKS_HomePageController {
             System.debug('Record was not found!');
             return null;
         }
+    }
+
+    @AuraEnabled
+    public static List<Knowledge__kav> getReadyResponses() {
+        try {
+            List<Knowledge__kav> readyResponses = [
+                SELECT Id, Title, LastModifiedDate
+                FROM Knowledge__kav
+                WHERE Title LIKE 'Felles - Svarberedskap%' AND PublishStatus = 'Online'
+                ORDER BY LastModifiedDate DESC
+                LIMIT 3
+            ];
+
+            if (readyResponses.size() > 0) {
+                return readyResponses;
+            }
+        } catch (Exception ex) {
+            System.debug(ex.getStackTraceString());
+        }
+        return null;
+    }
+
+    @invocableMethod(label='Remove HTML Tags')
+    public static List<String> removeHtmlTags(List<String> richTextList) {
+        String richText = richTextList[0];
+        List<String> plainTextList = new List<String>();
+        richText = richText.stripHtmlTags();
+        plainTextList.add(richText);
+        return plainTextList;
     }
 }
