@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Bostedsadresse" icon-name="utility:checkin">
+        <div class="slds-p-left_large">
+            <div class="slds-p-left_large">
+                <template for:each={boAddresses} for:item="boaddress">
+                    <p key={boaddress.adressenavn} class="slds-p-left_xx-small">
+                        {boaddress.adressenavn} {boaddress.husnummer} {boaddress.husbokstav}
+                        {boaddress.bruksenhetsnummer}
+                    </p>
+                    <p key={boaddress.name} class="slds-p-left_xx-small">
+                        {boaddress.postnummer} {boaddress.tilleggsnavn}
+                    </p>
+                    <p key={boaddress.name} class="slds-p-left_xx-small">{boaddress.region} {boaddress.landkode}</p>
+                    <p key={boaddress.name} class="slds-p-left_xx-small slds-text-title">
+                        Endret {boaddress.endringRegistrertDato} i Folkeregisteret
+                    </p>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>
