@@ -17,7 +17,7 @@ global class NKS_ConversationNoteAccessHandler extends MyTriggers {
     }
 
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
-        List<String> fieldNamesToCheck = new List<String>{ 'NKS_Incorrectly_Sent__c', 'CRM_Theme__c' };
+        List<String> fieldNamesToCheck = new List<String>{ 'CRM_Theme__c' };
 
         List<Id> parentIdToDelete = new List<Id>();
         List<Conversation_Note__c> notesWithNewSharing = new List<Conversation_Note__c>();
