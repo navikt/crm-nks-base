@@ -55,8 +55,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-
-        this.handleError();
     }
 
     renderedCallback() {
@@ -110,6 +108,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
         if (!this.isEmpSubscribed) {
             this.handleSubscribe();
+            this.handleError();
         }
     }
 
