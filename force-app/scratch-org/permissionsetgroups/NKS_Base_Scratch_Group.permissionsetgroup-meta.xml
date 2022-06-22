@@ -3,7 +3,6 @@
     <description>Scratch org permission set group</description>
     <label>NKS Base Scratch Group</label>
     <permissionSets>NKS_Announcement_News_Editor</permissionSets>
-    <permissionSets>NKS_Announcement_Operational_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
     <permissionSets>NKS_Beta_Permission</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
