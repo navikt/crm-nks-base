@@ -278,7 +278,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         var res = '';
         if (this.relation.livesWith === true) {
             res += 'Bor med bruker.';
-        } else if (this.relation.livesWith === false && this.relation.recordType === 'child') {
+        } else {
             res += 'Bor ikke med bruker.';
         }
         return res;
@@ -313,6 +313,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         ) {
             return 'Har foreldreansvar.';
         }
-        return '';
+        return 'Har ikke foreldreansvar.';
     }
 }
