@@ -4,9 +4,7 @@ private class NKS_TaskOwnerHandler_Test {
     private static void setupTestData() {
         Group queue = TestDataFactory.getQueue('Oslo', 'queue_391', 'NavTask__c');
         TestDataFactory.getPublicGroup('NKS Veiledere', 'group_41001');
-        DefaultRecordOwner__c orgDef = DefaultRecordOwner__c.getOrgDefaults();
-        orgDef.UserOrQueueId__c = queue.Id;
-        upsert orgDef custSettings__c.Id;
+        setOrgDefault(queue.Id);
     }
 
     @IsTest
@@ -53,5 +51,12 @@ private class NKS_TaskOwnerHandler_Test {
 
         NavTask__c newTask = [SELECT OwnerId FROM NavTask__c LIMIT 1];
         System.assertEquals(UserInfo.getUserId(), newTask.OwnerId);
+    }
+
+    @future
+    private static void setOrgDefault(Id queueId) {
+        DefaultRecordOwner__c orgDef = DefaultRecordOwner__c.getOrgDefaults();
+        orgDef.UserOrQueueId__c = queueId;
+        upsert orgDef custSettings__c.Id;
     }
 }
