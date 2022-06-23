@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Remove_HTML_Tags</name>
         <label>Remove HTML Tags</label>
-        <locationX>880</locationX>
-        <locationY>1607</locationY>
+        <locationX>176</locationX>
+        <locationY>1799</locationY>
         <actionName>NKS_HomePageController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -25,8 +25,8 @@
     <actionCalls>
         <name>Send_Notification</name>
         <label>Send Notification</label>
-        <locationX>880</locationX>
-        <locationY>1727</locationY>
+        <locationX>176</locationX>
+        <locationY>1919</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -166,7 +166,7 @@
             <targetReference>Is_User</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_Notification</targetReference>
+            <targetReference>Loop_Through_Group_Members</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -180,7 +180,6 @@
             <targetReference>Check_Members</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Get_Notification</targetReference>
         </noMoreValuesConnector>
     </loops>
@@ -269,8 +268,8 @@
     <recordLookups>
         <name>Get_Notification</name>
         <label>Get Notification</label>
-        <locationX>880</locationX>
-        <locationY>1487</locationY>
+        <locationX>176</locationX>
+        <locationY>1679</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Remove_HTML_Tags</targetReference>
