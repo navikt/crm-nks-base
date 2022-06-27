@@ -5,12 +5,7 @@ export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
     boAddresses;
-    addList;
-    adressenavn;
-    husnummer;
-    husbokstav;
-    bruksenhetsnummer;
-    endringDato;
+    open = false;
 
     @wire(getBostedAddress, {
         recordId: '$recordId',
@@ -24,5 +19,13 @@ export default class NksBostedAddress extends LightningElement {
         if (error) {
             this.addError(error);
         }
+    }
+
+    get iconName() {
+        return this.open ? 'utility:chevrondown' : 'utility:chevronright';
+    }
+
+    onclickHandler() {
+        this.open = !this.open;
     }
 }
