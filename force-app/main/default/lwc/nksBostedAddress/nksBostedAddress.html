@@ -1,0 +1,50 @@
+<template>
+    <article class="slds-card slds-card_narrow" style="top: -1.5rem">
+        <div class="slds-card__header">
+            <header class="slds-media slds-media_center slds-p-horizontal_small">
+                <div class="slds-accordion__summary-heading slds-p-right_medium">
+                    <button
+                        type="button"
+                        onclick={onclickHandler}
+                        slot="title"
+                        class="section-control slds-button slds-button_reset slds-theme_shade"
+                        style="width: 100%; line-height: 2rem"
+                        aria-expanded={open}
+                    >
+                        <div class="slds-media__body">
+                            <h3>
+                                <span>
+                                    <lightning-icon
+                                        icon-name={iconName}
+                                        size="x-small"
+                                        class="slds-current-color slds-p-horizontal_x-small"
+                                    ></lightning-icon>
+                                    <span title="Bostedsadresse">Bostedsadresse</span>
+                                </span>
+                            </h3>
+                        </div>
+                    </button>
+                </div>
+            </header>
+        </div>
+        <template if:true={open}>
+            <div class="slds-card__body">
+                <div class="slds-p-horizontal_large">
+                    <template for:each={boAddresses} for:item="boaddress">
+                        <p key={boaddress.adressenavn}>
+                            {boaddress.adressenavn} {boaddress.husnummer} {boaddress.husbokstav}
+                            {boaddress.bruksenhetsnummer}
+                        </p>
+                        <p key={boaddress.name}>
+                            {boaddress.postnummer} {boaddress.tilleggsnavn}
+                        </p>
+                        <p key={boaddress.name} >{boaddress.region} {boaddress.landkode}</p>
+                        <p key={boaddress.name} class="slds-text-title">
+                            Endret {boaddress.endringRegistrertDato} i Folkeregisteret
+                        </p>
+                    </template>
+                </div>                
+            </div>
+        </template>
+    </article>
+</template>
