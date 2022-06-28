@@ -94,19 +94,23 @@ public with sharing class NKS_BostedAddressController {
         List<BostedAddress> addList = new List<BostedAddress>();
         if (addressData.data.hentPerson.bostedsadresse[0]?.vegadresse != null) {
             PDL_Vegadresse vegAddr = addressData.data.hentPerson.bostedsadresse[0]?.vegadresse;
-            boAddr.adressenavn = vegAddr?.adressenavn;
-            boAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer;
+            boAddr.adressenavn = vegAddr?.adressenavn != null ? (vegAddr?.adressenavn).toUpperCase() : null;
+            boAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
+                ? (vegAddr?.bruksenhetsnummer).toUpperCase()
+                : null;
             boAddr.postnummer = vegAddr?.postnummer;
-            boAddr.tilleggsnavn = vegAddr?.tilleggsnavn;
-            boAddr.husbokstav = vegAddr?.husbokstav;
-            boAddr.husnummer = vegAddr?.husnummer;
+            boAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
+            boAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
+            boAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
             boAddr.recId = '1';
         }
         if (addressData.data.hentPerson.bostedsadresse[0]?.matrikkeladresse != null) {
             PDL_Matrikkeladresse matAddr = addressData.data.hentPerson.bostedsadresse[0]?.matrikkeladresse;
-            boAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer;
+            boAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
+                ? (matAddr?.bruksenhetsnummer).toUpperCase()
+                : null;
             boAddr.postnummer = matAddr?.postnummer;
-            boAddr.tilleggsnavn = matAddr?.tilleggsnavn;
+            boAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             boAddr.recId = '2';
         }
         PDL_Metadata meta = addressData.data.hentPerson.bostedsadresse[0]?.metadata;
@@ -122,27 +126,37 @@ public with sharing class NKS_BostedAddressController {
         List<BostedAddress> addListOp = new List<BostedAddress>();
         if (addressData.data.hentPerson.oppholdsadresse[0]?.vegadresse != null) {
             PDL_Vegadresse vegAddr = addressData.data.hentPerson.oppholdsadresse[0]?.vegadresse;
-            opAddr.adressenavn = vegAddr?.adressenavn;
-            opAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer;
+            opAddr.adressenavn = vegAddr?.adressenavn != null ? (vegAddr?.adressenavn).toUpperCase() : null;
+            opAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
+                ? (vegAddr?.bruksenhetsnummer).toUpperCase()
+                : null;
             opAddr.postnummer = vegAddr?.postnummer;
-            opAddr.tilleggsnavn = vegAddr?.tilleggsnavn;
-            opAddr.husbokstav = vegAddr?.husbokstav;
-            opAddr.husnummer = vegAddr?.husnummer;
+            opAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
+            opAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
+            opAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
             opAddr.recId = '3';
         } else if (addressData.data.hentPerson.oppholdsadresse[0]?.matrikkeladresse != null) {
             PDL_Matrikkeladresse matAddr = addressData.data.hentPerson.oppholdsadresse[0]?.matrikkeladresse;
-            opAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer;
+            opAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
+                ? (matAddr?.bruksenhetsnummer).toUpperCase()
+                : null;
             opAddr.postnummer = matAddr?.postnummer;
-            opAddr.tilleggsnavn = matAddr?.tilleggsnavn;
+            opAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             opAddr.recId = '4';
         } else if (addressData.data.hentPerson.oppholdsadresse[0]?.utenlandskAdresse != null) {
             PDL_UtenlandskAdresse utenlandsAddr = addressData.data.hentPerson.oppholdsadresse[0]?.utenlandskAdresse;
-            opAddr.adressenavn = utenlandsAddr?.adressenavnNummer;
-            opAddr.bruksenhetsnummer = utenlandsAddr?.bygningEtasjeLeilighet;
+            opAddr.adressenavn = utenlandsAddr?.adressenavnNummer != null
+                ? (utenlandsAddr?.adressenavnNummer).toUpperCase()
+                : null;
+            opAddr.bruksenhetsnummer = utenlandsAddr?.bygningEtasjeLeilighet != null
+                ? (utenlandsAddr?.bygningEtasjeLeilighet).toUpperCase()
+                : null;
             opAddr.postnummer = utenlandsAddr?.postkode;
-            opAddr.tilleggsnavn = utenlandsAddr?.bySted;
-            opAddr.region = utenlandsAddr?.regionDistriktOmraade;
-            opAddr.landkode = utenlandsAddr?.landkode;
+            opAddr.tilleggsnavn = utenlandsAddr?.bySted != null ? (utenlandsAddr?.bySted).toUpperCase() : null;
+            opAddr.region = utenlandsAddr?.regionDistriktOmraade != null
+                ? (utenlandsAddr?.regionDistriktOmraade).toUpperCase()
+                : null;
+            opAddr.landkode = utenlandsAddr?.landkode != null ? (utenlandsAddr?.landkode).toUpperCase() : null;
             opAddr.recId = '5';
         }
         PDL_Metadata meta = addressData.data.hentPerson.oppholdsadresse[0]?.metadata;

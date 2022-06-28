@@ -47,7 +47,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '"kvalitet" : null' +
             '},' +
             '"kommunenummer" : "1557",' +
-            '"husnummer" : "1",' +
+            '"husnummer" : "H101",' +
             '"husbokstav" : "A",' +
             '"bydelsnummer" : "2435",' +
             '"bruksenhetsnummer" : "555",' +
@@ -170,7 +170,10 @@ public with sharing class NKS_BostedAddressControllerTest {
             '"x" : 453529.0,' +
             '"kvalitet" : null' +
             '},' +
-            '"bruksenhetsnummer" : "311"' +
+            '"bruksenhetsnummer" : "311",' +
+            '"husnummer" : "H102",' +
+            '"husbokstav" : "b",' +
+            '"adressenavn" : "PlassOpp"' +
             '},' +
             '"metadata":{' +
             '"opplysningsId":"53a9f29d-0980-42a3-8e18-13ae0b01b3d7",' +
@@ -189,7 +192,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
         l = NKS_BostedAddressController.getOppholdsAddress(response, new NKS_BostedAddressController.BostedAddress());
-        System.assertEquals('GRIMSTAD OppVeg', l[0].tilleggsnavn);
+        System.assertEquals('GRIMSTAD OPPVEG', l[0].tilleggsnavn);
 
         boVegAdd =
             '{' +
@@ -200,8 +203,10 @@ public with sharing class NKS_BostedAddressControllerTest {
             '"oppholdsadresse" : [ {' +
             '"utenlandskAdresse" : {' +
             '"adressenavnNummer" : "GRIMSTAD 12",' +
+            '"bygningEtasjeLeilighet" : "h 201",' +
             '"postkode" : "1234",' +
-            '"regionDistriktOmraade" : "",' +
+            '"bySted" : "oslo",' +
+            '"regionDistriktOmraade" : "regionOpp",' +
             '"landkode" : "NO"' +
             '}' +
             '} ]' +
