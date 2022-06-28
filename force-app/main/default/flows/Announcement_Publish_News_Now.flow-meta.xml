@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_Values</name>
         <label>Assign Values</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>446</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_News.NKS_News_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -25,10 +25,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_if_image_url_is_empty</name>
+        <label>Check if image url is empty</label>
+        <locationX>248</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isEmpty</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_ContentDocumentLink</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Empty_URL_Screen</targetReference>
+            </connector>
+            <label>isEmpty</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Published</name>
         <label>Is Published</label>
-        <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -71,13 +96,34 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_ContentDocumentLink</name>
+        <label>Get ContentDocumentLink</label>
+        <locationX>248</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_image_url_is_empty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LinkedEntityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_News.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ContentDocumentLink</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_News</name>
         <label>Get News</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_Values</targetReference>
+            <targetReference>Get_ContentDocumentLink</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -94,8 +140,8 @@
     <recordUpdates>
         <name>Update_News</name>
         <label>Update News</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationX>446</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Is_Published</targetReference>
         </connector>
@@ -103,10 +149,27 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Error_Empty_URL_Screen</name>
+        <label>Error Empty URL Screen</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Empty_URL_Error_Message</name>
+            <fieldText>&lt;p&gt;Det ser ut til at du har glemt å laste opp forsidebilde til artikkelen. Vennligst last opp et bilde og prøv på nytt.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -122,8 +185,8 @@
     <screens>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>314</locationX>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -137,13 +200,20 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_News</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>ContentDocumentIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
