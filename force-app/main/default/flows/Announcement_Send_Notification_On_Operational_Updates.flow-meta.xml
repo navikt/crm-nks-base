@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Get_Members</name>
+        <label>Get Members</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <actionName>NKS_HomePageGroupMemberFinder</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Get_Notification</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>IDs</name>
+            <value>
+                <elementReference>Get_Group.Id</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>Recipient_IDs</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Remove_HTML_Tags</name>
         <label>Remove HTML Tags</label>
         <locationX>176</locationX>
-        <locationY>1799</locationY>
+        <locationY>695</locationY>
         <actionName>NKS_HomePageController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -26,7 +48,7 @@
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
-        <locationY>1919</locationY>
+        <locationY>815</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -62,127 +84,8 @@
         </inputParameters>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <assignments>
-        <name>Add_Id</name>
-        <label>Add Id</label>
-        <locationX>968</locationX>
-        <locationY>1175</locationY>
-        <assignmentItems>
-            <assignToReference>Recipient_IDs</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Through_Each_Group_Members.UserOrGroupId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Through_Each_Group_Members</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Add_Recipient_Id</name>
-        <label>Add Recipient Id</label>
-        <locationX>264</locationX>
-        <locationY>815</locationY>
-        <assignmentItems>
-            <assignToReference>Recipient_IDs</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Through_Group_Members.UserOrGroupId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Through_Group_Members</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_Members</name>
-        <label>Check Members</label>
-        <locationX>704</locationX>
-        <locationY>695</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>IsUser</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Through_Group_Members.UserOrGroupId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>005</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_Recipient_Id</targetReference>
-            </connector>
-            <label>IsUser</label>
-        </rules>
-        <rules>
-            <name>IsPublicGroup</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Through_Group_Members.UserOrGroupId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>00G</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Members_Of_Each_Group</targetReference>
-            </connector>
-            <label>IsPublicGroup</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_User</name>
-        <label>Is User</label>
-        <locationX>1100</locationX>
-        <locationY>1055</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Through_Each_Group_Members.UserOrGroupId</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>005</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_Id</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <interviewLabel>Announcement Send Notification On Operational Updates {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Operational Updates</label>
-    <loops>
-        <name>Loop_Through_Each_Group_Members</name>
-        <label>Loop Through Each Group Members</label>
-        <locationX>880</locationX>
-        <locationY>935</locationY>
-        <collectionReference>Get_Members_Of_Each_Group</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Is_User</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Loop_Through_Group_Members</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop_Through_Group_Members</name>
-        <label>Loop Through Group Members</label>
-        <locationX>176</locationX>
-        <locationY>575</locationY>
-        <collectionReference>Get_Group_Members</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Check_Members</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Get_Notification</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -209,7 +112,7 @@
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Group_Members</targetReference>
+            <targetReference>Get_Members</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -224,52 +127,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Group_Members</name>
-        <label>Get Group Members</label>
-        <locationX>176</locationX>
-        <locationY>455</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Through_Group_Members</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>GroupId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Group.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>GroupMember</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Members_Of_Each_Group</name>
-        <label>Get Members Of Each Group</label>
-        <locationX>880</locationX>
-        <locationY>815</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Through_Each_Group_Members</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>GroupId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_Through_Group_Members.UserOrGroupId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>GroupMember</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Notification</name>
         <label>Get Notification</label>
         <locationX>176</locationX>
-        <locationY>1679</locationY>
+        <locationY>575</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Remove_HTML_Tags</targetReference>
@@ -279,7 +140,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Notify_Operational_Updates</stringValue>
+                <stringValue>NKS_Announcement_Custom_Notification</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
