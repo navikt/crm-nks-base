@@ -1,67 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Send_Email_Alert</name>
-        <label>Send Email Alert</label>
-        <locationX>242</locationX>
-        <locationY>528</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>Email_Template</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <stringValue>sara.mohammadi@nav.no</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <stringValue>Problem ved publisering av nyhetsartikkel</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <decisions>
-        <name>Check_if_image_url_is_empty</name>
-        <label>Check if image url is empty</label>
-        <locationX>374</locationX>
-        <locationY>408</locationY>
-        <defaultConnector>
-            <targetReference>Update_Scheduled_News</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isEmpty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_ContentDocumentLink</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_Email_Alert</targetReference>
-            </connector>
-            <label>isEmpty</label>
-        </rules>
-    </decisions>
-    <formulas>
-        <name>Email_Template</name>
-        <dataType>String</dataType>
-        <expression>&apos;Hei!&apos;
-&amp;BR()&amp;
-&apos;Det ser ut til at du har glemt å laste opp forsidebilde til følgende nyhetsartikkel. Vennligst last opp et bilde og publiser artikkelen på nytt.&apos; 
-&amp;BR()&amp;
-LEFT($Api.Enterprise_Server_URL_510, FIND( &apos;/services&apos;, $Api.Enterprise_Server_URL_510)) &amp;  {!$Record.Id}</expression>
-    </formulas>
     <interviewLabel>Announcement Publish Scheduled News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Publish Scheduled News</label>
     <processMetadataValues>
@@ -83,32 +22,11 @@ LEFT($Api.Enterprise_Server_URL_510, FIND( &apos;/services&apos;, $Api.Enterpris
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_ContentDocumentLink</name>
-        <label>Get ContentDocumentLink</label>
-        <locationX>374</locationX>
-        <locationY>288</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Check_if_image_url_is_empty</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>LinkedEntityId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>ContentDocumentLink</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Update_Scheduled_News</name>
         <label>Update Scheduled News</label>
-        <locationX>506</locationX>
-        <locationY>528</locationY>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_News_Status__c</field>
@@ -149,7 +67,7 @@ LEFT($Api.Enterprise_Server_URL_510, FIND( &apos;/services&apos;, $Api.Enterpris
         <scheduledPaths>
             <name>Publish_Scheduled_News</name>
             <connector>
-                <targetReference>Get_ContentDocumentLink</targetReference>
+                <targetReference>Update_Scheduled_News</targetReference>
             </connector>
             <label>Publish Scheduled News</label>
             <offsetNumber>0</offsetNumber>
@@ -160,9 +78,4 @@ LEFT($Api.Enterprise_Server_URL_510, FIND( &apos;/services&apos;, $Api.Enterpris
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <textTemplates>
-        <name>Email_Body</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;Hei!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Det ser ut til at du har glemt å laste opp forsidebilde til følgende nyhetsartikkel. Vennligst last opp et bilde og publiser artikkelen på nytt. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;﻿{!$Record.Id}&lt;/span&gt;&lt;/p&gt;</text>
-    </textTemplates>
 </Flow>

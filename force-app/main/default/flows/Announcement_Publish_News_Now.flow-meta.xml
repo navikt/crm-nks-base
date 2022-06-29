@@ -25,8 +25,8 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Check_if_image_url_is_empty</name>
-        <label>Check if image url is empty</label>
+        <name>Check_if_any_image_is_uploaded</name>
+        <label>Check if any image is uploaded</label>
         <locationX>248</locationX>
         <locationY>398</locationY>
         <defaultConnector>
@@ -34,7 +34,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>isEmpty</name>
+            <name>notUploaded</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_ContentDocumentLink</leftValueReference>
@@ -46,7 +46,7 @@
             <connector>
                 <targetReference>Error_Empty_URL_Screen</targetReference>
             </connector>
-            <label>isEmpty</label>
+            <label>notUploaded</label>
         </rules>
     </decisions>
     <decisions>
@@ -102,7 +102,7 @@
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_if_image_url_is_empty</targetReference>
+            <targetReference>Check_if_any_image_is_uploaded</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

@@ -279,7 +279,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Notify_Operational_Updates</stringValue>
+                <stringValue>NKS_Announcement_Custom_Notification</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
