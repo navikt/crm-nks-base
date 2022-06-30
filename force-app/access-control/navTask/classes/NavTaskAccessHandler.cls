@@ -1,10 +1,10 @@
 global with sharing class NavTaskAccessHandler extends MyTriggers {
     global override void onAfterInsert() {
-        List<SharingEvent__e> events=new List<SharingEvent__e>();
+        List<RecordSharingEvent__e> events=new List<RecordSharingEvent__e>();
         //run sharing in a platform event
         
         for(NavTask__c task:(List<NavTask__c>) records){
-            SharingEvent__e event=new SharingEvent__e();
+            RecordSharingEvent__e event=new RecordSharingEvent__e();
             event.RecordId__c=task.Id;
             event.ObjectType__c='NavTask__c';
             events.add(event);
