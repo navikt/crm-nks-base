@@ -1,12 +1,41 @@
-public without sharing class NKS_ThreadSharingEventHandler extends SharingEvent {
-    public override void execute(Id recordId) {
-        List<Thread__c> threads = [
-            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
-            FROM Thread__c
-            WHERE Id = :recordId
+public without sharing class NKS_ThreadSharingEventHandler extends RecordSharingEvent {
+    private static LoggerUtility logger = new LoggerUtility('NAV Task');
+    List<Id> recordIds=new List<Id>();
+
+    public override void execute(List<RecordSharingEvent__e> recordSharingEvents) {
+        try{
+            for(RecordSharingEvent__e sharingEvent:recordSharingEvents){
+                if(sharingEvent.ObjectType__c!='Thread__c'){
+                    continue;
+                } 
+                recordIds.add(sharingEvent.RecordId__c);
+            }
+
+            List<Thread__c> threads = [
+                SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
+                FROM Thread__c
+                WHERE Id in:recordIds
         ];
         if (threads.size() > 0) {
             new NKS_ThreadAccessHandler().grantAccessToNewThreads(threads);
         }
-    }
+        } catch (Exception ex) {
+            String recordIdsString = String.join( recordIds, ', ' );  
+            logger.error(
+
+                'Failed to share records: ' +
+                recordIdsString +
+                '\n' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                null
+            );
+        } finally {
+            logger.publish();
+        }
 }
+}
+

@@ -1,6 +1,6 @@
 global class NKS_ThreadAccessHandler extends MyTriggers {
     global override void onAfterInsert() {
-        List<SharingEvent__e> events = new List<SharingEvent__e>();
+        List<RecordSharingEvent__e> events = new List<RecordSharingEvent__e>();
         //run sharing in a platform event
 
         for (Thread__c thread : (List<Thread__c>) records) {
@@ -8,7 +8,7 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
                 thread.CRM_Related_Object_Type__c != 'Inquiry__c' &&
                 thread.CRM_Related_Object_Type__c != 'Application__c'
             ) {
-                SharingEvent__e event = new SharingEvent__e();
+                RecordSharingEvent__e event = new RecordSharingEvent__e();
                 event.RecordId__c = thread.Id;
                 event.ObjectType__c = 'Thread__c';
                 events.add(event);
