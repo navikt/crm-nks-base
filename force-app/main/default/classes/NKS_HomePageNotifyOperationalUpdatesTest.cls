@@ -97,6 +97,6 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
 
         System.assertNotEquals(IDSet, null);
         System.assert(IDSet.size() < 500);
-        System.assertEquals(throwsException, false);
+        System.assertEquals(throwsException, true);
     }
 }
