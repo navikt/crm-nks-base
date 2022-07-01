@@ -3,17 +3,17 @@
     <customValue>
         <fullName>ArbeidsgiverSamhandler</fullName>
         <default>false</default>
-        <label>AG 1 - inntektsmelding, refusjon, annet</label>
+        <label>Arbeidsgiver 1 - inntektsmelding, refusjon, annet</label>
     </customValue>
     <customValue>
         <fullName>Sykefravaersoppfolging</fullName>
         <default>false</default>
-        <label>AG 2 - sykefraværsoppfølging</label>
+        <label>Arbeidsgiver 2 - sykefraværsoppfølging</label>
     </customValue>
     <customValue>
         <fullName>Permittering_og_rekruttering</fullName>
         <default>false</default>
-        <label>AG 3 - permittering, rekruttering</label>
+        <label>Arbeidsgiver 3 - permittering, rekruttering</label>
     </customValue>
     <customValue>
         <fullName>Arbeid</fullName>
