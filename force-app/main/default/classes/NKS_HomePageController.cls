@@ -18,7 +18,7 @@ public with sharing class NKS_HomePageController {
                 res = information;
             }
         } catch (Exception ex) {
-            System.debug(ex.getStackTraceString());
+            System.debug('Problem getting Information-field for Announcement' + ex.getMessage());
         }
         return res;
     }
@@ -166,20 +166,21 @@ public with sharing class NKS_HomePageController {
         return records;
     }
 
-    private static String getImageUrl(Id recordId) {
-        ContentDocumentLink cdl = [
-            SELECT
-                Id,
-                ContentDocumentId,
-                ContentDocument.LatestPublishedVersionId,
-                ContentDocument.ContentModifiedDate,
-                ContentDocument.FileType
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :recordId
-            ORDER BY ContentDocument.ContentModifiedDate DESC
-            LIMIT 1
-        ];
+    public static String getImageUrl(Id recordId) {
         try {
+            ContentDocumentLink cdl = [
+                SELECT
+                    Id,
+                    ContentDocumentId,
+                    ContentDocument.LatestPublishedVersionId,
+                    ContentDocument.ContentModifiedDate,
+                    ContentDocument.FileType
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId = :recordId
+                ORDER BY ContentDocument.ContentModifiedDate DESC
+                LIMIT 1
+            ];
+
             String contentversionid = cdl.ContentDocument.LatestPublishedVersionId;
             if (contentversionid != null) {
                 if (cdl.ContentDocument.FileType == 'PDF') {
