@@ -18,7 +18,7 @@ public with sharing class NKS_HomePageController {
                 res = information;
             }
         } catch (Exception ex) {
-            System.debug(ex.getStackTraceString());
+            System.debug('Problem getting Information-field for Announcement' + ex.getMessage());
         }
         return res;
     }
@@ -166,18 +166,36 @@ public with sharing class NKS_HomePageController {
         return records;
     }
 
-    private static String getImageUrl(Id recordId) {
-        String contentversionid = [
-            SELECT Id, ContentDocumentId, ContentDocument.LatestPublishedVersionId, ContentDocument.ContentModifiedDate
-            FROM ContentDocumentLink
-            WHERE LinkedEntityId = :recordId
-            ORDER BY ContentDocument.ContentModifiedDate DESC
-            LIMIT 1
-        ]
-        ?.ContentDocument.LatestPublishedVersionId;
-        return contentversionid != null
-            ? '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' + contentversionid
-            : '';
+    public static String getImageUrl(Id recordId) {
+        try {
+            ContentDocumentLink cdl = [
+                SELECT
+                    Id,
+                    ContentDocumentId,
+                    ContentDocument.LatestPublishedVersionId,
+                    ContentDocument.ContentModifiedDate,
+                    ContentDocument.FileType
+                FROM ContentDocumentLink
+                WHERE LinkedEntityId = :recordId
+                ORDER BY ContentDocument.ContentModifiedDate DESC
+                LIMIT 1
+            ];
+
+            String contentversionid = cdl.ContentDocument.LatestPublishedVersionId;
+            if (contentversionid != null) {
+                if (cdl.ContentDocument.FileType == 'PDF') {
+                    return '/sfc/servlet.shepherd/version/renditionDownload?rendition=SVGZ&versionId=' +
+                        contentversionid;
+                }
+                return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
+                    contentversionid;
+            } else {
+                System.debug('Cannot fetch any images for Announcement with recordId = ' + recordId);
+            }
+        } catch (Exception ex) {
+            System.debug('Problem getting  image for Annoucement: ' + ex.getMessage());
+        }
+        return null;
     }
 
     public static Set<String> getUserSkills(Id userId) {
