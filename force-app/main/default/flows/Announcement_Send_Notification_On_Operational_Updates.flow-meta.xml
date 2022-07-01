@@ -1,32 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_Members</name>
-        <label>Get Members</label>
-        <locationX>176</locationX>
-        <locationY>455</locationY>
-        <actionName>NKS_HomePageGroupMemberFinder</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Notification</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>IDs</name>
-            <value>
-                <elementReference>Get_Group.Id</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Recipient_IDs</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>Remove_HTML_Tags</name>
         <label>Remove HTML Tags</label>
         <locationX>176</locationX>
-        <locationY>695</locationY>
+        <locationY>335</locationY>
         <actionName>NKS_HomePageController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -48,38 +26,14 @@
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
-        <locationY>815</locationY>
-        <actionName>customNotificationAction</actionName>
-        <actionType>customNotificationAction</actionType>
+        <locationY>455</locationY>
+        <actionName>NKS_HomePageNotifyOperationalUpdates</actionName>
+        <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>customNotifTypeId</name>
-            <value>
-                <elementReference>Get_Notification.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
+            <name>message</name>
             <value>
                 <elementReference>Message</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>NKS Driftsmelding</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientIds</name>
-            <value>
-                <elementReference>Recipient_IDs</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>targetPageRef</name>
-            <value>
-                <elementReference>Target_Page</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -105,53 +59,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Group</name>
-        <label>Get Group</label>
-        <locationX>176</locationX>
-        <locationY>335</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Members</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>group_41001</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Group</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Notification</name>
-        <label>Get Notification</label>
-        <locationX>176</locationX>
-        <locationY>575</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Remove_HTML_Tags</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Notify_Operational_Updates</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>CustomNotificationType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Group</targetReference>
+            <targetReference>Remove_HTML_Tags</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -173,30 +85,11 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <textTemplates>
-        <name>Target_Page</name>
-        <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{&quot;type&quot;: &quot;standard__namedPage&quot;,&quot;attributes&quot;: {&quot;pageName&quot;: &quot;home&quot;,&quot;actionName&quot;: &quot;view&quot;}}</text>
-    </textTemplates>
     <variables>
         <name>Message</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Recipient_IDs</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
