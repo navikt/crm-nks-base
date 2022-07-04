@@ -6,6 +6,8 @@
     <externalId>false</externalId>
     <inlineHelpText>Set to true to pin the news in the list.</inlineHelpText>
     <label>Pin</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
