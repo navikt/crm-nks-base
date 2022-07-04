@@ -18,7 +18,7 @@ public with sharing class NKS_NewsXMLGenerator {
         dom.xmlNode journalPostTab = noArkSak.addChildElement('JOURNALPOST.TAB', null, null);
         dom.xmlNode post = journalPostTab.addChildElement('JOURNALPOST', null, null);
         dom.xmlNode postContent = post.addChildElement('JP.INNHOLD', null, null).addTextNode(journalPostName);
-        dom.xmlNode postContentIntern = post.addChildElement('JP.INNHOLDINTERN', null, null, journalPostCategory);
+        dom.xmlNode postContentIntern = post.addChildElement('JP.INNHOLDINTERN', null, null).addTextNode(journalPostCategory);
         dom.xmlNode postDate = post.addChildElement('JP.DOKDATO', null, null)
             .addTextNode(formatDateString(submissionDate));
         dom.xmlNode journalPostType = post.addChildElement('JP.DOKTYPE', null, null).addTextNode(journalPostType);
