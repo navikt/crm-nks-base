@@ -1,14 +1,16 @@
 import { LightningElement, api } from 'lwc';
 import getField from '@salesforce/apex/NKS_HomePageController.getField';
+import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 
-export default class NksHomePageText extends LightningElement {
+export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
     @api type;
 
     isInitiated = false;
     text;
+    pageUrl;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
 
@@ -16,6 +18,19 @@ export default class NksHomePageText extends LightningElement {
         this.isInitiated = true;
         this.loadField();
         this.handleError();
+
+        this[NavigationMixin.GenerateUrl]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'NKS_Announcement__c',
+                actionName: 'list'
+            },
+            state: {
+                filterName: 'Salesforce_oppdateringer'
+            }
+        }).then((url) => {
+            this.pageUrl = url;
+        });
     }
 
     loadField() {
@@ -52,6 +67,23 @@ export default class NksHomePageText extends LightningElement {
         this.isInitiated = true;
         this.loadField();
     };
+
+    navigateToList() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'NKS_Announcement__c',
+                actionName: 'list'
+            },
+            state: {
+                filterName: 'Salesforce_oppdateringer'
+            }
+        });
+    }
+
+    get hasSalesforceUpdate() {
+        return this.type === 'Salesforce oppdatering' && this.text ? true : false;
+    }
 
     get isEmpSubscribed() {
         return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
