@@ -48,9 +48,15 @@
             <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-right_none">
                 <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
             </lightning-layout-item>
-            <lightning-layout-item class="slds-col slds-size_4-of-12 slds-align-top slds-text-align_right slds-m-right_none">
+            <lightning-layout-item
+                class="slds-col slds-size_4-of-12 slds-align-top slds-text-align_right slds-m-right_none"
+            >
                 <img aria-hidden="true" src={imageURL} style="max-height: 180px" />
             </lightning-layout-item>
         </lightning-layout>
+        <template if:true={hasPermission}>
+            <lightning-layout-item> <span>{numOfViews}</span>&nbsp; visninger </lightning-layout-item>
+        </template>
+        <iframe src={siteURL} style="display: none"></iframe>
     </section>
 </template>
