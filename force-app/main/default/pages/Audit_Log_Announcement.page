@@ -1,0 +1,27 @@
+<apex:page standardController="NKS_Announcement__c">
+    <!-- variables to change for different objects -->
+    <apex:variable value="{!NKS_Announcement__c.Id}"         var="RecordId" rendered="true"/>
+    <apex:variable value="Announcement__c"            var="LookupField" rendered="true"/><!-- value = The lookup field from the audit log to the object being logged. -->
+    <apex:variable value="NKS_Audit_Log__c"          var="LogObject" rendered="true"/><!-- value = The API Name of the audit log object. Only change this if you are using different audit log objects per custom object. -->
+    <apex:remoteObjects >
+        <apex:remoteObjectModel name="{!LogObject}" jsShorthand="cal" fields="{!LookupField},User__c" />
+    </apex:remoteObjects>
+    <script>
+    function createUserLog() {
+        // Create log record
+        var announcementAuditLog = new SObjectModel.{!LogObject}();
+        announcementAuditLog.set('<apex:outputText value="{!LookupField}" />','<apex:outputText value="{!RecordId}" />');
+        announcementAuditLog.set('User__c', '<apex:outputText value="{!$User.Id}" />');
+        announcementAuditLog.set('Operation__c', 'View');        
+        announcementAuditLog.create(function(error, result, event) {
+                // Success? Exit the function.
+                if(error == null) {
+                    return;
+                }
+                // Error? Log it.
+                console.log(error);
+            } );
+    }
+    createUserLog();
+    </script>
+</apex:page>

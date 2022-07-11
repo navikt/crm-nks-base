@@ -1,5 +1,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getNews from '@salesforce/apex/NKS_HomePageController.getNews';
+import countViews from '@salesforce/apex/NKS_HomePageController.countNewsViews';
+import hasPermission from '@salesforce/customPermission/NKS_Manage_News';
 import { refreshApex } from '@salesforce/apex';
 
 export default class NksHomePageNews extends LightningElement {
@@ -10,13 +12,18 @@ export default class NksHomePageNews extends LightningElement {
 
     showSpinner = false;
     wiredNews;
+    wiredCounter;
     publishDate;
     lastModifiedDate;
     otherAuthors;
     information;
     imageURL;
+    siteURL;
+    numOfViews = 0;
 
-    connectedCallback() {}
+    connectedCallback() {
+        this.siteURL = '/apex/Audit_Log_Announcement?Id=' + this.recordId;
+    }
 
     @wire(getNews, {
         recordId: '$recordId'
@@ -24,6 +31,23 @@ export default class NksHomePageNews extends LightningElement {
     wiredData(result) {
         this.wiredNews = result;
         this.loadNews();
+    }
+
+    @wire(countViews, {
+        recordId: '$recordId'
+    })
+    wiredCountViews(result) {
+        this.wiredCounter = result;
+        this.loadCounter();
+    }
+
+    loadCounter() {
+        const { error, data } = this.wiredCounter;
+        if (data) {
+            this.numOfViews = data;
+        } else if (error) {
+            console.log(error);
+        }
     }
 
     loadNews() {
@@ -45,6 +69,9 @@ export default class NksHomePageNews extends LightningElement {
 
     refreshRecord() {
         this.showSpinner = true;
+        refreshApex(this.wiredCounter).then(() => {
+            this.loadCounter();
+        });
         refreshApex(this.wiredNews)
             .then(() => {
                 this.loadNews();
@@ -52,5 +79,9 @@ export default class NksHomePageNews extends LightningElement {
             .finally(() => {
                 this.showSpinner = false;
             });
+    }
+
+    get hasPermission() {
+        return hasPermission;
     }
 }
