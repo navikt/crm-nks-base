@@ -12,6 +12,7 @@ export default class NksHomePageNews extends LightningElement {
 
     showSpinner = false;
     wiredNews;
+    wiredCounter;
     publishDate;
     lastModifiedDate;
     otherAuthors;
@@ -35,7 +36,13 @@ export default class NksHomePageNews extends LightningElement {
     @wire(countViews, {
         recordId: '$recordId'
     })
-    wiredCountViews({ data, error }) {
+    wiredCountViews(result) {
+        this.wiredCounter = result;
+        this.loadCounter();
+    }
+
+    loadCounter() {
+        const { error, data } = this.wiredCounter;
         if (data) {
             this.numOfViews = data;
         } else if (error) {
@@ -62,6 +69,9 @@ export default class NksHomePageNews extends LightningElement {
 
     refreshRecord() {
         this.showSpinner = true;
+        refreshApex(this.wiredCounter).then(() => {
+            this.loadCounter();
+        });
         refreshApex(this.wiredNews)
             .then(() => {
                 this.loadNews();
@@ -72,7 +82,6 @@ export default class NksHomePageNews extends LightningElement {
     }
 
     get hasPermission() {
-        console.log(hasPermission);
         return hasPermission;
     }
 }
