@@ -4,6 +4,10 @@
         <enabled>true</enabled>
         <name>NKS_Beta</name>
     </customPermissions>
+     <customPermissions>
+        <enabled>true</enabled>
+        <name>Arena_Beta_Permission</name>
+    </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
         <name>SAF_BetaAccess</name>
