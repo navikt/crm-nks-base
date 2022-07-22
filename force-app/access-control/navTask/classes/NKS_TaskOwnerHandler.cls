@@ -1,5 +1,12 @@
 public without sharing class NKS_TaskOwnerHandler extends MyTriggers {
-    private static final Set<String> assigneeTriggerProfiles = new Set<String>{ 'NAV ATA', 'NAV YTA' };
+    private static final Set<String> assigneeTriggerProfiles = new Set<String>{
+        'NAV ATA',
+        'NAV YTA',
+        'NAV Kontaktsenter - Redaktør',
+        'NAV Kontaktsenter (Sanitized)',
+        'NAV Kontaktsenter - Pilot',
+        'NAV Kontaktsenter - Trafikk'
+    };
     public override void onBeforeInsert() {
         Id newOwnerId = RecordOwnerService.getDefaultOwner();
 
