@@ -257,6 +257,12 @@ TODAY())</expression>
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>themeSet</name>
+                <value>
+                    <stringValue>ALL</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>theme</name>
                 <value>
                     <elementReference>NavTask.NKS_Theme__c</elementReference>
