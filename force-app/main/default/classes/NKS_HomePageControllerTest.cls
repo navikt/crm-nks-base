@@ -131,4 +131,24 @@ public with sharing class NKS_HomePageControllerTest {
 
         System.assertEquals('Test String', res[0]);
     }
+
+    @isTest
+    static void testGetImageURL() {
+        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        Test.startTest();
+        String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
+        Test.stopTest();
+
+        System.assertEquals(null, testURL);
+    }
+
+    @isTest
+    static void testCountNewsViews() {
+        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        Test.startTest();
+        Integer counter = NKS_HomePageController.countNewsViews(testNews.Id);
+        Test.stopTest();
+
+        System.assertEquals(null, counter);
+    }
 }

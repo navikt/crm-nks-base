@@ -15,6 +15,16 @@
             <p class="slds-var-p-horizontal_medium">
                 <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
             </p>
+            <template if:true={hasSalesforceUpdate}>
+                <div class="slds-var-p-top_small">
+                    <lightning-formatted-url
+                        value={pageUrl}
+                        label="Se alle Salesforce oppdateringer"
+                        onclick={navigateToList}
+                    >
+                    </lightning-formatted-url>
+                </div>
+            </template>
         </section>
     </template>
     <template if:true={isOperational}>

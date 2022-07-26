@@ -373,6 +373,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_NavTaskSyncCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_NavTaskRoutingHandlerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -386,14 +390,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_NavUnitsControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_PaymentListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_PaymentService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -486,10 +482,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ObjectPermissionAnalyzerService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ObjectPermissionFromPermissionSetTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
