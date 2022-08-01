@@ -77,6 +77,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NavTask__c.NKS_Henvendelse_BehandlingsId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NavTask__c.INT_Journal_Entry_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
