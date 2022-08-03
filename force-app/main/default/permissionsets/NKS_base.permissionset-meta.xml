@@ -305,10 +305,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKSNavTaskWorkAllocationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_BostedAddressController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -330,10 +326,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_HenvendelseController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_HenvendelseListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -422,14 +414,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_RelatedListController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SafJournalPostListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SafViewDocumentController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1483,10 +1467,6 @@
         <object>UserNotification__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <pageAccesses>
-        <apexPage>NKS_SafViewDocument</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account.Employer</recordType>
         <visible>true</visible>

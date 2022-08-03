@@ -31,14 +31,6 @@
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label>Oppgavetype er påkrevd</label>
-        <name>NKS_NAV_Task_Type_Validation_Error</name>
-    </customLabels>
-    <customLabels>
-        <label>Send til meg</label>
-        <name>NKS_Nav_Task_Work_Allocation_Delegate_to_Self</name>
-    </customLabels>
-    <customLabels>
         <label>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</label>
         <name>NKS_Nav_Task_Work_Allocation_Validation_Error</name>
     </customLabels>

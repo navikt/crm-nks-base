@@ -231,6 +231,8 @@
         <name>CustomPermission</name>
     </types>
     <types>
+        <members>nksPersonHenvendelse</members>
+        <members>nksPersonHenvendelseList</members>
         <members>nksSafDocumentLink</members>
         <members>nksSafJournalpost</members>
         <members>nksSafJournalpostList</members>

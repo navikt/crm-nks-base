@@ -19,10 +19,6 @@
         <name>Errors_InvalidSettingConfiguration</name>
     </customLabels>
     <customLabels>
-        <label>Vennligst fullfør kategorisering.</label>
-        <name>NKS_Theme_Categorization_Validation_Error</name>
-    </customLabels>
-    <customLabels>
         <label>
             <!-- Error when selecting a cross-object fieldsset is not allowed and attempted. -->
         </label>
@@ -101,39 +97,6 @@
         <fullName>NAVTask_Owner_Change</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows>
-            <screens>
-                <fields>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(218,13,13);&quot;&gt;Det oppsto en feil&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <name>Error_Header</name>
-                </fields>
-                <name>Error_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Journal_Header</name>
-                </fields>
-                <fields>
-                    <fieldText>Oppgave til NAV-enhet:</fieldText>
-                    <name>Task_Description</name>
-                </fields>
-                <fields>
-                    <fieldText>Prioritet:</fieldText>
-                    <name>Task_Priority</name>
-                </fields>
-                <name>Input_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0,0,0); font-size: 16px;&quot;&gt;Chatsamtalen er journalført&lt;/span&gt;&lt;/p&gt;</fieldText>
-                    <name>Entry_Completed_Text</name>
-                </fields>
-                <name>Journal_Completed_Screen</name>
-            </screens>
-        </flows>
-        <fullName>NKS_Chat_Create_Journal_Entry</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
         <flows />
         <fullName>POST_JOURNAL_TEMPLATE</fullName>
     </flowDefinitions>
@@ -151,29 +114,6 @@
             </screens>
         </flows>
         <fullName>POST_JOURNAL_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <choices>
-                <name>None</name>
-            </choices>
-            <screens>
-                <fields>
-                    <name>ShowIfNote</name>
-                </fields>
-                <fields>
-                    <name>UnitInfo</name>
-                </fields>
-                <fields>
-                    <name>assignTask</name>
-                </fields>
-                <fields>
-                    <name>error</name>
-                </fields>
-                <name>Screen_to_Log_a_Call</name>
-            </screens>
-        </flows>
-        <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows />
