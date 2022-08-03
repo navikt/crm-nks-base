@@ -7,7 +7,7 @@ public with sharing class NKS_HomePageController {
             announcements = [
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
-                WHERE NKS_TypeFormula__c = :type
+                WHERE RecordType.Name = :type
                 ORDER BY LastModifiedDate DESC
                 LIMIT 1
             ];
