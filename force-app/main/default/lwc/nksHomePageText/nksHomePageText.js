@@ -6,7 +6,26 @@ import { subscribe, onError } from 'lightning/empApi';
 export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
-    @api type;
+    _type;
+
+    set type(value) {
+        if (value && this.recordTypeNameMap.has(value)) {
+            this._type = this.recordTypeNameMap.get(value);
+        }
+        this._type = '';
+    }
+
+    @api get type() {
+        return this._type;
+    }
+
+    recordTypeNameMap = new Map[
+        (['Nyhet', 'News'],
+        ['Kampanje', 'Campaign'],
+        ['Teknisk og drift', 'Operational'],
+        ['Salesforce oppdatering', 'Salesforce Update'],
+        ['Trafikk', 'Traffic'])
+    ]();
 
     isInitiated = false;
     text;
