@@ -7,6 +7,22 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
     @api type;
+    get recordTypeNameMap() {
+        switch (this.type) {
+            case 'Nyhet':
+                return 'News';
+            case 'Kampanje':
+                return 'Campaign';
+            case 'Teknisk og drift':
+                return 'Operational';
+            case 'Salesforce oppdatering':
+                return 'Salesforce Update';
+            case 'Trafikk':
+                return 'Traffic';
+            default:
+                return this.type;
+        }
+    }
 
     isInitiated = false;
     text;
@@ -35,7 +51,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
 
     loadField() {
         getField({
-            type: this.type
+            type: this.recordTypeNameMap
         })
             .then((data) => {
                 this.text = data && data.length > 0 ? data : null;

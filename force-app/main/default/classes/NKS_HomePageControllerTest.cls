@@ -27,7 +27,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetField() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Salesforce oppdatering');
+        String info = NKS_HomePageController.getField('Salesforce Update');
         Test.stopTest();
 
         System.assertEquals(700, info.length());
@@ -36,7 +36,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetFieldWithNullValue() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Trafikk');
+        String info = NKS_HomePageController.getField('Traffic  ');
         Test.stopTest();
 
         System.assertEquals(null, info);
