@@ -6,26 +6,23 @@ import { subscribe, onError } from 'lightning/empApi';
 export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
-    _type;
-
-    @api set type(value) {
-        if (value && this.recordTypeNameMap.has(value)) {
-            this._type = this.recordTypeNameMap.get(value);
+    @api type;
+    get recordTypeNameMap() {
+        switch (this.type) {
+            case 'Nyhet':
+                return 'News';
+            case 'Kampanje':
+                return 'Campaign';
+            case 'Teknisk og drift':
+                return 'Operational';
+            case 'Salesforce oppdatering':
+                return 'Salesforce Update';
+            case 'Trafikk':
+                return 'Traffic';
+            default:
+                return this.type;
         }
-        this._type = '';
     }
-
-    get type() {
-        return this._type;
-    }
-
-    recordTypeNameMap = new Map[
-        (['Nyhet', 'News'],
-        ['Kampanje', 'Campaign'],
-        ['Teknisk og drift', 'Operational'],
-        ['Salesforce oppdatering', 'Salesforce Update'],
-        ['Trafikk', 'Traffic'])
-    ]();
 
     isInitiated = false;
     text;
@@ -54,7 +51,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
 
     loadField() {
         getField({
-            type: this.type
+            type: this.recordTypeNameMap
         })
             .then((data) => {
                 this.text = data && data.length > 0 ? data : null;
