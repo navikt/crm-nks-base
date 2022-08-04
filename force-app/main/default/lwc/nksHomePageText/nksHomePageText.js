@@ -8,14 +8,14 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api iconName;
     _type;
 
-    set type(value) {
+    @api set type(value) {
         if (value && this.recordTypeNameMap.has(value)) {
             this._type = this.recordTypeNameMap.get(value);
         }
         this._type = '';
     }
 
-    @api get type() {
+    get type() {
         return this._type;
     }
 
