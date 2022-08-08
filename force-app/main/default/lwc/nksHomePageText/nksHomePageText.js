@@ -1,22 +1,57 @@
 import { LightningElement, api } from 'lwc';
 import getField from '@salesforce/apex/NKS_HomePageController.getField';
+import { NavigationMixin } from 'lightning/navigation';
+import { subscribe, onError } from 'lightning/empApi';
 
-export default class NksHomePageText extends LightningElement {
+export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
     @api type;
+    get recordTypeNameMap() {
+        switch (this.type) {
+            case 'Nyhet':
+                return 'News';
+            case 'Kampanje':
+                return 'Campaign';
+            case 'Teknisk og drift':
+                return 'Operational';
+            case 'Salesforce oppdatering':
+                return 'Salesforce Update';
+            case 'Trafikk':
+                return 'Traffic';
+            default:
+                return this.type;
+        }
+    }
 
     isInitiated = false;
     text;
+    pageUrl;
+    channelName = '/topic/Announcement_Updates';
+    subscription = {};
 
     connectedCallback() {
         this.isInitiated = true;
-        this.getField();
+        this.loadField();
+        this.handleError();
+
+        this[NavigationMixin.GenerateUrl]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'NKS_Announcement__c',
+                actionName: 'list'
+            },
+            state: {
+                filterName: 'Salesforce_oppdateringer'
+            }
+        }).then((url) => {
+            this.pageUrl = url;
+        });
     }
 
-    getField() {
+    loadField() {
         getField({
-            type: this.type
+            type: this.recordTypeNameMap
         })
             .then((data) => {
                 this.text = data && data.length > 0 ? data : null;
@@ -24,6 +59,50 @@ export default class NksHomePageText extends LightningElement {
             .catch((error) => {
                 console.log('An error occurred: ' + JSON.stringify(error, null, 2));
             });
+
+        if (!this.isEmpSubscribed) {
+            this.handleSubscribe();
+        }
+    }
+
+    handleError() {
+        onError((error) => {
+            console.log('Received error from empApi: ', JSON.stringify(error));
+            this.handleSubscribe();
+        });
+    }
+
+    handleSubscribe() {
+        subscribe(this.channelName, -1, this.refreshField).then((response) => {
+            this.subscription = response;
+            console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
+        });
+    }
+
+    refreshField = () => {
+        this.isInitiated = true;
+        this.loadField();
+    };
+
+    navigateToList() {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'NKS_Announcement__c',
+                actionName: 'list'
+            },
+            state: {
+                filterName: 'Salesforce_oppdateringer'
+            }
+        });
+    }
+
+    get hasSalesforceUpdate() {
+        return this.type === 'Salesforce oppdatering' && this.text ? true : false;
+    }
+
+    get isEmpSubscribed() {
+        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
     get icon() {

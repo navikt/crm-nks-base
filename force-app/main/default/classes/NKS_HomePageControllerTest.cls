@@ -27,7 +27,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetField() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Salesforce oppdatering');
+        String info = NKS_HomePageController.getField('Salesforce Update');
         Test.stopTest();
 
         System.assertEquals(700, info.length());
@@ -36,7 +36,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetFieldWithNullValue() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Trafikk');
+        String info = NKS_HomePageController.getField('Traffic  ');
         Test.stopTest();
 
         System.assertEquals(null, info);
@@ -130,5 +130,25 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertEquals('Test String', res[0]);
+    }
+
+    @isTest
+    static void testGetImageURL() {
+        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        Test.startTest();
+        String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
+        Test.stopTest();
+
+        System.assertEquals(null, testURL);
+    }
+
+    @isTest
+    static void testCountNewsViews() {
+        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        Test.startTest();
+        Integer counter = NKS_HomePageController.countNewsViews(testNews.Id);
+        Test.stopTest();
+
+        System.assertEquals(null, counter);
     }
 }
