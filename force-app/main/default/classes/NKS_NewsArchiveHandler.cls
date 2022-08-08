@@ -2,10 +2,10 @@ public with sharing class NKS_NewsArchiveHandler {
     private static final String JOURNAL_POST_STATUS = 'J';
     private static final String INCOMING_POST = 'X';
     private static final String BUSINESS_UNIT = 'NAV Styringsenhet Kontaktsenter';
-    private static final String BUSINESS_UNIT_ID = '2530003'; //'410000';
+    private static final String BUSINESS_UNIT_ID = '410000'; //'410000';
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
-    private static final String NAV_IDENT = 'A133191'; //'A117995';
+    private static final String NAV_IDENT = 'A117995'; //'A117995';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
     private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_NKS';
     private static final String FTPS_CATALOUGE_TEST = 'ftpmottakP1SF_NKS';
@@ -14,12 +14,28 @@ public with sharing class NKS_NewsArchiveHandler {
     private string errorMessage='';
     private Boolean isSandbox;
 
-    public void execute(NKS_Announcement__c article) {
-        String ftpsCatalouge = getFtpsCatalouge();
-        String caseNumber = NEWS_CASE_NUMBER;
-        archiveArticle(article,caseNumber,ftpsCatalouge);
+    public NKS_NewsArchiveHandler(){
+        isSandbox=[SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
     }
 
+    public void execute(NKS_Announcement__c article) {
+        String ftpsCatalouge = getFtpsCatalouge();
+        String caseNumber = getCaseNumber();
+        if(caseNumber == null){
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Fant ikke saksnummer for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return;
+        }
+        archiveArticle(article,caseNumber,ftpsCatalouge);
+        return;
+    }
+    @TestVisible
+    private String getCaseNumber(){
+        WebsakNewsMapping__mdt mdt = [SELECT Id, CaseNumberTest__c, CaseNumberProd__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+        if (mdt == null) return null;
+        return isSandbox?mdt.CaseNumberTest__c:mdt.CaseNumberProd__c;
+    }
     @TestVisible
     private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String ftpsCatalouge){
         String articleFileName=formatFileName(article.Name + DEFAULT_FILE_FORMAT);
@@ -42,7 +58,6 @@ public with sharing class NKS_NewsArchiveHandler {
         } else {
             manifestBlob=getManifest(
                 fileNameFormatMap,
-                article,
                 INCOMING_POST,
                 getJournalPostName(JOURNAL_POST_TYPE, article.Name),
                 article.Skills__c.replaceAll(';', ' '),
@@ -103,7 +118,6 @@ public with sharing class NKS_NewsArchiveHandler {
       @TestVisible
       private Blob getManifest(
         Map<String, String> fileInfo,
-        NKS_Announcement__c article,
         String postType,
         String journalPostName,
         String category,
@@ -156,7 +170,6 @@ public with sharing class NKS_NewsArchiveHandler {
       }
 
     private String getFtpsCatalouge(){
-        isSandbox=[SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
         if(isSandbox){
             return FTPS_CATALOUGE_TEST;
         }
