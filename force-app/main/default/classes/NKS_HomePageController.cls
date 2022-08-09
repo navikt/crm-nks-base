@@ -5,7 +5,7 @@ public with sharing class NKS_HomePageController {
         String res = null;
         try {
             announcements = [
-                SELECT NKS_Information__c
+                SELECT Id, NKS_Information__c
                 FROM NKS_Announcement__c
                 WHERE NKS_TypeFormula__c = :type
                 ORDER BY LastModifiedDate DESC
