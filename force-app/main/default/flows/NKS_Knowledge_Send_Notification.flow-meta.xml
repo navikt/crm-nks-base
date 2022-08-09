@@ -17,13 +17,13 @@
         <inputParameters>
             <name>body</name>
             <value>
-                <stringValue>Du ble tildelt en tilbakemelding.</stringValue>
+                <elementReference>$Record.Description</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>title</name>
             <value>
-                <stringValue>Tilbakemeldings tildeling</stringValue>
+                <stringValue>Du ble tildelt en tilbakemelding</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -131,13 +131,12 @@
         <connector>
             <targetReference>Check_RecordType</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Status</field>
-            <operator>EqualTo</operator>
+            <field>Assignee__c</field>
+            <operator>IsChanged</operator>
             <value>
-                <stringValue>Forwarded</stringValue>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Case</object>
