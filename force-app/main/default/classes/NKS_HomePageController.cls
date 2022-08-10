@@ -50,9 +50,24 @@ public with sharing class NKS_HomePageController {
         }
 
         if (String.isNotBlank(orderby)) {
-            qf.addOrdering(
-                new fflib_QueryFactory.Ordering(objectName, orderby, fflib_QueryFactory.SortOrder.ASCENDING)
-            );
+            List<String> orderBys = orderby.split(' ');
+            Integer i = 0;
+            Integer n = 1;
+            while (i < orderBys.size()) {
+                fflib_QueryFactory.SortOrder so = fflib_QueryFactory.SortOrder.ASCENDING;
+                String orderByField = orderBys[i];
+                if (n < orderBys.size() && orderBys[n] == 'ASC' || orderBys[n] == 'DESC') {
+                    if (orderBys[n] == 'DESC') {
+                        so = fflib_QueryFactory.SortOrder.DESCENDING;
+                    }
+                    i++;
+                    n++;
+                }
+
+                qf.addOrdering(orderByField, so);
+                i++;
+                n++;
+            }
         }
 
         if (String.isNotBlank(content)) {
@@ -108,6 +123,7 @@ public with sharing class NKS_HomePageController {
                 skillstring.removeEnd(',') +
                 ')';
         }
+        qf.setCondition(filter);
 
         System.debug('QUERY: ' + qf.toSOQL());
 
