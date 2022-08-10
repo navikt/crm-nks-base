@@ -9,11 +9,11 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.160.0.LATEST"
+                    "versionNumber": "0.168.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.99.0.LATEST"
+                    "versionNumber": "0.102.0.LATEST"
                 },
                 {
                     "package": "crm-shared-base",
@@ -25,7 +25,7 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.81.0.LATEST"
+                    "versionNumber": "0.83.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
@@ -33,39 +33,39 @@
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.16.0.LATEST"
+                    "versionNumber": "0.17.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.16.0.LATEST"
+                    "versionNumber": "0.17.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
-                    "versionNumber": "0.2.0.LATEST"
+                    "versionNumber": "0.3.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.2.0.LATEST"
-                },
-                {
-                    "package": "crm-henvendelse",
-                    "versionNumber": "0.64.0.LATEST"
-                },
-                {
-                    "package": "crm-platform-oppgave",
-                    "versionNumber": "0.25.0.LATEST"
-                },
-                {
-                    "package": "crm-sf-saf",
                     "versionNumber": "0.8.0.LATEST"
                 },
                 {
+                    "package": "crm-henvendelse",
+                    "versionNumber": "0.79.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-oppgave",
+                    "versionNumber": "0.40.0.LATEST"
+                },
+                {
+                    "package": "crm-sf-saf",
+                    "versionNumber": "0.10.0.LATEST"
+                },
+                {
                     "package": "crm-nks-base-components",
-                    "versionNumber": "0.5.0.LATEST"
+                    "versionNumber": "0.6.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.20.0.LATEST"
+                    "versionNumber": "0.27.0.LATEST"
                 }
             ]
         }

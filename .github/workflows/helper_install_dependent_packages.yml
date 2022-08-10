@@ -6,7 +6,7 @@ on:
         description: "Package ID"
         required: true
       org:
-        description: "Org (prod, preprod, dev, uat, sit)"
+        description: "Org (preprod, dev, uat, sit)"
         required: true
 jobs:
   debug:
@@ -27,10 +27,7 @@ jobs:
       - name: Set SFDX Auth URL
         id: auth-url
         run: |
-          if [ ${{ github.event.inputs.org }} == "prod" ];then
-            echo "::set-output name=target::$(echo ${{ secrets.CRM_PROD_SFDX_URL }})"
-            echo "'prod' was set"
-          elif [ ${{ github.event.inputs.org }} == "preprod" ];then
+          if [ ${{ github.event.inputs.org }} == "preprod" ];then
             echo "::set-output name=target::$(echo ${{ secrets.CRM_PREPROD_SFDX_URL }})"
             echo "'preprod' was set"
           elif [ ${{ github.event.inputs.org }} == "dev" ];then
