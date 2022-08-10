@@ -42,59 +42,34 @@ public with sharing class NKS_HomePageController {
             userskills = getUserSkills(userId);
         }
 
-        fflib_QueryFactory qf = new fflib_QueryFactory(Schema.getGlobalDescribe().get(objectName));
-        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
-
-        if (String.isNotBlank(limitNumber)) {
-            qf.setLimit(Integer.valueOf(limitNumber));
-        }
-
-        if (String.isNotBlank(orderby)) {
-            qf.addOrdering(
-                new fflib_QueryFactory.Ordering(objectName, orderby, fflib_QueryFactory.SortOrder.ASCENDING)
-            );
-        }
-
-        if (String.isNotBlank(content)) {
-            qf.selectFields(content.split(','));
+        String query = 'SELECT LastModifiedDate, CreatedDate, ' + title;
+        if (content != null) {
+            query += ' , ' + content;
         }
 
         if (filterbyskills && objectName == 'NKS_Announcement__c') {
-            qf.selectField('skills__c');
+            query += ' , Skills__c ';
         }
 
-        if (objectName == 'NKS_Announcement__c') {
-            qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c' });
-
-            if (userskills.size() > 0) {
-                String skillstring = '';
-                for (String u : userskills) {
-                    skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
-                }
-
-                filter +=
-                    (String.isBlank(filter) ? '' : ' AND ') +
-                    '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                    skillstring.removeEnd(',') +
-                    '))';
-            }
+        if (
+            objectName == 'NKS_Announcement__c' &&
+            Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
+        ) {
+            query += ' , NKS_News_Pin__c, NKS_News_Publish_Date__c';
         }
 
         if (objectName == 'Case') {
-            qf.selectField('toLabel(Status)');
+            query += ' , toLabel(Status)';
         }
+
+        query += ' FROM ' + objectName + ' WHERE ' + filter;
 
         if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
             String skillstring = '';
             for (String u : userskills) {
                 skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
             }
-
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                skillstring.removeEnd(',') +
-                '))';
+            query += ' AND (Skills__c = \'\' OR Skills__c INCLUDES (' + skillstring.removeEnd(',') + '))';
         }
 
         if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
@@ -102,16 +77,19 @@ public with sharing class NKS_HomePageController {
             for (String u : userskills) {
                 skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
             }
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
-                skillstring.removeEnd(',') +
-                ')';
+            query += ' WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillstring.removeEnd(',') + ')';
         }
 
-        System.debug('QUERY: ' + qf.toSOQL());
+        if (orderby != null) {
+            query += ' ORDER BY ' + orderby;
+        }
 
-        List<SObject> listtoreturn = Database.query(qf.toSOQL());
+        if (limitNumber != null) {
+            query += ' LIMIT ' + limitNumber;
+        }
+
+        System.debug('QUERY: ' + query);
+        List<SObject> listtoreturn = Database.query(query);
 
         records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
         return records;
@@ -147,25 +125,13 @@ public with sharing class NKS_HomePageController {
         Boolean showimage
     ) {
         List<Record> records = new List<Record>();
-        Map<Id, String> urlMap;
-
-        if (showimage) {
-            List<Id> recordIds = new List<Id>();
-            for (sObject r : listofrecords) {
-                recordIds.add(r.Id);
-            }
-            urlMap = getImageUrls(recordIds);
-        } else {
-            urlMap = new Map<Id, String>();
-        }
-
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
             if (showimage) {
-                record.imageurl = urlMap.get(r.Id);
+                record.imageurl = getImageUrl(r.Id);
             }
 
             if (content != null) {
@@ -176,7 +142,11 @@ public with sharing class NKS_HomePageController {
                     record.summary = record.content;
                 }
             }
-            if (objectName == 'NKS_Announcement__c') {
+
+            if (
+                objectName == 'NKS_Announcement__c' &&
+                Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByDeveloperName().get('News') != null
+            ) {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
                 record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
@@ -196,40 +166,36 @@ public with sharing class NKS_HomePageController {
         return records;
     }
 
-    public static Map<Id, String> getImageUrls(List<Id> recordIds) {
-        Map<Id, String> urlMap = new Map<Id, String>();
+    public static String getImageUrl(Id recordId) {
         try {
-            for (ContentDocumentLink cdl : [
+            ContentDocumentLink cdl = [
                 SELECT
                     Id,
                     ContentDocumentId,
                     ContentDocument.LatestPublishedVersionId,
                     ContentDocument.ContentModifiedDate,
-                    ContentDocument.FileType,
-                    LinkedEntityId
+                    ContentDocument.FileType
                 FROM ContentDocumentLink
-                WHERE LinkedEntityId IN :recordIds
+                WHERE LinkedEntityId = :recordId
                 ORDER BY ContentDocument.ContentModifiedDate DESC
-            ]) {
-                if (urlMap.containsKey(cdl.LinkedEntityId)) {
-                    continue;
+                LIMIT 1
+            ];
+
+            String contentversionid = cdl.ContentDocument.LatestPublishedVersionId;
+            if (contentversionid != null) {
+                if (cdl.ContentDocument.FileType == 'PDF') {
+                    return '/sfc/servlet.shepherd/version/renditionDownload?rendition=SVGZ&versionId=' +
+                        contentversionid;
                 }
-                String rendition = cdl.ContentDocument.FileType == 'PDF' ? 'SVGZ' : 'ORIGINAL_Png';
-                String urlString =
-                    '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
-                    rendition +
-                    '&versionId=' +
-                    cdl.ContentDocument.LatestPublishedVersionId;
-                urlMap.put(cdl.LinkedEntityId, urlString);
+                return '/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&versionId=' +
+                    contentversionid;
+            } else {
+                System.debug('Cannot fetch any images for Announcement with recordId = ' + recordId);
             }
         } catch (Exception ex) {
             System.debug('Problem getting  image for Annoucement: ' + ex.getMessage());
         }
-        return urlMap;
-    }
-
-    public static String getImageUrl(Id recordId) {
-        return getImageUrls(new List<Id>{ recordId }).get(recordId);
+        return null;
     }
 
     public static Set<String> getUserSkills(Id userId) {
@@ -285,7 +251,7 @@ public with sharing class NKS_HomePageController {
                 NKS_Campaign_From_Date__c,
                 NKS_Campaign_To_Date__c
             FROM NKS_Announcement__c
-            WHERE RecordType.Name = 'Campaign' AND NKS_Campaign_To_Date__c >= TODAY
+            WHERE NKS_TypeFormula__c = 'Kampanje' AND NKS_Campaign_To_Date__c >= TODAY
             ORDER BY CreatedDate DESC
             LIMIT 1
         ];
