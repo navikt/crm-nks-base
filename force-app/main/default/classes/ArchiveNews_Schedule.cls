@@ -2,7 +2,7 @@ global class ArchiveNews_Schedule implements Schedulable, Database.Batchable<sOb
     private String query='';
     
     public ArchiveNews_Schedule(){
-        this.query='SELECT Id, Name ,Skills__c, NKS_News_Publish_Date__c FROM NKS_Announcement__c WHERE RecordType.Name=\'News\' AND NKS_News_Archive__c=TRUE AND NKS_News_Delete_Date__c=YESTERDAY AND NKS_News_Status__c=\'Published\'';
+        this.query='SELECT Id, Name ,Skills__c, NKS_News_Publish_Date__c FROM NKS_Announcement__c WHERE RecordType.Name=\'News\' AND NKS_News_Archive__c=TRUE AND NKS_News_Delete_Date__c=TOMORROW AND NKS_News_Status__c=\'Published\'';
     }
 
     public ArchiveNews_Schedule(String query){
