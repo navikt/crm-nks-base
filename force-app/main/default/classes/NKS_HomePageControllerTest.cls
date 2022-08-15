@@ -151,4 +151,12 @@ public with sharing class NKS_HomePageControllerTest {
 
         System.assertEquals(null, counter);
     }
+
+    @isTest
+    static void removeHtmlTagsTest() {
+        Test.startTest();
+        List<String> result = NKS_HomePageController.removeHtmlTags(new List<String>{ '<b>TEST</b>' });
+        System.assertEquals('TEST', result[0], 'expected html tags to be removed');
+        Test.stopTest();
+    }
 }

@@ -29,17 +29,24 @@ public with sharing class NKS_HomePageController {
         String content,
         String objectName,
         String filter,
-        String orderby,
+        String orderBy,
         String limitNumber,
         String datefield,
-        Boolean showimage,
-        Boolean filterbyskills
+        Boolean showImage,
+        Boolean filterBySkills
     ) {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
         String userId = UserInfo.getUserID();
+        String skillStringAnnouncement = '';
+        String skillStringKnowledge = '';
+
         if (filterbyskills) {
-            userskills = getUserSkills(userId);
+            for (String u : getUserSkills(userId)) {
+                u = u.replaceAll('NKS_Skill_', '');
+                skillStringAnnouncement += '\'' + u + '\',';
+                skillStringKnowledge += u + '__c ,';
+            }
         }
 
         fflib_QueryFactory qf = new fflib_QueryFactory(Schema.getGlobalDescribe().get(objectName));
@@ -74,23 +81,18 @@ public with sharing class NKS_HomePageController {
             qf.selectFields(content.split(','));
         }
 
-        if (filterbyskills && objectName == 'NKS_Announcement__c') {
+        if (filterBySkills && objectName == 'NKS_Announcement__c') {
             qf.selectField('skills__c');
         }
 
         if (objectName == 'NKS_Announcement__c') {
             qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c' });
 
-            if (userskills.size() > 0) {
-                String skillstring = '';
-                for (String u : userskills) {
-                    skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
-                }
-
+            if (String.isNotBlank(skillStringAnnouncement)) {
                 filter +=
                     (String.isBlank(filter) ? '' : ' AND ') +
                     '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                    skillstring.removeEnd(',') +
+                    skillStringAnnouncement.removeEnd(',') +
                     '))';
             }
         }
@@ -99,37 +101,20 @@ public with sharing class NKS_HomePageController {
             qf.selectField('toLabel(Status)');
         }
 
-        if (filterbyskills && objectName == 'NKS_Announcement__c' && userskills.size() > 0) {
-            String skillstring = '';
-            for (String u : userskills) {
-                skillstring += '\'' + u.replaceAll('NKS_Skill_', '') + '\',';
-            }
-
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                skillstring.removeEnd(',') +
-                '))';
-        }
-
-        if (filterbyskills && objectName == 'Knowledge__kav' && userskills.size() > 0) {
-            String skillstring = '';
-            for (String u : userskills) {
-                skillstring += u.replaceAll('NKS_Skill_', '') + '__c ,';
-            }
+        if (filterBySkills && objectName == 'Knowledge__kav' && String.isNotBlank(skillStringKnowledge)) {
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
                 'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
-                skillstring.removeEnd(',') +
+                skillStringKnowledge.removeEnd(',') +
                 ')';
         }
         qf.setCondition(filter);
 
         System.debug('QUERY: ' + qf.toSOQL());
 
-        List<SObject> listtoreturn = Database.query(qf.toSOQL());
+        List<SObject> listToReturn = Database.query(qf.toSOQL());
 
-        records = createRecords(listtoreturn, objectName, title, content, datefield, showimage);
+        records = createRecords(listToReturn, objectName, title, content, dateField, showImage);
         return records;
     }
 
