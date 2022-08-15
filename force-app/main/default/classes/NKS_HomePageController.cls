@@ -81,19 +81,21 @@ public with sharing class NKS_HomePageController {
             qf.selectFields(content.split(','));
         }
 
-        if (filterBySkills && objectName == 'NKS_Announcement__c') {
-            qf.selectField('skills__c');
-        }
-
         if (objectName == 'NKS_Announcement__c') {
             qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c' });
 
-            if (String.isNotBlank(skillStringAnnouncement)) {
-                filter +=
-                    (String.isBlank(filter) ? '' : ' AND ') +
-                    '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                    skillStringAnnouncement.removeEnd(',') +
-                    '))';
+            if (filterbyskills) {
+                qf.selectField('skills__c');
+                filter += (String.isBlank(filter) ? '' : ' AND ');
+
+                if (String.isNotBlank(skillStringAnnouncement)) {
+                    filter +=
+                        '(Skills__c = \'\' OR Skills__c INCLUDES (' +
+                        skillStringAnnouncement.removeEnd(',') +
+                        '))';
+                } else {
+                    filter += 'Skills__c = \'\'';
+                }
             }
         }
 
@@ -101,7 +103,7 @@ public with sharing class NKS_HomePageController {
             qf.selectField('toLabel(Status)');
         }
 
-        if (filterBySkills && objectName == 'Knowledge__kav' && String.isNotBlank(skillStringKnowledge)) {
+        if (objectName == 'Knowledge__kav' && filterbyskills == true) {
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
                 'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +

@@ -54,7 +54,7 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             true,
-            false
+            true
         );
         Test.stopTest();
 
