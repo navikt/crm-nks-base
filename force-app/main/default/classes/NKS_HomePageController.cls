@@ -41,7 +41,7 @@ public with sharing class NKS_HomePageController {
         String skillStringAnnouncement = '';
         String skillStringKnowledge = '';
 
-        if (filterbyskills) {
+        if (filterBySkills == true) {
             for (String u : getUserSkills(userId)) {
                 u = u.replaceAll('NKS_Skill_', '');
                 skillStringAnnouncement += '\'' + u + '\',';
@@ -84,7 +84,7 @@ public with sharing class NKS_HomePageController {
         if (objectName == 'NKS_Announcement__c') {
             qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c' });
 
-            if (filterbyskills) {
+            if (filterBySkills == true) {
                 qf.selectField('skills__c');
                 filter += (String.isBlank(filter) ? '' : ' AND ');
 
@@ -99,10 +99,6 @@ public with sharing class NKS_HomePageController {
             }
         }
 
-        if (objectName == 'Case') {
-            qf.selectField('toLabel(Status)');
-        }
-
         if (objectName == 'Knowledge__kav' && filterbyskills == true) {
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
@@ -110,11 +106,18 @@ public with sharing class NKS_HomePageController {
                 skillStringKnowledge.removeEnd(',') +
                 ')';
         }
+
         qf.setCondition(filter);
 
-        System.debug('QUERY: ' + qf.toSOQL());
+        String query = qf.toSOQL();
 
-        List<SObject> listToReturn = Database.query(qf.toSOQL());
+        if (objectName == 'Case') {
+            query = query.replace('SELECT', 'SELECT toLabel(Status),');
+        }
+
+        System.debug('QUERY: ' + query);
+
+        List<SObject> listToReturn = Database.query(query);
 
         records = createRecords(listToReturn, objectName, title, content, dateField, showImage);
         return records;
@@ -146,13 +149,13 @@ public with sharing class NKS_HomePageController {
         String objectName,
         String title,
         String content,
-        String datefield,
-        Boolean showimage
+        String dateField,
+        Boolean showImage
     ) {
         List<Record> records = new List<Record>();
         Map<Id, String> urlMap;
 
-        if (showimage) {
+        if (showImage == true) {
             List<Id> recordIds = new List<Id>();
             for (sObject r : listofrecords) {
                 recordIds.add(r.Id);
@@ -167,7 +170,7 @@ public with sharing class NKS_HomePageController {
             record.recordId = r.Id;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
-            if (showimage) {
+            if (showImage == true) {
                 record.imageurl = urlMap.get(r.Id);
             }
 
