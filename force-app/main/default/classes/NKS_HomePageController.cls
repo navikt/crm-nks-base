@@ -29,11 +29,11 @@ public with sharing class NKS_HomePageController {
         String content,
         String objectName,
         String filter,
-        String orderBy,
+        String orderby,
         String limitNumber,
         String datefield,
-        Boolean showImage,
-        Boolean filterBySkills
+        Boolean showimage,
+        Boolean filterbyskills
     ) {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
@@ -86,20 +86,18 @@ public with sharing class NKS_HomePageController {
 
             if (filterBySkills == true) {
                 qf.selectField('skills__c');
-                filter += (String.isBlank(filter) ? '' : ' AND ');
 
                 if (String.isNotBlank(skillStringAnnouncement)) {
+                    filter += (String.isBlank(filter) ? '' : ' AND ');
                     filter +=
                         '(Skills__c = \'\' OR Skills__c INCLUDES (' +
                         skillStringAnnouncement.removeEnd(',') +
                         '))';
-                } else {
-                    filter += 'Skills__c = \'\'';
                 }
             }
         }
 
-        if (objectName == 'Knowledge__kav' && filterbyskills == true) {
+        if (objectName == 'Knowledge__kav' && filterbyskills == true && String.isNotBlank(skillStringKnowledge)) {
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
                 'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
