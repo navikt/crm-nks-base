@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Announcement_New_Custom_Button</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>New</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>/lightning/o/NKS_Announcement__c/new?&amp;useRecordTypeCheck=1&amp;defaultFieldValues=NKS_Information__c=&lt;strong&gt;Innledning&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h2&gt;Mellomtittel&lt;/h2&gt;Avsnitt ...&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Undertittel&lt;/h3&gt;Avsnitt ...</url>
+</WebLink>
