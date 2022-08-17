@@ -1,4 +1,4 @@
-name: "[HELPER] Install pacakge with dependent packages"
+name: "[HELPER] Install package with dependent packages"
 on:
   workflow_dispatch:
     inputs:
