@@ -9,5 +9,5 @@
     <openType>replace</openType>
     <protected>false</protected>
     <requireRowSelection>false</requireRowSelection>
-    <url>/lightning/o/NKS_Announcement__c/new?&amp;useRecordTypeCheck=1&amp;defaultFieldValues=NKS_Information__c=&lt;strong&gt;Innledning&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h2&gt;Mellomtittel&lt;/h2&gt;Avsnitt ...&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Undertittel&lt;/h3&gt;Avsnitt ...</url>
+    <url>{!URLFOR(&apos;/lightning/o/NKS_Announcement__c/new?useRecordTypeCheck=1&amp;defaultFieldValues=NKS_Information__c=&lt;strong&gt;Innledning&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h2&gt;Mellomtittel&lt;/h2&gt;Avsnitt ...&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Undertittel&lt;/h3&gt;Avsnitt ...&apos;)}</url>
 </WebLink>
