@@ -172,7 +172,7 @@ public with sharing class NKS_HomePageController {
                 record.imageurl = urlMap.get(r.Id);
             }
 
-            if (content != null) {
+            if (String.isNotBlank(content) && String.isNotBlank((String) r.get(content))) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
                 if (record.content.length() > 600) {
                     record.summary = record.content.mid(0, 600) + '...';
@@ -180,6 +180,7 @@ public with sharing class NKS_HomePageController {
                     record.summary = record.content;
                 }
             }
+
             if (objectName == 'NKS_Announcement__c') {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
