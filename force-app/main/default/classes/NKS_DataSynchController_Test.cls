@@ -19,6 +19,15 @@ public class NKS_DataSynchController_Test {
     }
 
     @isTest
+    static void testHenvendelseSynchError() {
+        ApiMock.setTestMock('GET_HENVENDELSER', 200, 'OK');
+
+        Test.startTest();
+        NKS_DataSynchController.doHenvendelseSynch('123456789', null);
+        Test.stopTest();
+    }
+
+    @isTest
     static void testBankAccountSync() {
         Person__c person = (Person__c) UTIL_TestDataFactory.createRecord(
             new Person__c(INT_ActorId__c = '123456789', Name = '01234567890')
