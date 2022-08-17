@@ -60,7 +60,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 fileNameFormatMap,
                 INCOMING_POST,
                 getJournalPostName(JOURNAL_POST_TYPE, article.Name),
-                article.Skills__c.replaceAll(';', ' '),
+                article.Skills__c != null ? article.Skills__c.replaceAll(';', ' ') : '',
                 Date.today(),
                 caseNumber
               );
