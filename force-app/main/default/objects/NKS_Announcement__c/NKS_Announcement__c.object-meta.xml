@@ -163,10 +163,7 @@
     <pluralLabel>Announcements</pluralLabel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts>
-        <excludedStandardButtons>New</excludedStandardButtons>
-        <listViewButtons>NKS_Announcement_New_Custom_Button</listViewButtons>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
