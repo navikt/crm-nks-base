@@ -94,4 +94,8 @@
         <label>Trafikk</label>
         <name>Traffic</name>
     </recordTypes>
+    <webLinks>
+        <label>Ny</label>
+        <name>NKS_Announcement_New_Custom_Button</name>
+    </webLinks>
 </CustomObjectTranslation>
