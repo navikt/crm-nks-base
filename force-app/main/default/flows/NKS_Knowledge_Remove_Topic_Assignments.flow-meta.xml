@@ -1,103 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_Topic_Assingnments</name>
-        <label>Get Topic Assingnments</label>
-        <locationX>484</locationX>
-        <locationY>911</locationY>
-        <actionName>FlowFindCollection</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Loop_Through_Topic_Assignments</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>U__outputCollection</typeName>
-            <typeValue>TopicAssignment</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>FieldApiINames</name>
-            <value>
-                <stringValue>Id, EntityId, EntityKeyPrefix, EntityType, TopicId, CreatedDate</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sObjectName</name>
-            <value>
-                <stringValue>TopicAssignment</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>WhereClause</name>
-            <value>
-                <elementReference>WhereClause</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>55.0</apiVersion>
-    <assignments>
-        <name>Add_Topic_Assignment</name>
-        <label>Add Topic Assignment</label>
-        <locationX>572</locationX>
-        <locationY>1271</locationY>
-        <assignmentItems>
-            <assignToReference>TopicAssignments</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop_Through_Topic_Assignments</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Through_Topic_Assignments</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>Assign_VersionId</name>
         <label>Assign VersionId</label>
-        <locationX>572</locationX>
-        <locationY>695</locationY>
+        <locationX>440</locationX>
+        <locationY>815</locationY>
         <assignmentItems>
             <assignToReference>VersionIds</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_Through_Knowledge_Versions.Id</elementReference>
+                <elementReference>currentItem_Filter_Knowledge_Articles.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Loop_Through_Knowledge_Versions</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Check_EntityId_Against_VersionId</name>
-        <label>Check EntityId Against VersionId</label>
-        <locationX>704</locationX>
-        <locationY>1151</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Through_Topic_Assignments</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>doesMatch</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>VersionIds</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <elementReference>Loop_Through_Topic_Assignments.EntityId</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_Topic_Assignment</targetReference>
-            </connector>
-            <label>doesMatch</label>
-        </rules>
-    </decisions>
+    <collectionProcessors>
+        <name>Filter_Knowledge_Articles</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Knowledge Articles</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <assignNextValueToReference>currentItem_Filter_Knowledge_Articles</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_Knowledge_Article_Versions</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Knowledge_Articles.IsLatestVersion</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <booleanValue>true</booleanValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Check_If_ArticleList_Is_Empty</targetReference>
+        </connector>
+    </collectionProcessors>
     <decisions>
         <name>Check_If_ArticleList_Is_Empty</name>
         <label>Check If ArticleList Is Empty</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>575</locationY>
         <defaultConnector>
             <targetReference>Loop_Through_Knowledge_Versions</targetReference>
         </defaultConnector>
@@ -106,64 +51,26 @@
             <name>listIsEmpty</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Knowledge_Article_Versions</leftValueReference>
+                <leftValueReference>Filter_Knowledge_Articles</leftValueReference>
                 <operator>EqualTo</operator>
             </conditions>
             <label>listIsEmpty</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Check_If_List_Is_Empty</name>
-        <label>Check If List Is Empty</label>
-        <locationX>484</locationX>
-        <locationY>1583</locationY>
-        <defaultConnector>
-            <targetReference>Delete_Topic_Assingments</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isEmpty</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>TopicAssignments</leftValueReference>
-                <operator>EqualTo</operator>
-            </conditions>
-            <label>isEmpty</label>
-        </rules>
-    </decisions>
-    <formulas>
-        <name>WhereClause</name>
-        <dataType>String</dataType>
-        <expression>&quot; EntityType = &apos;Knowledge&apos;&quot;</expression>
-    </formulas>
     <interviewLabel>NKS Knowledge Remove Topic Assingments {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Knowledge Remove Topic Assignments</label>
     <loops>
         <name>Loop_Through_Knowledge_Versions</name>
         <label>Loop Through Knowledge Versions</label>
-        <locationX>484</locationX>
-        <locationY>575</locationY>
-        <collectionReference>Get_Knowledge_Article_Versions</collectionReference>
+        <locationX>352</locationX>
+        <locationY>695</locationY>
+        <collectionReference>Filter_Knowledge_Articles</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_VersionId</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_Topic_Assingnments</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Loop_Through_Topic_Assignments</name>
-        <label>Loop Through Topic Assignments</label>
-        <locationX>484</locationX>
-        <locationY>1031</locationY>
-        <collectionReference>Get_Topic_Assingnments.outputCollection</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Check_EntityId_Against_VersionId</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Check_If_List_Is_Empty</targetReference>
+            <targetReference>Remove_Old_Topic_Assignments</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -185,13 +92,6 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordDeletes>
-        <name>Delete_Topic_Assingments</name>
-        <label>Delete Topic Assingments</label>
-        <locationX>616</locationX>
-        <locationY>1703</locationY>
-        <inputReference>TopicAssignments</inputReference>
-    </recordDeletes>
     <recordLookups>
         <name>Get_Knowledge_Article_Versions</name>
         <label>Get Knowledge Article Versions</label>
@@ -199,7 +99,7 @@
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_If_ArticleList_Is_Empty</targetReference>
+            <targetReference>Filter_Knowledge_Articles</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -207,13 +107,6 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.ArticleNumber</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>PublishStatus</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Online</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -234,18 +127,32 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <filters>
-            <field>PublishStatus</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Online</stringValue>
-            </value>
-        </filters>
         <object>Knowledge__kav</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
+    <subflows>
+        <name>Remove_Old_Topic_Assignments</name>
+        <label>Remove Old Topic Assignments</label>
+        <locationX>352</locationX>
+        <locationY>1031</locationY>
+        <flowName>Remove_Old_TopicAssignment</flowName>
+        <inputAssignments>
+            <name>versionIds</name>
+            <value>
+                <elementReference>VersionIds</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>currentItem_Filter_Knowledge_Articles</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Knowledge__kav</objectType>
+    </variables>
     <variables>
         <name>currentItem_Filter_Knowledge_Records</name>
         <dataType>SObject</dataType>
