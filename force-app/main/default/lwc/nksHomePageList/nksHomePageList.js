@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
+import getSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -24,6 +25,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     @track listCount = 3;
     @track records = [];
+
+    userSkills = [];
 
     showSpinner = false;
     isInitiated = false;
@@ -60,7 +63,30 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     renderedCallback() {
         if (this.initRun === false) {
             this.initRun = true;
-            this.loadList();
+            if (this.filterbyskills === true) {
+                getSkills()
+                    .then((data) => {
+                        this.userSkills = data;
+                        this.loadList();
+                    })
+                    .catch((error) => {
+                        let message = 'Unknown error';
+                        if (Array.isArray(error.body)) {
+                            message = error.body.map((e) => e.message).join(', ');
+                        } else if (typeof error.body.message === 'string') {
+                            message = error.body.message;
+                        }
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Error',
+                                message,
+                                variant: 'error'
+                            })
+                        );
+                    });
+            } else {
+                this.loadList();
+            }
         }
     }
 
@@ -81,7 +107,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             limitNumber: this.limit,
             datefield: this.datefield,
             showimage: this.showimage,
-            filterbyskills: this.filterbyskills
+            filterbyskills: this.filterbyskills,
+            skills: this.userSkills
         })
             .then((data) => {
                 this.records = data;
