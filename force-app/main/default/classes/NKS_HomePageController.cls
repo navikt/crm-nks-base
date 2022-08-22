@@ -1,5 +1,18 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled
+    public static List<String> getUserSkills() {
+        try {
+            List<String> skills = new List<String>();
+            for (String skill : getUserSkills(UserInfo.getUserId())) {
+                skills.add(skill.replaceAll('NKS_Skill_', ''));
+            }
+            return skills;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static string getField(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
@@ -33,7 +46,8 @@ public with sharing class NKS_HomePageController {
         String limitNumber,
         String datefield,
         Boolean showimage,
-        Boolean filterbyskills
+        Boolean filterbyskills,
+        List<String> skills
     ) {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
@@ -42,8 +56,9 @@ public with sharing class NKS_HomePageController {
         String skillStringKnowledge = '';
 
         if (filterBySkills == true) {
-            for (String u : getUserSkills(userId)) {
-                u = u.replaceAll('NKS_Skill_', '');
+            for (String u : skills) {
+                //getUserSkills(userId)) {
+                // u = u.replaceAll('NKS_Skill_', '');
                 skillStringAnnouncement += '\'' + u + '\',';
                 skillStringKnowledge += u + '__c ,';
             }
@@ -172,7 +187,7 @@ public with sharing class NKS_HomePageController {
                 record.imageurl = urlMap.get(r.Id);
             }
 
-            if (content != null) {
+            if (String.isNotBlank(content) && String.isNotBlank((String) r.get(content))) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
                 if (record.content.length() > 600) {
                     record.summary = record.content.mid(0, 600) + '...';
@@ -180,6 +195,7 @@ public with sharing class NKS_HomePageController {
                     record.summary = record.content;
                 }
             }
+
             if (objectName == 'NKS_Announcement__c') {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;

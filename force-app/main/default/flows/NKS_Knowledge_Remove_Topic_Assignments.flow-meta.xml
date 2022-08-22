@@ -245,7 +245,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>currentItem_Filter_Knowledge_Records</name>
         <dataType>SObject</dataType>
