@@ -57,7 +57,8 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             true,
-            true
+            true,
+            new List<String>()
         );
         Test.stopTest();
 
@@ -76,7 +77,8 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             false,
-            false
+            false,
+            null
         );
         Test.stopTest();
 
@@ -95,7 +97,8 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             false,
-            false
+            false,
+            new List<String>()
         );
         Test.stopTest();
 
@@ -114,7 +117,8 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             false,
-            false
+            false,
+            new List<String>()
         );
         Test.stopTest();
 
@@ -123,10 +127,10 @@ public with sharing class NKS_HomePageControllerTest {
 
     @isTest
     static void testGetUserSkills() {
-        User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
-        Set<String> testSkills = new Set<String>();
+        //User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
+        List<String> testSkills;
         Test.startTest();
-        testSkills = NKS_HomePageController.getUserSkills(testUser.Id);
+        testSkills = NKS_HomePageController.getUserSkills();
         Test.stopTest();
 
         if (testSkills.size() > 0) {
