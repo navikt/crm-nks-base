@@ -1,5 +1,5 @@
 public with sharing class NKS_HomePageController {
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<String> getUserSkills() {
         try {
             List<String> skills = new List<String>();
@@ -12,7 +12,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static string getField(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
@@ -36,7 +36,7 @@ public with sharing class NKS_HomePageController {
         return res;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Record> getList(
         String title,
         String content,
@@ -294,7 +294,7 @@ public with sharing class NKS_HomePageController {
         return skills;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
             SELECT
@@ -348,7 +348,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Knowledge__kav> getReadyResponses() {
         try {
             List<Knowledge__kav> readyResponses = [
