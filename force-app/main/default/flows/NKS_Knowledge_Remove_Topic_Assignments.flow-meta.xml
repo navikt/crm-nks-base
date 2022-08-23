@@ -4,7 +4,7 @@
         <name>Get_Topic_Assignments</name>
         <label>Get Topic Assignments</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>455</locationY>
         <actionName>NKS_KnowledgeController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -20,11 +20,24 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Assign_Null_Value_To_TopicAssignments</name>
+        <label>Assign Null Value To TopicAssignments</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignmentItems>
+            <assignToReference>TopicAssignments</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Topic_Assignments</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Topic_Assignment_List_Is_Empty</name>
         <label>Topic Assignment List Is Empty</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>575</locationY>
         <defaultConnector>
             <targetReference>Delete_Topic_Assignments</targetReference>
         </defaultConnector>
@@ -35,15 +48,13 @@
             <conditions>
                 <leftValueReference>Get_Topic_Assignments</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>TopicAssignments</elementReference>
+                </rightValue>
             </conditions>
             <label>Yes</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>WhereClause</name>
-        <dataType>String</dataType>
-        <expression>&quot; EntityType = &apos;Knowledge&apos;&quot;</expression>
-    </formulas>
     <interviewLabel>NKS Knowledge Remove Topic Assingments {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Knowledge Remove Topic Assignments</label>
     <processMetadataValues>
@@ -69,28 +80,28 @@
         <name>Delete_Topic_Assignments</name>
         <label>Delete Topic Assignments</label>
         <locationX>308</locationX>
-        <locationY>575</locationY>
+        <locationY>695</locationY>
         <inputReference>Get_Topic_Assignments</inputReference>
     </recordDeletes>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Topic_Assignments</targetReference>
+            <targetReference>Assign_Null_Value_To_TopicAssignments</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
-        <filters>
-            <field>PublishStatus</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Online</stringValue>
-            </value>
-        </filters>
         <filters>
             <field>IsLatestVersion</field>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>PublishStatus</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Online</stringValue>
             </value>
         </filters>
         <object>Knowledge__kav</object>
@@ -99,34 +110,11 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>currentItem_Filter_Knowledge_Records</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Knowledge__kav</objectType>
-    </variables>
-    <variables>
-        <name>currentItem_Filter_Topic_Assignmetns</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>TopicAssignment</objectType>
-    </variables>
-    <variables>
         <name>TopicAssignments</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>TopicAssignment</objectType>
-    </variables>
-    <variables>
-        <name>VersionIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
