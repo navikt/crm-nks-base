@@ -29,15 +29,13 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     userSkills = [];
 
     showSpinner = false;
-    isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
     initRun = false;
 
     connectedCallback() {
-        this.isInitiated = true;
-
+        this.showSpinner = true;
         // Add userId to filter for STO and Chat
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
@@ -58,9 +56,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-    }
 
-    renderedCallback() {
         if (this.initRun === false) {
             this.initRun = true;
             if (this.filterbyskills === true) {
@@ -89,6 +85,36 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             }
         }
     }
+
+    // renderedCallback() {
+    //     if (this.initRun === false) {
+    //         this.initRun = true;
+    //         if (this.filterbyskills === true) {
+    //             getSkills()
+    //                 .then((data) => {
+    //                     this.userSkills = data;
+    //                     this.loadList();
+    //                 })
+    //                 .catch((error) => {
+    //                     let message = 'Unknown error';
+    //                     if (Array.isArray(error.body)) {
+    //                         message = error.body.map((e) => e.message).join(', ');
+    //                     } else if (typeof error.body.message === 'string') {
+    //                         message = error.body.message;
+    //                     }
+    //                     this.dispatchEvent(
+    //                         new ShowToastEvent({
+    //                             title: 'Error',
+    //                             message,
+    //                             variant: 'error'
+    //                         })
+    //                     );
+    //                 });
+    //         } else {
+    //             this.loadList();
+    //         }
+    //     }
+    // }
 
     handleError() {
         onError((error) => {
@@ -161,7 +187,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     refreshList = () => {
-        this.isInitiated = true;
         this.loadList();
     };
 
