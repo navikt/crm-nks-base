@@ -29,15 +29,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     userSkills = [];
 
     showSpinner = false;
-    isInitiated = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
     initRun = false;
 
     connectedCallback() {
-        this.isInitiated = true;
-
         // Add userId to filter for STO and Chat
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             // eslint-disable-next-line @lwc/lwc/no-api-reassignments
@@ -161,7 +158,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     refreshList = () => {
-        this.isInitiated = true;
         this.loadList();
     };
 
