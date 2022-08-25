@@ -2,7 +2,10 @@
 <PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Scratch org permission set group</description>
     <label>NKS Base Scratch Group</label>
+    <permissionSets>NKS_Announcement_Campaign_Editor</permissionSets>
     <permissionSets>NKS_Announcement_News_Editor</permissionSets>
+    <permissionSets>NKS_Announcement_SF_Update_Editor</permissionSets>
+    <permissionSets>NKS_Announcement_Traffic_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
     <permissionSets>NKS_Config</permissionSets>

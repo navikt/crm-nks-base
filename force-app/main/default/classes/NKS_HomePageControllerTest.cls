@@ -22,6 +22,9 @@ public with sharing class NKS_HomePageControllerTest {
             Summary = 'Informasjon for test svarberedskap'
         );
         insert testKnowledge;
+
+        Case testCase = new Case();
+        insert testCase;
     }
 
     @isTest
@@ -43,18 +46,59 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetList() {
+    static void testGetListAnnouncement() {
         Test.startTest();
         List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
             'Name',
             'NKS_Information__c',
             'NKS_Announcement__c',
             'NKS_TypeFormula__c != null',
-            'LastModifiedDate DESC',
+            'LastModifiedDate DESC Name ASC',
             '3',
             'CreatedDate',
             true,
-            false
+            true,
+            new List<String>()
+        );
+        Test.stopTest();
+
+        System.assertNotEquals(0, recordlist.size());
+    }
+
+    @isTest
+    static void testGetListKnowledge() {
+        Test.startTest();
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+            'Title',
+            null,
+            'Knowledge__kav',
+            'LastModifiedDate = LAST_N_DAYS:30 AND Title != \'\'',
+            'LastModifiedDate DESC',
+            '3',
+            'CreatedDate',
+            false,
+            false,
+            null
+        );
+        Test.stopTest();
+
+        System.assertNotEquals(0, recordlist.size());
+    }
+
+    @isTest
+    static void testGetListCase() {
+        Test.startTest();
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+            'CaseNumber',
+            null,
+            'Case',
+            'Status IN (\'New\', \'In progress\', \'Reserved\')',
+            'LastModifiedDate DESC',
+            '3',
+            'CreatedDate',
+            false,
+            false,
+            new List<String>()
         );
         Test.stopTest();
 
@@ -73,7 +117,8 @@ public with sharing class NKS_HomePageControllerTest {
             '3',
             'CreatedDate',
             false,
-            false
+            false,
+            new List<String>()
         );
         Test.stopTest();
 
@@ -82,10 +127,10 @@ public with sharing class NKS_HomePageControllerTest {
 
     @isTest
     static void testGetUserSkills() {
-        User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
-        Set<String> testSkills = new Set<String>();
+        //User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
+        List<String> testSkills;
         Test.startTest();
-        testSkills = NKS_HomePageController.getUserSkills(testUser.Id);
+        testSkills = NKS_HomePageController.getUserSkills();
         Test.stopTest();
 
         if (testSkills.size() > 0) {
@@ -121,6 +166,7 @@ public with sharing class NKS_HomePageControllerTest {
         System.assertEquals(null, testList);
     }
 
+    @isTest
     static void testRemoveHtmlTags() {
         String info = '<p><span style="color:rgb(0,0,0);font-size:14px;">Test String</span></p>';
         List<String> testList = new List<String>();
@@ -133,13 +179,39 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetImageURL() {
+    static void testGetImageUrlNULL() {
         NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
         Test.startTest();
         String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
         Test.stopTest();
 
         System.assertEquals(null, testURL);
+    }
+
+    @isTest
+    static void testGetImageUrl() {
+        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+
+        ContentVersion content = new ContentVersion();
+        content.Title = 'Header_Picture1';
+        content.PathOnClient = '/' + content.Title + '.jpg';
+        content.VersionData = Blob.valueOf('Unit Test ContentVersion Body');
+        content.origin = 'H';
+        insert content;
+
+        ContentDocumentLink contentlink = new ContentDocumentLink();
+        contentlink.LinkedEntityId = testNews.id;
+        contentlink.contentdocumentid = [SELECT contentDocumentId FROM ContentVersion WHERE id = :content.id]
+        .contentDocumentId;
+        contentlink.ShareType = 'I';
+        contentlink.Visibility = 'AllUsers';
+        insert contentlink;
+
+        Test.startTest();
+        String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
+        Test.stopTest();
+
+        System.assertNotEquals(null, testURL);
     }
 
     @isTest
