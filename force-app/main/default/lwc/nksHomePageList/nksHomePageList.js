@@ -208,9 +208,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     get newsRecords() {
         let sortedList = [];
+        let recordsToSort = [];
 
-        if (this.isNews) {
-            sortedList = this.records.sort(function (x, y) {
+        if (this.isNews && this.records && Array.isArray(this.records)) {
+            recordsToSort = JSON.parse(JSON.stringify(this.records));
+            sortedList = recordsToSort.sort(function (x, y) {
                 let index = 0;
 
                 // pinned items first
@@ -230,13 +232,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get isNews() {
-        let isNews = false;
-        if (this.objectName === 'NKS_Announcement__c') {
-            if (this.filter.includes('News')) {
-                isNews = true;
-            }
+        if (this.objectName === 'NKS_Announcement__c' && this.filter && this.filter.includes('News')) {
+            return true;
         }
-        return isNews;
+        return false;
     }
 
     get isKnowledge() {
