@@ -35,7 +35,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>EmptyCollection</name>
         <label>Empty Collection</label>
@@ -112,7 +112,7 @@
             <targetReference>EmptyCollection</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>emptyRecordCollection</name>
         <dataType>SObject</dataType>
