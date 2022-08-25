@@ -23,6 +23,7 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>DeleteTopicAssignmentsScreen</name>
         <label>DeleteTopicAssignmentsScreen</label>

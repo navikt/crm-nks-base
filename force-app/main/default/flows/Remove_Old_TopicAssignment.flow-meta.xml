@@ -105,6 +105,7 @@
         <locationY>518</locationY>
         <inputReference>Get_TopicAssignments.outputCollection</inputReference>
     </recordDeletes>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
