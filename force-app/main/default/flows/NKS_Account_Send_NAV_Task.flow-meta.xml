@@ -5,7 +5,7 @@
         <label>Show Success Message</label>
         <locationX>50</locationX>
         <locationY>758</locationY>
-        <actionName>c:ShowToast_Flow</actionName>
+        <actionName>c:fcFlowToaster</actionName>
         <actionType>component</actionType>
         <connector>
             <targetReference>Success_Screen</targetReference>
@@ -20,7 +20,7 @@
         <inputParameters>
             <name>message</name>
             <value>
-                <stringValue>Oppgave opprettet.</stringValue>
+                <stringValue>Oppgaven ble opprettet.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -32,7 +32,7 @@
         <inputParameters>
             <name>type</name>
             <value>
-                <elementReference>Success</elementReference>
+                <stringValue>success</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
