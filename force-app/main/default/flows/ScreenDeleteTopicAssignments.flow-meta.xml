@@ -49,7 +49,7 @@
             <targetReference>DeleteTopicAssignmentsScreen</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
         <name>Delete_TopicAssignments</name>
         <label>Delete TopicAssignments</label>
