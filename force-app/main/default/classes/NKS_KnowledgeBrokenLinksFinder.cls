@@ -56,7 +56,7 @@ global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 }
             }
             /**
-             * endpoint must be registered in remote site setting otherwise must define name credential
+             * endpoint must be registered in remote site setting otherwise must define named credential
              */
             if (matches.size() > 0) {
                 for (String str : matches) {
@@ -79,6 +79,7 @@ global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 finalList.put(article.Id, resultList);
             }
         }
+        System.debug(finalList);
     }
 
     global void finish(Database.BatchableContext bc) {
@@ -120,10 +121,5 @@ global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
         // Send the email you have created.
         Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
-    }
-
-    @invocableMethod(label='Find Broken Links')
-    public static void findBrokenLinks() {
-        NKS_KnowledgeBrokenLinksFinder finder = new NKS_KnowledgeBrokenLinksFinder();
     }
 }
