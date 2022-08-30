@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>55.0</apiVersion>
     <description>Screen to manually trigger topic assignment deletion</description>
     <interviewLabel>ScreenDeleteTopicAssignments {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ScreenDeleteTopicAssignments</label>
@@ -49,7 +49,7 @@
             <targetReference>DeleteTopicAssignmentsScreen</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
         <name>Delete_TopicAssignments</name>
         <label>Delete TopicAssignments</label>
