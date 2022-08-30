@@ -20,7 +20,7 @@ public with sharing class NKS_HomePageController {
             announcements = [
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
-                WHERE RecordType.Name = :type AND LastModifiedDate = LAST_N_DAYS:30
+                WHERE RecordType.Name = :type AND CreatedDate = LAST_N_DAYS:45 AND LastModifiedDate = LAST_N_DAYS:30
                 ORDER BY LastModifiedDate DESC
                 LIMIT 1
             ];
