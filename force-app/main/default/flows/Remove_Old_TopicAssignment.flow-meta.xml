@@ -75,7 +75,7 @@
     <formulas>
         <name>whereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;EntityId NOT IN (SELECT Id FROM Knowledge__kav WHERE IsLatestVersion = true OR PublishStatus = &apos;Online&apos;) AND EntityType = &apos;Knowledge&apos;&quot;</expression>
+        <expression>&quot;EntityId NOT IN (SELECT Id FROM Knowledge__kav WHERE IsLatestVersion = true OR PublishStatus = &apos;Online&apos;) AND EntityType = &apos;Knowledge&apos; AND IsDeleted = FALSE&quot;</expression>
     </formulas>
     <interviewLabel>Remove Old TopicAssignment {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Remove Old TopicAssignment</label>
@@ -112,7 +112,7 @@
             <targetReference>EmptyCollection</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>emptyRecordCollection</name>
         <dataType>SObject</dataType>

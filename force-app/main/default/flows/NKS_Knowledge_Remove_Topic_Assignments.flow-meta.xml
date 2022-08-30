@@ -1,62 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_TopicAssignments</name>
-        <label>Get TopicAssignments</label>
-        <locationX>374</locationX>
-        <locationY>288</locationY>
-        <actionName>NKS_KnowledgeController</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Set_List_Empty</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>articleIds</name>
-            <value>
-                <elementReference>$Record.KnowledgeArticleId</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>55.0</apiVersion>
-    <assignments>
-        <name>Set_List_Empty</name>
-        <label>Set List Empty</label>
-        <locationX>374</locationX>
-        <locationY>408</locationY>
-        <assignmentItems>
-            <assignToReference>EmptyCollection</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <connector>
-            <targetReference>List_Is_Empty</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>List_Is_Empty</name>
-        <label>List Is Empty</label>
-        <locationX>374</locationX>
-        <locationY>528</locationY>
-        <defaultConnector>
-            <targetReference>Delete_Old_TopicAssignments</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_TopicAssignments</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>EmptyCollection</elementReference>
-                </rightValue>
-            </conditions>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <interviewLabel>NKS Knowledge Remove Topic Assingments {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Knowledge Remove Topic Assignments</label>
+    <interviewLabel>NKS {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Knowledge Remove TopicAssignments</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -76,54 +22,25 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordDeletes>
-        <name>Delete_Old_TopicAssignments</name>
-        <label>Delete Old TopicAssignments</label>
-        <locationX>506</locationX>
-        <locationY>648</locationY>
-        <inputReference>Get_TopicAssignments</inputReference>
-    </recordDeletes>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>IsLatestVersion</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>PublishStatus</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Online</stringValue>
-            </value>
-        </filters>
-        <object>Knowledge__kav</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <scheduledPaths>
-            <name>Scheduled_Path</name>
-            <connector>
-                <targetReference>Get_TopicAssignments</targetReference>
-            </connector>
-            <label>Scheduled Path</label>
-            <maxBatchSize>200</maxBatchSize>
-            <offsetNumber>30</offsetNumber>
-            <offsetUnit>Minutes</offsetUnit>
-            <timeSource>RecordTriggerEvent</timeSource>
-        </scheduledPaths>
-        <triggerType>RecordAfterSave</triggerType>
+        <connector>
+            <targetReference>Remove_Old_TopicAssignments</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2022-08-30</startDate>
+            <startTime>00:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>EmptyCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>TopicAssignment</objectType>
-    </variables>
+    <subflows>
+        <name>Remove_Old_TopicAssignments</name>
+        <label>Remove Old TopicAssignments</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <flowName>Remove_Old_TopicAssignment</flowName>
+    </subflows>
 </Flow>
