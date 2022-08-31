@@ -2,6 +2,7 @@
 # profiles
 # ----------------------------------------------------------------------------------------
 **/profiles/*
+!**/scratch-org/**
 
 # NOTE!! USE **/ before
 !**/unpackagable/profiles/* 
