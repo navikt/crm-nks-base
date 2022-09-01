@@ -58,14 +58,16 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.NKS_Information__c</fieldItem>
                 <identifier>RecordNKS_Information__cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-c34d3163-7403-4841-80d5-80b985c8aceb</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.CreatedById</fieldItem>
@@ -78,7 +80,7 @@
                 <identifier>RecordLastModifiedByIdField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</name>
+        <name>Facet-c34d3163-7403-4841-80d5-80b985c8aceb</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -92,16 +94,6 @@
                 <identifier>flexipage_column</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-97139f57-173a-4b55-9f78-0049dc8f73c7</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column2</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>Facet-bd873de5-2899-46c5-8841-6f0b9550f4fd</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -110,6 +102,9 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>copyFields</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
