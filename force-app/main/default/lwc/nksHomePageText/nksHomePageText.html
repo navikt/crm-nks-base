@@ -25,6 +25,16 @@
                     </lightning-formatted-url>
                 </div>
             </template>
+            <template if:true={hasTraffic}>
+                <div class="slds-var-p-top_small">
+                    <lightning-formatted-url
+                        value={pageUrl}
+                        label="Se alle tidligere oppdateringer"
+                        onclick={navigateToList}
+                    >
+                    </lightning-formatted-url>
+                </div>
+            </template>
         </section>
     </template>
     <template if:true={isOperational}>
