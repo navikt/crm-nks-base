@@ -7,6 +7,8 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api cardTitle;
     @api iconName;
     @api type;
+    @api listViewName;
+
     get recordTypeNameMap() {
         switch (this.type) {
             case 'Nyhet':
@@ -42,7 +44,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
                 actionName: 'list'
             },
             state: {
-                filterName: 'Salesforce_oppdateringer'
+                filterName: this.listViewName
             }
         }).then((url) => {
             this.pageUrl = url;
@@ -92,13 +94,17 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
                 actionName: 'list'
             },
             state: {
-                filterName: 'Salesforce_oppdateringer'
+                filterName: this.listViewName
             }
         });
     }
 
     get hasSalesforceUpdate() {
         return this.type === 'Salesforce oppdatering' && this.text ? true : false;
+    }
+
+    get hasTraffic() {
+        return this.type === 'Trafikk' && this.text ? true : false;
     }
 
     get isEmpSubscribed() {
