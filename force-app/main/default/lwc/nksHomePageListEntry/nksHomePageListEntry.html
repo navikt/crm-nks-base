@@ -65,9 +65,21 @@
                                 ></lightning-formatted-url>
                             </h3>
                         </lightning-layout-item>
-                        <lightning-layout-item size="12">
+                        <lightning-layout-item size="12"
+                            >Publisert:&nbsp;
                             <lightning-formatted-date-time
                                 value={record.publishDate}
+                                year="numeric"
+                                month="long"
+                                day="numeric"
+                                hour="2-digit"
+                                minute="2-digit"
+                            ></lightning-formatted-date-time>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12"
+                            >Sist oppdatert:&nbsp;
+                            <lightning-formatted-date-time
+                                value={record.lastUpdatedDate}
                                 year="numeric"
                                 month="long"
                                 day="numeric"
