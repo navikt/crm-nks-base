@@ -1,6 +1,6 @@
 global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts {
     //private String articleId;
-    private Map<Id, List<String>> finalList = new Map<Id, List<String>>();
+    global Map<Id, List<String>> finalList = new Map<Id, List<String>>();
 
     global NKS_KnowledgeBrokenLinksFinder() {
         //this.articleId = articleId;
@@ -51,24 +51,108 @@ global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                             matches.add(groupValue);
                         }
                     } catch (Exception ex) {
-                        System.debug(ex.getMessage());
+                        //System.debug(ex.getMessage());
                     }
                 }
             }
+            //System.debug('Matches: ' + matches);
+
             /**
              * endpoint must be registered in remote site setting otherwise must define named credential
              */
             if (matches.size() > 0) {
                 for (String str : matches) {
-                    if (str.contains('www.nav.no')) {
-                        String path = str.substringAfter('www.nav.no');
-                        HttpRequest req = new HttpRequest();
+                    HttpRequest req = new HttpRequest();
+                    String path;
+
+                    if (str.contains('nav.no')) {
+                        path = str.substringAfter('nav.no');
                         req.setEndpoint('callout:nav_no' + path);
 
-                        req.setMethod('HEAD');
+                        req.setMethod('GET');
                         Http http = new Http();
                         HTTPResponse res = http.send(req);
-                        if (res.getStatusCode() != 200) {
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('helsenorge.no')) {
+                        path = str.substringAfter('helsenorge.no');
+                        req.setEndpoint('callout:helsenorge_no' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('arbeidsplassen.no')) {
+                        path = str.substringAfter('arbeidsplassen.no');
+                        req.setEndpoint('callout:arbeidsplassen_no' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('karriereveiledning.no')) {
+                        path = str.substringAfter('karriereveiledning.no');
+                        req.setEndpoint('callout:karriereveiledning_no' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('utdanning.no')) {
+                        path = str.substringAfter('utdanning.no');
+                        req.setEndpoint('callout:utdanning_no' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('google.no')) {
+                        path = str.substringAfter('google.no');
+                        req.setEndpoint('callout:google_no' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('vimeo.com')) {
+                        path = str.substringAfter('vimeo.com');
+                        req.setEndpoint('callout:vimeo_com' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('facebook.com')) {
+                        path = str.substringAfter('facebook.com');
+                        req.setEndpoint('callout:facebook_com' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
+                            resultList.add(str);
+                        }
+                    } else if (str.contains('youtube.com')) {
+                        path = str.substringAfter('youtube.com');
+                        req.setEndpoint('callout:youtube_com' + path);
+
+                        req.setMethod('GET');
+                        Http http = new Http();
+                        HTTPResponse res = http.send(req);
+                        if (res.getStatusCode() > 400) {
                             resultList.add(str);
                         }
                     }
@@ -79,47 +163,39 @@ global with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 finalList.put(article.Id, resultList);
             }
         }
-        System.debug(finalList);
+        System.debug('Final list: ' + finalList);
     }
 
     global void finish(Database.BatchableContext bc) {
-        //Messaging.reserveSingleEmailCapacity(2);
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        if (finalList.size() > 0) {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
-        String[] toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
-        String[] ccAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+            String[] toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+            //String[] ccAddresses = new List<String>{ '' };
 
-        mail.setToAddresses(toAddresses);
-        mail.setCcAddresses(ccAddresses);
-        mail.setSenderDisplayName('Knowledge Broken Links Finder');
-        mail.setSubject('Broken Links Raport');
-        mail.setBccSender(false);
-        mail.setUseSignature(false);
+            mail.setToAddresses(toAddresses);
+            //mail.setCcAddresses(ccAddresses);
+            mail.setSenderDisplayName('Knowledge Broken Links Finder');
+            mail.setSubject('Broken Links Raport');
+            mail.setBccSender(false);
+            mail.setUseSignature(false);
 
-        // Specify the text content of the email.
-        String body = '';
+            // Specify the text content of the email.
+            String body = '';
 
-        for (Id key : finalList.keySet()) {
-            List<String> links = finalList.get(key);
-            body += 'Article: ' + key + ' has the following dead links:\n';
-            for (String str : links) {
-                body += str + ', ';
+            for (Id key : finalList.keySet()) {
+                Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
+                List<String> links = finalList.get(key);
+                body += 'Article: "' + article.Title + '" has the following dead links:\n';
+                for (String str : links) {
+                    body += str + ', ';
+                }
+                body += '\n';
             }
-            body += '\n';
-        }
-        mail.setPlainTextBody(body);
-        /*
-        mail.setHtmlBody(
-            'Your case:<b> ' +
-            case.Id +
-            ' </b>has been created.<p>' +
-            'To view your case <a href=https://MyDomainName.my.salesforce.com/' +
-            case.Id +
-            '>click here.</a>'
-        );
-        */
+            mail.setPlainTextBody(body);
 
-        // Send the email you have created.
-        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+            // Send the email you have created.
+            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+        }
     }
 }
