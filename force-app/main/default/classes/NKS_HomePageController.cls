@@ -14,26 +14,22 @@ public with sharing class NKS_HomePageController {
 
     @AuraEnabled(cacheable=true)
     public static string getField(String type) {
-        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
-        String res = null;
         try {
-            announcements = [
+            List<NKS_Announcement__c> announcements = [
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
-                WHERE RecordType.Name = :type AND CreatedDate = LAST_N_DAYS:45 AND LastModifiedDate = LAST_N_DAYS:30
+                WHERE RecordType.Name = :type AND CreatedDate = LAST_N_DAYS:30
                 ORDER BY LastModifiedDate DESC
                 LIMIT 1
             ];
 
             if (announcements.size() > 0) {
-                NKS_Announcement__c announcement = announcements[0];
-                String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
-                res = information;
+                return announcements[0].NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
             }
         } catch (Exception ex) {
             System.debug('Problem getting Information-field for Announcement' + ex.getMessage());
         }
-        return res;
+        return null;
     }
 
     @AuraEnabled(cacheable=true)
@@ -57,8 +53,6 @@ public with sharing class NKS_HomePageController {
 
         if (filterBySkills == true) {
             for (String u : skills) {
-                //getUserSkills(userId)) {
-                // u = u.replaceAll('NKS_Skill_', '');
                 skillStringAnnouncement += '\'' + u + '\',';
                 skillStringKnowledge += u + '__c ,';
             }
@@ -197,17 +191,15 @@ public with sharing class NKS_HomePageController {
             }
 
             if (objectName == 'NKS_Announcement__c') {
-                NKS_Announcement__c news = (NKS_Announcement__c) r;
-                record.pin = news.NKS_News_Pin__c;
-                record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
+                record.pin = (Boolean) r.get('NKS_News_Pin__c');
+                record.publishDate = Datetime.valueOf(r.get('NKS_News_Publish_Date__c'));
             } else {
                 record.pin = false;
                 record.publishDate = null;
             }
 
             if (objectName == 'Case') {
-                Case enCase = (Case) r;
-                record.status = enCase.Status;
+                record.status = (String) r.get('Status');
             } else {
                 record.status = '';
             }
