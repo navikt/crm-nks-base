@@ -2,14 +2,12 @@ public with sharing class NKS_NewsArchiveHandler {
     private static final String JOURNAL_POST_STATUS = 'J';
     private static final String INCOMING_POST = 'X';
     private static final String BUSINESS_UNIT = 'NAV Styringsenhet Kontaktsenter';
-    private static final String BUSINESS_UNIT_ID = '410000'; //'410000';
+    private static final String BUSINESS_UNIT_ID = '410000';
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
-    private static final String NAV_IDENT = 'A133191'; //'A117995';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
     private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_NKS';
     private static final String FTPS_CATALOUGE_TEST = 'ftpmottakP1SF_NKS';
-    private static final String NEWS_CASE_NUMBER = '22/14412';
 
     private string errorMessage='';
     private Boolean isSandbox;
