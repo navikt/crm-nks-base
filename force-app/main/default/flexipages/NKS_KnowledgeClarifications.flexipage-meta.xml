@@ -356,9 +356,9 @@
                 <identifier>force_relatedListContainer</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <leftValue>{!$User.Username}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
+                        <rightValue>karina.lund.sommerseth@nav.no</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
