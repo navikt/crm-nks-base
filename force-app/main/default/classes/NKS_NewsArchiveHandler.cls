@@ -5,11 +5,11 @@ public with sharing class NKS_NewsArchiveHandler {
     private static final String BUSINESS_UNIT_ID = '410000'; //'410000';
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
-    private static final String NAV_IDENT = 'A117995'; //'A117995';
+    private static final String NAV_IDENT = 'A133191'; //'A117995';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
     private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_NKS';
     private static final String FTPS_CATALOUGE_TEST = 'ftpmottakP1SF_NKS';
-    private static final String NEWS_CASE_NUMBER = '22/389';
+    private static final String NEWS_CASE_NUMBER = '22/14412';
 
     private string errorMessage='';
     private Boolean isSandbox;
@@ -20,24 +20,38 @@ public with sharing class NKS_NewsArchiveHandler {
 
     public void execute(NKS_Announcement__c article) {
         String ftpsCatalouge = getFtpsCatalouge();
-        String caseNumber = getCaseNumber();
-        if(caseNumber == null){
+        WebsakNewsMapping__mdt settings = getSettings();
+        if(settings == null){
             LoggerUtility logger = new LoggerUtility();
-            logger.error('Fant ikke saksnummer for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error('Fant ikke metadata for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
             return;
         }
-        archiveArticle(article,caseNumber,ftpsCatalouge);
+        String caseNumber = getCaseNumber(settings);
+        String navIdent = getNavIdent(settings);
+        if(caseNumber == null || navIdent == null){
+            LoggerUtility logger = new LoggerUtility();
+            logger.error('Fant ikke saksnummer eller NAV-Ident for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return;
+        }
+        archiveArticle(article, caseNumber, navIdent, ftpsCatalouge);
         return;
     }
     @TestVisible
-    private String getCaseNumber(){
-        WebsakNewsMapping__mdt mdt = [SELECT Id, CaseNumberTest__c, CaseNumberProd__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
-        if (mdt == null) return null;
-        return isSandbox?mdt.CaseNumberTest__c:mdt.CaseNumberProd__c;
+    private String getCaseNumber(WebsakNewsMapping__mdt settings){
+        if (settings == null) return null;
+        return isSandbox ? settings.CaseNumberTest__c : settings.CaseNumberProd__c;
+    }
+    private String getNavIdent (WebsakNewsMapping__mdt settings){
+        if(settings == null) return null;
+        return settings.NavId__c;
+    }
+    private WebsakNewsMapping__mdt getSettings(){
+        return [SELECT Id, CaseNumberTest__c, CaseNumberProd__c, NavId__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
     }
     @TestVisible
-    private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String ftpsCatalouge){
+    private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String navIdent, String ftpsCatalouge){
         String articleFileName=formatFileName(article.Name + DEFAULT_FILE_FORMAT);
         Blob articlePdf;
         if(Test.isRunningTest()) { 
@@ -62,7 +76,8 @@ public with sharing class NKS_NewsArchiveHandler {
                 getJournalPostName(JOURNAL_POST_TYPE, article.Name),
                 article.Skills__c != null ? article.Skills__c.replaceAll(';', ' ') : '',
                 Date.today(),
-                caseNumber
+                caseNumber,
+                navIdent
               );
           }
     
@@ -122,7 +137,8 @@ public with sharing class NKS_NewsArchiveHandler {
         String journalPostName,
         String category,
         Date referenceDate,
-        String caseNumber
+        String caseNumber,
+        String navIdent
       ) {
         NKS_NewsXMLGenerator generator = new NKS_NewsXMLGenerator();
           generator.businessUnitId=BUSINESS_UNIT_ID;
@@ -132,7 +148,7 @@ public with sharing class NKS_NewsArchiveHandler {
           generator.journalPostName=journalPostName;
           generator.journalPostCategory=category;
           generator.journalCaseNumber=caseNumber;
-          generator.userNavIdent=NAV_IDENT;
+          generator.userNavIdent=navIdent;
           generator.submissionDate=referenceDate;
           generator.documentNameFormat=fileInfo;
     
