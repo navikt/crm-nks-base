@@ -58,7 +58,6 @@ export default class CrmSecurityQuestion extends LightningElement {
             });
             this.getNextQuestion();
             this.isLoading = false;
-            console.log(this.unusedQuestions);
         });
     }
 
