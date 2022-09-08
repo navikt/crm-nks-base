@@ -2,7 +2,6 @@ public with sharing class NKS_NewsArchiveHandler {
     private static final String JOURNAL_POST_STATUS = 'J';
     private static final String INCOMING_POST = 'X';
     private static final String BUSINESS_UNIT = 'NAV Styringsenhet Kontaktsenter';
-    private static final String BUSINESS_UNIT_ID = '410000';
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
@@ -27,13 +26,14 @@ public with sharing class NKS_NewsArchiveHandler {
         }
         String caseNumber = getCaseNumber(settings);
         String navIdent = getNavIdent(settings);
-        if(caseNumber == null || navIdent == null){
+        String navEnhet = getNavEnhet(settings);
+        if(caseNumber == null || navIdent == null || navEnhet == null){
             LoggerUtility logger = new LoggerUtility();
-            logger.error('Fant ikke saksnummer eller NAV-Ident for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error('Fant ikke saksnummer/NAV-Ident/NAV-enhet for ' + article.Name, null, CRM_ApplicationDomain.Domain.NKS);
             logger.publish();
             return;
         }
-        archiveArticle(article, caseNumber, navIdent, ftpsCatalouge);
+        archiveArticle(article, caseNumber, navIdent, navEnhet, ftpsCatalouge);
         return;
     }
     @TestVisible
@@ -43,13 +43,21 @@ public with sharing class NKS_NewsArchiveHandler {
     }
     private String getNavIdent (WebsakNewsMapping__mdt settings){
         if(settings == null) return null;
-        return settings.NavId__c;
+        return isSandbox ? settings.NavIdTest__c : settings.NavIdProd__c;
+    }
+    private String getNavEnhet (WebsakNewsMapping__mdt settings){
+        if(settings == null) return null;
+        return isSandbox ? settings.NavEnhetTest__c : settings.NavEnhetProd__c;
     }
     private WebsakNewsMapping__mdt getSettings(){
-        return [SELECT Id, CaseNumberTest__c, CaseNumberProd__c, NavId__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+        if (isSandbox){
+            return [SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+        } else {
+            return [SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+        }
     }
     @TestVisible
-    private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String navIdent, String ftpsCatalouge){
+    private Boolean archiveArticle(NKS_Announcement__c article, String caseNumber, String navIdent, String navEnhet, String ftpsCatalouge){
         String articleFileName=formatFileName(article.Name + DEFAULT_FILE_FORMAT);
         Blob articlePdf;
         if(Test.isRunningTest()) { 
@@ -75,7 +83,8 @@ public with sharing class NKS_NewsArchiveHandler {
                 article.Skills__c != null ? article.Skills__c.replaceAll(';', ' ') : '',
                 Date.today(),
                 caseNumber,
-                navIdent
+                navIdent,
+                navEnhet
               );
           }
     
@@ -136,10 +145,11 @@ public with sharing class NKS_NewsArchiveHandler {
         String category,
         Date referenceDate,
         String caseNumber,
-        String navIdent
+        String navIdent,
+        String navEnhet
       ) {
         NKS_NewsXMLGenerator generator = new NKS_NewsXMLGenerator();
-          generator.businessUnitId=BUSINESS_UNIT_ID;
+          generator.businessUnitId=navEnhet;
           generator.businessUnitName=BUSINESS_UNIT;
           generator.journalPostStatus=JOURNAL_POST_STATUS;
           generator.journalPostType=postType;
