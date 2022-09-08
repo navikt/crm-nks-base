@@ -1,74 +1,90 @@
-import { LightningElement, track, wire, api } from 'lwc';
-import getSecurityQuestion from '@salesforce/apex/CRM_SecurityQuestionPicker.getSecurityQuestion';
+import { LightningElement, wire, api } from 'lwc';
+import getSecurityQuestionTPS from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsTPS';
+import getSecurityQuestionKRR from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsKRR';
+import getSecurityQuestionPDL from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsPDL';
 import ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
+import PERSON_ID from '@salesforce/schema/Case.Account.CRM_Person__c';
+import PERSON_NAME from '@salesforce/schema/Person__c.Name';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 export default class CrmSecurityQuestion extends LightningElement {
-    question;
-    @track answer;
-    questionsAsked = null;
-    @track disabled = true;
-    closed = false;
-    personId;
     @api recordId;
+    personId = null;
+    personIdent = null;
+    question = '';
+    answer = '';
+    questionsAsked = [];
+    unusedQuestions = [];
     useErrorColor = false;
+    disabled = true;
+    closed = false;
+    isLoading = false;
 
-    fetchData({ error, data }) {
-        if (error && error != null) {
-            this.question = 'Det oppsto en feil, vennligst prøv på nytt.';
-            this.answer = '';
-            this.useErrorColor = true;
-        } else if (data && data != null) {
-            if (
-                this.questionsAsked == data.usedQuestions &&
-                this.questionsAsked == null &&
-                data.question != 'Fant ikke brukeren'
-            ) {
-                this.question = 'Brukeren har ingen gyldige spørsmål.';
-                this.answer = '';
-                this.useErrorColor = true;
-                return;
-            } else {
-                this.question = data.question;
-                this.answer = data.answer;
-                this.questionsAsked = data.usedQuestions;
-                this.useErrorColor = false;
-            }
+    get isNextButtonDisabled() {
+        return this.isLoading || this.disabled || (this.unusedQuestions.length < 1 && this.questionsAsked.length < 1);
+    }
+
+    getNextQuestion() {
+        this.disabled = true;
+        if (this.unusedQuestions.length > 0) {
+            const newQuestion = this.unusedQuestions.splice((this.unusedQuestions.length * Math.random()) | 0, 1)[0];
+            this.questionsAsked.push(newQuestion);
+            this.question = newQuestion.question;
+            this.answer = newQuestion.answer;
+        } else {
+            this.unusedQuestions.push(...this.questionsAsked);
+            this.questionsAsked = [];
+            this.question = 'Ingen flere spørsmål';
+            this.answer = 'Trykk på "Nytt"-knappen for å se tidligere spørsmål';
         }
         this.disabled = false;
     }
 
+    loadQuestions() {
+        this.unusedQuestions = [];
+        this.questionsAsked = [];
+        this.isLoading = true;
+        Promise.allSettled([
+            getSecurityQuestionTPS({ ident: this.personIdent }),
+            getSecurityQuestionKRR({ ident: this.personIdent }),
+            getSecurityQuestionPDL({ ident: this.personIdent })
+        ]).then((values) => {
+            values.forEach((value) => {
+                if (value.status === 'fulfilled' && Array.isArray(value.value)) {
+                    this.unusedQuestions.push(...value.value);
+                } else if (value.status === 'rejected') {
+                    console.error(value.reason);
+                }
+            });
+            this.getNextQuestion();
+            this.isLoading = false;
+            console.log(this.unusedQuestions);
+        });
+    }
+
     @wire(getRecord, {
         recordId: '$recordId',
-        fields: [ACCOUNT_FIELD]
+        fields: [ACCOUNT_FIELD, PERSON_ID]
     })
     wiredPersonInfo({ error, data }) {
         if (data) {
-            this.personId = getFieldValue(data, ACCOUNT_FIELD);
+            this.personId = getFieldValue(data, PERSON_ID);
             this.questionsAsked = null;
-            this.handleNextQuestion();
         }
 
         if (error) {
-            this.addError(error);
+            console.error(error);
         }
     }
 
-    async handleNextQuestion() {
-        this.disabled = true;
-        this.answer = 'Henter spørsmål...';
-        this.useErrorColor = false;
-        this.question = '';
-        getSecurityQuestion({
-            accountId: this.personId,
-            usedQuestions: this.questionsAsked
-        })
-            .then((data) => {
-                this.fetchData({ error: null, data: data });
-            })
-            .catch((error) => {
-                this.fetchData({ error: error, data: null });
-            });
+    @wire(getRecord, { recordId: '$personId', fields: [PERSON_NAME] }) wirePerson({ error, data }) {
+        if (data) {
+            this.personIdent = getFieldValue(data, PERSON_NAME);
+            this.loadQuestions();
+        }
+        if (error) {
+            console.error(error);
+        }
     }
 
     handleClose() {
@@ -76,6 +92,6 @@ export default class CrmSecurityQuestion extends LightningElement {
     }
 
     get questionClass() {
-        return 'question bold slds-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
+        return 'question bold slds-var-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
     }
 }
