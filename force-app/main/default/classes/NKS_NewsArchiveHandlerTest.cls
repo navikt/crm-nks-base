@@ -53,6 +53,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
             ],
             '1/2',
             'A123456',
+            '1234567',
             'ftp_cat'
         );
         Test.stopTest();
@@ -74,7 +75,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         Map<String, String> fileInfo=new Map<String,String>();
         fileInfo.put('filename','fileType');
         Test.startTest();
-        Blob manifestBlob=new NKS_NewsArchiveHandler().getManifest(fileInfo, 'posttype', 'postName', 'categry', Date.Today(),'4234/03', 'A123456');
+        Blob manifestBlob=new NKS_NewsArchiveHandler().getManifest(fileInfo, 'posttype', 'postName', 'categry', Date.Today(),'4234/03', 'A123456','1234567');
         Test.stopTest();
 
         System.assertNotEquals(null,EncodingUtil.base64Encode(manifestBlob), 'Expect a blob');
