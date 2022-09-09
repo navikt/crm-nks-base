@@ -26,7 +26,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NKS_News_Last_Updated_Date__c</field>
+                <field>NKS_News_Update_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

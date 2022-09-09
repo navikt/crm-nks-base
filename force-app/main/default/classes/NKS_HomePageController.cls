@@ -98,7 +98,7 @@ public with sharing class NKS_HomePageController {
 
         if (objectName == 'NKS_Announcement__c') {
             qf.selectFields(
-                new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Last_Updated_Date__c' }
+                new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' }
             );
 
             if (filterBySkills == true) {
@@ -204,7 +204,7 @@ public with sharing class NKS_HomePageController {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
                 record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
-                record.lastUpdatedDate = Datetime.valueOf(news.NKS_News_Last_Updated_Date__c);
+                record.lastUpdatedDate = Datetime.valueOf(news.NKS_News_Update_Date__c);
             } else {
                 record.pin = false;
                 record.publishDate = null;
@@ -339,7 +339,7 @@ public with sharing class NKS_HomePageController {
                 NKS_News_Author__c,
                 NKS_News_Other_Authors__c,
                 NKS_News_Publish_Date__c,
-                NKS_News_Last_Updated_Date__c,
+                NKS_News_Update_Date__c,
                 LastModifiedDate,
                 NKS_Information__c,
                 NKS_ImageURL__c

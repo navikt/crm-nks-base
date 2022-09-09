@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NKS_News_Last_Updated_Date__c</fullName>
-    <defaultValue>NOW()</defaultValue>
-    <description>Custom field to set last update date for news manually.</description>
+    <fullName>NKS_News_Update_Date__c</fullName>
+    <description>Custom field to set updated date for news manually.</description>
     <externalId>false</externalId>
     <inlineHelpText>Dato for når nyhetsartikkelen var sist oppdatert.</inlineHelpText>
-    <label>Last updated date</label>
+    <label>Updated date</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

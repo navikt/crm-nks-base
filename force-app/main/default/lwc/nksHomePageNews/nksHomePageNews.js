@@ -57,7 +57,7 @@ export default class NksHomePageNews extends LightningElement {
             this.news = data;
             if (this.news) {
                 this.publishDate = this.news.NKS_News_Publish_Date__c;
-                this.lastUpdatedDate = this.news.NKS_News_Last_Updated_Date__c;
+                this.lastUpdatedDate = this.news.NKS_News_Update_Date__c;
                 this.lastModifiedDate = this.news.LastModifiedDate;
                 this.otherAuthors = this.news.NKS_News_Other_Authors__c;
                 this.information = this.news.NKS_Information__c;
