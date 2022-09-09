@@ -7,6 +7,8 @@ import PERSON_ID from '@salesforce/schema/Case.Account.CRM_Person__c';
 import PERSON_NAME from '@salesforce/schema/Person__c.Name';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
+const NO_QUESTIONS_MESSAGE = 'Kunne ikke hente spørsmål, vennligst finn på et sikkerhetsspørsmål';
+
 export default class CrmSecurityQuestion extends LightningElement {
     @api recordId;
     personId = null;
@@ -25,17 +27,25 @@ export default class CrmSecurityQuestion extends LightningElement {
     }
 
     getNextQuestion() {
-        this.disabled = true;
-        if (this.unusedQuestions.length > 0) {
-            const newQuestion = this.unusedQuestions.splice((this.unusedQuestions.length * Math.random()) | 0, 1)[0];
-            this.questionsAsked.push(newQuestion);
-            this.question = newQuestion.question;
-            this.answer = newQuestion.answer;
-        } else {
-            this.unusedQuestions.push(...this.questionsAsked);
-            this.questionsAsked = [];
-            this.question = 'Ingen flere spørsmål';
-            this.answer = 'Trykk på "Nytt"-knappen for å se tidligere spørsmål';
+        try {
+            this.disabled = true;
+            if (this.unusedQuestions.length > 0) {
+                const newQuestion = this.unusedQuestions.splice(
+                    (this.unusedQuestions.length * Math.random()) | 0,
+                    1
+                )[0];
+                this.questionsAsked.push(newQuestion);
+                this.question = newQuestion.question;
+                this.answer = newQuestion.answer;
+            } else {
+                this.unusedQuestions.push(...this.questionsAsked);
+                this.questionsAsked = [];
+                this.question = 'Ingen flere spørsmål';
+                this.answer = 'Trykk på "Nytt"-knappen for å se tidligere spørsmål';
+            }
+        } catch (error) {
+            console.error(error);
+            this.setNoQuestionsMessage();
         }
         this.disabled = false;
     }
@@ -44,21 +54,33 @@ export default class CrmSecurityQuestion extends LightningElement {
         this.unusedQuestions = [];
         this.questionsAsked = [];
         this.isLoading = true;
-        Promise.allSettled([
-            getSecurityQuestionTPS({ ident: this.personIdent }),
-            getSecurityQuestionKRR({ ident: this.personIdent }),
-            getSecurityQuestionPDL({ ident: this.personIdent })
-        ]).then((values) => {
-            values.forEach((value) => {
-                if (value.status === 'fulfilled' && Array.isArray(value.value)) {
-                    this.unusedQuestions.push(...value.value);
-                } else if (value.status === 'rejected') {
-                    console.error(value.reason);
+        this.question = '';
+        this.answer = 'Henter spørsmål...';
+        try {
+            Promise.allSettled([
+                getSecurityQuestionTPS({ ident: this.personIdent }),
+                getSecurityQuestionKRR({ ident: this.personIdent }),
+                getSecurityQuestionPDL({ ident: this.personIdent })
+            ]).then((values) => {
+                values.forEach((value) => {
+                    if (value.status === 'fulfilled' && Array.isArray(value.value)) {
+                        this.unusedQuestions.push(...value.value);
+                    } else if (value.status === 'rejected') {
+                        console.error(value.reason);
+                    }
+                });
+                this.isLoading = false;
+                if (this.unusedQuestions.length > 0) {
+                    this.question = '';
+                    this.answer = NO_QUESTIONS_MESSAGE;
+                } else {
+                    this.getNextQuestion();
                 }
             });
-            this.getNextQuestion();
-            this.isLoading = false;
-        });
+        } catch (error) {
+            console.error(error);
+            this.setNoQuestionsMessage();
+        }
     }
 
     @wire(getRecord, {
@@ -73,6 +95,7 @@ export default class CrmSecurityQuestion extends LightningElement {
 
         if (error) {
             console.error(error);
+            this.setNoQuestionsMessage();
         }
     }
 
@@ -83,11 +106,17 @@ export default class CrmSecurityQuestion extends LightningElement {
         }
         if (error) {
             console.error(error);
+            this.setNoQuestionsMessage();
         }
     }
 
     handleClose() {
         this.closed = true;
+    }
+
+    setNoQuestionsMessage() {
+        this.question = '';
+        this.answer = NO_QUESTIONS_MESSAGE;
     }
 
     get questionClass() {
