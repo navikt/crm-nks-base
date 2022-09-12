@@ -26,9 +26,39 @@ export default class CrmSecurityQuestion extends LightningElement {
         return this.isLoading || this.disabled || (this.unusedQuestions.length < 1 && this.questionsAsked.length < 1);
     }
 
+    get questionClass() {
+        return 'question bold slds-var-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
+    }
+
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: [ACCOUNT_FIELD, PERSON_ID]
+    })
+    wiredPersonInfo({ error, data }) {
+        if (data) {
+            this.personId = getFieldValue(data, PERSON_ID);
+        }
+
+        if (error) {
+            console.error(error);
+            this.setNoQuestionsMessage();
+        }
+    }
+
+    @wire(getRecord, { recordId: '$personId', fields: [PERSON_NAME] }) wirePerson({ error, data }) {
+        if (data) {
+            this.personIdent = getFieldValue(data, PERSON_NAME);
+            this.loadQuestions();
+        }
+        if (error) {
+            console.error(error);
+            this.setNoQuestionsMessage();
+        }
+    }
+
     getNextQuestion() {
+        this.disabled = true;
         try {
-            this.disabled = true;
             if (this.unusedQuestions.length > 0) {
                 const newQuestion = this.unusedQuestions.splice(
                     (this.unusedQuestions.length * Math.random()) | 0,
@@ -71,42 +101,16 @@ export default class CrmSecurityQuestion extends LightningElement {
                 });
                 this.isLoading = false;
                 if (this.unusedQuestions.length > 0) {
+                    this.getNextQuestion();
+                } else {
                     this.question = '';
                     this.answer = NO_QUESTIONS_MESSAGE;
-                } else {
-                    this.getNextQuestion();
                 }
             });
         } catch (error) {
             console.error(error);
             this.setNoQuestionsMessage();
-        }
-    }
-
-    @wire(getRecord, {
-        recordId: '$recordId',
-        fields: [ACCOUNT_FIELD, PERSON_ID]
-    })
-    wiredPersonInfo({ error, data }) {
-        if (data) {
-            this.personId = getFieldValue(data, PERSON_ID);
-            this.questionsAsked = null;
-        }
-
-        if (error) {
-            console.error(error);
-            this.setNoQuestionsMessage();
-        }
-    }
-
-    @wire(getRecord, { recordId: '$personId', fields: [PERSON_NAME] }) wirePerson({ error, data }) {
-        if (data) {
-            this.personIdent = getFieldValue(data, PERSON_NAME);
-            this.loadQuestions();
-        }
-        if (error) {
-            console.error(error);
-            this.setNoQuestionsMessage();
+            this.isLoading = false;
         }
     }
 
@@ -117,9 +121,5 @@ export default class CrmSecurityQuestion extends LightningElement {
     setNoQuestionsMessage() {
         this.question = '';
         this.answer = NO_QUESTIONS_MESSAGE;
-    }
-
-    get questionClass() {
-        return 'question bold slds-var-m-left_xx-small' + (this.useErrorColor ? ' errorColor' : '');
     }
 }
