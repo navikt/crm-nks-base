@@ -47,8 +47,12 @@ export default class CrmSecurityQuestion extends LightningElement {
 
     @wire(getRecord, { recordId: '$personId', fields: [PERSON_NAME] }) wirePerson({ error, data }) {
         if (data) {
-            this.personIdent = getFieldValue(data, PERSON_NAME);
-            this.loadQuestions();
+            const ident = getFieldValue(data, PERSON_NAME);
+
+            if (ident !== this.personIdent) {
+                this.personIdent = getFieldValue(data, PERSON_NAME);
+                this.loadQuestions();
+            }
         }
         if (error) {
             console.error(error);
