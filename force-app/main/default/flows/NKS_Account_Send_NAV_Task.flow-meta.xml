@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Show_Success_Message</name>
+        <label>Show Success Message</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <actionName>c:fcFlowToaster</actionName>
+        <actionType>component</actionType>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>5</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Oppgaven ble opprettet.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Vellykket!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
@@ -116,7 +153,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Success_Screen</targetReference>
+                <targetReference>Show_Success_Message</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -125,8 +162,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -134,8 +171,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -339,11 +376,12 @@ TODAY())</expression>
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </connector>
         <fields>
@@ -369,6 +407,7 @@ TODAY())</expression>
         <locationX>578</locationX>
         <locationY>278</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>

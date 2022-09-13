@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
     <description>Screen to manually trigger topic assignment deletion</description>
     <interviewLabel>ScreenDeleteTopicAssignments {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ScreenDeleteTopicAssignments</label>
@@ -12,7 +13,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -25,8 +26,8 @@
     <screens>
         <name>DeleteTopicAssignmentsScreen</name>
         <label>DeleteTopicAssignmentsScreen</label>
-        <locationX>168</locationX>
-        <locationY>206</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -42,8 +43,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>41</locationX>
-        <locationY>68</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>DeleteTopicAssignmentsScreen</targetReference>
         </connector>
@@ -52,8 +53,8 @@
     <subflows>
         <name>Delete_TopicAssignments</name>
         <label>Delete TopicAssignments</label>
-        <locationX>302</locationX>
-        <locationY>206</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <flowName>Remove_Old_TopicAssignment</flowName>
     </subflows>
 </Flow>

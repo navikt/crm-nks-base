@@ -4,7 +4,7 @@
         <name>Get_TopicAssignments</name>
         <label>Get TopicAssignments</label>
         <locationX>176</locationX>
-        <locationY>200</locationY>
+        <locationY>278</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -14,6 +14,7 @@
             <typeName>U__outputCollection</typeName>
             <typeValue>TopicAssignment</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>FieldApiINames</name>
             <value>
@@ -34,11 +35,12 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>55.0</apiVersion>
     <assignments>
         <name>EmptyCollection</name>
         <label>Empty Collection</label>
-        <locationX>127</locationX>
-        <locationY>415</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <assignmentItems>
             <assignToReference>emptyRecordCollection</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +52,8 @@
     <decisions>
         <name>Empty</name>
         <label>Empty?</label>
-        <locationX>303</locationX>
-        <locationY>203</locationY>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Delete_TopicAssignments</targetReference>
         </defaultConnector>
@@ -73,7 +75,7 @@
     <formulas>
         <name>whereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;EntityId NOT IN (SELECT Id FROM Knowledge__kav WHERE IsLatestVersion = true OR PublishStatus = &apos;Online&apos;) AND EntityType = &apos;Knowledge&apos;&quot;</expression>
+        <expression>&quot;EntityId NOT IN (SELECT Id FROM Knowledge__kav WHERE IsLatestVersion = true OR PublishStatus = &apos;Online&apos;) AND EntityType = &apos;Knowledge&apos; AND IsDeleted = FALSE&quot;</expression>
     </formulas>
     <interviewLabel>Remove Old TopicAssignment {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Remove Old TopicAssignment</label>
@@ -86,7 +88,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -99,13 +101,13 @@
     <recordDeletes>
         <name>Delete_TopicAssignments</name>
         <label>Delete TopicAssignments</label>
-        <locationX>491</locationX>
-        <locationY>201</locationY>
+        <locationX>308</locationX>
+        <locationY>518</locationY>
         <inputReference>Get_TopicAssignments.outputCollection</inputReference>
     </recordDeletes>
     <start>
-        <locationX>23</locationX>
-        <locationY>50</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>EmptyCollection</targetReference>
         </connector>

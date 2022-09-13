@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <interviewLabel>NKS {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Knowledge Remove TopicAssignments</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Remove_Old_TopicAssignments</targetReference>
+        </connector>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2022-08-30</startDate>
+            <startTime>00:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Remove_Old_TopicAssignments</name>
+        <label>Remove Old TopicAssignments</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <flowName>Remove_Old_TopicAssignment</flowName>
+    </subflows>
+</Flow>

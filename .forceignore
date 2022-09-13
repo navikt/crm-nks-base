@@ -2,6 +2,7 @@
 # profiles
 # ----------------------------------------------------------------------------------------
 **/profiles/*
+!**/scratch-org/profiles/Admin.profile-meta.xml
 **/fieldRestrictionRules/*.rule-meta.xml
 Topic.datacategorygroup
 

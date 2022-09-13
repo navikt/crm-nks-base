@@ -11,6 +11,7 @@
             <property name="cardTitle" label="Title" type="String" default="Title" />
             <property name="iconName" label="Icon name" description="On the format category:iconName. See available icons: https://lightningdesignsystem.com/icons/" type="String" default="Title" />
             <property name="type" label="Type of announcement" type="String" required="true" />
+            <property name="listViewName" label="List View" type="String" required="true" default="Recent" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
