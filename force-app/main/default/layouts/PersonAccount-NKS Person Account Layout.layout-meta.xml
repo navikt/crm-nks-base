@@ -85,11 +85,11 @@
         <fields>NAME</fields>
         <fields>NKS_Theme__c</fields>
         <fields>NKS_StatusFormula__c</fields>
-        <fields>CRM_Date_Registered__c</fields>
+        <fields>NKS_Date_Registered__c</fields>
         <fields>CRM_DueDate__c</fields>
         <fields>CRM_NavUnit__c</fields>
         <relatedList>NavTask__c.CRM_AccountRelated__c</relatedList>
-        <sortField>CRM_Date_Registered__c</sortField>
+        <sortField>NKS_Date_Registered__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
