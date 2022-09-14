@@ -5,7 +5,7 @@ public with sharing class NKS_NewsArchiveHandler {
     private static final String MANIFEST_FORMAT = '.xml';
     private static final String DEFAULT_FILE_FORMAT = '.pdf';
     private static final String JOURNAL_POST_TYPE = 'NyheterNKS';
-    private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_NKS';
+    private static final String FTPS_CATALOUGE_PROD = 'ftpmottak_SF_NKS';
     private static final String FTPS_CATALOUGE_TEST = 'ftpmottakP1SF_NKS';
 
     private string errorMessage='';
