@@ -22,11 +22,11 @@
                         onclick={handleClose}
                     ></lightning-button>
                     <lightning-button
-                        disabled={disabled}
+                        disabled={isNextButtonDisabled}
                         label="Nytt"
                         title="Nytt sikkerhetsspørsmål"
                         aria-label="Nytt sikkerhetsspørsmål"
-                        onclick={handleNextQuestion}
+                        onclick={getNextQuestion}
                     ></lightning-button>
                 </lightning-layout-item>
             </lightning-layout>
