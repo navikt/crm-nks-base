@@ -39,10 +39,6 @@
         <name>NKS_Single_Record_Input_Validation_Error</name>
     </customLabels>
     <customLabels>
-        <label>Vennligst fullfør kategorisering.</label>
-        <name>NKS_Theme_Categorization_Validation_Error</name>
-    </customLabels>
-    <customLabels>
         <label>Tilgangsnivå</label>
         <name>fbc_AccessLevel</name>
     </customLabels>
