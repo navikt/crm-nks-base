@@ -31,10 +31,6 @@
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label>Må fylles ut. Legg inn enheten oppgaven skal tildeles.</label>
-        <name>NKS_Nav_Task_Work_Allocation_Validation_Error</name>
-    </customLabels>
-    <customLabels>
         <label>Ingen saker for valgt temagruppe.</label>
         <name>NKS_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
