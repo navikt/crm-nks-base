@@ -247,6 +247,7 @@
         <members>nksThemesPicklists</members>
         <members>stoThemeItem</members>
         <members>stoComponent</members>
+        <members>toggle</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
