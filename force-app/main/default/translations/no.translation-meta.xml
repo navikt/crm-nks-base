@@ -9,12 +9,6 @@
         <name>Permitteringsvarsler</name>
     </customApplications>
     <customApplications>
-        <label>
-            <!-- Sladding -->
-        </label>
-        <name>Sladding</name>
-    </customApplications>
-    <customApplications>
         <label>NAV</label>
         <name>TAG_NAV_default</name>
     </customApplications>
