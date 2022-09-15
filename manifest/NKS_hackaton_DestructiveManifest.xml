@@ -244,7 +244,6 @@
         <members>nksPersonCaseOverview</members>
         <members>nksThemeCategorization</members>
         <members>nksTaskTypePicklist</members>
-        <members>nksThemesPicklists</members>
         <members>stoThemeItem</members>
         <members>stoComponent</members>
         <members>toggle</members>
