@@ -1,0 +1,14 @@
+<template>
+    <template if:true={showcomponent}>
+        <lightning-combobox
+            name="TaskType"
+            label="Oppgavetype"
+            options={tasktypes}
+            required=""
+            placeholder="(Ikke valgt)"
+            value={tasktype}
+            onchange={handleTaskTypeChange}
+        >
+        </lightning-combobox>
+    </template>
+</template>
