@@ -337,10 +337,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_NAVTaskTypeController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_NavTaskRoutingHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
