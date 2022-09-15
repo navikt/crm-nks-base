@@ -81,11 +81,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.NKS_Henvendelse_BehandlingsId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Conversation_Note__c.NKS_Legacy_Case_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
