@@ -43,6 +43,7 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Conversation_Note__c</object>
+        <queriedFields>Id</queriedFields>
         <sortField>CreatedDate</sortField>
         <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -62,9 +63,9 @@
         <locationY>278</locationY>
         <flowName>NKS_Conversation_Note_Create_Journal_Entry</flowName>
         <inputAssignments>
-            <name>ConversationNote</name>
+            <name>recordId</name>
             <value>
-                <elementReference>Get_Cenversation_Note</elementReference>
+                <elementReference>Get_Cenversation_Note.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
