@@ -87,6 +87,11 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>NavTask__c.Edit_NAV_Task</members>
+        <members>NavTask__c.Send_NAV_Task</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
         <members>UserNotification__c.NKS</members>
         <name>CompactLayout</name>
     </types>
