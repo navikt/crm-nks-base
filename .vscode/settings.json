@@ -19,7 +19,7 @@
     },
     "diffEditor.ignoreTrimWhitespace": true,
     "files.exclude": {
-        "**/*.cls-metas.xml": true,
+        "**/*.cls-meta.xml": true,
         "**/*.trigger-meta.xml": true
     },
     "search.exclude": {
