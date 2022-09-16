@@ -138,14 +138,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
-        <name>ConversationNote</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Conversation_Note__c</objectType>
-    </variables>
-    <variables>
         <description>ID of the conversation note where the flow is triggered from.</description>
         <name>recordId</name>
         <dataType>String</dataType>
