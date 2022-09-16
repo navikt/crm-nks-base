@@ -272,6 +272,8 @@
         <members>Conversation_Note__c.NKS_Theme_Group_Code__c</members>
         <members>Conversation_Note__c.NKS_Theme_Group__c</members>
         <members>Conversation_Note__c.NKS_Theme__c</members>
+        <members>Conversation_Note__c.NKS_Owner_Department__c</members>
+        <members>Conversation_Note__c.CRM_Owner_Department__c</members>
         <members>STO_Category__mdt.STO_Language__c</members>
         <members>STO_Category__mdt.STO_Sort_Order__c</members>
         <members>STO_Category__mdt.STO_Description__c</members>
