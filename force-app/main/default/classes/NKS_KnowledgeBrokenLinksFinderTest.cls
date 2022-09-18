@@ -89,11 +89,10 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1].Id;
         listToSend.put(articleId, links);
         String[] toAddresses = new List<String>{ 'navnnavnesen@nav.no' };
-        String[] ccAddresses = new List<String>{ 'navnnavnesen@nav.no' };
 
         Test.startTest();
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
-        NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses, ccAddresses);
+        NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses);
         System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
         Test.stopTest();
     }

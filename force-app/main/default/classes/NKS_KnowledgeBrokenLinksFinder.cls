@@ -1,5 +1,51 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
     public Map<Id, List<String>> finalList = new Map<Id, List<String>>();
+    private List<String> links = new List<String>{
+        'afp.no',
+        'akan.no',
+        'altinn.no',
+        'anskaffelser.no',
+        'arbeidsmiljoportalen.no',
+        'arbeidsplassen.no',
+        'arbeidstilsynet.no',
+        'behandlingshjelpemidler.no',
+        'brreg.no',
+        'bufdir.no',
+        'deterdinpensjon.no',
+        'doffin.no',
+        'domstol.no',
+        'ehelse.no',
+        'eid.difi.no',
+        'facebook.com',
+        'garantikassen.no',
+        'helfo.no',
+        'helsedirektoratet.no',
+        'helsenorge.no',
+        'husbanken.no',
+        'huseieren.no',
+        'idebanken.org',
+        'imdi.no',
+        'jobbmesse.no',
+        'karriereveiledning.no',
+        'klp.no',
+        'konkursradet.no',
+        'lovdata.no',
+        'nav.no',
+        'nav.sabacloud.com',
+        'norskpensjon.no',
+        'politiet.no',
+        'skatteetaten.no',
+        'spk.no',
+        'norge.no',
+        'register.helsedirektoratet.no',
+        'regjeringen.no',
+        'udi.no',
+        'utdanning.no',
+        'veiviseren.no',
+        'vilbli.no',
+        'vimeo.com',
+        'youtube.com'
+    };
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\'';
@@ -57,7 +103,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 for (String str : strList) {
                     try {
                         Matcher matcher = linksPattern.matcher(str);
-
                         while (matcher.find()) {
                             String groupValue = matcher.group();
                             matches.add(groupValue);
@@ -70,7 +115,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             //System.debug('Matches: ' + matches);
 
             /**
-             * Endpoints are urls which their domains are defined as named credentials
+             * Endpoints defined as named credentials
              */
             if (matches.size() > 0) {
                 for (String str : matches) {
@@ -79,84 +124,19 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     if (Test.isRunningTest()) {
                         System.debug('Running tests.');
                     } else {
-                        if (str.contains('nav.no')) {
-                            HttpResponse res = calloutHttpReq(req, 'callout:nav_no' + str.substringAfter('nav.no'));
+                        for (String link : links) {
+                            if (str.contains(link)) {
+                                HttpResponse res = calloutHttpReq(
+                                    req,
+                                    'callout:' +
+                                    link.replace('.', '_') +
+                                    str.substringAfter(link)
+                                );
 
-                            detectRedirect(req, res);
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('helsenorge.no')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:helsenorge_no' + str.substringAfter('helsenorge.no')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('arbeidsplassen.no')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:arbeidsplassen_no' + str.substringAfter('arbeidsplassen.no')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('karriereveiledning.no')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:karriereveiledning_no' + str.substringAfter('karriereveiledning.no')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('utdanning.no')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:utdanning_no' + str.substringAfter('utdanning.no')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('google.no')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:google_no' + str.substringAfter('google.no')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('vimeo.com')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:vimeo_com' + str.substringAfter('vimeo.com')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('facebook.com')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:facebook_com' + str.substringAfter('facebook.com')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
-                            }
-                        } else if (str.contains('youtube.com')) {
-                            HttpResponse res = calloutHttpReq(
-                                req,
-                                'callout:youtube_com' + str.substringAfter('youtube.com')
-                            );
-
-                            if (res.getStatusCode() > 400) {
-                                resultList.add(str);
+                                //detectRedirect(req, res);
+                                if (res.getStatusCode() != 200) {
+                                    resultList.add(str);
+                                }
                             }
                         }
                     }
@@ -171,9 +151,9 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void finish(Database.BatchableContext bc) {
-        String[] toAddresses = new List<String>{ 'navnnavnesen@nav.no' };
-        String[] ccAddresses = new List<String>{ 'navnnavnesen@nav.no' };
-        sendEmail(finalList, toAddresses, ccAddresses);
+        // toAddress: nav.kontaktsenter.fag.og.kvalitet@nav.no
+        String[] toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+        sendEmail(finalList, toAddresses);
     }
 
     @TestVisible
@@ -220,16 +200,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     @TestVisible
-    private static void sendEmail(
-        Map<Id, List<String>> listToSend,
-        List<String> toAddresses,
-        List<String> ccAddresses
-    ) {
+    private static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
         if (listToSend.size() > 0) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
             mail.setToAddresses(toAddresses);
-            mail.setCcAddresses(ccAddresses);
+            //mail.setCcAddresses(ccAddresses);
             mail.setSenderDisplayName('Knowledge Broken Links Finder');
             mail.setSubject('Broken Links Raport');
             mail.setBccSender(false);
