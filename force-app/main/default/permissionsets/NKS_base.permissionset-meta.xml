@@ -305,10 +305,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKSNavTaskWorkAllocationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_BostedAddressController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -329,14 +325,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HenvendelseController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_HenvendelseListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_HistorikkViewController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -345,27 +333,7 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_JournalUtilities</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_JournalUtilities_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_KrrInformationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_NAVTaskTypeController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_NavSakService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_NavTaskManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -422,14 +390,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_RelatedListController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SafJournalPostListController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SafViewDocumentController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -718,10 +678,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>accountTeamMemberController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>nksDueDateUtility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1133,10 +1089,6 @@
         <object>UserNotification__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <pageAccesses>
-        <apexPage>NKS_SafViewDocument</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account.Employer</recordType>
         <visible>true</visible>

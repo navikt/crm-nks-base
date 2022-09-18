@@ -22,7 +22,8 @@ private class NKS_ConversationNoteAccessHandlerTest {
     @IsTest
     private static void grantAccess_whenUgradertAndNotNavEmployee() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
+        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
+        .Id;
 
         Test.startTest();
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
@@ -31,7 +32,11 @@ private class NKS_ConversationNoteAccessHandlerTest {
 
         System.assertEquals(
             1,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder
+            ],
             'Expected conversation note to be shared with group dialog'
         );
     }
@@ -39,19 +44,24 @@ private class NKS_ConversationNoteAccessHandlerTest {
     @IsTest
     private static void removeAccess_whenIncorrectlySentIsTrue() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
+        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
+        .Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
         insert note;
 
         Test.startTest();
-        note.NKS_Incorrectly_Sent__c = true;
+        note.CRM_Incorrectly_Sent__c = true;
         update note;
         Test.stopTest();
 
         System.assertEquals(
             0,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder
+            ],
             'Expected conversation note sharing to be removed'
         );
     }
@@ -59,20 +69,25 @@ private class NKS_ConversationNoteAccessHandlerTest {
     @IsTest
     private static void grantAccess_whenIncorrectlySentIsSetToFalse() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
-        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
+        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
+        .Id;
 
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
-        note.NKS_Incorrectly_Sent__c = true;
+        note.CRM_Incorrectly_Sent__c = true;
         insert note;
 
         Test.startTest();
-        note.NKS_Incorrectly_Sent__c = false;
+        note.CRM_Incorrectly_Sent__c = false;
         update note;
         Test.stopTest();
 
         System.assertEquals(
             1,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder
+            ],
             'Expected conversation note to be shared with group dialog'
         );
     }
@@ -84,8 +99,10 @@ private class NKS_ConversationNoteAccessHandlerTest {
         person.INT_IsNavEmployee__c = false;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
-        Id code7GroupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.FORTOLIG_GROUP_NAME LIMIT 1].Id;
+        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
+        .Id;
+        Id code7GroupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.FORTOLIG_GROUP_NAME LIMIT 1]
+        .Id;
 
         Test.startTest();
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
@@ -94,7 +111,11 @@ private class NKS_ConversationNoteAccessHandlerTest {
 
         System.assertEquals(
             0,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder
+            ],
             'Expected conversation notes not to be shared with veiledere'
         );
 
@@ -112,8 +133,15 @@ private class NKS_ConversationNoteAccessHandlerTest {
         person.INT_IsNavEmployee__c = true;
         insert person;
         Id accountId = [SELECT Id FROM Account WHERE CRM_Person__c = :person.Id LIMIT 1].Id;
-        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
-        Id skjermetGroupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.SKJERMET_GROUP_NAME LIMIT 1].Id;
+        Id dialogVeileder = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1]
+        .Id;
+        Id skjermetGroupId = [
+            SELECT Id
+            FROM Group
+            WHERE DeveloperName = :NKS_GroupVariables.SKJERMET_GROUP_NAME
+            LIMIT 1
+        ]
+        .Id;
 
         Test.startTest();
         Conversation_Note__c note = new Conversation_Note__c(CRM_Account__c = accountId);
@@ -122,13 +150,21 @@ private class NKS_ConversationNoteAccessHandlerTest {
 
         System.assertEquals(
             0,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :dialogVeileder
+            ],
             'Expected conversation notes not to be shared with veiledere'
         );
 
         System.assertEquals(
             1,
-            [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :skjermetGroupId],
+            [
+                SELECT COUNT()
+                FROM Conversation_Note__Share
+                WHERE RowCause = 'Manual' AND UserOrGroupId = :skjermetGroupId
+            ],
             'Expected conversation notes to be shared with skjermet group'
         );
     }

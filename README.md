@@ -58,6 +58,12 @@ Ved å bruke VS Code som IDE, er det lagt inn konfigurasjon som automatisk pushe
 -   `sfdx force:source:pull` for å hente endringer som du gjør i konfigurasjon i applikasjonen online.
 -   `sfdx force:source:push` for å publisere endringer du gjør i kode lokalt til applikasjonen online.
 
+## Scratch oppsett
+
+For å gjøre utvikling og testing enklere så er det lagt inn en del metadata under `force-app\scratch-org`. Metadataen består av permissions, apps og flexipages som gjør innholdet lettere tilgjengelig sånn at man slipper å sette opp dette hver gang man spinner opp en scratch org.
+
+Innholdet pushes og pulles til/fra scratch orgen på samme måte som annen metadata. Denne mappen slettes når vi bruker github actions for å lage pakker.
+
 ## Annet
 
 For spørsmål om denne applikasjonen, bruk #crm-nks på Slack.
