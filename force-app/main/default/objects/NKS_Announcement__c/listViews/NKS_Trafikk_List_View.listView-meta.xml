@@ -3,7 +3,7 @@
     <fullName>NKS_Trafikk_List_View</fullName>
     <columns>NAME</columns>
     <columns>NKS_Information__c</columns>
-    <columns>LAST_UPDATE</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>
