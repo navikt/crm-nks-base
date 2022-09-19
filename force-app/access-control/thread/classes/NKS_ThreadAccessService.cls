@@ -1,5 +1,5 @@
 public without sharing class NKS_ThreadAccessService {
-    private final Integer numberOfRetries = 1; // can potentially be put into a custom label/setting/metadata?
+    private final Integer numberOfRetries = 1;
 
     // Updates access rights for threads
     public void grantAccess(List<Thread__c> threads, List<Person__c> persons) {
