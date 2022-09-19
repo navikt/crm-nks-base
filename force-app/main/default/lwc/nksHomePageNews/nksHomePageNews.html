@@ -15,16 +15,19 @@
                                     hour="2-digit"
                                     minute="2-digit"
                                 ></lightning-formatted-date-time>
-                                .&nbsp;Oppdatert:&nbsp;<lightning-formatted-date-time
-                                    value={lastModifiedDate}
-                                    year="numeric"
-                                    month="long"
-                                    day="numeric"
-                                    hour="2-digit"
-                                    minute="2-digit"
-                                ></lightning-formatted-date-time
-                                >.</lightning-layout-item
-                            >
+                                .
+                                <template if:true={lastUpdatedDate}>
+                                    &nbsp;Oppdatert:&nbsp;<lightning-formatted-date-time
+                                        value={lastUpdatedDate}
+                                        year="numeric"
+                                        month="long"
+                                        day="numeric"
+                                        hour="2-digit"
+                                        minute="2-digit"
+                                    ></lightning-formatted-date-time
+                                    >.
+                                </template>
+                            </lightning-layout-item>
                             <template if:true={otherAuthors}>
                                 <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_small">
                                     Andre forfattere:&nbsp;{otherAuthors}

@@ -38,15 +38,15 @@
             </div>
         </template>
         <template if:true={isNews}>
-            <lightning-layout size="12" class="slds-grid slds-gutters">
-                <lightning-layout-item aria-hidden="true" class="slds-col slds-size_3-of-12">
+            <lightning-layout class="slds-grid slds-gutters">
+                <lightning-layout-item aria-hidden="true" size="3" class="slds-col">
                     <a href="#" onclick={navigateToSObject}>
                         <img src={record.imageurl} />
                     </a>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-col slds-size_9-of-12 slds-p-left_none">
-                    <lightning-layout multiple-rows="true" size="12">
-                        <lightning-layout-item class="slds-size_12-of-12">
+                <lightning-layout-item size="9" class="slds-col slds-p-left_none">
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12">
                             <template if:true={isPinned}>
                                 <lightning-icon
                                     icon-name="utility:pinned"
@@ -65,7 +65,8 @@
                                 ></lightning-formatted-url>
                             </h3>
                         </lightning-layout-item>
-                        <lightning-layout-item class="slds-size_12-of-12">
+                        <lightning-layout-item size="12"
+                            >Publisert:&nbsp;
                             <lightning-formatted-date-time
                                 value={record.publishDate}
                                 year="numeric"
@@ -75,7 +76,21 @@
                                 minute="2-digit"
                             ></lightning-formatted-date-time>
                         </lightning-layout-item>
-                        <lightning-layout-item class="slds-size_12-of-12 slds-truncate">
+                        <template if:true={record.lastUpdatedDate}>
+                            <lightning-layout-item size="12"
+                                >Oppdatert:&nbsp;
+                                <lightning-formatted-date-time
+                                    value={record.lastUpdatedDate}
+                                    year="numeric"
+                                    month="long"
+                                    day="numeric"
+                                    hour="2-digit"
+                                    minute="2-digit"
+                                ></lightning-formatted-date-time>
+                            </lightning-layout-item>
+                        </template>
+
+                        <lightning-layout-item size="12" class="slds-truncate">
                             <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
                         </lightning-layout-item>
                     </lightning-layout>

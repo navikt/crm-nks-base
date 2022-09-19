@@ -1,5 +1,18 @@
 public with sharing class NKS_HomePageController {
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
+    public static List<String> getUserSkills() {
+        try {
+            List<String> skills = new List<String>();
+            for (String skill : getUserSkills(UserInfo.getUserId())) {
+                skills.add(skill.replaceAll('NKS_Skill_', ''));
+            }
+            return skills;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
     public static string getField(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
@@ -7,7 +20,7 @@ public with sharing class NKS_HomePageController {
             announcements = [
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
-                WHERE RecordType.Name = :type
+                WHERE RecordType.Name = :type AND CreatedDate = LAST_N_DAYS:45 AND LastModifiedDate = LAST_N_DAYS:30
                 ORDER BY LastModifiedDate DESC
                 LIMIT 1
             ];
@@ -23,7 +36,7 @@ public with sharing class NKS_HomePageController {
         return res;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Record> getList(
         String title,
         String content,
@@ -33,7 +46,8 @@ public with sharing class NKS_HomePageController {
         String limitNumber,
         String datefield,
         Boolean showimage,
-        Boolean filterbyskills
+        Boolean filterbyskills,
+        List<String> skills
     ) {
         List<Record> records = new List<Record>();
         Set<String> userskills = new Set<String>();
@@ -42,8 +56,9 @@ public with sharing class NKS_HomePageController {
         String skillStringKnowledge = '';
 
         if (filterBySkills == true) {
-            for (String u : getUserSkills(userId)) {
-                u = u.replaceAll('NKS_Skill_', '');
+            for (String u : skills) {
+                //getUserSkills(userId)) {
+                // u = u.replaceAll('NKS_Skill_', '');
                 skillStringAnnouncement += '\'' + u + '\',';
                 skillStringKnowledge += u + '__c ,';
             }
@@ -82,7 +97,9 @@ public with sharing class NKS_HomePageController {
         }
 
         if (objectName == 'NKS_Announcement__c') {
-            qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c' });
+            qf.selectFields(
+                new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' }
+            );
 
             if (filterBySkills == true) {
                 qf.selectField('skills__c');
@@ -139,6 +156,8 @@ public with sharing class NKS_HomePageController {
         @AuraEnabled
         public Datetime publishDate;
         @AuraEnabled
+        public Datetime lastUpdatedDate;
+        @AuraEnabled
         public String status;
     }
 
@@ -185,9 +204,11 @@ public with sharing class NKS_HomePageController {
                 NKS_Announcement__c news = (NKS_Announcement__c) r;
                 record.pin = news.NKS_News_Pin__c;
                 record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
+                record.lastUpdatedDate = Datetime.valueOf(news.NKS_News_Update_Date__c);
             } else {
                 record.pin = false;
                 record.publishDate = null;
+                record.lastUpdatedDate = null;
             }
 
             if (objectName == 'Case') {
@@ -279,7 +300,7 @@ public with sharing class NKS_HomePageController {
         return skills;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static NKS_Announcement__c getCampaign() {
         List<NKS_Announcement__c> campaigns = [
             SELECT
@@ -318,6 +339,7 @@ public with sharing class NKS_HomePageController {
                 NKS_News_Author__c,
                 NKS_News_Other_Authors__c,
                 NKS_News_Publish_Date__c,
+                NKS_News_Update_Date__c,
                 LastModifiedDate,
                 NKS_Information__c,
                 NKS_ImageURL__c
@@ -333,7 +355,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Knowledge__kav> getReadyResponses() {
         try {
             List<Knowledge__kav> readyResponses = [
