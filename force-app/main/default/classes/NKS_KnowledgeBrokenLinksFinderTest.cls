@@ -49,9 +49,9 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         NKS_KnowledgeBrokenLinksFinder finder = new NKS_KnowledgeBrokenLinksFinder();
 
         Test.startTest();
-        Boolean redirect = NKS_KnowledgeBrokenLinksFinder.detectRedirect(new HttpRequest(), new HttpResponse());
+        Integer status = NKS_KnowledgeBrokenLinksFinder.detectRedirect(new HttpRequest(), new HttpResponse());
         Test.stopTest();
-        System.assertEquals(true, redirect);
+        System.assertEquals(null, status);
     }
 
     @isTest
@@ -91,9 +91,14 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         String[] toAddresses = new List<String>{ 'navnnavnesen@nav.no' };
 
         Test.startTest();
-        System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
-        NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses);
-        System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
+        try {
+            System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
+            NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses);
+            System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
+        } catch (Exception ex) {
+            System.assertEquals('System.EmailException', ex.getTypeName());
+        }
+
         Test.stopTest();
     }
 

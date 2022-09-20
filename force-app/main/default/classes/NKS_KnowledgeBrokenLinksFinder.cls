@@ -5,7 +5,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'akan.no',
         'altinn.no',
         'anskaffelser.no',
-        'arbeidsmiljoportalen.no',
+        'arbeidsmiljoportalen.no', // returns 200 for invalid links
         'arbeidsplassen.no',
         'arbeidstilsynet.no',
         'behandlingshjelpemidler.no',
@@ -15,7 +15,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'doffin.no',
         'domstol.no',
         'ehelse.no',
-        'eid.difi.no',
+        'eid.difi.no', // returns 200 for invalid links
         'facebook.com',
         'garantikassen.no',
         'helfo.no',
@@ -25,7 +25,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'huseieren.no',
         'idebanken.org',
         'imdi.no',
-        'jobbmesse.no',
+        'jobbmesse.no', // returns 200 for invalid links
         'karriereveiledning.no',
         'klp.no',
         'konkursradet.no',
@@ -124,17 +124,24 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     if (Test.isRunningTest()) {
                         System.debug('Running tests.');
                     } else {
+                        Boolean invalid = false;
+                        Integer statusCode = 0;
                         for (String link : links) {
                             if (str.contains(link)) {
-                                HttpResponse res = calloutHttpReq(
-                                    req,
-                                    'callout:' +
-                                    link.replace('.', '_') +
-                                    str.substringAfter(link)
-                                );
-
-                                //detectRedirect(req, res);
-                                if (res.getStatusCode() != 200) {
+                                try {
+                                    HttpResponse res = calloutHttpReq(
+                                        req,
+                                        'callout:' +
+                                        link.replace('.', '_') +
+                                        str.substringAfter(link)
+                                    );
+                                    statusCode = detectRedirect(req, res);
+                                } catch (Exception ex) {
+                                    System.debug('It is possbile this link is broken, check the link.');
+                                    invalid = true;
+                                }
+                                //System.debug(res.getStatusCode());
+                                if (statusCode != 200 || invalid == true) {
                                     resultList.add(str);
                                 }
                             }
@@ -145,9 +152,10 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
             if (resultList.size() > 0) {
                 finalList.put(article.Id, resultList);
+                System.debug('Number of dead links for article ' + article.Id + ': ' + resultList.size());
             }
         }
-        System.debug('Final list: ' + finalList);
+        System.debug('Number of articles with dead links: ' + finalList.size());
     }
 
     public void finish(Database.BatchableContext bc) {
@@ -157,12 +165,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     @TestVisible
-    private static Boolean detectRedirect(HttpRequest req, HttpResponse res) {
+    private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
         Boolean redirect;
 
         if (Test.isRunningTest()) {
             System.debug('Running tests.');
-            return true;
+            return null;
         } else {
             if (res.getStatusCode() >= 300 && res.getStatusCode() <= 307 && res.getStatusCode() != 306) {
                 do {
@@ -185,8 +193,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     }
                 } while (redirect && Limits.getCallouts() != Limits.getLimitCallouts());
             }
-            //system.debug(res.getBody());
-            return redirect;
+            //System.debug(res.getStatusCode());
+            return res.getStatusCode();
         }
     }
 
@@ -225,8 +233,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             }
             mail.setPlainTextBody(body);
 
-            // Send the email you have created.
-            Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+            try {
+                // Send the email you have created.
+                Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+            } catch (Exception ex) {
+                System.debug(ex.getMessage());
+            }
         }
     }
 }
