@@ -104,9 +104,9 @@ Example `myFeature-Cases.json`:
 
 ## File and folder structure
 
-**ALWAYS** have dummy-data self-contained in its own folder, both for readability and avoiding overwriting existing data. If you want ALL scratch orgs to have your dummy data, add the data as `dummy-data/[name]/`, which contains ONE `plan.json` file and one or more `[sObjects].json` files, which are also referenced in the plan.sjon.
+**ALWAYS** have dummy-data self-contained in its own folder, both for readability and avoiding overwriting existing data. If you want ALL scratch orgs to have your dummy data, add the data as `dummy-data/[name]/`, which contains ONE `plan.json` file and one or more `[sObjects].json` files, which are also referenced in the plan.json.
 
-The init scripts for scratch org creation automatically find these `plan.sjon` files and imports them for you. If you don't want auto importing, have the `plan.sjon` file renamed to anything else, and it won't be imported.
+The init scripts for scratch org creation automatically find these `plan.json` files and imports them for you. If you don't want auto importing, have the `plan.json` file renamed to anything else, and it won't be imported.
 
 ## Importing dummy data
 
