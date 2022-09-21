@@ -21,6 +21,7 @@ renderAs="pdf"
     <div>
     <apex:outputText value="{!information}" escape="false"/>
     </div>
+    <br/>
     <apex:image value="{!imageURL}" height="180" /> 
 </body>   
 </apex:page>
