@@ -100,7 +100,7 @@
     </values>
     <values>
         <field>SObjectSubtitle__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string">CRM_Conversation_Note__c</value>
     </values>
     <values>
         <field>SObjectTitle__c</field>
