@@ -23,7 +23,7 @@ global class NKS_ThreadPersonAccessHandler extends MyTriggers {
                 WHERE RowCause = 'Manual' AND ParentId IN :threadIds
             ];
 
-            delete toDelete;
+            new CRM_DatabaseOperations().setNumberOfRetries(1).setDomain(CRM_ApplicationDomain.Domain.NKS).deleteRecords(toDelete);
             new NKS_ThreadAccessService().grantAccess(threads, records);
         }
     }

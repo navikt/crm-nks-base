@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.238.0.NEXT",
+            "versionNumber": "0.240.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.168.0.LATEST"
+                    "versionNumber": "0.172.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -33,7 +33,7 @@
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.249.0.LATEST"
+                    "versionNumber": "1.262.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -49,11 +49,11 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.8.0.LATEST"
+                    "versionNumber": "0.10.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.79.0.LATEST"
+                    "versionNumber": "0.82.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
