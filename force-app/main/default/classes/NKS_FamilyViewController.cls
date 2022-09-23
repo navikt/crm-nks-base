@@ -808,7 +808,7 @@ public with sharing class NKS_FamilyViewController {
     @TestVisible
     private static Boolean isOver21(PDL_API_Response response) {
         Integer age = getAge(getAgeDate(response));
-        if (age == null || age < 21) {
+        if (age == null || age <= 21) {
             return false;
         }
         return true;
@@ -816,7 +816,7 @@ public with sharing class NKS_FamilyViewController {
 
     @TestVisible
     private static Boolean isOver21(Relation r) {
-        if (!r.deceased && r.age >= 21) {
+        if (!r.deceased && r.age > 21) {
             return true;
         }
         return false;
