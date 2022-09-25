@@ -37,10 +37,12 @@
         <apexClass>GetPicklistValuesTests</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>KafkaBrukernotifikasjon</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+
     <classAccesses>
         <apexClass>KafkaBrukernotifikasjonBeskjed</apexClass>
         <enabled>true</enabled>
@@ -125,6 +127,7 @@
         <apexClass>NKS_AvsenderMottaker</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    -->
     <classAccesses>
         <apexClass>NKS_Behandlingskjede</apexClass>
         <enabled>true</enabled>
@@ -137,6 +140,7 @@
         <apexClass>NKS_BostedAddressControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_Bruker</apexClass>
         <enabled>true</enabled>
@@ -157,6 +161,7 @@
         <apexClass>NKS_BrukervarslingBestilling</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
         <enabled>true</enabled>
@@ -217,6 +222,7 @@
         <apexClass>NKS_DataSynchController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_Dokumenter</apexClass>
         <enabled>true</enabled>
@@ -225,6 +231,7 @@
         <apexClass>NKS_Dokumentvarianter</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_FamilyViewController</apexClass>
         <enabled>true</enabled>
@@ -241,6 +248,7 @@
         <apexClass>NKS_GroupVariables</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_Henvendelse</apexClass>
         <enabled>true</enabled>
@@ -281,6 +289,7 @@
         <apexClass>NKS_HenvendelseUtil</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_HomePageController</apexClass>
         <enabled>true</enabled>
@@ -297,6 +306,7 @@
         <apexClass>NKS_HomePageNotifyOperationalUpdatesTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_JournalEntryWrapper</apexClass>
         <enabled>true</enabled>
@@ -313,6 +323,7 @@
         <apexClass>NKS_JournalfortInformasjon</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_Kodeverk</apexClass>
         <enabled>true</enabled>
@@ -325,6 +336,7 @@
         <apexClass>NKS_KrrInformationController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_Markering</apexClass>
         <enabled>true</enabled>
@@ -341,6 +353,7 @@
         <apexClass>NKS_NAVTaskTypeControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_NavCaseService</apexClass>
         <enabled>true</enabled>
@@ -349,6 +362,7 @@
         <apexClass>NKS_NavCaseService_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_NavSakService</apexClass>
         <enabled>true</enabled>
@@ -365,6 +379,7 @@
         <apexClass>NKS_NavTaskManager_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_NavTaskRecordTypeHandler</apexClass>
         <enabled>true</enabled>
@@ -417,6 +432,7 @@
         <apexClass>NKS_RelatedListController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_SafAvsenderMottaker</apexClass>
         <enabled>true</enabled>
@@ -525,10 +541,12 @@
         <apexClass>NKS_SafViewDocumentController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+
     <classAccesses>
         <apexClass>NKS_Sak</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    -->
     <classAccesses>
         <apexClass>NKS_SecurityMeasuresController</apexClass>
         <enabled>true</enabled>
@@ -553,6 +571,7 @@
         <apexClass>NKS_TestDataFactoryTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_ThemeUtils</apexClass>
         <enabled>true</enabled>
@@ -561,6 +580,7 @@
         <apexClass>NKS_ThemeUtils_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    -->
     <classAccesses>
         <apexClass>NKS_ThreadAccessHandler</apexClass>
         <enabled>true</enabled>
@@ -601,6 +621,7 @@
         <apexClass>NKS_ThreadSharingEventHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+
     <classAccesses>
         <apexClass>NKS_WarningBadgeController</apexClass>
         <enabled>true</enabled>
@@ -645,6 +666,7 @@
         <apexClass>fbc_FieldPickerControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>nksDueDateUtility</apexClass>
         <enabled>true</enabled>
@@ -653,6 +675,7 @@
         <apexClass>nksDueDateUtility_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    -->
     <custom>false</custom>
     <fieldPermissions>
         <editable>true</editable>
@@ -879,76 +902,91 @@
         <field>Conversation_Note__c.Journaled__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!--
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Created_By__c</field>
         <readable>false</readable>
     </fieldPermissions>
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Date_Registered__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Date_Time_Registered__c</field>
         <readable>false</readable>
     </fieldPermissions>
+   
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Henvendelse_BehandlingsId__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Incorrectly_Sent__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Is_Read__c</field>
         <readable>false</readable>
     </fieldPermissions>
+     
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Journal_Status_Formula__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Journal_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Legacy_Case_Id__c</field>
         <readable>false</readable>
     </fieldPermissions>
+   
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Number_of_API_Retries__c</field>
         <readable>false</readable>
     </fieldPermissions>
+     
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Owner_Department__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Sent__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <!--
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Subtheme_Code__c</field>
         <readable>false</readable>
     </fieldPermissions>
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Subtheme__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Theme_Code__c</field>
@@ -969,6 +1007,7 @@
         <field>Conversation_Note__c.NKS_Theme__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.NKS_Timeline_Name__c</field>
@@ -1344,10 +1383,12 @@
         <apexPage>Audit_Log_Announcement</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <!--
     <pageAccesses>
         <apexPage>NKS_SafViewDocument</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+-->
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>NKS_Announcement__c.Campaign</recordType>
