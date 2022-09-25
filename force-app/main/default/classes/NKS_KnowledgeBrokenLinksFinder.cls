@@ -136,13 +136,13 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                                         str.substringAfter(link)
                                     );
                                     statusCode = detectRedirect(req, res);
+                                    System.debug(statusCode);
+                                    if (statusCode != 200) {
+                                        resultList.add(str);
+                                    }
                                 } catch (Exception ex) {
-                                    System.debug('It is possbile this link is broken, check the link.');
-                                    invalid = true;
-                                }
-                                //System.debug(res.getStatusCode());
-                                if (statusCode != 200 || invalid == true) {
-                                    resultList.add(str);
+                                    //System.debug('It is possbile this link is broken, check the link.');
+                                    //invalid = true;
                                 }
                             }
                         }
@@ -152,10 +152,11 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
             if (resultList.size() > 0) {
                 finalList.put(article.Id, resultList);
-                System.debug('Number of dead links for article ' + article.Id + ': ' + resultList.size());
+                //System.debug('Number of dead links for article ' + article.Id + ': ' + resultList.size());
             }
         }
         System.debug('Number of articles with dead links: ' + finalList.size());
+        System.debug(finalList);
     }
 
     public void finish(Database.BatchableContext bc) {
@@ -239,6 +240,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             } catch (Exception ex) {
                 System.debug(ex.getMessage());
             }
+        } else {
+            System.debug('List is empty!');
         }
     }
 }
