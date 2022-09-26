@@ -27,7 +27,7 @@ public with sharing class NKS_BostedAddressControllerTest {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
         List<NKS_BostedAddressController.BostedAddress> l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
-            query.execute(),
+            query.execute().data.hentPerson.bostedsadresse[0],
             new NKS_BostedAddressController.BostedAddress()
         );
         String boVegAdd =
@@ -72,7 +72,7 @@ public with sharing class NKS_BostedAddressControllerTest {
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
         system.debug('response from PDL_API_Response data method from correct:::::>>' + response);
         l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
-            response,
+            response.data.hentPerson.bostedsadresse[0],
             new NKS_BostedAddressController.BostedAddress()
         );
         System.assertEquals('GRIMSTAD', l[0].tilleggsnavn);
@@ -110,7 +110,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
         l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
-            response,
+            response.data.hentPerson.bostedsadresse[0],
             new NKS_BostedAddressController.BostedAddress()
         );
         System.assertEquals('1234', l[0].postnummer);
@@ -150,7 +150,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(response, new NKS_BostedAddressController.BostedAddress());
+        l = NKS_BostedAddressController.getOppholdsAddress(response.data.hentPerson.oppholdsadresse[0], new NKS_BostedAddressController.BostedAddress());
         System.assertEquals('1200', l[0].postnummer);
 
         boVegAdd =
@@ -191,7 +191,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(response, new NKS_BostedAddressController.BostedAddress());
+        l = NKS_BostedAddressController.getOppholdsAddress(response.data.hentPerson.oppholdsadresse[0], new NKS_BostedAddressController.BostedAddress());
         System.assertEquals('GRIMSTAD OPPVEG', l[0].tilleggsnavn);
 
         boVegAdd =
@@ -214,7 +214,7 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(response, new NKS_BostedAddressController.BostedAddress());
+        l = NKS_BostedAddressController.getOppholdsAddress(response.data.hentPerson.oppholdsadresse[0], new NKS_BostedAddressController.BostedAddress());
         System.assertEquals('1234', l[0].postnummer);
         l = NKS_BostedAddressController.getAddressData(response);
         System.assertEquals('1234', l[0].postnummer);
