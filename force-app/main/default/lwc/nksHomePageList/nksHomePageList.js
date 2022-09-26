@@ -1,5 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
+import getKnowledgeList from '@salesforce/apex/NKS_HomePageController.getKnowledgeList';
+import getCaseList from '@salesforce/apex/NKS_HomePageController.getCaseList';
+import getAnnouncementList from '@salesforce/apex/NKS_HomePageController.getAnnouncementList';
 import getSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
@@ -86,36 +89,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }
     }
 
-    // renderedCallback() {
-    //     if (this.initRun === false) {
-    //         this.initRun = true;
-    //         if (this.filterbyskills === true) {
-    //             getSkills()
-    //                 .then((data) => {
-    //                     this.userSkills = data;
-    //                     this.loadList();
-    //                 })
-    //                 .catch((error) => {
-    //                     let message = 'Unknown error';
-    //                     if (Array.isArray(error.body)) {
-    //                         message = error.body.map((e) => e.message).join(', ');
-    //                     } else if (typeof error.body.message === 'string') {
-    //                         message = error.body.message;
-    //                     }
-    //                     this.dispatchEvent(
-    //                         new ShowToastEvent({
-    //                             title: 'Error',
-    //                             message,
-    //                             variant: 'error'
-    //                         })
-    //                     );
-    //                 });
-    //         } else {
-    //             this.loadList();
-    //         }
-    //     }
-    // }
-
     handleError() {
         onError((error) => {
             console.log('Received error from empApi: ', JSON.stringify(error));
@@ -124,18 +97,23 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     loadList() {
-        getList({
-            title: this.title,
-            content: this.content,
-            objectName: this.objectName,
-            filter: this.filter,
-            orderby: this.orderby,
-            limitNumber: this.limit,
-            datefield: this.datefield,
-            showimage: this.showimage,
-            filterbyskills: this.filterbyskills,
-            skills: this.userSkills
-        })
+        let promise;
+        switch (this.objectName) {
+            case 'Case':
+                promise = this.getCaseList();
+                break;
+            case 'NKS_Announcement__c':
+                promise = this.getAnnouncementList();
+                break;
+            case 'Knowledge__kav':
+                promise = this.getKnowledgeList();
+                break;
+            default:
+                promise = this.getList();
+                break;
+        }
+
+        promise
             .then((data) => {
                 this.records = data;
                 return this.records;
@@ -163,6 +141,96 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.handleSubscribe();
             this.handleError();
         }
+    }
+
+    getKnowledgeList() {
+        console.log('getKnowledgeList');
+        return new Promise((resolve, reject) => {
+            getKnowledgeList({
+                title: this.title,
+                content: this.content,
+                objectName: this.objectName,
+                filter: this.filter,
+                orderBy: this.orderby,
+                limitNumber: this.limit,
+                dateField: this.datefield,
+                showImage: this.showimage,
+                filterBySkills: this.filterbyskills,
+                skills: this.userSkills
+            })
+                .then((data) => {
+                    resolve(data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    getCaseList() {
+        console.log('getCaseList');
+        return new Promise((resolve, reject) => {
+            getCaseList({
+                title: this.title,
+                content: this.content,
+                objectName: this.objectName,
+                filter: this.filter,
+                orderBy: this.orderby,
+                limitNumber: this.limit,
+                dateField: this.datefield
+            })
+                .then((data) => {
+                    resolve(data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    getAnnouncementList() {
+        console.log('getAnnouncementList');
+        return new Promise((resolve, reject) => {
+            getAnnouncementList({
+                title: this.title,
+                content: this.content,
+                objectName: this.objectName,
+                filter: this.filter,
+                orderBy: this.orderby,
+                limitNumber: this.limit,
+                dateField: this.datefield,
+                showImage: this.showimage,
+                filterBySkills: this.filterbyskills,
+                skills: this.userSkills
+            })
+                .then((data) => {
+                    resolve(data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
+    getList() {
+        console.log('getList');
+        return new Promise((resolve, reject) => {
+            getList({
+                title: this.title,
+                content: this.content,
+                objectName: this.objectName,
+                filter: this.filter,
+                orderBy: this.orderby,
+                limitNumber: this.limit,
+                dateField: this.datefield
+            })
+                .then((data) => {
+                    resolve(data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
     }
 
     navigateToList() {
