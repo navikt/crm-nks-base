@@ -29,6 +29,9 @@
 # ----------------------------------------------------------------------------------------
 **/flexipages/LightningService_UtilityBar.flexipage-meta.xml
 
+# channelLayouts
+# ----------------------------------------------------------------------------------------
+force-app/main/default/channelLayouts/Knowledge__kav.Chat_channel.channelLayout-meta.xml
 
 # translations
 # ----------------------------------------------------------------------------------------
@@ -48,6 +51,7 @@
 **/workflows/CustomOpportunity__c*
 **/workflows/Contract__c*
 **/layouts/CustomOpportunity__c-Custom Opportunity Layout.layout-meta.xml
+**/permissionsetgroups/Arbeidsgiver_*
 
 # VS Code
 # ----------------------------------------------------------------------------------------
