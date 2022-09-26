@@ -30,7 +30,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetField() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Salesforce Update');
+        String info = NKS_HomePageController.getField('Salesforce_Update');
         Test.stopTest();
 
         System.assertEquals(700, info.length());
@@ -48,10 +48,9 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListAnnouncement() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getAnnouncementList(
             'Name',
             'NKS_Information__c',
-            'NKS_Announcement__c',
             'NKS_TypeFormula__c != null',
             'LastModifiedDate DESC Name ASC',
             '3',
@@ -68,10 +67,9 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListKnowledge() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getKnowledgeList(
             'Title',
             null,
-            'Knowledge__kav',
             'LastModifiedDate = LAST_N_DAYS:30 AND Title != \'\'',
             'LastModifiedDate DESC',
             '3',
@@ -88,17 +86,13 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListCase() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getCaseList(
             'CaseNumber',
             null,
-            'Case',
             'Status IN (\'New\', \'In progress\', \'Reserved\')',
             'LastModifiedDate DESC',
             '3',
-            'CreatedDate',
-            false,
-            false,
-            new List<String>()
+            'CreatedDate'
         );
         Test.stopTest();
 
@@ -115,10 +109,7 @@ public with sharing class NKS_HomePageControllerTest {
             'publishStatus=\'Online\'',
             'LastModifiedDate DESC',
             '3',
-            'CreatedDate',
-            false,
-            false,
-            new List<String>()
+            'CreatedDate'
         );
         Test.stopTest();
 
@@ -221,6 +212,6 @@ public with sharing class NKS_HomePageControllerTest {
         Integer counter = NKS_HomePageController.countNewsViews(testNews.Id);
         Test.stopTest();
 
-        System.assertEquals(null, counter);
+        System.assertEquals(0, counter);
     }
 }
