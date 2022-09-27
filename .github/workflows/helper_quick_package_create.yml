@@ -110,6 +110,7 @@ jobs:
   # ################################################################# #
   create-release:
     name: Create alpha release
+    if: ${{ always() }}
     needs: [create-package, validate-in-dev]
     runs-on: ubuntu-latest
     steps:
