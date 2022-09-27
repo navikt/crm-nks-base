@@ -124,7 +124,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     if (Test.isRunningTest()) {
                         System.debug('Running tests.');
                     } else {
-                        Boolean invalid = false;
                         Integer statusCode = 0;
                         for (String link : links) {
                             if (str.contains(link)) {
@@ -136,13 +135,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                                         str.substringAfter(link)
                                     );
                                     statusCode = detectRedirect(req, res);
-                                    System.debug(statusCode);
+                                    //System.debug(statusCode);
                                     if (statusCode != 200) {
                                         resultList.add(str);
                                     }
                                 } catch (Exception ex) {
                                     //System.debug('It is possbile this link is broken, check the link.');
-                                    //invalid = true;
                                 }
                             }
                         }
@@ -222,7 +220,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
             // Specify the text content of the email.
             String body = '';
-
             for (Id key : listToSend.keySet()) {
                 Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
                 List<String> links = listToSend.get(key);
@@ -233,12 +230,11 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 body += '\n';
             }
             mail.setPlainTextBody(body);
-
             try {
                 // Send the email you have created.
                 Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
             } catch (Exception ex) {
-                System.debug(ex.getMessage());
+                System.debug('Problem sending email: ' + ex.getMessage());
             }
         } else {
             System.debug('List is empty!');
