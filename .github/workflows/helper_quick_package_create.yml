@@ -4,7 +4,7 @@ on:
     inputs:
       deployInDev:
         description: "Deploy to dev"
-        type: choice
+        type: boolean
 
 jobs:
   # ################################################################# #
