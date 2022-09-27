@@ -288,4 +288,11 @@
         <shortDescription>Users</shortDescription>
         <value>Users</value>
     </labels>
+    <labels>
+        <fullName>NKS_No_Conversation_Notes_Found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Conversation Notes Found</shortDescription>
+        <value>Ingen Samtalereferater relatert til denne Henvendelse. Opprett en Samtalereferat først.</value>
+    </labels>
 </CustomLabels>

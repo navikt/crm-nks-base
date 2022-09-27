@@ -18,7 +18,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
             case 'Teknisk og drift':
                 return 'Operational';
             case 'Salesforce oppdatering':
-                return 'Salesforce Update';
+                return 'Salesforce_Update';
             case 'Trafikk':
                 return 'Traffic';
             default:
