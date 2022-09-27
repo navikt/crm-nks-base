@@ -86,6 +86,7 @@ public with sharing class NKS_HomePageController {
                 filter += (String.isBlank(filter) ? '' : ' AND ');
                 filter += '(Skills__c = \'\' OR Skills__c INCLUDES (' + skillStringAnnouncement + '))';
             }
+            qf.setCondition(filter);
         }
         return createRecords(Database.query(qf.toSOQL()), 'NKS_Announcement__c', title, content, dateField, showImage);
     }
@@ -121,6 +122,7 @@ public with sharing class NKS_HomePageController {
                 'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
                 skillStringKnowledge +
                 ')';
+            qf.setCondition(filter);
         }
 
         return createRecords(Database.query(qf.toSOQL()), 'Knowledge__kav', title, content, dateField, showImage);
