@@ -135,8 +135,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                                         str.substringAfter(link)
                                     );
                                     statusCode = detectRedirect(req, res);
-                                    //System.debug(statusCode);
-                                    if (statusCode != 200) {
+                                    if (statusCode != 200 && statusCode != 500) {
                                         resultList.add(str);
                                     }
                                 } catch (Exception ex) {
@@ -147,10 +146,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     }
                 }
             }
-
             if (resultList.size() > 0) {
                 finalList.put(article.Id, resultList);
-                //System.debug('Number of dead links for article ' + article.Id + ': ' + resultList.size());
             }
         }
         System.debug('Number of articles with dead links: ' + finalList.size());
@@ -213,8 +210,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
             mail.setToAddresses(toAddresses);
             //mail.setCcAddresses(ccAddresses);
-            mail.setSenderDisplayName('Knowledge Broken Links Finder');
-            mail.setSubject('Broken Links Raport');
+            mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
+            mail.setSubject('Rapport om døde lenker');
             mail.setBccSender(false);
             mail.setUseSignature(false);
 
@@ -223,13 +220,22 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             for (Id key : listToSend.keySet()) {
                 Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
                 List<String> links = listToSend.get(key);
-                body += 'Article: "' + article.Title + '" has the following dead links:\n';
+                String recordlink = URL.getSalesforceBaseUrl().toExternalForm() + '/' + article.Id;
+                body +=
+                    'Artikkel: "' +
+                    '<a href="' +
+                    recordlink +
+                    '">' +
+                    article.Title +
+                    '</a>' +
+                    '" har følgende døde lenker:<br/>';
                 for (String str : links) {
-                    body += str + ', ';
+                    //body += '<a href="' + str + '">' + str + '</a><br/>';
+                    body += str + '<br/>';
                 }
-                body += '\n';
+                body += '<br/>';
             }
-            mail.setPlainTextBody(body);
+            mail.setHtmlBody(body);
             try {
                 // Send the email you have created.
                 Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
