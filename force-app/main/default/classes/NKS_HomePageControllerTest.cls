@@ -52,7 +52,7 @@ public with sharing class NKS_HomePageControllerTest {
             'Name',
             'NKS_Information__c',
             'NKS_TypeFormula__c != null',
-            'LastModifiedDate DESC Name ASC',
+            'LastModifiedDate DESC',
             '3',
             'CreatedDate',
             true,
