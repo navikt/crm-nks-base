@@ -21,7 +21,7 @@ public with sharing class NKS_HomePageController {
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
                 WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
-                ORDER BY LastModifiedDate DESC
+                ORDER BY SystemModstamp DESC
                 LIMIT 1
             ]) {
                 return announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
@@ -67,28 +67,48 @@ public with sharing class NKS_HomePageController {
     ) {
         List<Record> records = new List<Record>();
 
-        fflib_QueryFactory qf = getQueryFactory(
-            NKS_Announcement__c.getSObjectType(),
-            title,
-            content,
-            filter,
-            orderBy,
-            limitNumber
-        );
+        // fflib_QueryFactory qf = getQueryFactory(
+        //     NKS_Announcement__c.getSObjectType(),
+        //     title,
+        //     content,
+        //     filter,
+        //     orderBy,
+        //     limitNumber
+        // );
 
-        qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' });
+        String q =
+            'SELECT NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, LastModifiedDate, CreatedDate, ' +
+            title +
+            ', ' +
+            content;
+        q = q.removeEnd(',') + ' FROM NKS_Announcement__c';
+
+        // qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' });
 
         if (filterBySkills == true && skills != null) {
             String skillStringAnnouncement = ('\'' + String.join(skills, '\',\'') + '\'').removeEnd('\'\'');
-            qf.selectField('skills__c');
+            // qf.selectField('skills__c');
 
             if (String.isNotBlank(skillStringAnnouncement)) {
                 filter += (String.isBlank(filter) ? '' : ' AND ');
                 filter += '(Skills__c = \'\' OR Skills__c INCLUDES (' + skillStringAnnouncement + '))';
             }
-            qf.setCondition(filter);
+            // qf.setCondition(filter);
         }
-        return createRecords(Database.query(qf.toSOQL()), 'NKS_Announcement__c', title, content, dateField, showImage);
+        // return createRecords(Database.query(qf.toSOQL()), 'NKS_Announcement__c', title, content, dateField, showImage);
+        if (String.isNotBlank(filter)) {
+            q += ' WHERE ' + filter;
+        }
+
+        if (String.isNotBlank(orderBy)) {
+            q += ' ORDER BY ' + orderBy;
+        }
+
+        if (String.isNotBlank(limitNumber)) {
+            q += ' LIMIT ' + limitNumber;
+        }
+
+        return createRecords(Database.query(q), 'NKS_Announcement__c', title, content, dateField, showImage);
     }
 
     @AuraEnabled(cacheable=true)
@@ -145,7 +165,7 @@ public with sharing class NKS_HomePageController {
         qf.setCondition(filter);
 
         if (String.isNotBlank(orderBy)) {
-            List<String> orderBys = orderBy.split(' ');
+            List<String> orderBys = orderBy.normalizeSpace().split(' ');
             Integer i = 0;
             Integer n = 1;
             while (i < orderBys.size()) {

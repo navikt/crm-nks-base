@@ -4,7 +4,9 @@
         <layout>Case Feed Layout</layout>
         <layoutType>CaseInteraction</layoutType>
         <sections>
-            <label><!-- Fields --></label>
+            <label>
+                <!-- Fields -->
+            </label>
             <section>Fields</section>
         </sections>
     </layouts>
@@ -17,11 +19,17 @@
         <name>Close_Case</name>
     </quickActions>
     <quickActions>
+        <label>Journalfør</label>
+        <name>Journal</name>
+    </quickActions>
+    <quickActions>
         <label>Lukk henvendelse</label>
         <name>Close_Case_and_Tab</name>
     </quickActions>
     <quickActions>
-        <label><!-- Opprett NAV-oppgave --></label>
+        <label>
+            <!-- Opprett NAV-oppgave -->
+        </label>
         <name>NKS_Case_Create_NAV_Task</name>
     </quickActions>
     <quickActions>
@@ -33,11 +41,15 @@
         <name>NKS_Clone_and_Change_Account</name>
     </quickActions>
     <quickActions>
-        <label><!-- NewChildCase --></label>
+        <label>
+            <!-- NewChildCase -->
+        </label>
         <name>NewChildCase</name>
     </quickActions>
     <quickActions>
-        <label><!-- SendEmail --></label>
+        <label>
+            <!-- SendEmail -->
+        </label>
         <name>SendEmail</name>
     </quickActions>
     <quickActions>
@@ -49,7 +61,9 @@
         <name>Set_to_in_progress</name>
     </quickActions>
     <quickActions>
-        <label><!-- Update Case --></label>
+        <label>
+            <!-- Update Case -->
+        </label>
         <name>UpdateFeedback</name>
     </quickActions>
 </CustomObjectTranslation>
