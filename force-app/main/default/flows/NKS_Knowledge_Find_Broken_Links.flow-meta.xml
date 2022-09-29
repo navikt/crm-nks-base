@@ -39,8 +39,8 @@
         </connector>
         <schedule>
             <frequency>Weekly</frequency>
-            <startDate>2022-09-12</startDate>
-            <startTime>00:30:00.000Z</startTime>
+            <startDate>2022-09-29</startDate>
+            <startTime>01:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>

@@ -134,7 +134,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                                         link.replace('.', '_') +
                                         str.substringAfter(link)
                                     );
-                                    statusCode = detectRedirect(req, res);
+                                    if (link.contains('.no')) {
+                                        statusCode = detectRedirect(req, res);
+                                    } else {
+                                        statusCode = res.getStatusCode();
+                                    }
+
                                     if (statusCode != 200 && statusCode != 500) {
                                         resultList.add(str);
                                     }
@@ -163,12 +168,13 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     @TestVisible
     private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
         Boolean redirect;
+        Integer statusCode = res.getStatusCode();
 
         if (Test.isRunningTest()) {
             System.debug('Running tests.');
             return null;
         } else {
-            if (res.getStatusCode() >= 300 && res.getStatusCode() <= 307 && res.getStatusCode() != 306) {
+            if (statusCode >= 300 && statusCode <= 307 && statusCode != 306) {
                 do {
                     redirect = false; // reset the value each time
                     String loc = res.getHeader('Location'); // get location of the redirect
@@ -181,16 +187,15 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                     req.setMethod('GET');
                     Http http = new Http();
                     res = http.send(req);
-                    if (res.getStatusCode() != 500) {
+                    if (statusCode != 500) {
                         // 500 = fail
-                        if (res.getStatusCode() >= 300 && res.getStatusCode() <= 307 && res.getStatusCode() != 306) {
+                        if (statusCode >= 300 && statusCode <= 307 && statusCode != 306) {
                             redirect = true;
                         }
                     }
                 } while (redirect && Limits.getCallouts() != Limits.getLimitCallouts());
             }
-            //System.debug(res.getStatusCode());
-            return res.getStatusCode();
+            return statusCode;
         }
     }
 
@@ -220,17 +225,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             for (Id key : listToSend.keySet()) {
                 Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
                 List<String> links = listToSend.get(key);
-                String recordlink = URL.getSalesforceBaseUrl().toExternalForm() + '/' + article.Id;
-                body +=
-                    'Artikkel: "' +
-                    '<a href="' +
-                    recordlink +
-                    '">' +
-                    article.Title +
-                    '</a>' +
-                    '" har følgende døde lenker:<br/>';
+                body += 'Artikkel: "' + article.Title + ' " har følgende døde lenker:<br/>';
                 for (String str : links) {
-                    //body += '<a href="' + str + '">' + str + '</a><br/>';
                     body += str + '<br/>';
                 }
                 body += '<br/>';
