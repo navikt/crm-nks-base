@@ -84,6 +84,7 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>NKS_Theme__c</fields>
+        <fields>CRM_GjelderFormula__c</fields>
         <fields>NKS_StatusFormula__c</fields>
         <fields>NKS_Date_Registered__c</fields>
         <fields>CRM_DueDate__c</fields>
