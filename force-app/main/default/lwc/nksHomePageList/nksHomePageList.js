@@ -37,6 +37,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     pageurl;
     initRun = false;
 
+    refreshList = () => {
+        const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
+        //eslint-disable-next-line @lwc/lwc/no-async-operation
+        setTimeout(() => {
+            this.loadList();
+        }, rand);
+    };
+
     connectedCallback() {
         this.showSpinner = true;
         // Add userId to filter for STO and Chat
@@ -88,7 +96,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             }
         }
     }
-
     handleError() {
         onError((error) => {
             console.log('Received error from empApi: ', JSON.stringify(error));
@@ -247,16 +254,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     handleSubscribe() {
-        if (this.refreshPageAutomatically)
+        if (this.refreshPageAutomatically && this.objectName === 'NKS_Announcement__c')
             subscribe(this.channelName, -1, this.refreshList).then((response) => {
-                console.log('Subscription request sent to: ', JSON.stringify(response.channel));
+                console.log(
+                    `Subscription request for object ${this.objectName} sent to: ${JSON.stringify(response.channel)}`
+                );
                 this.subscription = response;
             });
     }
-
-    refreshList = () => {
-        this.loadList();
-    };
 
     loadMoreList() {
         this.listCount += 3;

@@ -12,7 +12,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static string getField(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
@@ -33,7 +33,7 @@ public with sharing class NKS_HomePageController {
         return null;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Record> getCaseList(
         String title,
         String content,
@@ -53,7 +53,7 @@ public with sharing class NKS_HomePageController {
         return records;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Record> getAnnouncementList(
         String title,
         String content,
@@ -67,15 +67,6 @@ public with sharing class NKS_HomePageController {
     ) {
         List<Record> records = new List<Record>();
 
-        // fflib_QueryFactory qf = getQueryFactory(
-        //     NKS_Announcement__c.getSObjectType(),
-        //     title,
-        //     content,
-        //     filter,
-        //     orderBy,
-        //     limitNumber
-        // );
-
         String q =
             'SELECT NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, LastModifiedDate, CreatedDate, ' +
             title +
@@ -83,19 +74,14 @@ public with sharing class NKS_HomePageController {
             content;
         q = q.removeEnd(',') + ' FROM NKS_Announcement__c';
 
-        // qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' });
-
         if (filterBySkills == true && skills != null) {
             String skillStringAnnouncement = ('\'' + String.join(skills, '\',\'') + '\'').removeEnd('\'\'');
-            // qf.selectField('skills__c');
 
             if (String.isNotBlank(skillStringAnnouncement)) {
                 filter += (String.isBlank(filter) ? '' : ' AND ');
                 filter += '(Skills__c = \'\' OR Skills__c INCLUDES (' + skillStringAnnouncement + '))';
             }
-            // qf.setCondition(filter);
         }
-        // return createRecords(Database.query(qf.toSOQL()), 'NKS_Announcement__c', title, content, dateField, showImage);
         if (String.isNotBlank(filter)) {
             q += ' WHERE ' + filter;
         }
