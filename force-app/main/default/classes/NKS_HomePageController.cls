@@ -17,62 +17,155 @@ public with sharing class NKS_HomePageController {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
         try {
-            announcements = [
+            for (NKS_Announcement__c announcement : [
                 SELECT NKS_Information__c
                 FROM NKS_Announcement__c
-                WHERE RecordType.Name = :type AND CreatedDate = LAST_N_DAYS:45 AND LastModifiedDate = LAST_N_DAYS:30
-                ORDER BY LastModifiedDate DESC
+                WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
+                ORDER BY SystemModstamp DESC
                 LIMIT 1
-            ];
-
-            if (announcements.size() > 0) {
-                NKS_Announcement__c announcement = announcements[0];
-                String information = announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
-                res = information;
+            ]) {
+                return announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
             }
         } catch (Exception ex) {
             System.debug('Problem getting Information-field for Announcement' + ex.getMessage());
+            throw new AuraException('Kunne ikke hente informasjonen/n' + ex.getMessage());
         }
-        return res;
+        return null;
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<Record> getList(
+    public static List<Record> getCaseList(
         String title,
         String content,
-        String objectName,
         String filter,
-        String orderby,
+        String orderBy,
         String limitNumber,
-        String datefield,
-        Boolean showimage,
-        Boolean filterbyskills,
+        String dateField
+    ) {
+        List<Record> records = new List<Record>();
+
+        fflib_QueryFactory qf = getQueryFactory(Case.getSObjectType(), title, content, filter, orderBy, limitNumber);
+        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
+        String query = qf.toSOQL().replace('SELECT', 'SELECT toLabel(Status),');
+        List<SObject> listToReturn = Database.query(query);
+
+        records = createRecords(listToReturn, 'Case', title, content, dateField, false);
+        return records;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Record> getAnnouncementList(
+        String title,
+        String content,
+        String filter,
+        String orderBy,
+        String limitNumber,
+        String dateField,
+        Boolean showImage,
+        Boolean filterBySkills,
         List<String> skills
     ) {
         List<Record> records = new List<Record>();
-        Set<String> userskills = new Set<String>();
-        String userId = UserInfo.getUserID();
-        String skillStringAnnouncement = '';
-        String skillStringKnowledge = '';
 
-        if (filterBySkills == true) {
-            for (String u : skills) {
-                //getUserSkills(userId)) {
-                // u = u.replaceAll('NKS_Skill_', '');
-                skillStringAnnouncement += '\'' + u + '\',';
-                skillStringKnowledge += u + '__c ,';
+        // fflib_QueryFactory qf = getQueryFactory(
+        //     NKS_Announcement__c.getSObjectType(),
+        //     title,
+        //     content,
+        //     filter,
+        //     orderBy,
+        //     limitNumber
+        // );
+
+        String q =
+            'SELECT NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, LastModifiedDate, CreatedDate, ' +
+            title +
+            ', ' +
+            content;
+        q = q.removeEnd(',') + ' FROM NKS_Announcement__c';
+
+        // qf.selectFields(new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' });
+
+        if (filterBySkills == true && skills != null) {
+            String skillStringAnnouncement = ('\'' + String.join(skills, '\',\'') + '\'').removeEnd('\'\'');
+            // qf.selectField('skills__c');
+
+            if (String.isNotBlank(skillStringAnnouncement)) {
+                filter += (String.isBlank(filter) ? '' : ' AND ');
+                filter += '(Skills__c = \'\' OR Skills__c INCLUDES (' + skillStringAnnouncement + '))';
             }
+            // qf.setCondition(filter);
+        }
+        // return createRecords(Database.query(qf.toSOQL()), 'NKS_Announcement__c', title, content, dateField, showImage);
+        if (String.isNotBlank(filter)) {
+            q += ' WHERE ' + filter;
         }
 
-        fflib_QueryFactory qf = new fflib_QueryFactory(Schema.getGlobalDescribe().get(objectName));
-        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
+        if (String.isNotBlank(orderBy)) {
+            q += ' ORDER BY ' + orderBy;
+        }
 
         if (String.isNotBlank(limitNumber)) {
-            qf.setLimit(Integer.valueOf(limitNumber));
+            q += ' LIMIT ' + limitNumber;
         }
 
-        if (String.isNotBlank(orderby)) {
-            List<String> orderBys = orderby.split(' ');
+        return createRecords(Database.query(q), 'NKS_Announcement__c', title, content, dateField, showImage);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Record> getKnowledgeList(
+        String title,
+        String content,
+        String filter,
+        String orderBy,
+        String limitNumber,
+        String dateField,
+        Boolean showImage,
+        Boolean filterBySkills,
+        List<String> skills
+    ) {
+        List<Record> records = new List<Record>();
+
+        fflib_QueryFactory qf = getQueryFactory(
+            Knowledge__kav.getSObjectType(),
+            title,
+            content,
+            filter,
+            orderBy,
+            limitNumber
+        );
+
+        if (filterBySkills == true && skills != null && skills.isEmpty() == false) {
+            String skillStringKnowledge = String.join(skills, '__c,') + '__c';
+
+            filter +=
+                (String.isBlank(filter) ? '' : ' AND ') +
+                'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
+                skillStringKnowledge +
+                ')';
+            qf.setCondition(filter);
+        }
+
+        return createRecords(Database.query(qf.toSOQL()), 'Knowledge__kav', title, content, dateField, showImage);
+    }
+
+    private static fflib_QueryFactory getQueryFactory(
+        sObjectType objType,
+        String title,
+        String content,
+        String filter,
+        String orderBy,
+        String limitNumber
+    ) {
+        fflib_QueryFactory qf = new fflib_QueryFactory(objType);
+        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
+        if (String.isNotBlank(content)) {
+            qf.selectFields(content.split(','));
+        }
+
+        qf.setCondition(filter);
+
+        if (String.isNotBlank(orderBy)) {
+            List<String> orderBys = orderBy.normalizeSpace().split(' ');
             Integer i = 0;
             Integer n = 1;
             while (i < orderBys.size()) {
@@ -92,50 +185,33 @@ public with sharing class NKS_HomePageController {
             }
         }
 
-        if (String.isNotBlank(content)) {
-            qf.selectFields(content.split(','));
+        if (String.isNotBlank(limitNumber)) {
+            qf.setLimit(Integer.valueOf(limitNumber));
         }
 
-        if (objectName == 'NKS_Announcement__c') {
-            qf.selectFields(
-                new Set<String>{ 'NKS_News_Pin__c', 'NKS_News_Publish_Date__c', 'NKS_News_Update_Date__c' }
-            );
+        return qf;
+    }
 
-            if (filterBySkills == true) {
-                qf.selectField('skills__c');
-
-                if (String.isNotBlank(skillStringAnnouncement)) {
-                    filter += (String.isBlank(filter) ? '' : ' AND ');
-                    filter +=
-                        '(Skills__c = \'\' OR Skills__c INCLUDES (' +
-                        skillStringAnnouncement.removeEnd(',') +
-                        '))';
-                }
-            }
-        }
-
-        if (objectName == 'Knowledge__kav' && filterbyskills == true && String.isNotBlank(skillStringKnowledge)) {
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
-                skillStringKnowledge.removeEnd(',') +
-                ')';
-        }
-
-        qf.setCondition(filter);
-
-        String query = qf.toSOQL();
-
-        if (objectName == 'Case') {
-            query = query.replace('SELECT', 'SELECT toLabel(Status),');
-        }
-
-        System.debug('QUERY: ' + query);
-
-        List<SObject> listToReturn = Database.query(query);
-
-        records = createRecords(listToReturn, objectName, title, content, dateField, showImage);
-        return records;
+    @AuraEnabled(cacheable=true)
+    public static List<Record> getList(
+        String title,
+        String content,
+        String objectName,
+        String filter,
+        String orderBy,
+        String limitNumber,
+        String dateField
+    ) {
+        List<Record> records = new List<Record>();
+        fflib_QueryFactory qf = getQueryFactory(
+            Schema.getGlobalDescribe().get(objectName),
+            title,
+            content,
+            filter,
+            orderBy,
+            limitNumber
+        );
+        return createRecords(Database.query(qf.toSOQL()), objectName, title, content, dateField, false);
     }
 
     public class Record {
@@ -170,7 +246,11 @@ public with sharing class NKS_HomePageController {
         Boolean showImage
     ) {
         List<Record> records = new List<Record>();
-        Map<Id, String> urlMap;
+        Map<Id, String> urlMap = new Map<Id, String>();
+
+        if (listofrecords.isEmpty()) {
+            return records;
+        }
 
         if (showImage == true) {
             List<Id> recordIds = new List<Id>();
@@ -178,45 +258,34 @@ public with sharing class NKS_HomePageController {
                 recordIds.add(r.Id);
             }
             urlMap = getImageUrls(recordIds);
-        } else {
-            urlMap = new Map<Id, String>();
         }
 
         for (sObject r : listofrecords) {
             Record record = new Record();
             record.recordId = r.Id;
+            record.pin = false;
+            record.publishDate = null;
+            record.lastUpdatedDate = null;
             record.name = r.get(title).toString();
             record.modifiedDate = Datetime.valueOf(r.get(datefield));
+
             if (showImage == true) {
                 record.imageurl = urlMap.get(r.Id);
             }
 
             if (String.isNotBlank(content) && String.isNotBlank((String) r.get(content))) {
                 record.content = r.get(content).toString().replaceAll('\\<.*?\\>', '');
-                if (record.content.length() > 600) {
-                    record.summary = record.content.mid(0, 600) + '...';
-                } else {
-                    record.summary = record.content;
-                }
+                record.summary = (record.content.length() > 600) ? record.content.mid(0, 600) + '...' : record.content;
             }
 
             if (objectName == 'NKS_Announcement__c') {
-                NKS_Announcement__c news = (NKS_Announcement__c) r;
-                record.pin = news.NKS_News_Pin__c;
-                record.publishDate = Datetime.valueOf(news.NKS_News_Publish_Date__c);
-                record.lastUpdatedDate = Datetime.valueOf(news.NKS_News_Update_Date__c);
-            } else {
-                record.pin = false;
-                record.publishDate = null;
-                record.lastUpdatedDate = null;
+                record.pin = (Boolean) r.get('NKS_News_Pin__c');
+                record.publishDate = Datetime.valueOf(r.get('NKS_News_Publish_Date__c'));
+                record.lastUpdatedDate = Datetime.valueOf(r.get('NKS_News_Update_Date__c'));
             }
 
-            if (objectName == 'Case') {
-                Case enCase = (Case) r;
-                record.status = enCase.Status;
-            } else {
-                record.status = '';
-            }
+            record.status = objectName == 'Case' ? r.get('Status').toString() : '';
+
             records.add(record);
         }
         return records;
@@ -240,12 +309,15 @@ public with sharing class NKS_HomePageController {
                 if (urlMap.containsKey(cdl.LinkedEntityId)) {
                     continue;
                 }
+
                 String rendition = cdl.ContentDocument.FileType == 'PDF' ? 'SVGZ' : 'ORIGINAL_Png';
+
                 String urlString =
                     '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
                     rendition +
                     '&versionId=' +
                     cdl.ContentDocument.LatestPublishedVersionId;
+
                 urlMap.put(cdl.LinkedEntityId, urlString);
             }
         } catch (Exception ex) {
@@ -390,21 +462,13 @@ public with sharing class NKS_HomePageController {
         Set<Id> resultList = new Set<Id>();
 
         try {
-            List<NKS_Audit_Log__c> alList = [
-                SELECT Id, Name, Announcement__c, User__c, Viewed_date__c
+            AggregateResult[] countResult = [
+                SELECT COUNT_DISTINCT(User__c) nmbOfUniqueViews
                 FROM NKS_Audit_Log__c
                 WHERE Announcement__c = :recordId
-                ORDER BY CreatedDate DESC
             ];
 
-            if (alList.size() > 0) {
-                for (Integer i = 0; i < alList.size(); i++) {
-                    originalList.add(alList[i].User__c);
-                }
-
-                resultList.addAll(originalList);
-                return resultList.size();
-            }
+            return Integer.valueOf(countResult[0].get('nmbOfUniqueViews'));
         } catch (Exception ex) {
             System.debug(ex.getMessage());
         }
