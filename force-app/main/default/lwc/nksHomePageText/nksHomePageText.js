@@ -9,28 +9,22 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api type;
     @api listViewName;
 
-    get recordTypeNameMap() {
-        switch (this.type) {
-            case 'Nyhet':
-                return 'News';
-            case 'Kampanje':
-                return 'Campaign';
-            case 'Teknisk og drift':
-                return 'Operational';
-            case 'Salesforce oppdatering':
-                return 'Salesforce_Update';
-            case 'Trafikk':
-                return 'Traffic';
-            default:
-                return this.type;
-        }
-    }
-
     isInitiated = false;
     text;
     pageUrl;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
+
+    refreshField = (response) => {
+        if (response.data.sobject.NKS_TypeFormula__c === this.type) {
+            const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
+            //eslint-disable-next-line @lwc/lwc/no-async-operation
+            setTimeout(() => {
+                this.isInitiated = true;
+                this.loadField();
+            }, rand);
+        }
+    };
 
     connectedCallback() {
         this.isInitiated = true;
@@ -49,6 +43,23 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
+    }
+
+    get recordTypeNameMap() {
+        switch (this.type) {
+            case 'Nyhet':
+                return 'News';
+            case 'Kampanje':
+                return 'Campaign';
+            case 'Teknisk og drift':
+                return 'Operational';
+            case 'Salesforce oppdatering':
+                return 'Salesforce_Update';
+            case 'Trafikk':
+                return 'Traffic';
+            default:
+                return this.type;
+        }
     }
 
     loadField() {
@@ -80,11 +91,6 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
             console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
         });
     }
-
-    refreshField = () => {
-        this.isInitiated = true;
-        this.loadField();
-    };
 
     navigateToList() {
         this[NavigationMixin.Navigate]({
