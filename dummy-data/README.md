@@ -111,3 +111,16 @@ The init scripts for scratch org creation automatically find these `plan.json` f
 ## Importing dummy data
 
 All data is automatically imported using the init scripts for macOS or Windows, as long as they follow the folder structures defined above. See `./scripts/mac/createScratchOrg.command` and `./scripts/windows/createScratchOrg.sh`.
+
+## Example queries
+
+This was run to export conversation notes for an account:
+
+```sql
+SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c,
+(SELECT CRM_Created_By_Ident__c, CRM_Date_Time_Registered__c, CRM_Is_Read__c,
+    CRM_Theme_Group__c, CRM_Theme__c, CRM_Subtheme__c, CRM_Conversation_Note__c
+    from Conversation_Notes__r)
+FROM Account
+WHERE Name='FATTIG PERSILLE'
+```
