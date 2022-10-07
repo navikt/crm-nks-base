@@ -5,7 +5,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'akan.no',
         'altinn.no',
         'anskaffelser.no',
-        'arbeidsmiljoportalen.no', // returns 200 for invalid links
+        'arbeidsmiljoportalen.no',
         'arbeidsplassen.no',
         'arbeidstilsynet.no',
         'behandlingshjelpemidler.no',
@@ -15,7 +15,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'doffin.no',
         'domstol.no',
         'ehelse.no',
-        'eid.difi.no', // returns 200 for invalid links
+        'eid.difi.no',
         'facebook.com',
         'garantikassen.no',
         'helfo.no',
@@ -25,7 +25,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         'huseieren.no',
         'idebanken.org',
         'imdi.no',
-        'jobbmesse.no', // returns 200 for invalid links
+        'jobbmesse.no',
         'karriereveiledning.no',
         'klp.no',
         'konkursradet.no',
@@ -102,7 +102,9 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 // find all links
                 for (String str : strList) {
                     try {
-                        Matcher matcher = linksPattern.matcher(str);
+                        Matcher matcher = linksPattern.matcher(
+                            str.replaceAll('ø', 'o').replaceAll('æ', 'ae').replaceAll('å', 'a')
+                        );
                         while (matcher.find()) {
                             String groupValue = matcher.group();
                             matches.add(groupValue);
@@ -119,28 +121,21 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
              */
             if (matches.size() > 0) {
                 for (String str : matches) {
-                    HttpRequest req = new HttpRequest();
-
                     if (Test.isRunningTest()) {
                         System.debug('Running tests.');
                     } else {
-                        Integer statusCode = 0;
                         for (String link : links) {
                             if (str.contains(link)) {
+                                String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
                                 try {
-                                    HttpResponse res = calloutHttpReq(
-                                        req,
-                                        'callout:' +
-                                        link.replace('.', '_') +
-                                        str.substringAfter(link)
-                                    );
-                                    if (link.contains('.no')) {
-                                        statusCode = detectRedirect(req, res);
-                                    } else {
-                                        statusCode = res.getStatusCode();
-                                    }
+                                    HttpRequest req = new HttpRequest();
+                                    HttpResponse res = calloutHttpReq(req, endpoint);
+                                    Integer statusCode = res.getStatusCode();
 
-                                    if (statusCode != 200 && statusCode != 500) {
+                                    if (str.contains('.no') || statusCode == 301) {
+                                        statusCode = detectRedirect(req, res);
+                                    }
+                                    if (statusCode != 200 && statusCode != 500 && statusCode.format().left(1) != '3') {
                                         resultList.add(str);
                                     }
                                 } catch (Exception ex) {
@@ -168,12 +163,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     @TestVisible
     private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
         Boolean redirect;
-        Integer statusCode = res.getStatusCode();
 
         if (Test.isRunningTest()) {
             System.debug('Running tests.');
             return null;
         } else {
+            Integer statusCode = res.getStatusCode();
             if (statusCode >= 300 && statusCode <= 307 && statusCode != 306) {
                 do {
                     redirect = false; // reset the value each time
