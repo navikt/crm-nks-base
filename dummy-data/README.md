@@ -104,10 +104,23 @@ Example `myFeature-Cases.json`:
 
 ## File and folder structure
 
-**ALWAYS** have dummy-data self-contained in its own folder, both for readability and avoiding overwriting existing data. If you want ALL scratch orgs to have your dummy data, add the data as `dummy-data/[name]/`, which contains ONE `plan.json` file and one or more `[sObjects].json` files, which are also referenced in the plan.sjon.
+**ALWAYS** have dummy-data self-contained in its own folder, both for readability and avoiding overwriting existing data. If you want ALL scratch orgs to have your dummy data, add the data as `dummy-data/[name]/`, which contains ONE `plan.json` file and one or more `[sObjects].json` files, which are also referenced in the plan.json.
 
-The init scripts for scratch org creation automatically find these `plan.sjon` files and imports them for you. If you don't want auto importing, have the `plan.sjon` file renamed to anything else, and it won't be imported.
+The init scripts for scratch org creation automatically find these `plan.json` files and imports them for you. If you don't want auto importing, have the `plan.json` file renamed to anything else, and it won't be imported.
 
 ## Importing dummy data
 
 All data is automatically imported using the init scripts for macOS or Windows, as long as they follow the folder structures defined above. See `./scripts/mac/createScratchOrg.command` and `./scripts/windows/createScratchOrg.sh`.
+
+## Example queries
+
+This was run to export conversation notes for an account:
+
+```sql
+SELECT FirstName, LastName, INT_PersonIdent__c, CRM_Person__c,
+(SELECT CRM_Created_By_Ident__c, CRM_Date_Time_Registered__c, CRM_Is_Read__c,
+    CRM_Theme_Group__c, CRM_Theme__c, CRM_Subtheme__c, CRM_Conversation_Note__c
+    from Conversation_Notes__r)
+FROM Account
+WHERE Name='FATTIG PERSILLE'
+```
