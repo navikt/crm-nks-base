@@ -155,9 +155,9 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void finish(Database.BatchableContext bc) {
-        // toAddress: nav.kontaktsenter.fag.og.kvalitet@nav.no
-        String[] toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
-        sendEmail(finalList, toAddresses);
+        String[] toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
+        String[] ccAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+        sendEmail(finalList, toAddresses, ccAddresses);
     }
 
     @TestVisible
@@ -204,12 +204,16 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     @TestVisible
-    private static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
+    private static void sendEmail(
+        Map<Id, List<String>> listToSend,
+        List<String> toAddresses,
+        List<String> ccAddresses
+    ) {
         if (listToSend.size() > 0) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
             mail.setToAddresses(toAddresses);
-            //mail.setCcAddresses(ccAddresses);
+            mail.setCcAddresses(ccAddresses);
             mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
             mail.setSubject('Rapport om døde lenker');
             mail.setBccSender(false);

@@ -88,12 +88,13 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         List<String> links = new List<String>{ 'https://example.com/fakeLink' };
         Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1].Id;
         listToSend.put(articleId, links);
-        String[] toAddresses = new List<String>{ 'navnnavnesen@nav.no' };
+        String[] toAddresses = new List<String>{ 'testUser1@example.com' };
+        String[] ccAddresses = new List<String>{ 'testUser2@example.com' };
 
         Test.startTest();
         try {
             System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
-            NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses);
+            NKS_KnowledgeBrokenLinksFinder.sendEmail(listToSend, toAddresses, ccAddresses);
             System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
         } catch (Exception ex) {
             System.assertEquals('System.EmailException', ex.getTypeName());
