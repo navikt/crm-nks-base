@@ -39,7 +39,7 @@
         </connector>
         <schedule>
             <frequency>Weekly</frequency>
-            <startDate>2022-09-29</startDate>
+            <startDate>2022-10-15</startDate>
             <startTime>01:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
