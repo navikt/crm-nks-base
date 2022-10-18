@@ -3,16 +3,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>showPersonBadges</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>nksPersonHeader</componentName>
-                <identifier>c_nksPersonHeader</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>crmSecurityQuestion</componentName>
                 <identifier>c_crmSecurityQuestion</identifier>
             </componentInstance>
@@ -21,6 +11,16 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                    <value>CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksBrukervarselList</componentName>
+                <identifier>c_nksBrukervarselList</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
