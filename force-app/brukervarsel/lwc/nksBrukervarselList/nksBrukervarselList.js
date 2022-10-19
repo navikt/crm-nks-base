@@ -38,10 +38,6 @@ export default class NksBrukervarselList extends LightningElement {
     }
 
     filterNotificationList() {
-        // if (this.notifications.length < 1) {
-        //     this.filteredNotificationList = [];
-        // }
-
         let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
         let getLatestDate = (e) => {
             return e.sisteVarselutsendelse != null
@@ -63,7 +59,12 @@ export default class NksBrukervarselList extends LightningElement {
                 let bd = getLatestDate(b);
                 return (ad < bd) - (ad > bd);
             });
-        this.filteredNotificationList = this.showAll ? n : n.slice(0, 1);
+
+        this.filteredNotificationList = n;
+    }
+
+    get maxDate() {
+        return new Date().toISOString().split('T')[0];
     }
 
     get numberOfNotifications() {
@@ -84,6 +85,10 @@ export default class NksBrukervarselList extends LightningElement {
 
     get personActorId() {
         return getFieldValue(this.wiredPerson.data, PERSON_ACTOR_FIELD);
+    }
+
+    get notificationList() {
+        return this.showAll ? this.filteredNotificationList : this.filteredNotificationList.slice(0, 1);
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
