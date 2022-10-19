@@ -1,10 +1,6 @@
-name: "[HELPER] Quick Package Create"
+name: "Quick Package Create"
 on:
   workflow_dispatch:
-    inputs:
-      deployInDev:
-        description: "Deploy to dev"
-        type: boolean
 
 jobs:
   # ################################################################# #
@@ -25,9 +21,9 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
       # Delete unpackagable and scratch-org folder
       - name: Delete unpackagable
         run: |
@@ -51,67 +47,12 @@ jobs:
       packageId: ${{ steps.package-version-create.outputs.packageId }}
       alphaVersionNumber: ${{ steps.package-version-create.outputs.alphaVersionNumber }}
 
-  # ################################################################# # 
-  # ####################### VALIDATE IN DEV ######################### #
-  # ################################################################# #
-  validate-in-dev:
-    name: Validate install in DEV Sandbox
-    needs: [create-package]
-    if: github.event.inputs.deployInDev == true
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout source code
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
-      # Install SFDX
-      - name: Install SFDX
-        uses: sfdx-actions/setup-sfdx@v1
-
-      # Authenticate prod
-      - name: Authenticate prod
-        run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
-      # Authenticate dev-sandbox
-      - name: Authenticate dev-sandbox
-        run: |
-          echo ${{ secrets.DEV_SFDX_URL}} > ./DEV_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./DEV_SFDX_URL.txt -a dev-sandbox -s
-          rm -f ./DEV_SFDX_URL.txt
-      # Install new package version into DEV org
-      - name: Install new package version into DEV org
-        id: dev-installation
-        run: |
-          sfdx force:package:install --package ${{ needs.create-package.outputs.packageId }} -w 20 -b 20 -u dev-sandbox -r -k ${{ secrets.CRM_PACKAGE_KEY }} --json | tee output
-          echo "::set-output name=installOutput::$(cat output | jq '.message')"
-          if [ $(cat output | jq '.status') == "0" ]; then
-            echo "::set-output name=successfullyInstalled::true"
-          else
-            echo
-            echo FAILED TO INSTALL PACKAGE IN DEV SANDBOX
-            echo
-            exit 125
-          fi
-      # Deploy unpackagable content
-      - name: Deploy unpackagable content
-        run: |
-          if [ -d "./force-app/unpackagable-with-auto-deploy" ]; then
-            echo "Starting deployment of ./force-app/unpackagable-with-auto-deploy"
-            sfdx force:source:deploy -p ./force-app/unpackagable-with-auto-deploy -l RunLocalTests
-          fi
-    outputs:
-      successfullyInstalled: ${{ steps.dev-installation.outputs.successfullyInstalled }}
-      installOutput: ${{ steps.dev-installation.outputs.installOutput }}
-
   # ################################################################# #
   # ######################### CREATE RELEASE ######################## #
   # ################################################################# #
   create-release:
     name: Create alpha release
-    if: ${{ always() }}
-    needs: [create-package, validate-in-dev]
+    needs: [create-package]
     runs-on: ubuntu-latest
     steps:
       # Checkout source code
@@ -129,11 +70,6 @@ jobs:
           echo "::set-output name=bodyVersion::$(echo $versionNumber).$(echo $alphaVersionNumber)"
           echo "::set-output name=bodyPackage::${{ needs.create-package.outputs.packageId }}"
           echo "::set-output name=packageCreation::✅ Package Creation"
-           if [ ${{ needs.validate-in-dev.outputs.successfullyInstalled }} == "true" ]; then
-            echo "::set-output name=integrationInstallation::✅ Package Installation (DEV)"
-          else
-            echo "::set-output name=integrationInstallation::❌ Package Installation (DEV)"
-          fi
       # Generate changelog from commits
       - name: Generate changelog
         id: changelog
@@ -155,7 +91,6 @@ jobs:
             **ALPHA**
             **Author**: ${{ github.actor }}
             ${{ steps.release-fields.outputs.packageCreation }}
-            ${{ steps.release-fields.outputs.integrationInstallation }}
             ## Changelog
             ${{ steps.changelog.outputs.changelog }}
           draft: false

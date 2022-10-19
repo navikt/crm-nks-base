@@ -2,7 +2,7 @@ name: "[PR] Validate"
 on:
   pull_request:
     branches:
-      - master
+      - "*"
 jobs:
   # ################################################################# #
   # ########################### COMPILE ############################# #
@@ -22,9 +22,9 @@ jobs:
       # Authenticate dev hub
       - name: Authenticate Dev Hub
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Create scratch org
       - name: Create scratch org
@@ -95,7 +95,7 @@ jobs:
 
       # Deploy source to scratch org
       - name: Push source to scratch org
-        run: sfdx force:source:push
+        run: sf deploy metadata --source-dir force-app/
 
   # ################################################################# #
   # ########################### RUN TESTS ########################### #
@@ -139,12 +139,12 @@ jobs:
           for p in $( grep -r -l -i --include="*.cls" "@istest" . | sed 's@.*/@@' ); do
             classes+=$(echo $p | cut -f 1 -d '.')","
           done
-          echo "::set-output name=classes::$( echo $classes | sed 's/\(.*\),/\1 /' | sed -r 's/\s+//g' )"
+          echo "::set-output name=classes::$( echo $classes | sed 's/\(.*\),/\1 /' )"
 
       # Run Apex tests in scratch org
       - name: Run Apex tests
         if: steps.test-classes-in-repo.outputs.classes
-        run: sfdx force:apex:test:run -t "${{ steps.test-classes-in-repo.outputs.classes }}" -c -r human -d ./tests/apex -w 20
+        run: sfdx force:apex:test:run -t ${{ steps.test-classes-in-repo.outputs.classes }} -c -r human -d ./tests/apex -w 20
 
       # Upload Apex test results
       - name: Upload Apex test results
@@ -252,9 +252,9 @@ jobs:
       # Authenticate dev hub
       - name: Authenticate Dev Hub
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Download SCRATCH_ORG_SFDX_AUTH_URL.txt
       - name: Download SCRATCH_ORG_SFDX_AUTH_URL.txt
