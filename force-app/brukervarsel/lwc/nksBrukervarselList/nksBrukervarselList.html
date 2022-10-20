@@ -17,6 +17,8 @@
                                 label="Fra"
                                 value={fromDate}
                                 onchange={onDateFilterChange}
+                                min="2000-01-01"
+                                max={maxDate}
                             ></lightning-input>
                         </lightning-layout-item>
                         <lightning-layout-item size="4">
@@ -26,6 +28,8 @@
                                 label="Til"
                                 value={toDate}
                                 onchange={onDateFilterChange}
+                                min="2000-01-01"
+                                max={maxDate}
                             ></lightning-input>
                         </lightning-layout-item>
                         <lightning-button-icon
@@ -66,7 +70,7 @@
                         </ul>
                     </div>
                     <ol if:true={showNotifications} class="slds-has-dividers_around-space">
-                        <template for:each={filteredNotificationList} for:item="notification">
+                        <template for:each={notificationList} for:item="notification">
                             <li class="slds-item slds-theme_default" key={notification.bestilt}>
                                 <c-nks-brukervarsel brukervarsel={notification}></c-nks-brukervarsel>
                             </li>

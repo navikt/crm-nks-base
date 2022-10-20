@@ -20,14 +20,14 @@ jobs:
 
       # Install SFDX
       - name: Install SFDX
-        uses: sfdx-actions/setup-sfdx@v1
+        run: npm install --global sfdx-cli@7.170.0
 
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Delete unpackagable and scratch-org folder
       - name: Delete unpackagable
@@ -40,7 +40,7 @@ jobs:
       - name: Create package version
         id: package-version-create
         run: |
-          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.PACKAGE_KEY }} -w 90 -c --json | tee output
+          sfdx force:package:version:create -f config/project-scratch-def.json -p $(cat sfdx-project.json | jq '.packageDirectories | map(select(.package != null))[0].package' -r) -k ${{ secrets.CRM_PACKAGE_KEY }} -w 90 -c --json | tee output
 
           # ! manually cancel the process if the package failed to be created
           if [ $(cat output |jq '.status') == "1" ]; then
@@ -79,16 +79,16 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Authenticate integration-sandbox
       - name: Authenticate integration-sandbox
         run: |
-          echo ${{ secrets.CRM_SIT_SFDX_URL}} > ./INTEGRATION_SANDBOX_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./INTEGRATION_SANDBOX_SFDX_URL.txt -a integration-sandbox -s
-          rm -f ./INTEGRATION_SANDBOX_SFDX_URL.txt
+          echo ${{ secrets.CRM_SIT_SFDX_URL}} > ./CRM_SIT_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_SIT_SFDX_URL.txt -a integration-sandbox -s
+          rm -f ./CRM_SIT_SFDX_URL.txt
 
       # Install new package version into integration org
       - name: Install new package version into integration org
@@ -170,9 +170,9 @@ jobs:
       # Authenticate prod
       - name: Authenticate prod
         run: |
-          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./PROD_SFDX_URL.txt
-          sfdx auth:sfdxurl:store -f ./PROD_SFDX_URL.txt -a devhub -d
-          rm -f ./PROD_SFDX_URL.txt
+          echo ${{ secrets.CRM_PROD_SFDX_URL}} > ./CRM_PROD_SFDX_URL.txt
+          sfdx auth:sfdxurl:store -f ./CRM_PROD_SFDX_URL.txt -a devhub -d
+          rm -f ./CRM_PROD_SFDX_URL.txt
 
       # Authenticate dev sandbox
       - name: Authenticate dev sandbox

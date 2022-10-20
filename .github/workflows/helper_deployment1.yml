@@ -41,7 +41,7 @@ jobs:
             echo "'preprod' was set"
           elif [ ${{ github.event.inputs.org }} == "sit" ];then
             echo "::set-output name=target::$(echo ${{ secrets.CRM_SIT_SFDX_URL }})"
-            echo "'sit' was set"
+            echo "'preprod' was set"
           fi
 
       # Authorize SFDX
