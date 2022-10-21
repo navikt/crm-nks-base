@@ -1,5 +1,8 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import updateKrrInfo from '@salesforce/apex/NKS_KrrInformationController.updateKrrInformation';
+
+import {MessageContext, publish} from 'lightning/messageService';
+import krrUpdateChannel from '@salesforce/messageChannel/krrUpdate__c';
 
 export default class NksKrrInformation extends LightningElement {
     @api recordId; // Value from UiRecordAPI
@@ -44,5 +47,8 @@ export default class NksKrrInformation extends LightningElement {
     refreshRecord() {
         //Calls the child component to be refreshed after updating KRR information
         this.recordCmp.refreshRecord();
+        publish(this.messageContext, krrUpdateChannel, {updated : true});
     }
+    @wire(MessageContext)
+    messageContext;
 }
