@@ -45,6 +45,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
         return 'slds-section slds-var-m-horizontal_small' + (this.expanded ? ' slds-is-open' : '');
     }
 
+    get hasCNotes() {
+        return this.notes != null && this.notes.length > 0;
+    }
+
     handleChange(event) {
         if (
             event.detail.status === 'FINISHED' &&
@@ -55,9 +59,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
             refreshApex(this._wiredRecord);
     }
 
-    handleExpandClick(event) {
-        console.log('Heisann');
-        console.log(this.expanded);
+    handleExpandClick() {
         this.expanded = !this.expanded;
     }
 }
