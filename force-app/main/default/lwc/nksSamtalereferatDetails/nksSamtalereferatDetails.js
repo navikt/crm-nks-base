@@ -19,9 +19,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
         this._wiredRecord = result;
         const { data, error } = result;
         if (data) {
-            console.log('Yo');
             this.notes = data;
-            console.log(JSON.stringify(this.notes));
         } else if (error) {
             console.log(error);
         }
