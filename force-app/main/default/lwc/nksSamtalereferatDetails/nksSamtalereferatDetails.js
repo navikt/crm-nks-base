@@ -1,12 +1,21 @@
 import { LightningElement, api, wire } from 'lwc';
 import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.getReverseRelatedRecord';
 import { refreshApex } from '@salesforce/apex';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
     dataShowing;
     notes;
     expanded = true;
+
+    @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
+    objectInfo;
+
+    renderedCallback() {
+        console.log(this.objectInfo);
+    }
 
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
