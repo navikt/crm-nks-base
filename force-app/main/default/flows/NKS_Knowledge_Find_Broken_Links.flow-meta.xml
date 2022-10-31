@@ -10,6 +10,7 @@
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>NKS Knowledge Find Broken Links {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Knowledge Find Broken Links</label>
     <processMetadataValues>
@@ -37,6 +38,22 @@
         <connector>
             <targetReference>Find_Dead_Links</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PublishStatus</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Online</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsLatestVersion</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Knowledge__kav</object>
         <schedule>
             <frequency>Weekly</frequency>
             <startDate>2022-10-15</startDate>

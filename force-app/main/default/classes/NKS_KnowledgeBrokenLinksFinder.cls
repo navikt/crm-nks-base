@@ -48,7 +48,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     };
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\'';
+        String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\' AND IsLatestVersion = TRUE';
         return Database.getQueryLocator(query);
     }
 
