@@ -5,7 +5,7 @@ public without sharing class NKS_KrrInformationController {
     public static void updateKrrInformation(String personIdent) {
         List<Person__c> personsToUpdate = new List<Person__c>();
         try {
-            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag(new List<String>{ personIdent }, null);
+            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null);
             if (personer != null && !personer.isEmpty()) {
                 for (Person__c person : [SELECT Id FROM Person__c WHERE Name = :personIdent]) {
                     personsToUpdate.add(
@@ -30,7 +30,7 @@ public without sharing class NKS_KrrInformationController {
         }
     }
 
-    private static Datetime sistVerifisertDato(KrrCalloutService.Personer pers) {
+    private static Datetime sistVerifisertDato(KrrCalloutService.Person pers) {
         Datetime emailVerifisertDato = pers?.epostadresseVerifisert;
         Datetime mobileVerifisertDato = pers?.mobiltelefonnummerVerifisert;
         if (emailVerifisertDato != null && mobileVerifisertDato != null) {

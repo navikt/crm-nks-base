@@ -26,7 +26,7 @@ public with sharing class CRM_SecurityQuestionPicker {
     @AuraEnabled(cacheable=true)
     public static List<SecurityQuestionWrapper> getQuestionsKRR(String ident) {
         List<SecurityQuestionWrapper> questions = new List<SecurityQuestionWrapper>();
-        List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident }, null);
+        List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ ident }, null);
 
         if (personer != null && personer.size() > 0) {
             String email = personer[0]?.epostadresse;
