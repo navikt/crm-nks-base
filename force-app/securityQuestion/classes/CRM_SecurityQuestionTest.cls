@@ -45,7 +45,8 @@ private with sharing class CRM_SecurityQuestionTest {
     @IsTest
     static void getQuestionsKrrWithoutEmail() {
         List<CRM_SecurityQuestionPicker.SecurityQuestionWrapper> result;
-        new Mock().addSuccessfullBody(MASKINPORTEN_TOKEN_RESPONSE).addSuccessfullBody(KRR_EMPTY).activateMock();
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', KRR_EMPTY, null));
+
         Test.startTest();
         result = CRM_SecurityQuestionPicker.getQuestionsKRR('1234567890');
         Test.stopTest();
@@ -56,7 +57,7 @@ private with sharing class CRM_SecurityQuestionTest {
     @IsTest
     static void getQuestionsKrrWithEmail() {
         List<CRM_SecurityQuestionPicker.SecurityQuestionWrapper> result;
-        new Mock().addSuccessfullBody(MASKINPORTEN_TOKEN_RESPONSE).addSuccessfullBody(KRR_EMAIL).activateMock();
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', KRR_EMAIL, null));
         Test.startTest();
         result = CRM_SecurityQuestionPicker.getQuestionsKRR('1234567890');
         Test.stopTest();
