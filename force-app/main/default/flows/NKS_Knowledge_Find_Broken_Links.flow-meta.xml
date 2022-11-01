@@ -5,7 +5,7 @@
         <label>Find Dead Links</label>
         <locationX>176</locationX>
         <locationY>276</locationY>
-        <actionName>NKS_KnowledgeController</actionName>
+        <actionName>NKS_KnowledgeBrokenLinksFinder</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>

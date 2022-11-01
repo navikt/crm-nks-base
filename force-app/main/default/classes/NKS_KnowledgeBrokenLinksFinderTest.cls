@@ -45,40 +45,16 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
     }
 
     @isTest
-    static void testdetectRedirect() {
-        NKS_KnowledgeBrokenLinksFinder finder = new NKS_KnowledgeBrokenLinksFinder();
-
+    static void testFindDeadLinks() {
+        Boolean throwsException = false;
         Test.startTest();
-        Integer status = NKS_KnowledgeBrokenLinksFinder.detectRedirect(new HttpRequest(), new HttpResponse());
+        try {
+            NKS_KnowledgeBrokenLinksFinder.findDeadLinks();
+        } catch (Exception ex) {
+            throwsException = true;
+        }
         Test.stopTest();
-        System.assertEquals(null, status);
-    }
-
-    @isTest
-    static void testCalloutHttpReqLinkFound() {
-        // Set mock callout class
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200));
-
-        Test.startTest();
-        HttpResponse res = NKS_KnowledgeBrokenLinksFinder.calloutHttpReq(new HttpRequest(), 'https://www.nav.no');
-        Test.stopTest();
-
-        System.assertEquals(200, res.getStatusCode());
-    }
-
-    @isTest
-    static void testCalloutHttpReqLinkNotFound() {
-        // Set mock callout class
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(404));
-
-        Test.startTest();
-        HttpResponse res = NKS_KnowledgeBrokenLinksFinder.calloutHttpReq(
-            new HttpRequest(),
-            'https://www.nav.no/testpath'
-        );
-        Test.stopTest();
-
-        System.assertEquals(404, res.getStatusCode());
+        System.assertEquals(false, throwsException);
     }
 
     @IsTest
@@ -98,24 +74,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         } catch (Exception ex) {
             System.assertEquals('System.EmailException', ex.getTypeName());
         }
-
         Test.stopTest();
-    }
-
-    private class MockHttpResponseGenerator implements HttpCalloutMock {
-        Integer statusCode;
-        public MockHttpResponseGenerator(Integer statusCode) {
-            this.statusCode = statusCode;
-        }
-
-        public HTTPResponse respond(HTTPRequest req) {
-            // Send a mock response for a specific endpoint
-            System.assertEquals('GET', req.getMethod());
-
-            // Create a fake response
-            HttpResponse res = new HttpResponse();
-            res.setStatusCode(statusCode);
-            return res;
-        }
     }
 }
