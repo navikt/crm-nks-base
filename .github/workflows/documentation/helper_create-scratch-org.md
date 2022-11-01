@@ -51,5 +51,5 @@ A branch with metadata that has been automatically pulled after changes in a scr
 
 - `secrets.CRM_PROD_SFDX_URL`
     - Needed to create scratch orgs
-- `secrets.PACKAGE_KEY`
+- `secrets.CRM_PACKAGE_KEY`
     - Needed to install dependant packages
