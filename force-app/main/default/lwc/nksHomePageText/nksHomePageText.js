@@ -105,12 +105,12 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         });
     }
 
-    get hasSalesforceUpdate() {
-        return this.type === 'Salesforce oppdatering' && this.text ? true : false;
+    get isSalesforceUpdate() {
+        return this.type === 'Salesforce oppdatering';
     }
 
-    get hasTraffic() {
-        return this.type === 'Trafikk' && this.text ? true : false;
+    get isTraffic() {
+        return this.type === 'Trafikk';
     }
 
     get isEmpSubscribed() {

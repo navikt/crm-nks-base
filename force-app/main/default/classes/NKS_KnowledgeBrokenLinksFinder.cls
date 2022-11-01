@@ -132,7 +132,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                                     HttpResponse res = calloutHttpReq(req, endpoint);
                                     Integer statusCode = res.getStatusCode();
 
-                                    if (str.contains('.no') || statusCode == 301) {
+                                    if (statusCode.format().left(1) == '3') {
                                         statusCode = detectRedirect(req, res);
                                     }
                                     if (statusCode != 200 && statusCode != 500 && statusCode.format().left(1) != '3') {
@@ -156,42 +156,28 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
     public void finish(Database.BatchableContext bc) {
         String[] toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
-        String[] ccAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
-        sendEmail(finalList, toAddresses, ccAddresses);
+        sendEmail(finalList, toAddresses);
     }
 
     @TestVisible
     private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
-        Boolean redirect;
-
         if (Test.isRunningTest()) {
             System.debug('Running tests.');
             return null;
         } else {
-            Integer statusCode = res.getStatusCode();
-            if (statusCode >= 300 && statusCode <= 307 && statusCode != 306) {
-                do {
-                    redirect = false; // reset the value each time
-                    String loc = res.getHeader('Location'); // get location of the redirect
-                    if (loc == null) {
-                        redirect = false;
-                        continue;
-                    }
-                    req = new HttpRequest();
-                    req.setEndpoint(loc);
-                    req.setMethod('GET');
-                    Http http = new Http();
-                    res = http.send(req);
-                    if (statusCode != 500) {
-                        // 500 = fail
-                        if (statusCode >= 300 && statusCode <= 307 && statusCode != 306) {
-                            redirect = true;
-                        }
-                    }
-                } while (redirect && Limits.getCallouts() != Limits.getLimitCallouts());
+            String loc = res.getHeader('Location');
+            if (loc != null) {
+                req = new HttpRequest();
+                req.setEndpoint(loc);
+                req.setMethod('GET');
+                Http http = new Http();
+                res = http.send(req);
+                if (res.getStatusCode() != 500) {
+                    return res.getStatusCode();
+                }
             }
-            return statusCode;
         }
+        return res.getStatusCode();
     }
 
     @TestVisible
@@ -204,16 +190,11 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     @TestVisible
-    private static void sendEmail(
-        Map<Id, List<String>> listToSend,
-        List<String> toAddresses,
-        List<String> ccAddresses
-    ) {
+    private static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
         if (listToSend.size() > 0) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
             mail.setToAddresses(toAddresses);
-            mail.setCcAddresses(ccAddresses);
             mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
             mail.setSubject('Rapport om døde lenker');
             mail.setBccSender(false);
