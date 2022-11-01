@@ -34,6 +34,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
         }
     }
 
+    get recordLabel() {
+        return this.objectInfo?.data?.label ? this.objectInfo.data.label : 'Samtalereferat';
+    }
+
     get inputVariables() {
         return [
             {
