@@ -29,5 +29,5 @@ This workflow automatically validates that metadata is valid, tests run successf
 
 - `secrets.CRM_PROD_SFDX_URL`
     - Needed to create scratch orgs
-- `secrets.PACKAGE_KEY`
+- `secrets.CRM_PACKAGE_KEY`
     - Needed to install dependant packages
