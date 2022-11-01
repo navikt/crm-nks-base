@@ -30,7 +30,7 @@ public with sharing class CRM_SecurityQuestionPicker {
 
         if (personer != null && personer.size() > 0) {
             String email = personer[0]?.epostadresse;
-            if (String.isNotBlank(email) || email != null) {
+            if (String.isNotBlank(email) || email != null || email != 'null') {
                 questions.add(new SecurityQuestionWrapper('Hva er e-posten din?', email));
             }
         }
