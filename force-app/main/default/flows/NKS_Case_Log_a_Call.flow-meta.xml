@@ -568,6 +568,7 @@
             <label>Create Journal Entry</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>CONV_NOTE_THEME_GROUP_CODDE</name>
         <dataType>String</dataType>
@@ -999,7 +1000,7 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Samtalereferatet&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Created_Date}&lt;/p&gt;&lt;p&gt;------------------------&lt;/p&gt;&lt;p&gt;{!Conversation_Note_Summary}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;------------------------&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Flere handlinger&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Flere handlinger&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
