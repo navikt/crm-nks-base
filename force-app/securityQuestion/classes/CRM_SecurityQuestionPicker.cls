@@ -36,7 +36,7 @@ public with sharing class CRM_SecurityQuestionPicker {
         }
 
         return questions;
-    }0
+    }
 
     /**
      * @description Used to generate questions regarding marriage date and name/birth of child
