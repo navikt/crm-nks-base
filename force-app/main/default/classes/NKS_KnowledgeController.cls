@@ -90,10 +90,8 @@ public with sharing class NKS_KnowledgeController {
         //System.debug('Matches: ' + matches);
 
         if (matches.size() > 0) {
-            for (String str : matches) {
-                if (Test.isRunningTest()) {
-                    System.debug('Running tests.');
-                } else {
+            if (!Test.isRunningTest()) {
+                for (String str : matches) {
                     for (String link : LINKS) {
                         if (str.contains(link)) {
                             String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
@@ -122,10 +120,7 @@ public with sharing class NKS_KnowledgeController {
 
     @TestVisible
     private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
-        if (Test.isRunningTest()) {
-            System.debug('Running tests.');
-            return null;
-        } else {
+        if (!Test.isRunningTest()) {
             String loc = res.getHeader('Location');
             if (loc != null) {
                 req = new HttpRequest();
@@ -148,5 +143,38 @@ public with sharing class NKS_KnowledgeController {
         Http http = new Http();
         HTTPResponse res = http.send(req);
         return res;
+    }
+
+    public static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
+        if (listToSend.size() > 0) {
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+            mail.setToAddresses(toAddresses);
+            mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
+            mail.setSubject('Rapport om døde lenker');
+            mail.setBccSender(false);
+            mail.setUseSignature(false);
+
+            // Specify the text content of the email.
+            String body = '';
+            for (Id key : listToSend.keySet()) {
+                Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
+                List<String> links = listToSend.get(key);
+                body += 'Artikkel: "' + article.Title + ' " har følgende døde lenker:<br/>';
+                for (String str : links) {
+                    body += str + '<br/>';
+                }
+                body += '<br/>';
+            }
+            mail.setHtmlBody(body);
+            try {
+                // Send the email you have created.
+                Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
+            } catch (Exception ex) {
+                System.debug('Problem sending email: ' + ex.getMessage());
+            }
+        } else {
+            System.debug('List is empty!');
+        }
     }
 }

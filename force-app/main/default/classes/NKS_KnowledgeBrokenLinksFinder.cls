@@ -38,41 +38,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
     public void finish(Database.BatchableContext bc) {
         String[] toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
-        sendEmail(finalList, toAddresses);
-    }
-
-    @TestVisible
-    private static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
-        if (listToSend.size() > 0) {
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-            mail.setToAddresses(toAddresses);
-            mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
-            mail.setSubject('Rapport om døde lenker');
-            mail.setBccSender(false);
-            mail.setUseSignature(false);
-
-            // Specify the text content of the email.
-            String body = '';
-            for (Id key : listToSend.keySet()) {
-                Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
-                List<String> links = listToSend.get(key);
-                body += 'Artikkel: "' + article.Title + ' " har følgende døde lenker:<br/>';
-                for (String str : links) {
-                    body += str + '<br/>';
-                }
-                body += '<br/>';
-            }
-            mail.setHtmlBody(body);
-            try {
-                // Send the email you have created.
-                Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
-            } catch (Exception ex) {
-                System.debug('Problem sending email: ' + ex.getMessage());
-            }
-        } else {
-            System.debug('List is empty!');
-        }
+        NKS_KnowledgeController.sendEmail(finalList, toAddresses);
     }
 
     @invocableMethod(label='Find Broken Links')

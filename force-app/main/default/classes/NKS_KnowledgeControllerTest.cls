@@ -28,6 +28,37 @@ public with sharing class NKS_KnowledgeControllerTest {
     }
 
     @isTest
+    static void testFindBrokenLinks() {
+        Knowledge__kav article = [
+            SELECT
+                Id,
+                AdvisorInformation__c,
+                AdvisorInformationInternal__c,
+                Article__c,
+                EmployerInformation__c,
+                EmployerInformationInternal__c,
+                NKS_English__c,
+                InternationalInformation__c,
+                InternationalInformationInternal__c,
+                NKS_Legislation__c,
+                NKS_Nav_no__c,
+                NKS_Nynorsk__c,
+                NKS_Resources__c,
+                NKS_Summary__c,
+                NKS_UserInformation__c,
+                WhoDoesWhat__c
+            FROM Knowledge__kav
+            LIMIT 1
+        ];
+
+        Test.startTest();
+        List<String> res = NKS_KnowledgeController.findBrokenLinks(article);
+        Test.stopTest();
+
+        System.assertEquals(0, res.size());
+    }
+
+    @isTest
     static void testCalloutHttpReqLinkNotFound() {
         // Set mock callout class
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(404));
@@ -46,7 +77,7 @@ public with sharing class NKS_KnowledgeControllerTest {
         Test.startTest();
         Integer status = NKS_KnowledgeController.detectRedirect(new HttpRequest(), new HttpResponse());
         Test.stopTest();
-        System.assertEquals(null, status);
+        System.assertEquals(0, status);
     }
 
     @isTest
@@ -59,6 +90,26 @@ public with sharing class NKS_KnowledgeControllerTest {
         Test.stopTest();
 
         System.assertEquals(200, res.getStatusCode());
+    }
+
+    @isTest
+    static void testSendEmail() {
+        // make mock data
+        Map<Id, List<String>> listToSend = new Map<Id, List<String>>();
+        List<String> links = new List<String>{ 'https://example.com/fakeLink' };
+        Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1].Id;
+        listToSend.put(articleId, links);
+        String[] toAddresses = new List<String>{ 'testUser1@example.com' };
+
+        Test.startTest();
+        try {
+            System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
+            NKS_KnowledgeController.sendEmail(listToSend, toAddresses);
+            System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
+        } catch (Exception ex) {
+            System.assertEquals('System.EmailException', ex.getTypeName());
+        }
+        Test.stopTest();
     }
 
     private class MockHttpResponseGenerator implements HttpCalloutMock {
