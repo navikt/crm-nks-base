@@ -27,7 +27,7 @@ public without sharing class NKS_KrrInformationController {
             if(!personsToUpdate.isEmpty()){
                 logger.exception(e, personsToUpdate[0]);
             }else{
-                logger.exception(e, 'No information returned by server or no connection to server possible.');
+                logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
             }
             logger.publish();
             throw new AuraHandledException('Failed to refresh KRR information.');
