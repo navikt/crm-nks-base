@@ -5,19 +5,17 @@ public without sharing class NKS_KrrInformationController {
     public static void updateKrrInformation(String personIdent) {
         List<Person__c> personsToUpdate = new List<Person__c>();
         try {
-            List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
-                new List<String>{ personIdent }
-            );
+            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null);
             if (personer != null && !personer.isEmpty()) {
                 for (Person__c person : [SELECT Id FROM Person__c WHERE Name = :personIdent]) {
                     personsToUpdate.add(
                         new Person__c(
                             Id = person.Id,
-                            INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
-                            INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
+                            INT_KrrEmail__c = personer[0]?.epostadresse,
+                            INT_KrrMobilePhone__c = personer[0]?.mobiltelefonnummer,
                             INT_LastUpdatedFromKRR__c = Datetime.now(),
                             INT_VerifiedFromKRR__c = sistVerifisertDato(personer[0]),
-                            INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
+                            INT_KRR_Reservation__c = personer[0]?.reservert
                         )
                     );
                 }
@@ -26,15 +24,19 @@ public without sharing class NKS_KrrInformationController {
             if (!personsToUpdate.isEmpty())
                 update personsToUpdate;
         } catch (Exception e) {
-            logger.exception(e, personsToUpdate[0]);
+            if(!personsToUpdate.isEmpty()){
+                logger.exception(e, personsToUpdate[0]);
+            }else{
+                logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
+            }
             logger.publish();
             throw new AuraHandledException('Failed to refresh KRR information.');
         }
     }
 
-    private static Datetime sistVerifisertDato(KrrCalloutService.Personer pers) {
-        Datetime emailVerifisertDato = pers?.kontaktinformasjon?.epostadresse_sist_verifisert;
-        Datetime mobileVerifisertDato = pers?.kontaktinformasjon?.mobiltelefonnummer_sist_verifisert;
+    private static Datetime sistVerifisertDato(KrrCalloutService.Person pers) {
+        Datetime emailVerifisertDato = pers?.epostadresseVerifisert;
+        Datetime mobileVerifisertDato = pers?.mobiltelefonnummerVerifisert;
         if (emailVerifisertDato != null && mobileVerifisertDato != null) {
             if (emailVerifisertDato < mobileVerifisertDato) {
                 return mobileVerifisertDato;
