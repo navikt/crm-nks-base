@@ -21,7 +21,7 @@ private class NKS_ThreadAccessHandlerTest {
         Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
 
         Test.startTest();
-        Thread__c thread = new Thread__c(CRM_Account__c = accountId, CRM_Thread_Type__c = 'STO');
+        Thread__c thread = new Thread__c(CRM_Account__c = accountId);
         insert thread;
         Test.stopTest();
 
@@ -50,7 +50,7 @@ private class NKS_ThreadAccessHandlerTest {
         .Id;
 
         Test.startTest();
-        Thread__c thread = new Thread__c(CRM_Account__c = accountId, CRM_Thread_Type__c = 'STO');
+        Thread__c thread = new Thread__c(CRM_Account__c = accountId);
         insert thread;
         Test.stopTest();
 
@@ -90,7 +90,7 @@ private class NKS_ThreadAccessHandlerTest {
         .Id;
 
         Test.startTest();
-        Thread__c thread = new Thread__c(CRM_Account__c = accountId, CRM_Thread_Type__c = 'STB');
+        Thread__c thread = new Thread__c(CRM_Account__c = accountId);
         insert thread;
         Test.stopTest();
 
