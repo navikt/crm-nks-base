@@ -26,11 +26,11 @@ public with sharing class CRM_SecurityQuestionPicker {
     @AuraEnabled(cacheable=true)
     public static List<SecurityQuestionWrapper> getQuestionsKRR(String ident) {
         List<SecurityQuestionWrapper> questions = new List<SecurityQuestionWrapper>();
-        List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ ident }, null);
+        List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(new List<String>{ ident });
 
         if (personer != null && personer.size() > 0) {
-            String email = personer[0]?.epostadresse;
-            if (String.isNotBlank(email) && email != 'null') {
+            String email = personer[0]?.kontaktinformasjon?.epostadresse;
+            if (String.isNotBlank(email)) {
                 questions.add(new SecurityQuestionWrapper('Hva er e-posten din?', email));
             }
         }
