@@ -38,16 +38,15 @@ public without sharing class NKS_ThreadAccessService {
 
     // Creates a map of Person objects by Thread Id
     private Map<Id, Person__c> getPersonByThreadId(List<Thread__c> threads, List<Person__c> persons) {
-        Map<Id, Id> threadIdByAccountId = new Map<Id, Id>();
-        Set<Id> accountIds = new Set<id>();
-        for (Thread__c thread : threads) {
-            threadIdByAccountId.put(thread.CRM_Account__c, thread.Id);
+        Map<Id, Person__c> personByAccountId = new Map<Id, Person__c>();
+        for(Person__c person: persons) {
+            personByAccountId.put(person.CRM_Account__c, person);
         }
 
         Map<Id, Person__c> personByThreadId = new Map<Id, Person__c>();
-        for (Person__c person : persons) {
-            Id threadId = threadIdByAccountId.get(person.CRM_Account__c);
-            if(threadId != null) personByThreadId.put(threadId, person);
+        for (Thread__c thread : threads) {
+            Person__c threadPerson = personByAccountId.containsKey(thread.CRM_Account__c) ? personByAccountId.get(thread.CRM_Account__c): null;
+            if(threadPerson != null) personByThreadId.put(thread.Id, threadPerson);
         }
         return personByThreadId;
     }
