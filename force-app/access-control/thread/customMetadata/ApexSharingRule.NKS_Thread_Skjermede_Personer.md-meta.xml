@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>Operator4__c</field>
-        <value xsi:type="xsd:string">not equal to</value>
+        <value xsi:type="xsd:string">not in</value>
     </values>
     <values>
         <field>Operator5__c</field>
@@ -76,7 +76,7 @@
     </values>
     <values>
         <field>Values4__c</field>
-        <value xsi:type="xsd:string">BID</value>
+        <value xsi:type="xsd:string">BID,SER</value>
     </values>
     <values>
         <field>Values5__c</field>
