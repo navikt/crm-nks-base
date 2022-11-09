@@ -5,19 +5,19 @@ public without sharing class NKS_KrrInformationController {
     public static void updateKrrInformation(String personIdent) {
         List<Person__c> personsToUpdate = new List<Person__c>();
         try {
-            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null);
+            List<KrrCalloutService.Personer> personer = KrrCalloutService.doPersonOppslag(
+                new List<String>{ personIdent }
+            );
             if (personer != null && !personer.isEmpty()) {
-                logger.error(personer[0] + ' Reserved value:' + personer[0]?.reservert, null, CRM_ApplicationDomain.Domain.NKS);
-                System.debug(personer[0] + ' Reserved value:' + personer[0]?.reservert);
                 for (Person__c person : [SELECT Id FROM Person__c WHERE Name = :personIdent]) {
                     personsToUpdate.add(
                         new Person__c(
                             Id = person.Id,
-                            INT_KrrEmail__c = personer[0]?.epostadresse,
-                            INT_KrrMobilePhone__c = personer[0]?.mobiltelefonnummer,
+                            INT_KrrEmail__c = personer[0]?.kontaktinformasjon?.epostadresse,
+                            INT_KrrMobilePhone__c = personer[0]?.kontaktinformasjon?.mobiltelefonnummer,
                             INT_LastUpdatedFromKRR__c = Datetime.now(),
                             INT_VerifiedFromKRR__c = sistVerifisertDato(personer[0]),
-                            INT_KRR_Reservation__c = personer[0]?.reservert
+                            INT_KRR_Reservation__c = personer[0]?.reservasjon == 'JA'
                         )
                     );
                 }
@@ -36,9 +36,9 @@ public without sharing class NKS_KrrInformationController {
         }
     }
 
-    private static Datetime sistVerifisertDato(KrrCalloutService.Person pers) {
-        Datetime emailVerifisertDato = pers?.epostadresseVerifisert;
-        Datetime mobileVerifisertDato = pers?.mobiltelefonnummerVerifisert;
+    private static Datetime sistVerifisertDato(KrrCalloutService.Personer pers) {
+        Datetime emailVerifisertDato = pers?.kontaktinformasjon?.epostadresse_sist_verifisert;
+        Datetime mobileVerifisertDato = pers?.kontaktinformasjon?.mobiltelefonnummer_sist_verifisert;
         if (emailVerifisertDato != null && mobileVerifisertDato != null) {
             if (emailVerifisertDato < mobileVerifisertDato) {
                 return mobileVerifisertDato;
