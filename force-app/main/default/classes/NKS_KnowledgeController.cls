@@ -145,7 +145,7 @@ public with sharing class NKS_KnowledgeController {
         return res;
     }
 
-    public static void sendEmail(Map<Id, List<String>> listToSend, List<String> toAddresses) {
+    public static void sendEmail(Map<String, List<String>> listToSend, List<String> toAddresses) {
         if (listToSend.size() > 0) {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
@@ -157,10 +157,9 @@ public with sharing class NKS_KnowledgeController {
 
             // Specify the text content of the email.
             String body = '';
-            for (Id key : listToSend.keySet()) {
-                Knowledge__kav article = [SELECT Id, Title FROM Knowledge__kav WHERE Id = :key];
-                List<String> links = listToSend.get(key);
-                body += 'Artikkel: "' + article.Title + ' " har følgende døde lenker:<br/>';
+            for (String title : listToSend.keySet()) {
+                List<String> links = listToSend.get(title);
+                body += 'Artikkel: "' + title + ' " har følgende døde lenker:<br/>';
                 for (String str : links) {
                     body += str + '<br/>';
                 }

@@ -1,5 +1,5 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
-    public Map<Id, List<String>> finalList = new Map<Id, List<String>>();
+    public Map<String, List<String>> finalList = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\' AND IsLatestVersion = TRUE';
@@ -9,6 +9,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
         for (Knowledge__kav article : [
             SELECT
+                Title,
                 AdvisorInformation__c,
                 AdvisorInformationInternal__c,
                 Article__c,
@@ -29,7 +30,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         ]) {
             List<String> res = NKS_KnowledgeController.findBrokenLinks(article);
             if (res.size() > 0) {
-                finalList.put(article.Id, res);
+                finalList.put(article.Title, res);
             }
         }
         System.debug('Number of articles with dead links: ' + finalList.size());
@@ -37,7 +38,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void finish(Database.BatchableContext bc) {
-        String[] toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
+        List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
         NKS_KnowledgeController.sendEmail(finalList, toAddresses);
     }
 
