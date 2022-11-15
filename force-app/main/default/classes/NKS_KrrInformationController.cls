@@ -4,6 +4,8 @@ public without sharing class NKS_KrrInformationController {
     @AuraEnabled
     public static void updateKrrInformation(String personIdent) {
         List<Person__c> personsToUpdate = new List<Person__c>();
+        CRM_DatabaseOperations cdo = new CRM_DatabaseOperations();
+        cdo.setDomain(CRM_ApplicationDomain.Domain.NKS);
         try {
             List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null);
             if (personer != null && !personer.isEmpty()) {
@@ -22,7 +24,7 @@ public without sharing class NKS_KrrInformationController {
             }
 
             if (!personsToUpdate.isEmpty())
-                update personsToUpdate;
+                cdo.updateRecords(personsToUpdate);
         } catch (Exception e) {
             if(!personsToUpdate.isEmpty()){
                 logger.exception(e, personsToUpdate[0]);
