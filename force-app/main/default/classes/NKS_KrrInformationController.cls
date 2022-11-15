@@ -7,7 +7,7 @@ public without sharing class NKS_KrrInformationController {
         CRM_DatabaseOperations cdo = new CRM_DatabaseOperations();
         cdo.setDomain(CRM_ApplicationDomain.Domain.NKS);
         try {
-            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null, false);
+            List<KrrCalloutService.Person> personer = KrrCalloutService.doPersonOppslag2(new List<String>{ personIdent }, null);
             if (personer != null && !personer.isEmpty()) {
                 for (Person__c person : [SELECT Id FROM Person__c WHERE Name = :personIdent]) {
                     personsToUpdate.add(
