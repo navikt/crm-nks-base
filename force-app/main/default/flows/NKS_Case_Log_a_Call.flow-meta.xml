@@ -901,8 +901,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>589</locationX>
-        <locationY>782</locationY>
+        <locationX>496</locationX>
+        <locationY>605</locationY>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
@@ -1290,6 +1290,12 @@
                 <name>theme</name>
                 <value>
                     <elementReference>Get_Case.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>optionalTheme</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

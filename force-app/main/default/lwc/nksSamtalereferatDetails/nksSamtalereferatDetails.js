@@ -19,7 +19,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
-        queryFields: 'Id, CRM_conversation_note__c, createddate, CRM_Theme__r.Name',
+        queryFields: 'Id, CRM_conversation_note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
         objectApiName: 'Conversation_note__c',
         relationshipField: 'CRM_case__c',
         ordering: 'createddate asc'
@@ -28,7 +28,14 @@ export default class NksSamtalereferatDetails extends LightningElement {
         this._wiredRecord = result;
         const { data, error } = result;
         if (data) {
-            this.notes = data;
+            this.notes = data.map((note) => ({
+                ...note,
+                displayName: note.CRM_Theme__r
+                    ? note.CRM_Theme__r.Name
+                    : note.CRM_Theme_Group__r
+                    ? note.CRM_Theme_Group__r.Name
+                    : '(Ingen tema)'
+            }));
         } else if (error) {
             console.log(error);
         }
