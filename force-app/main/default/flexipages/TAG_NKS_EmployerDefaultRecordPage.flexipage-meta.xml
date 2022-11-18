@@ -408,6 +408,7 @@
                 <componentInstanceProperties>
                     <name>actionNames</name>
                 </componentInstanceProperties>
+                <!--
                 <componentInstanceProperties>
                     <name>adminFilters</name>
                     <valueList>
@@ -419,6 +420,7 @@
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
+            -->
                 <componentInstanceProperties>
                     <name>maxRecordsToDisplay</name>
                     <value>10</value>
@@ -483,6 +485,7 @@
                 <componentInstanceProperties>
                     <name>actionNames</name>
                 </componentInstanceProperties>
+                <!--
                 <componentInstanceProperties>
                     <name>adminFilters</name>
                     <valueList>
@@ -494,6 +497,7 @@
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
+            -->
                 <componentInstanceProperties>
                     <name>maxRecordsToDisplay</name>
                     <value>10</value>
@@ -561,6 +565,7 @@
                 <componentInstanceProperties>
                     <name>actionNames</name>
                 </componentInstanceProperties>
+                <!--
                 <componentInstanceProperties>
                     <name>adminFilters</name>
                     <valueList>
@@ -572,6 +577,7 @@
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
+            -->
                 <componentInstanceProperties>
                     <name>maxRecordsToDisplay</name>
                     <value>10</value>
