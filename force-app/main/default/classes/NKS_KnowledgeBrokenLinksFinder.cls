@@ -44,6 +44,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
     @invocableMethod(label='Find Broken Links')
     public static void findDeadLinks() {
-        Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 5);
+        Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 1);
     }
 }
