@@ -1,17 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
-        <label />
-        <name>NAV_Kontaktsenter</name>
-    </customApplications>
-    <customApplications>
         <label>Permitteringsvarsler</label>
         <name>Permitteringsvarsler</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- SCRATCH --></label>
+        <name>SCRATCH</name>
     </customApplications>
     <customApplications>
         <label>NAV</label>
         <name>TAG_NAV_default</name>
     </customApplications>
+    <customLabels>
+        <label><!-- CRMHenveldelse_Blank --></label>
+        <name>CRMHenveldelse_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Conversation Note Discarded Message Notification Text --></label>
+        <name>CRMHenvendelse_ConversationNote_DiscardedMessageNotificationText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Conversation Note Redacted Message Notification Text --></label>
+        <name>CRMHenvendelse_ConversationNote_RedactedMessageNotificationText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Henvendelse - Innboks Base URL --></label>
+        <name>CRMHenvendelse_InnboksBaseURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - New Conversation Note Notification --></label>
+        <name>CRMHenvendelse_NewConversationNoteNotification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - New Message Notification --></label>
+        <name>CRMHenvendelse_NewMessageNotification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Thread Redacted Message Notification Text --></label>
+        <name>CRMHenvendelse_RedactedMessageNotificationText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - Samtalereferat URL --></label>
+        <name>CRMHenvendelse_SamtalereferatURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - System User --></label>
+        <name>CRMHenvendelse_SystemUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CRM Henvendelse - Thread URL --></label>
+        <name>CRMHenvendelse_ThreadURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Journal Case List Col Case Id --></label>
+        <name>CRM_Journal_Case_List_Col_Case_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Journal Case List Col Created Date --></label>
+        <name>CRM_Journal_Case_List_Col_Created_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Journal Case List No Cases Error --></label>
+        <name>CRM_Journal_Case_List_No_Cases_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NAV Case Retrieve Error --></label>
+        <name>CRM_NAV_Case_Retrieve_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NAV Case Title --></label>
+        <name>CRM_NAV_Case_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NAV Case Validation Error --></label>
+        <name>CRM_NAV_Case_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NAV Task Type Validation Error --></label>
+        <name>CRM_NAV_Task_Type_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Nav Task Work Allocation Delegate to Self --></label>
+        <name>CRM_Nav_Task_Work_Allocation_Delegate_to_Self</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Nav Task Work Allocation Validation Error --></label>
+        <name>CRM_Nav_Task_Work_Allocation_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No Cases for Selected Theme Group --></label>
+        <name>CRM_No_Cases_for_Selected_Theme_Group</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Theme Categorization Validation Error --></label>
+        <name>CRM_Theme_Categorization_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_CannotFindTriggerHandlerClass --></label>
+        <name>Errors_CannotFindTriggerHandlerClass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_DuplicateTriggerHandlerClass --></label>
+        <name>Errors_DuplicateTriggerHandlerClass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Errors_InvalidSettingConfiguration --></label>
+        <name>Errors_InvalidSettingConfiguration</name>
+    </customLabels>
+    <customLabels>
+        <label>Kan ikke finne brukers enhet basert på geografisk tilhørighet. Finner ikke kommunenummer eller bydelsnummer på bruker.</label>
+        <name>NAV_Unit_Error_person_location_missing</name>
+    </customLabels>
+    <customLabels>
+        <label>Har ikke tilgangsrettigheter på bruker. Oppslaget på enhet krever tilgang på bruker.</label>
+        <name>NAV_Unit_Error_person_not_accessible</name>
+    </customLabels>
     <customLabels>
         <label>Samtalereferatet kan ikke være tomt!</label>
         <name>NKS_Conversation_Note_Blank_Error</name>
@@ -29,8 +133,240 @@
         <name>NKS_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
+        <label><!-- No Conversation Notes Found --></label>
+        <name>NKS_No_Conversation_Notes_Found</name>
+    </customLabels>
+    <customLabels>
+        <label>Det oppsto en feil ved uthenting av brukerens utbetalinger. Feilkode:</label>
+        <name>NKS_Payment_List_API_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontonummer:</label>
+        <name>NKS_Payment_List_Bank_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Beløp</label>
+        <name>NKS_Payment_List_Col_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label>Detaljer</label>
+        <name>NKS_Payment_List_Col_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Antall</label>
+        <name>NKS_Payment_List_Col_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label>Sats</label>
+        <name>NKS_Payment_List_Col_Rate</name>
+    </customLabels>
+    <customLabels>
+        <label>Trekk</label>
+        <name>NKS_Payment_List_Deduction</name>
+    </customLabels>
+    <customLabels>
+        <label>Forfallsdato</label>
+        <name>NKS_Payment_List_Due_Date</name>
+    </customLabels>
+    <customLabels>
+        <label>Brutto</label>
+        <name>NKS_Payment_List_Gross_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label>Skjul detaljer</label>
+        <name>NKS_Payment_List_Hide_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Du har ikke tilgang til å se denne brukerens utbetalinger.</label>
+        <name>NKS_Payment_List_No_Access_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Brukeren har ingen utbetalinger</label>
+        <name>NKS_Payment_List_No_Payments</name>
+    </customLabels>
+    <customLabels>
+        <label>Utbetalinger</label>
+        <name>NKS_Payment_List_Payment_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Melding:</label>
+        <name>NKS_Payment_List_Payment_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Utbetalt til:</label>
+        <name>NKS_Payment_List_Payment_Recipient</name>
+    </customLabels>
+    <customLabels>
+        <label>Utbetalt</label>
+        <name>NKS_Payment_List_Payout</name>
+    </customLabels>
+    <customLabels>
+        <label>Egendefinert</label>
+        <name>NKS_Payment_List_Period_Custom</name>
+    </customLabels>
+    <customLabels>
+        <label>Fra og med:</label>
+        <name>NKS_Payment_List_Period_Custom_From</name>
+    </customLabels>
+    <customLabels>
+        <label>Til og med:</label>
+        <name>NKS_Payment_List_Period_Custom_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Periode</label>
+        <name>NKS_Payment_List_Period_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Siste måned</label>
+        <name>NKS_Payment_List_Period_Last_Month</name>
+    </customLabels>
+    <customLabels>
+        <label>I fjor</label>
+        <name>NKS_Payment_List_Period_Previous_Year</name>
+    </customLabels>
+    <customLabels>
+        <label>I år</label>
+        <name>NKS_Payment_List_Period_This_Year</name>
+    </customLabels>
+    <customLabels>
+        <label>Vis detaljer</label>
+        <name>NKS_Payment_List_Show_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Skattetrekk</label>
+        <name>NKS_Payment_List_Tax_Deduction</name>
+    </customLabels>
+    <customLabels>
+        <label>Total</label>
+        <name>NKS_Payment_List_Total_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Ytelse</label>
+        <name>NKS_Payment_List_Ytelse_Header</name>
+    </customLabels>
+    <customLabels>
         <label>Vennligst fyll ut feltet.</label>
         <name>NKS_Single_Record_Input_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Service --></label>
+        <name>Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Aktiviteter</label>
+        <name>Timeline_Activities</name>
+    </customLabels>
+    <customLabels>
+        <label>Avbryt</label>
+        <name>Timeline_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Skjul</label>
+        <name>Timeline_Collapse</name>
+    </customLabels>
+    <customLabels>
+        <label>Her er det ingenting!</label>
+        <name>Timeline_EmptyGroup</name>
+    </customLabels>
+    <customLabels>
+        <label>Ingen registrerte aktiviteter. Klikk “Ny” for å opprette en aktivitet.</label>
+        <name>Timeline_EmptySubtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Tomt!</label>
+        <name>Timeline_EmptyTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Feil!</label>
+        <name>Timeline_ErrorTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Utvid</label>
+        <name>Timeline_Expand</name>
+    </customLabels>
+    <customLabels>
+        <label>forrige</label>
+        <name>Timeline_Last</name>
+    </customLabels>
+    <customLabels>
+        <label>Last flere</label>
+        <name>Timeline_LoadMore</name>
+    </customLabels>
+    <customLabels>
+        <label>nb-no</label>
+        <name>Timeline_MomentJsLanguage</name>
+    </customLabels>
+    <customLabels>
+        <label>Ny</label>
+        <name>Timeline_New</name>
+    </customLabels>
+    <customLabels>
+        <label>En Administrator har enten ikke konfigurert denne komponent eller så har du ikke tilgang til denne type data. Kontakt din Administrator.</label>
+        <name>Timeline_NotConfugred</name>
+    </customLabels>
+    <customLabels>
+        <label>Eldre</label>
+        <name>Timeline_Older</name>
+    </customLabels>
+    <customLabels>
+        <label>Forfalt</label>
+        <name>Timeline_Overdue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] Previous Month --></label>
+        <name>Timeline_PreviousMonth</name>
+    </customLabels>
+    <customLabels>
+        <label>Nullstille</label>
+        <name>Timeline_Reset</name>
+    </customLabels>
+    <customLabels>
+        <label>Lagre</label>
+        <name>Timeline_Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- [ActTime] This Month --></label>
+        <name>Timeline_ThisMonth</name>
+    </customLabels>
+    <customLabels>
+        <label>kl.</label>
+        <name>Timeline_TimePrefix</name>
+    </customLabels>
+    <customLabels>
+        <label>i dag</label>
+        <name>Timeline_Today</name>
+    </customLabels>
+    <customLabels>
+        <label>i morgen</label>
+        <name>Timeline_Tomorrow</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontaktperson</label>
+        <name>Timeline_Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label>I dag og kommende</label>
+        <name>Timeline_Upcoming</name>
+    </customLabels>
+    <customLabels>
+        <label>Se alle</label>
+        <name>Timeline_ViewAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Se flere</label>
+        <name>Timeline_ViewMore</name>
+    </customLabels>
+    <customLabels>
+        <label>i går</label>
+        <name>Timeline_Yesterday</name>
+    </customLabels>
+    <customLabels>
+        <label>Du</label>
+        <name>Timeline_You</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Topic --></label>
+        <name>Topic</name>
     </customLabels>
     <customLabels>
         <label>Tilgangsnivå</label>
@@ -156,14 +492,74 @@
         <label>Users</label>
         <name>fbc_Users</name>
     </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
+        <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a field set for a different sobject type. --></label>
+        <name>fflib_QueryFactory_fieldset_wrong_sobject_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to nest subqueries. --></label>
+        <name>fflib_QueryFactory_recursive_subquery_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to create a subquery from an invalid relationship. --></label>
+        <name>fflib_QueryFactory_subquery_invalid_relationship</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_insertable --></label>
+        <name>fflib_security_error_field_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_readable --></label>
+        <name>fflib_security_error_field_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_updateable --></label>
+        <name>fflib_security_error_field_not_updateable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_deletable --></label>
+        <name>fflib_security_error_object_not_deletable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_insertable --></label>
+        <name>fflib_security_error_object_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_readable --></label>
+        <name>fflib_security_error_object_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_updateable --></label>
+        <name>fflib_security_error_object_not_updateable</name>
+    </customLabels>
     <customTabs>
-        <label />
+        <label><!-- API Transactions --></label>
         <name>API_Transactions</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Aktivitetsplan --></label>
+        <name>Aktivitetsplan</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Arenaytelser --></label>
+        <name>NKS_Arenaytelser</name>
     </customTabs>
     <customTabs>
         <label>Administrer veiledere</label>
         <name>NKS_User_administration</name>
     </customTabs>
+    <flowDefinitions>
+        <flows/>
+        <fullName>AccountTriggerBefore</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Account_Team_Update</fullName>
+    </flowDefinitions>
     <flowDefinitions>
         <flows>
             <screens>
@@ -174,6 +570,348 @@
             </screens>
         </flows>
         <fullName>Add_campaign_member</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Announcement_Delete_News_Automatically</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Empty_URL_Error_Message</name>
+                </fields>
+                <name>Error_Empty_URL_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Error_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>successful_message</name>
+                </fields>
+                <name>Success_Screen</name>
+            </screens>
+        </flows>
+        <fullName>Announcement_Publish_News_Now</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Announcement_Publish_Scheduled_News</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Announcement_Send_Notification_On_Not_Uploaded_Image</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Announcement_Send_Notification_On_Operational_Updates</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>successful_message</name>
+                </fields>
+                <name>Success_Screen</name>
+            </screens>
+        </flows>
+        <fullName>Announcement_Undo_Publishing_News</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_AfterInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_AfterUpdate_OnIsReadSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeUpdate_OfficeRestrictionSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_BeforeUpdate_OnAccountChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_ConversationNote_CreateInnboksUserNotification</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value/>
+                    </inputParameters>
+                    <name>ConfirmAbort</name>
+                </fields>
+                <name>Confirm_abort_redaction</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <name>NavigateToThread</name>
+                </fields>
+                <name>Go_to_thread</name>
+            </screens>
+        </flows>
+        <fullName>CRMHenvendelse_ConversationNote_Screenflow_AbortRedaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterInsert_OnInterntalMessage</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterUpdate_OnIsRedactedSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_AfterUpdate_OnReadSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Message_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnAccountChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnOfficeRestrictionSetToTrue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnSetActiveToFalse</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_BeforeUpdate_OnThreadTypeChange</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value/>
+                    </inputParameters>
+                    <name>ConfirmAbort</name>
+                </fields>
+                <name>Confirm_Abort_Redaction</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <name>NavigateToThread</name>
+                </fields>
+                <name>Go_to_thread</name>
+            </screens>
+        </flows>
+        <fullName>CRMHenvendelse_Thread_Screenflow_AbortRedaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRMHenvendelse_Thread_Subflow_CreateInnboksUserNotification</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <textTemplates>
+                <name>LineBreakString</name>
+            </textTemplates>
+            <textTemplates>
+                <name>MessageSummaryText</name>
+            </textTemplates>
+        </flows>
+        <fullName>CRMHenvendelse_Thread_Subflow_RecalculateMessageSummary</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Conversation_Note_Before_Update_Incorrectly_Sent_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Create_Thread_Event</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Henvendelse_Message_Before_Insert_On_Internal_Message_No_NAV_Unit</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_CHAT_Thread</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Conversation_Note</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Entry_After_Insert_On_Thread_Journal_Initiate_Journal_Post</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Entry_Retry_Autolaunched</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Journal_Message_Thread</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Message_Content_After_Insert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_Text</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+        </flows>
+        <fullName>CRM_Oppgave_Redirect</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>refreshRecord</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Complete_Flow</name>
+                </fields>
+                <name>Flow_Complete_Screen</name>
+            </screens>
+            <textTemplates>
+                <name>NEWLINE</name>
+            </textTemplates>
+        </flows>
+        <fullName>CRM_Patch_Complete_NAV_Task</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <name>New_NAV_Unit</name>
+                </fields>
+                <name>Change_NAV_Unit</name>
+            </screens>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>refreshRecord</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Complete_Flow</name>
+                </fields>
+                <name>Flow_Complete_Screen</name>
+            </screens>
+            <textTemplates>
+                <name>NEWLINE</name>
+            </textTemplates>
+        </flows>
+        <fullName>CRM_Patch_NAV_Task_Change_NAV_Unit</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Confirmation_Text</name>
+                </fields>
+                <name>Confirm_Remove_Screeen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Error_Header</name>
+                </fields>
+                <fields>
+                    <name>Error_Screen_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+        </flows>
+        <fullName>CRM_Patch_NAV_Task_Remove_Assignee</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -189,7 +927,7 @@
             <screens>
                 <fields>
                     <name>Task_Due_Date</name>
-                    <validationRule />
+                    <validationRule/>
                 </fields>
                 <fields>
                     <name>Task_Priority</name>
@@ -198,12 +936,64 @@
                     <name>Task_Status</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>selectedTaskTypeId</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>showcomponent</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
                     <name>Task_Type_Selector</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>subtheme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>subtype</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeGroup</name>
+                        <value/>
+                    </inputParameters>
                     <name>Theme_Categorization</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>disableConditionalRendering</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>hideDelegateToSelf</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>personId</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>selectedUnitId</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>taskType</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
                     <name>Work_Allocation</name>
                 </fields>
                 <name>NAV_Task_Input_Screen</name>
@@ -212,7 +1002,7 @@
         <fullName>CRM_Patch_Update_NAV_Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>CRM_Retry_NAV_Task_Post</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -237,12 +1027,36 @@
                     <name>Task_Priority</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>showcomponent</name>
+                        <value/>
+                    </inputParameters>
                     <name>Task_Type_Selector</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>subtheme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeGroup</name>
+                        <value/>
+                    </inputParameters>
                     <name>Theme_Categorization</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>hideDelegateToSelf</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>personId</name>
+                        <value/>
+                    </inputParameters>
                     <name>Work_Allocation</name>
                 </fields>
                 <name>NAV_Task_Input_Screen</name>
@@ -257,7 +1071,293 @@
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows>
+            <textTemplates>
+                <name>Newline</name>
+            </textTemplates>
+        </flows>
+        <fullName>CRM_Send_NAV_Task_Auto</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Thread_Before_Update_Incorrectly_Sent_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>CRM_Thread_Create_Journal_Entry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Campaign_Member_update</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Contract</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>userNotificationError</name>
+                </fields>
+                <name>No_user_notification</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next_0</name>
+                </fields>
+                <name>Trigger_sync_0</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>partialSuccessMessage</name>
+                </fields>
+                <name>partialSuccess</name>
+            </screens>
+            <textTemplates>
+                <name>Update_Conversation_Note</name>
+            </textTemplates>
+        </flows>
+        <fullName>ConversationNote_Screenflow_Complete_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Not_Complete</name>
+                </fields>
+                <name>Failed</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>somethingWnetWrongText</name>
+                </fields>
+                <fields>
+                    <name>userNotificationNotCreated</name>
+                </fields>
+                <fields>
+                    <name>usernotificationCreatedButNotSent</name>
+                </fields>
+                <name>Something_is_not_OK</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next_0</name>
+                </fields>
+                <name>Trigger_sync_0</name>
+            </screens>
+            <textTemplates>
+                <name>Update_Conversation_Note_After_Discarding</name>
+            </textTemplates>
+        </flows>
+        <fullName>ConversationNote_Screenflow_Discard_Conversation</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_After_Create_Archive</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_After_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_After_update_Archive</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Conversation_Note_Before_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Not_Found_Text</name>
+                </fields>
+                <name>Not_Found_Screen</name>
+            </screens>
+        </flows>
+        <fullName>Conversation_Note_Journal_From_Case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Screen_Message</name>
+                </fields>
+                <name>Redaction_Conversation_Note_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Cause</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Sensitive_Toggle</name>
+                </fields>
+                <name>Set_Conversation_Note_to_redaction</name>
+            </screens>
+        </flows>
+        <fullName>Conversation_Note_Set_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Custom_Campaign_Member_RelatedList</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Custom_Opportunity_update_Inq_Cat_2</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Discarding_Email_Alert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Flow_Create_Application_Log</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Gjelder_insert_before_save</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Conversation_Note_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Entry_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Journal_Message_Thread_Retry</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Kafka_Oppgave_Event_On_Insert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Message_After_update_Update_Message_Content</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NAVTASK_Set_resolved_date</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NAVTask_Owner_Change</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Endre_eier_Section1</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section1_Column1</name>
+                </fields>
+                <fields>
+                    <name>Endre_eier_Section2</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section2_Column1</name>
+                </fields>
+                <fields>
+                    <name>Endre_eier_Section3</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section3_Column1</name>
+                </fields>
+                <fields>
+                    <name>Endre_eier_Section4</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section4_Column1</name>
+                </fields>
+                <fields>
+                    <name>Endre_eier_Section5</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section5_Column1</name>
+                </fields>
+                <fields>
+                    <name>Endre_eier_Section6</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Endre_eier_Section6_Column1</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>availableForSObjectType</name>
+                        <value/>
+                    </inputParameters>
+                    <name>QueueLookup</name>
+                </fields>
+                <name>Endre_eier</name>
+            </screens>
+        </flows>
+        <fullName>NAV_Task_Assign_to_Queue</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>NKS_Account_Create_New_Case</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -279,12 +1379,44 @@
                     <name>Task_Priority</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>subtheme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>subtype</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeGroup</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeSet</name>
+                        <value/>
+                    </inputParameters>
                     <name>Theme_Categorization</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>showcomponent</name>
+                        <value/>
+                    </inputParameters>
                     <name>tasktype</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>disableConditionalRendering</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>personId</name>
+                        <value/>
+                    </inputParameters>
                     <name>workAllocation</name>
                 </fields>
                 <name>NAV_Task_Input_Screen</name>
@@ -302,9 +1434,41 @@
         <flows>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>fieldName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>readOnly</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>variant</name>
+                        <value/>
+                    </inputParameters>
                     <name>Account_Relation</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>headertag</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>input</name>
+                        <value/>
+                    </inputParameters>
                     <name>Select_Account_Header</name>
                 </fields>
                 <fields>
@@ -325,45 +1489,164 @@
             </choices>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>center</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>headertag</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>input</name>
+                        <value/>
+                    </inputParameters>
                     <name>Case_Closed_Header</name>
                 </fields>
                 <fields>
                     <name>Conversation_Summary</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>action</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>stretched</name>
+                        <value/>
+                    </inputParameters>
                     <name>Create_Case_Button</name>
                 </fields>
                 <fields>
                     <name>Next_Action</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonVariant</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>stretched</name>
+                        <value/>
+                    </inputParameters>
                     <name>Next_Button</name>
+                </fields>
+                <fields>
+                    <name>Record_Refresher_Closed_Case</name>
                 </fields>
                 <name>Case_Closed_Screen</name>
             </screens>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>center</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>headertag</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>input</name>
+                        <value/>
+                    </inputParameters>
                     <name>Closed_WO_Account_Text</name>
                 </fields>
                 <name>Closed_Without_Account_Screen</name>
             </screens>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>FAGSAK_ONLY</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>actorId</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>prefilledThemeGroup</name>
+                        <value/>
+                    </inputParameters>
                     <name>Case_Overview</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>action</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonAlignment</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>stretched</name>
+                        <value/>
+                    </inputParameters>
                     <name>Complete_BTN</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeGroup</name>
+                        <value/>
+                    </inputParameters>
                     <name>Conversation_Theme_Categorization</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>value</name>
+                        <value/>
+                    </inputParameters>
                     <name>Create_Journal_Entry</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>headertag</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>input</name>
+                        <value/>
+                    </inputParameters>
                     <name>Create_Note_Header</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>conversationNoteRich</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value/>
+                    </inputParameters>
                     <name>Dialogue_Summary</name>
                 </fields>
                 <fields>
@@ -373,27 +1656,104 @@
                     <name>Log_Screen_Section1</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
                     <name>Log_Screen_Section1_Column1</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
                     <name>Log_Screen_Section1_Column2</name>
+                </fields>
+                <fields>
+                    <name>Log_Screen_Section2</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Log_Screen_Section2_Column1</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>width</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Log_Screen_Section2_Column2</name>
                 </fields>
                 <fields>
                     <name>Record_Refresher</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>action</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonAlignment</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>buttonVariant</name>
+                        <value/>
+                    </inputParameters>
                     <name>back_button</name>
                 </fields>
                 <name>Log_Screen</name>
             </screens>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>fieldName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>readOnly</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>variant</name>
+                        <value/>
+                    </inputParameters>
                     <name>Account_Relation</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>headertag</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>input</name>
+                        <value/>
+                    </inputParameters>
                     <name>Missing_Account_Header</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>buttonLabel</name>
+                        <value/>
+                    </inputParameters>
                     <name>No_Account_Next_Button</name>
                 </fields>
                 <fields>
@@ -429,12 +1789,48 @@
                     <name>Task_Priority</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>subtheme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>subtype</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>theme</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeGroup</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>themeSet</name>
+                        <value/>
+                    </inputParameters>
                     <name>Theme_Categorization</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>showcomponent</name>
+                        <value/>
+                    </inputParameters>
                     <name>tasktype</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>disableConditionalRendering</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>hideDelegateToSelf</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>personId</name>
+                        <value/>
+                    </inputParameters>
                     <name>workAllocation</name>
                 </fields>
                 <name>NAV_Task_Input_Screen</name>
@@ -446,6 +1842,22 @@
         <flows>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value/>
+                    </inputParameters>
                     <name>accountInput</name>
                 </fields>
                 <name>Set_Acoount</name>
@@ -454,13 +1866,25 @@
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>NKS_Close_Case_and_Tab</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
             <screens>
                 <fields>
+                    <inputParameters>
+                        <name>FAGSAK_ONLY</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>actorId</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>prefilledThemeGroup</name>
+                        <value/>
+                    </inputParameters>
                     <name>Case_Overview</name>
                 </fields>
                 <name>Journal_Screen</name>
@@ -483,6 +1907,54 @@
                     <name>Feedback</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>cardLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>content</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>datefield</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>filterbyskills</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>iconName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>limit</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>linklabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>listviewname</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>orderby</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>showimage</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>title</name>
+                        <value/>
+                    </inputParameters>
                     <name>FeedbackList</name>
                 </fields>
                 <fields>
@@ -492,6 +1964,18 @@
             </screens>
         </flows>
         <fullName>NKS_KnowledgeFeedback</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Knowledge_Find_Broken_Links</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Knowledge_Remove_Topic_Assignments</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>NKS_Knowledge_Send_Notification</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -524,6 +2008,30 @@
                     <name>Set_NKS_Topics</name>
                 </fields>
                 <fields>
+                    <inputParameters>
+                        <name>allowNoneToBeChosen</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>displayMode</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>fieldName</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>inputMode</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>masterLabel</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectName</name>
+                        <value/>
+                    </inputParameters>
                     <name>UpdateDivision</name>
                 </fields>
                 <fields>
@@ -567,15 +2075,77 @@
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Opportunity</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
+        <fullName>POST_JOURNAL_AUTO_TEMPLATE</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_Message</name>
+                </fields>
+                <name>Error_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <inputParameters>
+                        <name>actorId</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Journal_Case_Overview</name>
+                </fields>
+                <name>Theme_Input_Screen</name>
+            </screens>
+        </flows>
+        <fullName>POST_JOURNAL_TEMPLATE</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Comment</name>
+                </fields>
+                <fields>
+                    <name>Comment_Failed_Text</name>
+                </fields>
+                <name>Add_Comment_Screen</name>
+            </screens>
+            <textTemplates>
+                <name>NEWLINE</name>
+            </textTemplates>
+        </flows>
+        <fullName>Patch_NAV_Task_Add_Comment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Error_message</name>
+                </fields>
+                <fields>
+                    <name>PersonIdent</name>
+                </fields>
+                <name>Select_Person_Ident</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Sharing_ok</name>
+                </fields>
+                <name>Tilgangene_er_rekalkulert</name>
+            </screens>
+        </flows>
+        <fullName>Recalculate_sharing_for_person</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
         <fullName>Remove_Old_TopicAssignment</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Reset_Account_Warning_After_6_Months</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -588,6 +2158,14 @@
             </screens>
         </flows>
         <fullName>ScreenDeleteTopicAssignments</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>SetUltimateParentAccount</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Set_Validation_Bypass_To_False</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -613,15 +2191,15 @@
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Task</fullName>
     </flowDefinitions>
     <flowDefinitions>
-        <flows />
+        <flows/>
         <fullName>Temporary_Layoff_Update</fullName>
     </flowDefinitions>
     <flowDefinitions>
@@ -646,6 +2224,157 @@
             </screens>
         </flows>
         <fullName>Test_SMS_Callout</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_After_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_After_update_Archive</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Thread_Before_Update_Sensitive_Information_Set_To_True</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>exceptionMessage</name>
+                </fields>
+                <name>Exception_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>userNotificationError</name>
+                </fields>
+                <name>No_user_notification</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>partialSuccessMessage</name>
+                </fields>
+                <name>partialSuccess</name>
+            </screens>
+            <textTemplates>
+                <name>Redacted_Message_Notification_Text</name>
+            </textTemplates>
+        </flows>
+        <fullName>Thread_Screenflow_Complete_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Not_Complete</name>
+                </fields>
+                <name>Failed</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>somethingWnetWrongText</name>
+                </fields>
+                <fields>
+                    <name>userNotificationNotCreated</name>
+                </fields>
+                <fields>
+                    <name>usernotificationCreatedButNotSent</name>
+                </fields>
+                <name>Something_is_not_OK</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>next</name>
+                </fields>
+                <name>Trigger_sync</name>
+            </screens>
+            <textTemplates>
+                <name>Redacted_Message_Notification_Text</name>
+            </textTemplates>
+        </flows>
+        <fullName>Thread_Screenflow_Discard_Message</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>Screen_Message</name>
+                </fields>
+                <name>Redaction_Thread_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Cause</name>
+                </fields>
+                <fields>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleActive</name>
+                        <value/>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>messageToggleInactive</name>
+                        <value/>
+                    </inputParameters>
+                    <name>Sensitive_Toggle</name>
+                </fields>
+                <name>Set_Thread_to_Redaction</name>
+            </screens>
+        </flows>
+        <fullName>Thread_Set_To_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <screens>
+                <fields>
+                    <name>NavigateComponent</name>
+                </fields>
+                <name>Navigate</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NavigateComponent_0</name>
+                </fields>
+                <name>Navigate_0</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NavigateComponent_0_0</name>
+                </fields>
+                <name>Navigate_0_0</name>
+            </screens>
+        </flows>
+        <fullName>Thread_Sub_Screenflow_Complete_Redaction</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>UN_UserNotificationCreateDoneEventFromRelatedRecordId</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>UN_UserNotification_AfterInsert</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>UN_UserNotification_AfterUpdate</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows/>
+        <fullName>Update_Ansvarlig</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -700,9 +2429,359 @@
         </flows>
         <fullName>Update_NAVUnits</fullName>
     </flowDefinitions>
+    <prompts>
+        <name>ReleaseReadinessServiceSandbox</name>
+        <promptVersions>
+            <name>Release Readiness Service Sandbox</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialKanbanVideo</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Kanban Video</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>GmailIntegrationandSync</name>
+        <promptVersions>
+            <name>Gmail Integration and Sync</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SetupUsers</name>
+        <promptVersions>
+            <name>Setup Users</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Virksomhetskortet</name>
+        <promptVersions>
+            <name>Virksomhetskortet</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialHomepageGuide</name>
+        <promptVersions>
+            <name>Service Cloud Trial Homepage Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ReleaseReadiness</name>
+        <promptVersions>
+            <name>Release Readiness</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EnablementSwitchToProgramsEnblAdmin</name>
+        <promptVersions>
+            <name>Switch Between Measures and Programs Easily</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialHomePage</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Home Page</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>CDPOnboardingInAppGuidance</name>
+        <promptVersions>
+            <name>CDP Onboarding InApp Guidance</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>X4StepWalkthroughonContact</name>
+        <promptVersions>
+            <name>4 Step Walkthrough on Contact Step 1</name>
+            <stepNumber>1</stepNumber>
+        </promptVersions>
+        <promptVersions>
+            <name>4 Step Walkthrough on Contact Step 2</name>
+            <stepNumber>2</stepNumber>
+        </promptVersions>
+        <promptVersions>
+            <name>4 Step Walkthrough on Contact Step 3</name>
+            <stepNumber>3</stepNumber>
+        </promptVersions>
+        <promptVersions>
+            <name>4 Step Walkthrough on Contact Step 4</name>
+            <stepNumber>4</stepNumber>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EndreEierpoppgaven</name>
+        <promptVersions>
+            <name>Endre Eier på oppgaven</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>FinnInnkomneoppgaver</name>
+        <promptVersions>
+            <name>Finn Innkomne oppgaver</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrailPreconfiguredDashboardsGuide</name>
+        <promptVersions>
+            <name>Sales Cloud Trail Pre-configured Dashboards Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreReportsTab</name>
+        <promptVersions>
+            <name>Service Cloud Core Reports Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>NPSPLicenseDay1</name>
+        <promptVersions>
+            <name>NPSP License Day 1</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Fullfreoppgaven</name>
+        <promptVersions>
+            <name>Fullføre oppgaven</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ReleaseReadinessSandboxSales</name>
+        <promptVersions>
+            <name>Release Readiness Sandbox Sales</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialChatterGuide</name>
+        <promptVersions>
+            <name>Service Cloud Trial Chatter Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EngagementAttributeTips</name>
+        <promptVersions>
+            <name>Engagement Attribute Tips</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialDashboardGuide</name>
+        <promptVersions>
+            <name>Service Cloud Trial Dashboard Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCoreQuoteAdminCpq</name>
+        <promptVersions>
+            <name>Sales Core Quote Admin to CPQ</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAG</name>
+        <promptVersions>
+            <name>Velkomst melding til NAV Kontor brukere (TAG)</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialContactsListViewsVideo</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Contacts List Views Video</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreContactsTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Contacts Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ReleaseReadinessSales</name>
+        <promptVersions>
+            <name>Release Readiness Sales</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EnablementExploreProgramsEnblAdmin</name>
+        <promptVersions>
+            <name>Explore Programs</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SupportEmailToCase</name>
+        <promptVersions>
+            <name>Support Email To Case</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Innkomneoppgaverhjemskjermen</name>
+        <promptVersions>
+            <name>Innkomne oppgaver hjemskjermen</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudTrialCasesTab</name>
+        <promptVersions>
+            <name>Service Cloud Trial Cases Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>OmProfflink</name>
+        <promptVersions>
+            <name>Om ny Proff link</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreHomepage</name>
+        <promptVersions>
+            <name>Sales Cloud Core Homepage</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudTrialChatterGuide</name>
+        <promptVersions>
+            <name>Sales Cloud Trial Chatter Guide</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>X2StepWalkthroughonReports</name>
+        <promptVersions>
+            <name>2 Step Walkthrough on Reports Step 1</name>
+            <stepNumber>1</stepNumber>
+        </promptVersions>
+        <promptVersions>
+            <name>2 Step Walkthrough on Reports Step 2</name>
+            <stepNumber>2</stepNumber>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EnablementExploreMeasuresEnblAdmin</name>
+        <promptVersions>
+            <name>Explore Measures</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreHomepage</name>
+        <promptVersions>
+            <name>Service Cloud Core Homepage</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreOpportunitiesTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Opportunities Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesHVSDialer</name>
+        <promptVersions>
+            <name>Sales HVS Dialer</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>tabletFullWidthGA</name>
+        <promptVersions>
+            <name>TabletFullWidthGA</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>NPSPLicenseDay25</name>
+        <promptVersions>
+            <name>NPSP License Day 25</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Underskelseinkludering</name>
+        <promptVersions>
+            <name>Undersøkelse inkludering</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>IAGFeatureAdoption</name>
+        <promptVersions>
+            <name>IAG Feature Adoption Step 1</name>
+            <stepNumber>1</stepNumber>
+        </promptVersions>
+        <promptVersions>
+            <name>IAG Feature Adoption Step 2</name>
+            <stepNumber>2</stepNumber>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>MFARequirementAwareness</name>
+        <promptVersions>
+            <name>MFA Requirement Awareness</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>Lenketilproffnoerforbedret</name>
+        <promptVersions>
+            <name>Lenke til proff.no er forbedret</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
+        <promptVersions>
+            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SelfSupportDataImportWizard</name>
+        <promptVersions>
+            <name>Self Support Data Import Wizard</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreCases</name>
+        <promptVersions>
+            <name>Service Cloud Core Cases</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>NPSPLicenseDay20</name>
+        <promptVersions>
+            <name>NPSP License Day 20</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EnablementExploreAnalyticsEnblAdmin</name>
+        <promptVersions>
+            <name>Explore Analytics</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>KontokoblettilNAVkontor</name>
+        <promptVersions>
+            <name>Konto koblet til NAV kontor</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreReportsTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Reports Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>EinsteinPredictionBuilderSetupPagePrompt</name>
+        <promptVersions>
+            <name>Einstein Prediction Builder Setup Page Prompt</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>SalesCloudCoreChatterTab</name>
+        <promptVersions>
+            <name>Sales Cloud Core Chatter Tab</name>
+        </promptVersions>
+    </prompts>
+    <prompts>
+        <name>ServiceCloudCoreChatter</name>
+        <promptVersions>
+            <name>Service Cloud Core Chatter</name>
+        </promptVersions>
+    </prompts>
     <quickActions>
-        <aspect>Master</aspect>
-        <label />
+        <label><!-- Opprett nyhet fra mal --></label>
+        <name>Create_News_From_Template</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log a Call --></label>
         <name>LogACall</name>
     </quickActions>
     <quickActions>
@@ -711,63 +2790,107 @@
         <name>NKS_newTask</name>
     </quickActions>
     <quickActions>
-        <aspect>Master</aspect>
-        <label />
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
         <name>SendEmail</name>
     </quickActions>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Admin dashboard Rapport --></description>
+        <label><!-- Admin dashboard Rapport --></label>
         <name>Admin_dashboard_Rapport</name>
         <sections>
-            <label />
+            <label><!-- Dashboard Components --></label>
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Dashboards --></label>
             <name>Dashboards</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Admin rapport over Rapporter --></description>
+        <label><!-- Admin rapport over Rapporter --></label>
         <name>Admin_rapport_over_Rapporter</name>
         <sections>
-            <label />
+            <label><!-- Dashboard Components --></label>
             <name>Dashboard Components</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Reports --></label>
             <name>Reports</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Bedriftskampanjemedlemmer med Aktiviteter og Konto --></description>
+        <label><!-- Bedriftskampanjemedlemmer med Aktiviteter og Konto --></label>
         <name>Bedriftskampanjemedlemmer_med_Konto</name>
         <sections>
-            <label />
+            <label><!-- Activities --></label>
             <name>Activities</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Custom Campaign Members --></label>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Konto --></label>
             <name>Konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Chat Transcript --></description>
+        <label><!-- Chat Transcript --></label>
+        <name>Chat_Transcript</name>
+        <sections>
+            <label><!-- Chat Transcripts --></label>
+            <name>Chat Transcripts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Kampanje med kontoer --></description>
+        <label><!-- Kampanje med kontoer --></label>
         <name>Kampanjer_med_kontoer_og_kontakter</name>
         <sections>
-            <label />
+            <label><!-- Custom Campaign Members --></label>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Custom Campaigns --></label>
             <name>Custom Campaigns</name>
         </sections>
         <sections>
@@ -843,11 +2966,11 @@
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontakter i kampanje --></description>
+        <label><!-- Kontakter i kampanje --></label>
         <name>Kontakter_i_kampanje</name>
         <sections>
-            <label />
+            <label><!-- Account Relationships --></label>
             <name>Account Relationships</name>
         </sections>
         <sections>
@@ -855,142 +2978,153 @@
             <name>Contacts</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Custom Campaign Members --></label>
             <name>Custom Campaign Members</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Felter fra konto --></label>
             <name>Felter fra konto</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontakter med Arbeidsgivere som har Arena Aktivite --></description>
+        <label><!-- Kontakter med Arbeidsgivere som har Arena Aktivite --></label>
         <name>Kontakter_med_Arbeidsgivere_som_har_Arena_Aktivite</name>
         <sections>
-            <label />
+            <label><!-- Account Relationships --></label>
             <name>Account Relationships</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Arena Aktiviteter --></label>
             <name>Arena Aktiviteter</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontoer med NAV Kontaktperson --></description>
+        <label><!-- Kontoer med NAV Kontaktperson --></label>
         <name>Kontoer_med_NAV_Kontaktperson</name>
         <sections>
-            <label />
+            <label><!-- Account Team --></label>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontoer med eller uten kontakter --></description>
+        <label><!-- Kontoer med eller uten kontakter --></label>
         <name>Kontoer_med_eller_uten_kontakter</name>
         <sections>
-            <label />
+            <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontoer med eller uten kontaktpersponer fra NAV --></description>
+        <label><!-- Kontoer med eller uten kontaktpersponer fra NAV --></label>
         <name>Kontoer_med_eller_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label />
+            <label><!-- Account Team --></label>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Kontoer uten kontaktpersponer fra NAV --></description>
+        <label><!-- Kontoer uten kontaktpersponer fra NAV --></label>
         <name>Kontoer_uten_kontaktpersponer_fra_NAV</name>
         <sections>
-            <label />
+            <label><!-- Account Team --></label>
             <name>Account Team</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Muligheter med konto og NAV-Kontor --></description>
+        <label><!-- Muligheter med konto og NAV-Kontor --></label>
         <name>Muligheter_med_konto_og_NAV_Kontor</name>
         <sections>
-            <label />
+            <label><!-- Custom Opportunities --></label>
             <name>Custom Opportunities</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- NAV Kontor --></label>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label>
-                <!-- Opportunities -->
-            </label>
+            <label><!-- Opportunities --></label>
             <name>Opportunities</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Virksomhet --></label>
             <name>Virksomhet</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Agent Work --></description>
+        <label><!-- Agent Work --></label>
         <name>NKS_Agent_Work</name>
         <sections>
-            <label />
+            <label><!-- Agent Work --></label>
             <name>Agent Work</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Stillinger med arbeidsgiver --></description>
+        <label><!-- Stillinger med arbeidsgiver --></label>
+        <name>Stillinger_med_arbeidsgiver</name>
+        <sections>
+            <label><!-- Arbeidsgiver --></label>
+            <name>Arbeidsgiver</name>
+        </sections>
+        <sections>
+            <label><!-- Job Postings --></label>
+            <name>Job Postings</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Permitteringsvarsler med konto og NAV kontor --></description>
+        <label><!-- Permitteringsvarsler med konto og NAV kontor --></label>
         <name>TAG_Permitteringsvarsler_med_konto_og_NAV_kontor</name>
         <sections>
-            <label />
+            <label><!-- Konto --></label>
             <name>Konto</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- NAV Kontor --></label>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Temporary Layoffs --></label>
             <name>Temporary Layoffs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Screen Flows --></description>
+        <label><!-- Screen Flows --></label>
         <name>screen_flows_prebuilt_crt</name>
         <sections>
-            <label />
+            <label><!-- Flow Interview Log Entries --></label>
             <name>Flow Interview Log Entries</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Flow Interview Logs --></label>
             <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
