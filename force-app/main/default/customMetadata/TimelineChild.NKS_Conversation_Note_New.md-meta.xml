@@ -68,7 +68,7 @@
     </values>
     <values>
         <field>FilterablePicklist2__c</field>
-        <value xsi:type="xsd:string">CRM_Theme_Name__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SLDS_Dropdown_Icon__c</field>
