@@ -32,6 +32,7 @@ public with sharing class NKS_KnowledgeControllerTest {
         Knowledge__kav article = [
             SELECT
                 Id,
+                Title,
                 AdvisorInformation__c,
                 AdvisorInformationInternal__c,
                 Article__c,
@@ -95,10 +96,10 @@ public with sharing class NKS_KnowledgeControllerTest {
     @isTest
     static void testSendEmail() {
         // make mock data
-        Map<Id, List<String>> listToSend = new Map<Id, List<String>>();
+        Map<String, List<String>> listToSend = new Map<String, List<String>>();
         List<String> links = new List<String>{ 'https://example.com/fakeLink' };
-        Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1].Id;
-        listToSend.put(articleId, links);
+        String title = [SELECT Id, Title FROM Knowledge__kav LIMIT 1].Title;
+        listToSend.put(title, links);
         String[] toAddresses = new List<String>{ 'testUser1@example.com' };
 
         Test.startTest();
