@@ -28,7 +28,7 @@ public with sharing class NKS_KnowledgeControllerTest {
     }
 
     @isTest
-    static void testFindBrokenLinks() {
+    static void testGetBrokenLinks() {
         Knowledge__kav article = [
             SELECT
                 Id,
@@ -53,7 +53,7 @@ public with sharing class NKS_KnowledgeControllerTest {
         ];
 
         Test.startTest();
-        List<String> res = NKS_KnowledgeController.findBrokenLinks(article);
+        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
         Test.stopTest();
 
         System.assertEquals(0, res.size());
@@ -96,10 +96,13 @@ public with sharing class NKS_KnowledgeControllerTest {
     @isTest
     static void testSendEmail() {
         // make mock data
-        Map<String, List<String>> listToSend = new Map<String, List<String>>();
+        Map<String, Map<String, List<String>>> listToSend = new Map<String, Map<String, List<String>>>();
+        Map<String, List<String>> fieldLinks = new Map<String, List<String>>();
         List<String> links = new List<String>{ 'https://example.com/fakeLink' };
+        String field = 'NKS_Summary__c';
+        fieldLinks.put(field, links);
         String title = [SELECT Id, Title FROM Knowledge__kav LIMIT 1].Title;
-        listToSend.put(title, links);
+        listToSend.put(title, fieldLinks);
         String[] toAddresses = new List<String>{ 'testUser1@example.com' };
 
         Test.startTest();
