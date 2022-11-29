@@ -389,7 +389,7 @@
                     <criteria>
                         <leftValue>{!$User.Email}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Camilla.Knem.Christie@nav.no</rightValue>
+                        <rightValue>camilla.knem.christie@nav.no</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
