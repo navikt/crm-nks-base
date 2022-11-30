@@ -380,10 +380,16 @@
                 <componentName>safDocumentByUser</componentName>
                 <identifier>c_safDocumentByUser</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!$User.Email}</leftValue>
                         <operator>CONTAINS</operator>
                         <rightValue>andreas.kristiansen@nav.no</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Email}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>camilla.knem.christie@nav.no</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

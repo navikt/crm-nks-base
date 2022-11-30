@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.264.0.NEXT",
+            "versionNumber": "0.267.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -49,7 +49,7 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.10.0.LATEST"
+                    "versionNumber": "0.12.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
