@@ -113,35 +113,33 @@ public with sharing class NKS_KnowledgeController {
     @TestVisible
     private static Map<String, List<String>> findBrokenLinks(Map<String, List<String>> mapToCheck) {
         Map<String, List<String>> resultList = new Map<String, List<String>>();
-        if (!Test.isRunningTest()) {
-            for (String field : mapToCheck.keySet()) {
-                List<String> linksToCheck = mapToCheck.get(field);
-                List<String> deadLinks = new List<String>();
-                for (String str : linksToCheck) {
-                    for (String link : LINKS) {
-                        if (str.contains(link)) {
-                            String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
-                            try {
-                                HttpRequest req = new HttpRequest();
-                                HttpResponse res = calloutHttpReq(req, endpoint);
-                                Integer statusCode = res.getStatusCode();
+        for (String field : mapToCheck.keySet()) {
+            List<String> linksToCheck = mapToCheck.get(field);
+            List<String> deadLinks = new List<String>();
+            for (String str : linksToCheck) {
+                for (String link : LINKS) {
+                    if (str.contains(link)) {
+                        String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
+                        try {
+                            HttpRequest req = new HttpRequest();
+                            HttpResponse res = calloutHttpReq(req, endpoint);
+                            Integer statusCode = res.getStatusCode();
 
-                                if (statusCode.format().left(1) == '3') {
-                                    statusCode = detectRedirect(req, res);
-                                    System.debug(statusCode);
-                                }
-                                if (statusCode == 404) {
-                                    deadLinks.add(str);
-                                }
-                            } catch (Exception ex) {
-                                //System.debug('It is possbile this link is broken, check the link.');
+                            if (statusCode.format().left(1) == '3') {
+                                statusCode = detectRedirect(req, res);
+                                System.debug(statusCode);
                             }
+                            if (statusCode == 404) {
+                                deadLinks.add(str);
+                            }
+                        } catch (Exception ex) {
+                            //System.debug('It is possbile this link is broken, check the link.');
                         }
                     }
                 }
-                if (deadLinks.size() > 0) {
-                    resultList.put(field, deadLinks);
-                }
+            }
+            if (deadLinks.size() > 0) {
+                resultList.put(field, deadLinks);
             }
         }
         //System.debug('Dead links: ' + resultList);
@@ -150,17 +148,15 @@ public with sharing class NKS_KnowledgeController {
 
     @TestVisible
     private static Integer detectRedirect(HttpRequest req, HttpResponse res) {
-        if (!Test.isRunningTest()) {
-            String loc = res.getHeader('Location');
-            if (loc != null) {
-                req = new HttpRequest();
-                req.setEndpoint(loc);
-                req.setMethod('GET');
-                Http http = new Http();
-                res = http.send(req);
-                if (res.getStatusCode() != 500) {
-                    return res.getStatusCode();
-                }
+        String loc = res.getHeader('Location');
+        if (loc != null) {
+            req = new HttpRequest();
+            req.setEndpoint(loc);
+            req.setMethod('GET');
+            Http http = new Http();
+            res = http.send(req);
+            if (res.getStatusCode() != 500) {
+                return res.getStatusCode();
             }
         }
         return res.getStatusCode();
