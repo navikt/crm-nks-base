@@ -4,7 +4,7 @@ private class NKS_ThreadOwnerHandler_Test {
     private static void setupTestData() {
         TestDataFactory.getQueue('Oslo', 'queue_391', 'Thread__c');
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
-        TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
+        TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTROLIG_GROUP_NAME);
         TestDataFactory.getPublicGroup('Dialog Skjermet', NKS_GroupVariables.SKJERMET_GROUP_NAME);
     }
 
