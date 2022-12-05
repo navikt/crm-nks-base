@@ -1,5 +1,6 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
-    public Map<String, List<String>> finalList = new Map<String, List<String>>();
+    // map to return: string: title of article, map: list of dead links per field
+    public Map<String, Map<String, List<String>>> finalList = new Map<String, Map<String, List<String>>>();
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\' AND IsLatestVersion = TRUE';
@@ -28,7 +29,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             FROM Knowledge__kav
             WHERE Id IN :scope
         ]) {
-            List<String> res = NKS_KnowledgeController.findBrokenLinks(article);
+            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
             if (res.size() > 0) {
                 finalList.put(article.Title, res);
             }
@@ -38,12 +39,13 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void finish(Database.BatchableContext bc) {
-        List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
-        NKS_KnowledgeController.sendEmail(finalList, toAddresses);
-    }
-
-    @invocableMethod(label='Find Broken Links')
-    public static void findDeadLinks() {
-        Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 1);
+        if (finalList.size() > 0) {
+            List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+            try {
+                NKS_KnowledgeController.sendEmail(finalList, toAddresses);
+            } catch (Exception ex) {
+                System.debug('Problem sending email: ' + ex.getMessage());
+            }
+        }
     }
 }
