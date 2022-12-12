@@ -1,5 +1,6 @@
 public without sharing class NKS_DataSynchController {
     private static KRP_CalloutService krpService = new KRP_CalloutService();
+    private static CRM_ApplicationDomain.Domain domain = CRM_ApplicationDomain.Domain.NKS;
 
     private static Map<String, Id> themeGroupMap {
         get {
@@ -27,6 +28,7 @@ public without sharing class NKS_DataSynchController {
     @AuraEnabled
     public static Boolean doBankAccountNumberSync(String ident) {
         Boolean isSynced = true;
+        LoggerUtility logger = new LoggerUtility('KRP Bank Sync');
 
         try {
             HttpResponse resp = krpService.getBankAccount(ident);
@@ -36,9 +38,13 @@ public without sharing class NKS_DataSynchController {
                 updatePersonBankAccount(ident, accountInfo);
             } else {
                 isSynced = false;
+                logger.httpError('Error from KRP', resp, null, domain);
             }
         } catch (Exception e) {
             isSynced = false;
+            logger.exception(e, domain);
+        } finally {
+            logger.publish();
         }
 
         return isSynced;
