@@ -6,7 +6,7 @@ public class NKS_DataSynchController_Test {
             new Person__c(INT_ActorId__c = '123456789', Name = '01234567890')
         );
 
-        ApiMock.setTestMock('GET_TPS_BANKKONTO', 200, 'OK');
+        ApiMock.setTestMock('POST_HENT_AKTIV_KONTO', 200, 'OK');
 
         Test.startTest();
         NKS_DataSynchController.doBankAccountNumberSync('01234567890');
