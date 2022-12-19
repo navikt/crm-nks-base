@@ -379,19 +379,6 @@
                 </componentInstanceProperties>
                 <componentName>safDocumentByUser</componentName>
                 <identifier>c_safDocumentByUser</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!$User.Email}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>andreas.kristiansen@nav.no</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.Email}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>camilla.knem.christie@nav.no</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>Facet-3317f026-e02e-49dd-a720-18da91adde7f</name>
@@ -817,7 +804,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Varsler</value>
+                    <value>Dokumenter</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab2</identifier>
