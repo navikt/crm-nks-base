@@ -173,8 +173,8 @@ public with sharing class NKS_NewsArchiveHandler {
     
       private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
-        // delete '-', ':', ',' and '?' characters
-        return fileName.replaceAll(' |\\\\|\\/|\\(|\\)', '_').replaceAll('-|:|,|\\?', '');
+        // delete '-', ':', ',', '?', ''' and '"' characters
+        return fileName.replaceAll(' |\\\\|\\/|\\(|\\)', '_').replaceAll('-|:|,|\\?|\'|"', '');
       }
     
       private String formatDateString(Date input) {
