@@ -28,5 +28,8 @@
         "**/.sfdx": true,
         "**/.vscode": true,
         "**/.idea": true
-    }
+    },
+    "scratch.default.permissionsets": [
+        "NKS_Base_Scratch_Group"
+    ]
 }
