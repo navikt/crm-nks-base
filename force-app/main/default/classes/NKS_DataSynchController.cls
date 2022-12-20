@@ -28,12 +28,13 @@ public without sharing class NKS_DataSynchController {
     @AuraEnabled
     public static Boolean doBankAccountNumberSync(String ident) {
         Boolean isSynced = true;
+        Set<Integer> successCodes = new Set<Integer>{ 200, 201, 202, 203, 204 };
         LoggerUtility logger = new LoggerUtility('KRP Bank Sync');
 
         try {
             HttpResponse resp = krpService.getBankAccount(ident);
             Integer statusCode = resp.getStatusCode();
-            if (statusCode == 200) {
+            if (successCodes.contains(statusCode)) {
                 KRP_Konto accountInfo = (KRP_Konto) JSON.deserialize(resp.getBody(), KRP_Konto.class);
                 updatePersonBankAccount(ident, accountInfo);
             } else {
