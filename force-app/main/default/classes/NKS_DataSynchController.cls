@@ -2,24 +2,6 @@ public without sharing class NKS_DataSynchController {
     private static KRP_CalloutService krpService = new KRP_CalloutService();
     private static CRM_ApplicationDomain.Domain domain = CRM_ApplicationDomain.Domain.NKS;
 
-    private static Map<String, Id> themeGroupMap {
-        get {
-            if (themeGroupMap == null) {
-                themeGroupMap = new Map<String, Id>();
-                for (Common_Code__c themeGroup : [
-                    SELECT Id, CRM_Code__c
-                    FROM Common_Code__c
-                    WHERE CRM_Code_Set__c = 'Temagrupper'
-                ]) {
-                    themeGroupMap.put(themeGroup.CRM_Code__c, themeGroup.Id);
-                }
-            }
-            return themeGroupMap;
-        }
-        set {
-        }
-    }
-
     /**
      * @description Synchronize a persons bank information from KRP
      * @param ident
