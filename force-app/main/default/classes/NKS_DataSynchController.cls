@@ -2,24 +2,6 @@ public without sharing class NKS_DataSynchController {
     private static KRP_CalloutService krpService = new KRP_CalloutService();
     private static CRM_ApplicationDomain.Domain domain = CRM_ApplicationDomain.Domain.NKS;
 
-    private static Map<String, Id> themeGroupMap {
-        get {
-            if (themeGroupMap == null) {
-                themeGroupMap = new Map<String, Id>();
-                for (Common_Code__c themeGroup : [
-                    SELECT Id, CRM_Code__c
-                    FROM Common_Code__c
-                    WHERE CRM_Code_Set__c = 'Temagrupper'
-                ]) {
-                    themeGroupMap.put(themeGroup.CRM_Code__c, themeGroup.Id);
-                }
-            }
-            return themeGroupMap;
-        }
-        set {
-        }
-    }
-
     /**
      * @description Synchronize a persons bank information from KRP
      * @param ident
@@ -28,12 +10,13 @@ public without sharing class NKS_DataSynchController {
     @AuraEnabled
     public static Boolean doBankAccountNumberSync(String ident) {
         Boolean isSynced = true;
+        Set<Integer> successCodes = new Set<Integer>{ 200, 201, 202, 203, 204 };
         LoggerUtility logger = new LoggerUtility('KRP Bank Sync');
 
         try {
             HttpResponse resp = krpService.getBankAccount(ident);
             Integer statusCode = resp.getStatusCode();
-            if (statusCode == 200) {
+            if (successCodes.contains(statusCode)) {
                 KRP_Konto accountInfo = (KRP_Konto) JSON.deserialize(resp.getBody(), KRP_Konto.class);
                 updatePersonBankAccount(ident, accountInfo);
             } else {
