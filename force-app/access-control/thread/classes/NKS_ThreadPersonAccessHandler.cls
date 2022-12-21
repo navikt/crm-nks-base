@@ -1,4 +1,7 @@
 global class NKS_ThreadPersonAccessHandler extends MyTriggers {
+    
+    private static final List<String> threadTypesOfInterest = new List<String>{'STO', 'STB'};
+
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
         List<String> fieldNamesToCheck = new List<String>{ 'INT_Confidential__c', 'INT_IsNavEmployee__c', 'CRM_ManuallyRecalculatedSharing__c' };
         Set<Id> personIdsWithNewSharing = new Set<Id>();
@@ -29,10 +32,20 @@ global class NKS_ThreadPersonAccessHandler extends MyTriggers {
     }
 
     private List<Thread__c> getThreadsFromPersonIds(Set<Id> personIds) {
-        return [
-            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
-            FROM Thread__c
-            WHERE CRM_Account__r.CRM_Person__c IN :personIds
+
+         return [
+            SELECT 
+                Id,
+                CRM_Account__c,
+                CRM_Henvendelse_BehandlingsId__c,
+                CRM_Office_Restriction__c,
+                CRM_Theme_Code__c
+            FROM
+                Thread__c
+            WHERE
+                CRM_Account__r.CRM_Person__c IN :personIds
+                AND
+                CRM_Thread_Type__c IN :threadTypesOfInterest
         ];
     }
 }
