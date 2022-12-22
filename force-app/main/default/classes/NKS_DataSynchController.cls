@@ -17,8 +17,10 @@ public without sharing class NKS_DataSynchController {
             HttpResponse resp = krpService.getBankAccount(ident);
             Integer statusCode = resp.getStatusCode();
             if (successCodes.contains(statusCode)) {
-                KRP_Konto accountInfo = (KRP_Konto) JSON.deserialize(resp.getBody(), KRP_Konto.class);
-                updatePersonBankAccount(ident, accountInfo);
+                if (String.isNotBlank(resp.getBody())) {
+                    KRP_Konto accountInfo = (KRP_Konto) JSON.deserialize(resp.getBody(), KRP_Konto.class);
+                    updatePersonBankAccount(ident, accountInfo);
+                }
             } else {
                 isSynced = false;
                 logger.httpError('Error from KRP', resp, null, domain);
