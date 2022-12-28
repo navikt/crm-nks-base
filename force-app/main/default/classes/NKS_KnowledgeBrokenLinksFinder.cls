@@ -1,7 +1,6 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
     // map to return: string: title of article, map: list of dead links per field
     public Map<String, Map<String, List<String>>> finalList = new Map<String, Map<String, List<String>>>();
-    public Integer counter = 0; // this variable is for test
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\' AND IsLatestVersion = TRUE';
@@ -44,7 +43,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
             try {
                 NKS_KnowledgeController.sendEmail(finalList, toAddresses);
-                counter += 1;
             } catch (Exception ex) {
                 System.debug('Problem sending email: ' + ex.getMessage());
             }
@@ -62,9 +60,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         mail.setToAddresses(toAddresses);
         mail.setSubject('Apex Sharing Recalculation ' + a.Status);
         mail.setPlainTextBody(
-            'Number of calling sendEmail-function: ' +
-            counter +
-            '\n' +
             'The batch Apex job processed ' +
             a.TotalJobItems +
             ' batches with ' +
