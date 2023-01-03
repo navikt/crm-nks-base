@@ -90,7 +90,9 @@ public with sharing class NKS_KnowledgeController {
                     );
                     while (matcher.find()) {
                         String groupValue = matcher.group();
-                        matchesPerField.add(groupValue);
+                        if (!matchesPerField.contains(groupValue)) {
+                            matchesPerField.add(groupValue);
+                        }
                     }
                 } catch (Exception ex) {
                     //System.debug(ex.getMessage());
@@ -105,9 +107,8 @@ public with sharing class NKS_KnowledgeController {
         // System.debug('Matches: ' + matches);
         if (matches.size() > 0) {
             returnedMap = findBrokenLinks(matches);
-            return returnedMap;
         }
-        return null;
+        return returnedMap;
     }
 
     @TestVisible
@@ -127,7 +128,6 @@ public with sharing class NKS_KnowledgeController {
 
                             if (statusCode.format().left(1) == '3') {
                                 statusCode = detectRedirect(req, res);
-                                System.debug(statusCode);
                             }
                             if (statusCode == 404) {
                                 deadLinks.add(str);
