@@ -173,9 +173,18 @@ public with sharing class NKS_NewsArchiveHandler {
     
       private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
+        // replace 'ÅåØøÆæ' with AaOoAeae'
         // delete all non-word characters [^a-zA-Z_0-9]
 
-        return fileName.replaceAll(' |\\\\|\\/|\\(|\\)', '_').replaceAll('\\W', ''); 
+        String s = fileName.replaceAll('Å','A');
+        s = s.replaceAll('å','a');
+        s = s.replaceAll('Ø', 'O');
+        s = s.replaceAll('ø', 'o');
+        s = s.replaceAll('Æ','Ae');
+        s = s.replaceAll('æ','ae');
+        s = s.replaceAll(' |\\\\|\\/|\\(|\\)', '_');
+        s = s.replaceAll('\\W', ''); 
+        return s;
       }
     
       private String formatDateString(Date input) {
