@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>CRM_NavTaskRerunCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CRM_PersonSharingCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_NavTaskRerunCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
@@ -85,6 +85,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Common_Code__c.CRM_UniqueKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Journal_Entry__c.CRM_Conversation_Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Journal_Entry__c.CRM_Thread__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Journal_Entry__c.Journal_Entry_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Journal_Entry__c.NKS_Chat_Transcript__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
