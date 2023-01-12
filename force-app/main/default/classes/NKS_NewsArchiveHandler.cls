@@ -174,7 +174,7 @@ public with sharing class NKS_NewsArchiveHandler {
       private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
-        // delete all non-word characters [^a-zA-Z_0-9]
+        // skip '.pdf' at the end of string and delete all non-word characters [^a-zA-Z_0-9]
 
         String s = fileName.replaceAll('Å','A');
         s = s.replaceAll('å','a');
@@ -183,7 +183,7 @@ public with sharing class NKS_NewsArchiveHandler {
         s = s.replaceAll('Æ','Ae');
         s = s.replaceAll('æ','ae');
         s = s.replaceAll(' |\\\\|\\/|\\(|\\)', '_');
-        s = s.replaceAll('\\W', ''); 
+        s = s.replaceAll('(?!\\.pdf$)\\W', ''); 
         return s;
       }
     
