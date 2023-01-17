@@ -171,10 +171,15 @@ public with sharing class NKS_KnowledgeController {
         return res;
     }
 
-    public static void sendEmail(Map<String, Map<String, List<String>>> listToSend, List<String> toAddresses) {
+    public static void sendEmail(
+        Map<String, Map<String, List<String>>> listToSend,
+        List<String> toAddresses,
+        List<String> bccAddresses
+    ) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
         mail.setToAddresses(toAddresses);
+        mail.setBccAddresses(bccAddresses);
         mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
         mail.setSubject('Rapport om døde lenker');
         mail.setBccSender(false);

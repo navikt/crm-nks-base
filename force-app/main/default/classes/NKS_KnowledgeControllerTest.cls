@@ -104,11 +104,12 @@ public with sharing class NKS_KnowledgeControllerTest {
         String title = [SELECT Id, Title FROM Knowledge__kav LIMIT 1].Title;
         listToSend.put(title, fieldLinks);
         String[] toAddresses = new List<String>{ 'testUser1@example.com' };
+        String[] bccAddresses = new List<String>{ 'testUser2@example.com' };
 
         Test.startTest();
         try {
             System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should be sent');
-            NKS_KnowledgeController.sendEmail(listToSend, toAddresses);
+            NKS_KnowledgeController.sendEmail(listToSend, toAddresses, bccAddresses);
             System.assertEquals(1, Limits.getEmailInvocations(), 'Emails should be sent');
         } catch (Exception ex) {
             System.assertEquals('System.EmailException', ex.getTypeName());
