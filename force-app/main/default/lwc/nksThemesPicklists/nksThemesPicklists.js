@@ -18,8 +18,13 @@ export default class NksThemesPicklists extends LightningElement {
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
     navTaskInfo;
 
+    get employerRecordTypeId() {
+        const rtis = this.navTaskInfo.data.recordTypeInfos;
+        return Object.keys(rtis).find(rti => rtis[rti].name === 'Employer');
+    }
+
     @wire(getPicklistValues, {
-        recordTypeId: '$navTaskInfo.data.defaultRecordTypeId',
+        recordTypeId: '$employerRecordTypeId',
         fieldApiName: THEME_FIELD
     })
     themeFieldInfo({ data, error }) {
@@ -27,7 +32,7 @@ export default class NksThemesPicklists extends LightningElement {
     }
 
     @wire(getPicklistValues, {
-        recordTypeId: '$navTaskInfo.data.defaultRecordTypeId',
+        recordTypeId: '$employerRecordTypeId',
         fieldApiName: SUB_THEME_FIELD
     })
     subThemeFieldInfo({ data, error }) {
