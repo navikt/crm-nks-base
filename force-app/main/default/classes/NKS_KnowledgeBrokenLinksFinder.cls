@@ -40,32 +40,13 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
     public void finish(Database.BatchableContext bc) {
         if (finalList.size() > 0) {
-            List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+            List<String> toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
+            List<String> bccAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
             try {
-                NKS_KnowledgeController.sendEmail(finalList, toAddresses);
+                NKS_KnowledgeController.sendEmail(finalList, toAddresses, bccAddresses);
             } catch (Exception ex) {
                 System.debug('Problem sending email: ' + ex.getMessage());
             }
         }
-
-        // This part is for test
-        AsyncApexJob a = [
-            SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email
-            FROM AsyncApexJob
-            WHERE Id = :bc.getJobId()
-        ];
-        // Send an email to the Apex job's submitter notifying of job completion.
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        String[] toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
-        mail.setToAddresses(toAddresses);
-        mail.setSubject('Apex Sharing Recalculation ' + a.Status);
-        mail.setPlainTextBody(
-            'The batch Apex job processed ' +
-            a.TotalJobItems +
-            ' batches with ' +
-            a.NumberOfErrors +
-            ' failures.'
-        );
-        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
     }
 }
