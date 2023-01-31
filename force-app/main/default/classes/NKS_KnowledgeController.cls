@@ -106,7 +106,11 @@ public with sharing class NKS_KnowledgeController {
 
         // System.debug('Matches: ' + matches);
         if (matches.size() > 0) {
-            returnedMap = findBrokenLinks(matches);
+            try {
+                returnedMap = findBrokenLinks(matches);
+            } catch (Exception ex) {
+                System.debug('Problem getting broken links: ' + ex);
+            }
         }
         return returnedMap;
     }
@@ -154,9 +158,13 @@ public with sharing class NKS_KnowledgeController {
             req.setEndpoint(loc);
             req.setMethod('GET');
             Http http = new Http();
-            res = http.send(req);
-            if (res.getStatusCode() != 500) {
-                return res.getStatusCode();
+            try {
+                res = http.send(req);
+                if (res.getStatusCode() != 500) {
+                    return res.getStatusCode();
+                }
+            } catch (System.CalloutException ex) {
+                System.debug('Callout error: ' + ex);
             }
         }
         return res.getStatusCode();
@@ -167,7 +175,12 @@ public with sharing class NKS_KnowledgeController {
         req.setEndpoint(endpoint);
         req.setMethod('GET');
         Http http = new Http();
-        HTTPResponse res = http.send(req);
+        HTTPResponse res = new HttpResponse();
+        try {
+            res = http.send(req);
+        } catch (System.CalloutException ex) {
+            System.debug('Callout error: ' + ex);
+        }
         return res;
     }
 
@@ -205,15 +218,6 @@ public with sharing class NKS_KnowledgeController {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
         } catch (Exception ex) {
             System.debug('Problem sending email: ' + ex.getMessage());
-        }
-    }
-
-    @invocableMethod(label='Find Broken Links')
-    public static void findDeadLinks() {
-        try {
-            Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 1);
-        } catch (Exception ex) {
-            System.debug('Problem executing batch: ' + ex.getMessage());
         }
     }
 }

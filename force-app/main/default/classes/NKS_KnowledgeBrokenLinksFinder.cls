@@ -1,4 +1,5 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     // map to return: string: title of article, map: list of dead links per field
     public Map<String, Map<String, List<String>>> finalList = new Map<String, Map<String, List<String>>>();
 
@@ -29,9 +30,25 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             FROM Knowledge__kav
             WHERE Id IN :scope
         ]) {
-            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
-            if (res.size() > 0) {
-                finalList.put(article.Title, res);
+            try {
+                Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
+                if (res.size() > 0) {
+                    finalList.put(article.Title, res);
+                }
+            } catch (Exception ex) {
+                logger.error(
+                    'Problem finding broken links: ' +
+                    article.Id +
+                    '\n' +
+                    ex.getMessage() +
+                    '\n' +
+                    ex.getStackTraceString(),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS,
+                    null
+                );
+            } finally {
+                logger.publish();
             }
         }
         //System.debug('Number of articles with dead links: ' + finalList.size());
