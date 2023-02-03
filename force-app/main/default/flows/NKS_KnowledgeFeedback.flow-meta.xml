@@ -1,33 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <actionCalls>
-        <name>Success</name>
-        <label>Success</label>
-        <locationX>176</locationX>
-        <locationY>1094</locationY>
-        <actionName>c:ShowToast_Flow</actionName>
-        <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>message</name>
-            <value>
-                <stringValue>Tilbakemeldingen ble opprettet</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Jippi!</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>type</name>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assign_feedback</name>
@@ -97,6 +69,7 @@
         <picklistField>Knowledge_Area__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>SOQLFilter</name>
         <dataType>String</dataType>
@@ -143,7 +116,7 @@
         <locationX>176</locationX>
         <locationY>974</locationY>
         <connector>
-            <targetReference>Success</targetReference>
+            <targetReference>finish_modal</targetReference>
         </connector>
         <inputReference>CaseFeedback</inputReference>
     </recordCreates>
@@ -312,6 +285,55 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>finish_modal</name>
+        <label>finish_modal</label>
+        <locationX>176</locationX>
+        <locationY>1094</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Success_toast</name>
+            <extensionName>c:fcFlowCloseWithToast</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>closeModal</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>dismissible</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Jippi!</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Tilbakemeldingen ble opprettet</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -319,7 +341,7 @@
             <targetReference>Get_Feedback_RecordTypeId</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>CaseFeedback</name>
         <dataType>SObject</dataType>

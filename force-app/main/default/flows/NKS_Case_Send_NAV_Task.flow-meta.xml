@@ -1,45 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <actionCalls>
-        <name>Task_Created_Toast</name>
-        <label>Task Created Toast</label>
-        <locationX>173</locationX>
-        <locationY>1075</locationY>
-        <actionName>c:ShowToast_Flow</actionName>
-        <actionType>component</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>mode</name>
-            <value>
-                <stringValue>dismissible</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>duration</name>
-            <value>
-                <stringValue>5</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>message</name>
-            <value>
-                <stringValue>Oppgave opprettet.</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Vellykket</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>type</name>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
@@ -179,8 +139,8 @@
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
-        <locationX>287</locationX>
-        <locationY>907</locationY>
+        <locationX>294</locationX>
+        <locationY>903</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -196,7 +156,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Task_Created_Toast</targetReference>
+                <targetReference>Finish_modal</targetReference>
             </connector>
             <label>Successful Post</label>
         </rules>
@@ -219,6 +179,7 @@
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
@@ -338,6 +299,55 @@ TODAY())</expression>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Finish_modal</name>
+        <label>Finish_modal</label>
+        <locationX>171</locationX>
+        <locationY>1077</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Success_toast</name>
+            <extensionName>c:fcFlowCloseWithToast</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>closeModal</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>dismissible</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Oppgave opprettet.</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Vellykket</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>NAV_Task_Input_Screen</name>
