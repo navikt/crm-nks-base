@@ -13,7 +13,6 @@ export default class NksHomePageNews extends LightningElement {
     showSpinner = false;
     wiredNews;
     wiredCounter;
-    title;
     publishDate;
     lastModifiedDate;
     lastUpdatedDate;
@@ -57,7 +56,6 @@ export default class NksHomePageNews extends LightningElement {
         if (data) {
             this.news = data;
             if (this.news) {
-                this.title = this.news.Name;
                 this.publishDate = this.news.NKS_News_Publish_Date__c;
                 this.lastUpdatedDate = this.news.NKS_News_Update_Date__c;
                 this.lastModifiedDate = this.news.LastModifiedDate;

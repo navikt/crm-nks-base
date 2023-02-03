@@ -50,9 +50,6 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
-            <div class="sr-only">
-                <h1>{title}</h1>
-            </div>
             <lightning-layout-item size="12">
                 <lightning-layout class="slds-grid slds-gutters slds-var-p-top_large slds-var-p-left_large">
                     <lightning-layout-item class="slds-col slds-size_8-of-12 slds-p-right_none">
@@ -65,6 +62,35 @@
                     </lightning-layout-item>
                 </lightning-layout>
             </lightning-layout-item>
+            <div class="sr-only">
+                <h1>Mer informasjon om artikkelen</h1>
+                <p>
+                    Publisert:&nbsp;
+                    <lightning-formatted-date-time
+                        value={publishDate}
+                        year="numeric"
+                        month="long"
+                        day="numeric"
+                        hour="2-digit"
+                        minute="2-digit"
+                    ></lightning-formatted-date-time>
+                </p>
+                <template if:true={lastUpdatedDate}>
+                    <p>
+                        &nbsp;Oppdatert:&nbsp;<lightning-formatted-date-time
+                            value={lastUpdatedDate}
+                            year="numeric"
+                            month="long"
+                            day="numeric"
+                            hour="2-digit"
+                            minute="2-digit"
+                        ></lightning-formatted-date-time>
+                    </p>
+                </template>
+                <template if:true={otherAuthors}>
+                    <p>Andre forfattere:&nbsp;{otherAuthors}</p>
+                </template>
+            </div>
             <template if:true={hasPermission}>
                 <lightning-layout-item size="12" class="slds-var-p-top_small slds-text-align_right">
                     <lightning-icon class="" icon-name="utility:preview" size="x-small"></lightning-icon>&nbsp;&nbsp;
