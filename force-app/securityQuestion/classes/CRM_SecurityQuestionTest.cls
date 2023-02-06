@@ -11,8 +11,8 @@ private with sharing class CRM_SecurityQuestionTest {
     private final static String PDL_CHILD_2_NOT_SAME_ADDRESS = '{"data": {"hentPerson": {"bostedsadresse": [{"angittFlyttedato": null,"coAdressenavn": null,"gyldigFraOgMed": "2020-05-07T12:09:19","gyldigTilOgMed": null,"vegadresse": {"matrikkelId": null,"husbokstav": null,"husnummer": "222","adressenavn": "Almåsvegen","bruksenhetsnummer": null,"tilleggsnavn": null,"postnummer": "5109","kommunenummer": "4601","bydelsnummer": null,"koordinater": null},"matrikkeladresse": null,"ukjentBosted": null,"utenlandskAdresse": null}],"deltBosted": [],"adressebeskyttelse": [],"foedsel": [{"foedselsdato": "2020-10-10"}],"doedsfall": [],"navn": [{"fornavn": "TEST2","mellomnavn": "2","etternavn": "BARN2"}]}}}';
     private final static String PDL_CHILD_3_ABOVE_21 = '{"data": {"hentPerson": {"bostedsadresse": [{"angittFlyttedato": null,"coAdressenavn": null,"gyldigFraOgMed": "2020-05-07T12:09:19","gyldigTilOgMed": null,"vegadresse": {"matrikkelId": null,"husbokstav": null,"husnummer": "100","adressenavn": "Almåsvegen","bruksenhetsnummer": null,"tilleggsnavn": null,"postnummer": "5109","kommunenummer": "4601","bydelsnummer": null,"koordinater": null},"matrikkeladresse": null,"ukjentBosted": null,"utenlandskAdresse": null}],"deltBosted": [],"adressebeskyttelse": [],"foedsel": [{"foedselsdato": "2000-10-10"}],"doedsfall": [],"navn": [{"fornavn": "TEST3","mellomnavn": "3","etternavn": "BARN3"}]}}}';
     private final static String PDL_PARENT_OF_MARRIED_PERSON_WITH_KIDS = '{"data": {"hentPerson": {"bostedsadresse": [{"angittFlyttedato": null,"coAdressenavn": null,"gyldigFraOgMed": "2020-05-07T12:09:19","gyldigTilOgMed": null,"vegadresse": {"matrikkelId": null,"husbokstav": null,"husnummer": "100","adressenavn": "Almåsvegen","bruksenhetsnummer": null,"tilleggsnavn": null,"postnummer": "5109","kommunenummer": "4601","bydelsnummer": null,"koordinater": null},"matrikkeladresse": null,"ukjentBosted": null,"utenlandskAdresse": null}],"deltBosted": [],"adressebeskyttelse": [],"foedsel": [{"foedselsdato": "1950-10-10"}],"doedsfall": [],"navn": [{"fornavn": "TEST","mellomnavn": "","etternavn": "FORELDER"}]}}}';
-    private final static String TPS_WITH_BANK_ACCOUNT_NUMBER = '{"endringstidspunkt":"2020-10-01","endretAv":null,"endringstype":null,"bankkontoUtland":null,"bankkontoNorge":{"bankkontonummer":"06279137416","banknavn":null}}}';
-    private final static String TPS_WITHOUT_BANK_ACCOUNT_NUMBER = '{"endringstidspunkt":"2020-10-01","endretAv":null,"endringstype":null,"bankkontoUtland":null,"bankkontoNorge":null}}';
+    private final static String KRP_WITH_BANK_ACCOUNT_NUMBER = '{"kontonummer":"06279137416"}';
+    private final static String KRP_WITHOUT_BANK_ACCOUNT_NUMBER = '{"kontonummer":null}';
     private final static String KRR_EMPTY = '{"personer":{"additionalProp1":{"personident":"1234567890","aktiv":true,"kanVarsles":true,"reservert":false,"spraak":"string","spraakOppdatert":"2022-10-17T10:12:25.864Z","epostadresse": null,"epostadresseOppdatert":"2022-10-17T10:12:25.864Z","epostadresseVerifisert":"2022-10-17T10:12:25.864Z","mobiltelefonnummer":"+4799999999","mobiltelefonnummerOppdatert":"2022-10-17T10:12:25.864Z","mobiltelefonnummerVerifisert":"2022-10-17T10:12:25.864Z","sikkerDigitalPostkasse":{"adresse":"string","leverandoerAdresse":"string","leverandoerSertifikat":"string"}}}}';
     private final static String KRR_EMAIL = '{"personer":{"additionalProp1":{"personident":"1234567890","aktiv":true,"kanVarsles":true,"reservert":false,"spraak":"string","spraakOppdatert":"2022-10-17T10:12:25.864Z","epostadresse":"test@nav.no","epostadresseOppdatert":"2022-10-17T10:12:25.864Z","epostadresseVerifisert":"2022-10-17T10:12:25.864Z","mobiltelefonnummer":"+4799999999","mobiltelefonnummerOppdatert":"2022-10-17T10:12:25.864Z","mobiltelefonnummerVerifisert":"2022-10-17T10:12:25.864Z","sikkerDigitalPostkasse":{"adresse":"string","leverandoerAdresse":"string","leverandoerSertifikat":"string"}}}}';
     public final static String MASKINPORTEN_TOKEN_RESPONSE = '{"access_token": "super-secret-access-token", "token_type": "Bearer", "expires_in": 119, "scope": "global/kontaktinformasjon.read global/spraak.read global/sikkerdigitalpost.read global/varslingsstatus.read"}';
@@ -66,23 +66,23 @@ private with sharing class CRM_SecurityQuestionTest {
     }
 
     @IsTest
-    static void getQuestionsTpsWithBankaccount() {
+    static void getQuestionsKrpWithBankaccount() {
         List<CRM_SecurityQuestionPicker.SecurityQuestionWrapper> result;
-        new Mock().addSuccessfullBody(TPS_WITH_BANK_ACCOUNT_NUMBER).activateMock();
+        new Mock().addSuccessfullBody(KRP_WITH_BANK_ACCOUNT_NUMBER).activateMock();
         Test.startTest();
-        result = CRM_SecurityQuestionPicker.getQuestionsTPS('1234567890');
+        result = CRM_SecurityQuestionPicker.getQuestionsKRP('1234567890');
         Test.stopTest();
 
-        System.assertEquals(1, result.size(), 'Expected no results, got' + result);
+        System.assertEquals(1, result.size(), 'Expected one result, got' + result);
         System.assertEquals('06279137416', result[0].answer, 'Did not get the expected bank account number');
     }
 
     @IsTest
-    static void getQuestionsTpsWithoutBankaccount() {
+    static void getQuestionsKrpWithoutBankaccount() {
         List<CRM_SecurityQuestionPicker.SecurityQuestionWrapper> result;
-        new Mock().addSuccessfullBody(TPS_WITHOUT_BANK_ACCOUNT_NUMBER).activateMock();
+        new Mock().addSuccessfullBody(KRP_WITHOUT_BANK_ACCOUNT_NUMBER).activateMock();
         Test.startTest();
-        result = CRM_SecurityQuestionPicker.getQuestionsTPS('1234567890');
+        result = CRM_SecurityQuestionPicker.getQuestionsKRP('1234567890');
         Test.stopTest();
 
         System.assertEquals(true, result.isEmpty(), 'Expected no results, got' + result);

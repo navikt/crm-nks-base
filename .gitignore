@@ -193,3 +193,8 @@ fabric.properties
 
 # Swapfiles
 .*.sw?
+
+# misc
+.*.sw?
+TAGS
+tags
