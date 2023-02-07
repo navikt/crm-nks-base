@@ -1,4 +1,5 @@
 <template>
+    <h1 class="sr-only">{title}</h1>
     <section class="slds-box slds-theme_default slds-is-relative">
         <lightning-layout multiple-rows="true">
             <lightning-layout-item size="12" aria-hidden="true">
@@ -63,8 +64,9 @@
                 </lightning-layout>
             </lightning-layout-item>
             <div class="sr-only">
-                <h1>Mer informasjon om artikkelen</h1>
-                <p>
+                <h2>Detaljert informasjon</h2>
+                <span> Forfatter:&nbsp;{author}</span>
+                <span>
                     Publisert:&nbsp;
                     <lightning-formatted-date-time
                         value={publishDate}
@@ -74,9 +76,9 @@
                         hour="2-digit"
                         minute="2-digit"
                     ></lightning-formatted-date-time>
-                </p>
+                </span>
                 <template if:true={lastUpdatedDate}>
-                    <p>
+                    <span>
                         &nbsp;Oppdatert:&nbsp;<lightning-formatted-date-time
                             value={lastUpdatedDate}
                             year="numeric"
@@ -85,10 +87,10 @@
                             hour="2-digit"
                             minute="2-digit"
                         ></lightning-formatted-date-time>
-                    </p>
+                    </span>
                 </template>
                 <template if:true={otherAuthors}>
-                    <p>Andre forfattere:&nbsp;{otherAuthors}</p>
+                    <span>Andre forfattere:&nbsp;{otherAuthors}</span>
                 </template>
             </div>
             <template if:true={hasPermission}>

@@ -1,8 +1,10 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getNews from '@salesforce/apex/NKS_HomePageController.getNews';
 import countViews from '@salesforce/apex/NKS_HomePageController.countNewsViews';
 import hasPermission from '@salesforce/customPermission/NKS_Manage_News';
 import { refreshApex } from '@salesforce/apex';
+import AUTHOR_NAME_FIELD from '@salesforce/schema/User.NKS_FullName__c';
 
 export default class NksHomePageNews extends LightningElement {
     @api recordId;
@@ -10,9 +12,12 @@ export default class NksHomePageNews extends LightningElement {
 
     @track news;
 
+    authorId;
     showSpinner = false;
     wiredNews;
     wiredCounter;
+    title;
+    author;
     publishDate;
     lastModifiedDate;
     lastUpdatedDate;
@@ -42,6 +47,18 @@ export default class NksHomePageNews extends LightningElement {
         this.loadCounter();
     }
 
+    @wire(getRecord, {
+        recordId: '$authorId',
+        fields: [AUTHOR_NAME_FIELD]
+    })
+    wiredRecord({ error, data }) {
+        if (error) {
+            console.log(error);
+        } else if (data) {
+            this.author = getFieldValue(data, AUTHOR_NAME_FIELD);
+        }
+    }
+
     loadCounter() {
         const { error, data } = this.wiredCounter;
         if (data) {
@@ -56,6 +73,8 @@ export default class NksHomePageNews extends LightningElement {
         if (data) {
             this.news = data;
             if (this.news) {
+                this.title = this.news.Name;
+                this.authorId = this.news.NKS_News_Author__c;
                 this.publishDate = this.news.NKS_News_Publish_Date__c;
                 this.lastUpdatedDate = this.news.NKS_News_Update_Date__c;
                 this.lastModifiedDate = this.news.LastModifiedDate;
