@@ -696,7 +696,7 @@ public with sharing class NKS_FamilyViewController {
     // part of Address could be missing
     @TestVisible
     private static Boolean compareAddressParts(String parent, String child) {
-        if (parent == child)
+        if (parent == child  || (String.isBlank(parent) && String.isBlank(child)) )
             return true;
         return false;
     }
@@ -704,7 +704,7 @@ public with sharing class NKS_FamilyViewController {
     // part of Address is required
     @TestVisible
     private static Boolean compareAddressPartsRequired(String parent, String child) {
-        if (parent != null && parent == child) {
+        if (parent != null && String.isNotBlank(parent) && parent == child) {
             return true;
         }
         return false;
