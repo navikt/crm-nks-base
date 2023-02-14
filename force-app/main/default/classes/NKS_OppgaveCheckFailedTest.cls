@@ -80,9 +80,11 @@ public with sharing class NKS_OppgaveCheckFailedTest {
     static void testgetFailedOppgaverPersonList() {
         Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', '[]', null));
         Test.startTest();
-        List<String> failedIdents = NKS_OppgaveCheckFailed.getFailedOppgaverPersonList(Date.today());
+        NKS_OppgaveCheckFailed.OppgaveCheckReturnWrapper failedIdents = NKS_OppgaveCheckFailed.getFailedOppgaverPersonList(
+            Date.today()
+        );
         Test.stopTest();
 
-        System.assertEquals(3, failedIdents.size());
+        System.assertEquals(3, failedIdents.aktoersNeedCheckedList.size());
     }
 }

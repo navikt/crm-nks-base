@@ -6,8 +6,9 @@
  * @last modified by  : mamikals
  **/
 public with sharing class NKS_OppgaveCheckFailed {
-    public static List<String> getFailedOppgaverPersonList(Date day) {
-        List<String> returnList = new List<String>();
+    public static OppgaveCheckReturnWrapper getFailedOppgaverPersonList(Date day) {
+        List<String> aktoersNeedCheckedList = new List<String>();
+        List<String> tasksThatWereRecreated = new List<String>();
 
         try {
             CRM_OppgaveQueryList query = new CRM_OppgaveQueryList();
@@ -54,17 +55,22 @@ public with sharing class NKS_OppgaveCheckFailed {
             Boolean shouldAdd;
             for (NavTask__c checkTask : failedTasks) {
                 shouldAdd = true;
+                if (!mappedTasks.containsKey(checkTask.CRM_Account__c)) {
+                    aktoersNeedCheckedList.add(checkTask.CRM_Account__r.CRM_Person__r.Name);
+                    continue;
+                }
                 for (NavTask__c loopedTask : mappedTasks.get(checkTask.CRM_Account__c)) {
                     if (
                         loopedTask.NKS_Theme__r.CRM_Code__c == checkTask.NKS_Theme__r.CRM_Code__c &&
                         loopedTask.NKS_TaskType__r.CRM_Code__c == checkTask.NKS_TaskType__r.CRM_Code__c
                     ) {
+                        tasksThatWereRecreated.add(checkTask.Id);
                         shouldAdd = false;
                         break;
                     }
                 }
                 if (shouldAdd) {
-                    returnList.add(checkTask.CRM_Account__r.CRM_Person__r.Name);
+                    aktoersNeedCheckedList.add(checkTask.CRM_Account__r.CRM_Person__r.Name);
                 }
             }
         } catch (Exception e) {
@@ -73,6 +79,16 @@ public with sharing class NKS_OppgaveCheckFailed {
             logger.publish();
         }
 
-        return returnList;
+        return new OppgaveCheckReturnWrapper(aktoersNeedCheckedList, tasksThatWereRecreated);
+    }
+
+    public class OppgaveCheckReturnWrapper {
+        public List<String> aktoersNeedCheckedList;
+        public List<String> tasksThatWereRecreated;
+
+        public OppgaveCheckReturnWrapper(List<String> aktoersNeedCheckedList, List<String> tasksThatWereRecreated) {
+            this.aktoersNeedCheckedList = aktoersNeedCheckedList;
+            this.tasksThatWereRecreated = tasksThatWereRecreated;
+        }
     }
 }
