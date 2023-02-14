@@ -78,6 +78,7 @@ public with sharing class NKS_OppgaveCheckFailedTest {
 
     @IsTest
     static void testgetFailedOppgaverPersonList() {
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', '[]', null));
         Test.startTest();
         List<String> failedIdents = NKS_OppgaveCheckFailed.getFailedOppgaverPersonList(Date.today());
         Test.stopTest();

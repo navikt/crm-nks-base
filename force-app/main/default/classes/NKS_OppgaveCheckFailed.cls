@@ -7,22 +7,6 @@
  **/
 public with sharing class NKS_OppgaveCheckFailed {
     public static List<String> getFailedOppgaverPersonList(Date day) {
-        List<NavTask__c> allEverySingleOneTasks = [SELECT Id FROM NavTask__c];
-        List<NavTask__c> selectToSee = [
-            SELECT
-                RecordType.DeveloperName,
-                CRM_Account__c,
-                CRM_Account__r.CRM_Person__c,
-                Int_external_reference__c,
-                createdDate
-            FROM NavTask__c
-            LIMIT 1
-        ];
-        System.debug(allEverySingleOneTasks);
-        System.debug(selectToSee);
-
-        System.debug('WTf');
-
         List<String> returnList = new List<String>();
 
         try {
@@ -43,17 +27,13 @@ public with sharing class NKS_OppgaveCheckFailed {
                     AND Int_external_reference__c = NULL
                     AND DAY_ONLY(createdDate) = :day
             ];
-            System.debug(failedTasks);
             for (NavTask__c task : failedTasks) {
                 allAktoerIds.add(task.CRM_Account__r.CRM_Person__r.Name);
                 allAccountIds.add(task.CRM_Account__c);
             }
-            System.debug(allAccountIds);
             query.aktoerId = new List<String>(allAktoerIds);
             query.opprettetFom = day;
-            if (!Test.isRunningTest()) {
-                CRM_OppgaveSyncController.doMassOppgaveSync(query);
-            }
+            CRM_OppgaveSyncController.doMassOppgaveSync(query);
             List<NavTask__c> allTasks = [
                 SELECT Id, NKS_Theme__r.CRM_Code__c, NKS_TaskType__r.CRM_Code__c, CRM_account__c
                 FROM NavTask__c
@@ -63,7 +43,6 @@ public with sharing class NKS_OppgaveCheckFailed {
                     AND NKS_Date_Registered__c = :Day
                     AND INT_External_Reference__c != NULL
             ];
-            System.debug(allTasks);
             Map<Id, List<NavTask__c>> mappedTasks = new Map<Id, List<NavTask__c>>();
             for (NavTask__c groupTask : allTasks) {
                 if (mappedTasks.containsKey(groupTask.CRM_account__c)) {
@@ -72,7 +51,6 @@ public with sharing class NKS_OppgaveCheckFailed {
                     mappedTasks.put(groupTask.CRM_ACcount__c, new List<NavTask__c>{ groupTask });
                 }
             }
-            System.debug(mappedTasks);
             Boolean shouldAdd;
             for (NavTask__c checkTask : failedTasks) {
                 shouldAdd = true;
@@ -95,7 +73,6 @@ public with sharing class NKS_OppgaveCheckFailed {
             logger.publish();
         }
 
-        System.debug(returnList);
         return returnList;
     }
 }
