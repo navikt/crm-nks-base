@@ -1,3 +1,10 @@
+/**
+ * @description       :
+ * @author            : mamikals
+ * @group             :
+ * @last modified on  : 14-02-2023
+ * @last modified by  : mamikals
+ **/
 @isTest
 public without sharing class NKS_TestDataFactory {
     public static List<Person__c> createPersons(Integer amount) {
@@ -36,6 +43,8 @@ public without sharing class NKS_TestDataFactory {
             CRM_Person__c = p.Id
         );
         insert acc;
+        p.CRM_Account__c = acc.Id;
+        update p;
     }
 
     public static List<SecurityMeasure__c> createSecurityMeasures(Integer amount, Person__c person) {
