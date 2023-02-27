@@ -95,22 +95,25 @@ public with sharing class NKS_KnowledgeController {
                         }
                     }
                 } catch (Exception ex) {
-                    //System.debug(ex.getMessage());
+                    if (ex.getTypeName() == 'System.LimitException') {
+                        String errorRef = NKS_KnowledgeController.logError(
+                            'Governor limits has reached: ' + ex.getCause()
+                        );
+                        throw new NKS_KnowledgeController.BLRException(
+                            'Poblem on getBrokenLinks()-function for article: ' +
+                            article.Id +
+                            '\n' +
+                            errorRef
+                        );
+                    }
                 }
-
                 if (matchesPerField.size() > 0) {
                     matches.put(fieldLabel, matchesPerField);
                 }
             }
         }
-
-        // System.debug('Matches: ' + matches);
         if (matches.size() > 0) {
-            try {
-                returnedMap = findBrokenLinks(matches);
-            } catch (Exception ex) {
-                System.debug('Problem getting broken links: ' + ex);
-            }
+            returnedMap = findBrokenLinks(matches);
         }
         return returnedMap;
     }
@@ -137,7 +140,14 @@ public with sharing class NKS_KnowledgeController {
                                 deadLinks.add(str);
                             }
                         } catch (Exception ex) {
-                            //System.debug('It is possbile this link is broken, check the link.');
+                            if (ex.getTypeName() == 'System.LimitException') {
+                                String errorRef = NKS_KnowledgeController.logError(
+                                    'Governor limits has reached: ' + ex.getCause()
+                                );
+                                throw new NKS_KnowledgeController.BLRException(
+                                    'Poblem on findBrokenLinks()-function\n' + errorRef
+                                );
+                            }
                         }
                     }
                 }
@@ -146,7 +156,6 @@ public with sharing class NKS_KnowledgeController {
                 resultList.put(field, deadLinks);
             }
         }
-        //System.debug('Dead links: ' + resultList);
         return resultList;
     }
 
@@ -158,13 +167,9 @@ public with sharing class NKS_KnowledgeController {
             req.setEndpoint(loc);
             req.setMethod('GET');
             Http http = new Http();
-            try {
-                res = http.send(req);
-                if (res.getStatusCode() != 500) {
-                    return res.getStatusCode();
-                }
-            } catch (System.CalloutException ex) {
-                System.debug('Callout error: ' + ex);
+            res = http.send(req);
+            if (res.getStatusCode() != 500) {
+                return res.getStatusCode();
             }
         }
         return res.getStatusCode();
@@ -175,12 +180,7 @@ public with sharing class NKS_KnowledgeController {
         req.setEndpoint(endpoint);
         req.setMethod('GET');
         Http http = new Http();
-        HTTPResponse res = new HttpResponse();
-        try {
-            res = http.send(req);
-        } catch (System.CalloutException ex) {
-            System.debug('Callout error: ' + ex);
-        }
+        HTTPResponse res = http.send(req);
         return res;
     }
 
@@ -219,5 +219,18 @@ public with sharing class NKS_KnowledgeController {
         } catch (Exception ex) {
             System.debug('Problem sending email: ' + ex.getMessage());
         }
+    }
+
+    public static String logError(String message) {
+        String errorRef = '';
+        LoggerUtility logger = new LoggerUtility();
+        logger.error(message, null, null);
+        errorRef = logger.peek().UUID__c;
+        logger.publish();
+
+        return errorRef;
+    }
+
+    public class BLRException extends Exception {
     }
 }

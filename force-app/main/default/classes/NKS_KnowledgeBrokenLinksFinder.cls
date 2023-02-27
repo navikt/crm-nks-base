@@ -1,5 +1,4 @@
 public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful {
-    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     // map to return: string: title of article, map: list of dead links per field
     public Map<String, Map<String, List<String>>> finalList = new Map<String, Map<String, List<String>>>();
 
@@ -9,6 +8,8 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
+        Integer numOfCallouts = Limits.getCallouts();
+        Integer limitCallouts = Limits.getLimitCallouts();
         for (Knowledge__kav article : [
             SELECT
                 Title,
@@ -30,29 +31,21 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             FROM Knowledge__kav
             WHERE Id IN :scope
         ]) {
-            try {
-                Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
-                if (res.size() > 0) {
-                    finalList.put(article.Title, res);
-                }
-            } catch (Exception ex) {
-                logger.error(
-                    'Problem finding broken links: ' +
+            // check if callout limit has reached
+            if (numOfCallouts > limitCallouts) {
+                String errorRef = NKS_KnowledgeController.logError('Limit of callouts has reached.');
+                throw new NKS_KnowledgeController.BLRException(
+                    'Poblem executing batch to find broken links for article ' +
                     article.Id +
-                    '\n' +
-                    ex.getMessage() +
-                    '\n' +
-                    ex.getStackTraceString(),
-                    null,
-                    CRM_ApplicationDomain.Domain.NKS,
-                    null
+                    ': ' +
+                    errorRef
                 );
-            } finally {
-                logger.publish();
+            }
+            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
+            if (res.size() > 0) {
+                finalList.put(article.Title, res);
             }
         }
-        //System.debug('Number of articles with dead links: ' + finalList.size());
-        //System.debug(finalList);
     }
 
     public void finish(Database.BatchableContext bc) {
