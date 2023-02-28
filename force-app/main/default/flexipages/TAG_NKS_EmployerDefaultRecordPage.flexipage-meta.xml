@@ -940,6 +940,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Fagsystemer Arbeidsgiver</value>
+                </componentInstanceProperties>
+                <componentName>tagFagsystemerArbeidsgiver</componentName>
+                <identifier>c_tagFagsystemerArbeidsgiver</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>

@@ -1,0 +1,47 @@
+<template>
+    <lightning-card title={title} icon-name="standard:link">
+        <template if:false={inFagsone}>
+            <div class="slds-p-horizontal_small">
+                <template if:true={showContent}>
+                    <p>Du er ikke i en sikker sone</p>
+                </template>
+                <template if:false={showContent}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+            </div>
+        </template>
+        <template if:true={inFagsone}>
+            <template if:true={showRefreshButton}>
+                <lightning-button-icon
+                    alternative-text="Oppdater"
+                    icon-name="utility:refresh"
+                    onclick={refreshRecord}
+                    slot="actions"
+                ></lightning-button-icon>
+            </template>
+            <div class="slds-p-horizontal_small">
+                <template if:true={showContent}>
+                    <lightning-record-view-form record-id={accountId} object-api-name="Account" onload={handleLoaded}>
+                        <lightning-layout class="slds-wrap">
+                            <template for:each={fields} for:item="link">
+                                <lightning-layout-item key={link.id} size={size} if:true={link.show}>
+                                    <template if:false={link.custom}>
+                                        <lightning-output-field
+                                            variant="label-hidden"
+                                            class="fieldStyle"
+                                            field-name={link.field}
+                                        >
+                                        </lightning-output-field>
+                                    </template>
+                                </lightning-layout-item>
+                            </template>
+                        </lightning-layout>
+                    </lightning-record-view-form>
+                </template>
+                <template if:false={showContent}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+</template>
