@@ -99,7 +99,7 @@ public with sharing class NKS_KnowledgeController {
                         String errorRef = NKS_KnowledgeController.logError(
                             'Governor limits has reached: ' + ex.getCause()
                         );
-                        throw new NKS_KnowledgeController.BLRException(
+                        throw new BLRException(
                             'Poblem on getBrokenLinks()-function for article: ' +
                             article.Id +
                             '\n' +
@@ -140,13 +140,12 @@ public with sharing class NKS_KnowledgeController {
                                 deadLinks.add(str);
                             }
                         } catch (Exception ex) {
+                            // check for limit exceptions
                             if (ex.getTypeName() == 'System.LimitException') {
                                 String errorRef = NKS_KnowledgeController.logError(
                                     'Governor limits has reached: ' + ex.getCause()
                                 );
-                                throw new NKS_KnowledgeController.BLRException(
-                                    'Poblem on findBrokenLinks()-function\n' + errorRef
-                                );
+                                throw new BLRException('Problem on findBrokenLinks()-function\n' + errorRef);
                             }
                         }
                     }

@@ -8,8 +8,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
-        Integer numOfCallouts = Limits.getCallouts();
-        Integer limitCallouts = Limits.getLimitCallouts();
         for (Knowledge__kav article : [
             SELECT
                 Title,
@@ -31,16 +29,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             FROM Knowledge__kav
             WHERE Id IN :scope
         ]) {
-            // check if callout limit has reached
-            if (numOfCallouts > limitCallouts) {
-                String errorRef = NKS_KnowledgeController.logError('Limit of callouts has reached.');
-                throw new NKS_KnowledgeController.BLRException(
-                    'Poblem executing batch to find broken links for article ' +
-                    article.Id +
-                    ': ' +
-                    errorRef
-                );
-            }
             Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
             if (res.size() > 0) {
                 finalList.put(article.Title, res);
