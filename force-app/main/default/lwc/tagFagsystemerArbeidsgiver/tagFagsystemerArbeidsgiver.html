@@ -21,7 +21,7 @@
             </template>
             <div class="slds-p-horizontal_small">
                 <template if:true={showContent}>
-                    <lightning-record-view-form record-id={recordId} object-api-name="Account" onload={handleLoaded}>
+                    <lightning-record-view-form record-id={accountId} object-api-name="Account" onload={handleLoaded}>
                         <lightning-layout class="slds-wrap">
                             <template for:each={fields} for:item="link">
                                 <lightning-layout-item key={link.id} size={size} if:true={link.show}>
