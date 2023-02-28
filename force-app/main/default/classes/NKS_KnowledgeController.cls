@@ -96,9 +96,7 @@ public with sharing class NKS_KnowledgeController {
                     }
                 } catch (Exception ex) {
                     if (ex.getTypeName() == 'System.LimitException') {
-                        String errorRef = NKS_KnowledgeController.logError(
-                            'Governor limits has reached: ' + ex.getCause()
-                        );
+                        String errorRef = logError('Governor limits has reached: ' + ex.getCause());
                         throw new BLRException(
                             'Poblem on getBrokenLinks()-function for article: ' +
                             article.Id +
@@ -128,6 +126,10 @@ public with sharing class NKS_KnowledgeController {
                 for (String link : LINKS) {
                     if (str.contains(link)) {
                         String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
+                        if (Limits.getCallouts() > Limits.getLimitCallouts()) {
+                            String errorRef = logError('Callout limit has reached');
+                            throw new BLRException('Problem on findBrokenLinks()-function: ' + errorRef);
+                        }
                         try {
                             HttpRequest req = new HttpRequest();
                             HttpResponse res = calloutHttpReq(req, endpoint);
@@ -142,9 +144,7 @@ public with sharing class NKS_KnowledgeController {
                         } catch (Exception ex) {
                             // check for limit exceptions
                             if (ex.getTypeName() == 'System.LimitException') {
-                                String errorRef = NKS_KnowledgeController.logError(
-                                    'Governor limits has reached: ' + ex.getCause()
-                                );
+                                String errorRef = logError('Governor limits has reached: ' + ex.getCause());
                                 throw new BLRException('Problem on findBrokenLinks()-function\n' + errorRef);
                             }
                         }
@@ -220,7 +220,7 @@ public with sharing class NKS_KnowledgeController {
         }
     }
 
-    public static String logError(String message) {
+    private static String logError(String message) {
         String errorRef = '';
         LoggerUtility logger = new LoggerUtility();
         logger.error(message, null, null);
@@ -230,6 +230,6 @@ public with sharing class NKS_KnowledgeController {
         return errorRef;
     }
 
-    public class BLRException extends Exception {
+    private class BLRException extends Exception {
     }
 }
