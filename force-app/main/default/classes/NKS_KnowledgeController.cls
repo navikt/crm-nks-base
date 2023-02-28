@@ -1,4 +1,5 @@
 public with sharing class NKS_KnowledgeController {
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     private static final List<String> LINKS = new List<String>{
         'afp.no',
         'akan.no',
@@ -78,13 +79,12 @@ public with sharing class NKS_KnowledgeController {
         strMap.put('NKS_UserInformation__c', article.NKS_UserInformation__c);
         strMap.put('WhoDoesWhat__c', article.WhoDoesWhat__c);
 
-        // find all links
-        for (String field : strMap.keySet()) {
-            String fieldValue = strMap.get(field);
-            if (fieldValue != null) {
-                String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
-                List<String> matchesPerField = new List<String>();
-                try {
+        try {
+            for (String field : strMap.keySet()) {
+                String fieldValue = strMap.get(field);
+                if (fieldValue != null) {
+                    String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
+                    List<String> matchesPerField = new List<String>();
                     Matcher matcher = linksPattern.matcher(
                         fieldValue.replaceAll('ø', 'o').replaceAll('æ', 'ae').replaceAll('å', 'a')
                     );
@@ -94,24 +94,38 @@ public with sharing class NKS_KnowledgeController {
                             matchesPerField.add(groupValue);
                         }
                     }
-                } catch (Exception ex) {
-                    if (ex.getTypeName() == 'System.LimitException') {
-                        String errorRef = logError('Governor limits has reached: ' + ex.getCause());
-                        throw new BLRException(
-                            'Poblem on getBrokenLinks()-function for article: ' +
-                            article.Id +
-                            '\n' +
-                            errorRef
-                        );
+                    if (matchesPerField.size() > 0) {
+                        matches.put(fieldLabel, matchesPerField);
                     }
                 }
-                if (matchesPerField.size() > 0) {
-                    matches.put(fieldLabel, matchesPerField);
+            }
+            if (matches.size() > 0) {
+                returnedMap = findBrokenLinks(matches);
+                if (Limits.getCallouts() > Limits.getLimitCallouts()) {
+                    logger.error(
+                        'Callout limit has exceeded for article ' +
+                        article.Id +
+                        '\n',
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS,
+                        null
+                    );
                 }
             }
-        }
-        if (matches.size() > 0) {
-            returnedMap = findBrokenLinks(matches);
+        } catch (Exception ex) {
+            logger.error(
+                'Problem finding broken links for article ' +
+                article.Id +
+                '\n' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                null
+            );
+        } finally {
+            logger.publish();
         }
         return returnedMap;
     }
@@ -126,10 +140,6 @@ public with sharing class NKS_KnowledgeController {
                 for (String link : LINKS) {
                     if (str.contains(link)) {
                         String endpoint = 'callout:' + link.replace('.', '_') + str.substringAfter(link);
-                        if (Limits.getCallouts() > Limits.getLimitCallouts()) {
-                            String errorRef = logError('Callout limit has reached');
-                            throw new BLRException('Problem on findBrokenLinks()-function: ' + errorRef);
-                        }
                         try {
                             HttpRequest req = new HttpRequest();
                             HttpResponse res = calloutHttpReq(req, endpoint);
@@ -142,11 +152,7 @@ public with sharing class NKS_KnowledgeController {
                                 deadLinks.add(str);
                             }
                         } catch (Exception ex) {
-                            // check for limit exceptions
-                            if (ex.getTypeName() == 'System.LimitException') {
-                                String errorRef = logError('Governor limits has reached: ' + ex.getCause());
-                                throw new BLRException('Problem on findBrokenLinks()-function\n' + errorRef);
-                            }
+                            //System.debug('It is possbile this link is broken, check the link.');
                         }
                     }
                 }
@@ -218,18 +224,5 @@ public with sharing class NKS_KnowledgeController {
         } catch (Exception ex) {
             System.debug('Problem sending email: ' + ex.getMessage());
         }
-    }
-
-    private static String logError(String message) {
-        String errorRef = '';
-        LoggerUtility logger = new LoggerUtility();
-        logger.error(message, null, null);
-        errorRef = logger.peek().UUID__c;
-        logger.publish();
-
-        return errorRef;
-    }
-
-    private class BLRException extends Exception {
     }
 }
