@@ -1,10 +1,3 @@
-/**
- * @description       :
- * @author            : andrecolle
- * @group             :
- * @last modified on  : 24-02-2023
- * @last modified by  : andrecolle
- **/
 public with sharing class TAG_FagsystemerArbeidsgiverController {
 
     @AuraEnabled(cacheable=true)
@@ -15,8 +8,9 @@ public with sharing class TAG_FagsystemerArbeidsgiverController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
-    } 
+    }
 
+    /*
     @AuraEnabled(cacheable=true)
     public static FagsoneIp checkFagsoneIpRange() {
         Map<String, String> currentSession = Auth.SessionManagement.getCurrentSession();
@@ -35,5 +29,5 @@ public with sharing class TAG_FagsystemerArbeidsgiverController {
             this.ip = ip;
             this.isInFagsone = isInFagsone;
         }
-    }
+    }*/
 }
