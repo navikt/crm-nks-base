@@ -34,7 +34,6 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     hasListeners;
     isLoading = false;
     updated = false;
-    personId;
     personIdent;
 
     initiateKrrUpdate() {
@@ -138,7 +137,6 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
         })
             .then((record) => {
                 this.viewedRecordId = this.resolve(relationshipField, record);
-                this.personId = this.resolve('CRM_Person__c', record);
             })
             .catch((error) => {
                 console.log(error);
@@ -253,7 +251,7 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     }
 
     @wire(getRecord, {
-        recordId: '$personId',
+        recordId: '$viewedRecordId',
         fields: [NAME]
     })
     wiredRecord({ error, data }) {
