@@ -1,6 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getAccount from '@salesforce/apex/TAG_FagsystemerArbeidsgiverController.getAccount';
-import checkFagsoneIpRange from '@salesforce/apex/TAG_FagsystemerArbeidsgiverController.checkFagsoneIpRange';
+//import checkFagsoneIpRange from '@salesforce/apex/TAG_FagsystemerArbeidsgiverController.checkFagsoneIpRange';
 //https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.apex_result_caching
 
 // https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.reference_salesforce_modules
@@ -17,7 +17,7 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
     @api title;
     @api accountId;
     @track showLinks;
-    @track inFagsone = false;
+    @track inFagsone = true;
     @api filterList;
 
     possibleLinks = [
@@ -28,6 +28,7 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
         { name: 'TiltakRefusjon', field: 'TiltakRefusjonURL__c' }
     ];
     
+    /*
     connectedCallback() {
         checkFagsoneIpRange().then((res) => {
             this.inFagsone = res.isInFagsone;
@@ -35,7 +36,7 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
                 console.log('Ip is: ' + res.ip);
             }
         });
-    }
+    }*/
 
     renderedCallback() {
         const listOfFilter =
