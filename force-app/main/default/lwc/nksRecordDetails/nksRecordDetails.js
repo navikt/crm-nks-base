@@ -34,25 +34,6 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
     hasListeners;
     isLoading = false;
     updated = false;
-    personIdent;
-
-    initiateKrrUpdate() {
-        this.isLoading = true;
-        //Get ident from record info component
-        updateKrrInfo({ personIdent: this.personIdent })
-            .then((result) => {
-                //Successful update
-                this.refreshRecord();
-            })
-            .catch((error) => {
-                //Update failed
-                console.log(JSON.stringify(error, null, 2));
-            })
-            .finally(() => {
-                this.isLoading = false;
-                this.updated = true; //Preventing loop when child fires another event after refresh
-            });
-    }
 
     renderedCallback() {
         if (this.hasListeners || this.copyFieldsNr.length === 0 || !this.viewedObjectApiName || !this.wireRecord)
@@ -73,7 +54,6 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
                 );
             }, this);
         this.hasListeners = true;
-        this.initiateKrrUpdate();
     }
 
     disconnectedCallback() {
@@ -258,12 +238,27 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
         if (error) {
             console.log(error);
         } else if (data) {
-            this.personIdent = getFieldValue(data, NAME);
+            let personIdent = getFieldValue(data, NAME);
+            if (this.updated === false && personIdent && personIdent !== '') {
+                this.isLoading = true;
+                updateKrrInfo({ personIdent: personIdent })
+                    .then((result) => {
+                        //Successful update
+                        this.refreshKrrInfo();
+                    })
+                    .catch((error) => {
+                        //Update failed
+                        console.log(JSON.stringify(error, null, 2));
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                        this.updated = true;
+                    });
+            }
         }
     }
 
     //Supports refreshing the record
-    @api
     refreshRecord() {
         this.showSpinner = true;
         refreshApex(this.wireRecord)
@@ -273,6 +268,10 @@ export default class NksRecordInfo extends NavigationMixin(LightningElement) {
             .finally(() => {
                 this.showSpinner = false;
             });
+    }
+
+    refreshKrrInfo() {
+        this.refreshRecord();
         publish(this.messageContext, krrUpdateChannel, { updated: true });
     }
 
