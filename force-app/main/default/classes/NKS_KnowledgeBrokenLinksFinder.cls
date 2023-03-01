@@ -34,8 +34,6 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 finalList.put(article.Title, res);
             }
         }
-        //System.debug('Number of articles with dead links: ' + finalList.size());
-        //System.debug(finalList);
     }
 
     public void finish(Database.BatchableContext bc) {
