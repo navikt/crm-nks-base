@@ -242,8 +242,8 @@ TODAY())</expression>
             <targetReference>NAV_Task_Assignment</targetReference>
         </connector>
         <fields>
-            <name>Ny_oppgave</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Ny oppgave﻿&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Ny_Oppgave_Display</name>
+            <fieldText>&lt;p&gt;{!Ny_oppgave}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -466,6 +466,11 @@ TODAY())</expression>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <textTemplates>
+        <name>Ny_oppgave</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
+    </textTemplates>
     <variables>
         <description>The NAV task record to perform the action on.</description>
         <name>NavTask</name>
