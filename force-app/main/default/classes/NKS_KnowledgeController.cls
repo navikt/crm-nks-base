@@ -1,4 +1,5 @@
 public with sharing class NKS_KnowledgeController {
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     private static final List<String> LINKS = new List<String>{
         'afp.no',
         'akan.no',
@@ -78,13 +79,12 @@ public with sharing class NKS_KnowledgeController {
         strMap.put('NKS_UserInformation__c', article.NKS_UserInformation__c);
         strMap.put('WhoDoesWhat__c', article.WhoDoesWhat__c);
 
-        // find all links
-        for (String field : strMap.keySet()) {
-            String fieldValue = strMap.get(field);
-            if (fieldValue != null) {
-                String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
-                List<String> matchesPerField = new List<String>();
-                try {
+        try {
+            for (String field : strMap.keySet()) {
+                String fieldValue = strMap.get(field);
+                if (fieldValue != null) {
+                    String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
+                    List<String> matchesPerField = new List<String>();
                     Matcher matcher = linksPattern.matcher(
                         fieldValue.replaceAll('ø', 'o').replaceAll('æ', 'ae').replaceAll('å', 'a')
                     );
@@ -94,19 +94,38 @@ public with sharing class NKS_KnowledgeController {
                             matchesPerField.add(groupValue);
                         }
                     }
-                } catch (Exception ex) {
-                    //System.debug(ex.getMessage());
-                }
-
-                if (matchesPerField.size() > 0) {
-                    matches.put(fieldLabel, matchesPerField);
+                    if (matchesPerField.size() > 0) {
+                        matches.put(fieldLabel, matchesPerField);
+                    }
                 }
             }
-        }
-
-        // System.debug('Matches: ' + matches);
-        if (matches.size() > 0) {
-            returnedMap = findBrokenLinks(matches);
+            if (matches.size() > 0) {
+                returnedMap = findBrokenLinks(matches);
+                if (Limits.getCallouts() > Limits.getLimitCallouts()) {
+                    logger.error(
+                        'Callout limit has exceeded for article ' +
+                        article.Id +
+                        '\n',
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS,
+                        null
+                    );
+                }
+            }
+        } catch (Exception ex) {
+            logger.error(
+                'Problem finding broken links for article ' +
+                article.Id +
+                '\n' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                null
+            );
+        } finally {
+            logger.publish();
         }
         return returnedMap;
     }
@@ -142,7 +161,6 @@ public with sharing class NKS_KnowledgeController {
                 resultList.put(field, deadLinks);
             }
         }
-        //System.debug('Dead links: ' + resultList);
         return resultList;
     }
 
@@ -205,15 +223,6 @@ public with sharing class NKS_KnowledgeController {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
         } catch (Exception ex) {
             System.debug('Problem sending email: ' + ex.getMessage());
-        }
-    }
-
-    @invocableMethod(label='Find Broken Links')
-    public static void findDeadLinks() {
-        try {
-            Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 1);
-        } catch (Exception ex) {
-            System.debug('Problem executing batch: ' + ex.getMessage());
         }
     }
 }
