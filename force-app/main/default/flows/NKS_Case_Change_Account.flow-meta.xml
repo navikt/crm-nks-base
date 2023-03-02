@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Navigate_to_Case</name>
-        <label>Navigate to Case</label>
+        <name>Redirect_To_New_Case</name>
+        <label>Redirect To New Case</label>
         <locationX>176</locationX>
         <locationY>518</locationY>
-        <actionName>c:nksFlowRedirect</actionName>
+        <actionName>c:nksOpenRecordInNewTab</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -18,6 +18,7 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <description>Creates a duplicate case with a new account relation.</description>
+    <environments>Default</environments>
     <interviewLabel>Case Change Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Change Account</label>
     <processMetadataValues>
@@ -45,7 +46,7 @@
         <locationX>176</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Navigate_to_Case</targetReference>
+            <targetReference>Redirect_To_New_Case</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
