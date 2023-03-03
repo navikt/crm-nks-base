@@ -5,8 +5,8 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>175</locationX>
-        <locationY>580</locationY>
+        <locationX>330</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -113,8 +113,8 @@
         <description>Check if the case is related to an account before allowing to create task.</description>
         <name>Validate_Account</name>
         <label>Validate Account</label>
-        <locationX>272</locationX>
-        <locationY>303</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </defaultConnector>
@@ -139,8 +139,8 @@
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
-        <locationX>294</locationX>
-        <locationY>903</locationY>
+        <locationX>330</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -217,7 +217,7 @@ TODAY())</expression>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -232,7 +232,7 @@ TODAY())</expression>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>176</locationX>
-        <locationY>190</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Account</targetReference>
@@ -257,8 +257,8 @@ TODAY())</expression>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>555</locationX>
-        <locationY>304</locationY>
+        <locationX>176</locationX>
+        <locationY>1310</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -303,8 +303,8 @@ TODAY())</expression>
     <screens>
         <name>Finish_modal</name>
         <label>Finish_modal</label>
-        <locationX>171</locationX>
-        <locationY>1077</locationY>
+        <locationX>198</locationX>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -352,14 +352,19 @@ TODAY())</expression>
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>176</locationX>
-        <locationY>408</locationY>
+        <locationX>330</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>NAV_Task_Assignment</targetReference>
         </connector>
+        <fields>
+            <name>Ny_Oppgave_Display</name>
+            <fieldText>&lt;p&gt;{!Ny_Oppgave}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>Theme_Categorization</name>
             <extensionName>c:crmThemeCategorization</extensionName>
@@ -474,7 +479,7 @@ TODAY())</expression>
     </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -483,9 +488,10 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>739</locationX>
-        <locationY>199</locationY>
+        <locationX>638</locationX>
+        <locationY>278</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </connector>
         <flowName>Flow_Create_Application_Log</flowName>
@@ -523,8 +529,8 @@ TODAY())</expression>
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>173</locationX>
-        <locationY>759</locationY>
+        <locationX>330</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>
@@ -543,6 +549,11 @@ TODAY())</expression>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <textTemplates>
+        <name>Ny_Oppgave</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
+    </textTemplates>
     <variables>
         <description>The NAV task record to perform the action on.</description>
         <name>NavTask</name>
