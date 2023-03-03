@@ -328,7 +328,6 @@
         <apexClass>NKS_Kodeverk</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <!--
     <classAccesses>
         <apexClass>NKS_KrrInformationController</apexClass>
         <enabled>true</enabled>
@@ -337,6 +336,7 @@
         <apexClass>NKS_KrrInformationController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_Markering</apexClass>
         <enabled>true</enabled>
