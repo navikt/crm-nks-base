@@ -332,10 +332,12 @@
         <apexClass>NKS_HistorikkViewController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <!--
     <classAccesses>
         <apexClass>NKS_KrrInformationController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+-->
     <classAccesses>
         <apexClass>NKS_NavTaskRoutingHandler</apexClass>
         <enabled>true</enabled>
