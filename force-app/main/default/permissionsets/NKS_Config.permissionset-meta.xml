@@ -81,6 +81,11 @@
         <field>Common_Code__c.CRM_Archive_Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Common_Code__c.CRM_Available__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Common_Code__c.CRM_Parent_Code__c</field>
