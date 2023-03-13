@@ -81,6 +81,11 @@
         <field>Common_Code__c.CRM_Archive_Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>Common_Code__c.CRM_Available__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Common_Code__c.CRM_Parent_Code__c</field>
@@ -194,6 +199,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServiceResourceSkill.SkillLevel</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Thread__c.CRM_Created_By_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
