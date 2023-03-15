@@ -8,7 +8,13 @@ public with sharing class NKS_HomePageNotifyOperationalUpdates {
         Set<Id> groupIdProxies = new Set<Id>();
 
         /** get active users and all groups */
-        Map<Id, User> activeUsersMap = new Map<Id, User>([SELECT Id FROM User WHERE IsActive = TRUE]);
+        Map<Id, User> activeUsersMap = new Map<Id, User>(
+            [
+                SELECT Id
+                FROM User
+                WHERE IsActive = TRUE AND ProfileId IN (SELECT Id FROM Profile WHERE Name LIKE 'NAV Kontaktsenter%')
+            ]
+        );
 
         for (Id groupElementId : groupIds) {
             if (String.valueOf(groupElementId.getSobjectType()) == 'Group') {
