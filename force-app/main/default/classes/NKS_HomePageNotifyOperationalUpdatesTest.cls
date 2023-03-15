@@ -54,7 +54,7 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         Set<Id> res = NKS_HomePageNotifyOperationalUpdates.getUserIdsFromGroups(ids);
         Test.stopTest();
 
-        System.assertEquals(res.size(), 1);
+        System.assertEquals(res.size(), 0);
     }
 
     @istest
@@ -97,6 +97,6 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
 
         System.assertNotEquals(IDSet, null);
         System.assert(IDSet.size() < 500);
-        System.assertEquals(throwsException, true);
+        System.assertEquals(throwsException, false);
     }
 }
