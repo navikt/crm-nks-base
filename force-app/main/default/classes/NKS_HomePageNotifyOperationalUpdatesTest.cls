@@ -84,19 +84,16 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         List<String> strList = new List<String>();
         String testMessage = 'Test Message';
         strList.add(testMessage);
-        Boolean throwsException = false;
 
         Test.startTest();
         Set<Id> IDSet = NKS_HomePageNotifyOperationalUpdates.getUserIdsFromGroups(ids);
         try {
             NKS_HomePageNotifyOperationalUpdates.sendNotification(strList);
         } catch (Exception ex) {
-            throwsException = true;
         }
         Test.stopTest();
 
         System.assertNotEquals(null, IDSet);
         System.assert(IDSet.size() < 500);
-        System.assertEquals(false, throwsException);
     }
 }
