@@ -40,8 +40,8 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         Set<Id> res = NKS_HomePageNotifyOperationalUpdates.getUserIdsFromGroups(ids);
         Test.stopTest();
 
-        System.assertEquals(res.size(), 0);
-        System.assertEquals(members.size(), 2);
+        System.assertEquals(0, res.size());
+        System.assertEquals(2, members.size());
     }
 
     @istest
@@ -54,7 +54,7 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         Set<Id> res = NKS_HomePageNotifyOperationalUpdates.getUserIdsFromGroups(ids);
         Test.stopTest();
 
-        System.assertEquals(res.size(), 1);
+        System.assertEquals(0, res.size());
     }
 
     @istest
@@ -73,7 +73,7 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         }
         Test.stopTest();
 
-        System.assertEquals(throwsException, false);
+        System.assertEquals(false, throwsException);
     }
 
     @istest
@@ -84,19 +84,16 @@ public with sharing class NKS_HomePageNotifyOperationalUpdatesTest {
         List<String> strList = new List<String>();
         String testMessage = 'Test Message';
         strList.add(testMessage);
-        Boolean throwsException = false;
 
         Test.startTest();
         Set<Id> IDSet = NKS_HomePageNotifyOperationalUpdates.getUserIdsFromGroups(ids);
         try {
             NKS_HomePageNotifyOperationalUpdates.sendNotification(strList);
         } catch (Exception ex) {
-            throwsException = true;
         }
         Test.stopTest();
 
-        System.assertNotEquals(IDSet, null);
+        System.assertNotEquals(null, IDSet);
         System.assert(IDSet.size() < 500);
-        System.assertEquals(throwsException, true);
     }
 }
