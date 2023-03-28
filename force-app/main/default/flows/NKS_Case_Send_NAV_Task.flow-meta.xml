@@ -400,6 +400,12 @@ TODAY())</expression>
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>HIDE_THEME_GROUP</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>autoFocus</name>
                 <value>
                     <booleanValue>true</booleanValue>
