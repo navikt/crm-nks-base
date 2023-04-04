@@ -405,6 +405,12 @@ TODAY())</expression>
                     <stringValue>HIDE_THEME_GROUP</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>autoFocus</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
