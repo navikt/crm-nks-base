@@ -77,7 +77,7 @@ public with sharing class NKS_KnowledgeController {
      */
     private static Map<String, List<String>> findLinksPerField(Map<String, Object> fieldsToValue) {
         // regex/pattern to find links in a string
-        String regex = '(https?://|www\\d{0,3}[.]|[a-z0-9.-]+[.][a-z]{2,4}/)(\\S*)';
+        String regex = '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)';
         Pattern linksPattern = Pattern.compile(regex);
         Map<String, List<String>> matches = new Map<String, List<String>>();
         try {
@@ -88,7 +88,7 @@ public with sharing class NKS_KnowledgeController {
                     String fieldLabel = getFieldLabel(fieldName); // Get the field label
                     List<String> matchesPerField = new List<String>();
                     Matcher matcher = linksPattern.matcher(
-                        fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'aa').replace('"', '')
+                        fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'a').replace('"', '')
                     );
                     // Loop through all matches found in the field value
                     while (matcher.find()) {
