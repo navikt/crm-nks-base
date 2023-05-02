@@ -11,11 +11,7 @@ public with sharing class NKS_KnowledgeController {
         List<String> links = new List<String>();
         try {
             // Query the NamedCredential object to retrieve the named credentials
-            for (NamedCredential nc : [
-                SELECT MasterLabel
-                FROM NamedCredential
-                WHERE DeveloperName LIKE '%_no' OR DeveloperName LIKE '%_com' OR DeveloperName LIKE '%_org'
-            ]) {
+            for (NamedCredential nc : [SELECT MasterLabel FROM NamedCredential WHERE DeveloperName LIKE 'knowledge%']) {
                 links.add(nc.MasterLabel);
             }
         } catch (Exception ex) {
@@ -65,7 +61,11 @@ public with sharing class NKS_KnowledgeController {
      */
     private static Boolean validateMatchedUrl(String matchedUrl, String link) {
         Integer index = matchedUrl.indexOf(link);
-        List<Integer> desiredIndices = new List<Integer>{ 7, 8, 11, 12 }; // List of desired indices
+        /**
+         * List of desired indices (Some urls include a link not at the start but in the middle. All these urls are matched when finding urls in an article while it is not necessary to check all of them.
+         * This will help to reduce http-calls and prevent to reach call-out limits)
+         */
+        List<Integer> desiredIndices = new List<Integer>{ 7, 8, 11, 12 };
         return desiredIndices.contains(index);
     }
 
