@@ -141,7 +141,7 @@
                 <identifier>c_nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-9165dd99-a2c9-48d1-9c21-7a37c8990a10</name>
+        <name>Facet-c260a3d6-acff-49ad-abb8-0b7220c4b234</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -195,7 +195,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_Nynorsk_Emplyer__c</value>
+                    <value>NKS_Nynorsk_Employer__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -230,7 +230,7 @@
                 <identifier>c_nksRecordInfo3</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-9g6nq1i80e8</name>
+        <name>Facet-zvlvyc26hy</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -256,7 +256,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-9165dd99-a2c9-48d1-9c21-7a37c8990a10</value>
+                    <value>Facet-c260a3d6-acff-49ad-abb8-0b7220c4b234</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -264,7 +264,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
-                    <value>accordionSection--33agt16gmej</value>
+                    <value>accordionSection--ne4i2sgel9</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
                 <identifier>flexipage_accordionSection</identifier>
@@ -292,7 +292,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-9g6nq1i80e8</value>
+                    <value>Facet-zvlvyc26hy</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -300,7 +300,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
-                    <value>accordionSection--bodlt85fn58</value>
+                    <value>accordionSection--aj4z5w84juk</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
                 <identifier>flexipage_accordionSection3</identifier>
@@ -325,6 +325,37 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-jn984vmxnu</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-2beb6cb9-aaa9-4370-aa6b-f189018f90d7</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -358,6 +389,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2beb6cb9-aaa9-4370-aa6b-f189018f90d7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.feed</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-75d43d82-eb80-4612-8468-47b49a447d51</name>

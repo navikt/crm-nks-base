@@ -453,7 +453,7 @@
                 <identifier>c_nksRecordInfo</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-61b9e94a-87d6-4cac-9d16-b5cb2891064e</name>
+        <name>Facet-9b7f7dae-a335-435b-ab01-4cb77bcd9f8a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -542,7 +542,7 @@
                 <identifier>c_nksRecordInfo2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-vldkncococ</name>
+        <name>Facet-k0ctph0nuy</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -568,7 +568,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-61b9e94a-87d6-4cac-9d16-b5cb2891064e</value>
+                    <value>Facet-9b7f7dae-a335-435b-ab01-4cb77bcd9f8a</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -576,7 +576,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
-                    <value>accordionSection--kzdx8vrfyt</value>
+                    <value>accordionSection--wpm5u8j20f</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
                 <identifier>flexipage_accordionSection</identifier>
@@ -604,7 +604,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-vldkncococ</value>
+                    <value>Facet-k0ctph0nuy</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
@@ -612,7 +612,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
-                    <value>accordionSection--fki0ze8663e</value>
+                    <value>accordionSection--3cyc8yrc47u</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
                 <identifier>flexipage_accordionSection2</identifier>
@@ -637,6 +637,37 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-b3074ef3-8901-42db-9d2a-00bf0b8ec3dc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:publisher</componentName>
+                <identifier>forceChatter_publisher</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.StandardPermission.ManageKnowledge}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>context</name>
+                    <value>RECORD</value>
+                </componentInstanceProperties>
+                <componentName>forceChatter:exposedFeed</componentName>
+                <identifier>forceChatter_exposedFeed</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b2a7dc9a-2290-40d4-a541-5a2008df7eea</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -670,6 +701,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab5</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-b2a7dc9a-2290-40d4-a541-5a2008df7eea</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.feed</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
