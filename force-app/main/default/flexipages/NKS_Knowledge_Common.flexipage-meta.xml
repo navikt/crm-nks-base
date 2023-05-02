@@ -210,6 +210,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -259,6 +263,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -296,6 +304,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -393,6 +405,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -401,6 +417,43 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-97dc061c-9ee0-4980-9827-a3305cc5c49c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>copyFields</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_English_Employer__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>c_nksRecordInfo</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-9b7f7dae-a335-435b-ab01-4cb77bcd9f8a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -429,6 +482,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -443,12 +500,61 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>copyFields</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>NKS_Nynorsk_Employer__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>c_nksRecordInfo2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-k0ctph0nuy</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-97dc061c-9ee0-4980-9827-a3305cc5c49c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Engelsk</value>
+                    <value>Engelsk - personbruker</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
@@ -462,11 +568,29 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
+                    <value>Facet-9b7f7dae-a335-435b-ab01-4cb77bcd9f8a</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Engelsk - arbeidsgiver</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection--wpm5u8j20f</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
                     <value>Facet-2533569e-bc63-4b99-a135-f74ae5051800</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Nynorsk</value>
+                    <value>Nynorsk - personbruker</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
@@ -474,6 +598,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:accordionSection</componentName>
                 <identifier>customSection4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-k0ctph0nuy</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Nynorsk - arbeidsgiver</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection--3cyc8yrc47u</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-b38dd136-bf7a-48f3-a959-f14ef96555ea</name>
@@ -525,7 +667,7 @@
                 <identifier>forceChatter_exposedFeed</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-6e462054-a1cd-4c11-bcf2-b3fef77b731e</name>
+        <name>Facet-b2a7dc9a-2290-40d4-a541-5a2008df7eea</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -565,14 +707,14 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-6e462054-a1cd-4c11-bcf2-b3fef77b731e</value>
+                    <value>Facet-b2a7dc9a-2290-40d4-a541-5a2008df7eea</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>feedTab</identifier>
+                <identifier>flexipage_tab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -623,6 +765,10 @@
                     <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -657,6 +803,10 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -695,6 +845,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -729,6 +883,10 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
