@@ -12,7 +12,7 @@ public with sharing class NKS_HomePageController {
         }
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static string getField(String type) {
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         String res = null;
