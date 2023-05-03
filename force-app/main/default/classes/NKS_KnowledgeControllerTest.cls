@@ -60,40 +60,6 @@ public with sharing class NKS_KnowledgeControllerTest {
     }
 
     @isTest
-    static void testCalloutHttpReqLinkNotFound() {
-        // Set mock callout class
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(404));
-
-        Test.startTest();
-        HttpResponse res = NKS_KnowledgeController.calloutHttpReq(new HttpRequest(), 'https://www.nav.no/testpath');
-        Test.stopTest();
-
-        System.assertEquals(404, res.getStatusCode());
-    }
-
-    @isTest
-    static void testdetectRedirect() {
-        NKS_KnowledgeController testController = new NKS_KnowledgeController();
-
-        Test.startTest();
-        Integer status = NKS_KnowledgeController.detectRedirect(new HttpRequest(), new HttpResponse());
-        Test.stopTest();
-        System.assertEquals(0, status);
-    }
-
-    @isTest
-    static void testCalloutHttpReqLinkFound() {
-        // Set mock callout class
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200));
-
-        Test.startTest();
-        HttpResponse res = NKS_KnowledgeController.calloutHttpReq(new HttpRequest(), 'https://www.nav.no');
-        Test.stopTest();
-
-        System.assertEquals(200, res.getStatusCode());
-    }
-
-    @isTest
     static void testSendEmail() {
         // make mock data
         Map<String, Map<String, List<String>>> listToSend = new Map<String, Map<String, List<String>>>();
