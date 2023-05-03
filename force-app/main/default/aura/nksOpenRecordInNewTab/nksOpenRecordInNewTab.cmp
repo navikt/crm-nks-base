@@ -1,0 +1,5 @@
+<aura:component implements="lightning:availableForFlowActions">
+    <aura:attribute name="recordId" type="String" />
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler event="force:navigateToSObject" action="{!c.invoke}" />
+</aura:component>

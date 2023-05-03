@@ -68,7 +68,7 @@ public with sharing class NKS_NewsArchiveHandler {
         Map<String, Blob> filesToSend = new Map<String, Blob>();
         Map<String, String> fileNameFormatMap = new Map<String, String>();
         
-        String manifestName = getManifestName(article.Name, article.NKS_News_Publish_Date__c.date());
+        String manifestName = getManifestName(article.NKS_News_Publish_Date__c.date());
         filesToSend.put(articleFileName, articlePdf);
         fileNameFormatMap.put(articleFileName, DEFAULT_FILE_FORMAT);
         
@@ -163,7 +163,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return Blob.valueOf(generator.generateXML());
       }
     
-      private String getManifestName(String name, Date archiveDate) {
+      private String getManifestName(Date archiveDate) {
         return getAutoNumber() + '_NyheterNKS_' + formatDateString(archiveDate) + MANIFEST_FORMAT;
       }
     
@@ -173,8 +173,18 @@ public with sharing class NKS_NewsArchiveHandler {
     
       private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
-        // delete '-', ':', ',', '?', ''' and '"' characters
-        return fileName.replaceAll(' |\\\\|\\/|\\(|\\)', '_').replaceAll('-|:|,|\\?|\'|"', '');
+        // replace 'ÅåØøÆæ' with AaOoAeae'
+        // skip '.pdf' at the end of string and delete all non-word characters [^a-zA-Z_0-9]
+
+        String s = fileName.replaceAll('Å','A');
+        s = s.replaceAll('å','a');
+        s = s.replaceAll('Ø', 'O');
+        s = s.replaceAll('ø', 'o');
+        s = s.replaceAll('Æ','Ae');
+        s = s.replaceAll('æ','ae');
+        s = s.replaceAll(' |\\\\|\\/|\\(|\\)', '_');
+        s = s.replaceAll('(?!\\.pdf$)\\W', ''); 
+        return s;
       }
     
       private String formatDateString(Date input) {

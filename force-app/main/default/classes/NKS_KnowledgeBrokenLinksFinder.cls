@@ -34,15 +34,14 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 finalList.put(article.Title, res);
             }
         }
-        System.debug('Number of articles with dead links: ' + finalList.size());
-        System.debug(finalList);
     }
 
     public void finish(Database.BatchableContext bc) {
         if (finalList.size() > 0) {
-            List<String> toAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
+            List<String> toAddresses = new List<String>{ 'nav.kontaktsenter.fag.og.kvalitet@nav.no' };
+            List<String> bccAddresses = new List<String>{ 'sara.mohammadi@nav.no' };
             try {
-                NKS_KnowledgeController.sendEmail(finalList, toAddresses);
+                NKS_KnowledgeController.sendEmail(finalList, toAddresses, bccAddresses);
             } catch (Exception ex) {
                 System.debug('Problem sending email: ' + ex.getMessage());
             }

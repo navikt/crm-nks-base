@@ -1,4 +1,5 @@
 public with sharing class NKS_KnowledgeController {
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     private static final List<String> LINKS = new List<String>{
         'afp.no',
         'akan.no',
@@ -78,36 +79,55 @@ public with sharing class NKS_KnowledgeController {
         strMap.put('NKS_UserInformation__c', article.NKS_UserInformation__c);
         strMap.put('WhoDoesWhat__c', article.WhoDoesWhat__c);
 
-        // find all links
-        for (String field : strMap.keySet()) {
-            String fieldValue = strMap.get(field);
-            if (fieldValue != null) {
-                String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
-                List<String> matchesPerField = new List<String>();
-                try {
+        try {
+            for (String field : strMap.keySet()) {
+                String fieldValue = strMap.get(field);
+                if (fieldValue != null) {
+                    String fieldLabel = fieldMap.get(field).getDescribe().getLabel();
+                    List<String> matchesPerField = new List<String>();
                     Matcher matcher = linksPattern.matcher(
                         fieldValue.replaceAll('ø', 'o').replaceAll('æ', 'ae').replaceAll('å', 'a')
                     );
                     while (matcher.find()) {
                         String groupValue = matcher.group();
-                        matchesPerField.add(groupValue);
+                        if (!matchesPerField.contains(groupValue)) {
+                            matchesPerField.add(groupValue);
+                        }
                     }
-                } catch (Exception ex) {
-                    //System.debug(ex.getMessage());
-                }
-
-                if (matchesPerField.size() > 0) {
-                    matches.put(fieldLabel, matchesPerField);
+                    if (matchesPerField.size() > 0) {
+                        matches.put(fieldLabel, matchesPerField);
+                    }
                 }
             }
+            if (matches.size() > 0) {
+                returnedMap = findBrokenLinks(matches);
+                if (Limits.getCallouts() > Limits.getLimitCallouts()) {
+                    logger.error(
+                        'Callout limit has exceeded for article ' +
+                        article.Id +
+                        '\n',
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS,
+                        null
+                    );
+                }
+            }
+        } catch (Exception ex) {
+            logger.error(
+                'Problem finding broken links for article ' +
+                article.Id +
+                '\n' +
+                ex.getMessage() +
+                '\n' +
+                ex.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS,
+                null
+            );
+        } finally {
+            logger.publish();
         }
-
-        // System.debug('Matches: ' + matches);
-        if (matches.size() > 0) {
-            returnedMap = findBrokenLinks(matches);
-            return returnedMap;
-        }
-        return null;
+        return returnedMap;
     }
 
     @TestVisible
@@ -127,7 +147,6 @@ public with sharing class NKS_KnowledgeController {
 
                             if (statusCode.format().left(1) == '3') {
                                 statusCode = detectRedirect(req, res);
-                                System.debug(statusCode);
                             }
                             if (statusCode == 404) {
                                 deadLinks.add(str);
@@ -142,7 +161,6 @@ public with sharing class NKS_KnowledgeController {
                 resultList.put(field, deadLinks);
             }
         }
-        //System.debug('Dead links: ' + resultList);
         return resultList;
     }
 
@@ -171,10 +189,15 @@ public with sharing class NKS_KnowledgeController {
         return res;
     }
 
-    public static void sendEmail(Map<String, Map<String, List<String>>> listToSend, List<String> toAddresses) {
+    public static void sendEmail(
+        Map<String, Map<String, List<String>>> listToSend,
+        List<String> toAddresses,
+        List<String> bccAddresses
+    ) {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
         mail.setToAddresses(toAddresses);
+        mail.setBccAddresses(bccAddresses);
         mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
         mail.setSubject('Rapport om døde lenker');
         mail.setBccSender(false);
@@ -200,15 +223,6 @@ public with sharing class NKS_KnowledgeController {
             Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
         } catch (Exception ex) {
             System.debug('Problem sending email: ' + ex.getMessage());
-        }
-    }
-
-    @invocableMethod(label='Find Broken Links')
-    public static void findDeadLinks() {
-        try {
-            Database.executeBatch(new NKS_KnowledgeBrokenLinksFinder(), 1);
-        } catch (Exception ex) {
-            System.debug('Problem executing batch: ' + ex.getMessage());
         }
     }
 }
