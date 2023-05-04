@@ -51,7 +51,6 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
 
     refreshField() {
         this.showSpinner = true;
-
         refreshApex(this.wiredField)
             .then(() => {
                 this.loadField();
