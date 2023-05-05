@@ -45,7 +45,9 @@
         <name>fbc_ButtonIsNotSupportedMessage</name>
     </customLabels>
     <customLabels>
-        <label>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</label>
+        <label>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter
+            “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true
+            or only the fourth condition is true.</label>
         <name>fbc_ConditionLogicHelpText</name>
     </customLabels>
     <customLabels>
@@ -141,7 +143,7 @@
         <name>fbc_SupportedEditCapabilitiesEmptyMessage</name>
     </customLabels>
     <customLabels>
-        <label>Your search found more than 200 results.  Keep typing to make it more specific</label>
+        <label>Your search found more than 200 results. Keep typing to make it more specific</label>
         <name>fbc_TooManyResultsMessage</name>
     </customLabels>
     <customLabels>
@@ -591,9 +593,6 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <choices>
-                <name>None</name>
-            </choices>
             <screens>
                 <fields>
                     <name>ShowIfNote</name>
