@@ -1,16 +1,33 @@
 <template>
     <template if:false={isOperational}>
-        <section class="slds-box slds-theme_default slds-m-bottom_none">
-            <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
-                <div class="slds-media__figure">
-                    <lightning-icon
-                        aria-hidden="true"
-                        icon-name={iconName}
-                        class="slds-icon_container"
-                        size="small"
-                    ></lightning-icon>
-                </div>
-                <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+        <section class="slds-box slds-theme_default slds-is-relative">
+            <lightning-layout class="slds-grid slds-wrapp slds-var-p-bottom_small">
+                <template if:true={iconName}>
+                    <lightning-layout-item class="slds-media__figure">
+                        <lightning-icon
+                            aria-hidden="true"
+                            icon-name={iconName}
+                            class="slds-icon_container"
+                            size="small"
+                        ></lightning-icon>
+                    </lightning-layout-item>
+                </template>
+                <lightning-layout-item>
+                    <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+                </lightning-layout-item>
+                <template if:true={enableRefresh}>
+                    <lightning-layout-item class="slds-col">
+                        <lightning-button-icon
+                            class="slds-float_right"
+                            alternative-text="Oppdater"
+                            icon-name="utility:refresh"
+                            onclick={refreshField}
+                        ></lightning-button-icon>
+                    </lightning-layout-item>
+                    <template if:true={showSpinner} class="slds-spinner_container">
+                        <lightning-spinner title="Loading" size="small" type="brand"></lightning-spinner>
+                    </template>
+                </template>
             </lightning-layout>
             <template if:true={text}>
                 <p class="slds-var-p-horizontal_medium">
@@ -256,7 +273,6 @@
                     </template>
                 </div>
             </template>
-
             <template if:true={isSalesforceUpdate}>
                 <div class="slds-var-p-top_small">
                     <lightning-formatted-url

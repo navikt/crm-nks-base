@@ -89,16 +89,16 @@
                                 ></lightning-formatted-date-time>
                             </lightning-layout-item>
                         </template>
-
-                        <lightning-layout-item size="12" class="slds-truncate">
-                            <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+                        <lightning-layout-item size="12" class="slds-line-clamp_x-small">
+                            <strong>
+                                <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
+                            </strong>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
             </lightning-layout>
         </template>
     </template>
-
     <template if:true={isKnowledge}>
         <div class="slds-float_left slds-col">
             <p>
