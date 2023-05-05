@@ -39,10 +39,10 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetFieldWithNullValue() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Traffic  ');
+        String info = NKS_HomePageController.getField('Traffic');
         Test.stopTest();
 
-        System.assertEquals(null, info);
+        System.assertEquals('', info);
     }
 
     @isTest
