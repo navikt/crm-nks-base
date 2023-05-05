@@ -13,9 +13,8 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static string getField(String type) {
-        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
-        String res = null;
+    public static String getField(String type) {
+        String res = '';
         try {
             for (NKS_Announcement__c announcement : [
                 SELECT NKS_Information__c
@@ -24,13 +23,15 @@ public with sharing class NKS_HomePageController {
                 ORDER BY SystemModstamp DESC
                 LIMIT 1
             ]) {
-                return announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+                if (announcement.NKS_Information__c != '' && announcement.NKS_Information__c != null) {
+                    res += announcement.NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+                }
             }
         } catch (Exception ex) {
             System.debug('Problem getting Information-field for Announcement' + ex.getMessage());
             throw new AuraException('Kunne ikke hente informasjonen/n' + ex.getMessage());
         }
-        return null;
+        return res;
     }
 
     @AuraEnabled
