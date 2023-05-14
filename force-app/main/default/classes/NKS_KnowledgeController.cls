@@ -139,7 +139,10 @@ public with sharing class NKS_KnowledgeController {
                 // Loop through each link in the list of links to be checked
                 for (String link : linksToBeChecked) {
                     if (str.contains(link) && validateMatchedUrl(str, link)) {
-                        String endpoint = 'callout:knowledge_' + link.replace('.', '_') + str.substringAfter(link); // Endpoint for the HTTP request
+                        String endpoint =
+                            'callout:knowledge_' +
+                            link.replaceAll('[-.]', '_') +
+                            str.substringAfter(link); // Endpoint for the HTTP request
                         HttpRequest req = new HttpRequest();
                         req.setEndpoint(endpoint);
                         req.setMethod('GET');
@@ -152,7 +155,9 @@ public with sharing class NKS_KnowledgeController {
                         } catch (Exception ex) {
                             // Catch and handle exception
                             logger.error(
-                                'Problem finding broken links: ' +
+                                'Problem sending HTTP-request for ' +
+                                endpoint +
+                                ': ' +
                                 ex.getMessage() +
                                 '\n' +
                                 ex.getStackTraceString(),
