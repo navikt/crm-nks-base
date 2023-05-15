@@ -22,7 +22,7 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api required = false;
 
-    recentlyInsertedQuicktext = "cantaloupe";
+    recentlyInserted = "";
 
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
@@ -279,9 +279,7 @@ export default class nksQuickText extends LightningElement {
      */
     _replaceWithQuickText(editor, replacement, start, end) {
         editor.setRangeText(replacement, start, end, 'end');
-        this.recentlyInsertedQuicktext = (
-            this.recentlyInsertedQuicktext == "snack" ?
-            "tasty" : "snack");
+        this.recentlyInserted = replacement;
     }
 
     insertquicktext(event) {
@@ -319,6 +317,9 @@ export default class nksQuickText extends LightningElement {
                 } else {
                     this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd, 'end');
                 }
+            } else {
+                // Clear screen reader buffer for reading the next one.
+                this.recentlyInserted = '';
             }
         }
     }
