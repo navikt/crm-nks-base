@@ -22,6 +22,8 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api required = false;
 
+    recentlyInsertedQuicktext = "cantaloupe";
+
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
     }
@@ -277,6 +279,9 @@ export default class nksQuickText extends LightningElement {
      */
     _replaceWithQuickText(editor, replacement, start, end) {
         editor.setRangeText(replacement, start, end, 'end');
+        this.recentlyInsertedQuicktext = (
+            this.recentlyInsertedQuicktext == "snack" ?
+            "tasty" : "snack");
     }
 
     insertquicktext(event) {
