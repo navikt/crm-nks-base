@@ -284,24 +284,26 @@ export default class nksQuickText extends LightningElement {
                 }
             }
 
-            const quickText = obj.content.message;
-            const isCaseSensitive = obj.content.isCaseSensitive;
-            const startindex = carretPositionEnd - abbreviation.length - 1;
-            const lastChar = event.key === 'Enter' ? '\n' : event.key;
+            if(obj !== undefined) {
+                const quickText = obj.content.message;
+                const isCaseSensitive = obj.content.isCaseSensitive;
+                const startindex = carretPositionEnd - abbreviation.length - 1;
+                const lastChar = event.key === 'Enter' ? '\n' : event.key;
 
-            if (isCaseSensitive) {
-                const words = quickText.split(' ');
+                if (isCaseSensitive) {
+                    const words = quickText.split(' ');
 
-                if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
-                    words[0] = words[0].toLowerCase();
-                    const lowerCaseQuickText = words.join(' ');
-                    editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
-                } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
-                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                    editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                    if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
+                        words[0] = words[0].toLowerCase();
+                        const lowerCaseQuickText = words.join(' ');
+                        editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                    } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
+                        const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                        editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                    }
+                } else {
+                    editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
                 }
-            } else {
-                editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
             }
         }
     }
