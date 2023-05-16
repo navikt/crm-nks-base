@@ -309,13 +309,13 @@ export default class nksQuickText extends LightningElement {
                     if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
                         words[0] = words[0].toLowerCase();
                         const lowerCaseQuickText = words.join(' ');
-                        this._replaceWithQuickText(editor, lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                        this._replaceWithQuickText(editor, lowerCaseQuickText + lastChar, startindex, carretPositionEnd);
                     } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
                         const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        this._replaceWithQuickText(editor, upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                        this._replaceWithQuickText(editor, upperCaseQuickText + lastChar, startindex, carretPositionEnd);
                     }
                 } else {
-                    this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd, 'end');
+                    this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd);
                 }
             } else {
                 // Clear screen reader buffer for reading the next one.
