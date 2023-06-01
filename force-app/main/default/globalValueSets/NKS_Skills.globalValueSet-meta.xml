@@ -3,17 +3,17 @@
     <customValue>
         <fullName>ArbeidsgiverSamhandler</fullName>
         <default>false</default>
-        <label>AG 1+4 - Arbeidsgiver og samhandler</label>
+        <label>AG - Refusjoner og tiltaksøkonomi</label>
     </customValue>
     <customValue>
         <fullName>Sykefravaersoppfolging</fullName>
         <default>false</default>
-        <label>AG 2 - Sykefraværsoppfølging</label>
+        <label>AG - Sykefraværsoppfølging</label>
     </customValue>
     <customValue>
         <fullName>Permittering_og_rekruttering</fullName>
         <default>false</default>
-        <label>AG 3 - Permittering og rekruttering</label>
+        <label>AG - Rekruttering og permittering</label>
     </customValue>
     <customValue>
         <fullName>Arbeid</fullName>
@@ -71,7 +71,8 @@
         <isActive>false</isActive>
         <label>Felles</label>
     </customValue>
-    <description>Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for veilederne.</description>
+    <description>Ferdigheter på ulike fagområder. Brukes til å filtrere ut relevant informasjon for
+        veilederne.</description>
     <masterLabel>Skills</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>
