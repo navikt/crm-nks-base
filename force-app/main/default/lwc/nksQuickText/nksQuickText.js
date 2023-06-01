@@ -22,6 +22,8 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api required = false;
 
+    recentlyInserted = "";
+
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
     }
@@ -258,6 +260,28 @@ export default class nksQuickText extends LightningElement {
         this.dispatchEvent(attributeChangeEvent);
     }
 
+    _getQmappedItem(abbreviation) {
+        for (const item of this.qmap) {
+            if (item.abbreviation.toUpperCase() !== item.content.message) {
+                item.abbreviation = item.abbreviation.toUpperCase();
+                if (item.abbreviation === abbreviation.toUpperCase()) {
+                    return item;
+                }
+            }
+            if (item.abbreviation === abbreviation) {
+                return item;
+            }
+        }
+    }
+
+    /**
+     * Performs text replacement and alerts screen reader
+     */
+    _replaceWithQuickText(editor, replacement, start, end) {
+        editor.setRangeText(replacement, start, end, 'end');
+        this.recentlyInserted = replacement;
+    }
+
     insertquicktext(event) {
         if (QUICK_TEXT_TRIGGER_KEYS.includes(event.key)) {
             const editor = this.textArea;
@@ -269,39 +293,33 @@ export default class nksQuickText extends LightningElement {
                 .split(' ')
                 .pop();
 
-            const abbreviation = lastItem.replace(event.key, '');
+            const lastWord = lastItem.replace(event.key, '');
 
-            let obj;
-            for (const item of this.qmap) {
-                if (item.abbreviation.toUpperCase() !== item.content.message) {
-                    item.abbreviation = item.abbreviation.toUpperCase();
-                    if (item.abbreviation === abbreviation.toUpperCase()) {
-                        obj = item;
+            let obj = this._getQmappedItem(lastWord);
+
+            if(obj !== undefined) {
+                const quickText = obj.content.message;
+                const isCaseSensitive = obj.content.isCaseSensitive;
+                const startindex = carretPositionEnd - lastWord.length - 1;
+                const lastChar = event.key === 'Enter' ? '\n' : event.key;
+
+                if (isCaseSensitive) {
+                    const words = quickText.split(' ');
+
+                    if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
+                        words[0] = words[0].toLowerCase();
+                        const lowerCaseQuickText = words.join(' ');
+                        this._replaceWithQuickText(editor, lowerCaseQuickText + lastChar, startindex, carretPositionEnd);
+                    } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
+                        const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
+                        this._replaceWithQuickText(editor, upperCaseQuickText + lastChar, startindex, carretPositionEnd);
                     }
-                }
-                if (item.abbreviation === abbreviation) {
-                    obj = item;
-                }
-            }
-
-            const quickText = obj.content.message;
-            const isCaseSensitive = obj.content.isCaseSensitive;
-            const startindex = carretPositionEnd - abbreviation.length - 1;
-            const lastChar = event.key === 'Enter' ? '\n' : event.key;
-
-            if (isCaseSensitive) {
-                const words = quickText.split(' ');
-
-                if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
-                    words[0] = words[0].toLowerCase();
-                    const lowerCaseQuickText = words.join(' ');
-                    editor.setRangeText(lowerCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
-                } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
-                    const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                    editor.setRangeText(upperCaseQuickText + lastChar, startindex, carretPositionEnd, 'end');
+                } else {
+                    this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd);
                 }
             } else {
-                editor.setRangeText(quickText + lastChar, startindex, carretPositionEnd, 'end');
+                // Clear screen reader buffer for reading the next one.
+                this.recentlyInserted = '';
             }
         }
     }
