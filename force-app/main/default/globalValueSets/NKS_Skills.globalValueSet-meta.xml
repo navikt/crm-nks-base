@@ -3,17 +3,17 @@
     <customValue>
         <fullName>ArbeidsgiverSamhandler</fullName>
         <default>false</default>
-        <label>AG - Refusjoner, inntektsmelding, andre henvendelser</label>
+        <label>AG - Refusjoner og tiltaksøkonomi</label>
     </customValue>
     <customValue>
         <fullName>Sykefravaersoppfolging</fullName>
         <default>false</default>
-        <label> AG - Oppfølging eller tilrettelegging av sykemeldte ansatte </label>
+        <label>AG - Sykefraværsoppfølging</label>
     </customValue>
     <customValue>
         <fullName>Permittering_og_rekruttering</fullName>
         <default>false</default>
-        <label>AG - Rekruttering, permittering, arbeidsrettede tiltak</label>
+        <label>AG - Rekruttering og permittering</label>
     </customValue>
     <customValue>
         <fullName>Arbeid</fullName>
