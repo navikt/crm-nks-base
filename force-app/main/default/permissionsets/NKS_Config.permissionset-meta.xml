@@ -212,9 +212,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <field>Thread__c.CRM_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Created_By_NAV_Unit__c</field>
-        <readable>true</readable>
+        <editable>true</editable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Config</label>
