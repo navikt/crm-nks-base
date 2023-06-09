@@ -28,6 +28,10 @@
                     "versionNumber": "1.18.0.LATEST"
                 },
                 {
+                    "package": "crm-henvendelse-base",
+                    "versionNumber": "0.16.0.LATEST"
+                },
+                {
                     "package": "crm-platform-integration",
                     "versionNumber": "0.100.0.LATEST"
                 },
@@ -46,10 +50,6 @@
                 {
                     "package": "crm-shared-flowComponents",
                     "versionNumber": "0.4.0.LATEST"
-                },
-                {
-                    "package": "crm-henvendelse-base",
-                    "versionNumber": "0.16.0.LATEST"
                 },
                 {
                     "package": "crm-henvendelse",
