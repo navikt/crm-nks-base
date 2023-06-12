@@ -3,7 +3,7 @@
     <fullName>NKS_News_Archive__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <inlineHelpText>Velg hvis artikkelen skal lagres i Websack.</inlineHelpText>
+    <inlineHelpText>Velg hvis artikkelen skal lagres i Websak.</inlineHelpText>
     <label>Archive</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
