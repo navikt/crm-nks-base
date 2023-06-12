@@ -1,15 +1,15 @@
 public with sharing class CRM_SecurityQuestionPicker {
     /**
-     * @description get questions regarding registered bank account in TPS
+     * @description get questions regarding registered bank account in KRP
      * @author Tor Håkon Sigurdsen
      * @param  ident ident description
      * @return       List with questions
      */
     @AuraEnabled(cacheable=true)
-    public static List<SecurityQuestionWrapper> getQuestionsTPS(String ident) {
+    public static List<SecurityQuestionWrapper> getQuestionsKRP(String ident) {
         List<SecurityQuestionWrapper> questions = new List<SecurityQuestionWrapper>();
-        TPS_Bankkonto bankkonto = TPS_Persons.getBankkonto(ident);
-        String bankAccountNumber = bankkonto?.bankkontoNorge?.bankkontonummer;
+        KRP_Konto bankkonto = KRP_Persons.getBankkonto(ident);
+        String bankAccountNumber = bankkonto?.kontonummer;
         if (String.isNotBlank(bankAccountNumber)) {
             questions.add(new SecurityQuestionWrapper('Hva er bankkontonummeret ditt?', bankAccountNumber));
         }

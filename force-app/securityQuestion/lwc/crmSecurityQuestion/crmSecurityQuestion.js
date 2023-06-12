@@ -1,5 +1,5 @@
 import { LightningElement, wire, api } from 'lwc';
-import getSecurityQuestionTPS from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsTPS';
+import getSecurityQuestionKRP from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsKRP';
 import getSecurityQuestionKRR from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsKRR';
 import getSecurityQuestionPDL from '@salesforce/apex/CRM_SecurityQuestionPicker.getQuestionsPDL';
 import ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
@@ -92,7 +92,7 @@ export default class CrmSecurityQuestion extends LightningElement {
         this.answer = 'Henter spørsmål...';
         try {
             Promise.allSettled([
-                getSecurityQuestionTPS({ ident: this.personIdent }),
+                getSecurityQuestionKRP({ ident: this.personIdent }),
                 getSecurityQuestionKRR({ ident: this.personIdent }),
                 getSecurityQuestionPDL({ ident: this.personIdent })
             ]).then((values) => {

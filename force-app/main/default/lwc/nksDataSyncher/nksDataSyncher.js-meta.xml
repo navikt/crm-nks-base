@@ -3,7 +3,7 @@
     <apiVersion>51.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>External Data Syncher</masterLabel>
-    <description>Imports henvendelse and bankaccountnumber from TPS</description>
+    <description>Imports henvendelse and bankaccountnumber from KRP</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
