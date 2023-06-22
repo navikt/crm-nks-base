@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Log_Error</name>
+        <label>Log Error</label>
+        <locationX>440</locationX>
+        <locationY>647</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>NKS_Announcement__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <stringValue>Det har oppstått en feil i å sende Custom Notification.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
-        <locationY>1139</locationY>
+        <locationY>539</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
+        <faultConnector>
+            <targetReference>Log_Error</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
@@ -41,63 +81,31 @@
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
-        <name>Assign_UserId</name>
-        <label>Assign UserId</label>
-        <locationX>264</locationX>
-        <locationY>863</locationY>
+        <name>Add_UserIds</name>
+        <label>Add UserIds</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>RecipientIDs</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Loop_Through_Users.Id</elementReference>
+                <stringValue>0052o000009chHfAAI</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>RecipientIDs</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>0051w000009QzamAAC</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_Through_Users</targetReference>
+            <targetReference>Send_Notification</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>User_Is_Active</name>
-        <label>User Is Active</label>
-        <locationX>396</locationX>
-        <locationY>755</locationY>
-        <defaultConnector>
-            <targetReference>Loop_Through_Users</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Loop_Through_Users.IsActive</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_UserId</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <environments>Default</environments>
     <interviewLabel>Announcement Send Notification On Publishing News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Publishing News</label>
-    <loops>
-        <name>Loop_Through_Users</name>
-        <label>Loop Through Users</label>
-        <locationX>176</locationX>
-        <locationY>647</locationY>
-        <collectionReference>Get_RecipientIDs</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>User_Is_Active</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Send_Notification</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -124,7 +132,7 @@
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Profile</targetReference>
+            <targetReference>Add_UserIds</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -136,48 +144,6 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>CustomNotificationType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Profile</name>
-        <label>Get Profile</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_RecipientIDs</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>NAV Kontaktsenter - Redaktør</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Profile</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_RecipientIDs</name>
-        <label>Get RecipientIDs</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Loop_Through_Users</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ProfileId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Profile.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>User</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
@@ -202,24 +168,23 @@
                 <stringValue>Published</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>NKS_News_Author__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>NKS_Announcement__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <variables>
-        <name>currentItemFromSourceCollection</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>User</objectType>
-    </variables>
-    <variables>
         <name>RecipientIDs</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
