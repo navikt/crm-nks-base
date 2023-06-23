@@ -22,5 +22,5 @@
         <operation>equals</operation>
         <value>NKS_Announcement__c.News</value>
     </filters>
-    <label>Nyhet -  AG 1+4</label>
+    <label>Nyhet - AG Refusjoner og tiltaksøkonomi</label>
 </ListView>

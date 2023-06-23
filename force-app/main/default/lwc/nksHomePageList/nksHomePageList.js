@@ -331,10 +331,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         return !this.hasRecord && this.isSTO ? true : false;
     }
 
-    get setEmptyStateForChat() {
-        return !this.hasRecord && this.objectName === 'LiveChatTranscript' ? true : false;
-    }
-
     get lastIndex() {
         let index = 0;
         if (this.objectName === 'LiveChatTranscript' || this.isSTO) {

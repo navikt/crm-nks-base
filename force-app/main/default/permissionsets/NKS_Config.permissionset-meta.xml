@@ -73,6 +73,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CRM_Run_Case_Assignment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Common_Code__c.CRM_Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -81,7 +86,7 @@
         <field>Common_Code__c.CRM_Archive_Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
-     <fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Common_Code__c.CRM_Available__c</field>
         <readable>true</readable>
@@ -108,6 +113,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Conversation_Note__c.CRM_Read_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Journal_Entry__c.CRM_Conversation_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -117,7 +127,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Journal_Entry__c.Journal_Entry_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -199,6 +209,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServiceResourceSkill.SkillLevel</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Thread__c.CRM_Assignee_NAV_Unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

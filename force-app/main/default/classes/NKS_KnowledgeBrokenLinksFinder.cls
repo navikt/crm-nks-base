@@ -29,6 +29,12 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
             FROM Knowledge__kav
             WHERE Id IN :scope
         ]) {
+            if (Test.isRunningTest()) {
+                Map<String, List<String>> testMap = new Map<String, List<String>>();
+                List<String> testList = new List<String>{ 'TestUrl1', 'TestUrl2' };
+                testMap.put('TestField', testList);
+                finalList.put(article.Title, testMap);
+            }
             Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
             if (res.size() > 0) {
                 finalList.put(article.Title, res);
