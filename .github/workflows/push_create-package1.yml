@@ -9,5 +9,5 @@ on:
 jobs:
   create-package:
     name: Run Package Creation
-    uses: navikt/crm-workflows-base/.github/workflows/packageCreate.yml@convertFromSfdxToSf
+    uses: navikt/crm-workflows-base/.github/workflows/packageCreate.yml@master
     secrets: inherit
