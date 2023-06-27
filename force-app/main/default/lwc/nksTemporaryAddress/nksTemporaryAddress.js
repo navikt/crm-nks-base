@@ -15,14 +15,12 @@ export default class NksBostedAddress extends LightningElement {
     zipCode;
     countryCode;
     municipalityNumber;
-
     open = false;
 
     connectedCallback() {
         if (this.relationshipField != null && this.relationshipField !== '') {
             this.getRelatedRecordId(this.relationshipField, this.objectApiName);
         }
-        this.wireFields = [this.objectApiName + '.Id'];
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
