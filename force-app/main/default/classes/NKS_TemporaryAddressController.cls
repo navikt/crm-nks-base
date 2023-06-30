@@ -92,9 +92,11 @@ public with sharing class NKS_TemporaryAddressController {
                 tempAddresses.add(obj);
             }
         } catch (Exception e) {
-            // Catch and handle general exception
+            // Catch and handle exception
             logger.error(
-                'Problem getting links (NamedCredentials) to be checked: ' +
+                'Problem getting temporary address for personIdent: ' +
+                personIdent +
+                '\n' +
                 e.getMessage() +
                 '\n' +
                 e.getStackTraceString(),
