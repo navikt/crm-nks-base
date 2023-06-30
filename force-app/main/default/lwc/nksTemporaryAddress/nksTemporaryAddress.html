@@ -1,5 +1,5 @@
 <template>
-    <article if:true={address} class="slds-card slds-card_narrow" style="top: -1.5rem">
+    <article if:true={hasRecord} class="slds-card slds-card_narrow">
         <div class="slds-card__header">
             <header class="slds-media slds-media_center slds-var-p-horizontal_small">
                 <div class="slds-accordion__summary-heading slds-var-p-right_medium">
@@ -19,7 +19,7 @@
                                         size="x-small"
                                         class="slds-current-color slds-p-horizontal_x-small"
                                     ></lightning-icon>
-                                    <span title="Bostedsadresse">Midlertidig adresse</span>
+                                    <span title="Midlertidig adresse">Midlertidig adresse</span>
                                 </span>
                             </h3>
                         </div>
@@ -30,10 +30,20 @@
         <template if:true={open}>
             <div class="slds-card__body">
                 <div class="slds-var-p-horizontal_large">
-                    <p if:true={address} class="slds-text-title">Adresse: {address}</p>
-                    <p if:true={zipCode} class="slds-text-title">Postnummer: {zipCode}</p>
-                    <p if:true={countryCode} class="slds-text-title">Landskode: {countryCode}</p>
-                    <p if:true={municipalityNumber} class="slds-text-title">Kommunenummer: {municipalityNumber}</p>
+                    <template for:each={temporaryAddresses} for:item="tempAddress">
+                        <p key={tempAddress.address} class="slds-text-heading_small">
+                            Midlertidig adresse: {tempAddress.address}
+                        </p>
+                        <p key={tempAddress.address} class="slds-text-heading_small">
+                            Midlertidig postnummer: {tempAddress.zipCode}
+                        </p>
+                        <p key={tempAddress.address} class="slds-text-heading_small">
+                            Midlertidig landskode: {tempAddress.countryCode}
+                        </p>
+                        <p key={tempAddress.address} class="slds-text-heading_small">
+                            Midlertidig kommunenummer: {tempAddress.municipalityNumber}
+                        </p>
+                    </template>
                 </div>
             </div>
         </template>
