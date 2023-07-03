@@ -1,51 +1,42 @@
 <template>
-    <article if:true={hasRecord} class="slds-card slds-card_narrow">
-        <div class="slds-card__header">
-            <header class="slds-media slds-media_center slds-var-p-horizontal_small">
-                <div class="slds-accordion__summary-heading slds-var-p-right_medium">
-                    <button
-                        type="button"
-                        onclick={onclickHandler}
-                        slot="title"
-                        class="section-control slds-button slds-button_reset slds-theme_shade"
-                        style="width: 100%; line-height: 2rem"
-                        aria-expanded={open}
-                    >
-                        <div class="slds-media__body">
-                            <h3>
-                                <span>
-                                    <lightning-icon
-                                        icon-name={iconName}
-                                        size="x-small"
-                                        class="slds-current-color slds-p-horizontal_x-small"
-                                    ></lightning-icon>
-                                    <span title="Midlertidig adresse">Midlertidig adresse</span>
-                                </span>
-                            </h3>
-                        </div>
-                    </button>
-                </div>
-            </header>
-        </div>
-        <template if:true={open}>
-            <div class="slds-card__body">
-                <div class="slds-var-p-horizontal_large">
-                    <template for:each={temporaryAddresses} for:item="tempAddress">
-                        <p key={tempAddress.address} class="slds-text-heading_small">
-                            Midlertidig adresse: {tempAddress.address}
-                        </p>
-                        <p key={tempAddress.address} class="slds-text-heading_small">
-                            Midlertidig postnummer: {tempAddress.zipCode}
-                        </p>
-                        <p key={tempAddress.address} class="slds-text-heading_small">
-                            Midlertidig landskode: {tempAddress.countryCode}
-                        </p>
-                        <p key={tempAddress.address} class="slds-text-heading_small">
-                            Midlertidig kommunenummer: {tempAddress.municipalityNumber}
-                        </p>
-                    </template>
-                </div>
+    <template if:true={hasRecords}>
+        <div class={sectionClass}>
+            <h3 class="slds-section__title">
+                <button
+                    aria-controls="expando-unique-id"
+                    aria-expanded={isExpanded}
+                    class="slds-button slds-section__title-action"
+                    onclick={handleOpen}
+                >
+                    <lightning-icon
+                        class="slds-var-p-right_small icon"
+                        icon-name={sectionIconName}
+                        size="x-small"
+                        alternative-text="switch"
+                    ></lightning-icon>
+                    <span class="slds-truncate" title="Section Title">Midlertidig adresse</span>
+                </button>
+            </h3>
+            <div
+                aria-hidden={ariaHidden}
+                class="slds-section__content slds-var-p-horizontal_large"
+                id="expando-unique-id"
+            >
+                <template for:each={temporaryAddresses} for:item="tempAddress">
+                    <p if:true={tempAddress.address} key={tempAddress.address} class="slds-text-title">
+                        Adresse: {tempAddress.address}
+                    </p>
+                    <p if:true={tempAddress.zipCode} key={tempAddress.address} class="slds-text-title">
+                        Postnummer: {tempAddress.zipCode}
+                    </p>
+                    <p if:true={tempAddress.countryCode} key={tempAddress.address} class="slds-text-title">
+                        Landskode: {tempAddress.countryCode}
+                    </p>
+                    <p if:true={tempAddress.municipalityNumber} key={tempAddress.address} class="slds-text-title">
+                        Kommunenummer: {tempAddress.municipalityNumber}
+                    </p>
+                </template>
             </div>
-        </template>
-    </article>
+        </div>
+    </template>
 </template>
