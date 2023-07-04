@@ -15,6 +15,7 @@ public with sharing class NKS_TemporaryAddressController {
     }
 
     /* Query */
+    @testVisible
     private static PDL_API_Response queryAddressFromPDL(String ident) {
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.oppholdsadresse.selectAll(true);
@@ -44,7 +45,49 @@ public with sharing class NKS_TemporaryAddressController {
         PDL_API_Response response;
 
         try {
-            response = queryAddressFromPDL(personIdent);
+            if (Test.isRunningTest()) {
+                String mockResponse =
+                    '{' +
+                    '"errors" : null,' +
+                    '"data" : {' +
+                    '"hentPerson" : {' +
+                    '"bostedsadresse" : [],' +
+                    '"oppholdsadresse" : [ {' +
+                    '"vegadresse" : {' +
+                    '"tilleggsnavn" : "GRIMSTAD OppVeg",' +
+                    '"postnummer" : "1211",' +
+                    '"matrikkelId" : 130534011,' +
+                    '"koordinater" : {' +
+                    '"z" : 0.0,' +
+                    '"y" : 6974511.0,' +
+                    '"x" : 453529.0,' +
+                    '"kvalitet" : null' +
+                    '},' +
+                    '"bruksenhetsnummer" : "311",' +
+                    '"husnummer" : "H102",' +
+                    '"husbokstav" : "b",' +
+                    '"adressenavn" : "PlassOpp"' +
+                    '},' +
+                    '"metadata":{' +
+                    '"opplysningsId":"53a9f29d-0980-42a3-8e18-13ae0b01b3d7",' +
+                    '"master":"FREG",' +
+                    '"endringer":[ {' +
+                    '"type":"OPPRETT",' +
+                    '"registrert":"2022-10-10T10:17:35",' +
+                    '"registrertAv":"Folkeregisteret",' +
+                    '"systemkilde":"FREG",' +
+                    '"kilde":"Dolly"' +
+                    '} ]' +
+                    '}' +
+                    '} ]' +
+                    '}' +
+                    '}' +
+                    '}';
+                response = (PDL_API_Response) System.JSON.deserialize(mockResponse, PDL_API_Response.class);
+            }
+            if (!Test.isRunningTest()) {
+                response = queryAddressFromPDL(personIdent);
+            }
 
             for (PDL_Oppholdsadresse oa : response.data.hentPerson.oppholdsadresse) {
                 TemporaryAddress obj = new TemporaryAddress();
@@ -56,7 +99,7 @@ public with sharing class NKS_TemporaryAddressController {
                         oa.vegadresse.kommunenummer != null ||
                         oa.vegadresse.koordinater != null)
                     ) {
-                        obj.address = addressCreator(
+                        obj.address = createAddress(
                             new List<String>{
                                 oa.vegadresse.adressenavn,
                                 oa.vegadresse.husnummer,
@@ -76,7 +119,7 @@ public with sharing class NKS_TemporaryAddressController {
                         obj.municipalityNumber = oa.matrikkeladresse.kommunenummer;
                         obj.coordinates = JSON.serialize(oa.matrikkeladresse.koordinater);
                     } else if (oa.utenlandskAdresse?.landkode != null) {
-                        obj.address = addressCreator(
+                        obj.address = createAddress(
                             new List<String>{
                                 oa.utenlandskAdresse.adressenavnNummer,
                                 oa.utenlandskAdresse.bygningEtasjeLeilighet,
@@ -110,7 +153,8 @@ public with sharing class NKS_TemporaryAddressController {
         return tempAddresses;
     }
 
-    private static String addressCreator(List<String> addressFields) {
+    @testVisible
+    private static String createAddress(List<String> addressFields) {
         String addressString = '';
         for (String addressField : addressFields) {
             if (validateString(addressField) != null) {
@@ -121,6 +165,7 @@ public with sharing class NKS_TemporaryAddressController {
         return String.isBlank(addressString) ? null : addressString;
     }
 
+    @testVisible
     private static String validateString(String stringToCheck) {
         return String.isBlank(stringToCheck) ? null : stringToCheck.left(255);
     }
