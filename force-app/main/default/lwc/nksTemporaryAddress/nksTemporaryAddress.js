@@ -1,25 +1,25 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getResidentialAddress from '@salesforce/apex/NKS_BostedAddressController.getBostedAddress';
+import getTemporaryAddresses from '@salesforce/apex/NKS_TemporaryAddressController.getTemporaryAddresses';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
-    residentialAddresses = [];
+    temporaryAddresses = [];
     isExpanded = false;
     ariaHidden = true;
 
-    @wire(getResidentialAddress, {
+    @wire(getTemporaryAddresses, {
         recordId: '$recordId',
         objectApiName: '$objectApiName'
     })
     wiredAddresses({ error, data }) {
         if (data) {
-            this.residentialAddresses = data;
+            this.temporaryAddresses = data;
         }
         if (error) {
-            console.log('Problem getting residentialAddress: ' + error);
+            console.log('Problem getting temporaryAddress: ' + error);
         }
     }
 
@@ -28,7 +28,7 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     get hasRecords() {
-        return this.residentialAddresses.length > 0;
+        return this.temporaryAddresses.length > 0;
     }
 
     /* Function to handle open/close section */

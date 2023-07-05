@@ -14,7 +14,7 @@
                         size="x-small"
                         alternative-text="switch"
                     ></lightning-icon>
-                    <span class="slds-truncate" title="Section Title">Bostedsadresse</span>
+                    <span class="slds-truncate" title="Section Title">Midlertidig adresse</span>
                 </button>
             </h3>
             <div
@@ -22,15 +22,16 @@
                 class="slds-section__content slds-var-p-horizontal_medium"
                 id="expando-unique-id"
             >
-                <template for:each={residentialAddresses} for:item="boaddress">
-                    <div key={boaddress.adressenavn} class="slds-var-p-bottom_xx-small">
-                        <p class="slds-text-title">
-                            {boaddress.adressenavn} {boaddress.husnummer} {boaddress.husbokstav}
-                            {boaddress.bruksenhetsnummer}
+                <template for:each={temporaryAddresses} for:item="tempAddress">
+                    <div key={tempAddress.address} class="slds-var-p-bottom_xx-small">
+                        <p if:true={tempAddress.address} class="slds-text-title">Adresse: {tempAddress.address}</p>
+                        <p if:true={tempAddress.zipCode} class="slds-text-title">Postnummer: {tempAddress.zipCode}</p>
+                        <p if:true={tempAddress.countryCode} class="slds-text-title">
+                            Landskode: {tempAddress.countryCode}
                         </p>
-                        <p class="slds-text-title">{boaddress.postnummer} {boaddress.tilleggsnavn}</p>
-                        <p class="slds-text-title">{boaddress.region} {boaddress.landkode}</p>
-                        <p class="slds-text-title">Endret {boaddress.endringRegistrertDato} i Folkeregisteret</p>
+                        <p if:true={tempAddress.municipalityNumber} class="slds-text-title">
+                            Kommunenummer: {tempAddress.municipalityNumber}
+                        </p>
                     </div>
                 </template>
             </div>
