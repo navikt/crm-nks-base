@@ -23,18 +23,16 @@
                 id="expando-unique-id"
             >
                 <template for:each={temporaryAddresses} for:item="tempAddress">
-                    <p if:true={tempAddress.address} key={tempAddress.address} class="slds-text-title">
-                        Adresse: {tempAddress.address}
-                    </p>
-                    <p if:true={tempAddress.zipCode} key={tempAddress.address} class="slds-text-title">
-                        Postnummer: {tempAddress.zipCode}
-                    </p>
-                    <p if:true={tempAddress.countryCode} key={tempAddress.address} class="slds-text-title">
-                        Landskode: {tempAddress.countryCode}
-                    </p>
-                    <p if:true={tempAddress.municipalityNumber} key={tempAddress.address} class="slds-text-title">
-                        Kommunenummer: {tempAddress.municipalityNumber}
-                    </p>
+                    <div key={tempAddress.address} class="slds-var-p-bottom_xx-small">
+                        <p if:true={tempAddress.address} class="slds-text-title">Adresse: {tempAddress.address}</p>
+                        <p if:true={tempAddress.zipCode} class="slds-text-title">Postnummer: {tempAddress.zipCode}</p>
+                        <p if:true={tempAddress.countryCode} class="slds-text-title">
+                            Landskode: {tempAddress.countryCode}
+                        </p>
+                        <p if:true={tempAddress.municipalityNumber} class="slds-text-title">
+                            Kommunenummer: {tempAddress.municipalityNumber}
+                        </p>
+                    </div>
                 </template>
             </div>
         </div>
