@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getBostedAddress from '@salesforce/apex/NKS_BostedAddressController.getBostedAddress';
+import getResidentialAddress from '@salesforce/apex/NKS_BostedAddressController.getBostedAddress';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -10,17 +10,16 @@ export default class NksBostedAddress extends LightningElement {
     isExpanded = false;
     ariaHidden = true;
 
-    @wire(getBostedAddress, {
+    @wire(getResidentialAddress, {
         recordId: '$recordId',
         objectApiName: '$objectApiName'
     })
     wiredAddresses({ error, data }) {
         if (data) {
-            console.log('pppp:' + JSON.stringify(data));
             this.residentialAddresses = data;
         }
         if (error) {
-            this.addError(error);
+            console.log('Problem getting residentialAddress: ' + error);
         }
     }
 

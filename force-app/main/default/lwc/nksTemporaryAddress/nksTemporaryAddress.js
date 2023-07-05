@@ -19,7 +19,7 @@ export default class NksBostedAddress extends LightningElement {
             this.temporaryAddresses = data;
         }
         if (error) {
-            this.addError(error);
+            console.log('Problem getting temporaryAddress: ' + error);
         }
     }
 
