@@ -16,7 +16,6 @@ export default class NksBostedAddress extends LightningElement {
     })
     wiredAddresses({ error, data }) {
         if (data) {
-            console.log('pppp:' + JSON.stringify(data));
             this.temporaryAddresses = data;
         }
         if (error) {
