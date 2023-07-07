@@ -24,13 +24,15 @@
             >
                 <template for:each={residentialAddresses} for:item="boaddress">
                     <div key={boaddress.adressenavn} class="slds-var-p-bottom_xx-small">
-                        <p class="slds-text-title">
-                            {boaddress.adressenavn} {boaddress.husnummer} {boaddress.husbokstav}
-                            {boaddress.bruksenhetsnummer}
+                        <p class="slds-text-title text">{boaddress.fulltNavn}</p>
+                        <p class="slds-text-title text">
+                            {boaddress.adressenavn} {boaddress.husnummer}{boaddress.husbokstav}
                         </p>
-                        <p class="slds-text-title">{boaddress.postnummer} {boaddress.tilleggsnavn}</p>
-                        <p class="slds-text-title">{boaddress.region} {boaddress.landkode}</p>
-                        <p class="slds-text-title">Endret {boaddress.endringRegistrertDato} i Folkeregisteret</p>
+                        <p class="slds-text-title text">{boaddress.postnummer} {boaddress.poststed}</p>
+                        <p if:false={boaddress.region} class="slds-text-title text">NORGE NO</p>
+                        <p if:true={boaddress.region} class="slds-text-title- text">
+                            {boaddress.region} {boaddress.landkode}
+                        </p>
                     </div>
                 </template>
             </div>

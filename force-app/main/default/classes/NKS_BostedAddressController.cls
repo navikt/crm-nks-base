@@ -1,6 +1,8 @@
 public with sharing class NKS_BostedAddressController {
     public class BostedAddress {
         @AuraEnabled
+        public String fulltNavn;
+        @AuraEnabled
         public String adressenavn;
         @AuraEnabled
         public String husnummer;
@@ -12,6 +14,8 @@ public with sharing class NKS_BostedAddressController {
         public String bruksenhetsnummer;
         @AuraEnabled
         public String postnummer;
+        @AuraEnabled
+        public String poststed;
         @AuraEnabled
         public String endringRegistrertDato;
         @AuraEnabled
@@ -57,6 +61,7 @@ public with sharing class NKS_BostedAddressController {
         try {
             addressData = queryBostedAddressFromPDL(personIdent);
             boAddress = getAddressData(addressData);
+            setValues(boAddress, personIdent);
         } catch (Exception e) {
             BostedAddress b = new BostedAddress();
             b.recId = e.getMessage();
@@ -73,16 +78,15 @@ public with sharing class NKS_BostedAddressController {
         if (addressData.data.hentPerson.bostedsadresse.size() > 0) {
             PDL_Bostedsadresse latestAddress = getLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse);
             System.debug(latestAddress);
-            if (
-                latestAddress?.vegadresse != null ||
-                latestAddress?.matrikkeladresse != null
-            ) {
+            if (latestAddress?.vegadresse != null || latestAddress?.matrikkeladresse != null) {
                 addrData.addAll(getBostedVegMatrikkAddress(latestAddress, boAddr));
                 return addrData;
             }
         }
         if (addressData.data.hentPerson.oppholdsadresse.size() > 0) {
-            addrData.addAll(getOppholdsAddress(getLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse), boAddr));
+            addrData.addAll(
+                getOppholdsAddress(getLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse), boAddr)
+            );
             return addrData;
         }
         boAddr.adressenavn = 'Ikke registrert';
@@ -90,68 +94,78 @@ public with sharing class NKS_BostedAddressController {
         return addrData;
     }
     @TestVisible
-    private static PDL_Bostedsadresse getLastUpdatedBostedsAdresse(List<PDL_Bostedsadresse> addresses){
+    private static PDL_Bostedsadresse getLastUpdatedBostedsAdresse(List<PDL_Bostedsadresse> addresses) {
         PDL_Bostedsadresse latestAddress;
-        for(PDL_Bostedsadresse addr : addresses){
-            if(addr.gyldigFraOgMed == null ) continue;
-            if(latestAddress == null){
+        for (PDL_Bostedsadresse addr : addresses) {
+            if (addr.gyldigFraOgMed == null)
+                continue;
+            if (latestAddress == null) {
                 latestAddress = addr;
-            } else{
-                if(latestAddress.gyldigFraOgMed >= addr.gyldigFraOgMed) continue;
+            } else {
+                if (latestAddress.gyldigFraOgMed >= addr.gyldigFraOgMed)
+                    continue;
                 latestAddress = addr;
             }
         }
-        if(latestAddress != null) return latestAddress;
+        if (latestAddress != null)
+            return latestAddress;
 
-        for(PDL_Bostedsadresse addr : addresses){
-            if(latestAddress == null){
+        for (PDL_Bostedsadresse addr : addresses) {
+            if (latestAddress == null) {
                 latestAddress = addr;
-            } else{
-                if(getCreatedDate(latestAddress.metadata) >= getCreatedDate(addr.metadata)) continue;
+            } else {
+                if (getCreatedDate(latestAddress.metadata) >= getCreatedDate(addr.metadata))
+                    continue;
                 latestAddress = addr;
             }
         }
         return latestAddress;
     }
     @TestVisible
-    private static PDL_Oppholdsadresse getLastUpdatedOppholdsAdresse(List<PDL_Oppholdsadresse> addresses){
+    private static PDL_Oppholdsadresse getLastUpdatedOppholdsAdresse(List<PDL_Oppholdsadresse> addresses) {
         PDL_Oppholdsadresse latestAddress;
-        for(PDL_Oppholdsadresse addr : addresses){
-            if(addr.gyldigFraOgMed == null ) continue;
-            if(latestAddress == null){
+        for (PDL_Oppholdsadresse addr : addresses) {
+            if (addr.gyldigFraOgMed == null)
+                continue;
+            if (latestAddress == null) {
                 latestAddress = addr;
-            } else{
-                if(latestAddress.gyldigFraOgMed >= addr.gyldigFraOgMed) continue;
+            } else {
+                if (latestAddress.gyldigFraOgMed >= addr.gyldigFraOgMed)
+                    continue;
                 latestAddress = addr;
             }
         }
-        if(latestAddress != null) return latestAddress;
-        for(PDL_Oppholdsadresse addr : addresses){
-            if(latestAddress == null){
+        if (latestAddress != null)
+            return latestAddress;
+        for (PDL_Oppholdsadresse addr : addresses) {
+            if (latestAddress == null) {
                 latestAddress = addr;
-            } else{
-                if(getCreatedDate(latestAddress.metadata) >= getCreatedDate(addr.metadata)) continue;
+            } else {
+                if (getCreatedDate(latestAddress.metadata) >= getCreatedDate(addr.metadata))
+                    continue;
                 latestAddress = addr;
             }
         }
         return latestAddress;
     }
     @TestVisible
-    private static Datetime getCreatedDate(PDL_Metadata metadata){
-        for(PDL_Endring endring : metadata.endringer){
-            if(endring.type == PDL_Endringstype.OPPRETT) return endring.registrert;
+    private static Datetime getCreatedDate(PDL_Metadata metadata) {
+        for (PDL_Endring endring : metadata.endringer) {
+            if (endring.type == PDL_Endringstype.OPPRETT)
+                return endring.registrert;
         }
         return Datetime.newInstance(0, 0, 0, 0, 0, 0);
     }
     @TestVisible
-    private static Datetime getLastUpdateDate(PDL_Metadata metadata){
+    private static Datetime getLastUpdateDate(PDL_Metadata metadata) {
         Datetime latestUpdate;
-        for(PDL_Endring endring : metadata.endringer){
-            if(endring.type == PDL_Endringstype.OPPRETT){
-                if(latestUpdate == null){
+        for (PDL_Endring endring : metadata.endringer) {
+            if (endring.type == PDL_Endringstype.OPPRETT) {
+                if (latestUpdate == null) {
                     latestUpdate = endring.registrert;
                 } else {
-                    if (latestUpdate < endring.registrert) latestUpdate = endring.registrert;
+                    if (latestUpdate < endring.registrert)
+                        latestUpdate = endring.registrert;
                 }
             }
         }
@@ -246,5 +260,27 @@ public with sharing class NKS_BostedAddressController {
                 String.valueOf(lstSplitDate[0]);
         }
         return null;
+    }
+
+    @Testvisible
+    private static void setValues(List<BostedAddress> addresses, String personIdent) {
+        String fulltNavn = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = :personIdent]
+            ?.NKS_Full_Name__c.toUpperCase();
+        try {
+            for (BostedAddress resAddress : addresses) {
+                resAddress.fulltNavn = fulltNavn;
+                String postCode = resAddress.postnummer;
+                if (postCode != null && postCode != '') {
+                    resAddress.poststed = [
+                        SELECT Name
+                        FROM Common_Code__c
+                        WHERE CRM_Code_Set__c = 'Postnummer' AND crm_code__c = :postCode
+                    ]
+                    ?.Name;
+                }
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }

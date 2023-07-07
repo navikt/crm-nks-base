@@ -1,6 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_BostedAddressController.getBostedAddress';
-
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
@@ -9,6 +8,7 @@ export default class NksBostedAddress extends LightningElement {
     residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
+    postOffice;
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
