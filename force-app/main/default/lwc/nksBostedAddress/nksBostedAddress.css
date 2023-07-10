@@ -10,3 +10,10 @@
 .text {
     line-height: 1.25rem;
 }
+
+.clipboardInput {
+    position: fixed;
+    top: -5rem;
+    height: 1px;
+    width: 10px;
+}

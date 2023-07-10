@@ -5,10 +5,10 @@ export default class NksBostedAddress extends LightningElement {
     @api recordId;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
-    residentialAddresses = [];
+    _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
-    postOffice;
+    showbutton = false;
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
@@ -16,7 +16,7 @@ export default class NksBostedAddress extends LightningElement {
     })
     wiredAddresses({ error, data }) {
         if (data) {
-            this.residentialAddresses = data;
+            this._residentialAddresses = data;
         }
         if (error) {
             console.log('Problem getting residentialAddress: ' + error);
@@ -29,6 +29,50 @@ export default class NksBostedAddress extends LightningElement {
 
     get hasRecords() {
         return this.residentialAddresses.length > 0;
+    }
+
+    get residentialAddresses() {
+        let addressesToReturn = [];
+        if (this._residentialAddresses.length > 0) {
+            this.showbutton = true;
+            this._residentialAddresses.forEach((element) => {
+                if (element.fulltNavn) {
+                    addressesToReturn.push(element.fulltNavn);
+                }
+                let addressLine = '';
+                if (element.adressenavn) {
+                    addressLine += element.adressenavn;
+                }
+                if (element.husnummer) {
+                    addressLine += ' ' + element.husnummer;
+                }
+                if (element.husbokstav) {
+                    addressLine += element.husbokstav;
+                }
+                addressesToReturn.push(addressLine);
+                let postInfo = '';
+                if (element.postnummer) {
+                    postInfo += element.postnummer;
+                }
+                if (element.poststed) {
+                    postInfo += ' ' + element.poststed;
+                }
+                addressesToReturn.push(postInfo);
+                let region = '';
+                if (element.region) {
+                    region += element.region;
+                }
+                if (element.landkode) {
+                    region += ' ' + element.landkode;
+                }
+                if (region !== '') {
+                    addressesToReturn.push(region);
+                } else {
+                    addressesToReturn.push('NORGE NO');
+                }
+            });
+        }
+        return addressesToReturn.join('\n');
     }
 
     /* Function to handle open/close section */
@@ -44,5 +88,16 @@ export default class NksBostedAddress extends LightningElement {
             this.isExpanded = true;
             this.ariaHidden = false;
         }
+    }
+
+    copyHandler() {
+        let clipboardInput = this.template.querySelector('.clipboardInput');
+        clipboardInput.disabled = false;
+        clipboardInput.hidden = false;
+        clipboardInput.value = this.residentialAddresses;
+        clipboardInput.select();
+        document.execCommand('copy');
+        clipboardInput.hidden = true;
+        clipboardInput.disabled = true;
     }
 }
