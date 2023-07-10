@@ -181,7 +181,7 @@ public with sharing class NKS_BostedAddressController {
             boAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
                 ? (vegAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            boAddr.postnummer = vegAddr?.postnummer;
+            boAddr.postnummer = vegAddr?.postnummer != null ? vegAddr?.postnummer : null;
             boAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
             boAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
             boAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
@@ -191,7 +191,7 @@ public with sharing class NKS_BostedAddressController {
             boAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
                 ? (matAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            boAddr.postnummer = matAddr?.postnummer;
+            boAddr.postnummer = matAddr?.postnummer != null ? matAddr?.postnummer : null;
             boAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             boAddr.recId = '2';
         }
@@ -212,7 +212,7 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
                 ? (vegAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            opAddr.postnummer = vegAddr?.postnummer;
+            opAddr.postnummer = vegAddr?.postnummer != null ? vegAddr?.postnummer : null;
             opAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
             opAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
             opAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
@@ -222,7 +222,7 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
                 ? (matAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            opAddr.postnummer = matAddr?.postnummer;
+            opAddr.postnummer = matAddr?.postnummer != null ? matAddr?.postnummer : null;
             opAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             opAddr.recId = '4';
         } else if (address?.utenlandskAdresse != null) {
@@ -233,8 +233,8 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = utenlandsAddr?.bygningEtasjeLeilighet != null
                 ? (utenlandsAddr?.bygningEtasjeLeilighet).toUpperCase()
                 : null;
-            opAddr.postnummer = utenlandsAddr?.postkode;
-            opAddr.tilleggsnavn = utenlandsAddr?.bySted != null ? (utenlandsAddr?.bySted).toUpperCase() : null;
+            opAddr.postnummer = utenlandsAddr?.postkode != null ? utenlandsAddr?.postkode : null;
+            opAddr.poststed = utenlandsAddr?.bySted != null ? (utenlandsAddr?.bySted).toUpperCase() : null;
             opAddr.region = utenlandsAddr?.regionDistriktOmraade != null
                 ? (utenlandsAddr?.regionDistriktOmraade).toUpperCase()
                 : null;
@@ -264,17 +264,18 @@ public with sharing class NKS_BostedAddressController {
 
     @Testvisible
     private static void setValues(List<BostedAddress> addresses, String personIdent) {
-        String fulltNavn = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = :personIdent]
+        String fulltNavn = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = :personIdent LIMIT 1]
             ?.NKS_Full_Name__c.toUpperCase();
         try {
             for (BostedAddress resAddress : addresses) {
                 resAddress.fulltNavn = fulltNavn;
                 String postCode = resAddress.postnummer;
-                if (postCode != null && postCode != '') {
+                if (postCode != null && resAddress.region == null) {
                     resAddress.poststed = [
                         SELECT Name
                         FROM Common_Code__c
                         WHERE CRM_Code_Set__c = 'Postnummer' AND crm_code__c = :postCode
+                        LIMIT 1
                     ]
                     ?.Name;
                 }

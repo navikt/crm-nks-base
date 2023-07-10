@@ -17,23 +17,13 @@
                     <span class="slds-truncate" title="Section Title">Midlertidig adresse</span>
                 </button>
             </h3>
-            <div
-                aria-hidden={ariaHidden}
-                class="slds-section__content slds-var-p-horizontal_medium"
-                id="expando-unique-id"
-            >
-                <template for:each={temporaryAddresses} for:item="tempAddress">
-                    <div key={tempAddress.address} class="slds-var-p-bottom_xx-small">
-                        <p if:true={tempAddress.address} class="slds-text-title">Adresse: {tempAddress.address}</p>
-                        <p if:true={tempAddress.zipCode} class="slds-text-title">Postnummer: {tempAddress.zipCode}</p>
-                        <p if:true={tempAddress.countryCode} class="slds-text-title">
-                            Landskode: {tempAddress.countryCode}
-                        </p>
-                        <p if:true={tempAddress.municipalityNumber} class="slds-text-title">
-                            Kommunenummer: {tempAddress.municipalityNumber}
-                        </p>
-                    </div>
-                </template>
+            <div aria-hidden={ariaHidden} class="slds-section__content" id="expando-unique-id">
+                <div class="slds-var-p-horizontal_medium">
+                    <lightning-formatted-text
+                        value={temporaryAddresses}
+                        class="slds-text-title text"
+                    ></lightning-formatted-text>
+                </div>
             </div>
         </div>
     </template>

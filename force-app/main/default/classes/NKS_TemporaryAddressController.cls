@@ -5,11 +5,21 @@ public with sharing class NKS_TemporaryAddressController {
         @AuraEnabled
         public String address;
         @AuraEnabled
-        public String coordinates;
+        public String city;
+        @AuraEnabled
+        public String coordinates; // not in use
         @AuraEnabled
         public String countryCode;
         @AuraEnabled
-        public String municipalityNumber;
+        public String fullName;
+        @AuraEnabled
+        public String houseNumber;
+        @AuraEnabled
+        public String houseLetter;
+        @AuraEnabled
+        public String municipalityNumber; // not in use
+        @AuraEnabled
+        public String region;
         @AuraEnabled
         public String zipCode;
     }
@@ -92,44 +102,47 @@ public with sharing class NKS_TemporaryAddressController {
             for (PDL_Oppholdsadresse oa : response.data.hentPerson.oppholdsadresse) {
                 TemporaryAddress obj = new TemporaryAddress();
                 if (oa.metadata?.historisk != true) {
-                    if (
-                        oa.vegadresse != null &&
-                        (oa.vegadresse.adressenavn != null ||
-                        oa.vegadresse.postnummer != null ||
-                        oa.vegadresse.kommunenummer != null ||
-                        oa.vegadresse.koordinater != null)
-                    ) {
+                    if (oa?.vegadresse != null) {
+                        obj.address = oa.vegadresse?.adressenavn != null
+                            ? (oa.vegadresse?.adressenavn).toUpperCase()
+                            : null;
+                        obj.houseNumber = oa.vegadresse?.husnummer != null
+                            ? (oa.vegadresse?.husnummer).toUpperCase()
+                            : null;
+                        obj.houseLetter = oa.vegadresse?.husbokstav != null
+                            ? (oa.vegadresse?.husbokstav).toUpperCase()
+                            : null;
+                        obj.zipCode = oa.vegadresse?.postnummer != null ? oa.vegadresse?.postnummer : null;
+                        obj.municipalityNumber = oa.vegadresse?.kommunenummer != null
+                            ? oa.vegadresse?.kommunenummer
+                            : null;
+                        obj.coordinates = oa.vegadresse?.koordinater != null
+                            ? JSON.serialize(oa.vegadresse?.koordinater)
+                            : null;
+                    } else if (oa?.matrikkeladresse != null) {
+                        obj.zipCode = oa.matrikkeladresse?.postnummer != null ? oa.matrikkeladresse?.postnummer : null;
+                        obj.municipalityNumber = oa.matrikkeladresse?.kommunenummer != null
+                            ? oa.matrikkeladresse?.kommunenummer
+                            : null;
+                        obj.coordinates = oa.matrikkeladresse?.koordinater != null
+                            ? JSON.serialize(oa.matrikkeladresse?.koordinater)
+                            : null;
+                    } else if (oa?.utenlandskAdresse != null) {
                         obj.address = createAddress(
                             new List<String>{
-                                oa.vegadresse.adressenavn,
-                                oa.vegadresse.husnummer,
-                                oa.vegadresse.husbokstav
+                                oa.utenlandskAdresse?.adressenavnNummer,
+                                oa.utenlandskAdresse?.bygningEtasjeLeilighet,
+                                oa.utenlandskAdresse?.postboksNummerNavn
                             }
                         );
-                        obj.zipCode = oa.vegadresse.postnummer;
-                        obj.municipalityNumber = oa.vegadresse.kommunenummer;
-                        obj.coordinates = JSON.serialize(oa.vegadresse.koordinater);
-                    } else if (
-                        oa.matrikkeladresse != null &&
-                        (oa.matrikkeladresse.postnummer != null ||
-                        oa.matrikkeladresse.kommunenummer != null ||
-                        oa.matrikkeladresse.koordinater != null)
-                    ) {
-                        obj.zipCode = oa.matrikkeladresse.postnummer;
-                        obj.municipalityNumber = oa.matrikkeladresse.kommunenummer;
-                        obj.coordinates = JSON.serialize(oa.matrikkeladresse.koordinater);
-                    } else if (oa.utenlandskAdresse?.landkode != null) {
-                        obj.address = createAddress(
-                            new List<String>{
-                                oa.utenlandskAdresse.adressenavnNummer,
-                                oa.utenlandskAdresse.bygningEtasjeLeilighet,
-                                oa.utenlandskAdresse.postboksNummerNavn,
-                                oa.utenlandskAdresse.postkode,
-                                oa.utenlandskAdresse.bysted,
-                                oa.utenlandskAdresse.regionDistriktOmraade
-                            }
-                        );
-                        obj.countryCode = oa.utenlandskAdresse.landkode.left(3);
+                        obj.zipcode = oa.utenlandskAdresse?.postkode != null ? oa.utenlandskAdresse?.postkode : null;
+                        obj.city = oa.utenlandskAdresse?.bysted != null ? oa.utenlandskAdresse?.bysted : null;
+                        obj.region = oa.utenlandskAdresse?.regionDistriktOmraade != null
+                            ? oa.utenlandskAdresse?.regionDistriktOmraade
+                            : null;
+                        obj.countryCode = oa.utenlandskAdresse?.landkode != null
+                            ? oa.utenlandskAdresse?.landkode.left(3)
+                            : null;
                     }
                 }
                 tempAddresses.add(obj);
@@ -150,6 +163,7 @@ public with sharing class NKS_TemporaryAddressController {
         } finally {
             logger.publish();
         }
+        setValues(tempAddresses, personIdent);
         return tempAddresses;
     }
 
@@ -158,7 +172,7 @@ public with sharing class NKS_TemporaryAddressController {
         String addressString = '';
         for (String addressField : addressFields) {
             if (validateString(addressField) != null) {
-                addressString += validateString(addressField) + ' ';
+                addressString += validateString(addressField).toUpperCase() + ' ';
             }
         }
         addressString = addressString.removeEnd(' ');
@@ -168,5 +182,28 @@ public with sharing class NKS_TemporaryAddressController {
     @testVisible
     private static String validateString(String stringToCheck) {
         return String.isBlank(stringToCheck) ? null : stringToCheck.left(255);
+    }
+
+    @TestVisible
+    private static void setValues(List<TemporaryAddress> addresses, String personIdent) {
+        String fullName = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = :personIdent LIMIT 1]
+            ?.NKS_Full_Name__c.toUpperCase();
+        try {
+            for (TemporaryAddress tempAddress : addresses) {
+                tempAddress.fullName = fullName;
+                String zipCode = tempAddress.zipCode;
+                if (zipCode != null && tempAddress.region == null) {
+                    tempAddress.city = [
+                        SELECT Name
+                        FROM Common_Code__c
+                        WHERE CRM_Code_Set__c = 'Postnummer' AND crm_code__c = :zipCode
+                        LIMIT 1
+                    ]
+                    ?.Name;
+                }
+            }
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }

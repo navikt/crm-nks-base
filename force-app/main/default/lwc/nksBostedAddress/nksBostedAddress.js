@@ -68,7 +68,7 @@ export default class NksBostedAddress extends LightningElement {
                 if (region !== '') {
                     addressesToReturn.push(region);
                 } else {
-                    addressesToReturn.push('NORGE NO');
+                    addressesToReturn.push('NORGE NO\n\n');
                 }
             });
         }

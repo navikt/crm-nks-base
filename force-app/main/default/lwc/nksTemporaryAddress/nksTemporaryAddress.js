@@ -6,7 +6,7 @@ export default class NksBostedAddress extends LightningElement {
     @api recordId;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
-    temporaryAddresses = [];
+    _temporaryAddresses = [];
     isExpanded = false;
     ariaHidden = true;
 
@@ -16,11 +16,54 @@ export default class NksBostedAddress extends LightningElement {
     })
     wiredAddresses({ error, data }) {
         if (data) {
-            this.temporaryAddresses = data;
+            this._temporaryAddresses = data;
         }
         if (error) {
             console.log('Problem getting temporaryAddress: ' + error);
         }
+    }
+
+    get temporaryAddresses() {
+        let addressesToReturn = [];
+        if (this._temporaryAddresses.length > 0) {
+            this._temporaryAddresses.forEach((element) => {
+                if (element.fullName) {
+                    addressesToReturn.push(element.fullName);
+                }
+                let addressLine = '';
+                if (element.address) {
+                    addressLine += element.address;
+                }
+                if (element.houseNumber) {
+                    addressLine += ' ' + element.houseNumber;
+                }
+                if (element.houseLetter) {
+                    addressLine += element.houseLetter;
+                }
+                addressesToReturn.push(addressLine);
+                let postInfo = '';
+                if (element.zipCode) {
+                    postInfo += element.zipCode;
+                }
+                if (element.city) {
+                    postInfo += ' ' + element.city;
+                }
+                addressesToReturn.push(postInfo);
+                let region = '';
+                if (element.region) {
+                    region += element.region;
+                }
+                if (element.countryCode) {
+                    region += ' ' + element.countryCode;
+                }
+                if (region !== '') {
+                    addressesToReturn.push(region);
+                } else {
+                    addressesToReturn.push('NORGE NO\n\n');
+                }
+            });
+        }
+        return addressesToReturn.join('\n');
     }
 
     get iconName() {

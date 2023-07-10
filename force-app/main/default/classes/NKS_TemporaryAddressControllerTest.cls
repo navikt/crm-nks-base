@@ -59,4 +59,46 @@ public with sharing class NKS_TemporaryAddressControllerTest {
         String testAddress = NKS_TemporaryAddressController.createAddress(fieldList);
         Test.stopTest();
     }
+
+    @isTest
+    static void testSetValues() {
+        // Create test data
+        Person__c p = new Person__c(
+            Name = '12345678910',
+            INT_LastName__c = 'TestLastName',
+            INT_FirstName__c = 'TestFirstname'
+        );
+        insert p;
+
+        List<NKS_TemporaryAddressController.TemporaryAddress> addresses = new List<NKS_TemporaryAddressController.TemporaryAddress>();
+        NKS_TemporaryAddressController.TemporaryAddress address1 = new NKS_TemporaryAddressController.TemporaryAddress();
+        address1.zipCode = '1234';
+        NKS_TemporaryAddressController.TemporaryAddress address2 = new NKS_TemporaryAddressController.TemporaryAddress();
+        address2.zipCode = '5678';
+        addresses.add(address1);
+        addresses.add(address2);
+
+        // Create Common_Code__c records for testing
+        Common_Code__c commonCode1 = new Common_Code__c();
+        commonCode1.CRM_Code_Set__c = 'Postnummer';
+        commonCode1.crm_code__c = '1234';
+        commonCode1.Name = 'Poststed1';
+        Common_Code__c commonCode2 = new Common_Code__c();
+        commonCode2.CRM_Code_Set__c = 'Postnummer';
+        commonCode2.crm_code__c = '5678';
+        commonCode2.Name = 'Poststed2';
+        List<Common_Code__c> commonCodes = new List<Common_Code__c>{ commonCode1, commonCode2 };
+        insert commonCodes;
+
+        Test.startTest();
+        // Call the method to be tested
+        NKS_TemporaryAddressController.setValues(addresses, '12345678910');
+        Test.stopTest();
+
+        // Verify the results
+        System.assertEquals('Poststed1', addresses[0].city);
+        System.assertEquals('Poststed2', addresses[1].city);
+        System.assertEquals('NAVN NAVNESEN', addresses[0].fullName);
+        System.assertEquals('NAVN NAVNESEN', addresses[1].fullName);
+    }
 }
