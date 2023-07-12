@@ -212,7 +212,7 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
                 ? (vegAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            opAddr.postnummer = vegAddr?.postnummer != null ? vegAddr?.postnummer : null;
+            opAddr.postnummer = vegAddr?.postnummer;
             opAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
             opAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
             opAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
@@ -222,7 +222,7 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
                 ? (matAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            opAddr.postnummer = matAddr?.postnummer != null ? matAddr?.postnummer : null;
+            opAddr.postnummer = matAddr?.postnummer;
             opAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             opAddr.recId = '4';
         } else if (address?.utenlandskAdresse != null) {
@@ -233,7 +233,7 @@ public with sharing class NKS_BostedAddressController {
             opAddr.bruksenhetsnummer = utenlandsAddr?.bygningEtasjeLeilighet != null
                 ? (utenlandsAddr?.bygningEtasjeLeilighet).toUpperCase()
                 : null;
-            opAddr.postnummer = utenlandsAddr?.postkode != null ? utenlandsAddr?.postkode : null;
+            opAddr.postnummer = utenlandsAddr?.postkode;
             opAddr.poststed = utenlandsAddr?.bySted != null ? (utenlandsAddr?.bySted).toUpperCase() : null;
             opAddr.region = utenlandsAddr?.regionDistriktOmraade != null
                 ? (utenlandsAddr?.regionDistriktOmraade).toUpperCase()

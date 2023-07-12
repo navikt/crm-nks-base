@@ -8,7 +8,7 @@ export default class NksBostedAddress extends LightningElement {
     _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
-    showbutton = false;
+    showCopyButton = false;
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
@@ -34,7 +34,7 @@ export default class NksBostedAddress extends LightningElement {
     get residentialAddresses() {
         let addressesToReturn = [];
         if (this._residentialAddresses.length > 0) {
-            this.showbutton = true;
+            this.showCopyButton = true;
             this._residentialAddresses.forEach((element) => {
                 if (element.fulltNavn) {
                     addressesToReturn.push(element.fulltNavn);
