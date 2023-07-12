@@ -181,7 +181,7 @@ public with sharing class NKS_BostedAddressController {
             boAddr.bruksenhetsnummer = vegAddr?.bruksenhetsnummer != null
                 ? (vegAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            boAddr.postnummer = vegAddr?.postnummer != null ? vegAddr?.postnummer : null;
+            boAddr.postnummer = vegAddr?.postnummer;
             boAddr.tilleggsnavn = vegAddr?.tilleggsnavn != null ? (vegAddr?.tilleggsnavn).toUpperCase() : null;
             boAddr.husbokstav = vegAddr?.husbokstav != null ? (vegAddr?.husbokstav).toUpperCase() : null;
             boAddr.husnummer = vegAddr?.husnummer != null ? (vegAddr?.husnummer).toUpperCase() : null;
@@ -191,7 +191,7 @@ public with sharing class NKS_BostedAddressController {
             boAddr.bruksenhetsnummer = matAddr?.bruksenhetsnummer != null
                 ? (matAddr?.bruksenhetsnummer).toUpperCase()
                 : null;
-            boAddr.postnummer = matAddr?.postnummer != null ? matAddr?.postnummer : null;
+            boAddr.postnummer = matAddr?.postnummer;
             boAddr.tilleggsnavn = matAddr?.tilleggsnavn != null ? (matAddr?.tilleggsnavn).toUpperCase() : null;
             boAddr.recId = '2';
         }
