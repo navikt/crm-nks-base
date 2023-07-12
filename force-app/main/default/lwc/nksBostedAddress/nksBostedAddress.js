@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getResidentialAddress from '@salesforce/apex/NKS_BostedAddressController.getBostedAddress';
+import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
@@ -36,39 +36,39 @@ export default class NksBostedAddress extends LightningElement {
         if (this._residentialAddresses.length > 0) {
             this.showCopyButton = true;
             this._residentialAddresses.forEach((element) => {
-                if (element.fulltNavn) {
-                    addressesToReturn.push(element.fulltNavn);
+                if (element.fullName) {
+                    addressesToReturn.push(element.fullName);
                 }
                 let addressLine = '';
-                if (element.adressenavn) {
-                    addressLine += element.adressenavn;
+                if (element.address) {
+                    addressLine += element.address;
                 }
-                if (element.husnummer) {
-                    addressLine += ' ' + element.husnummer;
+                if (element.houseNumber) {
+                    addressLine += ' ' + element.houseNumber;
                 }
-                if (element.husbokstav) {
-                    addressLine += element.husbokstav;
+                if (element.houseLetter) {
+                    addressLine += element.houseLetter;
                 }
                 addressesToReturn.push(addressLine);
                 let postInfo = '';
-                if (element.postnummer) {
-                    postInfo += element.postnummer;
+                if (element.zipCode) {
+                    postInfo += element.zipCode;
                 }
-                if (element.poststed) {
-                    postInfo += ' ' + element.poststed;
+                if (element.city) {
+                    postInfo += ' ' + element.city;
                 }
                 addressesToReturn.push(postInfo);
                 let region = '';
                 if (element.region) {
                     region += element.region;
                 }
-                if (element.landkode) {
-                    region += ' ' + element.landkode;
+                if (element.countryCode) {
+                    region += ' ' + element.countryCode;
                 }
                 if (region !== '') {
                     addressesToReturn.push(region);
                 } else {
-                    addressesToReturn.push('NORGE NO\n\n');
+                    addressesToReturn.push('NORGE NO');
                 }
             });
         }

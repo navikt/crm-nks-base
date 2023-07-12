@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getTemporaryAddresses from '@salesforce/apex/NKS_TemporaryAddressController.getTemporaryAddresses';
+import getTemporaryAddresses from '@salesforce/apex/NKS_AddressController.getTemporaryAddresses';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -59,7 +59,7 @@ export default class NksBostedAddress extends LightningElement {
                 if (region !== '') {
                     addressesToReturn.push(region);
                 } else {
-                    addressesToReturn.push('NORGE NO\n\n');
+                    addressesToReturn.push('NORGE NO');
                 }
             });
         }

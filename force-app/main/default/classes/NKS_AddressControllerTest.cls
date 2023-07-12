@@ -1,7 +1,20 @@
 @isTest
-public with sharing class NKS_BostedAddressControllerTest {
+public with sharing class NKS_AddressControllerTest {
     @isTest
-    private static void getAddressTestAccount() {
+    static void testGetPersonIdent() {
+        Person__c p = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
+        insert p;
+        Account a = new Account(CRM_Person__c = p.Id, Name = '78912345687');
+        insert a;
+
+        Test.startTest();
+        String personIdent = NKS_AddressController.getPersonIdent(a.Id, 'Account');
+        Test.stopTest();
+        System.assertEquals('78912345687', personIdent);
+    }
+
+    @isTest
+    static void getAddressTestAccount() {
         Person__c p = new Person__c(
             Name = '12106519356',
             INT_LastName__c = 'TestLastName',
@@ -14,23 +27,20 @@ public with sharing class NKS_BostedAddressControllerTest {
         insert c;
 
         Test.startTest();
-        List<NKS_BostedAddressController.BostedAddress> addr = NKS_BostedAddressController.getBostedAddress(
-            a.Id,
-            'Account'
-        );
-        addr = NKS_BostedAddressController.getBostedAddress(c.Id, 'Case');
+        List<NKS_AddressController.NKS_Address> addr = NKS_AddressController.getBostedAddress(a.Id, 'Account');
+        addr = NKS_AddressController.getBostedAddress(c.Id, 'Case');
         Test.stopTest();
 
         System.assertEquals(false, addr.isEmpty());
     }
 
     @isTest
-    private static void getBostedVegAddressTest() {
+    static void getBostedVegAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_BostedAddressController.BostedAddress> l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
+        List<NKS_AddressController.NKS_Address> l = NKS_AddressController.getBostedVegMatrikkAddress(
             query.execute().data.hentPerson.bostedsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
         String boVegAdd =
             '{' +
@@ -72,13 +82,13 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}';
 
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
+        l = NKS_AddressController.getBostedVegMatrikkAddress(
             response.data.hentPerson.bostedsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
-        System.assertEquals('GRIMSTAD', l[0].tilleggsnavn);
-        l = NKS_BostedAddressController.getAddressData(response);
-        System.assertEquals('GRIMSTAD', l[0].tilleggsnavn);
+        System.assertEquals('GRIMSTAD', l[0].additionalName);
+        l = NKS_AddressController.getAddressData(response);
+        System.assertEquals('GRIMSTAD', l[0].additionalName);
 
         boVegAdd =
             '{' +
@@ -103,11 +113,11 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getBostedVegMatrikkAddress(
+        l = NKS_AddressController.getBostedVegMatrikkAddress(
             response.data.hentPerson.bostedsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
-        System.assertEquals('1234', l[0].postnummer);
+        System.assertEquals('1234', l[0].zipCode);
 
         boVegAdd =
             '{' +
@@ -144,11 +154,11 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(
+        l = NKS_AddressController.getOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
-        System.assertEquals('1200', l[0].postnummer);
+        System.assertEquals('1200', l[0].zipCode);
 
         boVegAdd =
             '{' +
@@ -188,11 +198,11 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(
+        l = NKS_AddressController.getOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
-        System.assertEquals('GRIMSTAD OPPVEG', l[0].tilleggsnavn);
+        System.assertEquals('GRIMSTAD OPPVEG', l[0].additionalName);
 
         boVegAdd =
             '{' +
@@ -214,30 +224,26 @@ public with sharing class NKS_BostedAddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_BostedAddressController.getOppholdsAddress(
+        l = NKS_AddressController.getOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
-            new NKS_BostedAddressController.BostedAddress()
+            new NKS_AddressController.NKS_Address()
         );
-        System.assertEquals('1234', l[0].postnummer);
-        l = NKS_BostedAddressController.getAddressData(response);
-        System.assertEquals('1234', l[0].postnummer);
+        System.assertEquals('1234', l[0].zipCode);
+        l = NKS_AddressController.getAddressData(response);
+        System.assertEquals('1234', l[0].zipCode);
     }
 
     @isTest
     static void testSetValues() {
         // Create test data
-        Person__c p = new Person__c(
-            Name = '12345678910',
-            INT_LastName__c = 'TestLastName',
-            INT_FirstName__c = 'TestFirstname'
-        );
+        Person__c p = new Person__c(Name = '12345678910', INT_FirstName__c = 'NAVN', INT_LastName__c = 'NAVNESEN');
         insert p;
 
-        List<NKS_BostedAddressController.BostedAddress> addresses = new List<NKS_BostedAddressController.BostedAddress>();
-        NKS_BostedAddressController.BostedAddress address1 = new NKS_BostedAddressController.BostedAddress();
-        address1.postnummer = '1234';
-        NKS_BostedAddressController.BostedAddress address2 = new NKS_BostedAddressController.BostedAddress();
-        address2.postnummer = '5678';
+        List<NKS_AddressController.NKS_Address> addresses = new List<NKS_AddressController.NKS_Address>();
+        NKS_AddressController.NKS_Address address1 = new NKS_AddressController.NKS_Address();
+        address1.zipCode = '1234';
+        NKS_AddressController.NKS_Address address2 = new NKS_AddressController.NKS_Address();
+        address2.zipCode = '5678';
         addresses.add(address1);
         addresses.add(address2);
 
@@ -255,13 +261,68 @@ public with sharing class NKS_BostedAddressControllerTest {
 
         Test.startTest();
         // Call the method to be tested
-        NKS_BostedAddressController.setValues(addresses, '12345678910');
+        NKS_AddressController.setValues(addresses, '12345678910');
         Test.stopTest();
 
         // Verify the results
-        System.assertEquals('Poststed1', addresses[0].poststed);
-        System.assertEquals('Poststed2', addresses[1].poststed);
-        System.assertEquals('TESTFIRSTNAME TESTLASTNAME', addresses[0].fulltNavn);
-        System.assertEquals('TESTFIRSTNAME TESTLASTNAME', addresses[1].fulltNavn);
+        System.assertEquals('Poststed1', addresses[0].city);
+        System.assertEquals('Poststed2', addresses[1].city);
+        System.assertEquals('NAVN NAVNESEN', addresses[0].fullName);
+        System.assertEquals('NAVN NAVNESEN', addresses[1].fullName);
+    }
+
+    @isTest
+    static void testQueryAddressFromPDL() {
+        // Create test data
+        Person__c p = new Person__c(Name = '12345678910', INT_FirstName__c = 'Navn', INT_LastName__c = 'Navnesen');
+        insert p;
+
+        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
+        Test.startTest();
+        PDL_API_Response testResponse = NKS_AddressController.queryAddressFromPDL(p.Name);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testGetTemporaryAddress() {
+        Person__c p = new Person__c(Name = '98761234567', INT_FirstName__c = 'Kari', INT_LastName__c = 'Larsen');
+        insert p;
+        Account a = new Account(CRM_Person__c = p.Id, Name = '98761234567');
+        insert a;
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+
+        Test.startTest();
+        Boolean throwsException = false;
+        try {
+            List<NKS_AddressController.NKS_Address> addresses1 = NKS_AddressController.getTemporaryAddresses(
+                a.Id,
+                'Account'
+            );
+            List<NKS_AddressController.NKS_Address> addresses2 = NKS_AddressController.getTemporaryAddresses(
+                c.Id,
+                'Case'
+            );
+        } catch (Exception e) {
+            throwsException = true;
+        }
+        Test.stopTest();
+        System.assertEquals(false, throwsException);
+    }
+
+    @isTest
+    static void testValidateString() {
+        String testString = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        Test.startTest();
+        String str = NKS_AddressController.validateString(testString);
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testCreateAddress() {
+        List<String> fieldList = new List<String>{ 'Solbakken 7e', '1111', 'Oslo' };
+        Test.startTest();
+        String testAddress = NKS_AddressController.createAddress(fieldList);
+        Test.stopTest();
     }
 }
