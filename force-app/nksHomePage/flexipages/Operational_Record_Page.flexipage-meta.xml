@@ -62,9 +62,6 @@
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>copyFields</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Information__c</value>
                 </componentInstanceProperties>
@@ -85,6 +82,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -113,7 +114,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Traffic Record Page</masterLabel>
+    <masterLabel>Operational Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSimpleViewTemplate</name>
