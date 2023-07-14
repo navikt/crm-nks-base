@@ -24,7 +24,7 @@ private class NavTaskActivation_BatchTest {
         ApexSharingRule__mdt apexSharingRule = [
             SELECT Id
             FROM ApexSharingRule__mdt
-            WHERE DeveloperName = 'NavTask_Skjermede_Personer'
+            WHERE DeveloperName = 'NKS_NAVTask_Skjermede_Personer'
             LIMIT 1
         ];
 
