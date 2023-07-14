@@ -21,6 +21,39 @@ private class NKS_ThreadAccessHandlerTest {
     }
 
     @IsTest
+    private static void onAfterUpdateTemaChangeTest() {
+        Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
+
+        Common_Code__c cc1 = new Common_Code__c(Name = 'Arbeid', CRM_Code_Set__c = 'Tema', CRM_Code__c = 'ARB');
+        insert cc1;
+        Common_Code__c cc2 = new Common_Code__c(Name = 'Pensjon', CRM_Code_Set__c = 'Tema', CRM_Code__c = 'PEN');
+        insert cc2;
+        Thread__c thread = new Thread__c(CRM_Account__c = accountId, CRM_Thread_Type__c = 'STO', CRM_Theme__c = cc1.Id);
+        insert thread;
+        Thread__Share share = new Thread__Share();
+        share.RowCause = 'Manual';
+        share.UserOrGroupId = [
+            SELECT Id
+            FROM Group
+            WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME
+            LIMIT 1
+        ].Id;
+        share.ParentId = thread.Id;
+        share.AccessLevel = 'Edit';
+        insert share;
+        Test.startTest();
+        thread.CRM_Theme__c = cc2.Id;
+        update thread;
+        Test.stopTest();
+
+        List<Thread__Share> shareList = [SELECT Id FROM Thread__Share WHERE RowCause = 'Manual' AND ParentId = :thread.id];
+
+        System.assertEquals(1, shareList.size(), 'Expected only One sharing');
+        System.assertNotEquals(share.Id, shareList[0].Id, 'Expected old share deleted and new created');
+    }
+
+    @IsTest
     private static void grantAccess_whenUgradertAndNotNavEmployee() {
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
         Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.VEILEDER_GROUP_NAME LIMIT 1].Id;
