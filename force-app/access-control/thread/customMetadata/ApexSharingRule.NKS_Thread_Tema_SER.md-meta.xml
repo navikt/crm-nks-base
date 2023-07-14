@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Field4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Office Restriction</value>
     </values>
     <values>
         <field>Field5__c</field>
@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>Operator4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">equals</value>
     </values>
     <values>
         <field>Operator5__c</field>
@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>Values4__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">false</value>
     </values>
     <values>
         <field>Values5__c</field>
