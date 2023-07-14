@@ -1,6 +1,6 @@
 global class NKS_ThreadPersonAccessHandler extends MyTriggers {
     
-    private static final List<String> threadTypesOfInterest = new List<String>{'STO', 'STB'};
+    private static final List<String> threadTypesOfInterest = new List<String>{'STO', 'STB', 'BTO', 'CHAT'};
 
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
         List<String> fieldNamesToCheck = new List<String>{ 'INT_Confidential__c', 'INT_IsNavEmployee__c', 'CRM_ManuallyRecalculatedSharing__c' };
