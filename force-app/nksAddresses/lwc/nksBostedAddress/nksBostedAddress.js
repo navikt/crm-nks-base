@@ -8,7 +8,6 @@ export default class NksBostedAddress extends LightningElement {
     _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
-    showCopyButton = false;
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
@@ -34,41 +33,42 @@ export default class NksBostedAddress extends LightningElement {
     get residentialAddresses() {
         let addressesToReturn = [];
         if (this._residentialAddresses.length > 0) {
-            this.showCopyButton = true;
             this._residentialAddresses.forEach((element) => {
-                if (element.fullName) {
-                    addressesToReturn.push(element.fullName);
-                }
-                let addressLine = '';
-                if (element.address) {
-                    addressLine += element.address;
-                }
-                if (element.houseNumber) {
-                    addressLine += ' ' + element.houseNumber;
-                }
-                if (element.houseLetter) {
-                    addressLine += element.houseLetter;
-                }
-                addressesToReturn.push(addressLine);
-                let postInfo = '';
-                if (element.zipCode) {
-                    postInfo += element.zipCode;
-                }
-                if (element.city) {
-                    postInfo += ' ' + element.city;
-                }
-                addressesToReturn.push(postInfo);
-                let region = '';
-                if (element.region) {
-                    region += element.region;
-                }
-                if (element.countryCode) {
-                    region += ' ' + element.countryCode;
-                }
-                if (region !== '') {
-                    addressesToReturn.push(region);
-                } else {
-                    addressesToReturn.push('NORGE NO');
+                if (element.address !== 'Ikke registrert' && element.address !== undefined) {
+                    if (element.fullName) {
+                        addressesToReturn.push(element.fullName);
+                    }
+                    let addressLine = '';
+                    if (element.address) {
+                        addressLine += element.address;
+                    }
+                    if (element.houseNumber) {
+                        addressLine += ' ' + element.houseNumber;
+                    }
+                    if (element.houseLetter) {
+                        addressLine += element.houseLetter;
+                    }
+                    addressesToReturn.push(addressLine);
+                    let postInfo = '';
+                    if (element.zipCode) {
+                        postInfo += element.zipCode;
+                    }
+                    if (element.city) {
+                        postInfo += ' ' + element.city;
+                    }
+                    addressesToReturn.push(postInfo);
+                    let region = '';
+                    if (element.region) {
+                        region += element.region;
+                    }
+                    if (element.countryCode) {
+                        region += ' ' + element.countryCode;
+                    }
+                    if (region !== '') {
+                        addressesToReturn.push(region);
+                    } else {
+                        addressesToReturn.push('NORGE NO');
+                    }
                 }
             });
         }

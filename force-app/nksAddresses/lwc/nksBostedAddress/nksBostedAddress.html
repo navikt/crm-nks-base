@@ -24,7 +24,7 @@
                 ></lightning-formatted-text>
             </div>
             <div class="slds-var-p-horizontal_small">
-                <template if:true={showCopyButton}>
+                <template if:true={hasRecords}>
                     <textarea hidden disabled class="clipboardInput"></textarea>
                     <button type="button" class="slds-button slds-button_outline-brand" onclick={copyHandler}>
                         <lightning-icon
