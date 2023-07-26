@@ -77,6 +77,10 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>

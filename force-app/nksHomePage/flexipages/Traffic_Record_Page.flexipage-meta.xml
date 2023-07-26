@@ -10,7 +10,7 @@
                             <value>Edit</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -20,7 +20,7 @@
                             <value>Delete</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -52,6 +52,10 @@
                 <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -83,6 +87,10 @@
                     <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -90,20 +98,16 @@
                     <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo</identifier>
+                <identifier>c_nksRecordInfo1</identifier>
             </componentInstance>
         </itemInstances>
-        <name>header</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
                 <identifier>force_detailPanel</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Announcements}</leftValue>
+                        <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>true</rightValue>
                     </criteria>
@@ -113,10 +117,14 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Announcement Record Page</masterLabel>
+    <masterLabel>Traffic Record Page</masterLabel>
     <sobjectType>NKS_Announcement__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+        <properties>
+            <name>enablePageActionConfig</name>
+            <value>false</value>
+        </properties>
     </template>
     <type>RecordPage</type>
 </FlexiPage>
