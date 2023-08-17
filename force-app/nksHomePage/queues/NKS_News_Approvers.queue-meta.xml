@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>NKS News Approvers</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>NKS_News_Approvers</publicGroup>
+        </publicGroups>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>NKS_Announcement__c</sobjectType>
+    </queueSobject>
+</Queue>

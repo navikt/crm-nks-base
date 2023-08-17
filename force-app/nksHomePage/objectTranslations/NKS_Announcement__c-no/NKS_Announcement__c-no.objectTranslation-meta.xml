@@ -94,6 +94,11 @@
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
+        <label>Send til godkjenning</label>
+        <name>Send_for_approval</name>
+    </quickActions>
+    <quickActions>
+        <aspect>Master</aspect>
         <label>Angre publisering</label>
         <name>Undo_publishing</name>
     </quickActions>
@@ -117,4 +122,8 @@
         <label>Trafikk</label>
         <name>Traffic</name>
     </recordTypes>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>NKS_News_Validation_Rule</name>
+    </validationRules>
 </CustomObjectTranslation>

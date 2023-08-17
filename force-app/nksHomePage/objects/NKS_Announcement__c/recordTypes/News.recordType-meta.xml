@@ -5,6 +5,25 @@
     <compactLayoutAssignment>News_Compact_Layout</compactLayoutAssignment>
     <label>News</label>
     <picklistValues>
+        <picklist>NKS_News_Approval_Status__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Request Not Submitted</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Request Submitted</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>NKS_News_Status__c</picklist>
         <values>
             <fullName>Draft</fullName>
