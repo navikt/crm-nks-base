@@ -45,7 +45,7 @@ export default class NksAssignTask extends LightningElement {
     }
 
     handleThemeChange(event) {
-        this.selectedTheme = event.detail.value;
+        this.selectedTheme = event.detail;
         //this.selectedSubTheme = null;
         const attributeChangeEvent = new FlowAttributeChangeEvent('theme', this.selectedTheme);
         this.dispatchEvent(attributeChangeEvent);
