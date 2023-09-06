@@ -1,42 +1,30 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponses';
 
 export default class NksHomePageUsefulLinks extends NavigationMixin(LightningElement) {
     @track records = [];
 
-    isInitiated = false;
-    size;
     className;
+    showReadyResponse = false;
 
-    connectedCallback() {
-        this.isInitiated = true;
-        this.loadList();
-    }
-
-    loadList() {
-        getReadyResponse()
-            .then((result) => {
-                this.records = result;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-    get showReadyResponse() {
-        let show;
-        if (this.records == null) {
-            show = false;
-            this.size = 12;
-            this.className = '';
-        } else {
-            show = true;
-            this.size = 7;
-            this.className = 'slds-var-p-left_large';
+    @wire(getReadyResponse) wiredRecords({ error, data }) {
+        if (data) {
+            this.records = data;
+            this.checkResult();
+        } else if (error) {
+            console.log(`Det har oppstått en feil ved å hente svarberedskaper: ${error}`);
         }
+    }
 
-        return show;
+    checkResult() {
+        if (this.records == null) {
+            this.showReadyResponse = false;
+            this.className = 'slds-size_12-of-12';
+        } else {
+            this.showReadyResponse = true;
+            this.className = 'slds-size_7-of-12 slds-var-p-left_large';
+        }
     }
 
     navigateToKnowledge() {
