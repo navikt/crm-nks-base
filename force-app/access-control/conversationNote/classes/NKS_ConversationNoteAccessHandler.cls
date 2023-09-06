@@ -25,11 +25,8 @@ global class NKS_ConversationNoteAccessHandler extends MyTriggers {
         for (Conversation_Note__c note : (List<Conversation_Note__c>) records) {
             Conversation_Note__c oldRecord = (Conversation_Note__c) triggerOldMap.get(note.Id);
             if (MyTriggers.hasChangedFields(fieldNamesToCheck, note, oldRecord)) {
-                if (note.CRM_Incorrectly_Sent__c) {
                     parentIdToDelete.add(note.Id);
-                } else {
                     notesWithNewSharing.add(note);
-                }
             }
         }
 
@@ -39,7 +36,7 @@ global class NKS_ConversationNoteAccessHandler extends MyTriggers {
                 FROM Conversation_Note__Share
                 WHERE RowCause = 'Manual' AND ParentId IN :parentIdToDelete
             ];
-            delete toDelete;
+            new CRM_DatabaseOperations().setNumberOfRetries(1).setDomain(CRM_ApplicationDomain.Domain.NKS).deleteRecords(toDelete);
         }
 
         if (notesWithNewSharing.size() > 0) {

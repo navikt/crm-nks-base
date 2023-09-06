@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>NKS NAV Tasks</label>
+    <label>NKS_NAV_Task_Tema_SER</label>
     <protected>false</protected>
     <values>
         <field>Field1__c</field>
@@ -13,6 +13,18 @@
     <values>
         <field>Field3__c</field>
         <value xsi:type="xsd:string">Theme</value>
+    </values>
+    <values>
+        <field>Field4__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Field5__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Field6__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>FilterLogic__c</field>
@@ -28,15 +40,31 @@
     </values>
     <values>
         <field>Operator3__c</field>
-        <value xsi:type="xsd:string">not equal to</value>
+        <value xsi:type="xsd:string">equals</value>
+    </values>
+    <values>
+        <field>Operator4__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Operator5__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Operator6__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">1.0</value>
+        <value xsi:type="xsd:double">100.0</value>
+    </values>
+    <values>
+        <field>ThemeGroupPrefix__c</field>
+        <value xsi:type="xsd:string">Tema</value>
     </values>
     <values>
         <field>UnitNumber__c</field>
-        <value xsi:type="xsd:string">41002</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Values1__c</field>
@@ -44,11 +72,23 @@
     </values>
     <values>
         <field>Values2__c</field>
-        <value xsi:type="xsd:string">FALSE</value>
+        <value xsi:type="xsd:string">false</value>
     </values>
     <values>
         <field>Values3__c</field>
         <value xsi:type="xsd:string">SER</value>
+    </values>
+    <values>
+        <field>Values4__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Values5__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Values6__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>sObjectType__c</field>

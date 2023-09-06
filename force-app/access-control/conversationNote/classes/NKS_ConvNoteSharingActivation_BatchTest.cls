@@ -4,7 +4,7 @@ private class NKS_ConvNoteSharingActivation_BatchTest {
     static void makeData() {
        
         TestDataFactory.getPublicGroup('NKS Dialog', NKS_GroupVariables.VEILEDER_GROUP_NAME);
-        TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTOLIG_GROUP_NAME);
+        TestDataFactory.getPublicGroup('Dialog Fortrolig Adresse', NKS_GroupVariables.FORTROLIG_GROUP_NAME);
         TestDataFactory.getPublicGroup('Dialog Skjermet', NKS_GroupVariables.SKJERMET_GROUP_NAME);
     }
 
@@ -26,7 +26,7 @@ private class NKS_ConvNoteSharingActivation_BatchTest {
         );
         insert note;
 
-        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.FORTOLIG_GROUP_NAME LIMIT 1].Id;
+        Id groupId = [SELECT Id FROM Group WHERE DeveloperName = :NKS_GroupVariables.FORTROLIG_GROUP_NAME LIMIT 1].Id;
 
         Test.startTest();
         NKS_ConvNoteSharingActivation_Batch batch = new NKS_ConvNoteSharingActivation_Batch();
@@ -36,7 +36,7 @@ private class NKS_ConvNoteSharingActivation_BatchTest {
         System.assertEquals(
             1,
             [SELECT COUNT() FROM Conversation_Note__Share WHERE RowCause = 'Manual' AND UserOrGroupId = :groupId],
-            'Expected conversation note to be shared with group ' + NKS_GroupVariables.FORTOLIG_GROUP_NAME
+            'Expected conversation note to be shared with group ' + NKS_GroupVariables.FORTROLIG_GROUP_NAME
         );
     }
     @isTest
