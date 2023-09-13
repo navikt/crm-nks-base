@@ -9,7 +9,7 @@
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.195.0.LATEST"
+                    "versionNumber": "0.196.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -36,16 +36,20 @@
                     "versionNumber": "0.100.0.LATEST"
                 },
                 {
+                    "package": "crm-journal-utilities",
+                    "versionNumber": "0.26.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-oppgave",
+                    "versionNumber": "0.49.0.LATEST"
+                },
+                {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.301.0.LATEST"
+                    "versionNumber": "1.326.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
                     "versionNumber": "0.17.0.LATEST"
-                },
-                {
-                    "package": "crm-journal-utilities",
-                    "versionNumber": "0.22.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -54,10 +58,6 @@
                 {
                     "package": "crm-henvendelse",
                     "versionNumber": "0.82.0.LATEST"
-                },
-                {
-                    "package": "crm-platform-oppgave",
-                    "versionNumber": "0.47.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
