@@ -161,6 +161,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_beta_variable</name>
+        <label>Assign beta variable</label>
+        <locationX>413</locationX>
+        <locationY>3122</locationY>
+        <assignmentItems>
+            <assignToReference>BooleanvariabletocheckBetaAccess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateUser</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_quick_text_variable</name>
         <label>Assign quick text variable</label>
         <locationX>413</locationX>
@@ -240,22 +256,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Assign_topic_variable</name>
-        <label>Copy 1 of Assign topic variable</label>
-        <locationX>413</locationX>
-        <locationY>3122</locationY>
-        <assignmentItems>
-            <assignToReference>BooleanvariabletocheckBetaAccess</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>UpdateUser</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Update_the_Selected_Account_String</name>
         <label>Update the Selected Account String</label>
         <locationX>490</locationX>
@@ -292,7 +292,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Assign_topic_variable</targetReference>
+                <targetReference>Assign_beta_variable</targetReference>
             </connector>
             <label>Has Beta Access</label>
         </rules>
