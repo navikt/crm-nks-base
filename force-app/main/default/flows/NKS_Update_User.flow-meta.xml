@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_Current_Memberships</name>
         <label>Get Current Memberships</label>
-        <locationX>4399</locationX>
-        <locationY>1393</locationY>
+        <locationX>182</locationX>
+        <locationY>5870</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -14,6 +14,7 @@
             <typeName>U__outputCollection</typeName>
             <typeValue>GroupMember</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>FieldApiINames</name>
             <value>
@@ -40,8 +41,8 @@
     <actionCalls>
         <name>Get_User_Queues</name>
         <label>Get User Queues</label>
-        <locationX>2375</locationX>
-        <locationY>908</locationY>
+        <locationX>545</locationX>
+        <locationY>242</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -51,6 +52,7 @@
             <typeName>U__outputCollection</typeName>
             <typeValue>Group</typeValue>
         </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>FieldApiINames</name>
             <value>
@@ -77,13 +79,14 @@
     <actionCalls>
         <name>GetPicklistValues</name>
         <label>GetPicklistValues</label>
-        <locationX>2503</locationX>
-        <locationY>908</locationY>
+        <locationX>545</locationX>
+        <locationY>350</locationY>
         <actionName>GetPicklistValues</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Loop_Picklist_Values</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>fieldName</name>
             <value>
@@ -101,11 +104,12 @@
             <name>picklistValues</name>
         </outputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Add_queue_name</name>
         <label>Add queue name</label>
-        <locationX>2759</locationX>
-        <locationY>802</locationY>
+        <locationX>633</locationX>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>UsersQueueNames</assignToReference>
             <operator>Add</operator>
@@ -120,8 +124,8 @@
     <assignments>
         <name>Add_to_collection_variable</name>
         <label>Add to collection variable</label>
-        <locationX>4204</locationX>
-        <locationY>1517</locationY>
+        <locationX>490</locationX>
+        <locationY>5870</locationY>
         <assignmentItems>
             <assignToReference>singleGroupString</assignToReference>
             <operator>Assign</operator>
@@ -143,8 +147,8 @@
     <assignments>
         <name>Add_to_selectable_divisions</name>
         <label>Add to selectable divisions</label>
-        <locationX>2682</locationX>
-        <locationY>802</locationY>
+        <locationX>633</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>SelectableDivisions</assignToReference>
             <operator>Add</operator>
@@ -159,8 +163,8 @@
     <assignments>
         <name>Assign_quick_text_variable</name>
         <label>Assign quick text variable</label>
-        <locationX>2966</locationX>
-        <locationY>640</locationY>
+        <locationX>413</locationX>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>BooleanvariabletocheckQuickTextEditorassignment</assignToReference>
             <operator>Assign</operator>
@@ -175,8 +179,8 @@
     <assignments>
         <name>Assign_quick_text_variable_0_0</name>
         <label>Assign quick text variable</label>
-        <locationX>3173</locationX>
-        <locationY>633</locationY>
+        <locationX>413</locationX>
+        <locationY>2090</locationY>
         <assignmentItems>
             <assignToReference>KnowledgeEditorCheckbox</assignToReference>
             <operator>Assign</operator>
@@ -191,8 +195,8 @@
     <assignments>
         <name>Assign_Selected_Value_To_String</name>
         <label>Assign Selected Value To String</label>
-        <locationX>4273</locationX>
-        <locationY>1259</locationY>
+        <locationX>336</locationX>
+        <locationY>5654</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -222,10 +226,26 @@
     <assignments>
         <name>Assign_topic_variable_0_0_0</name>
         <label>Assign topic variable</label>
-        <locationX>3379</locationX>
-        <locationY>671</locationY>
+        <locationX>413</locationX>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>BooleanvariabletocheckTopicsAssignment</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Permset_Beta</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Assign_topic_variable</name>
+        <label>Copy 1 of Assign topic variable</label>
+        <locationX>413</locationX>
+        <locationY>3122</locationY>
+        <assignmentItems>
+            <assignToReference>BooleanvariabletocheckBetaAccess</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -238,8 +258,8 @@
     <assignments>
         <name>Update_the_Selected_Account_String</name>
         <label>Update the Selected Account String</label>
-        <locationX>4134</locationX>
-        <locationY>1392</locationY>
+        <locationX>490</locationX>
+        <locationY>5978</locationY>
         <assignmentItems>
             <assignToReference>selectedGroupIds</assignToReference>
             <operator>Assign</operator>
@@ -248,14 +268,40 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Check_selected_string</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <name>Beta_Access_Empty</name>
+        <label>Beta Access Empty?</label>
+        <locationX>545</locationX>
+        <locationY>3014</locationY>
+        <defaultConnector>
+            <targetReference>UpdateUser</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Beta Access</defaultConnectorLabel>
+        <rules>
+            <name>Has_Beta_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Permset_Assignment_Beta</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Assign_topic_variable</targetReference>
+            </connector>
+            <label>Has Beta Access</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_selected_string</name>
         <label>Check selected string</label>
-        <locationX>4264</locationX>
-        <locationY>1394</locationY>
+        <locationX>336</locationX>
+        <locationY>5762</locationY>
         <defaultConnector>
             <targetReference>Add_to_collection_variable</targetReference>
         </defaultConnector>
@@ -276,8 +322,8 @@
     <decisions>
         <name>Edit_Division</name>
         <label>Edit Division?</label>
-        <locationX>4265</locationX>
-        <locationY>1010</locationY>
+        <locationX>545</locationX>
+        <locationY>5246</locationY>
         <defaultConnector>
             <targetReference>Edit_Queues</targetReference>
         </defaultConnector>
@@ -301,8 +347,8 @@
     <decisions>
         <name>Edit_Queues</name>
         <label>Edit Queues?</label>
-        <locationX>4264</locationX>
-        <locationY>1146</locationY>
+        <locationX>545</locationX>
+        <locationY>5546</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>EditQueuesTrue</name>
@@ -323,8 +369,8 @@
     <decisions>
         <name>Empty_list</name>
         <label>Empty list?</label>
-        <locationX>4369</locationX>
-        <locationY>1873</locationY>
+        <locationX>402</locationX>
+        <locationY>6386</locationY>
         <defaultConnector>
             <targetReference>Create_group_memberships</targetReference>
         </defaultConnector>
@@ -345,8 +391,8 @@
     <decisions>
         <name>Group_Empty_0_0_0</name>
         <label>Group Empty?</label>
-        <locationX>3730</locationX>
-        <locationY>171</locationY>
+        <locationX>589</locationX>
+        <locationY>3854</locationY>
         <defaultConnector>
             <targetReference>Update_QuickText_0</targetReference>
         </defaultConnector>
@@ -399,8 +445,8 @@
     <decisions>
         <name>Is_there_any_to_delete</name>
         <label>Is there any to delete?</label>
-        <locationX>4391</locationX>
-        <locationY>1567</locationY>
+        <locationX>182</locationX>
+        <locationY>5978</locationY>
         <defaultConnector>
             <targetReference>Loop_String_Collection</targetReference>
         </defaultConnector>
@@ -424,8 +470,8 @@
     <decisions>
         <name>Knowledge_Editor_Empty_0</name>
         <label>Knowledge Editor Empty?</label>
-        <locationX>3158</locationX>
-        <locationY>815</locationY>
+        <locationX>545</locationX>
+        <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Get_Permset_Topics</targetReference>
         </defaultConnector>
@@ -449,8 +495,8 @@
     <decisions>
         <name>Quick_Text_Editor_Empty</name>
         <label>Quick Text Editor Empty?</label>
-        <locationX>2957</locationX>
-        <locationY>820</locationY>
+        <locationX>545</locationX>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Get_Permset_Knowledge_Editor</targetReference>
         </defaultConnector>
@@ -474,10 +520,10 @@
     <decisions>
         <name>Topic_Editor_Empty_0_0</name>
         <label>Topic Editor Empty?</label>
-        <locationX>3370</locationX>
-        <locationY>817</locationY>
+        <locationX>545</locationX>
+        <locationY>2498</locationY>
         <defaultConnector>
-            <targetReference>UpdateUser</targetReference>
+            <targetReference>Get_Permset_Beta</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Topic Editor</defaultConnectorLabel>
         <rules>
@@ -497,10 +543,64 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Update_Beta_access</name>
+        <label>Update Beta access?</label>
+        <locationX>545</locationX>
+        <locationY>4838</locationY>
+        <defaultConnector>
+            <targetReference>Set_chat_user</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Give_Beta_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Beta_tilgang</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BooleanvariabletocheckBetaAccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Beta_Access_permset_assignment</targetReference>
+            </connector>
+            <label>Give Beta Access</label>
+        </rules>
+        <rules>
+            <name>Remove_Beta_access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Beta_tilgang</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>BooleanvariabletocheckBetaAccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_Beta_Access_permset_assignment</targetReference>
+            </connector>
+            <label>Remove Beta access</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Update_Knowledge</name>
         <label>Update Knowledge?</label>
-        <locationX>3715</locationX>
-        <locationY>689</locationY>
+        <locationX>545</locationX>
+        <locationY>3422</locationY>
         <defaultConnector>
             <targetReference>Update_QuickText_0</targetReference>
         </defaultConnector>
@@ -553,8 +653,8 @@
     <decisions>
         <name>Update_QuickText_0</name>
         <label>Update Quick Text?</label>
-        <locationX>4014</locationX>
-        <locationY>584</locationY>
+        <locationX>545</locationX>
+        <locationY>4238</locationY>
         <defaultConnector>
             <targetReference>Update_Topic_0_0</targetReference>
         </defaultConnector>
@@ -607,10 +707,10 @@
     <decisions>
         <name>Update_Topic_0_0</name>
         <label>Update Topic?</label>
-        <locationX>4330</locationX>
-        <locationY>584</locationY>
+        <locationX>545</locationX>
+        <locationY>4538</locationY>
         <defaultConnector>
-            <targetReference>Set_chat_user</targetReference>
+            <targetReference>Update_Beta_access</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -661,8 +761,8 @@
     <decisions>
         <name>Users_divisions</name>
         <label>Users divisions</label>
-        <locationX>2544</locationX>
-        <locationY>800</locationY>
+        <locationX>765</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Loop_Picklist_Values</targetReference>
         </defaultConnector>
@@ -687,6 +787,7 @@
         <name>Queues</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>StartsWith</operator>
@@ -697,6 +798,7 @@
         <object>Group</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>DepartmentNumber</name>
         <dataType>String</dataType>
@@ -737,8 +839,8 @@
     <loops>
         <name>Loop_Picklist_Values</name>
         <label>Loop Picklist Values</label>
-        <locationX>2617</locationX>
-        <locationY>908</locationY>
+        <locationX>545</locationX>
+        <locationY>458</locationY>
         <collectionReference>allPicklistValues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -751,8 +853,8 @@
     <loops>
         <name>Loop_queues</name>
         <label>Loop queues</label>
-        <locationX>2758</locationX>
-        <locationY>915</locationY>
+        <locationX>545</locationX>
+        <locationY>950</locationY>
         <collectionReference>UserGroups</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -765,8 +867,8 @@
     <loops>
         <name>Loop_String_Collection</name>
         <label>Loop String Collection</label>
-        <locationX>4398</locationX>
-        <locationY>1696</locationY>
+        <locationX>182</locationX>
+        <locationY>6278</locationY>
         <collectionReference>SelectedGroupList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -782,7 +884,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -793,10 +895,33 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Create_Beta_Access_permset_assignment</name>
+        <label>Create Beta Access permset assignment</label>
+        <locationX>281</locationX>
+        <locationY>4946</locationY>
+        <connector>
+            <targetReference>Set_chat_user</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AssigneeId</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PermissionSetId</field>
+            <value>
+                <elementReference>Get_Permset_Beta.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Create_group_memberships</name>
         <label>Create group memberships</label>
-        <locationX>4288</locationX>
-        <locationY>1778</locationY>
+        <locationX>534</locationX>
+        <locationY>6494</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
@@ -818,9 +943,10 @@
     <recordCreates>
         <name>Create_Knowledge_Editor_permset_assignment</name>
         <label>Create Knowledge Editor permset assignment</label>
-        <locationX>3802</locationX>
-        <locationY>523</locationY>
+        <locationX>61</locationX>
+        <locationY>3530</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Get_Knowledge_Editor_Group</targetReference>
         </connector>
         <inputAssignments>
@@ -841,8 +967,8 @@
     <recordCreates>
         <name>Create_Knowledge_Group_Member</name>
         <label>Create Knowledge Group Member</label>
-        <locationX>3617</locationX>
-        <locationY>50</locationY>
+        <locationX>325</locationX>
+        <locationY>3962</locationY>
         <connector>
             <targetReference>Update_QuickText_0</targetReference>
         </connector>
@@ -864,8 +990,8 @@
     <recordCreates>
         <name>Create_Quick_Text_Editor_permset_assignement</name>
         <label>Create Quick Text Editor permset assignement</label>
-        <locationX>4034</locationX>
-        <locationY>392</locationY>
+        <locationX>281</locationX>
+        <locationY>4346</locationY>
         <connector>
             <targetReference>Update_Topic_0_0</targetReference>
         </connector>
@@ -887,10 +1013,10 @@
     <recordCreates>
         <name>Create_Topics_permset_assignment</name>
         <label>Create Topics permset assignment</label>
-        <locationX>4341</locationX>
-        <locationY>392</locationY>
+        <locationX>281</locationX>
+        <locationY>4646</locationY>
         <connector>
-            <targetReference>Set_chat_user</targetReference>
+            <targetReference>Update_Beta_access</targetReference>
         </connector>
         <inputAssignments>
             <field>AssigneeId</field>
@@ -910,8 +1036,8 @@
     <recordDeletes>
         <name>Delete_current_memberships</name>
         <label>Delete current memberships</label>
-        <locationX>4291</locationX>
-        <locationY>1630</locationY>
+        <locationX>50</locationX>
+        <locationY>6086</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
         </connector>
@@ -920,18 +1046,28 @@
     <recordDeletes>
         <name>Delete_Knowledge_Group_Member</name>
         <label>Delete Knowledge Group Member</label>
-        <locationX>3872</locationX>
-        <locationY>52</locationY>
+        <locationX>589</locationX>
+        <locationY>3962</locationY>
         <connector>
             <targetReference>Update_QuickText_0</targetReference>
         </connector>
         <inputReference>Get_Knowledge_Group_Member</inputReference>
     </recordDeletes>
     <recordDeletes>
+        <name>Remove_Beta_Access_permset_assignment</name>
+        <label>Remove Beta Access permset assignment</label>
+        <locationX>545</locationX>
+        <locationY>4946</locationY>
+        <connector>
+            <targetReference>Set_chat_user</targetReference>
+        </connector>
+        <inputReference>Get_Permset_Assignment_Beta</inputReference>
+    </recordDeletes>
+    <recordDeletes>
         <name>Remove_Knowledge_Editor_permset_assignment</name>
         <label>Remove Knowledge Editor permset assignment</label>
-        <locationX>3664</locationX>
-        <locationY>514</locationY>
+        <locationX>589</locationX>
+        <locationY>3530</locationY>
         <connector>
             <targetReference>Get_Knowledge_Editor_Group</targetReference>
         </connector>
@@ -940,8 +1076,8 @@
     <recordDeletes>
         <name>Remove_Quick_Text_Editor_permset_assignment</name>
         <label>Remove Quick Text Editor permset assignment</label>
-        <locationX>4178</locationX>
-        <locationY>391</locationY>
+        <locationX>545</locationX>
+        <locationY>4346</locationY>
         <connector>
             <targetReference>Update_Topic_0_0</targetReference>
         </connector>
@@ -950,22 +1086,23 @@
     <recordDeletes>
         <name>Remove_Topics_permset_assignment</name>
         <label>Remove Topics permset assignment</label>
-        <locationX>4469</locationX>
-        <locationY>399</locationY>
+        <locationX>545</locationX>
+        <locationY>4646</locationY>
         <connector>
-            <targetReference>Set_chat_user</targetReference>
+            <targetReference>Update_Beta_access</targetReference>
         </connector>
         <inputReference>Get_Permset_Assignment_Topics</inputReference>
     </recordDeletes>
     <recordLookups>
         <name>Get_Knowledge_Editor_Group</name>
         <label>Get Knowledge Editor Group</label>
-        <locationX>3734</locationX>
-        <locationY>404</locationY>
+        <locationX>589</locationX>
+        <locationY>3638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Knowledge_Group_Member</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
@@ -980,12 +1117,13 @@
     <recordLookups>
         <name>Get_Knowledge_Group_Member</name>
         <label>Get Knowledge Group Member</label>
-        <locationX>3738</locationX>
-        <locationY>285</locationY>
+        <locationX>589</locationX>
+        <locationY>3746</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Group_Empty_0_0_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>GroupId</field>
             <operator>EqualTo</operator>
@@ -1005,14 +1143,43 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Permset_Assignment_Beta</name>
+        <label>Get Permset Assignment Beta</label>
+        <locationX>545</locationX>
+        <locationY>2906</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Beta_Access_Empty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Permset_Beta.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Permset_Assignment_Knowledge_Editor</name>
         <label>Get Permset Assignment Knowledge Editor</label>
-        <locationX>3167</locationX>
-        <locationY>930</locationY>
+        <locationX>545</locationX>
+        <locationY>1874</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Knowledge_Editor_Empty_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AssigneeId</field>
             <operator>EqualTo</operator>
@@ -1034,12 +1201,13 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Quick_Text_Editor</name>
         <label>Get Permset Assignment Quick Text Editor</label>
-        <locationX>2969</locationX>
-        <locationY>938</locationY>
+        <locationX>545</locationX>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quick_Text_Editor_Empty</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AssigneeId</field>
             <operator>EqualTo</operator>
@@ -1061,12 +1229,13 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Topics</name>
         <label>Get Permset Assignment Topics</label>
-        <locationX>3379</locationX>
-        <locationY>934</locationY>
+        <locationX>545</locationX>
+        <locationY>2390</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Topic_Editor_Empty_0_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>AssigneeId</field>
             <operator>EqualTo</operator>
@@ -1086,14 +1255,36 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Permset_Beta</name>
+        <label>Get Permset Beta</label>
+        <locationX>545</locationX>
+        <locationY>2798</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Permset_Assignment_Beta</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NKS_Beta_Permission</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Permset_Knowledge_Editor</name>
         <label>Get Permset Knowledge Editor</label>
-        <locationX>3059</locationX>
-        <locationY>930</locationY>
+        <locationX>545</locationX>
+        <locationY>1766</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Knowledge_Editor</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -1108,12 +1299,13 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor</name>
         <label>Get Permset Quick Text Editor</label>
-        <locationX>2865</locationX>
-        <locationY>938</locationY>
+        <locationX>545</locationX>
+        <locationY>1250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Quick_Text_Editor</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -1128,12 +1320,13 @@
     <recordLookups>
         <name>Get_Permset_Topics</name>
         <label>Get Permset Topics</label>
-        <locationX>3268</locationX>
-        <locationY>934</locationY>
+        <locationX>545</locationX>
+        <locationY>2282</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Permset_Assignment_Topics</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
             <operator>EqualTo</operator>
@@ -1148,12 +1341,13 @@
     <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
-        <locationX>2253</locationX>
-        <locationY>908</locationY>
+        <locationX>545</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Queues</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1168,11 +1362,12 @@
     <recordUpdates>
         <name>Set_chat_user</name>
         <label>Set chat user</label>
-        <locationX>4277</locationX>
-        <locationY>887</locationY>
+        <locationX>545</locationX>
+        <locationY>5138</locationY>
         <connector>
             <targetReference>Edit_Division</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1215,11 +1410,12 @@
     <recordUpdates>
         <name>Update_User</name>
         <label>Update User</label>
-        <locationX>4151</locationX>
-        <locationY>1006</locationY>
+        <locationX>413</locationX>
+        <locationY>5354</locationY>
         <connector>
             <targetReference>Edit_Queues</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -1239,8 +1435,8 @@
     <screens>
         <name>UpdateUser</name>
         <label>Oppdater bruker</label>
-        <locationX>3723</locationX>
-        <locationY>809</locationY>
+        <locationX>545</locationX>
+        <locationY>3314</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1335,6 +1531,7 @@
                     <stringValue>Endre avdeling</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1413,12 +1610,22 @@
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <fields>
+            <name>Beta_tilgang</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <elementReference>BooleanvariabletocheckBetaAccess</elementReference>
+            </defaultValue>
+            <fieldText>Beta tilgang</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>2127</locationX>
-        <locationY>782</locationY>
+        <locationX>419</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
@@ -1430,6 +1637,16 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>BooleanvariabletocheckBetaAccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>BooleanvariabletocheckQuickTextEditorassignment</name>
