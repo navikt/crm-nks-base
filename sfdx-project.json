@@ -5,9 +5,9 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.308.0.NEXT",
+            "versionNumber": "0.309.0.NEXT",
             "dependencies": [
-                    {
+                {
                     "package": "crm-platform-base",
                     "versionNumber": "0.197.0.LATEST"
                 },
