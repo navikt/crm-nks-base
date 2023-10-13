@@ -61,9 +61,10 @@
                             </h3>
                         </lightning-layout-item>
                         <lightning-layout-item size="12" class="slds-line-clamp_x-small">
-                            <strong>
-                                <lightning-formatted-rich-text value={record.summary}></lightning-formatted-rich-text>
-                            </strong>
+                            <lightning-formatted-rich-text
+                                value={record.summary}
+                                class="summary"
+                            ></lightning-formatted-rich-text>
                         </lightning-layout-item>
                         <lightning-layout-item size="12">{publishDate} </lightning-layout-item>
                         <template if:true={record.lastUpdatedDate}>

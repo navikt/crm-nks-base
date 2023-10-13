@@ -11,5 +11,11 @@ img {
 
 .title {
     font-size: 1.17rem;
+    font-weight: 600;
     color: black;
+}
+
+.summary {
+    font-size: 0.83rem;
+    font-weight: 500;
 }

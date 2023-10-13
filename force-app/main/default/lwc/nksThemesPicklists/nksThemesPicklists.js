@@ -7,21 +7,23 @@ import SUB_THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_SubTheme__c';
 import THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_Theme__c';
 
 export default class NksThemesPicklists extends LightningElement {
+    objectApiName;
+    employerRecordTypeId;
+    @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
+    getobjectInfo(result) {
+        if (result.data) {
+            const rtis = result.data.recordTypeInfos;
+            this.employerRecordTypeId = Object.keys(rtis).find((rti) => rtis[rti].name === 'Employer');
+        }
+    }
     @api selectedTheme;
     @api selectedSubTheme;
     @api theme;
     @api subTheme;
-    @track theme = this.theme;
     @track themes;
-    @track subTheme = this.subTheme;
     @track subthemes;
-    @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
-    navTaskInfo;
-
-    get employerRecordTypeId() {
-        const rtis = this.navTaskInfo.data.recordTypeInfos;
-        return Object.keys(rtis).find(rti => rtis[rti].name === 'Employer');
-    }
+    @track theme = this.theme;
+    @track subTheme = this.subTheme;
 
     @wire(getPicklistValues, {
         recordTypeId: '$employerRecordTypeId',
@@ -35,8 +37,8 @@ export default class NksThemesPicklists extends LightningElement {
         recordTypeId: '$employerRecordTypeId',
         fieldApiName: SUB_THEME_FIELD
     })
-    subThemeFieldInfo({ data, error }) {
-        if (data && this.themes) {
+    subThemeFieldInfo({ error, data }) {
+        if (data) {
             this.subFieldData = data;
             //get array key for selected theme
             var selectedThemeKey = 0;
@@ -46,6 +48,9 @@ export default class NksThemesPicklists extends LightningElement {
                 }
             }
             this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(selectedThemeKey));
+        }
+        else {
+            console.log("error: "+error);
         }
     }
 

@@ -155,9 +155,7 @@ public with sharing class NKS_KnowledgeController {
                         } catch (Exception ex) {
                             // Catch and handle exception
                             logger.error(
-                                'Problem sending HTTP-request for ' +
-                                endpoint +
-                                ': ' +
+                                'Problem sending HTTP-request: ' +
                                 ex.getMessage() +
                                 '\n' +
                                 ex.getStackTraceString(),
