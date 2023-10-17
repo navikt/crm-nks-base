@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>760</locationX>
-        <locationY>1655</locationY>
+        <locationX>336</locationX>
+        <locationY>3104</locationY>
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Assign_Account_to_Case</name>
         <label>Assign Account to Case</label>
-        <locationX>1241</locationX>
-        <locationY>846</locationY>
+        <locationX>622</locationX>
+        <locationY>1856</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -68,8 +68,8 @@
     <assignments>
         <name>Assign_Task_Defaults</name>
         <label>Assign Task Defaults</label>
-        <locationX>116</locationX>
-        <locationY>976</locationY>
+        <locationX>490</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Task_to_Create.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
@@ -110,8 +110,8 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
-        <locationX>1058</locationX>
-        <locationY>1960</locationY>
+        <locationX>468</locationX>
+        <locationY>3404</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -133,8 +133,8 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>763</locationX>
-        <locationY>1327</locationY>
+        <locationX>336</locationX>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -212,8 +212,8 @@
     <assignments>
         <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
-        <locationX>1058</locationX>
-        <locationY>1536</locationY>
+        <locationX>600</locationX>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -285,8 +285,8 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Journal_Theme_Categorization_Assignment_0</name>
         <label>Journal Theme Categorization Assignment</label>
-        <locationX>762</locationX>
-        <locationY>1172</locationY>
+        <locationX>336</locationX>
+        <locationY>2780</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -308,8 +308,8 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>1188</locationX>
-        <locationY>502</locationY>
+        <locationX>974</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -325,8 +325,8 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Theme_Categorization_Assignment</name>
         <label>Theme Categorization Assignment</label>
-        <locationX>1056</locationX>
-        <locationY>1386</locationY>
+        <locationX>600</locationX>
+        <locationY>2780</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -371,8 +371,8 @@
     <decisions>
         <name>Changed_Account</name>
         <label>Changed Account</label>
-        <locationX>1235</locationX>
-        <locationY>987</locationY>
+        <locationX>468</locationX>
+        <locationY>1748</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_to_Case</targetReference>
         </defaultConnector>
@@ -397,8 +397,8 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>965</locationX>
-        <locationY>357</locationY>
+        <locationX>886</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Account_Screen</targetReference>
         </defaultConnector>
@@ -423,8 +423,8 @@
         <description>Checks the status if the case. If it is closed, the conversation note is already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
-        <locationX>768</locationX>
-        <locationY>357</locationY>
+        <locationX>468</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
         </defaultConnector>
@@ -470,8 +470,8 @@
     <decisions>
         <name>Check_Next_Action</name>
         <label>Check Next Action</label>
-        <locationX>338</locationX>
-        <locationY>975</locationY>
+        <locationX>402</locationX>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Assign_Task_Defaults</targetReference>
         </defaultConnector>
@@ -495,8 +495,8 @@
     <decisions>
         <name>Check_Person_Access</name>
         <label>Check Person Access</label>
-        <locationX>965</locationX>
-        <locationY>786</locationY>
+        <locationX>886</locationX>
+        <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>Log_Screen</targetReference>
         </defaultConnector>
@@ -520,8 +520,8 @@
     <decisions>
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
-        <locationX>1469</locationX>
-        <locationY>1173</locationY>
+        <locationX>622</locationX>
+        <locationY>2180</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry_Decision</targetReference>
         </defaultConnector>
@@ -546,8 +546,8 @@
         <description>Checks if journal entry is to be created.</description>
         <name>Create_Journal_Entry_Decision</name>
         <label>Create Journal Entry?</label>
-        <locationX>1047</locationX>
-        <locationY>1173</locationY>
+        <locationX>468</locationX>
+        <locationY>2672</locationY>
         <defaultConnector>
             <targetReference>Theme_Categorization_Assignment</targetReference>
         </defaultConnector>
@@ -588,7 +588,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -602,8 +602,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>760</locationX>
-        <locationY>1485</locationY>
+        <locationX>336</locationX>
+        <locationY>2996</locationY>
         <connector>
             <targetReference>Post_Journal</targetReference>
         </connector>
@@ -613,8 +613,8 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note_0</name>
         <label>Create Conversation Note</label>
-        <locationX>1058</locationX>
-        <locationY>1684</locationY>
+        <locationX>600</locationX>
+        <locationY>2996</locationY>
         <connector>
             <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
@@ -624,8 +624,8 @@
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>972</locationX>
-        <locationY>513</locationY>
+        <locationX>886</locationX>
+        <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access</targetReference>
@@ -652,8 +652,8 @@
         <description>Queries the account</description>
         <name>Get_Account_0</name>
         <label>Get Account</label>
-        <locationX>1362</locationX>
-        <locationY>846</locationY>
+        <locationX>622</locationX>
+        <locationY>1964</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access_0</targetReference>
@@ -676,8 +676,8 @@
         <description>Queries the account</description>
         <name>Get_Account_Case_Closed</name>
         <label>Get Account</label>
-        <locationX>476</locationX>
-        <locationY>351</locationY>
+        <locationX>402</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access_Case_Closed</targetReference>
@@ -700,8 +700,8 @@
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>776</locationX>
-        <locationY>207</locationY>
+        <locationX>468</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Case_Status</targetReference>
@@ -722,8 +722,8 @@
         <description>Queries information from the case record</description>
         <name>Get_Case_Verify</name>
         <label>Get Case</label>
-        <locationX>1080</locationX>
-        <locationY>978</locationY>
+        <locationX>468</locationX>
+        <locationY>1640</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Changed_Account</targetReference>
@@ -744,8 +744,8 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>595</locationX>
-        <locationY>351</locationY>
+        <locationX>402</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Case_Closed</targetReference>
@@ -774,8 +774,8 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note_0_0</name>
         <label>Get Conversation Note</label>
-        <locationX>1057</locationX>
-        <locationY>1822</locationY>
+        <locationX>468</locationX>
+        <locationY>3296</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment_Default_0_0</targetReference>
@@ -799,8 +799,8 @@
     <recordLookups>
         <name>Get_Person_Access</name>
         <label>Get Person Access</label>
-        <locationX>972</locationX>
-        <locationY>653</locationY>
+        <locationX>886</locationX>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access</targetReference>
@@ -833,8 +833,8 @@
     <recordLookups>
         <name>Get_Person_Access_0</name>
         <label>Get Person Access</label>
-        <locationX>1476</locationX>
-        <locationY>846</locationY>
+        <locationX>622</locationX>
+        <locationY>2072</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access_0</targetReference>
@@ -867,8 +867,8 @@
     <recordLookups>
         <name>Get_Person_Access_Case_Closed</name>
         <label>Get Person Access</label>
-        <locationX>346</locationX>
-        <locationY>351</locationY>
+        <locationX>402</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Closed_Screen</targetReference>
@@ -901,9 +901,10 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>589</locationX>
-        <locationY>782</locationY>
+        <locationX>754</locationX>
+        <locationY>1190</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Case_Closed_Screen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
@@ -925,8 +926,8 @@
     <recordUpdates>
         <name>Set_Case_Closed_0</name>
         <label>Set Case Closed</label>
-        <locationX>1688</locationX>
-        <locationY>1169</locationY>
+        <locationX>490</locationX>
+        <locationY>2288</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -946,15 +947,15 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>1059</locationX>
-        <locationY>2093</locationY>
+        <locationX>468</locationX>
+        <locationY>3512</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1188</locationX>
-        <locationY>655</locationY>
+        <locationX>974</locationX>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -964,8 +965,8 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>346</locationX>
-        <locationY>605</locationY>
+        <locationX>402</locationX>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1126,8 +1127,8 @@
         <description>Screen shown when case was closed without account connection</description>
         <name>Closed_Without_Account_Screen</name>
         <label>Closed Without Account Screen</label>
-        <locationX>776</locationX>
-        <locationY>573</locationY>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1163,8 +1164,8 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>976</locationX>
-        <locationY>977</locationY>
+        <locationX>468</locationX>
+        <locationY>1532</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1467,8 +1468,8 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1188</locationX>
-        <locationY>352</locationY>
+        <locationX>974</locationX>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1578,8 +1579,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>650</locationX>
-        <locationY>48</locationY>
+        <locationX>342</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -1588,8 +1589,8 @@
     <subflows>
         <name>Create_NAV_Task_Flow</name>
         <label>Create NAV Task Flow</label>
-        <locationX>116</locationX>
-        <locationY>1131</locationY>
+        <locationX>490</locationX>
+        <locationY>998</locationY>
         <flowName>NKS_Case_Send_NAV_Task</flowName>
         <inputAssignments>
             <name>NavTask</name>
