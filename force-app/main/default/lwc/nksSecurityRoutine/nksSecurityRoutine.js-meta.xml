@@ -12,10 +12,10 @@
             <property
                 name="articleId"
                 label="urlName"
-                description="Unique urlName of the knowledge article to navigate to on click"
+                description="Unique urlName of the knowledge article(s) to navigate to on click, seperated with comma"
                 type="String"
                 required="true"
-                default="Felles-Trussel-trakassering-og-sjikane"
+                default="Felles-Trussel-trakassering-og-sjikane,Felles-Trussel-om-selvmord-selvskading"
             />
         </targetConfig>
     </targetConfigs>
