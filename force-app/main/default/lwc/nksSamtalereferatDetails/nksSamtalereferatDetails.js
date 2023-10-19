@@ -3,6 +3,7 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
+import { trackAmplitudeEvent } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
@@ -16,7 +17,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
     renderedCallback() {
         console.log(this.objectInfo);
     }
-
+    
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
         queryFields: 'Id, CRM_conversation_note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
@@ -62,14 +63,23 @@ export default class NksSamtalereferatDetails extends LightningElement {
         return this.notes != null && this.notes.length > 0;
     }
 
-    handleChange(event) {
-        if (
-            event.detail.status === 'FINISHED' &&
-            event.detail.outputVariables?.some(
+    handleStatusChange(event) {
+        console.log('handleStatusChange');
+        const { status, outputVariables } = event.detail;
+        if (status === 'FINISHED' &&
+            outputVariables?.some(
                 (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
             )
         )
-            refreshApex(this._wiredRecord);
+        trackAmplitudeEvent('Conversation Note journaled');
+        refreshApex(this._wiredRecord);
+    }
+
+    handleChange(event) {;
+        if (event.detail) {
+            const { value } = event.detail;
+            value === 'GENERELL_SAK' || value === 'FAGSAK' ? trackAmplitudeEvent('CRMThemeCategorization sakstype', {value: value}) : trackAmplitudeEvent('Theme/Gjelder changed', {value: value});
+        }
     }
 
     handleExpandClick() {
