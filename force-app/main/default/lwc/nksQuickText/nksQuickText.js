@@ -70,7 +70,7 @@ export default class nksQuickText extends LightningElement {
     showModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
-        trackAmplitudeEvent('Quicktext opened');
+        trackAmplitudeEvent('Quicktext event', {type: 'Quicktext opened'});
     }
 
     hideModal() {

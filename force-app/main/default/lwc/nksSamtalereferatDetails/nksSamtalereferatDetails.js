@@ -71,14 +71,14 @@ export default class NksSamtalereferatDetails extends LightningElement {
                 (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
             )
         )
-        trackAmplitudeEvent('Conversation Note journaled');
+        trackAmplitudeEvent('ConvNote event', {type: 'Journaled'});
         refreshApex(this._wiredRecord);
     }
 
     handleChange(event) {;
         if (event.detail) {
             const { value } = event.detail;
-            value === 'GENERELL_SAK' || value === 'FAGSAK' ? trackAmplitudeEvent('CRMThemeCategorization sakstype', {value: value}) : trackAmplitudeEvent('Theme/Gjelder changed', {value: value});
+            value === 'GENERELL_SAK' || value === 'FAGSAK' ? trackAmplitudeEvent('ThemeCategorization Event', {type: 'Sakstype endret', value: value}) : trackAmplitudeEvent('ThemeCategorization Event', {type: 'Theme/Gjelder changed', value: value});
         }
     }
 
