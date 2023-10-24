@@ -25,6 +25,6 @@ private with sharing class NKS_BrukervarselControllerTest {
         }
         Test.stopTest();
 
-        // System.assertEquals(1, [SELECT Id FROM Application_Log__c].size(), 'Excpected an error logged');
+        System.assertEquals(1, [SELECT Id FROM Application_Log__c].size(), 'Excpected an error logged');
     }
 }
