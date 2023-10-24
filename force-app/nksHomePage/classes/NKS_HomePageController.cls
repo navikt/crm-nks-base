@@ -407,6 +407,7 @@ public with sharing class NKS_HomePageController {
         ];
         if (news != null) {
             news.NKS_ImageURL__c = getImageUrl(news.Id);
+            news.NKS_Information__c = news.NKS_Information__c.replaceAll('target="_blank"', 'target="_self"');
             return news;
         } else {
             System.debug('Record was not found!');
