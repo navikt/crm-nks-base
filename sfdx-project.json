@@ -73,7 +73,7 @@
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.27.0.LATEST"
+                    "versionNumber": "0.49.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -84,7 +84,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "57.0",
+    "sourceApiVersion": "59.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
