@@ -1,0 +1,153 @@
+<template>
+    <div class="slds-tabs_card">
+        <lightning-tabset class="flexipage-tabset" lwc:if={tabConditional}>
+            <lightning-tab label="Details" onactive={handleTabClick}>
+                <c-nks-record-info
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    viewed-object-api-name="Person__c"
+                    relationship-field="CRM_Person__c"
+                    icon-name="standard:avatar"
+                    displayed-fields="NKS_Full_Name__c,Name,INT_Sex__c,INT_LegalStatus__c,INT_Citizenships__c,INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c"
+                    card-label="Personinformasjon"
+                ></c-nks-record-info>
+                <c-nks-record-info
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    viewed-object-api-name="Person__c"
+                    relationship-field="CRM_Person__c"
+                    icon-name="standard:call_coaching"
+                    displayed-fields="NKS_Mobile_Phone__c, NKS_Phone_1__c, NKS_Email__c, NKS_Phone_2__c, INT_KRR_Reservation__c, NKS_County__c,  INT_VerifiedFromKRR__c"
+                    card-label="Kontaktinformasjon"
+                    show-krr
+                ></c-nks-record-info>
+                <c-nks-bosted-address record-id={recordId} object-api-name={objectApiName}></c-nks-bosted-address>
+                <c-nks-post-address record-id={recordId} object-api-name={objectApiName}></c-nks-post-address>
+                <c-nks-temporary-address record-id={recordId} object-api-name={objectApiName}></c-nks-temporary-address>
+                <c-nks-record-info
+                    lwc:if={flyttingConditional}
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    viewed-object-api-name="Person__c"
+                    relationship-field="CRM_Person__c"
+                    icon-name="custom:custom98"
+                    displayed-fields="INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c"
+                    card-label="Flytting"
+                    show-link
+                ></c-nks-record-info>
+                <!-- Nav Unit -->
+                <c-nks-nav-unit-single
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    relation-field="CRM_Person__c"
+                    type="PERSON_LOCATION"
+                    num-cols="4"
+                    card-layout
+                ></c-nks-nav-unit-single>
+                <c-nks-family-viewer record-id={recordId} object-api-name={objectApiName}></c-nks-family-viewer>
+            </lightning-tab>
+            <lightning-tab label="Kommunikasjon" onactive={handleTabClick}>
+                <c-timeline
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    amount-of-months="3"
+                    amount-of-months-to-load="3"
+                    amount-of-months-to-open="1"
+                    amount-of-records="999999999"
+                    amount-of-records-to-load="3"
+                    amount-of-records-to-open="1"
+                    button-is-hidden
+                    config-id="NKS_PERSON"
+                    custom-empty-subtitle="Denne brukeren har ingen registrerte henvendelser.‎"
+                    filter-is-active
+                    header-icon="standard:case"
+                    header-title-english="‎Cases"
+                    header-title-norwegian="Henvendelser‎"
+                    hide-my-activities-filter
+                    include-amount-in-title
+                    picklist-filter1-label="Temagruppe"
+                    timeline-parent-field="Id"
+                ></c-timeline>
+                <c-nks-brukervarsel-list
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    relationship-field="CRM_Person__c"
+                ></c-nks-brukervarsel-list>
+            </lightning-tab>
+            <lightning-tab label="Tasks" onactive={handleTabClick}>
+                <p>Hello Tab 3!</p>
+                <!-- Oppgaver -->
+                <p>Oppgave oppgave...</p>
+                <lightning-card title={heading} icon-name="custom:custom45">
+                    <div class="slds-card__body slds-card__body_inner">
+                        <c-nks-filtered-related-list
+                            person-id={personId}
+                            related-object="NavTask__c"
+                            object-relation="NavTasks__r"
+                            headers="Name, NKS_Themeformula__c, CRM_GjelderFormula__c,
+                                         NKS_StatusFormula__c, NKS_Date_Registered__c,
+                                         CRM_DueDate__c, CRM_NavUnit__c"
+                            filter-graphql="\{NKS_Themeformula__c: {eq: Pensjon}}"
+                            sort-by="CRM_DueDate__c"
+                            onpassheading={receiveHeading}
+                            onupdateloadmore={updateLoadMore}
+                        ></c-nks-filtered-related-list>
+                    </div>
+                    <div class="slds-is-relative" slot="footer">
+                        <lightning-layout horizontal-align="center">
+                            <lightning-layout-item>
+                                <lightning-button
+                                    variant="base"
+                                    label={SHOW_MORE}
+                                    disabled={loadMoreDisabled}
+                                    title={SHOW_MORE}
+                                    onclick={loadMore}
+                                ></lightning-button>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </lightning-card>
+                <c-nks-filtered-related-list
+                    person-id="a0F1l000004HdKfEAK"
+                    related-object="NavTask__c"
+                    object-relation="NavTasks__r"
+                    headers="Name, NKS_Theme__c, CRM_GjelderFormula__c,
+                    NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c,
+                    CRM_DueDate__c, CRM_NavUnit__c"
+                    filter-graphql="\{NKS_Status__c: {nin: [FERDIGSTILT, FEILREGISTRERT]}}"
+                    sort-by="CRM_DueDate__c"
+                    onpassheading={receiveHeading}
+                    onupdateloadmore={updateLoadMore}
+                ></c-nks-filtered-related-list>
+            </lightning-tab>
+            <lightning-tab label="Dokumenter" onactive={handleTabClick}>
+                <p>Hello Tab 4!</p>
+                <c-saf-document-by-user
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    bruker-ident-field="CRM_Person__r.Name"
+                    bruker-ident-type="FNR"
+                    log-domain="NKS"
+                    log-exception
+                    log-requests
+                ></c-saf-document-by-user>
+            </lightning-tab>
+            <lightning-tab label="Payout" onactive={handleTabClick}>
+                <p>Hello Tab 5!</p>
+                <c-nks-person-payment-list
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    relationship-field="CRM_Person__c"
+                ></c-nks-person-payment-list>
+            </lightning-tab>
+            <lightning-tab label="Cases" onactive={handleTabClick}>
+                <p>Hello Tab 6!</p>
+                <c-person-sak-list
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    relationship-field="CRM_Person__c"
+                ></c-person-sak-list>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>
