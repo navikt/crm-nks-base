@@ -10,6 +10,7 @@ export default class NksPersonTab extends LightningElement {
     @api recordId;
     @api objectApiName;
 
+    // TODO: Use labels for english/norwegian
     details = DETAILS_TAB_LABEL;
     communication = COMMUNICATION_TAB_LABEL;
     tasks = TASKS_TAB_LABEL;
@@ -18,7 +19,6 @@ export default class NksPersonTab extends LightningElement {
     cases = CASES_TAB_LABEL;
 
     // TODO: Add logic for both account and case
-    // TODO: Use labels for english/norwegian
     get relationshipField() {
         if (this.objectApiName === 'Case') {
             return 'Account.CRM_Person__c';
@@ -32,7 +32,7 @@ export default class NksPersonTab extends LightningElement {
         if (this.objectApiName === 'Case') {
             return 'Account.INT_PersonIdent__c	';
         } else if (this.objectApiName === 'Account') {
-            return 'INT_PersonIdent__c	';
+            return 'INT_PersonIdent__c';
         }
         return null;
     }
