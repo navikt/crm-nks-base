@@ -1,7 +1,7 @@
 <template>
     <div class="slds-tabs_card">
         <lightning-tabset class="flexipage-tabset" lwc:if={tabConditional}>
-            <lightning-tab label="Details" onactive={handleTabClick}>
+            <lightning-tab label={details} onactive={handleTabClick}>
                 <c-nks-record-info
                     record-id={recordId}
                     object-api-name={objectApiName}
@@ -46,7 +46,7 @@
                 ></c-nks-nav-unit-single>
                 <c-nks-family-viewer record-id={recordId} object-api-name={objectApiName}></c-nks-family-viewer>
             </lightning-tab>
-            <lightning-tab label="Kommunikasjon" onactive={handleTabClick}>
+            <lightning-tab label={communication} onactive={handleTabClick}>
                 <c-timeline
                     record-id={recordId}
                     object-api-name={objectApiName}
@@ -74,7 +74,7 @@
                     relationship-field="CRM_Person__c"
                 ></c-nks-brukervarsel-list>
             </lightning-tab>
-            <lightning-tab label="Tasks" onactive={handleTabClick}>
+            <lightning-tab label={tasks} onactive={handleTabClick}>
                 <p>Hello Tab 3!</p>
                 <!-- Oppgaver -->
                 <p>Oppgave oppgave...</p>
@@ -120,7 +120,7 @@
                     onupdateloadmore={updateLoadMore}
                 ></c-nks-filtered-related-list>
             </lightning-tab>
-            <lightning-tab label="Dokumenter" onactive={handleTabClick}>
+            <lightning-tab label={documents} onactive={handleTabClick}>
                 <p>Hello Tab 4!</p>
                 <c-saf-document-by-user
                     record-id={recordId}
@@ -132,7 +132,7 @@
                     log-requests
                 ></c-saf-document-by-user>
             </lightning-tab>
-            <lightning-tab label="Payout" onactive={handleTabClick}>
+            <lightning-tab label={payout} onactive={handleTabClick}>
                 <p>Hello Tab 5!</p>
                 <c-nks-person-payment-list
                     record-id={recordId}
@@ -140,7 +140,7 @@
                     relationship-field="CRM_Person__c"
                 ></c-nks-person-payment-list>
             </lightning-tab>
-            <lightning-tab label="Cases" onactive={handleTabClick}>
+            <lightning-tab label={cases} onactive={handleTabClick}>
                 <p>Hello Tab 6!</p>
                 <c-person-sak-list
                     record-id={recordId}
