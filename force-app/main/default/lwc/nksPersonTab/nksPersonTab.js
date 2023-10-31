@@ -19,11 +19,22 @@ export default class NksPersonTab extends LightningElement {
 
     // TODO: Add logic for both account and case
     // TODO: Use labels for english/norwegian
+    get relationshipField() {
+        if (this.objectApiName === 'Case') {
+            return 'Account.CRM_Person__c';
+        } else if (this.objectApiName === 'Account') {
+            return 'CRM_Person__c';
+        }
+        return null;
+    }
 
-    handleTabClick(event) {
-        console.log('First');
-        const tabContent2 = `Tab ${event.target.label} is now active`;
-        console.log(tabContent2);
+    get personIdent() {
+        if (this.objectApiName === 'Case') {
+            return 'Account.INT_PersonIdent__c	';
+        } else if (this.objectApiName === 'Account') {
+            return 'INT_PersonIdent__c	';
+        }
+        return null;
     }
 
     get tabConditional() {
@@ -34,6 +45,12 @@ export default class NksPersonTab extends LightningElement {
     get flyttingConditional() {
         // TODO: Add conditions for hiding flytting, mostly access
         return true;
+    }
+
+    handleTabClick(event) {
+        console.log('First');
+        const tabContent2 = `Tab ${event.target.label} is now active`;
+        console.log(tabContent2);
     }
 
     receiveHeading() {
