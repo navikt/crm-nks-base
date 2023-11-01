@@ -1,10 +1,15 @@
-import { LightningElement, api } from 'lwc';
-import { trackAmplitudeEvent } from 'c/amplitude';
+import { LightningElement, api, wire } from 'lwc';
+import { MessageContext, publish } from 'lightning/messageService';
+import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
+
 export default class NksBrukervarsel extends LightningElement {
     @api brukervarsel;
 
     sortedVarselList;
     showDetails = false;
+
+    @wire(MessageContext)
+    messageContext;
 
     get showVarselListe() {
         let retValue = this.hasMessageList && this.showDetails === true;
@@ -183,6 +188,10 @@ export default class NksBrukervarsel extends LightningElement {
 
     onShowHide() {
         this.showDetails = !this.showDetails;
-        trackAmplitudeEvent('UN List Event', { type: 'toggle show details' });
+        let message = {
+            eventType: 'UN List',
+            properties: { type: 'toggle show details' }
+        };
+        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
     }
 }
