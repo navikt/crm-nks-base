@@ -3,13 +3,17 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
-import { trackAmplitudeEvent } from 'c/amplitude';
+import { MessageContext, publish } from 'lightning/messageService';
+import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
     dataShowing;
     notes;
     expanded = true;
+
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
@@ -64,21 +68,29 @@ export default class NksSamtalereferatDetails extends LightningElement {
     }
 
     handleStatusChange(event) {
-        console.log('handleStatusChange');
         const { status, outputVariables } = event.detail;
         if (status === 'FINISHED' &&
             outputVariables?.some(
                 (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
             )
-        )
-        trackAmplitudeEvent('ConvNote event', {type: 'Journaled'});
-        refreshApex(this._wiredRecord);
+        ) {
+            let message = {
+                eventType: 'Conversation Note Journaled',
+            };
+            publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+            refreshApex(this._wiredRecord);
+        }        
     }
 
     handleChange(event) {;
         if (event.detail) {
             const { value } = event.detail;
-            value === 'GENERELL_SAK' || value === 'FAGSAK' ? trackAmplitudeEvent('ThemeCategorization Event', {type: 'Sakstype endret', value: value}) : trackAmplitudeEvent('ThemeCategorization Event', {type: 'Theme/Gjelder changed', value: value});
+            let message = {
+                eventType: 'ThemeCategorization',
+                properties: { value: value }
+            };
+            value === 'GENERELL_SAK' || value === 'FAGSAK' ? message.eventType += ' - Sakstype endret' : message.eventType += ' - Theme/Gjelder changed';
+            publish(this.messageContext, AMPLITUDE_CHANNEL, message);
         }
     }
 
