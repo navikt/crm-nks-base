@@ -1,0 +1,8 @@
+.emoji {
+    cursor: pointer;
+}
+
+.textArea {
+    width: 100%;
+    --sds-c-textarea-sizing-min-height: 100px;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="emoji3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.68 85.68">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#2c2c2c;stroke-linecap:round;stroke-miterlimit:10;stroke-width:5px;}.cls-2{fill:#231f20;}.cls-2,.cls-3,.cls-4,.cls-5,.cls-6{stroke-width:0px;}.cls-3{fill:#fff;}.cls-4{fill:#fee67b;}.cls-5{fill:#ffefaf;}.cls-6{fill:#fbdd45;}</style>
+    </defs>
+    <g id="Layer_1-2">
+        <circle class="cls-6" cx="42.84" cy="42.84" r="42.84" />
+        <path class="cls-4"
+            d="m0,42.84c0,9.6,3.16,18.45,8.48,25.59,6.2,3.49,13.36,5.5,20.99,5.5,23.66,0,42.84-19.18,42.84-42.84,0-9.6-3.16-18.45-8.48-25.59-6.2-3.49-13.36-5.5-20.99-5.5C19.18,0,0,19.18,0,42.84Z" />
+        <path class="cls-5"
+            d="m5.8,47.19C5.8,24.87,23.89,6.78,46.21,6.78c13.84,0,26.05,6.96,33.34,17.57C72.76,11.38,59.15,2.51,43.45,2.51,20.98,2.51,2.75,20.68,2.75,43.09c0,9.99,3.63,19.13,9.63,26.2-4.16-6.35-6.59-13.94-6.59-22.1Z" />
+        <circle class="cls-3" cx="22.56" cy="34.77" r="10.34" />
+        <ellipse class="cls-2" cx="23.86" cy="28.06" rx="3.58" ry="6.37"
+            transform="translate(-7.89 46.74) rotate(-80.09)" />
+        <circle class="cls-3" cx="61.63" cy="34.77" r="10.34" />
+        <ellipse class="cls-2" cx="62.93" cy="28.06" rx="3.58" ry="6.37"
+            transform="translate(24.46 85.23) rotate(-80.09)" />
+        <line class="cls-1" x1="26.3" y1="59.83" x2="59.38" y2="54.55" />
+    </g>
+</svg>

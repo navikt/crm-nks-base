@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="emoji3hover"
+    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    viewBox="0 0 85.7 85.7"
+    style="enable-background:new 0 0 85.7 85.7;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F5B82C;}
+	.st1{fill:#F9CC15;}
+	.st2{fill:#FBDF64;}
+	.st3{fill:#FFFFFF;}
+	.st4{fill:#231F20;}
+	.st5{fill:none;stroke:#2C2C2C;stroke-width:5;stroke-linecap:round;stroke-miterlimit:10;}
+</style>
+<g id="Layer_1-2">
+	<circle class="st0" cx="42.8" cy="42.8" r="42.8"/>
+	<path class="st1" d="M0,42.8c0,9.6,3.2,18.5,8.5,25.6c6.2,3.5,13.4,5.5,21,5.5c23.7,0,42.8-19.2,42.8-42.8c0-9.6-3.2-18.5-8.5-25.6
+		C57.6,2,50.5,0,42.8,0C19.2,0,0,19.2,0,42.8z"/>
+	<path class="st2" d="M5.8,47.2c0-22.3,18.1-40.4,40.4-40.4c13.8,0,26,7,33.3,17.6c-6.8-13-20.4-21.8-36.1-21.8
+		C21,2.5,2.8,20.7,2.8,43.1c0,10,3.6,19.1,9.6,26.2C8.2,62.9,5.8,55.4,5.8,47.2L5.8,47.2z"/>
+	<circle class="st3" cx="22.6" cy="34.8" r="10.3"/>
+	<ellipse transform="matrix(0.1721 -0.9851 0.9851 0.1721 -7.824 46.7485)" class="st4" cx="23.9" cy="28" rx="3.6" ry="6.4"/>
+	<circle class="st3" cx="61.6" cy="34.8" r="10.3"/>
+	<ellipse transform="matrix(0.1721 -0.9851 0.9851 0.1721 24.4391 85.2857)" class="st4" cx="63" cy="28.1" rx="3.6" ry="6.4"/>
+	<line class="st5" x1="26.3" y1="59.8" x2="59.4" y2="54.5"/>
+</g>
+</svg>
