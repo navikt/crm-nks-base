@@ -66,7 +66,7 @@
                     hide-my-activities-filter
                     include-amount-in-title
                     picklist-filter1-label="Temagruppe"
-                    timeline-parent-field="Id"
+                    timeline-parent-field={timelineRelation}
                 ></c-timeline>
                 <c-nks-brukervarsel-list
                     record-id={recordId}
@@ -74,7 +74,7 @@
                     relationship-field={relationshipField}
                 ></c-nks-brukervarsel-list>
             </lightning-tab>
-            <lightning-tab label="Tasks" onactive={handleTabClick}>
+            <lightning-tab label={tasks} onactive={handleTabClick}>
                 <article class="slds-card slds-card_boundary" aria-label="Åpne oppgaver">
                     <div style="display: flex; flex-direction: column; height: 100%">
                         <div
@@ -95,29 +95,22 @@
                                                         size="xx-small"
                                                         title="NAV Tasks"
                                                     ></lightning-icon>
-                                                    <p>Per</p>
-                                                    <!-- TODO: Fikse dette til å være lightning-icon -->
-                                                    <!-- <img
-                                                        src="https://navdialog--sit2.sandbox.my.salesforce.com/img/icon/t4v35/custom/custom45_120.png"
-                                                        title="NAV Tasks"
-                                                        alt=""
-                                                    /> -->
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="slds-media__body slds-align-middle">
                                             <h2 class="slds-card__header-title">
                                                 <!-- TODO: Fikse navigation her -->
-                                                <a
+                                                <!-- <a
                                                     class="slds-card__header-link baseCard__header-title-container"
                                                     href="/lightning/cmp/force__dynamicRelatedListViewAll?force__flexipageId=NKS_STO_Case_Record_Page&amp;force__cmpId=lst_dynamicRelatedList&amp;force__recordId=5005t000006sg77AAA"
+                                                > -->
+                                                <span
+                                                    class="slds-truncate slds-m-right--xx-small"
+                                                    title={relatedListHeading}
+                                                    >{relatedListHeading}</span
                                                 >
-                                                    <span
-                                                        class="slds-truncate slds-m-right--xx-small"
-                                                        title={relatedListHeading}
-                                                        >{relatedListHeading}</span
-                                                    >
-                                                </a>
+                                                <!-- </a> -->
                                             </h2>
                                         </div>
                                     </div>
@@ -135,9 +128,6 @@
                                 </div>
                             </div>
                             <div class="slds-grid">
-                                <div class="slds-col slds-align-bottom">
-                                    <p class="slds-text-body--small">Dis shit annoying</p>
-                                </div>
                                 <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink"></div>
                             </div>
                         </div>
@@ -165,42 +155,12 @@
                                 ></lightning-button>
                             </lightning-layout-item>
                         </lightning-layout>
-                        <!-- <a
-                            class="slds-card__footer"
-                            href="javascript:void(0)"
-                            onclick={loadMore}
-                            style="z-index: var(--lwc-zIndexDefault, 1); margin-top: -1px"
-                        >
-                            <span class="view-all-label"
-                                >View More<span class="assistiveText">NAV-oppgaver</span></span
-                            ></a
-                        > -->
                     </div>
                 </article>
-                <!-- <c-nks-filtered-related-list
-                    person-id={personId}
-                    related-object="NavTask__c"
-                    object-relation="NavTasks__r"
-                    headers="Name, NKS_Theme__c, CRM_GjelderFormula__c,
-                NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c,
-                CRM_DueDate__c, CRM_NavUnit__c"
-                    filter-graphql="\{NKS_Status__c: {nin: [FERDIGSTILT, FEILREGISTRERT]}}"
-                    sort-by="CRM_DueDate__c"
-                    onpassheading={receiveHeading}
-                    onupdateloadmore={updateLoadMore}
-                ></c-nks-filtered-related-list> -->
-                <!-- <lightning-button
-                    variant="base"
-                    label={SHOW_MORE}
-                    disabled={loadMoreDisabled}
-                    title={SHOW_MORE}
-                    onclick={loadMore}
-                ></lightning-button> -->
                 <br />
                 <c-related-list-link related-list="NAV_Tasks__r" label="Vis alle oppgaver"></c-related-list-link>
             </lightning-tab>
             <lightning-tab label={documents} onactive={handleTabClick}>
-                <p>Hello Tab 4!</p>
                 <c-saf-document-by-user
                     record-id={recordId}
                     object-api-name={objectApiName}
@@ -212,7 +172,6 @@
                 ></c-saf-document-by-user>
             </lightning-tab>
             <lightning-tab label={payout} onactive={handleTabClick}>
-                <p>Hello Tab 5!</p>
                 <c-nks-person-payment-list
                     record-id={recordId}
                     object-api-name={objectApiName}
@@ -220,7 +179,6 @@
                 ></c-nks-person-payment-list>
             </lightning-tab>
             <lightning-tab label={cases} onactive={handleTabClick}>
-                <p>Hello Tab 6!</p>
                 <c-person-sak-list
                     record-id={recordId}
                     object-api-name={objectApiName}

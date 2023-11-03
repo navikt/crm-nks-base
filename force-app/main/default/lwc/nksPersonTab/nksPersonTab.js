@@ -43,6 +43,10 @@ export default class NksPersonTab extends LightningElement {
         }
     }
 
+    get timelineRelation() {
+        return this.accountField[0].fieldApiName;
+    }
+
     get relationshipField() {
         if (this.objectApiName === 'Case') {
             return 'Account.CRM_Person__c';
