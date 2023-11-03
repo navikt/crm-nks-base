@@ -1,12 +1,12 @@
 <template>
     <div class="slds-tabs_card">
         <lightning-tabset class="flexipage-tabset" lwc:if={tabConditional}>
-            <lightning-tab label="Details" onactive={handleTabClick}>
+            <lightning-tab label={details} onactive={handleTabClick}>
                 <c-nks-record-info
                     record-id={recordId}
                     object-api-name={objectApiName}
                     viewed-object-api-name="Person__c"
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                     icon-name="standard:avatar"
                     displayed-fields="NKS_Full_Name__c,Name,INT_Sex__c,INT_LegalStatus__c,INT_Citizenships__c,INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c"
                     card-label="Personinformasjon"
@@ -15,7 +15,7 @@
                     record-id={recordId}
                     object-api-name={objectApiName}
                     viewed-object-api-name="Person__c"
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                     icon-name="standard:call_coaching"
                     displayed-fields="NKS_Mobile_Phone__c, NKS_Phone_1__c, NKS_Email__c, NKS_Phone_2__c, INT_KRR_Reservation__c, NKS_County__c,  INT_VerifiedFromKRR__c"
                     card-label="Kontaktinformasjon"
@@ -29,7 +29,7 @@
                     record-id={recordId}
                     object-api-name={objectApiName}
                     viewed-object-api-name="Person__c"
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                     icon-name="custom:custom98"
                     displayed-fields="INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c"
                     card-label="Flytting"
@@ -39,14 +39,14 @@
                 <c-nks-nav-unit-single
                     record-id={recordId}
                     object-api-name={objectApiName}
-                    relation-field="CRM_Person__c"
+                    relation-field={relationshipField}
                     type="PERSON_LOCATION"
                     num-cols="4"
                     card-layout
                 ></c-nks-nav-unit-single>
                 <c-nks-family-viewer record-id={recordId} object-api-name={objectApiName}></c-nks-family-viewer>
             </lightning-tab>
-            <lightning-tab label="Kommunikasjon" onactive={handleTabClick}>
+            <lightning-tab label={communication} onactive={handleTabClick}>
                 <c-timeline
                     record-id={recordId}
                     object-api-name={objectApiName}
@@ -71,7 +71,7 @@
                 <c-nks-brukervarsel-list
                     record-id={recordId}
                     object-api-name={objectApiName}
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                 ></c-nks-brukervarsel-list>
             </lightning-tab>
             <lightning-tab label="Tasks" onactive={handleTabClick}>
@@ -213,32 +213,32 @@
                 <br />
                 <c-related-list-link related-list="NAV_Tasks__r" label="Vis alle oppgaver"></c-related-list-link>
             </lightning-tab>
-            <lightning-tab label="Dokumenter" onactive={handleTabClick}>
+            <lightning-tab label={documents} onactive={handleTabClick}>
                 <p>Hello Tab 4!</p>
                 <c-saf-document-by-user
                     record-id={recordId}
                     object-api-name={objectApiName}
-                    bruker-ident-field="CRM_Person__r.Name"
+                    bruker-ident-field={personIdent}
                     bruker-ident-type="FNR"
                     log-domain="NKS"
                     log-exception
                     log-requests
                 ></c-saf-document-by-user>
             </lightning-tab>
-            <lightning-tab label="Payout" onactive={handleTabClick}>
+            <lightning-tab label={payout} onactive={handleTabClick}>
                 <p>Hello Tab 5!</p>
                 <c-nks-person-payment-list
                     record-id={recordId}
                     object-api-name={objectApiName}
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                 ></c-nks-person-payment-list>
             </lightning-tab>
-            <lightning-tab label="Cases" onactive={handleTabClick}>
+            <lightning-tab label={cases} onactive={handleTabClick}>
                 <p>Hello Tab 6!</p>
                 <c-person-sak-list
                     record-id={recordId}
                     object-api-name={objectApiName}
-                    relationship-field="CRM_Person__c"
+                    relationship-field={relationshipField}
                 ></c-person-sak-list>
             </lightning-tab>
         </lightning-tabset>
