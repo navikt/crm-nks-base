@@ -1,6 +1,6 @@
 <template>
-    <div class="slds-tabs_card">
-        <lightning-tabset class="flexipage-tabset" lwc:if={tabConditional}>
+    <div class="slds-tabs_card" lwc:if={tabConditional}>
+        <lightning-tabset class="flexipage-tabset">
             <lightning-tab label={details} onactive={handleTabClick}>
                 <c-nks-record-info
                     record-id={recordId}
@@ -136,21 +136,7 @@
                             </div>
                             <div class="slds-grid">
                                 <div class="slds-col slds-align-bottom">
-                                    <p class="slds-text-body--small">
-                                        <!-- <force-list-view-manager-status-info>
-                          <span>
-                            <span
-                              class="countSortedByFilteredBy"
-                              aria-live="polite"
-                              role="status"
-                              aria-label="Åpne oppgaver"
-                              >4 items • Sorted by Status • Filtered by Status •
-                            </span>
-                            <span>Updated a minute ago</span>
-                          </span>
-                        </force-list-view-manager-status-info> -->
-                                        Dis shit annoying
-                                    </p>
+                                    <p class="slds-text-body--small">Dis shit annoying</p>
                                 </div>
                                 <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink"></div>
                             </div>
