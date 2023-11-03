@@ -9,6 +9,9 @@ import CASES_TAB_LABEL from '@salesforce/label/c.NKS_Cases_Tab_Label';
 export default class NksPersonTab extends LightningElement {
     @api recordId;
     @api objectApiName;
+    personId = 'a0F1w000004cB1EEAU';
+    relatedListDisabled = false;
+    relatedListHeading = '';
 
     // TODO: Use labels for english/norwegian
     details = DETAILS_TAB_LABEL;
@@ -53,11 +56,24 @@ export default class NksPersonTab extends LightningElement {
         console.log(tabContent2);
     }
 
-    receiveHeading() {
-        console.log('Cwazy cupcake');
+    receiveHeading(event) {
+        this.relatedListHeading = event.detail;
     }
 
-    updateLoadMore() {
-        console.log('What');
+    updateLoadMore(event) {
+        this.relatedListDisabled = !event.detail.enabled;
+    }
+
+    get loadMoreDisabled() {
+        return this.relatedListDisabled;
+    }
+
+    loadMore() {
+        console.log('Bink');
+        this.template.querySelector('c-nks-filtered-related-list').loadMore();
+    }
+
+    beginRefresh() {
+        this.template.querySelector('c-nks-filtered-related-list').refreshList();
     }
 }
