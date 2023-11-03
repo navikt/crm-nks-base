@@ -49,6 +49,10 @@
         <name>NKS_Payout_Tab_Label</name>
     </customLabels>
     <customLabels>
+        <label>Oppdater</label>
+        <name>NKS_Refresh_Button_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Vennligst fyll ut feltet.</label>
         <name>NKS_Single_Record_Input_Validation_Error</name>
     </customLabels>

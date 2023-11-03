@@ -5,6 +5,7 @@ import TASKS_TAB_LABEL from '@salesforce/label/c.NKS_Tasks_Tab_Label';
 import DOCUMENTS_TAB_LABEL from '@salesforce/label/c.NKS_Documents_Tab_Label';
 import PAYOUT_TAB_LABEL from '@salesforce/label/c.NKS_Payout_Tab_Label';
 import CASES_TAB_LABEL from '@salesforce/label/c.NKS_Cases_Tab_Label';
+import REFRESH_BUTTON_LABEL from '@salesforce/label/c.NKS_Refresh_Button_Label';
 import CASE_ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
 import ACCOUNT_ID_FIELD from '@salesforce/schema/Account.Id';
 import ACCOUNT_PERSON_FIELD from '@salesforce/schema/Account.CRM_Person__c';
@@ -25,6 +26,7 @@ export default class NksPersonTab extends LightningElement {
     documents = DOCUMENTS_TAB_LABEL;
     payout = PAYOUT_TAB_LABEL;
     cases = CASES_TAB_LABEL;
+    refreshLabel = REFRESH_BUTTON_LABEL;
 
     personId;
     accountId;
