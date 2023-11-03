@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import SVG_EMOJIS from '@salesforce/resourceUrl/nksSurveyEmojis';
+import PNG_EMOJIS from '@salesforce/resourceUrl/nksSurveyEmojis';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class NksSurvey extends LightningElement {
@@ -12,27 +12,27 @@ export default class NksSurvey extends LightningElement {
         {
             id: 'emoji1',
             title: 'veldig dårlig',
-            url: `${SVG_EMOJIS}/emoji1.svg#emoji1`
+            url: `${PNG_EMOJIS}/emoji1.png`
         },
         {
             id: 'emoji2',
             title: 'dårlig',
-            url: `${SVG_EMOJIS}/emoji2.svg#emoji2`
+            url: `${PNG_EMOJIS}/emoji2.png`
         },
         {
             id: 'emoji3',
             title: 'nøytral',
-            url: `${SVG_EMOJIS}/emoji3.svg#emoji3`
+            url: `${PNG_EMOJIS}/emoji3.png`
         },
         {
             id: 'emoji4',
             title: 'bra',
-            url: `${SVG_EMOJIS}/emoji4.svg#emoji4`
+            url: `${PNG_EMOJIS}/emoji4.png`
         },
         {
             id: 'emoji5',
             title: 'veldig bra',
-            url: `${SVG_EMOJIS}/emoji5.svg#emoji5`
+            url: `${PNG_EMOJIS}/emoji5.png`
         }
     ];
     @track outputText;
@@ -42,14 +42,26 @@ export default class NksSurvey extends LightningElement {
     }
 
     /**
-     * Note: All functions are for test
+     * Note: some functions are for test
      */
     handleCloseClick() {
         this.show = false;
     }
 
     handleEmojiClick(event) {
-        console.log(event.currentTarget.getAttribute('data-id'));
+        console.log(event.currentTarget.getAttribute('title'));
+    }
+
+    handleMouseOver(event) {
+        const id = event.currentTarget.getAttribute('data-id');
+        let element = this.template.querySelector(`img[data-id="${id}"]`);
+        element.setAttribute('src', `${PNG_EMOJIS}/${id}hover.png`);
+    }
+
+    handleMouseOut(event) {
+        const id = event.currentTarget.getAttribute('data-id');
+        let element = this.template.querySelector(`img[data-id="${id}"]`);
+        element.setAttribute('src', `${PNG_EMOJIS}/${id}.png`);
     }
 
     handleChange() {

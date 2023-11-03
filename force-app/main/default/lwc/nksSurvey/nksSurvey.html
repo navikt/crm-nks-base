@@ -22,17 +22,22 @@
             <ul class="slds-list_horizontal slds-align_absolute-center slds-var-p-vertical_large">
                 <template for:each={emojis} for:item="emoji">
                     <li
-                        class="slds-var-p-right_small emoji"
-                        key={emoji.label}
+                        class="slds-var-p-right_large emoji"
+                        key={emoji.id}
+                        data-id={emoji.id}
                         title={emoji.title}
-                        data-id={emoji.title}
                         onclick={handleEmojiClick}
+                        onmouseover={handleMouseOver}
+                        onmouseout={handleMouseOut}
                     >
+                        <img src={emoji.url} data-id={emoji.id} alt={emoji.title} width="50" height="50" />
+                        <!--
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
                             ;
                             <use xlink:href={emoji.url}></use>
                         </svg>
                         <span class="slds-assistive-text">{emoji.title}</span>
+                        -->
                     </li>
                 </template>
             </ul>
