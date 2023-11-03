@@ -3,6 +3,9 @@ import { LightningElement, api } from 'lwc';
 export default class NksPersonTab extends LightningElement {
     @api recordId;
     @api objectApiName;
+    personId = 'a0F1w000004cB1EEAU';
+    relatedListDisabled = false;
+    relatedListHeading = '';
 
     // TODO: Add logic for both account and case
     // TODO: Use labels for english/norwegian
@@ -23,11 +26,24 @@ export default class NksPersonTab extends LightningElement {
         return true;
     }
 
-    receiveHeading() {
-        console.log('Cwazy cupcake');
+    receiveHeading(event) {
+        this.relatedListHeading = event.detail;
     }
 
-    updateLoadMore() {
-        console.log('What');
+    updateLoadMore(event) {
+        this.relatedListDisabled = !event.detail.enabled;
+    }
+
+    get loadMoreDisabled() {
+        return this.relatedListDisabled;
+    }
+
+    loadMore() {
+        console.log('Bink');
+        this.template.querySelector('c-nks-filtered-related-list').loadMore();
+    }
+
+    beginRefresh() {
+        this.template.querySelector('c-nks-filtered-related-list').refreshList();
     }
 }

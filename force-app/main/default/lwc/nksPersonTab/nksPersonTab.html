@@ -75,50 +75,143 @@
                 ></c-nks-brukervarsel-list>
             </lightning-tab>
             <lightning-tab label="Tasks" onactive={handleTabClick}>
-                <p>Hello Tab 3!</p>
-                <!-- Oppgaver -->
-                <p>Oppgave oppgave...</p>
-                <lightning-card title={heading} icon-name="custom:custom45">
-                    <div class="slds-card__body slds-card__body_inner">
+                <article class="slds-card slds-card_boundary" aria-label="Åpne oppgaver">
+                    <div style="display: flex; flex-direction: column; height: 100%">
+                        <div
+                            class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header--object-home"
+                        >
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate firstHeaderRow">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div aria-hidden="true">
+                                            <div>
+                                                <span
+                                                    class="record-avatar-container slds-avatar slds-avatar_small icon slds-m-right_small"
+                                                    style="background-color: #d95879"
+                                                >
+                                                    <lightning-icon
+                                                        icon-name="custom:custom45"
+                                                        alternative-text=""
+                                                        size="xx-small"
+                                                        title="NAV Tasks"
+                                                    ></lightning-icon>
+                                                    <p>Per</p>
+                                                    <!-- TODO: Fikse dette til å være lightning-icon -->
+                                                    <!-- <img
+                                                        src="https://navdialog--sit2.sandbox.my.salesforce.com/img/icon/t4v35/custom/custom45_120.png"
+                                                        title="NAV Tasks"
+                                                        alt=""
+                                                    /> -->
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slds-media__body slds-align-middle">
+                                            <h2 class="slds-card__header-title">
+                                                <!-- TODO: Fikse navigation her -->
+                                                <a
+                                                    class="slds-card__header-link baseCard__header-title-container"
+                                                    href="/lightning/cmp/force__dynamicRelatedListViewAll?force__flexipageId=NKS_STO_Case_Record_Page&amp;force__cmpId=lst_dynamicRelatedList&amp;force__recordId=5005t000006sg77AAA"
+                                                >
+                                                    <span
+                                                        class="slds-truncate slds-m-right--xx-small"
+                                                        title={relatedListHeading}
+                                                        >{relatedListHeading}</span
+                                                    >
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                                        <lightning-button-icon
+                                            variant="border-filled"
+                                            icon-name="utility:refresh"
+                                            alternative-text="Refresh"
+                                            title="Refresh"
+                                            onclick={beginRefresh}
+                                        ></lightning-button-icon>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-align-bottom">
+                                    <p class="slds-text-body--small">
+                                        <!-- <force-list-view-manager-status-info>
+                          <span>
+                            <span
+                              class="countSortedByFilteredBy"
+                              aria-live="polite"
+                              role="status"
+                              aria-label="Åpne oppgaver"
+                              >4 items • Sorted by Status • Filtered by Status •
+                            </span>
+                            <span>Updated a minute ago</span>
+                          </span>
+                        </force-list-view-manager-status-info> -->
+                                        Dis shit annoying
+                                    </p>
+                                </div>
+                                <div class="slds-col slds-no-flex slds-grid slds-align-bottom slds-shrink"></div>
+                            </div>
+                        </div>
                         <c-nks-filtered-related-list
                             person-id={personId}
                             related-object="NavTask__c"
                             object-relation="NavTasks__r"
-                            headers="Name, NKS_Themeformula__c, CRM_GjelderFormula__c,
-                                         NKS_StatusFormula__c, NKS_Date_Registered__c,
-                                         CRM_DueDate__c, CRM_NavUnit__c"
-                            filter-graphql="\{NKS_Themeformula__c: {eq: Pensjon}}"
+                            headers="Name, NKS_Theme__c, CRM_GjelderFormula__c,
+                NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c,
+                CRM_DueDate__c, CRM_NavUnit__c"
+                            filter-graphql="\{NKS_Status__c: {nin: [FERDIGSTILT, FEILREGISTRERT]}}"
                             sort-by="CRM_DueDate__c"
                             onpassheading={receiveHeading}
                             onupdateloadmore={updateLoadMore}
+                            sortable-fields="NKS_Theme__c, CRM_GjelderFormula__c, NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c, CRM_DueDate__c"
                         ></c-nks-filtered-related-list>
-                    </div>
-                    <div class="slds-is-relative" slot="footer">
                         <lightning-layout horizontal-align="center">
                             <lightning-layout-item>
                                 <lightning-button
                                     variant="base"
-                                    label={SHOW_MORE}
-                                    disabled={loadMoreDisabled}
-                                    title={SHOW_MORE}
+                                    label="View More"
+                                    title="View More"
                                     onclick={loadMore}
+                                    disabled={loadMoreDisabled}
                                 ></lightning-button>
                             </lightning-layout-item>
                         </lightning-layout>
+                        <!-- <a
+                            class="slds-card__footer"
+                            href="javascript:void(0)"
+                            onclick={loadMore}
+                            style="z-index: var(--lwc-zIndexDefault, 1); margin-top: -1px"
+                        >
+                            <span class="view-all-label"
+                                >View More<span class="assistiveText">NAV-oppgaver</span></span
+                            ></a
+                        > -->
                     </div>
-                </lightning-card>
-                <c-nks-filtered-related-list
-                    person-id="a0F1l000004HdKfEAK"
+                </article>
+                <!-- <c-nks-filtered-related-list
+                    person-id={personId}
                     related-object="NavTask__c"
                     object-relation="NavTasks__r"
                     headers="Name, NKS_Theme__c, CRM_GjelderFormula__c,
-                    NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c,
-                    CRM_DueDate__c, CRM_NavUnit__c"
+                NKS_StatusFormula__c, CRM_Priority__c, NKS_Date_Registered__c,
+                CRM_DueDate__c, CRM_NavUnit__c"
                     filter-graphql="\{NKS_Status__c: {nin: [FERDIGSTILT, FEILREGISTRERT]}}"
                     sort-by="CRM_DueDate__c"
                     onpassheading={receiveHeading}
                     onupdateloadmore={updateLoadMore}
-                ></c-nks-filtered-related-list>
+                ></c-nks-filtered-related-list> -->
+                <!-- <lightning-button
+                    variant="base"
+                    label={SHOW_MORE}
+                    disabled={loadMoreDisabled}
+                    title={SHOW_MORE}
+                    onclick={loadMore}
+                ></lightning-button> -->
+                <br />
+                <c-related-list-link related-list="NAV_Tasks__r" label="Vis alle oppgaver"></c-related-list-link>
             </lightning-tab>
             <lightning-tab label="Dokumenter" onactive={handleTabClick}>
                 <p>Hello Tab 4!</p>
