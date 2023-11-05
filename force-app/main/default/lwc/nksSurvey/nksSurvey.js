@@ -12,27 +12,32 @@ export default class NksSurvey extends LightningElement {
         {
             id: 'emoji1',
             title: 'veldig dårlig',
-            url: `${PNG_EMOJIS}/emoji1.png`
+            url: `${PNG_EMOJIS}/emoji1.png`,
+            selected: false
         },
         {
             id: 'emoji2',
             title: 'dårlig',
-            url: `${PNG_EMOJIS}/emoji2.png`
+            url: `${PNG_EMOJIS}/emoji2.png`,
+            selected: false
         },
         {
             id: 'emoji3',
             title: 'nøytral',
-            url: `${PNG_EMOJIS}/emoji3.png`
+            url: `${PNG_EMOJIS}/emoji3.png`,
+            selected: false
         },
         {
             id: 'emoji4',
             title: 'bra',
-            url: `${PNG_EMOJIS}/emoji4.png`
+            url: `${PNG_EMOJIS}/emoji4.png`,
+            selected: false
         },
         {
             id: 'emoji5',
             title: 'veldig bra',
-            url: `${PNG_EMOJIS}/emoji5.png`
+            url: `${PNG_EMOJIS}/emoji5.png`,
+            selected: false
         }
     ];
     @track outputText;
@@ -48,8 +53,18 @@ export default class NksSurvey extends LightningElement {
         this.show = false;
     }
 
-    handleEmojiClick(event) {
-        console.log(event.currentTarget.getAttribute('title'));
+    handleClick(event) {
+        const id = event.currentTarget.getAttribute('data-id');
+        this.emojis.forEach((emoji) => {
+            let element = this.template.querySelector(`img[data-id="${emoji.id}"]`);
+            if (emoji.id === id) {
+                element.setAttribute('src', `${PNG_EMOJIS}/${emoji.id}hover.png`);
+                emoji.selected = true;
+            } else {
+                element.setAttribute('src', `${PNG_EMOJIS}/${emoji.id}.png`);
+                emoji.selected = false;
+            }
+        });
     }
 
     handleMouseOver(event) {
@@ -60,8 +75,12 @@ export default class NksSurvey extends LightningElement {
 
     handleMouseOut(event) {
         const id = event.currentTarget.getAttribute('data-id');
-        let element = this.template.querySelector(`img[data-id="${id}"]`);
-        element.setAttribute('src', `${PNG_EMOJIS}/${id}.png`);
+        this.emojis.forEach((emoji) => {
+            let element = this.template.querySelector(`img[data-id="${emoji.id}"]`);
+            if (emoji.id === id && !emoji.selected) {
+                element.setAttribute('src', `${PNG_EMOJIS}/${id}.png`);
+            }
+        });
     }
 
     handleChange() {
