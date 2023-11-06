@@ -1,5 +1,11 @@
 .emoji {
     cursor: pointer;
+    border: transparent;
+}
+
+.emojiSelected {
+    cursor: pointer;
+    border: 1px solid blue;
 }
 
 .textArea {

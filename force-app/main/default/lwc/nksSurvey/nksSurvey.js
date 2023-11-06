@@ -5,7 +5,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class NksSurvey extends LightningElement {
     show = true;
     backgroundColor = '#dec8ef';
-    title = '';
+    title = 'Tilfredhetsmåling';
     question = 'Hva synes du om den nye meldekort-funksjonen?';
 
     @track emojis = [
@@ -57,12 +57,15 @@ export default class NksSurvey extends LightningElement {
         const id = event.currentTarget.getAttribute('data-id');
         this.emojis.forEach((emoji) => {
             let element = this.template.querySelector(`img[data-id="${emoji.id}"]`);
+            let item = this.template.querySelector(`li[data-id="${emoji.id}"]`);
             if (emoji.id === id) {
                 element.setAttribute('src', `${PNG_EMOJIS}/${emoji.id}hover.png`);
                 emoji.selected = true;
+                item.className = 'slds-box slds-box_small emojiSelected';
             } else {
                 element.setAttribute('src', `${PNG_EMOJIS}/${emoji.id}.png`);
                 emoji.selected = false;
+                item.className = 'slds-box slds-box_small emoji';
             }
         });
     }

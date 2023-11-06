@@ -1,9 +1,9 @@
 <template>
     <lightning-layout if:true={show} class="slds-card slds-var-p-around_medium" style={style} multiple-rows="true">
-        <lightning-layout-item if:true={title} class="" size="12">
+        <lightning-layout-item if:true={title} class="slds-var-p-bottom_small" size="12">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">{title}</h2>
+                    <h2 class="slds-text-heading_medium">{title}</h2>
                 </div>
                 <!--
                 <div class="slds-no-flex">
@@ -22,7 +22,7 @@
             <ul class="slds-list_horizontal slds-align_absolute-center slds-var-p-vertical_large">
                 <template for:each={emojis} for:item="emoji">
                     <li
-                        class="slds-var-p-right_large emoji"
+                        class="slds-box slds-box_small emoji"
                         key={emoji.id}
                         data-id={emoji.id}
                         title={emoji.title}
@@ -30,7 +30,14 @@
                         onmouseover={handleMouseOver}
                         onmouseout={handleMouseOut}
                     >
-                        <img src={emoji.url} data-id={emoji.id} alt={emoji.title} width="50" height="50" />
+                        <img
+                            src={emoji.url}
+                            data-id={emoji.id}
+                            alt={emoji.title}
+                            width="50"
+                            height="50"
+                            aria-hidden="true"
+                        />
                         <!--
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
                             ;
