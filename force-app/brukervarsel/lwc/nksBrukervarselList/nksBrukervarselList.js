@@ -5,8 +5,7 @@ import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.g
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
-import { MessageContext, publish } from 'lightning/messageService';
-import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
@@ -28,9 +27,6 @@ export default class NksBrukervarselList extends LightningElement {
     toDate;
     wiredBrukerVarsel;
     usernotificationsLoaded = false;
-
-    @wire(MessageContext)
-    messageContext;
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -192,11 +188,7 @@ export default class NksBrukervarselList extends LightningElement {
     refreshNotificationList() {
         this.isLoaded = false;
         this.getNotifications();
-        let message = {
-            eventType: 'UN List',
-            properties: { type: 'Click on refresh button' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('UN List', { type: 'Click on refresh button' });
     }
 
     onDateFilterChange(event) {
@@ -217,11 +209,7 @@ export default class NksBrukervarselList extends LightningElement {
             default:
                 break;
         }
-        let message = {
-            eventType: 'UN List',
-            properties: { type: 'Change date range' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('UN List', { type: 'Change date range' });
     }
 
     setDefaultDates() {
@@ -238,7 +226,7 @@ export default class NksBrukervarselList extends LightningElement {
             eventType: 'UN List',
             properties: { type: 'Show all notifications' }
         };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('UN List', { type: 'Show all notifications' });
     }
 
     addError(error) {
