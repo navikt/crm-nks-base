@@ -3,17 +3,13 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
-import { MessageContext, publish } from 'lightning/messageService';
-import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
     dataShowing;
     notes;
     expanded = true;
-
-    @wire(MessageContext)
-    messageContext;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
@@ -74,10 +70,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
                 (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
             )
         ) {
-            let message = {
-                eventType: 'Conversation Note Journaled',
-            };
-            publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+            publishToAmplitude('Conversation Note Journaled');
             refreshApex(this._wiredRecord);
         }        
     }
@@ -90,7 +83,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
                 properties: { value: value }
             };
             value === 'GENERELL_SAK' || value === 'FAGSAK' ? message.eventType += ' - Sakstype endret' : message.eventType += ' - Theme/Gjelder changed';
-            publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+            publishToAmplitude('ThemeCategorization', { value: value });
         }
     }
 

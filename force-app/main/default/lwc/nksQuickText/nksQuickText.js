@@ -2,8 +2,7 @@ import { LightningElement, track, api, wire } from 'lwc';
 import searchRecords from '@salesforce/apex/NKS_QuickTextSearchController.searchRecords';
 import getQuicktexts from '@salesforce/apex/NKS_QuickTextSearchController.getQuicktexts';
 import BLANK_ERROR from '@salesforce/label/c.NKS_Conversation_Note_Blank_Error';
-import { MessageContext, publish } from 'lightning/messageService';
-import AMPLITUDE_CHANNEL from '@salesforce/messageChannel/amplitude__c';
+import { publishToAmplitude } from 'c/amplitude';
 
 const ESC_KEY_CODE = 27;
 const ESC_KEY_STRING = 'Escape';
@@ -25,9 +24,6 @@ export default class nksQuickText extends LightningElement {
     @api required = false;
 
     recentlyInserted = "";
-
-    @wire(MessageContext)
-    messageContext;
 
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
@@ -74,11 +70,7 @@ export default class nksQuickText extends LightningElement {
     showModal() {
         this.template.querySelector('[data-id="modal"]').className = 'modalShow';
         this.template.querySelector('lightning-input').focus();
-        let message = {
-            eventType: 'Quicktext',
-            properties: { type: 'Quicktext opened' }
-        };
-        publish(this.messageContext, AMPLITUDE_CHANNEL, message);
+        publishToAmplitude('Quicktext', { type: 'Quicktext opened' });
     }
 
     hideModal() {
