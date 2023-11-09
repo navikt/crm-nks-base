@@ -347,7 +347,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Hjem</masterLabel>
+    <masterLabel>SCRATCH Home Page</masterLabel>
     <template>
         <name>home:desktopTemplate</name>
     </template>
