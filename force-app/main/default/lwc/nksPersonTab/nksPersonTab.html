@@ -158,7 +158,12 @@
                     </div>
                 </article>
                 <br />
-                <c-related-list-link related-list="NAV_Tasks__r" label="Vis alle oppgaver"></c-related-list-link>
+                <c-related-list-link
+                    record-id={recordId}
+                    object-api-name={objectApiName}
+                    related-list="NAV_Tasks__r"
+                    label="Vis alle oppgaver"
+                ></c-related-list-link>
             </lightning-tab>
             <lightning-tab label={documents} onactive={handleTabClick}>
                 <c-saf-document-by-user
