@@ -19,7 +19,6 @@ export default class NksPersonTab extends LightningElement {
     relatedListDisabled = false;
     relatedListHeading = '';
 
-    // TODO: Use labels for english/norwegian
     details = DETAILS_TAB_LABEL;
     communication = COMMUNICATION_TAB_LABEL;
     tasks = TASKS_TAB_LABEL;
@@ -28,6 +27,8 @@ export default class NksPersonTab extends LightningElement {
     cases = CASES_TAB_LABEL;
     refreshLabel = REFRESH_BUTTON_LABEL;
 
+    personIdent;
+    relationshipField;
     personId;
     accountId;
     accountField;
@@ -37,34 +38,18 @@ export default class NksPersonTab extends LightningElement {
     connectedCallback() {
         if (this.objectApiName === 'Case') {
             this.accountField = [CASE_ACCOUNT_FIELD];
-            return;
-        }
-        if (this.objectApiName === 'Account') {
+            this.relationshipField = 'Account.CRM_Person__c';
+            this.personIdent = 'Account.INT_PersonIdent__c	';
+        } else if (this.objectApiName === 'Account') {
             this.accountId = this.recordId;
             this.accountField = [ACCOUNT_ID_FIELD];
+            this.relationshipField = 'CRM_Person__c';
+            this.personIdent = 'INT_PersonIdent__c';
         }
     }
 
     get timelineRelation() {
         return this.accountField[0].fieldApiName;
-    }
-
-    get relationshipField() {
-        if (this.objectApiName === 'Case') {
-            return 'Account.CRM_Person__c';
-        } else if (this.objectApiName === 'Account') {
-            return 'CRM_Person__c';
-        }
-        return null;
-    }
-
-    get personIdent() {
-        if (this.objectApiName === 'Case') {
-            return 'Account.INT_PersonIdent__c	';
-        } else if (this.objectApiName === 'Account') {
-            return 'INT_PersonIdent__c';
-        }
-        return null;
     }
 
     @wire(getRecord, {
@@ -78,8 +63,7 @@ export default class NksPersonTab extends LightningElement {
             }
         }
         if (error) {
-            console.log('error: ');
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -93,8 +77,7 @@ export default class NksPersonTab extends LightningElement {
         }
 
         if (error) {
-            console.log('error: ');
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -109,8 +92,7 @@ export default class NksPersonTab extends LightningElement {
         }
 
         if (error) {
-            console.log('error:');
-            console.log(error);
+            console.error(error);
         }
     }
 
@@ -120,12 +102,6 @@ export default class NksPersonTab extends LightningElement {
 
     get flyttingConditional() {
         return this.movedCountry != null;
-    }
-
-    handleTabClick(event) {
-        console.log('First');
-        const tabContent2 = `Tab ${event.target.label} is now active`;
-        console.log(tabContent2);
     }
 
     receiveHeading(event) {
