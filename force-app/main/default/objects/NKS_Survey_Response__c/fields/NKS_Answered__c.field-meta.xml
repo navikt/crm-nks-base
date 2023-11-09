@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Answered__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>True if user has answered survey, false otherwise</description>
+    <externalId>false</externalId>
+    <label>Answered</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -874,6 +874,26 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey_Response__c.NKS_Answered__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey_Response__c.NKS_Comment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey_Response__c.NKS_Rating__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey_Response__c.User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>NavUnit__c.CRM_QueueId__c</field>
         <readable>true</readable>
@@ -1095,6 +1115,14 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Account.Employer</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Survey_Response__c.Survey_Answered</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Survey_Response__c.Survey_Response</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

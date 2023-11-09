@@ -12,3 +12,11 @@
     width: 100%;
     --sds-c-textarea-sizing-min-height: 100px;
 }
+
+.button {
+    border: none;
+}
+
+.label {
+    background-color: transparent;
+}
