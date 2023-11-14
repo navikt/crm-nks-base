@@ -2,5 +2,6 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Survey_Response</fullName>
     <active>true</active>
+    <description>Record type for saving user response</description>
     <label>Survey Response</label>
 </RecordType>

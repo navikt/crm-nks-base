@@ -3,11 +3,6 @@
     border: transparent;
 }
 
-.emojiSelected {
-    cursor: pointer;
-    border: 1px solid blue;
-}
-
 .textArea {
     width: 100%;
     --sds-c-textarea-sizing-min-height: 100px;

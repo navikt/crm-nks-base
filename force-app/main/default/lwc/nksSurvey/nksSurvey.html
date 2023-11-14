@@ -5,48 +5,11 @@
                 <div class="slds-media__body">
                     <h2 class="slds-text-heading_medium">{title}</h2>
                 </div>
-                <!--
-                <div class="slds-no-flex">
-                    <lightning-button-icon
-                        alternative-text="Lukk"
-                        icon-name="utility:close"
-                        onclick={handleCloseClick}
-                    ></lightning-button-icon>
-                </div>
-                -->
             </header>
         </lightning-layout-item>
         <lightning-layout-item size="12">
             <p class="slds-text-heading_small">{question}</p>
             <p class="slds-text-body_regular">Trykk på ett av fjesene</p>
-            <!--
-            <fieldset class="slds-form-element slds-align_absolute-center slds-var-p-vertical_large">
-                <div class="slds-form-element__control">
-                    <div class="slds-radio_button-group button">
-                        <template for:each={emojis} for:item="emoji">
-                            <span class="slds-button slds-radio_button button" key={emoji.id}>
-                                <input type="radio" name={emoji.title} id={emoji.id} value={emoji.value} />
-                                <label
-                                    class="slds-radio_button__label slds-var-p-around_x-small label"
-                                    for={emoji.title}
-                                >
-                                    <span class="slds-box slds-box_small emoji">
-                                        <img
-                                            src={emoji.url}
-                                            data-id={emoji.id}
-                                            alt={emoji.title}
-                                            width="50"
-                                            height="50"
-                                            aria-hidden="true"
-                                        />
-                                    </span>
-                                </label>
-                            </span>
-                        </template>
-                    </div>
-                </div>
-            </fieldset>
-        -->
             <ul class="slds-list_horizontal slds-align_absolute-center slds-var-p-vertical_large">
                 <template for:each={emojis} for:item="emoji">
                     <li
@@ -55,6 +18,7 @@
                         data-id={emoji.id}
                         title={emoji.title}
                         value={emoji.value}
+                        onselect={handleClick}
                         onclick={handleClick}
                         onmouseover={handleMouseOver}
                         onmouseout={handleMouseOut}
@@ -73,7 +37,7 @@
                             <use xlink:href={emoji.url}></use>
                         </svg>
                         <span class="slds-assistive-text">{emoji.title}</span>
-                      -->
+                         -->
                     </li>
                 </template>
             </ul>
@@ -91,7 +55,7 @@
         <lightning-layout-item class="slds-text-align_right slds-var-p-top_medium" flexibility="auto">
             <lightning-button class="slds-var-p-right_small" label="Jeg ønsker ikke å delta" onclick={handleCancel}>
             </lightning-button>
-            <lightning-button label="Send" variant="brand" onclick={handleSend}> </lightning-button>
+            <lightning-button class="button" label="Send" variant="brand" onclick={handleSend}> </lightning-button>
         </lightning-layout-item>
     </lightning-layout>
 </template>
