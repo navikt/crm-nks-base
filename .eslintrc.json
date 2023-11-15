@@ -6,7 +6,8 @@
     "extends": [
         "eslint:recommended",
         "@salesforce/eslint-config-lwc/recommended",
-        "@salesforce/eslint-config-lwc/i18n"
+        "@salesforce/eslint-config-lwc/i18n",
+        "@locker/eslint-config-locker/recommended"
     ],
     "parser": "@babel/eslint-parser",
     "parserOptions": {
