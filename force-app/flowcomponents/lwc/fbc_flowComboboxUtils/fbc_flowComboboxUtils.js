@@ -20,17 +20,17 @@ const isReference = (value) => {
 const getDataType = (currentText) => {
     if (isReference(currentText)) {
         return flowComboboxDefaults.referenceDataType;
-    } else {
+    } 
         return flowComboboxDefaults.stringDataType;
-    }
+    
 };
 
 const formattedValue = (value, dataType) => {
     if (isReference(value)) {
         return value;
-    } else {
+    } 
         return dataType === flowComboboxDefaults.referenceDataType ? '{!' + value + '}' : value;
-    }
+    
 };
 
 const removeFormatting = (value) => {

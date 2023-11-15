@@ -361,9 +361,9 @@ export default class FlowCombobox extends LightningElement {
     isCollection(curObject, isCollectionField) {
         if (curObject.hasOwnProperty(isCollectionField)) {
             return curObject[isCollectionField];
-        } else {
+        } 
             return curObject[flowComboboxDefaults.isCollectionField];
-        }
+        
     }
 
     getTypeByDescriptor(curObjectFieldType, typeDescriptor) {
@@ -371,9 +371,9 @@ export default class FlowCombobox extends LightningElement {
             return flowComboboxDefaults.stringDataType;
         } else if (typeDescriptor.apiName === flowComboboxDefaults.recordLookupsType) {
             return flowComboboxDefaults.dataTypeSObject;
-        } else {
+        } 
             return curObjectFieldType ? curObjectFieldType : flowComboboxDefaults.stringDataType;
-        }
+        
     }
 
     generateOptionLine(type, label, value, isCollection, objectType, optionIcon, isObject, displayType, key, flowType) {

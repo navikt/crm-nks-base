@@ -179,7 +179,7 @@ export default class QuickChoiceFSC extends LightningElement {
         if (!sortFlag) {
             return value;
         }
-        let fieldValue = (row) => row['label'] || '';
+        let fieldValue = (row) => row.label || '';
         return [
             ...value.sort(
                 (a, b) => ((a = fieldValue(a).toUpperCase()), (b = fieldValue(b).toUpperCase()), (a > b) - (b > a))

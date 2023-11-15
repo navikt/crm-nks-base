@@ -338,8 +338,8 @@ export default class nksQuickText extends LightningElement {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
                 : { isValid: false, errorMessage: this.labels.BLANK_ERROR }; //CUSTOM LABEL HERE
-        } else {
+        } 
             return { isValid: true };
-        }
+        
     }
 }

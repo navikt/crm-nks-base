@@ -141,9 +141,9 @@ export default class fbc_pickObjectAndField extends LightningElement {
     get availableObjectTypesList() {
         if (this.availableObjectTypes) {
             return this.splitValues(this.availableObjectTypes.toLowerCase());
-        } else {
+        } 
             return [];
-        }
+        
     }
 
     get isError() {
@@ -167,9 +167,9 @@ export default class fbc_pickObjectAndField extends LightningElement {
         if (this.fields && this._field) {
             let foundField = this.fields.find((e) => e.value == this._field);
             return foundField ? foundField.dataType : null;
-        } else {
+        } 
             return null;
-        }
+        
     }
 
     handleObjectChange(event) {
@@ -206,9 +206,9 @@ export default class fbc_pickObjectAndField extends LightningElement {
     splitValues(originalString) {
         if (originalString) {
             return originalString.replace(/ /g, '').split(',');
-        } else {
+        } 
             return [];
-        }
+        
     }
 
     get renderFlowCombobox() {

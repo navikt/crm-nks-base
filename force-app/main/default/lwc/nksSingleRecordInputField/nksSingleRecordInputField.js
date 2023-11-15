@@ -47,11 +47,11 @@ export default class NksSingleRecordInputField extends LightningElement {
         //Theme and theme group must be set
         if (true === this.required && this.value) {
             return { isValid: true };
-        } else {
+        } 
             return {
                 isValid: false,
                 errorMessage: VALIDATION_ERROR
             };
-        }
+        
     }
 }
