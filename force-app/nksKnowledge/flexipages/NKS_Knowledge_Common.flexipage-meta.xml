@@ -177,9 +177,6 @@
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>copyFields</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Summary__c</value>
                 </componentInstanceProperties>
@@ -197,9 +194,6 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showKrrInfo</name>
@@ -262,6 +256,9 @@
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>copyFields</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>Article__c</value>
                 </componentInstanceProperties>
@@ -290,6 +287,9 @@
                 <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <identifier>nksRecordInfo3</identifier>
@@ -722,6 +722,95 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
+                    <value>WhoDoesWhat__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>nksRecordInfo9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-980f514b-1016-4ad4-8371-ac7769939d18</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>copyFields</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
+                    <value>How_you_send_a_task__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideLabels</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numCols</name>
+                    <value>1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relationshipField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showKrrInfo</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showLink</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
+                </componentInstanceProperties>
+                <componentName>nksRecordInfo</componentName>
+                <identifier>c_nksRecordInfo3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1bbff89d-e924-4e93-8e4a-054577f65562</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>displayedFields</name>
                     <value>NKS_Nav_no__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -841,43 +930,39 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>cardLabel</name>
+                    <name>body</name>
+                    <value>Facet-980f514b-1016-4ad4-8371-ac7769939d18</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>WhoDoesWhat__c</value>
+                    <name>label</name>
+                    <value>Hvem gjør hva?</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
+                    <name>name</name>
+                    <value>accordionSection--ade6leflpeh</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideLabels</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo9</identifier>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>customSection8</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-980f514b-1016-4ad4-8371-ac7769939d18</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1bbff89d-e924-4e93-8e4a-054577f65562</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Slik sender du oppgave</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>name</name>
+                    <value>accordionSection--5k53bvbmeth</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:accordionSection</componentName>
+                <identifier>flexipage_accordionSection3</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -932,24 +1017,6 @@
                 <identifier>customSection7</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-980f514b-1016-4ad4-8371-ac7769939d18</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Hvem gjør hva?</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>name</name>
-                    <value>accordionSection--ade6leflpeh</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:accordionSection</componentName>
-                <identifier>customSection8</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>Facet-bc9f6dce-fbd7-41dd-80b9-3cb9d8616867</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -962,7 +1029,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>defaultSectionName</name>
-                    <value>accordionSection1</value>
+                    <value>accordionSection--ade6leflpeh</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:accordion</componentName>
                 <identifier>flexipage_accordion3</identifier>
@@ -1066,7 +1133,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Knowledge: Felles</masterLabel>
+    <masterLabel>Knowledge: Common</masterLabel>
     <parentFlexiPage>sfa__KnowledgeArticleVersion_rec_L</parentFlexiPage>
     <sobjectType>Knowledge__kav</sobjectType>
     <template>
