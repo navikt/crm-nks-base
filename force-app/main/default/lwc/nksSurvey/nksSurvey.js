@@ -1,11 +1,10 @@
 import { LightningElement, track, wire } from 'lwc';
-import SVG_EMOJIS from '@salesforce/resourceUrl/nksSurveyEmojis';
+//import SVG_EMOJIS from '@salesforce/resourceUrl/nksSurveyEmojis';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
 import createAnsweredRecord from '@salesforce/apex/NKS_InternalSurveyController.createAnsweredRecord';
-import CreateResponseRecord from '@salesforce/apex/NKS_InternalSurveyController.CreateResponseRecord';
-
+import createResponseRecord from '@salesforce/apex/NKS_InternalSurveyController.createResponseRecord';
 export default class NksSurvey extends LightningElement {
     surveyId;
     backgroundColor;
@@ -19,39 +18,35 @@ export default class NksSurvey extends LightningElement {
         {
             id: 'emoji1',
             title: 'veldig dårlig',
-            url: `${SVG_EMOJIS}/emoji1.svg`,
             selected: false,
             value: 1
         },
         {
             id: 'emoji2',
             title: 'dårlig',
-            url: `${SVG_EMOJIS}/emoji2.svg`,
             selected: false,
             value: 2
         },
         {
             id: 'emoji3',
             title: 'nøytral',
-            url: `${SVG_EMOJIS}/emoji3.svg`,
             selected: false,
             value: 3
         },
         {
             id: 'emoji4',
             title: 'bra',
-            url: `${SVG_EMOJIS}/emoji4.svg`,
             selected: false,
             value: 4
         },
         {
             id: 'emoji5',
             title: 'veldig bra',
-            url: `${SVG_EMOJIS}/emoji5.svg`,
             selected: false,
             value: 5
         }
     ];
+
     @track rating;
     @track comment;
     @track show = true;
@@ -77,9 +72,36 @@ export default class NksSurvey extends LightningElement {
     }
 
     renderedCallback() {
-        if (this.surveyId) {
+        /*
+        let svgs = this.template.querySelectorAll('c-nks-svg-render');
+
+        svgs.forEach(function (svg) {
+            svg.addEventListener('mouseover', function () {
+                this.fill1 = '#F6C912';
+                this.fill2 = '#F9D952';
+            });
+        });
+
+        svgs.forEach(function (svg) {
+            svg.addEventListener('mouseout', function (event) {
+                const id = event.currentTarget.getAttribute('selected');
+                //console.log('selected: ', id);
+                this.fill1 = '#F9DA57';
+                this.fill2 = '#FBE981';
+            });
+        });
+
+        svgs.forEach(function (svg) {
+            svg.addEventListener('click', function () {
+                this.fill1 = '#EEB11E';
+                this.fill2 = '#F9CD18';
+            });
+        });*/
+
+        if (this.surveyId && !this.isRendered) {
             hasAnswered({ surveyId: this.surveyId }).then((res) => {
                 this.isAnswered = res;
+                this.isRendered = true;
                 console.log('Survey is answered: ', res);
             });
         }
@@ -87,31 +109,13 @@ export default class NksSurvey extends LightningElement {
 
     handleClick(event) {
         const id = event.currentTarget.getAttribute('data-id');
+
         this.emojis.forEach((emoji) => {
-            let element = this.template.querySelector(`img[data-id="${emoji.id}"]`);
             if (emoji.id === id) {
-                element.setAttribute('src', `${SVG_EMOJIS}/${emoji.id}select.svg`);
                 emoji.selected = true;
                 this.rating = event.currentTarget.getAttribute('value');
             } else {
-                element.setAttribute('src', `${SVG_EMOJIS}/${emoji.id}.svg`);
                 emoji.selected = false;
-            }
-        });
-    }
-
-    handleMouseOver(event) {
-        const id = event.currentTarget.getAttribute('data-id');
-        let element = this.template.querySelector(`img[data-id="${id}"]`);
-        element.setAttribute('src', `${SVG_EMOJIS}/${id}hover.svg`);
-    }
-
-    handleMouseOut(event) {
-        const id = event.currentTarget.getAttribute('data-id');
-        this.emojis.forEach((emoji) => {
-            let element = this.template.querySelector(`img[data-id="${emoji.id}"]`);
-            if (emoji.id === id && !emoji.selected) {
-                element.setAttribute('src', `${SVG_EMOJIS}/${id}.svg`);
             }
         });
     }
@@ -130,11 +134,12 @@ export default class NksSurvey extends LightningElement {
         this.dispatchEvent(event);
         createAnsweredRecord({ surveyId: this.surveyId }).then((res) => {
             console.log('Result of Survey Answered creation: ', res);
-            console.log('rating from lwc: ', this.rating);
-            console.log('comment from lwc: ', this.comment);
-            CreateResponseRecord({ rating: this.rating, comment: this.comment }).then((result) => {
-                console.log('Result of Survey Response creation: ', result);
-            });
+
+            createResponseRecord({ surveyId: this.surveyId, rating: this.rating, comment: this.comment }).then(
+                (result) => {
+                    console.log('Result of Survey Response creation: ', result);
+                }
+            );
         });
     }
 

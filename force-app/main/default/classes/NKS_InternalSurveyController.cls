@@ -53,23 +53,27 @@ public with sharing class NKS_InternalSurveyController {
     }
 
     @AuraEnabled
-    public static Object CreateResponseRecord(Integer rating, String comment) {
+    public static string createResponseRecord(String surveyId, Integer rating, String comment) {
+        Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
+
         try {
-            Map<String, Object> inputs = new Map<String, Object>();
-            inputs.put('rating', rating);
-            inputs.put('comment', comment);
-
-            Flow.Interview.NKS_Create_Survey_Response interviewInstance = new Flow.Interview.NKS_Create_Survey_Response(
-                inputs
+            NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
+                CreatedById = '0051l000008rYxp',
+                CreatedDate = scheduledTime,
+                LastModifiedById = '0051l000008rYxp',
+                LastModifiedDate = scheduledTime,
+                RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
+                NKS_Survey__c = surveyId,
+                NKS_Rating__c = rating,
+                NKS_Comment__c = comment
             );
-            interviewInstance.start();
+            insert sr;
 
-            return interviewInstance.getVariableValue('responseId');
-            system.debug('ResponseId Output Variable: ' + interviewInstance.getVariableValue('responseId'));
-            system.debug('Rating Output Variable: ' + interviewInstance.getVariableValue('rating'));
-            system.debug('Comment Output Variable: ' + interviewInstance.getVariableValue('comment'));
+            System.debug('response id: ' + sr.Id);
+            return sr.Id;
         } catch (Exception e) {
-            throw new AuraHandledException('Problem creating Response record: ' + e.getMessage());
+            System.debug('Problem creating NKS_Survey_Response__c via API: ' + e.getMessage());
         }
+        return null;
     }
 }

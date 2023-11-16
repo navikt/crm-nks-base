@@ -18,26 +18,16 @@
                         data-id={emoji.id}
                         title={emoji.title}
                         value={emoji.value}
-                        onselect={handleClick}
                         onclick={handleClick}
-                        onmouseover={handleMouseOver}
-                        onmouseout={handleMouseOut}
                     >
-                        <img
-                            src={emoji.url}
+                        <c-nks-svg-render
                             data-id={emoji.id}
-                            alt={emoji.title}
+                            name={emoji.id}
                             width="60"
                             height="60"
+                            selected={emoji.selected}
                             aria-hidden="true"
-                        />
-                        <!--
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" aria-hidden="true">
-                            ;
-                            <use xlink:href={emoji.url}></use>
-                        </svg>
-                        <span class="slds-assistive-text">{emoji.title}</span>
-                         -->
+                        ></c-nks-svg-render>
                     </li>
                 </template>
             </ul>
