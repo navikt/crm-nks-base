@@ -1,9 +1,10 @@
 import { LightningElement, api } from 'lwc';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksBrukervarsel extends LightningElement {
     @api brukervarsel;
-    sortedVarselList;
 
+    sortedVarselList;
     showDetails = false;
 
     get showVarselListe() {
@@ -183,5 +184,6 @@ export default class NksBrukervarsel extends LightningElement {
 
     onShowHide() {
         this.showDetails = !this.showDetails;
+        publishToAmplitude('UN List', { type: 'toggle show details' });
     }
 }
