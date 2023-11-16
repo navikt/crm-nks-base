@@ -174,20 +174,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>headertag</name>
-                    <value>h4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>input</name>
-                    <value>Sammendrag</value>
-                </componentInstanceProperties>
-                <componentName>nksHeader</componentName>
-                <identifier>nksHeader</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>cardLabel</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -227,21 +213,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>headertag</name>
-                    <value>h4</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>input</name>
-                    <value>Mer informasjon</value>
-                </componentInstanceProperties>
-                <componentName>nksHeader</componentName>
-                <identifier>nksHeader2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>cardLabel</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>copyFields</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
@@ -263,12 +238,18 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>relationshipField</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showKrrInfo</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>viewedObjectApiName</name>
                 </componentInstanceProperties>
                 <componentName>nksRecordInfo</componentName>
                 <identifier>nksRecordInfo2</identifier>
@@ -347,7 +328,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Intern informasjon</value>
+                    <value>Mer informasjon</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>name</name>
@@ -1436,6 +1417,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>maxEARContainerHeight</name>
+                    <value>500</value>
+                </componentInstanceProperties>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <identifier>forceKnowledge_articleSearchDesktop</identifier>
                 <visibilityRule>

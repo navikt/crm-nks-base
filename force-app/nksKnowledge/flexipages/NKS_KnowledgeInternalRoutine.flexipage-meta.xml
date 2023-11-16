@@ -426,6 +426,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>maxEARContainerHeight</name>
+                    <value>500</value>
+                </componentInstanceProperties>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
@@ -503,7 +507,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Knowledge: Faglige avklaringer</masterLabel>
+    <masterLabel>Knowledge: Internal Routine</masterLabel>
     <parentFlexiPage>sfa__KnowledgeArticleVersion_rec_L</parentFlexiPage>
     <sobjectType>Knowledge__kav</sobjectType>
     <template>
