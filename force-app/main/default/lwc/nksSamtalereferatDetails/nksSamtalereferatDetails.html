@@ -2,7 +2,8 @@
     <lightning-flow
         flow-api-name="NKS_Case_Log_a_Call"
         flow-input-variables={inputVariables}
-        onstatuschange={handleChange}
+        onstatuschange={handleStatusChange}
+        onchange={handleChange}
     ></lightning-flow>
     <template if:true={hasCNotes}>
         <div class={sectionClasses}>
