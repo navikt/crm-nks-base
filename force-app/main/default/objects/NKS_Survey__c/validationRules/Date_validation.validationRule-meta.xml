@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>NKS_Start_Date__c &lt;     NOW() &amp;&amp;   NKS_End_Date__c  &lt;=    NKS_Start_Date__c</errorConditionFormula>
+    <errorMessage>Start date must be greater than or equal to today and end date must be greater than start date.</errorMessage>
+</ValidationRule>

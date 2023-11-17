@@ -1,5 +1,4 @@
 import { LightningElement, track, wire } from 'lwc';
-//import SVG_EMOJIS from '@salesforce/resourceUrl/nksSurveyEmojis';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
@@ -13,6 +12,8 @@ export default class NksSurvey extends LightningElement {
     isAnswered;
     isRendered = false;
     recordTypeId;
+    startDate;
+    endDate;
 
     @track emojis = [
         {
@@ -55,9 +56,11 @@ export default class NksSurvey extends LightningElement {
     wiredSurvey({ data, error }) {
         if (data) {
             this.surveyId = data.Id;
-            this.backgroundColor = data.Background_Color__c;
+            this.backgroundColor = data.NKS_Background_Color__c;
             this.title = data.NKS_Title__c;
             this.question = data.NKS_Question__c;
+            this.startDate = data.NKS_Start_Date__c;
+            this.endDate = data.NKS_End_Date__c;
         } else if (error) {
             console.log('Problem getting survey: ' + error);
         }
@@ -69,6 +72,18 @@ export default class NksSurvey extends LightningElement {
 
     get hide() {
         return !this.show || this.isAnswered;
+    }
+
+    get isValid() {
+        let valid = false;
+        if (this.surveyId) {
+            if (this.startDate && this.endDate) {
+                valid = new Date(this.endDate) - new Date(this.startDate) > 0 ? true : false;
+            } else {
+                valid = true;
+            }
+        }
+        return valid;
     }
 
     renderedCallback() {

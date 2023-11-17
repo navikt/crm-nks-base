@@ -22,12 +22,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NKS_Survey__c.Background_Color__c</field>
+        <field>NKS_Survey__c.NKS_Background_Color__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey__c.NKS_End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>NKS_Survey__c.NKS_Question__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NKS_Survey__c.NKS_Start_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

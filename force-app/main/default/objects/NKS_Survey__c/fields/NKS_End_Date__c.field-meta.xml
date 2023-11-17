@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_End_Date__c</fullName>
+    <description>End date of survey</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set et slutt tidspunkt for undersøkelse, ellers vil undersøkelsen være synlig til brukeren svarer eller til neste undersøkelse blir opprettet.</inlineHelpText>
+    <label>End Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

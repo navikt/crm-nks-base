@@ -3,7 +3,7 @@ public with sharing class NKS_InternalSurveyController {
     public static NKS_Survey__c getSurvey() {
         try {
             return [
-                SELECT Id, Background_Color__c, NKS_Question__c, NKS_Title__c
+                SELECT Id, NKS_Background_Color__c, NKS_Question__c, NKS_Title__c, NKS_Start_Date__c, NKS_End_Date__c
                 FROM NKS_Survey__c
                 ORDER BY CreatedDate DESC
                 LIMIT 1
@@ -36,17 +36,17 @@ public with sharing class NKS_InternalSurveyController {
     }
 
     @AuraEnabled
-    public static NKS_Survey_Response__c createAnsweredRecord(String surveyId) {
+    public static String createAnsweredRecord(String surveyId) {
         try {
-            NKS_Survey_Response__c answered = new NKS_Survey_Response__c(
+            NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
                 RecordTypeId = getRecordTypeId('Survey Answered'),
                 NKS_Survey__c = surveyId,
                 NKS_Participant__c = UserInfo.getUserId(),
                 NKS_Answered__c = true
             );
-            insert answered;
+            insert sr;
 
-            return answered;
+            return sr.Id;
         } catch (Exception e) {
             throw new AuraHandledException('Problem creating Answered record: ' + e.getMessage());
         }
@@ -58,9 +58,9 @@ public with sharing class NKS_InternalSurveyController {
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = '0051l000008rYxp',
+                CreatedById = '0057a00000FtHTOAA3',
                 CreatedDate = scheduledTime,
-                LastModifiedById = '0051l000008rYxp',
+                LastModifiedById = '0057a00000FtHTOAA3',
                 LastModifiedDate = scheduledTime,
                 RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
                 NKS_Survey__c = surveyId,
@@ -69,11 +69,9 @@ public with sharing class NKS_InternalSurveyController {
             );
             insert sr;
 
-            System.debug('response id: ' + sr.Id);
             return sr.Id;
         } catch (Exception e) {
-            System.debug('Problem creating NKS_Survey_Response__c via API: ' + e.getMessage());
+            throw new AuraHandledException('Problem creating Response record: ' + e.getMessage());
         }
-        return null;
     }
 }

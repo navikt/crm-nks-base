@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Background_Color__c</fullName>
+    <fullName>NKS_Background_Color__c</fullName>
     <defaultValue>&apos;#dec8ef&apos;</defaultValue>
     <description>Hex-code for background color for survey</description>
     <externalId>false</externalId>
