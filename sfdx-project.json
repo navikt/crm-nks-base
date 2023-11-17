@@ -5,11 +5,15 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.312.0.NEXT",
+            "versionNumber": "0.313.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
                     "versionNumber": "0.198.0.LATEST"
+                },
+                {
+                    "package": "crm-platform-reporting",
+                    "versionNumber": "0.35.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
@@ -80,7 +84,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "57.0",
+    "sourceApiVersion": "59.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
@@ -99,6 +103,7 @@
         "crm-henvendelse": "0Ho2o000000fxXfCAI",
         "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
         "crm-community-base": "0Ho2o0000008OSzCAM",
-        "crm-sf-saf": "0Ho7U0000000001SAA"
+        "crm-sf-saf": "0Ho7U0000000001SAA",
+        "crm-platform-reporting": "0Ho2o0000008OSfCAM"
     }
 }

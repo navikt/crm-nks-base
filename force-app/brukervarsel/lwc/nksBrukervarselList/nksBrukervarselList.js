@@ -5,24 +5,24 @@ import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.g
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
+
+    @track notifications = [];
+    @track filteredNotificationList = [];
+    @track errorMessages = [];
+
     showAll = false;
     personId;
     wireFields;
     isLoaded = false;
-    @track notifications = [];
-    @track filteredNotificationList = [];
-
     wiredPerson = null;
-
     varsler = [];
     brukernotifikasjon = [];
-
-    @track errorMessages = [];
     fromDate;
     toDate;
     wiredBrukerVarsel;
@@ -188,6 +188,7 @@ export default class NksBrukervarselList extends LightningElement {
     refreshNotificationList() {
         this.isLoaded = false;
         this.getNotifications();
+        publishToAmplitude('UN List', { type: 'Click on refresh button' });
     }
 
     onDateFilterChange(event) {
@@ -208,6 +209,7 @@ export default class NksBrukervarselList extends LightningElement {
             default:
                 break;
         }
+        publishToAmplitude('UN List', { type: 'Change date range' });
     }
 
     setDefaultDates() {
@@ -220,6 +222,11 @@ export default class NksBrukervarselList extends LightningElement {
     showAllNotifications() {
         this.showAll = true;
         this.filterNotificationList();
+        let message = {
+            eventType: 'UN List',
+            properties: { type: 'Show all notifications' }
+        };
+        publishToAmplitude('UN List', { type: 'Show all notifications' });
     }
 
     addError(error) {
