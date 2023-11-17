@@ -43,4 +43,8 @@
         </sections>
     </layouts>
     <nameFieldLabel></nameFieldLabel>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Date_validation</name>
+    </validationRules>
 </CustomObjectTranslation>
