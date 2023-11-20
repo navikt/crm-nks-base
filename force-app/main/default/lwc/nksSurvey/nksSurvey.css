@@ -3,6 +3,10 @@
     border: transparent;
 }
 
+.emoji:focus {
+    border: solid 1px blue;
+}
+
 .textArea {
     width: 100%;
     --sds-c-textarea-sizing-min-height: 100px;
@@ -14,4 +18,20 @@
 
 .label {
     background-color: transparent;
+}
+
+.path1:hover {
+    fill: rgb(246, 201, 18);
+}
+
+.path2:hover {
+    fill: rgb(249, 217, 82);
+}
+
+.select1 {
+    fill: rgb(238, 177, 30);
+}
+
+.select2 {
+    fill: rgb(249, 205, 24);
 }

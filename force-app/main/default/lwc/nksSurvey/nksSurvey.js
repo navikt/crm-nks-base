@@ -15,39 +15,6 @@ export default class NksSurvey extends LightningElement {
     startDate;
     endDate;
 
-    @track emojis = [
-        {
-            id: 'emoji1',
-            title: 'veldig dårlig',
-            selected: false,
-            value: 1
-        },
-        {
-            id: 'emoji2',
-            title: 'dårlig',
-            selected: false,
-            value: 2
-        },
-        {
-            id: 'emoji3',
-            title: 'nøytral',
-            selected: false,
-            value: 3
-        },
-        {
-            id: 'emoji4',
-            title: 'bra',
-            selected: false,
-            value: 4
-        },
-        {
-            id: 'emoji5',
-            title: 'veldig bra',
-            selected: false,
-            value: 5
-        }
-    ];
-
     @track rating;
     @track comment;
     @track show = true;
@@ -66,7 +33,7 @@ export default class NksSurvey extends LightningElement {
         }
     }
 
-    get style() {
+    get background() {
         return `background-color: ${this.backgroundColor}`;
     }
 
@@ -87,32 +54,6 @@ export default class NksSurvey extends LightningElement {
     }
 
     renderedCallback() {
-        /*
-        let svgs = this.template.querySelectorAll('c-nks-svg-render');
-
-        svgs.forEach(function (svg) {
-            svg.addEventListener('mouseover', function () {
-                this.fill1 = '#F6C912';
-                this.fill2 = '#F9D952';
-            });
-        });
-
-        svgs.forEach(function (svg) {
-            svg.addEventListener('mouseout', function (event) {
-                const id = event.currentTarget.getAttribute('selected');
-                //console.log('selected: ', id);
-                this.fill1 = '#F9DA57';
-                this.fill2 = '#FBE981';
-            });
-        });
-
-        svgs.forEach(function (svg) {
-            svg.addEventListener('click', function () {
-                this.fill1 = '#EEB11E';
-                this.fill2 = '#F9CD18';
-            });
-        });*/
-
         if (this.surveyId && !this.isRendered) {
             hasAnswered({ surveyId: this.surveyId }).then((res) => {
                 this.isAnswered = res;
@@ -123,16 +64,122 @@ export default class NksSurvey extends LightningElement {
     }
 
     handleClick(event) {
-        const id = event.currentTarget.getAttribute('data-id');
+        this.rating = event.currentTarget.getAttribute('value');
+        const currentId = event.currentTarget.getAttribute('data-id');
+        this.handleSelected(currentId);
+    }
 
-        this.emojis.forEach((emoji) => {
-            if (emoji.id === id) {
-                emoji.selected = true;
-                this.rating = event.currentTarget.getAttribute('value');
-            } else {
-                emoji.selected = false;
-            }
-        });
+    handleSelected(currentId) {
+        if (currentId === 'emoji1') {
+            let emoji1Paths = this.template.querySelectorAll(`li[data-id="emoji1"] path`);
+
+            emoji1Paths[0].setAttribute('class', 'select1');
+            emoji1Paths[1].setAttribute('class', 'select2');
+
+            let emoji2Paths = this.template.querySelectorAll(`li[data-id="emoji2"] path`);
+            emoji2Paths[0].setAttribute('class', 'path1');
+            emoji2Paths[1].setAttribute('class', 'path2');
+
+            let emoji3Paths = this.template.querySelectorAll(`li[data-id="emoji3"] path`);
+            emoji3Paths[0].setAttribute('class', 'path1');
+            emoji3Paths[1].setAttribute('class', 'path2');
+
+            let emoji4Paths = this.template.querySelectorAll(`li[data-id="emoji4"] path`);
+            emoji4Paths[0].setAttribute('class', 'path1');
+            emoji4Paths[1].setAttribute('class', 'path2');
+
+            let emoji5Paths = this.template.querySelectorAll(`li[data-id="emoji5"] path`);
+            emoji5Paths[0].setAttribute('class', 'path1');
+            emoji5Paths[1].setAttribute('class', 'path2');
+        }
+
+        if (currentId === 'emoji2') {
+            let emoji2Paths = this.template.querySelectorAll(`li[data-id="emoji2"] path`);
+            emoji2Paths[0].setAttribute('class', 'select1');
+            emoji2Paths[1].setAttribute('class', 'select2');
+
+            let emoji1Paths = this.template.querySelectorAll(`li[data-id="emoji1"] path`);
+            emoji1Paths[0].setAttribute('class', 'path1');
+            emoji1Paths[1].setAttribute('class', 'path2');
+
+            let emoji3Paths = this.template.querySelectorAll(`li[data-id="emoji3"] path`);
+            emoji3Paths[0].setAttribute('class', 'path1');
+            emoji3Paths[1].setAttribute('class', 'path2');
+
+            let emoji4Paths = this.template.querySelectorAll(`li[data-id="emoji4"] path`);
+            emoji4Paths[0].setAttribute('class', 'path1');
+            emoji4Paths[1].setAttribute('class', 'path2');
+
+            let emoji5Paths = this.template.querySelectorAll(`li[data-id="emoji5"] path`);
+            emoji5Paths[0].setAttribute('class', 'path1');
+            emoji5Paths[1].setAttribute('class', 'path2');
+        }
+
+        if (currentId === 'emoji3') {
+            let emoji3Paths = this.template.querySelectorAll(`li[data-id="emoji3"] path`);
+            emoji3Paths[0].setAttribute('class', 'select1');
+            emoji3Paths[1].setAttribute('class', 'select2');
+
+            let emoji2Paths = this.template.querySelectorAll(`li[data-id="emoji2"] path`);
+            emoji2Paths[0].setAttribute('class', 'path1');
+            emoji2Paths[1].setAttribute('class', 'path2');
+
+            let emoji1Paths = this.template.querySelectorAll(`li[data-id="emoji1"] path`);
+            emoji1Paths[0].setAttribute('class', 'path1');
+            emoji1Paths[1].setAttribute('class', 'path2');
+
+            let emoji4Paths = this.template.querySelectorAll(`li[data-id="emoji4"] path`);
+            emoji4Paths[0].setAttribute('class', 'path1');
+            emoji4Paths[1].setAttribute('class', 'path2');
+
+            let emoji5Paths = this.template.querySelectorAll(`li[data-id="emoji5"] path`);
+            emoji5Paths[0].setAttribute('class', 'path1');
+            emoji5Paths[1].setAttribute('class', 'path2');
+        }
+
+        if (currentId === 'emoji4') {
+            let emoji4Paths = this.template.querySelectorAll(`li[data-id="emoji4"] path`);
+            emoji4Paths[0].setAttribute('class', 'select1');
+            emoji4Paths[1].setAttribute('class', 'select2');
+
+            let emoji2Paths = this.template.querySelectorAll(`li[data-id="emoji2"] path`);
+            emoji2Paths[0].setAttribute('class', 'path1');
+            emoji2Paths[1].setAttribute('class', 'path2');
+
+            let emoji3Paths = this.template.querySelectorAll(`li[data-id="emoji3"] path`);
+            emoji3Paths[0].setAttribute('class', 'path1');
+            emoji3Paths[1].setAttribute('class', 'path2');
+
+            let emoji1Paths = this.template.querySelectorAll(`li[data-id="emoji1"] path`);
+            emoji1Paths[0].setAttribute('class', 'path1');
+            emoji1Paths[1].setAttribute('class', 'path2');
+
+            let emoji5Paths = this.template.querySelectorAll(`li[data-id="emoji5"] path`);
+            emoji5Paths[0].setAttribute('class', 'path1');
+            emoji5Paths[1].setAttribute('class', 'path2');
+        }
+
+        if (currentId === 'emoji5') {
+            let emoji5Paths = this.template.querySelectorAll(`li[data-id="emoji5"] path`);
+            emoji5Paths[0].setAttribute('class', 'select1');
+            emoji5Paths[1].setAttribute('class', 'select2');
+
+            let emoji2Paths = this.template.querySelectorAll(`li[data-id="emoji2"] path`);
+            emoji2Paths[0].setAttribute('class', 'path1');
+            emoji2Paths[1].setAttribute('class', 'path2');
+
+            let emoji3Paths = this.template.querySelectorAll(`li[data-id="emoji3"] path`);
+            emoji3Paths[0].setAttribute('class', 'path1');
+            emoji3Paths[1].setAttribute('class', 'path2');
+
+            let emoji4Paths = this.template.querySelectorAll(`li[data-id="emoji4"] path`);
+            emoji4Paths[0].setAttribute('class', 'path1');
+            emoji4Paths[1].setAttribute('class', 'path2');
+
+            let emoji1Paths = this.template.querySelectorAll(`li[data-id="emoji1"] path`);
+            emoji1Paths[0].setAttribute('class', 'path1');
+            emoji1Paths[1].setAttribute('class', 'path2');
+        }
     }
 
     handleChange() {
