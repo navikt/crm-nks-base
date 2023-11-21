@@ -17,7 +17,7 @@ public with sharing class NKS_InternalSurveyController {
     public static Boolean hasAnswered(String surveyId) {
         try {
             return [
-                SELECT Id, NKS_Answered__c, NKS_Participant__c
+                SELECT NKS_Answered__c
                 FROM NKS_Survey_Response__c
                 WHERE NKS_Participant__c = :UserInfo.getUserId() AND NKS_Survey__c = :surveyId
                 LIMIT 1
@@ -58,9 +58,9 @@ public with sharing class NKS_InternalSurveyController {
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = '0057a00000FtHTOAA3',
+                CreatedById = '0053O000009KeEbQAK', // 0052o000009W8yf
                 CreatedDate = scheduledTime,
-                LastModifiedById = '0057a00000FtHTOAA3',
+                LastModifiedById = '0053O000009KeEbQAK',
                 LastModifiedDate = scheduledTime,
                 RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
                 NKS_Survey__c = surveyId,

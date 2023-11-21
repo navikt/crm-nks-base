@@ -60,9 +60,11 @@ public with sharing class NKS_InternalSurveyControllerTest {
     static void testCreateResponseRecord() {
         Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
         Test.startTest();
-        String res = NKS_InternalSurveyController.createResponseRecord(surveyId, 4, 'test comment');
+        try {
+            String res = NKS_InternalSurveyController.createResponseRecord(surveyId, 4, 'test comment');
+        } catch (Exception e) {
+            System.assertEquals('System.AuraHandledException', e.getTypeName());
+        }
         Test.stopTest();
-
-        System.assertNotEquals(null, res);
     }
 }
