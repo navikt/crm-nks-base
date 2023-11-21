@@ -58,9 +58,9 @@ public with sharing class NKS_InternalSurveyController {
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = '0053O000009KeEbQAK', // 0052o000009W8yf
+                CreatedById = '0052o000009W8yf', // id for sfdx integrasjonsbruker
                 CreatedDate = scheduledTime,
-                LastModifiedById = '0053O000009KeEbQAK',
+                LastModifiedById = '0052o000009W8yf',
                 LastModifiedDate = scheduledTime,
                 RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
                 NKS_Survey__c = surveyId,
