@@ -16,24 +16,16 @@
             <lightning-layout-item size="12">
                 <p class="slds-text-heading_small">{question}</p>
                 <p class="slds-text-body_regular">Trykk på ett av fjesene</p>
-                <ul class="slds-list_horizontal slds-align_absolute-center slds-var-p-vertical_large">
+                <ul class="slds-list_horizontal slds-align_absolute-center">
                     <li
-                        class="slds-box slds-box_small emoji"
+                        class="slds-box slds-box_x-small emoji"
                         data-id="emoji1"
                         title="veldig dårlig"
                         value="1"
                         onclick={handleClick}
-                        tabindex="-1"
+                        tabindex="0"
                     >
-                        <svg
-                            width="60"
-                            height="60"
-                            viewBox="0 0 86 86"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            data-id="emoji1"
-                        >
+                        <svg viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <g clip-path="url(#clip0_10792_348)">
                                 <path
                                     class="path1"
@@ -80,25 +72,18 @@
                                 </clipPath>
                             </defs>
                         </svg>
+                        <div role="button" class="sr-only" onclick={handleClick}>veldig dårlig</div>
                     </li>
 
                     <li
-                        class="slds-box slds-box_small emoji"
+                        class="slds-box slds-box_x-small emoji"
                         data-id="emoji2"
                         title="dårlig"
                         value="2"
                         onclick={handleClick}
-                        tabindex="-1"
+                        tabindex="0"
                     >
-                        <svg
-                            width="60"
-                            height="60"
-                            viewBox="0 0 86 86"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            data-id="emoji2"
-                        >
+                        <svg viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <g clip-path="url(#clip0_10792_358)">
                                 <path
                                     class="path1"
@@ -141,25 +126,18 @@
                                 </clipPath>
                             </defs>
                         </svg>
+                        <div role="button" class="sr-only" onclick={handleClick}>dårlig</div>
                     </li>
 
                     <li
-                        class="slds-box slds-box_small emoji"
+                        class="slds-box slds-box_x-small emoji"
                         data-id="emoji3"
                         title="nøytral"
                         value="3"
                         onclick={handleClick}
-                        tabindex="-1"
+                        tabindex="0"
                     >
-                        <svg
-                            width="60"
-                            height="60"
-                            viewBox="0 0 86 86"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            data-id="emoji3"
-                        >
+                        <svg viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <g clip-path="url(#clip0_10792_367)">
                                 <path
                                     class="path1"
@@ -205,25 +183,18 @@
                                 </clipPath>
                             </defs>
                         </svg>
+                        <div role="button" class="sr-only" onclick={handleClick}>nøytral</div>
                     </li>
 
                     <li
-                        class="slds-box slds-box_small emoji"
+                        class="slds-box slds-box_x-small emoji"
                         data-id="emoji4"
                         title="bra"
                         value="4"
                         onclick={handleClick}
-                        tabindex="-1"
+                        tabindex="0"
                     >
-                        <svg
-                            width="60"
-                            height="60"
-                            viewBox="0 0 86 86"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            data-id="emoji4"
-                        >
+                        <svg viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <g clip-path="url(#clip0_10792_376)">
                                 <path
                                     class="path1"
@@ -266,25 +237,18 @@
                                 </clipPath>
                             </defs>
                         </svg>
+                        <div role="button" class="sr-only" onclick={handleClick}>bra</div>
                     </li>
 
                     <li
-                        class="slds-box slds-box_small emoji"
+                        class="slds-box slds-box_x-small emoji"
                         data-id="emoji5"
                         title="veldig bra"
                         value="5"
                         onclick={handleClick}
-                        tabindex="-1"
+                        tabindex="0"
                     >
-                        <svg
-                            width="60"
-                            height="60"
-                            viewBox="0 0 86 86"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="true"
-                            data-id="emoji5"
-                        >
+                        <svg viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <g clip-path="url(#clip0_10792_393)">
                                 <path
                                     class="path1"
@@ -323,6 +287,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
+                        <div role="button" class="sr-only" onclick={handleClick}>veldig bra</div>
                     </li>
                 </ul>
                 <p>Skriv gjerne en kommentar hvis du følre for det (frivillig)</p>

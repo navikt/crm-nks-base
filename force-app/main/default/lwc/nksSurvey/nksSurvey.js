@@ -13,7 +13,6 @@ export default class NksSurvey extends LightningElement {
     isRendered = false;
     startDate;
     endDate;
-
     rating;
     comment;
     show = true;

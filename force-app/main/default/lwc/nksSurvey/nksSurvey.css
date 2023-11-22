@@ -10,6 +10,8 @@
 .textArea {
     width: 100%;
     --sds-c-textarea-sizing-min-height: 100px;
+    font-size: 0.813rem;
+    margin-top: -0.75rem;
 }
 
 .button {
@@ -34,4 +36,18 @@
 
 .select2 {
     fill: rgb(249, 205, 24);
+}
+
+svg {
+    width: 3.125rem;
+    height: 3.125rem;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
