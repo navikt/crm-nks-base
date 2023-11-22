@@ -1,4 +1,13 @@
+/**
+ * @description
+ * Controller class for NKS Custom Survey Solution
+ */
 public with sharing class NKS_InternalSurveyController {
+    /**
+     * @description Function to get Survey
+     * @author Sara Mohammadi | 22-11-2023
+     * @return NKS_Survey__c
+     **/
     @AuraEnabled(cacheable=true)
     public static NKS_Survey__c getSurvey() {
         try {
@@ -13,6 +22,12 @@ public with sharing class NKS_InternalSurveyController {
         }
     }
 
+    /**
+     * @description Function to check if user has answered Survey
+     * @author Sara Mohammadi | 22-11-2023
+     * @param surveyId
+     * @return True if answered, False otherwise
+     **/
     @AuraEnabled
     public static Boolean hasAnswered(String surveyId) {
         try {
@@ -28,6 +43,12 @@ public with sharing class NKS_InternalSurveyController {
         }
     }
 
+    /**
+     * @description Function to get recordTypeId for NKS_Survey_Response__c
+     * @author Sara Mohammadi | 22-11-2023
+     * @param recordTypeName
+     * @return recordTypeId
+     **/
     @AuraEnabled(cacheable=true)
     public static String getRecordTypeId(String recordTypeName) {
         return Schema.SObjectType.NKS_Survey_Response__c.getRecordTypeInfosByName()
@@ -35,6 +56,12 @@ public with sharing class NKS_InternalSurveyController {
             .getRecordTypeId();
     }
 
+    /**
+     * @description Function to create NKS_Survey_Response__c object with recordType Answered
+     * @author Sara Mohammadi | 22-11-2023
+     * @param surveyId
+     * @return surveyResponseId
+     **/
     @AuraEnabled
     public static String createAnsweredRecord(String surveyId) {
         try {
@@ -52,15 +79,23 @@ public with sharing class NKS_InternalSurveyController {
         }
     }
 
+    /**
+     * @description Function to create NKS_Survey_Response__c object with recordType Response
+     * @author Sara Mohammadi | 22-11-2023
+     * @param surveyId
+     * @param rating
+     * @param comment
+     * @return surveyResponseId
+     **/
     @AuraEnabled
     public static string createResponseRecord(String surveyId, Integer rating, String comment) {
         Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = '0052o000009W8yf', // id for sfdx integrasjonsbruker
+                CreatedById = '0053O000009KeEbQAK', // id for sfdx integrasjonsbruker
                 CreatedDate = scheduledTime,
-                LastModifiedById = '0052o000009W8yf',
+                LastModifiedById = '0053O000009KeEbQAK',
                 LastModifiedDate = scheduledTime,
                 RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
                 NKS_Survey__c = surveyId,
