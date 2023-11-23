@@ -4,7 +4,7 @@
     <defaultValue>&apos;#dec8ef&apos;</defaultValue>
     <description>Hex-code for background color for survey</description>
     <externalId>false</externalId>
-    <inlineHelpText>Hex-kode (med #) til bakgrunns farge for undersøkelsen; la feltet være tomt hvis du ikke ønsker ny farge.</inlineHelpText>
+    <inlineHelpText>Hex-kode (med #) til bakgrunns farge for undersøkelsen; la feltet være uendret hvis du ikke ønsker ny farge.</inlineHelpText>
     <label>Background Color</label>
     <length>7</length>
     <required>false</required>

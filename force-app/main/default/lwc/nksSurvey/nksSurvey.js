@@ -40,8 +40,9 @@ export default class NksSurvey extends LightningElement {
     }
 
     get isValid() {
-        if (this.surveyId && this.startDate && this.endDate) {
-            return new Date(this.endDate) - new Date(this.startDate) > 0 ? true : false;
+        const currentdate = new Date();
+        if (this.surveyId) {
+            return new Date(this.startDate) <= currentdate && new Date(this.endDate) >= currentdate ? true : false;
         }
         return false;
     }

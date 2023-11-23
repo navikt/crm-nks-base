@@ -3,7 +3,7 @@
     <fullName>NKS_End_Date__c</fullName>
     <description>End date of survey</description>
     <externalId>false</externalId>
-    <inlineHelpText>Set et slutt tidspunkt for undersøkelse, ellers vil undersøkelsen være synlig til brukeren svarer eller til neste undersøkelse blir opprettet.</inlineHelpText>
+    <inlineHelpText>Set et sluttidspunkt for undersøkelsen.</inlineHelpText>
     <label>End Date</label>
     <required>true</required>
     <trackTrending>false</trackTrending>
