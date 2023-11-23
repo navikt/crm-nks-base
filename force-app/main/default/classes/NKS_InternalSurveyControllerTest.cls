@@ -5,7 +5,8 @@ public with sharing class NKS_InternalSurveyControllerTest {
         NKS_Survey__c testSurvey = new NKS_Survey__c();
         testSurvey.NKS_Title__c = 'Test Survey';
         testSurvey.NKS_Question__c = 'How satisfied are you with the overall user experience of our product/service on a scale of 1 to 5, with 1 being extremely dissatisfied and 5 being extremely satisfied?';
-
+        testSurvey.NKS_Start_Date__c = System.now();
+        testSurvey.NKS_End_Date__c = System.now() + 7;
         insert testSurvey;
 
         NKS_Survey_Response__c testResponse = new NKS_Survey_Response__c();
@@ -14,7 +15,6 @@ public with sharing class NKS_InternalSurveyControllerTest {
         testResponse.NKS_Answered__c = false;
         testResponse.NKS_Rating__c = 5;
         testResponse.NKS_Comment__c = 'This is a test response';
-
         insert testResponse;
     }
 

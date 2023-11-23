@@ -40,15 +40,10 @@ export default class NksSurvey extends LightningElement {
     }
 
     get isValid() {
-        let valid = false;
-        if (this.surveyId) {
-            if (this.startDate && this.endDate) {
-                valid = new Date(this.endDate) - new Date(this.startDate) > 0 ? true : false;
-            } else {
-                valid = true;
-            }
+        if (this.surveyId && this.startDate && this.endDate) {
+            return new Date(this.endDate) - new Date(this.startDate) > 0 ? true : false;
         }
-        return valid;
+        return false;
     }
 
     renderedCallback() {
