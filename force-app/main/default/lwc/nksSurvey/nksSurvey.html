@@ -16,16 +16,7 @@
             <lightning-layout-item size="12">
                 <p class="slds-text-heading_small">{question}</p>
                 <p class="slds-text-body_regular">Trykk på ett av fjesene</p>
-                <!-- <ul class="slds-list_horizontal slds-align_absolute-center"> -->
-                <!-- <li
-                        class="slds-box slds-box_x-small emoji"
-                        data-id="emoji1"
-                        title="veldig dårlig"
-                        value="1"
-                        onclick={handleClick}
-                        tabindex="0"
-                    > -->
-                <div style="display: flex; justify-content: space-evenly">
+                <div class="slds-var-p-vertical_x-small slds-var-p-horizontal_medium radioButton">
                     <div class="emoji" data-id="emoji1">
                         <input
                             type="radio"
@@ -85,16 +76,6 @@
                             </svg>
                         </label>
                     </div>
-                    <!-- </li> -->
-
-                    <!-- <li
-                        class="slds-box slds-box_x-small emoji"
-                        data-id="emoji2"
-                        title="dårlig"
-                        value="2"
-                        onclick={handleClick}
-                        tabindex="0"
-                    > -->
                     <div class="emoji" data-id="emoji2">
                         <input
                             type="radio"
@@ -150,16 +131,6 @@
                             </svg>
                         </label>
                     </div>
-                    <!-- </li> -->
-
-                    <!-- <li
-                        class="slds-box slds-box_x-small emoji"
-                        data-id="emoji3"
-                        title="nøytral"
-                        value="3"
-                        onclick={handleClick}
-                        tabindex="0"
-                    > -->
                     <div class="emoji" data-id="emoji3">
                         <input
                             type="radio"
@@ -218,16 +189,6 @@
                             </svg>
                         </label>
                     </div>
-                    <!-- </li> -->
-
-                    <!-- <li
-                        class="slds-box slds-box_x-small emoji"
-                        data-id="emoji4"
-                        title="bra"
-                        value="4"
-                        onclick={handleClick}
-                        tabindex="0"
-                    > -->
                     <div class="emoji" data-id="emoji4">
                         <input
                             type="radio"
@@ -283,16 +244,6 @@
                             </svg>
                         </label>
                     </div>
-                    <!-- </li> -->
-
-                    <!-- <li
-                        class="slds-box slds-box_x-small emoji"
-                        data-id="emoji5"
-                        title="veldig bra"
-                        value="5"
-                        onclick={handleClick}
-                        tabindex="0"
-                    > -->
                     <div class="emoji" data-id="emoji5">
                         <input
                             type="radio"
@@ -344,8 +295,6 @@
                             </svg>
                         </label>
                     </div>
-                    <!-- </li>
-                </ul> -->
                 </div>
                 <p>Skriv gjerne en kommentar hvis du følre for det (frivillig)</p>
                 <p>Svaret ditt er selvfølgelig anonymt.</p>
