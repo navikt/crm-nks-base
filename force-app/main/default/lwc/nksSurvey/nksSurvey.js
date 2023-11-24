@@ -58,9 +58,7 @@ export default class NksSurvey extends LightningElement {
     }
 
     handleClick(event) {
-        console.log('Noice');
         this.rating = event.currentTarget.getAttribute('value');
-        console.log(`rating is now ${this.rating}`);
         const currentId = 'emoji' + this.rating;
         this.handleSelected(currentId);
     }
