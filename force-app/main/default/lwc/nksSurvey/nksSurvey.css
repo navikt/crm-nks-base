@@ -7,6 +7,13 @@
     border: solid 1px blue;
 }
 
+[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
 .textArea {
     width: 100%;
     --sds-c-textarea-sizing-min-height: 100px;

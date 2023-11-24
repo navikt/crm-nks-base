@@ -58,8 +58,10 @@ export default class NksSurvey extends LightningElement {
     }
 
     handleClick(event) {
+        console.log('Noice');
         this.rating = event.currentTarget.getAttribute('value');
-        const currentId = event.currentTarget.getAttribute('data-id');
+        console.log(`rating is now ${this.rating}`);
+        const currentId = 'emoji' + this.rating;
         this.handleSelected(currentId);
     }
 
@@ -67,7 +69,7 @@ export default class NksSurvey extends LightningElement {
         const emojiIds = ['emoji1', 'emoji2', 'emoji3', 'emoji4', 'emoji5'];
 
         for (const emojiId of emojiIds) {
-            const paths = this.template.querySelectorAll(`li[data-id="${emojiId}"] path`);
+            const paths = this.template.querySelectorAll(`div[data-id="${emojiId}"] path`);
 
             if (currentId === emojiId) {
                 paths[0].setAttribute('class', 'select1');
