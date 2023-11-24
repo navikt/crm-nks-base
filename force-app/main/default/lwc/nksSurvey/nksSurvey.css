@@ -29,11 +29,11 @@
     background-color: transparent;
 }
 
-.path1:hover {
+svg:hover .path1 {
     fill: rgb(246, 201, 18);
 }
 
-.path2:hover {
+svg:hover .path2 {
     fill: rgb(249, 217, 82);
 }
 
@@ -48,13 +48,4 @@
 svg {
     width: 3.125rem;
     height: 3.125rem;
-}
-
-.sr-only {
-    position: absolute;
-    left: -10000px;
-    top: auto;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
 }
