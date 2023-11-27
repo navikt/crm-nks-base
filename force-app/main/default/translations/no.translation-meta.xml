@@ -568,10 +568,12 @@
         </flows>
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
+    <!--
     <flowDefinitions>
         <flows />
         <fullName>Opportunity</fullName>
     </flowDefinitions>
+    -->
     <flowDefinitions>
         <flows />
         <fullName>Remove_Old_TopicAssignment</fullName>
