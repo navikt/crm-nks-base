@@ -179,7 +179,7 @@ export default class NksBrukervarselList extends LightningElement {
         });
 
         Promise.allSettled([brukervarsler, brukernotifikasjoner]).finally(() => {
-            this.notifications = new Array().concat(this.varsler).concat(this.brukernotifikasjon);
+            this.notifications = [].concat(this.varsler).concat(this.brukernotifikasjon);
             this.isLoaded = true;
             this.filterNotificationList();
         });
@@ -241,6 +241,7 @@ export default class NksBrukervarselList extends LightningElement {
     resolve(path, obj) {
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
+            // eslint-disable-next-line no-restricted-globals
         }, obj || self);
     }
 }

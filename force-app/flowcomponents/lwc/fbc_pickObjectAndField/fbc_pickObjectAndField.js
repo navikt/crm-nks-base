@@ -102,7 +102,7 @@ export default class fbc_pickObjectAndField extends LightningElement {
             this.fields = fieldResults;
             if (this.fields) {
                 this.dispatchDataChangedEvent({
-                    ...this.fields.find((curField) => curField.value == this._field),
+                    ...this.fields.find((curField) => curField.value === this._field),
                     ...{ isInit: true }
                 });
             }
@@ -141,9 +141,8 @@ export default class fbc_pickObjectAndField extends LightningElement {
     get availableObjectTypesList() {
         if (this.availableObjectTypes) {
             return this.splitValues(this.availableObjectTypes.toLowerCase());
-        } 
-            return [];
-        
+        }
+        return [];
     }
 
     get isError() {
@@ -165,11 +164,10 @@ export default class fbc_pickObjectAndField extends LightningElement {
 
     get fieldType() {
         if (this.fields && this._field) {
-            let foundField = this.fields.find((e) => e.value == this._field);
+            let foundField = this.fields.find((e) => e.value === this._field);
             return foundField ? foundField.dataType : null;
-        } 
-            return null;
-        
+        }
+        return null;
     }
 
     handleObjectChange(event) {
@@ -183,7 +181,7 @@ export default class fbc_pickObjectAndField extends LightningElement {
 
     handleFieldChange(event) {
         this._field = event.detail.value;
-        this.dispatchDataChangedEvent(this.fields.find((curField) => curField.value == this._field));
+        this.dispatchDataChangedEvent(this.fields.find((curField) => curField.value === this._field));
         const attributeChangeEvent = new FlowAttributeChangeEvent('field', this._field);
         this.dispatchEvent(attributeChangeEvent);
     }
@@ -206,9 +204,8 @@ export default class fbc_pickObjectAndField extends LightningElement {
     splitValues(originalString) {
         if (originalString) {
             return originalString.replace(/ /g, '').split(',');
-        } 
-            return [];
-        
+        }
+        return [];
     }
 
     get renderFlowCombobox() {

@@ -1,10 +1,10 @@
 ({
-    ctiLoaded: function (component, event, helper) {
+    ctiLoaded: function (component) {
         console.log('CTI LOADED!');
         component.set('v.ctiLoaded', true);
     },
 
-    simulateCall: function (component, event, helper) {
+    simulateCall: function (component) {
         let identifier = component.get('v.identifier');
         let contextOverride = component.get('v.chosenContext');
 

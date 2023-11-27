@@ -1,5 +1,5 @@
 ({
-    openModel: function (component, event, helper) {
+    openModel: function (component, event) {
         // Set isModalOpen attribute to true
 
         var params = event.getParam('arguments');
@@ -20,12 +20,12 @@
         }
     },
 
-    closeModel: function (component, event, helper) {
+    closeModel: function (component) {
         // Set isModalOpen attribute to false
         component.set('v.isModalOpen', false);
     },
 
-    flowStatusChange: function (component, event, helper) {
+    flowStatusChange: function (component, event) {
         let flowStatus = event.getParam('status');
         if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
             component.set('v.isModalOpen', false);

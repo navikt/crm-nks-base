@@ -94,7 +94,7 @@ export default class CrmRelatedList extends LightningElement {
     }
 
     get scrollableStyle() {
-        return this.maxHeight != 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
+        return this.maxHeight !== 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
     }
 
     get usedFields() {
@@ -103,7 +103,7 @@ export default class CrmRelatedList extends LightningElement {
 
     get icon() {
         let nameString = null;
-        if (this.iconName && this.iconName != '') nameString = this.iconName;
+        if (this.iconName && this.iconName !== '') nameString = this.iconName;
 
         return nameString;
     }

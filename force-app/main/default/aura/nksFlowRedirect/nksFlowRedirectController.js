@@ -1,5 +1,5 @@
 ({
-    invoke: function (component, event, helper) {
+    invoke: function (component) {
         // Get the record ID attribute
         var record = component.get('v.recordId');
 

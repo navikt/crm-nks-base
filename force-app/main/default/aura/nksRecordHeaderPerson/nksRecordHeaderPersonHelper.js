@@ -18,7 +18,7 @@
     },
 
     setGenderIcon: function (cmp) {
-        let gender = 'neutral';
+        let gender;
         switch (cmp.get('v.accountRecord.CRM_Person__r.INT_Sex__c')) {
             case 'Mann':
                 gender = 'male';
@@ -26,6 +26,8 @@
             case 'Kvinne':
                 gender = 'female';
                 break;
+            default:
+                gender = 'neutral';
         }
 
         cmp.set('v.genderIcon', gender);
@@ -62,6 +64,7 @@
     resolve: function (path, obj) {
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
+            // eslint-disable-next-line no-restricted-globals
         }, obj || self);
     }
 });

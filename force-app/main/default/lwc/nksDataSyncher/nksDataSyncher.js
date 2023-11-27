@@ -43,6 +43,8 @@ export default class NksDataSyncher extends LightningElement {
             if (this.initialized === true && this.relationshipField && this.objectApiName) {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
+        } else if (error) {
+            console.log(error);
         }
     }
 
@@ -65,7 +67,7 @@ export default class NksDataSyncher extends LightningElement {
         }
     }
 
-    async doSynch(personIdent, personActorId, personAccountId) {
+    async doSynch(personIdent, personActorId) {
         this.synced = false;
         await Promise.all([this.bankAccountNumberSync(personIdent), this.oppgaveSync(personActorId)]);
         this.synced = true;
@@ -73,8 +75,8 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     oppgaveSync(personActorId) {
-        return new Promise(async (resolve, reject) => {
-            if (this.getSyncStatus('oppgave').status != syncStatus.SYNCING) {
+        return new Promise(async (resolve) => {
+            if (this.getSyncStatus('oppgave').status !== syncStatus.SYNCING) {
                 return resolve();
             }
             console.log('ACTOR ID: ' + personActorId);
@@ -93,12 +95,12 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     bankAccountNumberSync(ident) {
-        return new Promise(async (resolve, reject) => {
-            if (this.getSyncStatus('bankAccount').status != syncStatus.SYNCING) {
+        return new Promise(async (resolve) => {
+            if (this.getSyncStatus('bankAccount').status !== syncStatus.SYNCING) {
                 return resolve();
             }
             syncBankAccountNumber({ ident: ident })
-                .then((result) => {
+                .then(() => {
                     this.setSyncStatus('bankAccount', syncStatus.SYNCED);
                 })
                 .catch((error) => {

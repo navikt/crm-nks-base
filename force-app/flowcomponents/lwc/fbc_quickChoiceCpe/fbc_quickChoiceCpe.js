@@ -205,7 +205,7 @@ export default class QuickChoiceCpe extends LightningElement {
         );
     }
 
-    initializeValues(value) {
+    initializeValues() {
         if (this._values && this._values.length) {
             this._values.forEach((curInputParam) => {
                 if (curInputParam.name && this.inputValues[curInputParam.name]) {
