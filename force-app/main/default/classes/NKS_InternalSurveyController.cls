@@ -10,10 +10,11 @@ public without sharing class NKS_InternalSurveyController {
      **/
     @AuraEnabled(cacheable=true)
     public static NKS_Survey__c getSurvey() {
+        DateTime currentTime = System.now();
         try {
             return [
                 SELECT Id, NKS_Background_Color__c, NKS_Question__c, NKS_Title__c, NKS_Start_Date__c, NKS_End_Date__c
-                FROM NKS_Survey__c
+                FROM NKS_Survey__c WHERE NKS_Start_Date__c <= :currentTime AND NKS_End_Date__c >= :currentTime
                 ORDER BY CreatedDate DESC
                 LIMIT 1
             ];
@@ -28,13 +29,14 @@ public without sharing class NKS_InternalSurveyController {
      * @param surveyId
      * @return True if answered, False otherwise
      **/
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static Boolean hasAnswered(String surveyId) {
+        Id recordTypeId = getRecordTypeId('Survey Answered');
         try {
             return [
                 SELECT NKS_Answered__c
                 FROM NKS_Survey_Response__c
-                WHERE NKS_Participant__c = :UserInfo.getUserId() AND NKS_Survey__c = :surveyId
+                WHERE NKS_Participant__c = :UserInfo.getUserId() AND NKS_Survey__c = :surveyId AND recordTypeId = :recordTypeId
                 LIMIT 1
             ]
             ?.NKS_Answered__c;
@@ -90,12 +92,13 @@ public without sharing class NKS_InternalSurveyController {
     @AuraEnabled
     public static string createResponseRecord(String surveyId, Integer rating, String comment) {
         Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
+        Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = '0052o000009W8yf', // id for sfdx integrasjonsbruker
+                CreatedById = integrationUserId, 
                 CreatedDate = scheduledTime,
-                LastModifiedById = '0052o000009W8yf',
+                LastModifiedById = integrationUserId,
                 LastModifiedDate = scheduledTime,
                 RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
                 NKS_Survey__c = surveyId,

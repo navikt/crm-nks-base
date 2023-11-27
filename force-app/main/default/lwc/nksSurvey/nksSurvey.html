@@ -1,7 +1,7 @@
 <template>
-    <template if:true={isValid}>
+    <template if:true={surveyId}>
         <lightning-layout
-            if:false={hide}
+            if:false={isAnswered}
             class="slds-card slds-var-p-around_medium"
             style={background}
             multiple-rows="true"
@@ -296,7 +296,7 @@
                         </label>
                     </div>
                 </div>
-                <p>Skriv gjerne en kommentar hvis du følre for det (frivillig)</p>
+                <p>Skriv gjerne en kommentar hvis du føler for det (frivillig)</p>
                 <p>Svaret ditt er selvfølgelig anonymt.</p>
                 <lightning-textarea
                     label=""

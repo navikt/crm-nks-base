@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
@@ -9,13 +9,12 @@ export default class NksSurvey extends LightningElement {
     backgroundColor;
     title;
     question;
-    isAnswered;
-    isRendered = false;
     startDate;
     endDate;
     rating;
     comment;
-    show = true;
+
+    @track isAnswered = false;
 
     @wire(getSurvey)
     wiredSurvey({ data, error }) {
@@ -24,37 +23,23 @@ export default class NksSurvey extends LightningElement {
             this.backgroundColor = data.NKS_Background_Color__c;
             this.title = data.NKS_Title__c;
             this.question = data.NKS_Question__c;
-            this.startDate = data.NKS_Start_Date__c;
-            this.endDate = data.NKS_End_Date__c;
         } else if (error) {
             console.log('Problem getting survey: ' + error);
         }
     }
 
+    @wire(hasAnswered, { surveyId: '$surveyId' })
+    wiredAnswered({ error, data }) {
+        if (data) {
+            this.isAnswered = data;
+            console.log('is answered: ', this.isAnswered);
+        } else if (error) {
+            console.log(error);
+        }
+    }
+
     get background() {
         return `background-color: ${this.backgroundColor}`;
-    }
-
-    get hide() {
-        return !this.show || this.isAnswered;
-    }
-
-    get isValid() {
-        const currentdate = new Date();
-        if (this.surveyId) {
-            return new Date(this.startDate) <= currentdate && new Date(this.endDate) >= currentdate ? true : false;
-        }
-        return false;
-    }
-
-    renderedCallback() {
-        if (this.surveyId && !this.isRendered) {
-            hasAnswered({ surveyId: this.surveyId }).then((res) => {
-                this.isAnswered = res;
-                this.isRendered = true;
-                console.log('Survey is answered: ', res);
-            });
-        }
     }
 
     handleClick(event) {
@@ -84,7 +69,7 @@ export default class NksSurvey extends LightningElement {
     }
 
     handleSend() {
-        this.show = false;
+        this.isAnswered = true;
         const event = new ShowToastEvent({
             title: 'Tilbakemeldingen din er mottatt.',
             message: 'Ha en fin dag videre!',
@@ -103,7 +88,7 @@ export default class NksSurvey extends LightningElement {
     }
 
     handleCancel() {
-        this.show = false;
+        this.isAnswered = true;
         createAnsweredRecord({ surveyId: this.surveyId }).then((res) => {
             console.log('Result of Survey Answered creation: ', res);
         });
