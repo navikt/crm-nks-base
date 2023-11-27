@@ -1123,18 +1123,10 @@
     </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
-        <name>CreateAuditFields</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>EditTask</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>RunFlow</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>UpdateWithInactiveOwner</name>
     </userPermissions>
 </PermissionSet>

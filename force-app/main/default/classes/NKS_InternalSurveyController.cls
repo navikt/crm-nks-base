@@ -2,7 +2,7 @@
  * @description
  * Controller class for NKS Custom Survey Solution
  */
-public with sharing class NKS_InternalSurveyController {
+public without sharing class NKS_InternalSurveyController {
     /**
      * @description Function to get Survey
      * @author Sara Mohammadi | 22-11-2023
