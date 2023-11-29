@@ -1,0 +1,76 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="slds-accordion parent">
+        <div class={sectionClass}>
+            <div class="slds-accordion__summary">
+                <h2 class="slds-accordion__summary-heading">
+                    <button
+                        class="slds-button slds-button_reset slds-accordion__summary-action"
+                        aria-controls="knowledgeHelp"
+                        aria-expanded={ariaExpanded}
+                        title="knowledge hjelp"
+                        onclick={handleOpen}
+                    >
+                        <lightning-icon
+                            icon-name={sectionIconName}
+                            size="xx-small"
+                            alternative-text="switch"
+                            aria-hidden="true"
+                        ></lightning-icon>
+                        <span class="slds-accordion__summary-content slds-var-p-left_x-small"
+                            >Hvordan bruke Knowledge effektivt og smart</span
+                        >
+                    </button>
+                    <lightning-icon
+                        class="slds-var-p-right_small icon"
+                        icon-name="utility:info"
+                        size="x-small"
+                        alternative-text="information"
+                        aria-hidden="true"
+                    ></lightning-icon>
+                </h2>
+            </div>
+            <div class="slds-accordion__content child" id="knowledgeHelp" aria-hidden={ariaHidden}>
+                <div class="slds-var-p-around_small">
+                    <h3>
+                        <strong>Kun søkeord</strong>
+                    </h3>
+                    <p>
+                        La oss si du leter etter informasjon om dagpenger og ventedager. Du skriver dagpenger ventedager
+                        i søkefeltet i kunnskapsbasen og får opp over 100 treff.
+                    </p>
+                    <br />
+                    <h3>
+                        <strong> Søk ved hjelp av OR (ELLER)</strong>
+                    </h3>
+                    <p>
+                        Dersom du bruker OR (det engelske ELLER), altså skriver "dagpenger or ventedager" i søkefeltet
+                        får du 163 treff.
+                    </p>
+                    <br />
+                    <h3>
+                        <strong>Søk ved hjelp av AND (OG)</strong>
+                    </h3>
+                    <p>
+                        Dersom du bruker AND (det engelske OG), altså skriver "dagpenger and ventedager" i søkefeltet
+                        får du 4 treff.
+                    </p>
+                    <br />
+                    <h3>
+                        <strong>Søk innad i en kunnskapsartikkel</strong>
+                    </h3>
+                    <p>
+                        Du kan søke innad i en kunnskapsartikkel ved hjelp av F3-tasten. Merk at du kun får treff i de
+                        fanene/trekkspillene som vises/er åpne.
+                    </p>
+                    <br />
+                    <a
+                        href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Kunnskapsbase.aspx"
+                        target="_blank"
+                        >Les mer</a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

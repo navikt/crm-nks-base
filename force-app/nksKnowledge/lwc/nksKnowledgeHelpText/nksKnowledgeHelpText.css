@@ -1,0 +1,13 @@
+.parent {
+    background-color: #ccf1d6;
+    margin-bottom: -0.5rem;
+    border-radius: 0.25rem;
+}
+
+.child {
+    background-color: #ffffff;
+}
+
+.icon {
+    --sds-c-icon-color-foreground-default: #06893a;
+}
