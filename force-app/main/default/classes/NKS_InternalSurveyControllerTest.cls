@@ -20,11 +20,11 @@ public with sharing class NKS_InternalSurveyControllerTest {
 
     @isTest
     static void testGetSurvey() {
-        NKS_Survey__c survey; 
+        NKS_Survey__c survey;
 
         Test.startTest();
         try {
-             survey = NKS_InternalSurveyController.getSurvey();
+            survey = NKS_InternalSurveyController.getSurvey();
         } catch (Exception e) {
             System.assertEquals('System.AuraHandledException', e.getTypeName());
         }
@@ -37,7 +37,7 @@ public with sharing class NKS_InternalSurveyControllerTest {
         Boolean hasAnswered = false;
         Test.startTest();
         try {
-             hasAnswered = NKS_InternalSurveyController.hasAnswered(surveyId);
+            hasAnswered = NKS_InternalSurveyController.hasAnswered(surveyId);
         } catch (Exception e) {
             System.assertEquals('System.AuraHandledException', e.getTypeName());
         }
@@ -57,18 +57,8 @@ public with sharing class NKS_InternalSurveyControllerTest {
     static void testCreateAnsweredRecord() {
         Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
         Test.startTest();
-        String res = NKS_InternalSurveyController.createAnsweredRecord(surveyId);
-        Test.stopTest();
-
-        System.assertNotEquals(null, res);
-    }
-
-    @isTest
-    static void testCreateResponseRecord() {
-        Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
-        Test.startTest();
         try {
-            String res = NKS_InternalSurveyController.createResponseRecord(surveyId, 4, 'test comment');
+            NKS_InternalSurveyController.createAnsweredRecord(surveyId, 4, 'test comment', false);
         } catch (Exception e) {
             System.assertEquals('System.AuraHandledException', e.getTypeName());
         }

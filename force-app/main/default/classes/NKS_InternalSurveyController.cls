@@ -95,8 +95,7 @@ public without sharing class NKS_InternalSurveyController {
      * @param comment
      * @return surveyResponseId
      **/
-    @AuraEnabled
-    public static void createResponseRecord(String surveyId, Integer rating, String comment) {
+    private static void createResponseRecord(String surveyId, Integer rating, String comment) {
         Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
         Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 

@@ -31,9 +31,8 @@ export default class NksSurvey extends LightningElement {
     wiredAnswered({ error, data }) {
         if (data) {
             this.isAnswered = data;
-            console.log('is answered: ', this.isAnswered);
         } else if (error) {
-            console.log(error);
+            console.log('Problem checking if survey is answered: ', error);
         }
     }
 
