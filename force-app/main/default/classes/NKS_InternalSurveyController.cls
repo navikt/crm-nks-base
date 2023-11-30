@@ -14,7 +14,8 @@ public without sharing class NKS_InternalSurveyController {
         try {
             return [
                 SELECT Id, NKS_Background_Color__c, NKS_Question__c, NKS_Title__c, NKS_Start_Date__c, NKS_End_Date__c
-                FROM NKS_Survey__c WHERE NKS_Start_Date__c <= :currentTime AND NKS_End_Date__c >= :currentTime
+                FROM NKS_Survey__c
+                WHERE NKS_Start_Date__c <= :currentTime AND NKS_End_Date__c >= :currentTime
                 ORDER BY CreatedDate DESC
                 LIMIT 1
             ];
@@ -36,7 +37,10 @@ public without sharing class NKS_InternalSurveyController {
             return [
                 SELECT NKS_Answered__c
                 FROM NKS_Survey_Response__c
-                WHERE NKS_Participant__c = :UserInfo.getUserId() AND NKS_Survey__c = :surveyId AND recordTypeId = :recordTypeId
+                WHERE
+                    NKS_Participant__c = :UserInfo.getUserId()
+                    AND NKS_Survey__c = :surveyId
+                    AND recordTypeId = :recordTypeId
                 LIMIT 1
             ]
             ?.NKS_Answered__c;
@@ -65,7 +69,7 @@ public without sharing class NKS_InternalSurveyController {
      * @return surveyResponseId
      **/
     @AuraEnabled
-    public static String createAnsweredRecord(String surveyId) {
+    public static void createAnsweredRecord(String surveyId, Integer rating, String comment, Boolean isCanceled) {
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
                 RecordTypeId = getRecordTypeId('Survey Answered'),
@@ -75,7 +79,9 @@ public without sharing class NKS_InternalSurveyController {
             );
             insert sr;
 
-            return sr.Id;
+            if (!isCanceled) {
+                createResponseRecord(surveyId, rating, comment);
+            }
         } catch (Exception e) {
             throw new AuraHandledException('Problem creating Answered record: ' + e.getMessage());
         }
@@ -90,13 +96,13 @@ public without sharing class NKS_InternalSurveyController {
      * @return surveyResponseId
      **/
     @AuraEnabled
-    public static string createResponseRecord(String surveyId, Integer rating, String comment) {
+    public static void createResponseRecord(String surveyId, Integer rating, String comment) {
         Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
         Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 
         try {
             NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = integrationUserId, 
+                CreatedById = integrationUserId,
                 CreatedDate = scheduledTime,
                 LastModifiedById = integrationUserId,
                 LastModifiedDate = scheduledTime,
@@ -106,8 +112,6 @@ public without sharing class NKS_InternalSurveyController {
                 NKS_Comment__c = comment
             );
             insert sr;
-
-            return sr.Id;
         } catch (Exception e) {
             throw new AuraHandledException('Problem creating Response record: ' + e.getMessage());
         }

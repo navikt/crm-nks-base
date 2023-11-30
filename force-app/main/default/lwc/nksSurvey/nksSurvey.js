@@ -3,7 +3,6 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
 import createAnsweredRecord from '@salesforce/apex/NKS_InternalSurveyController.createAnsweredRecord';
-import createResponseRecord from '@salesforce/apex/NKS_InternalSurveyController.createResponseRecord';
 export default class NksSurvey extends LightningElement {
     surveyId;
     backgroundColor;
@@ -76,21 +75,20 @@ export default class NksSurvey extends LightningElement {
             variant: 'success'
         });
         this.dispatchEvent(event);
-        createAnsweredRecord({ surveyId: this.surveyId }).then((res) => {
-            console.log('Result of Survey Answered creation: ', res);
-
-            createResponseRecord({ surveyId: this.surveyId, rating: this.rating, comment: this.comment }).then(
-                (result) => {
-                    console.log('Result of Survey Response creation: ', result);
-                }
-            );
+        createAnsweredRecord({
+            surveyId: this.surveyId,
+            rating: this.rating,
+            comment: this.comment,
+            isCanceled: false
+        }).then(() => {
+            console.log('Response creation was successful!');
         });
     }
 
     handleCancel() {
         this.isAnswered = true;
-        createAnsweredRecord({ surveyId: this.surveyId }).then((res) => {
-            console.log('Result of Survey Answered creation: ', res);
+        createAnsweredRecord({ surveyId: this.surveyId, rating: 0, comment: '', isCanceled: true }).then(() => {
+            console.log('Response creation was successful!');
         });
     }
 }
