@@ -1,12 +1,6 @@
 public with sharing class NKS_AddressController {
     private static LoggerUtility logger = new LoggerUtility('NKS Address Controller');
 
-    /*
-     * @brief  Function to get Bosted Address for a person
-     * @param recordId:Id
-     * @param objectApiName:String
-     * @return address:List<NKS_Address>
-     */
     @AuraEnabled(cacheable=true)
     public static List<NKS_Address> getBostedAddress(Id recordId, String objectApiName) {
         Person__c person = getPersonIdentAndFullName(recordId, objectApiName);
@@ -14,17 +8,17 @@ public with sharing class NKS_AddressController {
             return new List<NKS_Address>();
         }
 
-        List<NKS_Address> boAddress = new List<NKS_Address>();
+        List<NKS_Address> bostedAddress = new List<NKS_Address>();
         try {
             PDL_API_Response addressData = queryAddressFromPDL(person.Name);
-            boAddress = setAddressData(addressData);
-            setAddressFullNameAndCity(boAddress, person);
+            bostedAddress = setAddressData(addressData);
+            setAddressFullNameAndCity(bostedAddress, person);
         } catch (Exception e) {
             handleException('bosted', e, person.Name);
         } finally {
             logger.publish();
         }
-        return boAddress;
+        return bostedAddress;
     }
 
     @AuraEnabled(cacheable=true)
@@ -101,47 +95,6 @@ public with sharing class NKS_AddressController {
         );
     }
 
-    private static PDL_API_Response getMockTemporaryAddresses() {
-        String mockResponse =
-                    '{' +
-                    '"errors" : null,' +
-                    '"data" : {' +
-                    '"hentPerson" : {' +
-                    '"bostedsadresse" : [],' +
-                    '"oppholdsadresse" : [ {' +
-                    '"vegadresse" : {' +
-                    '"tilleggsnavn" : "GRIMSTAD OppVeg",' +
-                    '"postnummer" : "1211",' +
-                    '"matrikkelId" : 130534011,' +
-                    '"koordinater" : {' +
-                    '"z" : 0.0,' +
-                    '"y" : 6974511.0,' +
-                    '"x" : 453529.0,' +
-                    '"kvalitet" : null' +
-                    '},' +
-                    '"bruksenhetsnummer" : "311",' +
-                    '"husnummer" : "H102",' +
-                    '"husbokstav" : "b",' +
-                    '"adressenavn" : "PlassOpp"' +
-                    '},' +
-                    '"metadata":{' +
-                    '"opplysningsId":"53a9f29d-0980-42a3-8e18-13ae0b01b3d7",' +
-                    '"master":"FREG",' +
-                    '"endringer":[ {' +
-                    '"type":"OPPRETT",' +
-                    '"registrert":"2022-10-10T10:17:35",' +
-                    '"registrertAv":"Folkeregisteret",' +
-                    '"systemkilde":"FREG",' +
-                    '"kilde":"Dolly"' +
-                    '} ]' +
-                    '}' +
-                    '} ]' +
-                    '}' +
-                    '}' +
-                    '}';
-        return (PDL_API_Response) System.JSON.deserialize(mockResponse, PDL_API_Response.class);
-    }
-
     @TestVisible
     private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
         Id personId;
@@ -158,6 +111,9 @@ public with sharing class NKS_AddressController {
         PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
         query.hentPerson.bostedsadresse.selectAll(true);
         query.hentPerson.oppholdsadresse.selectAll(true);
+        if (Test.isRunningTest()) {
+            return getMockBostedAddresses();
+        }
         return query.execute();
     }
 
@@ -364,6 +320,89 @@ public with sharing class NKS_AddressController {
 
         List<String> splitDate = inputDate.split('-');
         return String.join(new List<String>{splitDate[2], splitDate[1], splitDate[0]}, '.');
+    }
+
+    private static PDL_API_Response getMockTemporaryAddresses() {
+        String mockResponse =
+            '{' +
+            '"errors" : null,' +
+            '"data" : {' +
+            '"hentPerson" : {' +
+            '"bostedsadresse" : [],' +
+            '"oppholdsadresse" : [ {' +
+            '"vegadresse" : {' +
+            '"tilleggsnavn" : "GRIMSTAD OppVeg",' +
+            '"postnummer" : "1211",' +
+            '"matrikkelId" : 130534011,' +
+            '"koordinater" : {' +
+            '"z" : 0.0,' +
+            '"y" : 6974511.0,' +
+            '"x" : 453529.0,' +
+            '"kvalitet" : null' +
+            '},' +
+            '"bruksenhetsnummer" : "311",' +
+            '"husnummer" : "H102",' +
+            '"husbokstav" : "b",' +
+            '"adressenavn" : "PlassOpp"' +
+            '},' +
+            '"metadata":{' +
+            '"opplysningsId":"53a9f29d-0980-42a3-8e18-13ae0b01b3d7",' +
+            '"master":"FREG",' +
+            '"endringer":[ {' +
+            '"type":"OPPRETT",' +
+            '"registrert":"2022-10-10T10:17:35",' +
+            '"registrertAv":"Folkeregisteret",' +
+            '"systemkilde":"FREG",' +
+            '"kilde":"Dolly"' +
+            '} ]' +
+            '}' +
+            '} ]' +
+            '}' +
+            '}' +
+            '}';
+        return (PDL_API_Response) System.JSON.deserialize(mockResponse, PDL_API_Response.class);
+    }
+
+    private static PDL_API_Response getMockBostedAddresses() {
+        String mockResponse = 
+            '{' +
+            '"errors" : null,' +
+            '"data" : {' +
+            '"hentPerson" : {' +
+            '"bostedsadresse" : [ {' +
+            '"vegadresse" : {' +
+            '"tilleggsnavn" : "GRIMSTAD",' +
+            '"postnummer" : "6636",' +
+            '"matrikkelId" : 130534152,' +
+            '"koordinater" : {' +
+            '"z" : 0.0,' +
+            '"y" : 6974511.0,' +
+            '"x" : 453529.0,' +
+            '"kvalitet" : null' +
+            '},' +
+            '"kommunenummer" : "1557",' +
+            '"husnummer" : "H101",' +
+            '"husbokstav" : "A",' +
+            '"bydelsnummer" : "2435",' +
+            '"bruksenhetsnummer" : "555",' +
+            '"adressenavn" : "Plassavegen"' +
+            '},' +
+            '"metadata":{' +
+            '"opplysningsId":"53a9f29d-0980-42a3-8e18-13ae0b01b3d7",' +
+            '"master":"FREG",' +
+            '"endringer":[ {' +
+            '"type":"OPPRETT",' +
+            '"registrert":"2021-09-02T10:17:35",' +
+            '"registrertAv":"Folkeregisteret",' +
+            '"systemkilde":"FREG",' +
+            '"kilde":"Dolly"' +
+            '} ]' +
+            '}' +
+            '} ]' +
+            '}' +
+            '}' +
+            '}';
+        return (PDL_API_Response) System.JSON.deserialize(mockResponse, PDL_API_Response.class);
     }
 
     /*

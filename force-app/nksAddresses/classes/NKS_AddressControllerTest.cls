@@ -26,12 +26,15 @@ public with sharing class NKS_AddressControllerTest {
         Case c = new Case(AccountId = a.Id);
         insert c;
 
+        List<List<NKS_AddressController.NKS_Address>> addr = new List<List<NKS_AddressController.NKS_Address>>();
         Test.startTest();
-        List<NKS_AddressController.NKS_Address> addr = NKS_AddressController.getBostedAddress(a.Id, 'Account');
-        addr = NKS_AddressController.getBostedAddress(c.Id, 'Case');
+        addr.add(NKS_AddressController.getBostedAddress(a.Id, 'Account'));
+        addr.add(NKS_AddressController.getBostedAddress(c.Id, 'Case'));
         Test.stopTest();
 
-        System.assertEquals(false, addr.isEmpty());
+        System.assert(addr.size() == 2);
+        System.assertEquals(true, addr[0][0].address != null);
+        System.assertEquals(true, addr[1][0].address != null);
     }
 
     @isTest
@@ -239,7 +242,7 @@ public with sharing class NKS_AddressControllerTest {
         Person__c p = new Person__c(Name = '12345678910', INT_FirstName__c = 'NAVN', INT_LastName__c = 'NAVNESEN');
         insert p;
         p = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = '12345678910' LIMIT 1];
-        
+
         List<NKS_AddressController.NKS_Address> addresses = new List<NKS_AddressController.NKS_Address>();
         NKS_AddressController.NKS_Address address1 = new NKS_AddressController.NKS_Address();
         address1.zipCode = '1234';
