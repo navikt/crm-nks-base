@@ -26,12 +26,15 @@ public with sharing class NKS_AddressControllerTest {
         Case c = new Case(AccountId = a.Id);
         insert c;
 
+        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
         List<List<NKS_AddressController.NKS_Address>> addr = new List<List<NKS_AddressController.NKS_Address>>();
+
         Test.startTest();
         addr.add(NKS_AddressController.getBostedAddress(a.Id, 'Account'));
         addr.add(NKS_AddressController.getBostedAddress(c.Id, 'Case'));
         Test.stopTest();
-
+        
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].address != null);
         System.assertEquals(true, addr[1][0].address != null);
@@ -296,14 +299,20 @@ public with sharing class NKS_AddressControllerTest {
         Case c = new Case(AccountId = a.Id);
         insert c;
 
+        ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+
+        List<NKS_AddressController.NKS_Address> addresses1;
+        List<NKS_AddressController.NKS_Address> addresses2;
+
         Test.startTest();
         Boolean throwsException = false;
         try {
-            List<NKS_AddressController.NKS_Address> addresses1 = NKS_AddressController.getTemporaryAddresses(
+            addresses1 = NKS_AddressController.getTemporaryAddresses(
                 a.Id,
                 'Account'
             );
-            List<NKS_AddressController.NKS_Address> addresses2 = NKS_AddressController.getTemporaryAddresses(
+            addresses2 = NKS_AddressController.getTemporaryAddresses(
                 c.Id,
                 'Case'
             );
@@ -311,6 +320,8 @@ public with sharing class NKS_AddressControllerTest {
             throwsException = true;
         }
         Test.stopTest();
+        System.debug(addresses1);
+        System.debug(addresses2);
         System.assertEquals(false, throwsException);
     }
 
