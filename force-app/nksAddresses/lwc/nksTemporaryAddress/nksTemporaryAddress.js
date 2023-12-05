@@ -17,57 +17,37 @@ export default class NksBostedAddress extends LightningElement {
     wiredAddresses({ error, data }) {
         if (data) {
             this._temporaryAddresses = data;
+            console.log(this._temporaryAddresses);
         }
         if (error) {
-            console.log('Problem getting temporaryAddress: ' + error);
+            this._temporaryAddresses.push('Feil under henting av bostedsadresse.');
+            console.error('Problem getting temporaryAddress: ' + error);
         }
     }
 
     get temporaryAddresses() {
-        let addressesToReturn = [];
-        if (this._temporaryAddresses.length > 0) {
-            this._temporaryAddresses.forEach((element) => {
-                if (element.fullName) {
-                    addressesToReturn.push(element.fullName);
-                }
-                let addressLine = '';
-                if (element.address) {
-                    addressLine += element.address;
-                }
-                if (element.houseNumber) {
-                    addressLine += ' ' + element.houseNumber;
-                }
-                if (element.houseLetter) {
-                    addressLine += element.houseLetter;
-                }
-                addressesToReturn.push(addressLine);
-                let postInfo = '';
-                if (element.zipCode) {
-                    postInfo += element.zipCode;
-                }
-                if (element.city) {
-                    postInfo += ' ' + element.city;
-                }
-                addressesToReturn.push(postInfo);
-                let region = '';
-                if (element.region) {
-                    region += element.region;
-                }
-                if (element.countryCode) {
-                    region += ' ' + element.countryCode;
-                }
-                if (region !== '') {
-                    addressesToReturn.push(region);
-                } else {
-                    addressesToReturn.push('NORGE NO');
-                }
-            });
-        }
-        return addressesToReturn.join('\n');
-    }
-
-    get iconName() {
-        return this.open ? 'utility:chevrondown' : 'utility:chevronright';
+        const addressesToReturn = this._temporaryAddresses.map((element) => {
+            const fullName = element.fullName ? [element.fullName] : [];
+        
+            const addressLine = [
+                element.address ? element.address : '',
+                element.houseNumber ? ' ' + element.houseNumber : '',
+                element.houseLetter ? ' ' + element.houseLetter : ''
+            ].join('').trim();
+        
+            const postInfo = [
+                element.zipCode ? element.zipCode : '',
+                element.city ? ' ' + element.city : ''
+            ].join('').trim();
+        
+            const region = [
+                element.region ? element.region : '',
+                element.countryCode ? ' ' + element.countryCode : ''
+            ].join('').trim();
+        
+            return [...fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+        });
+        return addressesToReturn.join('\n').trim();
     }
 
     get hasRecords() {

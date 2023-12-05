@@ -38,7 +38,7 @@ public with sharing class NKS_AddressControllerTest {
     static void getBostedVegAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_AddressController.NKS_Address> l = NKS_AddressController.getBostedVegMatrikkAddress(
+        List<NKS_AddressController.NKS_Address> l = NKS_AddressController.setBostedVegMatrikkAddress(
             query.execute().data.hentPerson.bostedsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
@@ -82,12 +82,12 @@ public with sharing class NKS_AddressControllerTest {
             '}';
 
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_AddressController.getBostedVegMatrikkAddress(
+        l = NKS_AddressController.setBostedVegMatrikkAddress(
             response.data.hentPerson.bostedsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
         System.assertEquals('GRIMSTAD', l[0].additionalName);
-        l = NKS_AddressController.getAddressData(response);
+        l = NKS_AddressController.setAddressData(response);
         System.assertEquals('GRIMSTAD', l[0].additionalName);
 
         boVegAdd =
@@ -113,7 +113,7 @@ public with sharing class NKS_AddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_AddressController.getBostedVegMatrikkAddress(
+        l = NKS_AddressController.setBostedVegMatrikkAddress(
             response.data.hentPerson.bostedsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
@@ -154,7 +154,7 @@ public with sharing class NKS_AddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_AddressController.getOppholdsAddress(
+        l = NKS_AddressController.setOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
@@ -198,7 +198,7 @@ public with sharing class NKS_AddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_AddressController.getOppholdsAddress(
+        l = NKS_AddressController.setOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
@@ -224,17 +224,17 @@ public with sharing class NKS_AddressControllerTest {
             '}' +
             '}';
         response = (PDL_API_Response) System.JSON.deserialize(boVegAdd, PDL_API_Response.class);
-        l = NKS_AddressController.getOppholdsAddress(
+        l = NKS_AddressController.setOppholdsAddress(
             response.data.hentPerson.oppholdsadresse[0],
             new NKS_AddressController.NKS_Address()
         );
         System.assertEquals('1234', l[0].zipCode);
-        l = NKS_AddressController.getAddressData(response);
+        l = NKS_AddressController.setAddressData(response);
         System.assertEquals('1234', l[0].zipCode);
     }
 
     @isTest
-    static void testSetValues() {
+    static void testSetAddressFullNameAndCity() {
         // Create test data
         Person__c p = new Person__c(Name = '12345678910', INT_FirstName__c = 'NAVN', INT_LastName__c = 'NAVNESEN');
         insert p;
@@ -261,7 +261,7 @@ public with sharing class NKS_AddressControllerTest {
 
         Test.startTest();
         // Call the method to be tested
-        NKS_AddressController.setValues(addresses, '12345678910');
+        NKS_AddressController.setAddressFullNameAndCity(addresses, '12345678910');
         Test.stopTest();
 
         // Verify the results
