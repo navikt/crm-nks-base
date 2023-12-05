@@ -40,6 +40,7 @@ public with sharing class NKS_AddressControllerTest {
         System.assertEquals(true, addr[1][0].address != null);
     }
 
+    // TODO: Refactor these tests
     @isTest
     static void getBostedVegAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
@@ -53,6 +54,7 @@ public with sharing class NKS_AddressControllerTest {
             '"errors" : null,' +
             '"data" : {' +
             '"hentPerson" : {' +
+            '"deltBosted" : [],' +
             '"bostedsadresse" : [ {' +
             '"vegadresse" : {' +
             '"tilleggsnavn" : "GRIMSTAD",' +
@@ -101,6 +103,7 @@ public with sharing class NKS_AddressControllerTest {
             '"errors" : null,' +
             '"data" : {' +
             '"hentPerson" : {' +
+            '"deltBosted" : [],' +
             '"bostedsadresse" : [ {' +
             '"matrikkeladresse" : {' +
             '"tilleggsnavn" : "GRIMSTADGata",' +
@@ -131,6 +134,7 @@ public with sharing class NKS_AddressControllerTest {
             '"data" : {' +
             '"hentPerson" : {' +
             '"bostedsadresse" : [],' +
+            '"deltBosted" : [],' +
             '"oppholdsadresse" : [ {' +
             '"matrikkeladresse" : {' +
             '"tilleggsnavn" : "GRIMSTADGata OppMatrikkel",' +
@@ -172,6 +176,7 @@ public with sharing class NKS_AddressControllerTest {
             '"data" : {' +
             '"hentPerson" : {' +
             '"bostedsadresse" : [],' +
+            '"deltBosted" : [],' +
             '"oppholdsadresse" : [ {' +
             '"vegadresse" : {' +
             '"tilleggsnavn" : "GRIMSTAD OppVeg",' +
@@ -216,6 +221,7 @@ public with sharing class NKS_AddressControllerTest {
             '"data" : {' +
             '"hentPerson" : {' +
             '"bostedsadresse" : [],' +
+            '"deltBosted" : [],' +
             '"oppholdsadresse" : [ {' +
             '"utenlandskAdresse" : {' +
             '"adressenavnNummer" : "GRIMSTAD 12",' +
@@ -320,8 +326,6 @@ public with sharing class NKS_AddressControllerTest {
             throwsException = true;
         }
         Test.stopTest();
-        System.debug(addresses1);
-        System.debug(addresses2);
         System.assertEquals(false, throwsException);
     }
 

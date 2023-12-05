@@ -111,14 +111,17 @@ public with sharing class NKS_AddressController {
     private static List<NKS_Address> setAddressData(PDL_API_Response addressData) {
         List<NKS_Address> addrData = new List<NKS_Address>();
         if (addressData.data.hentPerson.bostedsadresse.size() > 0) {
-            PDL_Bostedsadresse latestAddress = setLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse);
-            if (latestAddress?.vegadresse != null || latestAddress?.matrikkeladresse != null) {
-                addrData.addAll(setBostedVegMatrikkAddress(latestAddress, new NKS_Address()));
-                return addrData;
-            }
+            addrData.addAll(setBostedVegMatrikkAddress(setLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse), new NKS_Address()));
         }
-        if (addressData.data.hentPerson.oppholdsadresse.size() > 0) {
+        // Use oppholdsadresse if bostedsadresse is empty
+        if (addressData.data.hentPerson.bostedsadresse.size() == 0 && addressData.data.hentPerson.oppholdsadresse.size() > 0) {
             addrData.addAll(setOppholdsAddress(setLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse), new NKS_Address()));
+        }
+        // Always append delt bosted address if it exists
+        if (addressData.data.hentPerson.deltBosted.size() > 0) {
+            addrData.addAll(setDeltBostedsAddress(setLastUpdatedDeltBostedsAddress(addressData.data.hentPerson?.deltBosted), new NKS_Address()));
+        }
+        if (!addrData.isEmpty()) {
             return addrData;
         }
         NKS_Address boAddr = new NKS_Address();
@@ -150,10 +153,8 @@ public with sharing class NKS_AddressController {
         List<NKS_Address> addrList = new List<NKS_Address>();
         if (address?.vegadresse != null) {
             setFieldsFromVegAdresse(address.vegadresse, boAddr);
-            boAddr.recId = '1';
         } else if (address?.matrikkeladresse != null) {
             setFieldsFromMatrikkelAdresse(address.matrikkeladresse, boAddr);
-            boAddr.recId = '2';
         }
 
         PDL_Metadata meta = address?.metadata;
@@ -167,24 +168,37 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static List<NKS_Address> setOppholdsAddress(PDL_Oppholdsadresse address, NKS_Address opAddr) {
-        List<NKS_Address> addListOp = new List<NKS_Address>();
+        List<NKS_Address> addrListOp = new List<NKS_Address>();
         if (address?.vegadresse != null) {
             setFieldsFromVegAdresse(address.vegadresse, opAddr);
-            opAddr.recId = '3';
         } else if (address?.matrikkeladresse != null) {
             setFieldsFromMatrikkelAdresse(address.matrikkeladresse, opAddr);
-            opAddr.recId = '4';
         } else if (address?.utenlandskAdresse != null) {
             setFieldsFromUtenlandskAdresse(address.utenlandskAdresse, opAddr);
-            opAddr.recId = '5';
         }
         PDL_Metadata meta = address?.metadata;
         if (meta != null) {
             opAddr.changeRegisteredDate = formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
         }
 
-        addListOp.add(opAddr);
-        return addListOp;
+        addrListOp.add(opAddr);
+        return addrListOp;
+    }
+
+    @TestVisible
+    private static List<NKS_Address> setDeltBostedsAddress(PDL_DeltBosted address, NKS_Address addr) {
+        List<NKS_Address> addrList = new List<NKS_Address>();
+        if (address?.vegadresse != null) {
+            setFieldsFromVegAdresse(address.vegadresse, addr);
+        } else if (address?.matrikkeladresse != null) {
+            setFieldsFromMatrikkelAdresse(address.matrikkeladresse, addr);
+        }
+        PDL_Metadata meta = address?.metadata;
+        if (meta != null) {
+            addr.changeRegisteredDate = formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
+        }
+        addrList.add(addr);
+        return addrList;
     }
 
     private static void setFieldsFromVegAdresse(PDL_Vegadresse vegAddr, NKS_Address addr) {
@@ -215,12 +229,30 @@ public with sharing class NKS_AddressController {
     private static PDL_Oppholdsadresse setLastUpdatedOppholdsAdresse(List<PDL_Oppholdsadresse> addresses) {
         PDL_Oppholdsadresse latestAddress;
         for (PDL_Oppholdsadresse addr : addresses) {
-            if (addr.gyldigFraOgMed != null && (latestAddress == null || latestAddress.gyldigFraOgMed < addr.gyldigFraOgMed)) {
+            if (addr.gyldigFraOgMed != null && (latestAddress == null || addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)) {
                 latestAddress = addr;
             }
         }
         if (latestAddress == null) {
             for (PDL_Oppholdsadresse addr : addresses) {
+                if (latestAddress == null || getCreatedDate(latestAddress.metadata) < getCreatedDate(addr.metadata)) {
+                    latestAddress = addr;
+                }
+            }
+        }
+        return latestAddress;
+    }
+
+    @TestVisible
+    private static PDL_DeltBosted setLastUpdatedDeltBostedsAddress(List<PDL_DeltBosted> addresses) {
+        PDL_DeltBosted latestAddress;
+        for (PDL_DeltBosted addr : addresses) {
+            if (addr.startdatoForKontrakt != null && (latestAddress == null || latestAddress.startdatoForKontrakt < addr.startdatoForKontrakt)) {
+                latestAddress = addr;
+            }
+        }
+        if (latestAddress == null) {
+            for (PDL_DeltBosted addr : addresses) {
                 if (latestAddress == null || getCreatedDate(latestAddress.metadata) < getCreatedDate(addr.metadata)) {
                     latestAddress = addr;
                 }
