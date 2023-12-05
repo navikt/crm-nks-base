@@ -9,18 +9,18 @@ public with sharing class NKS_AddressController {
      */
     @AuraEnabled(cacheable=true)
     public static List<NKS_Address> getBostedAddress(Id recordId, String objectApiName) {
-        String personIdent = getPersonIdent(recordId, objectApiName);
-        if (personIdent == null) {
+        Person__c person = getPersonIdentAndFullName(recordId, objectApiName);
+        if (person.Name == null) {
             return new List<NKS_Address>();
         }
 
         List<NKS_Address> boAddress = new List<NKS_Address>();
         try {
-            PDL_API_Response addressData = queryAddressFromPDL(personIdent);
+            PDL_API_Response addressData = queryAddressFromPDL(person.Name);
             boAddress = setAddressData(addressData);
-            setAddressFullNameAndCity(boAddress, personIdent);
+            setAddressFullNameAndCity(boAddress, person);
         } catch (Exception e) {
-            handleException('bosted', e, personIdent);
+            handleException('bosted', e, person.Name);
         } finally {
             logger.publish();
         }
@@ -29,7 +29,7 @@ public with sharing class NKS_AddressController {
 
     @AuraEnabled(cacheable=true)
     public static List<NKS_Address> getTemporaryAddresses(Id recordId, String objectApiName) {
-        String personIdent = getPersonIdent(recordId, objectApiName);
+        Person__c person = getPersonIdentAndFullName(recordId, objectApiName);
         PDL_API_Response response;
         if (Test.isRunningTest()) {
             response = getMockTemporaryAddresses();
@@ -38,7 +38,7 @@ public with sharing class NKS_AddressController {
         List<NKS_Address> tempAddresses = new List<NKS_Address>();
         try {
             if (!Test.isRunningTest()) {
-                response = queryAddressFromPDL(personIdent);
+                response = queryAddressFromPDL(person.Name);
             }
             for (PDL_Oppholdsadresse oa : response.data.hentPerson.oppholdsadresse) {
                 if (oa.metadata?.historisk == true) {
@@ -55,9 +55,9 @@ public with sharing class NKS_AddressController {
                 }
                 tempAddresses.add(tempAddr);
             }
-            setAddressFullNameAndCity(tempAddresses, personIdent);
+            setAddressFullNameAndCity(tempAddresses, person);
         } catch (Exception e) {
-            handleException('temporary', e, personIdent);
+            handleException('temporary', e, person.Name);
         } finally {
             logger.publish();
         }
@@ -143,14 +143,14 @@ public with sharing class NKS_AddressController {
     }
 
     @TestVisible
-    private static String getPersonIdent(Id recordId, String objectApiName) {
+    private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
         Id personId;
         if (objectApiName == 'Case') {
             personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
         } else if (objectApiName == 'Account') {
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
         }
-        return [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+        return [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId];
     }
 
     @TestVisible
@@ -284,25 +284,27 @@ public with sharing class NKS_AddressController {
     }
 
     @TestVisible
-    private static void setAddressFullNameAndCity(List<NKS_Address> addresses, String personIdent) {
-        String fullName = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = :personIdent LIMIT 1]
-            ?.NKS_Full_Name__c.toUpperCase();
-        try {
+    private static void setAddressFullNameAndCity(List<NKS_Address> addresses, Person__c person) {
+        if (addresses == null || person == null) {
+            return;
+        }
+        Set<String> zipCodes = new Set<String>();
+        for (NKS_Address address : addresses) {
+            address.fullName = person.NKS_Full_Name__c?.toUpperCase();
+            if (address.zipCode != null && address.region == null) {
+                zipCodes.add(address.zipCode);
+            }
+        }
+        if (!zipCodes.isEmpty()) {
+            Map<String, Common_Code__c> zipCodeToCityMap = new Map<String, Common_Code__c>();
+            for (Common_Code__c cc : [SELECT CRM_Code__c, Name FROM Common_Code__c WHERE CRM_Code_Set__c = 'Postnummer' AND CRM_Code__c IN :zipCodes]) {
+                zipCodeToCityMap.put(cc.CRM_Code__c, cc);
+            }
             for (NKS_Address address : addresses) {
-                address.fullName = fullName;
-                String zipCode = address.zipCode;
-                if (zipCode != null && address.region == null) {
-                    address.city = [
-                        SELECT Name
-                        FROM Common_Code__c
-                        WHERE CRM_Code_Set__c = 'Postnummer' AND crm_code__c = :zipCode
-                        LIMIT 1
-                    ]
-                    ?.Name;
+                if (zipCodeToCityMap.containsKey(address.zipCode)) {
+                    address.city = zipCodeToCityMap.get(address.zipCode).Name;
                 }
             }
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
         }
     }
 

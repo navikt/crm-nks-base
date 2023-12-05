@@ -1,14 +1,14 @@
 @isTest
 public with sharing class NKS_AddressControllerTest {
     @isTest
-    static void testGetPersonIdent() {
+    static void testGetPersonIdentAndFullName() {
         Person__c p = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
         insert p;
         Account a = new Account(CRM_Person__c = p.Id, Name = '78912345687');
         insert a;
 
         Test.startTest();
-        String personIdent = NKS_AddressController.getPersonIdent(a.Id, 'Account');
+        String personIdent = NKS_AddressController.getPersonIdentAndFullName(a.Id, 'Account')?.Name;
         Test.stopTest();
         System.assertEquals('78912345687', personIdent);
     }
@@ -238,7 +238,8 @@ public with sharing class NKS_AddressControllerTest {
         // Create test data
         Person__c p = new Person__c(Name = '12345678910', INT_FirstName__c = 'NAVN', INT_LastName__c = 'NAVNESEN');
         insert p;
-
+        p = [SELECT NKS_Full_Name__c FROM Person__c WHERE Name = '12345678910' LIMIT 1];
+        
         List<NKS_AddressController.NKS_Address> addresses = new List<NKS_AddressController.NKS_Address>();
         NKS_AddressController.NKS_Address address1 = new NKS_AddressController.NKS_Address();
         address1.zipCode = '1234';
@@ -250,18 +251,18 @@ public with sharing class NKS_AddressControllerTest {
         // Create Common_Code__c records for testing
         Common_Code__c commonCode1 = new Common_Code__c();
         commonCode1.CRM_Code_Set__c = 'Postnummer';
-        commonCode1.crm_code__c = '1234';
+        commonCode1.CRM_Code__c = '1234';
         commonCode1.Name = 'Poststed1';
         Common_Code__c commonCode2 = new Common_Code__c();
         commonCode2.CRM_Code_Set__c = 'Postnummer';
-        commonCode2.crm_code__c = '5678';
+        commonCode2.CRM_Code__c = '5678';
         commonCode2.Name = 'Poststed2';
         List<Common_Code__c> commonCodes = new List<Common_Code__c>{ commonCode1, commonCode2 };
         insert commonCodes;
-
+       
         Test.startTest();
         // Call the method to be tested
-        NKS_AddressController.setAddressFullNameAndCity(addresses, '12345678910');
+        NKS_AddressController.setAddressFullNameAndCity(addresses, p);
         Test.stopTest();
 
         // Verify the results
