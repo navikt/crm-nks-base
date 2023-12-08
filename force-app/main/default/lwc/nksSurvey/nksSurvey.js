@@ -42,24 +42,6 @@ export default class NksSurvey extends LightningElement {
 
     handleClick(event) {
         this.rating = event.currentTarget.getAttribute('value');
-        const currentId = 'emoji' + this.rating;
-        this.handleSelected(currentId);
-    }
-
-    handleSelected(currentId) {
-        const emojiIds = ['emoji1', 'emoji2', 'emoji3', 'emoji4', 'emoji5'];
-
-        for (const emojiId of emojiIds) {
-            const paths = this.template.querySelectorAll(`div[data-id="${emojiId}"] path`);
-
-            if (currentId === emojiId) {
-                paths[0].setAttribute('class', 'select1');
-                paths[1].setAttribute('class', 'select2');
-            } else {
-                paths[0].setAttribute('class', 'path1');
-                paths[1].setAttribute('class', 'path2');
-            }
-        }
     }
 
     handleChange() {

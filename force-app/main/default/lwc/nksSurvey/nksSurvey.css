@@ -37,14 +37,6 @@ svg:hover .path2 {
     fill: rgb(249, 217, 82);
 }
 
-.select1 {
-    fill: rgb(238, 177, 30);
-}
-
-.select2 {
-    fill: rgb(249, 205, 24);
-}
-
 svg {
     width: 3.125rem;
     height: 3.125rem;
@@ -53,4 +45,12 @@ svg {
 .radioButton {
     display: flex;
     justify-content: space-evenly;
+}
+
+[type='radio']:checked + label .path1 {
+    fill: rgb(238, 177, 30);
+}
+
+[type='radio']:checked + label .path2 {
+    fill: rgb(249, 205, 24);
 }
