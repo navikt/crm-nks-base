@@ -1,5 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
-import getTemporaryAddresses from '@salesforce/apex/NKS_AddressController.getTemporaryAddresses';
+import getOppholdsAddress from '@salesforce/apex/NKS_AddressController.getOppholdsAddress';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -10,7 +10,7 @@ export default class NksBostedAddress extends LightningElement {
     isExpanded = false;
     ariaHidden = true;
 
-    @wire(getTemporaryAddresses, {
+    @wire(getOppholdsAddress, {
         recordId: '$recordId',
         objectApiName: '$objectApiName'
     })
