@@ -22,9 +22,9 @@ public with sharing class NKS_AddressController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<NKS_Address> getTemporaryAddresses(Id recordId, String objectApiName) {
+    public static List<NKS_Address> getOppholdsAddress(Id recordId, String objectApiName) {
         Person__c person = getPersonIdentAndFullName(recordId, objectApiName);
-        List<NKS_Address> tempAddresses = new List<NKS_Address>();
+        List<NKS_Address> opAddresses = new List<NKS_Address>();
         try {
             PDL_API_Response response = queryAddressFromPDL(person.Name);
             for (PDL_Oppholdsadresse oa : response.data.hentPerson.oppholdsadresse) {
@@ -32,79 +32,52 @@ public with sharing class NKS_AddressController {
                     continue;
                 }
 
-                NKS_Address tempAddr = new NKS_Address();
+                NKS_Address opAddr = new NKS_Address();
                 if (oa?.vegadresse != null) {
-                    setTempAddressFieldsFromVegAdresse(oa.vegadresse, tempAddr);
+                    setOppholdsAddressFieldsFromVegAdresse(oa.vegadresse, opAddr);
                 } else if (oa?.matrikkeladresse != null) {
-                    setTempAddressFieldsFromMatrikkelAdresse(oa.matrikkeladresse, tempAddr);
+                    setOppholdsAddressFieldsFromMatrikkelAdresse(oa.matrikkeladresse, opAddr);
                 } else if (oa?.utenlandskAdresse != null) {
-                    setTempAddressFieldsFromUtenlandskAdresse(oa.utenlandskAdresse, tempAddr);
+                    setOppholdsAddressFieldsFromUtenlandskAdresse(oa.utenlandskAdresse, opAddr);
                 }
-                tempAddresses.add(tempAddr);
+                opAddresses.add(opAddr);
             }
-            setAddressFullNameAndCity(tempAddresses, person);
+            setAddressFullNameAndCity(opAddresses, person);
         } catch (Exception e) {
-            handleException('temporary', e, person.Name);
+            handleException('opphold', e, person.Name);
         } finally {
             logger.publish();
         }
-        return tempAddresses;
+        return opAddresses;
     }
 
-    private static void setTempAddressFieldsFromVegAdresse(PDL_Vegadresse vegAddr, NKS_Address tempAddr) {
-        tempAddr.address = safeUpperCase(vegAddr.adressenavn);
-        tempAddr.houseNumber = safeUpperCase(vegAddr.husnummer);
-        tempAddr.houseLetter = safeUpperCase(vegAddr.husbokstav);
-        tempAddr.zipCode = vegAddr.postnummer;
-        tempAddr.municipalityNumber = vegAddr.kommunenummer;
-        tempAddr.coordinates = JSON.serialize(vegAddr.koordinater);
+    // Includes coordinates
+    private static void setOppholdsAddressFieldsFromVegAdresse(PDL_Vegadresse vegAddr, NKS_Address opAddr) {
+        opAddr.address = safeUpperCase(vegAddr.adressenavn);
+        opAddr.houseNumber = safeUpperCase(vegAddr.husnummer);
+        opAddr.houseLetter = safeUpperCase(vegAddr.husbokstav);
+        opAddr.zipCode = vegAddr.postnummer;
+        opAddr.municipalityNumber = vegAddr.kommunenummer;
+        opAddr.coordinates = JSON.serialize(vegAddr.koordinater);
     }
 
-    private static void setTempAddressFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr, NKS_Address tempAddr) {
-        tempAddr.zipCode = matAddr.postnummer;
-        tempAddr.municipalityNumber = matAddr.kommunenummer;
-        tempAddr.coordinates = JSON.serialize(matAddr.koordinater);
+    // Includes coordinates
+    private static void setOppholdsAddressFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr, NKS_Address opAddr) {
+        opAddr.zipCode = matAddr.postnummer;
+        opAddr.municipalityNumber = matAddr.kommunenummer;
+        opAddr.coordinates = JSON.serialize(matAddr.koordinater);
     }
 
-    private static void setTempAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr, NKS_Address tempAddr) {
-        tempAddr.address = createAddress(new List<String>{
+    private static void setOppholdsAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr, NKS_Address opAddr) {
+        opAddr.address = createAddress(new List<String>{
             utenlandsAddr.adressenavnNummer,
             utenlandsAddr.bygningEtasjeLeilighet,
             utenlandsAddr.postboksNummerNavn
         });
-        tempAddr.zipCode = utenlandsAddr.postkode;
-        tempAddr.city = utenlandsAddr.bysted;
-        tempAddr.region = utenlandsAddr.regionDistriktOmraade;
-        tempAddr.countryCode = utenlandsAddr.landkode?.left(3);
-    }
-
-    private static void handleException(String addressType, Exception e, String personIdent) {
-        logger.error(
-            'Problem getting ' + addressType + ' address for personIdent: ' + personIdent +
-            '\n' + e.getMessage() + '\n' + e.getStackTraceString(),
-            null,
-            CRM_ApplicationDomain.Domain.NKS,
-            null
-        );
-    }
-
-    @TestVisible
-    private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
-        Id personId;
-        if (objectApiName == 'Case') {
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
-        } else if (objectApiName == 'Account') {
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
-        }
-        return [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId];
-    }
-
-    @TestVisible
-    private static PDL_API_Response queryAddressFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
-        query.hentPerson.bostedsadresse.selectAll(true);
-        query.hentPerson.oppholdsadresse.selectAll(true);
-        return query.execute();
+        opAddr.zipCode = utenlandsAddr.postkode;
+        opAddr.city = utenlandsAddr.bysted;
+        opAddr.region = utenlandsAddr.regionDistriktOmraade;
+        opAddr.countryCode = utenlandsAddr.landkode?.left(3);
     }
 
     @TestVisible
@@ -128,24 +101,6 @@ public with sharing class NKS_AddressController {
         boAddr.address = 'Ikke registrert';
         addrData.add(boAddr);
         return addrData;
-    }
-
-    @TestVisible
-    private static PDL_Bostedsadresse setLastUpdatedBostedsAdresse(List<PDL_Bostedsadresse> addresses) {
-        PDL_Bostedsadresse latestAddress;
-        for (PDL_Bostedsadresse addr : addresses) {
-            if (addr.gyldigFraOgMed != null && (latestAddress == null || addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)) {
-                latestAddress = addr;
-            }
-        }
-        if (latestAddress == null) {
-            for (PDL_Bostedsadresse addr : addresses) {
-                if (latestAddress == null || getCreatedDate(latestAddress.metadata) < getCreatedDate(addr.metadata)) {
-                    latestAddress = addr;
-                }
-            }
-        }
-        return latestAddress;
     }
 
     @TestVisible
@@ -226,6 +181,24 @@ public with sharing class NKS_AddressController {
     }
 
     @TestVisible
+    private static PDL_Bostedsadresse setLastUpdatedBostedsAdresse(List<PDL_Bostedsadresse> addresses) {
+        PDL_Bostedsadresse latestAddress;
+        for (PDL_Bostedsadresse addr : addresses) {
+            if (addr.gyldigFraOgMed != null && (latestAddress == null || addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)) {
+                latestAddress = addr;
+            }
+        }
+        if (latestAddress == null) {
+            for (PDL_Bostedsadresse addr : addresses) {
+                if (latestAddress == null || getCreatedDate(latestAddress.metadata) < getCreatedDate(addr.metadata)) {
+                    latestAddress = addr;
+                }
+            }
+        }
+        return latestAddress;
+    }
+
+    @TestVisible
     private static PDL_Oppholdsadresse setLastUpdatedOppholdsAdresse(List<PDL_Oppholdsadresse> addresses) {
         PDL_Oppholdsadresse latestAddress;
         for (PDL_Oppholdsadresse addr : addresses) {
@@ -287,6 +260,25 @@ public with sharing class NKS_AddressController {
     }
 
     @TestVisible
+    private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
+        Id personId;
+        if (objectApiName == 'Case') {
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
+        } else if (objectApiName == 'Account') {
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+        }
+        return [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId];
+    }
+
+    @TestVisible
+    private static PDL_API_Response queryAddressFromPDL(String ident) {
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        query.hentPerson.bostedsadresse.selectAll(true);
+        query.hentPerson.oppholdsadresse.selectAll(true);
+        return query.execute();
+    }
+
+    @TestVisible
     private static Datetime getCreatedDate(PDL_Metadata metadata) {
         for (PDL_Endring endring : metadata.endringer) {
             if (endring.type == PDL_Endringstype.OPPRETT)
@@ -324,6 +316,16 @@ public with sharing class NKS_AddressController {
     /*
         UTILITY FUNCTIONS
     */
+
+    private static void handleException(String addressType, Exception e, String personIdent) {
+        logger.error(
+            'Problem getting ' + addressType + ' address for personIdent: ' + personIdent +
+            '\n' + e.getMessage() + '\n' + e.getStackTraceString(),
+            null,
+            CRM_ApplicationDomain.Domain.NKS,
+            null
+        );
+    }
 
     private static String safeUpperCase(String value) {
         return value != null ? value.toUpperCase() : null;
