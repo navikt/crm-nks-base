@@ -304,7 +304,6 @@ public with sharing class NKS_AddressController {
         List<String> validFields = new List<String>();
 
         for (String addressField : addressFields) {
-            String validatedField = validateString(addressField);
             if (!String.isBlank(addressField)) {
                 validFields.add(addressField.left(255).toUpperCase());
             }
