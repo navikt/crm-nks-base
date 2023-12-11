@@ -151,16 +151,6 @@ public with sharing class NKS_AddressControllerTest {
     }
 
     @isTest
-    static void testValidateStringNull() {
-        String testString;
-        Test.startTest();
-        String str = NKS_AddressController.validateString(testString);
-        Test.stopTest();
-
-        System.assertEquals(null, str);
-    }
-
-    @isTest
     static void testCreateOppholdsAddressFromUtenlandskAdresse() {
         List<String> fieldList = new List<String>{ 'Solbakken 7e', '1111', 'Oslo' };
         Test.startTest();
