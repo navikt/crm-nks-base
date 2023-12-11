@@ -161,10 +161,10 @@ public with sharing class NKS_AddressControllerTest {
     }
 
     @isTest
-    static void testCreateAddress() {
+    static void testCreateOppholdsAddressFromUtenlandskAdresse() {
         List<String> fieldList = new List<String>{ 'Solbakken 7e', '1111', 'Oslo' };
         Test.startTest();
-        String testAddress = NKS_AddressController.createAddress(fieldList);
+        String testAddress = NKS_AddressController.createOppholdsAddressFromUtenlandskAdresse(fieldList);
         Test.stopTest();
 
         System.assertNotEquals(null, testAddress);
