@@ -46,7 +46,7 @@ export default class NksBostedAddress extends LightningElement {
         
             return [...fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
-        return addressesToReturn.join('\n').trim();
+        return addressesToReturn.join('\n\n').trim();
     }
 
     get hasRecords() {
