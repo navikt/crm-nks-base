@@ -69,7 +69,7 @@ public with sharing class NKS_AddressController {
     }
 
     private static void setOppholdsAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr, NKS_Address opAddr) {
-        opAddr.address = createAddress(new List<String>{
+        opAddr.address = createOppholdsAddressFromUtenlandskAdresse(new List<String>{
             utenlandsAddr.adressenavnNummer,
             utenlandsAddr.bygningEtasjeLeilighet,
             utenlandsAddr.postboksNummerNavn
@@ -300,13 +300,13 @@ public with sharing class NKS_AddressController {
     }
 
     @TestVisible
-    private static String createAddress(List<String> addressFields) {
+    private static String createOppholdsAddressFromUtenlandskAdresse(List<String> addressFields) {
         List<String> validFields = new List<String>();
 
         for (String addressField : addressFields) {
             String validatedField = validateString(addressField);
-            if (validatedField != null) {
-                validFields.add(validatedField.toUpperCase());
+            if (!String.isBlank(addressField)) {
+                validFields.add(addressField.left(255).toUpperCase());
             }
         }
         String addressString = String.join(validFields, ' ').trim();
@@ -329,11 +329,6 @@ public with sharing class NKS_AddressController {
 
     private static String safeUpperCase(String value) {
         return value != null ? value.toUpperCase() : null;
-    }
-
-    @TestVisible
-    private static String validateString(String stringToCheck) {
-        return String.isBlank(stringToCheck) ? null : stringToCheck.left(255);
     }
 
     @TestVisible

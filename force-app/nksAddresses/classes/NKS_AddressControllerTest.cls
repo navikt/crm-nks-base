@@ -151,16 +151,6 @@ public with sharing class NKS_AddressControllerTest {
     }
 
     @isTest
-    static void testValidateString() {
-        String testString = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-        Test.startTest();
-        String str = NKS_AddressController.validateString(testString);
-        Test.stopTest();
-        
-        System.assertNotEquals(null, str);
-    }
-
-    @isTest
     static void testValidateStringNull() {
         String testString;
         Test.startTest();
