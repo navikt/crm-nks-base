@@ -17,7 +17,6 @@ export default class NksBostedAddress extends LightningElement {
     wiredAddresses({ error, data }) {
         if (data) {
             this._temporaryAddresses = data;
-            console.log(this._temporaryAddresses);
         }
         if (error) {
             this._temporaryAddresses.push('Feil under henting av bostedsadresse.');

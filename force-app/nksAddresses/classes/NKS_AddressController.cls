@@ -152,6 +152,7 @@ public with sharing class NKS_AddressController {
         if (meta != null) {
             addr.changeRegisteredDate = formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
         }
+        addr.type = 'DELT BOSTED';
         addrList.add(addr);
         return addrList;
     }
@@ -373,5 +374,7 @@ public with sharing class NKS_AddressController {
         public String utilityUnitNumber; // not in use
         @AuraEnabled
         public String zipCode;
+        @AuraEnabled
+        public String type; // Bosted, delt bosted, opphold
     }
 }

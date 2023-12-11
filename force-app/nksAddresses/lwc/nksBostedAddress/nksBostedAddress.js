@@ -17,7 +17,6 @@ export default class NksBostedAddress extends LightningElement {
     wiredAddresses({ error, data }) {
         if (data) {
             this._residentialAddresses = data;
-            console.log(this._residentialAddresses);
         }
         if (error) {
             this._residentialAddresses.push('Feil under henting av bostedsadresse.');
@@ -32,6 +31,7 @@ export default class NksBostedAddress extends LightningElement {
 
         this.showCopyButton = true;
         const addressesToReturn = this._residentialAddresses.map((element) => {
+            const type = element.type ? [element.type + ':'] : [];
             const fullName = element.fullName ? [element.fullName] : [];
         
             const addressLine = [
@@ -49,10 +49,10 @@ export default class NksBostedAddress extends LightningElement {
                 element.region ? element.region : '',
                 element.countryCode ? ' ' + element.countryCode : ''
             ].join('').trim();
-        
-            return [...fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+
+            return [...type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
-        return addressesToReturn.join('\n').trim();
+        return addressesToReturn.join('\n\n').trim();
     }
 
     /* Function to handle open/close section */
