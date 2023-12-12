@@ -442,23 +442,4 @@ public with sharing class NKS_HomePageController {
         plainTextList.add(richText);
         return plainTextList;
     }
-
-    @AuraEnabled(cacheable=true)
-    public static Integer countNewsViews(Id recordId) {
-        List<Id> originalList = new List<Id>();
-        Set<Id> resultList = new Set<Id>();
-
-        try {
-            AggregateResult[] countResult = [
-                SELECT COUNT_DISTINCT(User__c) nmbOfUniqueViews
-                FROM NKS_Audit_Log__c
-                WHERE Announcement__c = :recordId
-            ];
-
-            return Integer.valueOf(countResult[0].get('nmbOfUniqueViews'));
-        } catch (Exception ex) {
-            System.debug(ex.getMessage());
-        }
-        return null;
-    }
 }

@@ -1,0 +1,9 @@
+<template>
+    <template if:true={hasPermission}>
+        <lightning-layout class="slds-theme_default slds-var-p-around_small" size="12">
+            <lightning-icon class="" icon-name="utility:preview" size="x-small"></lightning-icon>&nbsp;&nbsp;
+            <span>{numOfViews}</span>&nbsp; views
+        </lightning-layout>
+    </template>
+    <iframe src={siteURL} style="display: none"></iframe>
+</template>
