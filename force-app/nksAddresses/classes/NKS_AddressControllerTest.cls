@@ -69,33 +69,27 @@ public with sharing class NKS_AddressControllerTest {
     static void setBostedVegMatrikkAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_AddressController.NKS_Address> adressList = NKS_AddressController.setBostedVegMatrikkAddress(
-            query.execute().data.hentPerson.bostedsadresse[0],
-            new NKS_AddressController.NKS_Address()
-        );
-        System.assertEquals('6636', adressList[0].zipCode);
+        NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
+        addr.setBostedVegMatrikkAddress(query.execute().data.hentPerson.bostedsadresse[0]);
+        System.assertEquals('6636', addr.zipCode);
     }
 
     @isTest
     static void setOppholdsAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_AddressController.NKS_Address> adressList = NKS_AddressController.setOppholdsAddress(
-            query.execute().data.hentPerson.oppholdsadresse[0],
-            new NKS_AddressController.NKS_Address()
-        );
-        System.assertEquals('9511', adressList[0].zipCode);
+        NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
+        addr.setOppholdsAddress(query.execute().data.hentPerson.oppholdsadresse[0]);
+        System.assertEquals('6636', addr.zipCode);
     }
 
     @isTest
     static void setDeltBostedsAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
         PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
-        List<NKS_AddressController.NKS_Address> adressList = NKS_AddressController.setDeltBostedsAddress(
-            query.execute().data.hentPerson.deltBosted[0],
-            new NKS_AddressController.NKS_Address()
-        );
-        System.assertEquals('4636', adressList[0].zipCode);
+        NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
+        addr.setDeltBostedsAddress(query.execute().data.hentPerson.deltBosted[0]);
+        System.assertEquals('4636', addr.zipCode);
     }
 
 
