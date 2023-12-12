@@ -34,11 +34,11 @@ public with sharing class NKS_AddressController {
 
                 NKS_Address opAddr = new NKS_Address();
                 if (oa?.vegadresse != null) {
-                    setOppholdsAddressFieldsFromVegAdresse(oa.vegadresse, opAddr);
+                    opAddr.setOppholdsAddressFieldsFromVegAdresse(oa.vegadresse);
                 } else if (oa?.matrikkeladresse != null) {
-                    setOppholdsAddressFieldsFromMatrikkelAdresse(oa.matrikkeladresse, opAddr);
+                    opAddr.setOppholdsAddressFieldsFromMatrikkelAdresse(oa.matrikkeladresse);
                 } else if (oa?.utenlandskAdresse != null) {
-                    setOppholdsAddressFieldsFromUtenlandskAdresse(oa.utenlandskAdresse, opAddr);
+                    opAddr.setOppholdsAddressFieldsFromUtenlandskAdresse(oa.utenlandskAdresse);
                 }
                 opAddresses.add(opAddr);
             }
@@ -51,48 +51,22 @@ public with sharing class NKS_AddressController {
         return opAddresses;
     }
 
-    // Includes coordinates
-    private static void setOppholdsAddressFieldsFromVegAdresse(PDL_Vegadresse vegAddr, NKS_Address opAddr) {
-        opAddr.address = safeUpperCase(vegAddr.adressenavn);
-        opAddr.houseNumber = safeUpperCase(vegAddr.husnummer);
-        opAddr.houseLetter = safeUpperCase(vegAddr.husbokstav);
-        opAddr.zipCode = vegAddr.postnummer;
-        opAddr.municipalityNumber = vegAddr.kommunenummer;
-        opAddr.coordinates = JSON.serialize(vegAddr.koordinater);
-    }
-
-    // Includes coordinates
-    private static void setOppholdsAddressFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr, NKS_Address opAddr) {
-        opAddr.zipCode = matAddr.postnummer;
-        opAddr.municipalityNumber = matAddr.kommunenummer;
-        opAddr.coordinates = JSON.serialize(matAddr.koordinater);
-    }
-
-    private static void setOppholdsAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr, NKS_Address opAddr) {
-        opAddr.address = createOppholdsAddressFromUtenlandskAdresse(new List<String>{
-            utenlandsAddr.adressenavnNummer,
-            utenlandsAddr.bygningEtasjeLeilighet,
-            utenlandsAddr.postboksNummerNavn
-        });
-        opAddr.zipCode = utenlandsAddr.postkode;
-        opAddr.city = utenlandsAddr.bysted;
-        opAddr.region = utenlandsAddr.regionDistriktOmraade;
-        opAddr.countryCode = utenlandsAddr.landkode?.left(3);
-    }
-
     @TestVisible
     private static List<NKS_Address> setAddressData(PDL_API_Response addressData) {
         List<NKS_Address> addrData = new List<NKS_Address>();
+        NKS_Address addr = new NKS_Address();
         if (addressData.data.hentPerson.bostedsadresse.size() > 0) {
-            addrData.addAll(setBostedVegMatrikkAddress(setLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse), new NKS_Address()));
-        }
-        // Use oppholdsadresse if bostedsadresse is empty
-        if (addressData.data.hentPerson.bostedsadresse.size() == 0 && addressData.data.hentPerson.oppholdsadresse.size() > 0) {
-            addrData.addAll(setOppholdsAddress(setLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse), new NKS_Address()));
+            addr.setBostedVegMatrikkAddress(setLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse));
+            addrData.add(addr);
+        } else if (addressData.data.hentPerson.oppholdsadresse.size() > 0) {
+            addr.setOppholdsAddress(setLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse));
+            addrData.add(addr);
         }
         // Always append delt bosted address if it exists
         if (addressData.data.hentPerson.deltBosted.size() > 0) {
-            addrData.addAll(setDeltBostedsAddress(setLastUpdatedDeltBostedsAddress(addressData.data.hentPerson?.deltBosted), new NKS_Address()));
+            addr = new NKS_Address(); // Wipe in case bostedsAdresse > 0
+            addr.setDeltBostedsAddress(setLastUpdatedDeltBostedsAddress(addressData.data.hentPerson?.deltBosted));
+            addrData.add(addr);
         }
         if (!addrData.isEmpty()) {
             return addrData;
@@ -101,84 +75,6 @@ public with sharing class NKS_AddressController {
         boAddr.address = 'Ikke registrert';
         addrData.add(boAddr);
         return addrData;
-    }
-
-    @TestVisible
-    private static List<NKS_Address> setBostedVegMatrikkAddress(PDL_Bostedsadresse address, NKS_Address boAddr) {
-        List<NKS_Address> addrList = new List<NKS_Address>();
-        if (address?.vegadresse != null) {
-            setFieldsFromVegAdresse(address.vegadresse, boAddr);
-        } else if (address?.matrikkeladresse != null) {
-            setFieldsFromMatrikkelAdresse(address.matrikkeladresse, boAddr);
-        }
-
-        PDL_Metadata meta = address?.metadata;
-        if (meta != null) {
-            boAddr.changeRegisteredDate = formatDateString(String.valueOf(getLastUpdateDate(meta).date()));
-        }
-
-        addrList.add(boAddr);
-        return addrList;
-    }
-
-    @TestVisible
-    private static List<NKS_Address> setOppholdsAddress(PDL_Oppholdsadresse address, NKS_Address opAddr) {
-        List<NKS_Address> addrListOp = new List<NKS_Address>();
-        if (address?.vegadresse != null) {
-            setFieldsFromVegAdresse(address.vegadresse, opAddr);
-        } else if (address?.matrikkeladresse != null) {
-            setFieldsFromMatrikkelAdresse(address.matrikkeladresse, opAddr);
-        } else if (address?.utenlandskAdresse != null) {
-            setFieldsFromUtenlandskAdresse(address.utenlandskAdresse, opAddr);
-        }
-        PDL_Metadata meta = address?.metadata;
-        if (meta != null) {
-            opAddr.changeRegisteredDate = formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
-        }
-
-        addrListOp.add(opAddr);
-        return addrListOp;
-    }
-
-    @TestVisible
-    private static List<NKS_Address> setDeltBostedsAddress(PDL_DeltBosted address, NKS_Address addr) {
-        List<NKS_Address> addrList = new List<NKS_Address>();
-        if (address?.vegadresse != null) {
-            setFieldsFromVegAdresse(address.vegadresse, addr);
-        } else if (address?.matrikkeladresse != null) {
-            setFieldsFromMatrikkelAdresse(address.matrikkeladresse, addr);
-        }
-        PDL_Metadata meta = address?.metadata;
-        if (meta != null) {
-            addr.changeRegisteredDate = formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
-        }
-        addr.type = 'DELT BOSTED';
-        addrList.add(addr);
-        return addrList;
-    }
-
-    private static void setFieldsFromVegAdresse(PDL_Vegadresse vegAddr, NKS_Address addr) {
-        addr.address = safeUpperCase(vegAddr.adressenavn);
-        addr.utilityUnitNumber = safeUpperCase(vegAddr.bruksenhetsnummer);
-        addr.zipCode = vegAddr.postnummer;
-        addr.additionalName = safeUpperCase(vegAddr.tilleggsnavn);
-        addr.houseLetter = safeUpperCase(vegAddr.husbokstav);
-        addr.houseNumber = safeUpperCase(vegAddr.husnummer);
-    }
-
-    private static void setFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr, NKS_Address addr) {
-        addr.utilityUnitNumber = safeUpperCase(matAddr.bruksenhetsnummer);
-        addr.zipCode = matAddr.postnummer;
-        addr.additionalName = safeUpperCase(matAddr.tilleggsnavn);
-    }
-
-    private static void setFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr, NKS_Address addr) {
-        addr.address = safeUpperCase(utenlandsAddr.adressenavnNummer);
-        addr.utilityUnitNumber = safeUpperCase(utenlandsAddr.bygningEtasjeLeilighet);
-        addr.zipCode = utenlandsAddr.postkode;
-        addr.city = safeUpperCase(utenlandsAddr.bySted);
-        addr.region = safeUpperCase(utenlandsAddr.regionDistriktOmraade);
-        addr.countryCode = safeUpperCase(utenlandsAddr.landkode);
     }
 
     @TestVisible
@@ -240,16 +136,18 @@ public with sharing class NKS_AddressController {
         if (addresses == null || person == null) {
             return;
         }
-        Set<String> zipCodes = new Set<String>();
+
+        String uppercasedFullName = person.NKS_Full_Name__c?.toUpperCase();
+        Set<String> zipCodesWithoutRegion = new Set<String>();
         for (NKS_Address address : addresses) {
-            address.fullName = person.NKS_Full_Name__c?.toUpperCase();
+            address.fullName = uppercasedFullName;
             if (address.zipCode != null && address.region == null) {
-                zipCodes.add(address.zipCode);
+                zipCodesWithoutRegion.add(address.zipCode);
             }
         }
-        if (!zipCodes.isEmpty()) {
+        if (!zipCodesWithoutRegion.isEmpty()) {
             Map<String, Common_Code__c> zipCodeToCityMap = new Map<String, Common_Code__c>();
-            for (Common_Code__c cc : [SELECT CRM_Code__c, Name FROM Common_Code__c WHERE CRM_Code_Set__c = 'Postnummer' AND CRM_Code__c IN :zipCodes]) {
+            for (Common_Code__c cc : [SELECT CRM_Code__c, Name FROM Common_Code__c WHERE CRM_Code_Set__c = 'Postnummer' AND CRM_Code__c IN :zipCodesWithoutRegion]) {
                 zipCodeToCityMap.put(cc.CRM_Code__c, cc);
             }
             for (NKS_Address address : addresses) {
@@ -302,15 +200,14 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static String createOppholdsAddressFromUtenlandskAdresse(List<String> addressFields) {
-        List<String> validFields = new List<String>();
-
+        String address = '';
         for (String addressField : addressFields) {
             if (!String.isBlank(addressField)) {
-                validFields.add(addressField.left(255).toUpperCase());
+                address += addressField.toUpperCase() + ' ';
             }
         }
-        String addressString = String.join(validFields, ' ').trim();
-        return String.isBlank(addressString) ? null : addressString;
+        address = address.trim();
+        return String.isBlank(address) ? null : address;
     }
 
     /*
@@ -376,5 +273,107 @@ public with sharing class NKS_AddressController {
         public String zipCode;
         @AuraEnabled
         public String type; // Bosted, delt bosted, opphold
+    
+        // Includes coordinates
+        @TestVisible
+        private void setOppholdsAddressFieldsFromVegAdresse(PDL_Vegadresse vegAddr) {
+            this.address = safeUpperCase(vegAddr.adressenavn);
+            this.houseNumber = safeUpperCase(vegAddr.husnummer);
+            this.houseLetter = safeUpperCase(vegAddr.husbokstav);
+            this.zipCode = vegAddr.postnummer;
+            this.municipalityNumber = vegAddr.kommunenummer;
+            this.coordinates = JSON.serialize(vegAddr.koordinater);
+        }
+
+        // Includes coordinates
+        @TestVisible
+        private void setOppholdsAddressFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr) {
+            this.zipCode = matAddr.postnummer;
+            this.municipalityNumber = matAddr.kommunenummer;
+            this.coordinates = JSON.serialize(matAddr.koordinater);
+        }
+
+        @TestVisible
+        private void setOppholdsAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr) {
+            this.address = createOppholdsAddressFromUtenlandskAdresse(new List<String>{
+                utenlandsAddr.adressenavnNummer,
+                utenlandsAddr.bygningEtasjeLeilighet,
+                utenlandsAddr.postboksNummerNavn
+            });
+            this.zipCode = utenlandsAddr.postkode;
+            this.city = utenlandsAddr.bysted;
+            this.region = utenlandsAddr.regionDistriktOmraade;
+            this.countryCode = utenlandsAddr.landkode;
+        }
+        
+        @TestVisible
+        private void setFieldsFromVegAdresse(PDL_Vegadresse vegAddr) {
+            this.address = safeUpperCase(vegAddr.adressenavn);
+            this.utilityUnitNumber = safeUpperCase(vegAddr.bruksenhetsnummer);
+            this.zipCode = vegAddr.postnummer;
+            this.additionalName = safeUpperCase(vegAddr.tilleggsnavn);
+            this.houseLetter = safeUpperCase(vegAddr.husbokstav);
+            this.houseNumber = safeUpperCase(vegAddr.husnummer);
+        }
+
+        @TestVisible
+        private void setFieldsFromMatrikkelAdresse(PDL_Matrikkeladresse matAddr) {
+            this.utilityUnitNumber = safeUpperCase(matAddr.bruksenhetsnummer);
+            this.zipCode = matAddr.postnummer;
+            this.additionalName = safeUpperCase(matAddr.tilleggsnavn);
+        }
+
+        @TestVisible
+        private void setFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr) {
+            this.address = safeUpperCase(utenlandsAddr.adressenavnNummer);
+            this.utilityUnitNumber = safeUpperCase(utenlandsAddr.bygningEtasjeLeilighet);
+            this.zipCode = utenlandsAddr.postkode;
+            this.city = safeUpperCase(utenlandsAddr.bySted);
+            this.region = safeUpperCase(utenlandsAddr.regionDistriktOmraade);
+            this.countryCode = safeUpperCase(utenlandsAddr.landkode);
+        }
+
+        @TestVisible
+        private void setBostedVegMatrikkAddress(PDL_Bostedsadresse address) {
+            if (address?.vegadresse != null) {
+                this.setFieldsFromVegAdresse(address.vegadresse);
+            } else if (address?.matrikkeladresse != null) {
+                this.setFieldsFromMatrikkelAdresse(address.matrikkeladresse);
+            }
+
+            PDL_Metadata meta = address?.metadata;
+            if (meta != null) {
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(NKS_AddressController.getLastUpdateDate(meta).date()));
+            }
+        }
+
+        @TestVisible
+        private void setOppholdsAddress(PDL_Oppholdsadresse address) {
+            if (address?.vegadresse != null) {
+                this.setFieldsFromVegAdresse(address.vegadresse);
+            } else if (address?.matrikkeladresse != null) {
+                this.setFieldsFromMatrikkelAdresse(address.matrikkeladresse);
+            } else if (address?.utenlandskAdresse != null) {
+                this.setFieldsFromUtenlandskAdresse(address.utenlandskAdresse);
+            }
+            PDL_Metadata meta = address?.metadata;
+            if (meta != null) {
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
+            }
+        }
+
+        @TestVisible
+        private void setDeltBostedsAddress(PDL_DeltBosted address) {
+            if (address?.vegadresse != null) {
+                this.setFieldsFromVegAdresse(address.vegadresse);
+            } else if (address?.matrikkeladresse != null) {
+                this.setFieldsFromMatrikkelAdresse(address.matrikkeladresse);
+            }
+            PDL_Metadata meta = address?.metadata;
+            if (meta != null) {
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
+            }
+            this.type = 'DELT BOSTED';
+        }
     }
 }
