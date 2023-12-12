@@ -31,26 +31,23 @@ export default class NksBostedAddress extends LightningElement {
 
         this.showCopyButton = true;
         const addressesToReturn = this._residentialAddresses.map((element) => {
-            const type = element.type ? [element.type + ':'] : [];
-            const fullName = element.fullName ? [element.fullName] : [];
-        
+            const type = element.type ? element.type + ':' : '';
+            const fullName = element.fullName ? element.fullName : '';
             const addressLine = [
                 element.address ? element.address : '',
                 element.houseNumber ? ' ' + element.houseNumber : '',
                 element.houseLetter ? ' ' + element.houseLetter : ''
             ].join('').trim();
-        
             const postInfo = [
                 element.zipCode ? element.zipCode : '',
                 element.city ? ' ' + element.city : ''
             ].join('').trim();
-        
             const region = [
                 element.region ? element.region : '',
                 element.countryCode ? ' ' + element.countryCode : ''
             ].join('').trim();
 
-            return [...type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+            return [type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
         return addressesToReturn.join('\n\n').trim();
     }

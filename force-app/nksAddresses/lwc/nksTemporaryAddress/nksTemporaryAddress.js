@@ -19,32 +19,29 @@ export default class NksBostedAddress extends LightningElement {
             this._temporaryAddresses = data;
         }
         if (error) {
-            this._temporaryAddresses.push('Feil under henting av bostedsadresse.');
+            this._temporaryAddresses.push('Feil under henting av oppholdsadresse.');
             console.error('Problem getting temporaryAddress: ' + error);
         }
     }
 
     get temporaryAddresses() {
         const addressesToReturn = this._temporaryAddresses.map((element) => {
-            const fullName = element.fullName ? [element.fullName] : [];
-        
+            const fullName = element.fullName ? element.fullName : '';
             const addressLine = [
                 element.address ? element.address : '',
                 element.houseNumber ? ' ' + element.houseNumber : '',
                 element.houseLetter ? ' ' + element.houseLetter : ''
             ].join('').trim();
-        
             const postInfo = [
                 element.zipCode ? element.zipCode : '',
                 element.city ? ' ' + element.city : ''
             ].join('').trim();
-        
             const region = [
                 element.region ? element.region : '',
                 element.countryCode ? ' ' + element.countryCode : ''
             ].join('').trim();
         
-            return [...fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+            return [fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
         return addressesToReturn.join('\n\n').trim();
     }
