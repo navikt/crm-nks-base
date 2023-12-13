@@ -110,21 +110,6 @@
         <field>Knowledge__kav.WhoDoesWhat__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_Audit_Log__c.Knowledge__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_Audit_Log__c.Operation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>NKS_Audit_Log__c.User__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Knowledge Viewer</label>
     <objectPermissions>
@@ -145,19 +130,6 @@
         <object>Knowledge__kav</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>NKS_Audit_Log__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <pageAccesses>
-        <apexPage>Audit_Log_Knowledge</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Knowledge__kav.Common</recordType>
         <visible>true</visible>
@@ -168,10 +140,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Knowledge__kav.Servicerutine</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>NKS_Audit_Log__c.Knowledge_Audit_Log</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

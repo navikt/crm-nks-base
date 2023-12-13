@@ -19,6 +19,17 @@ public with sharing class NKS_AuditLogControllerTest {
     }
 
     @isTest
+    static void testCreateAuditLog() {
+        Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1]?.Id;
+        Id newsId = [SELECT Id FROM NKS_Announcement__c LIMIT 1]?.Id;
+
+        Test.startTest();
+        NKS_AuditLogController.createAuditLog(articleId, 'Knowledge__c');
+        NKS_AuditLogController.createAuditLog(newsId, 'Announcement__c');
+        Test.stopTest();
+    }
+
+    @isTest
     static void testCountViews() {
         Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1]?.Id;
         Id newsId = [SELECT Id FROM NKS_Announcement__c LIMIT 1]?.Id;

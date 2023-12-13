@@ -1,19 +1,24 @@
 import { LightningElement, api, wire } from 'lwc';
+import createAuditLog from '@salesforce/apex/NKS_AuditLogController.createAuditLog';
 import countViews from '@salesforce/apex/NKS_AuditLogController.countViews';
 import isKnowledgeUser from '@salesforce/apex/NKS_AuditLogController.isKnowledgeUser';
 
 export default class NksKnowledgeViewCounter extends LightningElement {
     @api recordId;
-    siteURL;
     numOfViews = 0;
     hasPermission = false;
+    isRendered = false;
 
-    connectedCallback() {
-        this.siteURL = '/apex/Audit_Log_Knowledge?Id=' + this.recordId;
+    renderedCallback() {
+        if (!this.isRendered) {
+            createAuditLog({ recordId: this.recordId, lookupField: 'Knowledge__c' }).then(() => {
+                this.isRendered = true;
+            });
+        }
     }
 
     @wire(isKnowledgeUser)
-    wiredRes({ error, data }) {
+    wiredIsKnowledgeUser({ error, data }) {
         if (error) {
             console.log(error);
         } else if (data) {
