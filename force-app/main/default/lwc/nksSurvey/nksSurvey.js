@@ -2,7 +2,7 @@ import { LightningElement, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
-import createAnsweredRecord from '@salesforce/apex/NKS_InternalSurveyController.mortenNiceThing';
+import createSurveyResponse from '@salesforce/apex/NKS_InternalSurveyController.createSurveyResponse';
 export default class NksSurvey extends LightningElement {
     surveyId;
     backgroundColor;
@@ -56,7 +56,7 @@ export default class NksSurvey extends LightningElement {
             variant: 'success'
         });
         this.dispatchEvent(event);
-        createAnsweredRecord({
+        createSurveyResponse({
             surveyId: this.surveyId,
             rating: this.rating,
             comment: this.comment,
@@ -68,7 +68,7 @@ export default class NksSurvey extends LightningElement {
 
     handleCancel() {
         this.isAnswered = true;
-        createAnsweredRecord({ surveyId: this.surveyId, rating: 0, comment: '', isCanceled: true }).then(() => {
+        createSurveyResponse({ surveyId: this.surveyId, rating: 0, comment: '', isCanceled: true }).then(() => {
             console.log('Response creation was successful!');
         });
     }

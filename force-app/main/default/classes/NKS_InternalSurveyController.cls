@@ -99,7 +99,7 @@ public without sharing class NKS_InternalSurveyController {
     }
 
     @AuraEnabled
-    public static void mortenNiceThing(String surveyId, Integer rating, String comment, Boolean isCanceled){
+    public static void createSurveyResponse(String surveyId, Integer rating, String comment, Boolean isCanceled){
         try {
             Map<String, Object> flowInputs = new Map<String, Object>();
             flowInputs.put('surveyId', surveyId);
