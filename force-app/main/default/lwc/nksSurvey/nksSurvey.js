@@ -2,7 +2,7 @@ import { LightningElement, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
 import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
-import createAnsweredRecord from '@salesforce/apex/NKS_InternalSurveyController.createAnsweredRecord';
+import createAnsweredRecord from '@salesforce/apex/NKS_InternalSurveyController.mortenNiceThing';
 export default class NksSurvey extends LightningElement {
     surveyId;
     backgroundColor;

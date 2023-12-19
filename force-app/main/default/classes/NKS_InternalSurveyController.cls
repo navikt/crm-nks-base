@@ -63,31 +63,6 @@ public without sharing class NKS_InternalSurveyController {
     }
 
     /**
-     * @description Function to create NKS_Survey_Response__c object with recordType Answered
-     * @author Sara Mohammadi | 22-11-2023
-     * @param surveyId
-     * @return surveyResponseId
-     **/
-    @AuraEnabled
-    public static void createAnsweredRecord(String surveyId, Integer rating, String comment, Boolean isCanceled) {
-        try {
-            NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                RecordTypeId = getRecordTypeId('Survey Answered'),
-                NKS_Survey__c = surveyId,
-                NKS_Participant__c = UserInfo.getUserId(),
-                NKS_Answered__c = true
-            );
-            insert sr;
-
-            if (!isCanceled) {
-                createResponseRecord(surveyId, rating, comment);
-            }
-        } catch (Exception e) {
-            throw new AuraHandledException('Problem creating Answered record: ' + e.getMessage());
-        }
-    }
-
-    /**
      * @description Function to create NKS_Survey_Response__c object with recordType Response
      * @author Sara Mohammadi | 22-11-2023
      * @param surveyId
@@ -95,24 +70,65 @@ public without sharing class NKS_InternalSurveyController {
      * @param comment
      * @return surveyResponseId
      **/
-    private static void createResponseRecord(String surveyId, Integer rating, String comment) {
-        Datetime scheduledTime = Datetime.newInstance(Date.today(), Time.newInstance(0, 0, 0, 0));
+    @InvocableMethod(
+        label='Create survey response'
+        description='Creates a survey response'
+        category='Survey'
+    )
+    public static void createResponseRecord(List<SurveyResponseInput> inputs) {
         Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 
         try {
-            NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
-                CreatedById = integrationUserId,
-                CreatedDate = scheduledTime,
-                LastModifiedById = integrationUserId,
-                LastModifiedDate = scheduledTime,
-                RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
-                NKS_Survey__c = surveyId,
-                NKS_Rating__c = rating,
-                NKS_Comment__c = comment
-            );
-            insert sr;
+            List<NKS_Survey_response__c> responses = new List<NKS_Survey_response__c>();
+            for(SurveyResponseInput input : inputs) {
+
+                NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
+                    CreatedById = integrationUserId,
+                    LastModifiedById = integrationUserId,
+                    RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
+                    NKS_Survey__c =  input.surveyId,
+                    NKS_Rating__c =  input.rating,
+                    NKS_Comment__c = input.comment
+                    );
+                responses.add(sr);
+            }
+            insert responses;
         } catch (Exception e) {
             throw new AuraHandledException('Problem creating Response record: ' + e.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static void mortenNiceThing(String surveyId, Integer rating, String comment, Boolean isCanceled){
+        try {
+            Map<String, Object> flowInputs = new Map<String, Object>();
+            flowInputs.put('surveyId', surveyId);
+            flowInputs.put('rating', rating);
+            flowInputs.put('comment', comment);
+            flowInputs.put('isCanceled', isCanceled);
+
+            Flow.Interview flowInv = Flow.Interview.createInterview('Survey_Create_response', flowInputs);
+            flowInv.start();
+            return;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    public class SurveyResponseInput {
+         @invocableVariable(
+            label='The survey Id'
+            required=true
+        )
+        public String surveyId; 
+         @invocableVariable(
+            label='The rating the user provided'
+            required=true
+        )
+        public Integer rating; 
+         @invocableVariable(
+            label='Opptional comment'
+        )
+        public String comment;
     }
 }
