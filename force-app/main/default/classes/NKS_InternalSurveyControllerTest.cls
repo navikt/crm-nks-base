@@ -16,6 +16,23 @@ public with sharing class NKS_InternalSurveyControllerTest {
         testResponse.NKS_Rating__c = 5;
         testResponse.NKS_Comment__c = 'This is a test response';
         insert testResponse;
+
+        Profile prof = [ Select Id from Profile where name = 'System Administrator' ];
+
+        User user = new User(
+            FirstName = 'SFDX',
+            LastName = 'Integrasjonsbruker',
+            Email = 'SFDX_Iintegrasjonsbruker@nav.apextest',
+            Username = 'SFDX_Iintegrasjonsbruker@nav.apextest',
+            Alias = 'Geirern',
+            LanguageLocaleKey = 'no',
+            LocaleSidKey = 'no_NO',
+            TimeZoneSidKey = 'Europe/Paris',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = prof.Id,
+            Department = '1'
+        );
+        insert user;
     }
 
     @isTest
@@ -57,11 +74,41 @@ public with sharing class NKS_InternalSurveyControllerTest {
     static void testCreateAnsweredRecord() {
         Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
         Test.startTest();
-        try {
-            NKS_InternalSurveyController.createAnsweredRecord(surveyId, 4, 'test comment', false);
-        } catch (Exception e) {
-            System.assertEquals('System.AuraHandledException', e.getTypeName());
-        }
+        NKS_InternalSurveyController.createSurveyResponse(surveyId, 4, 'test comment', false);
         Test.stopTest();
+        List<FlowInterview> interview = [Select Id, PauseLabel from FlowInterview limit 1];
+        Assert.areEqual(1, interview.size(), 'IDFK');
+    }
+
+    @isTest
+    static void testCreateResponseRecord() {
+        Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
+        List<NKS_InternalSurveyController.SurveyResponseInput> inputs = new List<NKS_InternalSurveyController.SurveyResponseInput>();
+        NKS_InternalSurveyController.SurveyResponseInput inp1 = new NKS_InternalSurveyController.SurveyResponseInput();
+        NKS_InternalSurveyController.SurveyResponseInput inp2 = new NKS_InternalSurveyController.SurveyResponseInput();
+        NKS_InternalSurveyController.SurveyResponseInput inp3 = new NKS_InternalSurveyController.SurveyResponseInput();
+        inp1.comment = 'Ehhhh';
+        inp2.comment = 'Good job';
+        inp3.comment = '';
+        inp2.rating = 1;
+        inp3.rating = 5;
+        inp2.rating = 3;
+        inp3.surveyId = surveyId;
+        inp2.surveyId = surveyId;
+        inp3.surveyId = surveyId;
+
+        inputs.add(inp1);
+        inputs.add(inp2);
+        inputs.add(inp3);
+
+        Test.startTest();
+        NKS_InternalSurveyController.createResponseRecord(inputs);
+        Test.stopTest();
+        List<NKS_Survey_Response__c> responses = [Select Id, LastModifiedById, CreatedById from NKS_Survey_Response__c where NKS_Survey__c = :surveyId and RecordType.DeveloperName = 'Survey_response'];
+        Assert.areEqual(3, responses.size(), 'Not the correct amount of responses created');
+        for (NKS_Survey_response__c response : responses) {   
+            Assert.areNotEqual(UserInfo.getUserId(), response.CreatedById, 'IDFK');
+            Assert.areNotEqual(UserInfo.getUserId(), response.LastModifiedById, 'IDFK');
+        }
     }
 }
