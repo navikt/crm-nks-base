@@ -55,6 +55,14 @@
         <object>NKS_Survey__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>NKS_Survey_Response__c.Survey_Answered</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>NKS_Survey_Response__c.Survey_Response</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <tabSettings>
         <tab>NKS_Survey__c</tab>
         <visibility>Visible</visibility>
