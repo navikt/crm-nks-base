@@ -76,7 +76,7 @@ public with sharing class NKS_KnowledgeController {
      * @return Map<String, List<String>> list of links per field
      */
     private static Map<String, List<String>> findLinksPerField(Map<String, Object> fieldsToValue) {
-        // regex/pattern to find links in a string
+        // Regex/pattern to find links in a string
         String regex = '(https?://)?(www\\.)?[a-zA-Z0-9-]+(\\.[a-zA-Z]{2,})+(\\/[-a-zA-Z0-9@:%._\\+~#?&//=]*)?';
         Pattern linksPattern = Pattern.compile(regex);
         Map<String, List<String>> matches = new Map<String, List<String>>();
@@ -86,20 +86,8 @@ public with sharing class NKS_KnowledgeController {
                 String fieldValue = String.valueOf(fieldsToValue.get(fieldName)); // Get the value of the field
                 if (fieldValue != null) {
                     String fieldLabel = getFieldLabel(fieldName); // Get the field label
-                    List<String> matchesPerField = new List<String>();
-                    Matcher matcher = linksPattern.matcher(
-                        fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'a').replace('"', '')
-                    );
-                    // Loop through all matches found in the field value
-                    while (matcher.find()) {
-                        String groupValue = matcher.group(); // Get the matched value
-                        if (!matchesPerField.contains(groupValue) && groupValue.toLowerCase().startsWith('http')) {
-                            if (groupValue.endsWith('.')) {
-                                groupValue = groupValue.substring(0, groupValue.length() - 1);
-                            }
-                            matchesPerField.add(groupValue);
-                        }
-                    }
+                    List<String> matchesPerField = findMatchesInField(linksPattern, fieldValue);
+
                     // Check if matches are found for the field
                     if (!matchesPerField.isEmpty()) {
                         matches.put(fieldLabel, matchesPerField); // Add the field label and its matches to the result map
@@ -119,6 +107,28 @@ public with sharing class NKS_KnowledgeController {
             );
         }
         return matches;
+    }
+
+    private static List<String> findMatchesInField(Pattern linksPattern, String fieldValue) {
+        List<String> matchesPerField = new List<String>();
+        Matcher matcher = linksPattern.matcher(normalizeFieldValue(fieldValue));
+    
+        // Loop through all matches found in the field value
+        while (matcher.find()) {
+            String groupValue = matcher.group(); // Get the matched value
+            if (!matchesPerField.contains(groupValue) && groupValue.toLowerCase().startsWith('http')) {
+                if (groupValue.endsWith('.')) {
+                    groupValue = groupValue.substring(0, groupValue.length() - 1);
+                }
+                matchesPerField.add(groupValue);
+            }
+        }
+        return matchesPerField;
+    }
+
+    private static String normalizeFieldValue(String fieldValue) {
+        // Normalize the field value by replacing characters
+        return fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'a').replace('"', '');
     }
 
     /**
