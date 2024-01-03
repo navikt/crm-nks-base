@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permission set granted to system user running the veritas backup solution. Define object and field access for data to be included in backup.</description>
+    <description>Permission set granted to system user running the veritas backup solution. Define
+        object and field access for data to be included in backup.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Conversation_Note__c.CRM_API_Reference__c</field>
@@ -643,7 +644,7 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Knowledge__kav.Clarifications</recordType>
+        <recordType>Knowledge__kav.Internal_Routine</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
