@@ -17,7 +17,7 @@ public with sharing class NKS_InternalSurveyControllerTest {
         testResponse.NKS_Comment__c = 'This is a test response';
         insert testResponse;
 
-        Profile prof = [ Select Id from Profile where name = 'System Administrator' ];
+        Profile prof = [SELECT Id FROM Profile WHERE name = 'System Administrator'];
 
         User user = new User(
             FirstName = 'SFDX',
@@ -76,7 +76,7 @@ public with sharing class NKS_InternalSurveyControllerTest {
         Test.startTest();
         NKS_InternalSurveyController.createSurveyResponse(surveyId, 4, 'test comment', false);
         Test.stopTest();
-        List<FlowInterview> interview = [Select Id, PauseLabel from FlowInterview limit 1];
+        List<FlowInterview> interview = [SELECT Id, PauseLabel FROM FlowInterview LIMIT 1];
         Assert.areEqual(1, interview.size(), 'IDFK');
     }
 
@@ -90,10 +90,10 @@ public with sharing class NKS_InternalSurveyControllerTest {
         inp1.comment = 'Ehhhh';
         inp2.comment = 'Good job';
         inp3.comment = '';
-        inp2.rating = 1;
-        inp3.rating = 5;
-        inp2.rating = 3;
-        inp3.surveyId = surveyId;
+        inp1.rating = 1;
+        inp2.rating = 5;
+        inp3.rating = 3;
+        inp1.surveyId = surveyId;
         inp2.surveyId = surveyId;
         inp3.surveyId = surveyId;
 
@@ -104,9 +104,13 @@ public with sharing class NKS_InternalSurveyControllerTest {
         Test.startTest();
         NKS_InternalSurveyController.createResponseRecord(inputs);
         Test.stopTest();
-        List<NKS_Survey_Response__c> responses = [Select Id, LastModifiedById, CreatedById from NKS_Survey_Response__c where NKS_Survey__c = :surveyId and RecordType.DeveloperName = 'Survey_response'];
+        List<NKS_Survey_Response__c> responses = [
+            SELECT Id, LastModifiedById, CreatedById
+            FROM NKS_Survey_Response__c
+            WHERE NKS_Survey__c = :surveyId AND RecordType.DeveloperName = 'Survey_response'
+        ];
         Assert.areEqual(3, responses.size(), 'Not the correct amount of responses created');
-        for (NKS_Survey_response__c response : responses) {   
+        for (NKS_Survey_response__c response : responses) {
             Assert.areNotEqual(UserInfo.getUserId(), response.CreatedById, 'IDFK');
             Assert.areNotEqual(UserInfo.getUserId(), response.LastModifiedById, 'IDFK');
         }
