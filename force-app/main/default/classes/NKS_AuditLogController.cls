@@ -9,9 +9,8 @@ public without sharing class NKS_AuditLogController {
     public static void createAuditLog(Id recordId, String lookupField) {
         try {
             if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
-                Id recordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
                 NKS_Audit_Log__c al = new NKS_Audit_Log__c();
-                al.RecordTypeId = recordTypeId;
+                al.RecordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
                 al.Knowledge__c = recordId;
                 al.User__c = USERID;
                 al.Operation__c = 'View';
@@ -19,9 +18,8 @@ public without sharing class NKS_AuditLogController {
             }
 
             if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
-                Id recordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
                 NKS_Audit_Log__c al = new NKS_Audit_Log__c();
-                al.RecordTypeId = recordTypeId;
+                al.RecordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
                 al.Announcement__c = recordId;
                 al.User__c = USERID;
                 al.Operation__c = 'View';
