@@ -51,9 +51,11 @@ public with sharing class NKS_KnowledgeControllerTest {
             FROM Knowledge__kav
             LIMIT 1
         ];
+        
+        NKS_KnowledgeController.setCompiledRegexPattern();
 
         Test.startTest();
-        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
+        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article, NKS_KnowledgeController.getCompiledRegexPattern());
         Test.stopTest();
 
         System.assertEquals(0, res.size());
