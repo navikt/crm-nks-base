@@ -17,6 +17,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
 
     @isTest
     static void testGetBrokenLinks() {
+        NKS_KnowledgeController.setCompiledRegexPattern();
         Knowledge__kav a = [
             SELECT
                 Title,
@@ -40,7 +41,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinderTest {
         ];
         Map<String, List<String>> resMap = new Map<String, List<String>>();
         Test.startTest();
-        resMap = NKS_KnowledgeController.getBrokenLinks(a);
+        resMap = NKS_KnowledgeController.getBrokenLinks(a, NKS_KnowledgeController.getCompiledRegexPattern());
         Test.stopTest();
 
         System.assertEquals(0, resMap.size());
