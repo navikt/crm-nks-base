@@ -97,8 +97,8 @@
                     <name>enableRefresh</name>
                     <value>true</value>
                 </componentInstanceProperties>
-                <componentName>nksHomePageNews</componentName>
-                <identifier>c_nksHomePageNews1</identifier>
+                <componentName>nksNewsArticle</componentName>
+                <identifier>nksNewsArticle1</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

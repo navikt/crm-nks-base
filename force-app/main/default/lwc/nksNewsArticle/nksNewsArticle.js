@@ -1,7 +1,8 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import getNews from '@salesforce/apex/NKS_HomePageController.getNews';
-import countViews from '@salesforce/apex/NKS_HomePageController.countNewsViews';
+import createAuditLog from '@salesforce/apex/NKS_AuditLogController.createAuditLog';
+import countViews from '@salesforce/apex/NKS_AuditLogController.countViews';
 import hasPermission from '@salesforce/customPermission/NKS_Manage_News';
 import { refreshApex } from '@salesforce/apex';
 import AUTHOR_NAME_FIELD from '@salesforce/schema/User.NKS_FullName__c';
@@ -26,9 +27,14 @@ export default class NksHomePageNews extends LightningElement {
     imageURL;
     siteURL;
     numOfViews = 0;
+    isRendered = false;
 
-    connectedCallback() {
-        this.siteURL = '/apex/Audit_Log_Announcement?Id=' + this.recordId;
+    renderedCallback() {
+        if (!this.isRendered) {
+            createAuditLog({ recordId: this.recordId, lookupField: 'Announcement__c' }).then(() => {
+                this.isRendered = true;
+            });
+        }
     }
 
     @wire(getNews, {
@@ -40,7 +46,8 @@ export default class NksHomePageNews extends LightningElement {
     }
 
     @wire(countViews, {
-        recordId: '$recordId'
+        recordId: '$recordId',
+        lookupField: 'Announcement__c'
     })
     wiredCountViews(result) {
         this.wiredCounter = result;
