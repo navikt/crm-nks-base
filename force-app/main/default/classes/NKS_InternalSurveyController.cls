@@ -11,41 +11,25 @@ public without sharing class NKS_InternalSurveyController {
     @AuraEnabled(cacheable=true)
     public static NKS_Survey__c getSurvey() {
         DateTime currentTime = System.now();
+        Id recordTypeId = getRecordTypeId('Survey Answered');
+
         try {
             return [
                 SELECT Id, NKS_Background_Color__c, NKS_Question__c, NKS_Title__c, NKS_Start_Date__c, NKS_End_Date__c
                 FROM NKS_Survey__c
-                WHERE NKS_Start_Date__c <= :currentTime AND NKS_End_Date__c >= :currentTime
-                ORDER BY CreatedDate DESC
+                WHERE
+                    NKS_Start_Date__c <= :currentTime
+                    AND NKS_End_Date__c >= :currentTime
+                    AND Id NOT IN (
+                        SELECT NKS_Survey__c
+                        FROM NKS_Survey_Response__c
+                        WHERE NKS_Participant__c = :UserInfo.getUserId() AND recordTypeId = :recordTypeId
+                    )
+                ORDER BY NKS_Start_Date__c DESC
                 LIMIT 1
             ];
         } catch (Exception e) {
             throw new AuraHandledException('Problem getting Survey: ' + e.getMessage());
-        }
-    }
-
-    /**
-     * @description Function to check if user has answered Survey
-     * @author Sara Mohammadi | 22-11-2023
-     * @param surveyId
-     * @return True if answered, False otherwise
-     **/
-    @AuraEnabled(cacheable=true)
-    public static Boolean hasAnswered(String surveyId) {
-        Id recordTypeId = getRecordTypeId('Survey Answered');
-        try {
-            return [
-                SELECT NKS_Answered__c
-                FROM NKS_Survey_Response__c
-                WHERE
-                    NKS_Participant__c = :UserInfo.getUserId()
-                    AND NKS_Survey__c = :surveyId
-                    AND recordTypeId = :recordTypeId
-                LIMIT 1
-            ]
-            ?.NKS_Answered__c;
-        } catch (Exception e) {
-            throw new AuraHandledException('Problem getting Survey Response: ' + e.getMessage());
         }
     }
 
@@ -70,26 +54,21 @@ public without sharing class NKS_InternalSurveyController {
      * @param comment
      * @return surveyResponseId
      **/
-    @InvocableMethod(
-        label='Create survey response'
-        description='Creates a survey response'
-        category='Survey'
-    )
+    @InvocableMethod(label='Create survey response' description='Creates a survey response' category='Survey')
     public static void createResponseRecord(List<SurveyResponseInput> inputs) {
         Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 
         try {
             List<NKS_Survey_response__c> responses = new List<NKS_Survey_response__c>();
-            for(SurveyResponseInput input : inputs) {
-
+            for (SurveyResponseInput input : inputs) {
                 NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
                     CreatedById = integrationUserId,
                     LastModifiedById = integrationUserId,
                     RecordTypeId = NKS_InternalSurveyController.getRecordTypeId('Survey Response'),
-                    NKS_Survey__c =  input.surveyId,
-                    NKS_Rating__c =  input.rating,
+                    NKS_Survey__c = input.surveyId,
+                    NKS_Rating__c = input.rating,
                     NKS_Comment__c = input.comment
-                    );
+                );
                 responses.add(sr);
             }
             insert responses;
@@ -99,7 +78,7 @@ public without sharing class NKS_InternalSurveyController {
     }
 
     @AuraEnabled
-    public static void createSurveyResponse(String surveyId, Integer rating, String comment, Boolean isCanceled){
+    public static void createSurveyResponse(String surveyId, Integer rating, String comment, Boolean isCanceled) {
         try {
             Map<String, Object> flowInputs = new Map<String, Object>();
             flowInputs.put('surveyId', surveyId);
@@ -116,19 +95,11 @@ public without sharing class NKS_InternalSurveyController {
     }
 
     public class SurveyResponseInput {
-         @invocableVariable(
-            label='The survey Id'
-            required=true
-        )
-        public String surveyId; 
-         @invocableVariable(
-            label='The rating the user provided'
-            required=true
-        )
-        public Integer rating; 
-         @invocableVariable(
-            label='Opptional comment'
-        )
+        @invocableVariable(label='The survey Id' required=true)
+        public String surveyId;
+        @invocableVariable(label='The rating the user provided' required=true)
+        public Integer rating;
+        @invocableVariable(label='Opptional comment')
         public String comment;
     }
 }

@@ -83,12 +83,6 @@
             <targetReference>User_does_not_want_to_respond</targetReference>
         </connector>
         <inputAssignments>
-            <field>NKS_Answered__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>NKS_Participant__c</field>
             <value>
                 <elementReference>$User.Id</elementReference>
@@ -144,7 +138,7 @@
             <targetReference>Get_answered_record_type</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>comment</name>
         <dataType>String</dataType>

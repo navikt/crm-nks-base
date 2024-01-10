@@ -1,7 +1,6 @@
-import { LightningElement, wire, track } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getSurvey from '@salesforce/apex/NKS_InternalSurveyController.getSurvey';
-import hasAnswered from '@salesforce/apex/NKS_InternalSurveyController.hasAnswered';
 import createSurveyResponse from '@salesforce/apex/NKS_InternalSurveyController.createSurveyResponse';
 export default class NksSurvey extends LightningElement {
     surveyId;
@@ -12,8 +11,7 @@ export default class NksSurvey extends LightningElement {
     endDate;
     rating;
     comment;
-
-    @track isAnswered = false;
+    isAnswered = false;
 
     @wire(getSurvey)
     wiredSurvey({ data, error }) {
@@ -24,15 +22,6 @@ export default class NksSurvey extends LightningElement {
             this.question = data.NKS_Question__c;
         } else if (error) {
             console.log('Problem getting survey: ' + error);
-        }
-    }
-
-    @wire(hasAnswered, { surveyId: '$surveyId' })
-    wiredAnswered({ error, data }) {
-        if (data) {
-            this.isAnswered = data;
-        } else if (error) {
-            console.log('Problem checking if survey is answered: ', error);
         }
     }
 
@@ -50,26 +39,34 @@ export default class NksSurvey extends LightningElement {
 
     handleSend() {
         this.isAnswered = true;
-        const event = new ShowToastEvent({
-            title: 'Tilbakemeldingen din er mottatt.',
-            message: 'Ha en fin dag videre!',
-            variant: 'success'
-        });
-        this.dispatchEvent(event);
         createSurveyResponse({
             surveyId: this.surveyId,
             rating: this.rating,
             comment: this.comment,
             isCanceled: false
-        }).then(() => {
-            console.log('Response creation was successful!');
-        });
+        })
+            .then(() => {
+                const event = new ShowToastEvent({
+                    title: 'Tilbakemeldingen din er mottatt.',
+                    message: 'Ha en fin dag videre!',
+                    variant: 'success'
+                });
+                this.dispatchEvent(event);
+            })
+            .catch((error) => {
+                const event = new ShowToastEvent({
+                    title: 'Feilmelding',
+                    message: 'Det har oppstått en feil ved sending av tilbakemeling.',
+                    variant: 'error'
+                });
+                this.dispatchEvent(event);
+
+                console.log('Det har oppstått en feil ved sending av undersøkelsen: ', error);
+            });
     }
 
     handleCancel() {
         this.isAnswered = true;
-        createSurveyResponse({ surveyId: this.surveyId, rating: 0, comment: '', isCanceled: true }).then(() => {
-            console.log('Response creation was successful!');
-        });
+        createSurveyResponse({ surveyId: this.surveyId, rating: 0, comment: '', isCanceled: true });
     }
 }

@@ -12,7 +12,6 @@ public with sharing class NKS_InternalSurveyControllerTest {
         NKS_Survey_Response__c testResponse = new NKS_Survey_Response__c();
         testResponse.NKS_Survey__c = testSurvey.Id;
         testResponse.NKS_Participant__c = UserInfo.getUserId();
-        testResponse.NKS_Answered__c = false;
         testResponse.NKS_Rating__c = 5;
         testResponse.NKS_Comment__c = 'This is a test response';
         insert testResponse;
@@ -42,19 +41,6 @@ public with sharing class NKS_InternalSurveyControllerTest {
         Test.startTest();
         try {
             survey = NKS_InternalSurveyController.getSurvey();
-        } catch (Exception e) {
-            System.assertEquals('System.AuraHandledException', e.getTypeName());
-        }
-        Test.stopTest();
-    }
-
-    @isTest
-    static void testHasAnswered() {
-        Id surveyId = [SELECT Id FROM NKS_Survey__c LIMIT 1].Id;
-        Boolean hasAnswered = false;
-        Test.startTest();
-        try {
-            hasAnswered = NKS_InternalSurveyController.hasAnswered(surveyId);
         } catch (Exception e) {
             System.assertEquals('System.AuraHandledException', e.getTypeName());
         }
