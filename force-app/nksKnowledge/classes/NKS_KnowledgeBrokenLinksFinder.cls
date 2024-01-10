@@ -4,10 +4,14 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
 
     public Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id FROM Knowledge__kav WHERE PublishStatus = \'Online\' AND IsLatestVersion = TRUE';
+        // Set regex pattern only once to avoid "Regex too complicated" err
+        NKS_KnowledgeController.setCompiledRegexPattern();
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
+        // Retrieve the compiled regex pattern
+        Pattern linksPattern = NKS_KnowledgeController.getCompiledRegexPattern();        
         for (Knowledge__kav article : [
             SELECT
                 Title,
@@ -35,7 +39,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 testMap.put('TestField', testList);
                 finalList.put(article.Title, testMap);
             }
-            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
+            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article, linksPattern);
             if (res.size() > 0) {
                 finalList.put(article.Title, res);
             }

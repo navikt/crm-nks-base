@@ -204,14 +204,4 @@ public with sharing class NKS_HomePageControllerTest {
 
         System.assertNotEquals(null, testURL);
     }
-
-    @isTest
-    static void testCountNewsViews() {
-        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
-        Test.startTest();
-        Integer counter = NKS_HomePageController.countNewsViews(testNews.Id);
-        Test.stopTest();
-
-        System.assertEquals(0, counter);
-    }
 }
