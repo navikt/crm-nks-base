@@ -184,7 +184,7 @@
             <label>el_0</label>
             <offset>1</offset>
             <offsetUnit>Minutes</offsetUnit>
-            <resumeTime>16:00:00.000Z</resumeTime>
+            <resumeTime>23:59:00.000Z</resumeTime>
         </waitEvents>
     </waits>
 </Flow>
