@@ -17,11 +17,14 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
-            Title = 'Svarberedskap - Korona',
-            UrlName = 'Svarberedskap-Korona',
-            Summary = 'Informasjon for test svarberedskap'
+            Title = 'Test Svarberedskap',
+            UrlName = 'Test-Svarberedskap',
+            Summary = 'Informasjon for test svarberedskap',
+            NKS_Publish_On_Home_Page__c = true
         );
         insert testKnowledge;
+        Knowledge__kav a = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
+        KbManagement.PublishingService.publishArticle(a.KnowledgeArticleId, true);
 
         Case testCase = new Case();
         insert testCase;
@@ -154,7 +157,7 @@ public with sharing class NKS_HomePageControllerTest {
         List<Knowledge__kav> testList = NKS_HomePageController.getReadyResponses();
         Test.stopTest();
 
-        System.assertEquals(null, testList);
+        System.assertEquals(1, testList.size());
     }
 
     @isTest
