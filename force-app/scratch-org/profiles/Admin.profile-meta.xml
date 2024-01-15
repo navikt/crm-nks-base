@@ -6,10 +6,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>AuditLogAnnouncementTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CRM_SecurityQuestionPicker</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -746,26 +742,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Audit_Log__c.Announcement__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Audit_Log__c.Operation__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Audit_Log__c.User__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NKS_Audit_Log__c.Viewed_date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NavTask__c.NKS_Comment_History__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -876,9 +852,6 @@
         <recordType>NKS_Announcement__c.Traffic</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>NKS_Audit_Log__c-Audit Log Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Puzzel_Queue_Mapping__mdt-Puzzel Queue Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -911,19 +884,6 @@
         <object>NKS_Announcement__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>NKS_Audit_Log__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <pageAccesses>
-        <apexPage>Audit_Log_Announcement</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>NKS_Announcement__c.Campaign</recordType>
@@ -972,10 +932,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>NKS_Announcement__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>NKS_Audit_Log__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
