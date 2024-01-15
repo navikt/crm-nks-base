@@ -51,9 +51,9 @@ public with sharing class NKS_NewsArchiveHandler {
     }
     private WebsakNewsMapping__mdt getSettings(){
         if (isSandbox){
-            return [SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+            return [SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c,ActiveFrom__c,Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1];
         } else {
-            return [SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c, Order__c DESC LIMIT 1];
+            return [SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c,ActiveFrom__c,Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1];
         }
     }
     @TestVisible
