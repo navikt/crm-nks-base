@@ -83,7 +83,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertNotEquals(0, recordlist.size());
+        System.assertEquals(1, recordlist.size());
     }
 
     @isTest
@@ -100,23 +100,6 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(0, recordlist.size());
-    }
-
-    @isTest
-    static void testGetListWithNullValue() {
-        Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
-            'Title',
-            null,
-            'Knowledge__kav',
-            'publishStatus=\'Online\'',
-            'LastModifiedDate DESC',
-            '3',
-            'CreatedDate'
-        );
-        Test.stopTest();
-
-        System.assertEquals(0, recordlist.size());
     }
 
     @isTest

@@ -418,7 +418,7 @@ public with sharing class NKS_HomePageController {
     public static List<Knowledge__kav> getReadyResponses() {
         try {
             List<Knowledge__kav> readyResponses = [
-                SELECT Id, Title, LastModifiedDate, NKS_Publish_On_Home_Page__c
+                SELECT Id, Title, LastModifiedDate
                 FROM Knowledge__kav
                 WHERE NKS_Publish_On_Home_Page__c = TRUE AND PublishStatus = 'Online'
                 ORDER BY LastModifiedDate DESC
