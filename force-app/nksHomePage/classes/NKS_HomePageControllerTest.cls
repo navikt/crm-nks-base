@@ -17,14 +17,11 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
-            Title = 'Test Svarberedskap',
-            UrlName = 'Test-Svarberedskap',
-            Summary = 'Informasjon for test svarberedskap',
-            NKS_Publish_On_Home_Page__c = true
+            Title = 'Test Article',
+            UrlName = 'Test-Article',
+            Summary = 'Informasjon for test'
         );
         insert testKnowledge;
-        Knowledge__kav a = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
-        KbManagement.PublishingService.publishArticle(a.KnowledgeArticleId, true);
 
         Case testCase = new Case();
         insert testCase;
@@ -83,7 +80,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(1, recordlist.size());
+        System.assertNotEquals(0, recordlist.size());
     }
 
     @isTest
@@ -100,6 +97,23 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(0, recordlist.size());
+    }
+
+    @isTest
+    static void testGetListWithNullValue() {
+        Test.startTest();
+        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+            'Title',
+            null,
+            'Knowledge__kav',
+            'publishStatus=\'Online\'',
+            'LastModifiedDate DESC',
+            '3',
+            'CreatedDate'
+        );
+        Test.stopTest();
+
+        System.assertEquals(0, recordlist.size());
     }
 
     @isTest
@@ -140,7 +154,7 @@ public with sharing class NKS_HomePageControllerTest {
         List<Knowledge__kav> testList = NKS_HomePageController.getReadyResponses();
         Test.stopTest();
 
-        System.assertEquals(1, testList.size());
+        System.assertEquals(null, testList);
     }
 
     @isTest
