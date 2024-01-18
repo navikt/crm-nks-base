@@ -302,14 +302,22 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getResponsibilityParentText() {
+        let res = '';
+
+        if (this.relation.responsible === '' || this.relation.responsible === null) {
+            return '';
+        }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
-            this.relation.responsible === 'medmor' ||
-            this.relation.responsible === 'felles'
+            this.relation.responsible === 'medmor'
         ) {
-            return 'Har foreldreansvar.';
+            res += 'Har foreldreansvar alene.';
+        } else if (this.relation.responsible === 'felles') {
+            res += 'Har felles foreldreansvar.';
+        } else {
+            res += 'Har ikke foreldreansvar.';
         }
-        return 'Har ikke foreldreansvar.';
+        return res;
     }
 }
