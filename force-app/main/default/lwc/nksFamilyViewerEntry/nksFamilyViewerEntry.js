@@ -282,42 +282,36 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getResponsibilityChildText() {
-        var res = '';
-
         if (this.relation.responsible === '' || this.relation.responsible === null) {
-            return '';
+            return 'Informasjon om foreldreansvar finnes ikke.';
         }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            res += 'Bruker har foreldreansvar alene.';
-        } else if (this.relation.responsible === 'felles') {
-            res += 'Bruker har felles foreldreansvar.';
-        } else {
-            res += 'Bruker har ikke foreldreansvar.';
+            return 'Bruker har foreldreansvar alene.';
         }
-        return res;
+        if (this.relation.responsible === 'felles') {
+            return 'Bruker har felles foreldreansvar.';
+        }
+        return 'Bruker har ikke foreldreansvar.';
     }
 
     getResponsibilityParentText() {
-        let res = '';
-
         if (this.relation.responsible === '' || this.relation.responsible === null) {
-            return '';
+            return 'Informasjon om foreldreansvar finnes ikke.';
         }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            res += 'Har foreldreansvar alene.';
-        } else if (this.relation.responsible === 'felles') {
-            res += 'Har felles foreldreansvar.';
-        } else {
-            res += 'Har ikke foreldreansvar.';
+            return 'Har foreldreansvar alene.';
         }
-        return res;
+        if (this.relation.responsible === 'felles') {
+            return 'Har felles foreldreansvar.';
+        }
+        return 'Har ikke foreldreansvar.';
     }
 }
