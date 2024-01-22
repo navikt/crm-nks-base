@@ -17,9 +17,9 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
-            Title = 'Svarberedskap - Korona',
-            UrlName = 'Svarberedskap-Korona',
-            Summary = 'Informasjon for test svarberedskap'
+            Title = 'Test Article',
+            UrlName = 'Test-Article',
+            Summary = 'Informasjon for test'
         );
         insert testKnowledge;
 
