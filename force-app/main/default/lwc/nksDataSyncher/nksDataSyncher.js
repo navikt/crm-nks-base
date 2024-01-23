@@ -44,7 +44,7 @@ export default class NksDataSyncher extends LightningElement {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
         } else if (error) {
-            console.log('An error occurred: ', error);
+            console.log('Problme getting record: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -63,7 +63,7 @@ export default class NksDataSyncher extends LightningElement {
             }
         }
         if (error) {
-            console.log(JSON.stringify(error, null, 2));
+            console.log('Problem getting person information: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -75,7 +75,7 @@ export default class NksDataSyncher extends LightningElement {
             const refreshEvent = new CustomEvent(eventName);
             this.dispatchEvent(refreshEvent);
         } catch (error) {
-            console.error('An error occurred:', error);
+            console.error('Problem synching bankAccountNumber/oppgave: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -127,7 +127,7 @@ export default class NksDataSyncher extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(JSON.stringify(error, null, 2));
+                console.log('Problem getting related record: ', JSON.stringify(error, null, 2));
             });
     }
 
