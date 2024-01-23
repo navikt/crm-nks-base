@@ -165,11 +165,9 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     calculateSyncStatus(ss) {
-        return {
-            isSyncing: ss.status === syncStatus.SYNCING,
-            isSynced: ss.status === syncStatus.SYNCED,
-            isError: ss.status === syncStatus.ERROR
-        };
+        ss.isSyncing = ss.status === syncStatus.SYNCING;
+        ss.isSynced = ss.status === syncStatus.SYNCED;
+        ss.isError = ss.status === syncStatus.ERROR;
     }
 
     getSyncStatus(name) {
