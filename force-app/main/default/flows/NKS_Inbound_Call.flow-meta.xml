@@ -3,13 +3,16 @@
     <actionCalls>
         <name>Get_Call_Queue_Info</name>
         <label>Get Call Queue Info</label>
-        <locationX>578</locationX>
+        <locationX>908</locationX>
         <locationY>134</locationY>
         <actionName>NKS_CallFlowController</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_Theme_Group</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Problem_Getting_Call_Queue_Info</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>sessionIds</name>
@@ -33,10 +36,127 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
+        <name>Problem_Creating_Case</name>
+        <label>Problem Creating Case</label>
+        <locationX>1634</locationX>
+        <locationY>974</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Application_Log__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>NKS Puzzel</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <stringValue>Error has occurred while trying to create case</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>LoggerUtility</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Problem_Getting_Account_1</name>
+        <label>Problem Getting Account</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Application_Log__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>NKS Puzzel</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <stringValue>Error has occurred while trying to get account with person ident: + {!Search}</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>LoggerUtility</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Problem_Getting_Call_Queue_Info</name>
+        <label>Problem Getting Call Queue Info</label>
+        <locationX>2426</locationX>
+        <locationY>242</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>Application_Log__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>NKS Puzzel</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain</name>
+            <value>
+                <stringValue>NKS</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <stringValue>Error has occurred while running getCallQueueInfo() </stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>LoggerUtility</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
         <description>Redirects user to the organization account</description>
         <name>Recirect_to_Account_0</name>
         <label>Recirect to Account</label>
-        <locationX>314</locationX>
+        <locationX>842</locationX>
         <locationY>866</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
@@ -74,8 +194,8 @@
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
-        <locationX>842</locationX>
-        <locationY>1082</locationY>
+        <locationX>1370</locationX>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -141,15 +261,8 @@
     <assignments>
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
-        <locationX>842</locationX>
-        <locationY>866</locationY>
-        <assignmentItems>
-            <assignToReference>Call_Case.AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RELATED_ACCOUNT_ID</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>1370</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.Origin</assignToReference>
             <operator>Assign</operator>
@@ -196,7 +309,7 @@
     <decisions>
         <name>Check_Call_Queue_0</name>
         <label>Check Call Queue</label>
-        <locationX>1106</locationX>
+        <locationX>1766</locationX>
         <locationY>650</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
@@ -224,7 +337,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Try_to_get_Person</targetReference>
+                <targetReference>Case_Assignment_0</targetReference>
             </connector>
             <label>Personbruker</label>
         </rules>
@@ -258,7 +371,7 @@
     <decisions>
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
-        <locationX>578</locationX>
+        <locationX>908</locationX>
         <locationY>542</locationY>
         <defaultConnector>
             <targetReference>Check_Call_Queue_0</targetReference>
@@ -299,7 +412,7 @@
         <description>Checks if the call queue had a theme group mapped</description>
         <name>Check_Theme_Group</name>
         <label>Check Theme Group</label>
-        <locationX>578</locationX>
+        <locationX>908</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Identifier</targetReference>
@@ -325,7 +438,7 @@
         <description>Checks if the input resulted in an account match</description>
         <name>Verify_Account</name>
         <label>Verify Account</label>
-        <locationX>446</locationX>
+        <locationX>974</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -392,24 +505,31 @@
         <connector>
             <targetReference>Redirect_To_Case</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Problem_Creating_Case</targetReference>
+        </faultConnector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
     <recordCreates>
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case_0</name>
         <label>Create Case</label>
-        <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationX>1370</locationX>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Problem_Creating_Case</targetReference>
+        </faultConnector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
     <recordLookups>
         <description>Queries the organization account.</description>
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
-        <locationX>446</locationX>
+        <locationX>974</locationX>
         <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -438,6 +558,9 @@
         <connector>
             <targetReference>Case_Assignment</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Problem_Getting_Account_1</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>INT_PersonIdent__c</field>
@@ -463,7 +586,7 @@
         <description>Queries the theme group that was mapped to the queue.</description>
         <name>Get_Theme_Group</name>
         <label>Get Theme Group</label>
-        <locationX>446</locationX>
+        <locationX>776</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -490,53 +613,9 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
-    <recordLookups>
-        <name>Try_to_get_Person</name>
-        <label>Try to get Person</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Case_Assignment_0</targetReference>
-        </connector>
-        <filterLogic>(1 OR 2 OR 3) AND 4</filterLogic>
-        <filters>
-            <field>NKS_Mobile_Phone__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NKS_Phone_1__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NKS_Phone_2__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>INT_IsHasTombstone__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Person__c</object>
-        <outputAssignments>
-            <assignToReference>RELATED_ACCOUNT_ID</assignToReference>
-            <field>CRM_Account__c</field>
-        </outputAssignments>
-    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>452</locationX>
+        <locationX>782</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Call_Queue_Info</targetReference>
