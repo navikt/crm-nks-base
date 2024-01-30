@@ -236,15 +236,16 @@ export default class NksBrukervarselList extends LightningElement {
         }
     }
 
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
     resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-            // eslint-disable-next-line no-restricted-globals
-        }, obj || self);
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+
+        const parts = path.split('.');
+        const result = parts.reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined;
+        }, obj || {});
+
+        return result !== undefined ? result : null;
     }
 }
