@@ -1,6 +1,7 @@
 public with sharing class NKS_KnowledgeController {
-    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report'); // Create logger to log errors while finding dead links
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Broken Links Report');
     private static Map<String, String> fieldLabelsCache = new Map<String, String>(); // Cache field labels (Store previously retrieved field labels to optimize performance)
+    private static Pattern compiledRegexPattern;
 
     /**
      * @description Function to get links which will be checked in Knowledge articles
@@ -15,7 +16,6 @@ public with sharing class NKS_KnowledgeController {
                 links.add(nc.MasterLabel);
             }
         } catch (Exception ex) {
-            // Catch and handle general exception
             logger.error(
                 'Problem getting links (NamedCredentials) to be checked: ' +
                 ex.getMessage() +
@@ -39,17 +39,18 @@ public with sharing class NKS_KnowledgeController {
         if (fieldLabelsCache.containsKey(fieldName)) {
             return fieldLabelsCache.get(fieldName);
         }
-        String objectName = 'Knowledge__kav'; // Specify the object name for which you want to retrieve field labels
-        Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe(); // Get the SObject Describe result for the specified object
-        Map<String, Schema.SObjectField> fieldsMap = describeResult.fields.getMap(); // Get the fields map for the object
+        String objectName = 'Knowledge__kav';
+        if (Schema.getGlobalDescribe().containsKey(objectName)) {
+            Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();
+            Map<String, Schema.SObjectField> fieldsMap = describeResult.fields.getMap();
 
-        if (fieldsMap.containsKey(fieldName)) {
-            String label = fieldsMap.get(fieldName).getDescribe().getLabel();
-            fieldLabelsCache.put(fieldName, label);
-            return label;
-        } else {
-            return fieldName;
+            if (fieldsMap.containsKey(fieldName)) {
+                String label = fieldsMap.get(fieldName).getDescribe().getLabel();
+                fieldLabelsCache.put(fieldName, label);
+                return label;
+            }
         }
+        return fieldName;
     }
 
     /**
@@ -75,39 +76,24 @@ public with sharing class NKS_KnowledgeController {
      * @param Map<String, String> map to be checked
      * @return Map<String, List<String>> list of links per field
      */
-    private static Map<String, List<String>> findLinksPerField(Map<String, Object> fieldsToValue) {
-        // regex/pattern to find links in a string
-        String regex = '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)';
-        Pattern linksPattern = Pattern.compile(regex);
+    private static Map<String, List<String>> findLinksPerField(
+        Map<String, Object> fieldsToValue,
+        Pattern linksPattern
+    ) {
         Map<String, List<String>> matches = new Map<String, List<String>>();
         try {
-            // Loop through each field in the input map
             for (String fieldName : fieldsToValue.keySet()) {
-                String fieldValue = String.valueOf(fieldsToValue.get(fieldName)); // Get the value of the field
+                String fieldValue = String.valueOf(fieldsToValue.get(fieldName));
                 if (fieldValue != null) {
-                    String fieldLabel = getFieldLabel(fieldName); // Get the field label
-                    List<String> matchesPerField = new List<String>();
-                    Matcher matcher = linksPattern.matcher(
-                        fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'a').replace('"', '')
-                    );
-                    // Loop through all matches found in the field value
-                    while (matcher.find()) {
-                        String groupValue = matcher.group(); // Get the matched value
-                        if (!matchesPerField.contains(groupValue) && groupValue.toLowerCase().startsWith('http')) {
-                            if (groupValue.endsWith('.')) {
-                                groupValue = groupValue.substring(0, groupValue.length() - 1);
-                            }
-                            matchesPerField.add(groupValue);
-                        }
-                    }
-                    // Check if matches are found for the field
+                    String fieldLabel = getFieldLabel(fieldName);
+                    List<String> matchesPerField = findMatchesInField(linksPattern, fieldValue);
+
                     if (!matchesPerField.isEmpty()) {
-                        matches.put(fieldLabel, matchesPerField); // Add the field label and its matches to the result map
+                        matches.put(fieldLabel, matchesPerField);
                     }
                 }
             }
         } catch (Exception ex) {
-            // Catch and handle general exception
             logger.error(
                 'Problem finding links per field: ' +
                 ex.getMessage() +
@@ -121,6 +107,28 @@ public with sharing class NKS_KnowledgeController {
         return matches;
     }
 
+    private static List<String> findMatchesInField(Pattern linksPattern, String fieldValue) {
+        List<String> matchesPerField = new List<String>();
+        Matcher matcher = linksPattern.matcher(normalizeFieldValue(fieldValue));
+
+        // Loop through all matches found in the field value
+        while (matcher.find()) {
+            String groupValue = matcher.group(); // Get the matched value
+            if (!matchesPerField.contains(groupValue) && groupValue.toLowerCase().startsWith('http')) {
+                if (groupValue.endsWith('.')) {
+                    groupValue = groupValue.substring(0, groupValue.length() - 1);
+                }
+                matchesPerField.add(groupValue);
+            }
+        }
+        return matchesPerField;
+    }
+
+    // Normalize the field value by replacing characters
+    private static String normalizeFieldValue(String fieldValue) {
+        return fieldValue.replace('ø', 'o').replace('æ', 'ae').replace('å', 'a').replace('"', '');
+    }
+
     /**
      * @description Function to find dead links
      *  @author Sara Mohammadi | 11. April 2023
@@ -131,10 +139,12 @@ public with sharing class NKS_KnowledgeController {
         Map<String, List<String>> mapToCheck,
         List<String> linksToBeChecked
     ) {
-        Map<String, List<String>> resultList = new Map<String, List<String>>(); // Map to return
+        Map<String, List<String>> resultList = new Map<String, List<String>>();
+
         for (String field : mapToCheck.keySet()) {
             List<String> linksToCheck = mapToCheck.get(field);
             List<String> deadLinks = new List<String>();
+
             for (String str : linksToCheck) {
                 // Loop through each link in the list of links to be checked
                 for (String link : linksToBeChecked) {
@@ -142,18 +152,19 @@ public with sharing class NKS_KnowledgeController {
                         String endpoint =
                             'callout:knowledge_' +
                             link.replaceAll('[-.]', '_') +
-                            str.substringAfter(link); // Endpoint for the HTTP request
+                            str.substringAfter(link);
                         HttpRequest req = new HttpRequest();
                         req.setEndpoint(endpoint);
                         req.setMethod('GET');
+
                         try {
-                            HttpResponse res = new Http().send(req); // Send the HTTP request
-                            // Check if the response status code indicates a broken link
+                            HttpResponse res = new Http().send(req);
+
+                            // Found broken link
                             if (res.getStatusCode() >= 400) {
                                 deadLinks.add(str);
                             }
                         } catch (Exception ex) {
-                            // Catch and handle exception
                             logger.error(
                                 'Problem sending HTTP-request: ' +
                                 ex.getMessage() +
@@ -172,11 +183,20 @@ public with sharing class NKS_KnowledgeController {
                     }
                 }
             }
-            if (deadLinks.size() > 0) {
+            if (!deadLinks.isEmpty()) {
                 resultList.put(field, deadLinks);
             }
         }
         return resultList;
+    }
+
+    public static void setCompiledRegexPattern() {
+        String regex = '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)';
+        compiledRegexPattern = Pattern.compile(regex);
+    }
+
+    public static Pattern getCompiledRegexPattern() {
+        return compiledRegexPattern;
     }
 
     /**
@@ -185,18 +205,17 @@ public with sharing class NKS_KnowledgeController {
      * @param Knowledge__kav article
      * @return Map<String, List<String>> list of dead links per field for input article
      */
-    public static Map<String, List<String>> getBrokenLinks(Knowledge__kav article) {
+    public static Map<String, List<String>> getBrokenLinks(Knowledge__kav article, Pattern linksPattern) {
         List<String> linksToBeChecked = getLinksToBeChecked();
-        Map<String, List<String>> returnedMap = new Map<String, List<String>>(); // Map to return
+        Map<String, List<String>> mapToReturn = new Map<String, List<String>>();
         Map<String, Object> fieldsToValue = article.getPopulatedFieldsAsMap(); // Retrieve all populated fields (which are stored in memory of the article object)
-        Map<String, List<String>> matches = findLinksPerField(fieldsToValue); // Find links per field in the article
+        Map<String, List<String>> matches = findLinksPerField(fieldsToValue, linksPattern);
 
         try {
             if (!matches.isEmpty()) {
-                returnedMap = findBrokenLinks(matches, linksToBeChecked); // Find dead links per field in the article
+                mapToReturn = findBrokenLinks(matches, linksToBeChecked);
             }
         } catch (Exception ex) {
-            // Catch and handle general exception
             logger.error(
                 'Problem getting broken links for article ' +
                 article.Id +
@@ -211,7 +230,7 @@ public with sharing class NKS_KnowledgeController {
         } finally {
             logger.publish();
         }
-        return returnedMap;
+        return mapToReturn;
     }
 
     /**
@@ -231,12 +250,11 @@ public with sharing class NKS_KnowledgeController {
         // Set the recipient(s) of the email
         mail.setToAddresses(toAddresses);
         mail.setBccAddresses(bccAddresses);
-        mail.setSenderDisplayName('Døde lenker i kunnskapsbasen'); // Set the sender of the email
-        mail.setSubject('Rapport om døde lenker'); // Set the subject of the email
+        mail.setSenderDisplayName('Døde lenker i kunnskapsbasen');
+        mail.setSubject('Rapport om døde lenker');
         mail.setBccSender(false);
         mail.setUseSignature(false);
 
-        // Specify the text content of the email.
         String body = '';
         for (String title : listToSend.keySet()) {
             Map<String, List<String>> fields = listToSend.get(title);
@@ -250,10 +268,9 @@ public with sharing class NKS_KnowledgeController {
             }
             body += '<br/>';
         }
-        mail.setHtmlBody(body); // Set the body of the email
-        Messaging.SendEmailResult[] results = Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail }); // Send the email
+        mail.setHtmlBody(body);
+        Messaging.SendEmailResult[] results = Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
 
-        // Check if the email was sent successfully
         if (results[0].isSuccess()) {
             System.debug('Email sent successfully.');
         } else {

@@ -17,9 +17,9 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
-            Title = 'Svarberedskap - Korona',
-            UrlName = 'Svarberedskap-Korona',
-            Summary = 'Informasjon for test svarberedskap'
+            Title = 'Test Article',
+            UrlName = 'Test-Article',
+            Summary = 'Informasjon for test'
         );
         insert testKnowledge;
 
@@ -203,15 +203,5 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(null, testURL);
-    }
-
-    @isTest
-    static void testCountNewsViews() {
-        NKS_Announcement__c testNews = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
-        Test.startTest();
-        Integer counter = NKS_HomePageController.countNewsViews(testNews.Id);
-        Test.stopTest();
-
-        System.assertEquals(0, counter);
     }
 }

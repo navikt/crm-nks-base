@@ -1,14 +1,40 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import NAV_TASK_OBJECT from '@salesforce/schema/NavTask__c';
-
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import NAV_TASK_OBJECT from '@salesforce/schema/NavTask__c';
 import SUB_THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_SubTheme__c';
 import THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_Theme__c';
 
 export default class NksThemesPicklists extends LightningElement {
+    @api theme;
+    @api subTheme;
+
+    @track themes;
+    @track subthemes;
+    @track _selectedTheme;
+    @track _selectedSubTheme;
+
     objectApiName;
     employerRecordTypeId;
+
+    @api
+    get selectedTheme() {
+        return this._selectedTheme;
+    }
+
+    set selectedTheme(value) {
+        this._selectedTheme = value;
+    }
+
+    @api
+    get selectedSubTheme() {
+        return this._selectedSubTheme;
+    }
+
+    set selectedSubTheme(value) {
+        this._selectedSubTheme = value;
+    }
+
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
     getobjectInfo(result) {
         if (result.data) {
@@ -16,14 +42,6 @@ export default class NksThemesPicklists extends LightningElement {
             this.employerRecordTypeId = Object.keys(rtis).find((rti) => rtis[rti].name === 'Employer');
         }
     }
-    @api selectedTheme;
-    @api selectedSubTheme;
-    @api theme;
-    @api subTheme;
-    @track themes;
-    @track subthemes;
-    @track theme = this.theme;
-    @track subTheme = this.subTheme;
 
     @wire(getPicklistValues, {
         recordTypeId: '$employerRecordTypeId',
@@ -61,7 +79,7 @@ export default class NksThemesPicklists extends LightningElement {
         let key = this.subFieldData.controllerValues[event.target.value];
         this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(key));
 
-        this.selectedTheme = event.detail.value;
+        this._selectedTheme = event.detail.value;
 
         const selectedThemeEvent = new CustomEvent('themechange', {
             detail: this.selectedTheme
@@ -71,7 +89,7 @@ export default class NksThemesPicklists extends LightningElement {
     }
 
     handleSubThemeChange(event) {
-        this.selectedSubTheme = event.detail.value;
+        this._selectedSubTheme = event.detail.value;
         const selectedSubThemeEvent = new CustomEvent('subthemechange', {
             detail: this.selectedSubTheme
         });

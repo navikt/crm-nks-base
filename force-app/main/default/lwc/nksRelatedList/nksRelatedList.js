@@ -6,7 +6,6 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
     @api objectApiName;
-    @track relatedRecords;
 
     //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
@@ -19,9 +18,12 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api filterConditions; //Optional filter conditions (i.e. Name != 'TEST')
     @api headerColor; // Color for the component header
     @api dynamicUpdate = false; // Flag to set if component should automatically refresh if the an update is triggered on the parent record page
-    @api wireFields;
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
+
+    @track relatedRecords;
+
+    wireFields;
 
     connectedCallback() {
         //Call apex to retrieve related records
@@ -133,14 +135,15 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         return nameString;
     }
 
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
     resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || self);
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+        const parts = path.split('.');
+        const result = parts.reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined;
+        }, obj || {});
+
+        return result !== undefined ? result : null;
     }
 }

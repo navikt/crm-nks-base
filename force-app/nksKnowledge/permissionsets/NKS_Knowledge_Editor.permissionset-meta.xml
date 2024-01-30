@@ -57,6 +57,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Knowledge__kav.How_you_send_a_task__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Knowledge__kav.InternationalInformationInternal__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -136,11 +141,11 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Knowledge__kav.Clarifications</recordType>
+        <recordType>Knowledge__kav.Common</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Knowledge__kav.Common</recordType>
+        <recordType>Knowledge__kav.Internal_Routine</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

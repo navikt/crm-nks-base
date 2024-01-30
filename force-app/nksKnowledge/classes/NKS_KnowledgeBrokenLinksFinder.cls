@@ -8,6 +8,10 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     }
 
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
+        // Set regex pattern only once to avoid "Regex too complicated" err
+        NKS_KnowledgeController.setCompiledRegexPattern();
+        Pattern linksPattern = NKS_KnowledgeController.getCompiledRegexPattern();    
+          
         for (Knowledge__kav article : [
             SELECT
                 Title,
@@ -35,7 +39,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 testMap.put('TestField', testList);
                 finalList.put(article.Title, testMap);
             }
-            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article);
+            Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article, linksPattern);
             if (res.size() > 0) {
                 finalList.put(article.Title, res);
             }

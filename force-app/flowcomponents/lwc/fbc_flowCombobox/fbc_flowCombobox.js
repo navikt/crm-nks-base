@@ -403,7 +403,8 @@ export default class FlowCombobox extends LightningElement {
                 this.doOpenObject(event, event.currentTarget.dataset.value, event.currentTarget.dataset.objectType);
             } else {
                 this._dataType = event.currentTarget.dataset.flowType;
-                this.value = this.getFullPath(this._selectedFieldPath, event.currentTarget.dataset.value);
+
+                this._value = this.getFullPath(this._selectedFieldPath, event.currentTarget.dataset.value);
                 this.isDataModified = true;
                 this.hasError = false;
                 this.closeOptionDialog();
@@ -414,7 +415,7 @@ export default class FlowCombobox extends LightningElement {
     doOpenObject(event, value, objectType) {
         event.stopPropagation();
         this._selectedFieldPath = (this._selectedFieldPath ? this._selectedFieldPath + '.' : '') + value;
-        this.value = this._selectedFieldPath + '.';
+        this._value = this._selectedFieldPath + '.';
         this._selectedObjectType = objectType;
     }
 

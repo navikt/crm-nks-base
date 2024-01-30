@@ -15,7 +15,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api title;
     @api content;
     @api objectName;
-    @api filter;
     @api orderby;
     @api limit;
     @api listviewname;
@@ -30,12 +29,21 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @track records = [];
 
     userSkills = [];
-
     showSpinner = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
     initRun = false;
+    _filter;
+
+    @api
+    get filter() {
+        return this._filter;
+    }
+
+    set filter(value) {
+        this._filter = value;
+    }
 
     refreshList = () => {
         const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
@@ -47,10 +55,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
         this.showSpinner = true;
-        // Add userId to filter for STO and Chat
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
-            // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-            this.filter += " AND OwnerId='" + userId + "'";
+            this._filter += " AND OwnerId='" + userId + "'";
             console.log(this.objectName + ': ' + this.filter);
         }
 

@@ -13,7 +13,6 @@ export default class NksSingleRecordInputField extends LightningElement {
     @api fieldName;
     @api readOnly;
     @api required;
-    @api value = null;
     @api variant;
 
     //OBJECT PARAMS
@@ -21,6 +20,17 @@ export default class NksSingleRecordInputField extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api recordTypeId;
+
+    _value = null;
+
+    @api
+    get value() {
+        return this._value;
+    }
+
+    set value(value) {
+        this._value = value;
+    }
 
     @wire(MessageContext)
     messageContext;
@@ -31,12 +41,12 @@ export default class NksSingleRecordInputField extends LightningElement {
     }
 
     onChange(event) {
-        if(event.detail.value.length === 0){
-            this.value = null;
-        }else{
-            this.value = event.detail.value;
+        if (event.detail.value.length === 0) {
+            this._value = null;
+        } else {
+            this._value = event.detail.value;
         }
-        this.dispatchEvent(new FlowAttributeChangeEvent('value',this.value));
+        this.dispatchEvent(new FlowAttributeChangeEvent('value', this.value));
         const payload = { name: this.fieldName, value: this.value };
         publish(this.messageContext, crmSingleValueUpdate, payload);
     }
@@ -47,11 +57,10 @@ export default class NksSingleRecordInputField extends LightningElement {
         //Theme and theme group must be set
         if (true === this.required && this.value) {
             return { isValid: true };
-        } 
-            return {
-                isValid: false,
-                errorMessage: VALIDATION_ERROR
-            };
-        
+        }
+        return {
+            isValid: false,
+            errorMessage: VALIDATION_ERROR
+        };
     }
 }

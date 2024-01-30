@@ -3,6 +3,7 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
@@ -62,14 +63,28 @@ export default class NksSamtalereferatDetails extends LightningElement {
         return this.notes != null && this.notes.length > 0;
     }
 
-    handleChange(event) {
+    handleStatusChange(event) {
+        const { status, outputVariables } = event.detail;
         if (
-            event.detail.status === 'FINISHED' &&
-            event.detail.outputVariables?.some(
-                (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
-            )
-        )
+            status === 'FINISHED' &&
+            outputVariables?.some((output) => output.objectType === 'Conversation_Note__c' && output.value !== null)
+        ) {
+            publishToAmplitude('Conversation Note Journaled');
             refreshApex(this._wiredRecord);
+        }
+    }
+
+    handleChange(event) {
+        if (event.detail) {
+            const { value } = event.detail;
+            let message = {
+                eventType: 'ThemeCategorization',
+                properties: { value: value }
+            };
+            message.eventType +=
+                value === 'GENERELL_SAK' || value === 'FAGSAK' ? ' - Sakstype endret' : ' - Theme/Gjelder changed';
+            publishToAmplitude('ThemeCategorization', { value: value });
+        }
     }
 
     handleExpandClick() {

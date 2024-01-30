@@ -44,7 +44,7 @@ export default class NksDataSyncher extends LightningElement {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
         } else if (error) {
-            console.log(error);
+            console.log('Problme getting record: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -63,54 +63,52 @@ export default class NksDataSyncher extends LightningElement {
             }
         }
         if (error) {
-            console.log(JSON.stringify(error, null, 2));
+            console.log('Problem getting person information: ', JSON.stringify(error, null, 2));
         }
     }
 
-    async doSynch(personIdent, personActorId) {
-        this.synced = false;
-        await Promise.all([this.bankAccountNumberSync(personIdent), this.oppgaveSync(personActorId)]);
-        this.synced = true;
-        eval("$A.get('e.force:refreshView').fire();"); //As getRecordNotifyChange does not support complete rerender of related lists, the aura hack is used
+    async doSynch(personIdent, personActorId, eventName = 'e.force:refreshView') {
+        try {
+            this.synced = false;
+            await Promise.all([this.bankAccountNumberSync(personIdent), this.oppgaveSync(personActorId)]);
+            this.synced = true;
+            const refreshEvent = new CustomEvent(eventName);
+            this.dispatchEvent(refreshEvent);
+        } catch (error) {
+            console.error('Problem synching bankAccountNumber/oppgave: ', JSON.stringify(error, null, 2));
+        }
     }
 
-    oppgaveSync(personActorId) {
-        return new Promise(async (resolve) => {
-            if (this.getSyncStatus('oppgave').status !== syncStatus.SYNCING) {
-                return resolve();
+    async oppgaveSync(personActorId) {
+        try {
+            const syncStatusObj = this.getSyncStatus('oppgave');
+            if (syncStatusObj.status !== syncStatus.SYNCING) {
+                return;
             }
-            console.log('ACTOR ID: ' + personActorId);
-            syncActorOppgaver(personActorId)
-                .then(() => {
-                    this.setSyncStatus('oppgave', syncStatus.SYNCED);
-                })
-                .catch((error) => {
-                    this.setSyncStatus('oppgave', syncStatus.ERROR);
-                    console.log(JSON.stringify(error, null, 2));
-                })
-                .finally(() => {
-                    resolve();
-                });
-        });
+
+            await syncActorOppgaver(personActorId);
+            this.setSyncStatus('oppgave', syncStatus.SYNCED);
+        } catch (error) {
+            this.setSyncStatus('oppgave', syncStatus.ERROR);
+            console.error('Error in oppgaveSync:', JSON.stringify(error, null, 2));
+            throw new Error('Error syncing oppgave: ' + error.message);
+        }
     }
 
-    bankAccountNumberSync(ident) {
-        return new Promise(async (resolve) => {
-            if (this.getSyncStatus('bankAccount').status !== syncStatus.SYNCING) {
-                return resolve();
+    async bankAccountNumberSync(ident) {
+        try {
+            const syncStatusObj = this.getSyncStatus('bankAccount');
+            if (syncStatusObj.status !== syncStatus.SYNCING) {
+                return;
             }
-            syncBankAccountNumber({ ident: ident })
-                .then(() => {
-                    this.setSyncStatus('bankAccount', syncStatus.SYNCED);
-                })
-                .catch((error) => {
-                    this.setSyncStatus('bankAccount', syncStatus.ERROR);
-                    console.error(JSON.stringify(error, null, 2));
-                })
-                .finally(() => {
-                    resolve();
-                });
-        });
+
+            await syncBankAccountNumber({ ident: ident });
+            this.setSyncStatus('bankAccount', syncStatus.SYNCED);
+        } catch (error) {
+            this.setSyncStatus('bankAccount', syncStatus.ERROR);
+            console.error('Error in bankAccountNumberSync:', JSON.stringify(error, null, 2));
+            throw new Error('Error syncing bank account number: ' + error.message);
+        }
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -129,7 +127,7 @@ export default class NksDataSyncher extends LightningElement {
                 }
             })
             .catch((error) => {
-                console.log(JSON.stringify(error, null, 2));
+                console.log('Problem getting related record: ', JSON.stringify(error, null, 2));
             });
     }
 
@@ -167,23 +165,25 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     calculateSyncStatus(ss) {
-        ss.isSyncing = ss.status === syncStatus.SYNCING ? true : false;
-        ss.isSynced = ss.status === syncStatus.SYNCED ? true : false;
-        ss.isError = ss.status === syncStatus.ERROR ? true : false;
+        ss.isSyncing = ss.status === syncStatus.SYNCING;
+        ss.isSynced = ss.status === syncStatus.SYNCED;
+        ss.isError = ss.status === syncStatus.ERROR;
     }
 
     getSyncStatus(name) {
         return this.syncStatuses.find((element) => element.name === name);
     }
 
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
     resolve(path, obj) {
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || self);
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+
+        const parts = path.split('.');
+        const result = parts.reduce(function (prev, curr) {
+            return prev ? prev[curr] : undefined;
+        }, obj || {});
+
+        return result !== undefined ? result : null;
     }
 }

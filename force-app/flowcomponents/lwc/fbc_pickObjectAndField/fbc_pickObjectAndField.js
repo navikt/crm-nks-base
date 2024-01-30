@@ -72,23 +72,21 @@ export default class fbc_pickObjectAndField extends LightningElement {
         } else if (data) {
             let fields = data.fields;
             let fieldResults = [];
-            for (let field in (this.fields = fields)) {
-                if (Object.prototype.hasOwnProperty.call(fields, field)) {
-                    if (this.isTypeSupported(fields[field])) {
-                        fieldResults.push({
-                            label: fields[field].label,
-                            value: fields[field].apiName,
-                            dataType: fields[field].dataType,
-                            required: fields[field].required,
-                            updateable: fields[field].updateable,
-                            referenceTo:
-                                fields[field].referenceToInfos.length > 0
-                                    ? fields[field].referenceToInfos.map((curRef) => {
-                                          return curRef.apiName;
-                                      })
-                                    : []
-                        });
-                    }
+
+            this.fields = fields;
+            for (let field of fields) {
+                if (this.isTypeSupported(field)) {
+                    fieldResults.push({
+                        label: field.label,
+                        value: field.apiName,
+                        dataType: field.dataType,
+                        required: field.required,
+                        updateable: field.updateable,
+                        referenceTo:
+                            field.referenceToInfos.length > 0
+                                ? field.referenceToInfos.map((curRef) => curRef.apiName)
+                                : []
+                    });
                 }
                 if (
                     this._field &&
@@ -100,6 +98,7 @@ export default class fbc_pickObjectAndField extends LightningElement {
                 }
             }
             this.fields = fieldResults;
+
             if (this.fields) {
                 this.dispatchDataChangedEvent({
                     ...this.fields.find((curField) => curField.value === this._field),
