@@ -20,10 +20,9 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api dynamicUpdate = false; // Flag to set if component should automatically refresh if the an update is triggered on the parent record page
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
+    @api wireFields;
 
     @track relatedRecords;
-
-    wireFields;
 
     connectedCallback() {
         //Call apex to retrieve related records
