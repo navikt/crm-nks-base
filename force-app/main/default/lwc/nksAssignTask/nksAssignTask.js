@@ -3,16 +3,18 @@ import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import getUnits from '@salesforce/apex/NKS_NavUnitsController.getUnits';
 
 export default class NksAssignTask extends LightningElement {
-    _queueId;
-    _selectedTheme;
-    _selectedSubTheme;
-    _createTask;
-    _dueDate;
-    _additionalComments;
-    _conversationNote;
+    @api queueId;
+    @api selectedTheme;
+    @api selectedSubTheme;
+    @api createTask;
+    @api shouldCreateTask;
+    @api dueDate;
+    @api additionalComments;
+    @api conversationNote;
 
     @track units;
     @track defaultQueueId = this.queueId;
+    @track createTask;
     @track themeValue;
 
     @wire(getUnits)
@@ -24,77 +26,14 @@ export default class NksAssignTask extends LightningElement {
         }
     }
 
-    @api
-    get queueId() {
-        return this._queueId;
-    }
-
-    set queueId(value) {
-        this._queueId = value;
-    }
-
-    @api
-    get selectedTheme() {
-        return this._selectedTheme;
-    }
-
-    set selectedTheme(value) {
-        this._selectedTheme = value;
-    }
-
-    @api
-    get selectedSubTheme() {
-        return this._selectedSubTheme;
-    }
-
-    set selectedSubTheme(value) {
-        this._selectedSubTheme = value;
-    }
-
-    @api
-    get createTask() {
-        return this._createTask;
-    }
-
-    set createTask(value) {
-        this._createTask = value;
-    }
-
-    @api
-    get dueDate() {
-        return this._dueDate;
-    }
-
-    set dueDate(value) {
-        this._dueDate = value;
-    }
-
-    @api
-    get additionalComments() {
-        return this._additionalComments;
-    }
-
-    set additionalComments(value) {
-        this._additionalComments = value;
-    }
-
-    @api
-    get conversationNote() {
-        return this._conversationNote;
-    }
-
-    set conversationNote(value) {
-        this._conversationNote = value;
-    }
-
     handleUnitChange(event) {
-        this._queueId = event.detail.value;
+        this.queueId = event.detail.value;
         const attributeChangeEvent = new FlowAttributeChangeEvent('unit', this.queueId);
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleSubThemeChange(event) {
-        this._selectedSubTheme = event.detail;
+        this.selectedSubTheme = event.detail;
         if (this.selectedSubTheme === 'Tiltaksøkonomi') {
             this.template.querySelector('[data-id="toggle"]').className = 'hide';
         } else if (this.selectedSubTheme === 'Lønnskompensasjon') {
@@ -109,31 +48,41 @@ export default class NksAssignTask extends LightningElement {
     }
 
     handleThemeChange(event) {
-        this._selectedTheme = event.detail;
+        this.selectedTheme = event.detail;
+        //this.selectedSubTheme = null;
         const attributeChangeEvent = new FlowAttributeChangeEvent('theme', this.selectedTheme);
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleToggleChange(event) {
-        this._createTask = event.target.checked;
+        this.createTask = event.target.checked;
+
+        /*if (this.createTask == true) {
+            this.template.querySelector('[data-id="task"]').className = 'show';
+            //this.template.querySelector('[data-id="checkbox-toggle-16"]').className = 'slds-checkbox_on';
+
+        } else {
+            this.template.querySelector('[data-id="task"]').className = 'hide';
+        }*/
         const attributeChangeEvent = new FlowAttributeChangeEvent('create-task', this.createTask);
+
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleDueDateChange(event) {
-        this._dueDate = event.detail.value;
+        this.dueDate = event.detail.value;
         const attributeChangeEvent = new FlowAttributeChangeEvent('due-date', this.dueDate);
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleAdditionalChange(event) {
-        this._additionalComments = event.detail.value;
+        this.additionalComments = event.detail.value;
         const attributeChangeEvent = new FlowAttributeChangeEvent('additional-commnets', this.additionalComment);
         this.dispatchEvent(attributeChangeEvent);
     }
 
     handleConversationNoteChange(event) {
-        this._conversationNote = event.detail;
+        this.conversationNote = event.detail;
         const attributeChangeEvent = new FlowAttributeChangeEvent('conversation-note', this.conversationNote);
         this.dispatchEvent(attributeChangeEvent);
     }

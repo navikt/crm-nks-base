@@ -16,6 +16,7 @@ export default class FlowCombobox extends LightningElement {
     @api builderContextFilterType;
     @api builderContextFilterCollectionBoolean;
     @api maxWidth;
+
     @track _dataType;
     @track _value;
     @track allOptions;
@@ -26,6 +27,7 @@ export default class FlowCombobox extends LightningElement {
     @track _selectedObjectType;
     @track _selectedFieldPath;
     @track hasError = false;
+
     isMenuOpen = false;
     isDataModified = false;
     selfEvent = false;
@@ -102,6 +104,7 @@ export default class FlowCombobox extends LightningElement {
     ];
 
     _staticOptions;
+
     @api
     get staticOptions() {
         return this._staticOptions;

@@ -6,8 +6,6 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class CrmRelatedList extends LightningElement {
     @api recordId;
     @api objectApiName;
-
-    //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
     @api iconName; //Displayed icon.
     @api relatedObjectApiName; //Object name of the records in the list
@@ -23,8 +21,9 @@ export default class CrmRelatedList extends LightningElement {
     @api objectName; // Used for the hidden header of each item.
     @api dateField; // Used for the hidden header of each item.
     @api displayedFields;
-    @api relatedRecords;
     @api wireFields;
+
+    relatedRecords;
 
     connectedCallback() {
         //Call apex to retrieve related records
