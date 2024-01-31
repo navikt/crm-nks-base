@@ -76,17 +76,19 @@ export default class fbc_pickObjectAndField extends LightningElement {
             this.fields = fields;
             for (let field of fields) {
                 if (this.isTypeSupported(field)) {
-                    fieldResults.push({
-                        label: field.label,
-                        value: field.apiName,
-                        dataType: field.dataType,
-                        required: field.required,
-                        updateable: field.updateable,
-                        referenceTo:
-                            field.referenceToInfos.length > 0
-                                ? field.referenceToInfos.map((curRef) => curRef.apiName)
-                                : []
-                    });
+                    if (Object.prototype.hasOwnProperty.call(fields, field)) {
+                        fieldResults.push({
+                            label: field.label,
+                            value: field.apiName,
+                            dataType: field.dataType,
+                            required: field.required,
+                            updateable: field.updateable,
+                            referenceTo:
+                                field.referenceToInfos.length > 0
+                                    ? field.referenceToInfos.map((curRef) => curRef.apiName)
+                                    : []
+                        });
+                    }
                 }
                 if (
                     this._field &&
