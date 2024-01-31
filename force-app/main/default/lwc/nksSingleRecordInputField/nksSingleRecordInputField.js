@@ -13,6 +13,7 @@ export default class NksSingleRecordInputField extends LightningElement {
     @api fieldName;
     @api readOnly;
     @api required;
+    @api value = null;
     @api variant;
 
     //OBJECT PARAMS
@@ -20,17 +21,6 @@ export default class NksSingleRecordInputField extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api recordTypeId;
-
-    _value = null;
-
-    @api
-    get value() {
-        return this._value;
-    }
-
-    set value(value) {
-        this._value = value;
-    }
 
     @wire(MessageContext)
     messageContext;
@@ -42,9 +32,9 @@ export default class NksSingleRecordInputField extends LightningElement {
 
     onChange(event) {
         if (event.detail.value.length === 0) {
-            this._value = null;
+            this.value = null;
         } else {
-            this._value = event.detail.value;
+            this.value = event.detail.value;
         }
         this.dispatchEvent(new FlowAttributeChangeEvent('value', this.value));
         const payload = { name: this.fieldName, value: this.value };
