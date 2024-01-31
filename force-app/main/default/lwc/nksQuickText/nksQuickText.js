@@ -143,7 +143,6 @@ export default class nksQuickText extends LightningElement {
                 el.addEventListener('focus', promiseListener);
                 el.focus();
                 el.removeEventListener('focus', promiseListener);
-
                 setTimeout(() => resolve(false), 0);
             } catch (ex) {
                 return resolve(false);

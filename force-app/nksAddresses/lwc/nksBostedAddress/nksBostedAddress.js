@@ -73,6 +73,7 @@ export default class NksBostedAddress extends LightningElement {
         clipboardInput.hidden = false;
         clipboardInput.value = this.residentialAddresses;
         clipboardInput.select();
+        // eslint-disable-next-line @locker/locker/distorted-document-exec-command
         document.execCommand('copy');
         clipboardInput.hidden = true;
         clipboardInput.disabled = true;

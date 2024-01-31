@@ -53,10 +53,12 @@
     },
 
     copyTextHelper: function (text) {
-        var hiddenInput = document.createElement('input');
+        let hiddenInput = document.createElement('input');
+        // eslint-disable-next-line @locker/locker/distorted-element-set-attribute
         hiddenInput.setAttribute('value', text);
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
+        // eslint-disable-next-line @locker/locker/distorted-document-exec-command
         document.execCommand('copy');
         document.body.removeChild(hiddenInput);
     },

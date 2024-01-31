@@ -1,6 +1,7 @@
 ({
     doInit: function (cmp, event, helper) {
         helper.setFlowButtons(cmp);
+        // eslint-disable-next-line @salesforce/aura/ecma-intrinsics, compat/compat
         cmp.set('v.recordFields', Array.from(new Set(['Id', cmp.get('v.relationshipField')])));
         cmp.set('v.loadRecord', true);
     },

@@ -47,7 +47,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     refreshList = () => {
         const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
-        //eslint-disable-next-line @lwc/lwc/no-async-operation
+        // eslint-disable-next-line @locker/locker/distorted-window-set-timeout, @lwc/lwc/no-async-operation
         setTimeout(() => {
             this.loadList();
         }, rand);
