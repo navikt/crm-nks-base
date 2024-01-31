@@ -3,32 +3,41 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent } from 'lightning/flo
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import Quickchoice_Images from '@salesforce/resourceUrl/fbc_Quickchoice_Images'; //Static Resource containing images for Visual Cards
 
-export default class QuickChoiceFSC extends LightningElement {
-    masterRecordTypeId = '012000000000000AAA'; //if a recordTypeId is not provided, use this one
-    picklistOptionsStorage;
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 
-    @api availableActions = [];
+export default class QuickChoiceFSC extends LightningElement {
+    @api
+    availableActions = [];
+
     @api masterLabel;
     @api choiceLabels;
     @api choiceValues; //string collection
+
     @api displayMode; //Picklist, Radio, Card (3 different selection types) - Visual is equivalent to Card
+
     @api numberOfColumns; //for Visual Pickers only, 1(default) or 2
 
     //-------------For inputMode = Picklist
     @api allowNoneToBeChosen; //For picklist field only
+    @api recordTypeId; //used for picklist fields
     @api objectName; //used for picklist fields
     @api fieldName; //used for picklist fields
     @api sortList; //used for picklist fields
 
     //-------------For inputMode = Visual Text Box (Card)
+    @api choiceIcons;
     @api includeIcons;
     @api iconSize;
     @api navOnSelect;
 
     //-------------For displayMode = Picklist or Radio
     @api style_width = 320;
+
+    masterRecordTypeId = '012000000000000AAA'; //if a recordTypeId is not provided, use this one
     @api inputMode;
     @api required;
+    picklistOptionsStorage;
 
     @track selectedValue;
     @track _selectedLabel;
@@ -45,9 +54,6 @@ export default class QuickChoiceFSC extends LightningElement {
     @track options = [];
     @track items = [];
     @track dualColumns = false;
-    @track _radioGroup = 'RG-' + this.masterLabel + '_RG';
-    @track _choiceIcons;
-    @track _recordTypeId;
 
     @api get value() {
         return this.selectedValue;
@@ -83,29 +89,11 @@ export default class QuickChoiceFSC extends LightningElement {
     }
 
     @api get radioGroup() {
-        return this._radioGroup;
+        return 'RG-' + this.masterLabel + '_RG';
     }
 
     set radioGroup(value) {
-        this._radioGroup = value;
-    }
-
-    @api
-    get recordTypeId() {
-        return this._recordTypeId;
-    }
-
-    set recordTypeId(value) {
-        this._recordTypeId = value;
-    }
-
-    @api
-    get choiceIcons() {
-        return this._choiceIcons;
-    }
-
-    set choiceIcons(value) {
-        this._choiceIcons = value;
+        this.radioGroup = value;
     }
 
     //possibility master record type only works if there aren't other record types?
@@ -135,6 +123,8 @@ export default class QuickChoiceFSC extends LightningElement {
             // Sort Picklist Values
             this.picklistOptionsStorage = this.doSort(picklistOptions, this.sortList);
 
+            console.log('displayMode is' + this.displayMode);
+
             if (this.inputMode === 'Picklist Field') {
                 this.setPicklistOptions();
             }
@@ -149,7 +139,11 @@ export default class QuickChoiceFSC extends LightningElement {
     }
 
     get calculatedObjectAndFieldName() {
+        console.log('in getter: objectApiName is: ' + this.objectName);
+        console.log('in getter: fieldApiName is: ' + this.fieldName);
+
         if (this.objectName && this.fieldName) {
+            console.log('satisfied calculatedObjectAndFieldName test');
             return `${this.objectName}.${this.fieldName}`;
         }
         return undefined;
@@ -179,41 +173,43 @@ export default class QuickChoiceFSC extends LightningElement {
     }
 
     doSort(value, sortFlag) {
-        if (!value || !sortFlag) {
+        if (!value) {
+            return;
+        }
+        if (!sortFlag) {
             return value;
         }
-        const fieldValue = (row) => (row.label || '').toUpperCase();
-
-        return [...value].sort((a, b) => {
-            const aFieldValue = fieldValue(a);
-            const bFieldValue = fieldValue(b);
-
-            if (aFieldValue < bFieldValue) {
-                return -1;
-            }
-            if (aFieldValue > bFieldValue) {
-                return 1;
-            }
-            return 0;
-        });
+        let fieldValue = (row) => row['label'] || '';
+        return [
+            ...value.sort(
+                (a, b) => ((a = fieldValue(a).toUpperCase()), (b = fieldValue(b).toUpperCase()), (a > b) - (b > a))
+            )
+        ];
     }
 
     connectedCallback() {
-        if (!this.recordTypeId) this._recordTypeId = this.masterRecordTypeId;
+        console.log('Entering Connected Callback for smartchoice');
+        console.log('recordtypeId is: ' + this.recordTypeId);
+        if (!this.recordTypeId) this.recordTypeId = this.masterRecordTypeId;
 
         // Visual Card Selection
         let items = []; //parameters for visual picker selection
         let index = 0;
         if (this.displayMode === 'Card' || this.displayMode === 'Visual') {
             this.showVisual = true;
+            console.log('includeIcons is: ' + this.includeIcons);
+            console.log('choiceIcons is: ' + this.choiceIcons);
             if (!this.includeIcons || !this.choiceIcons) {
-                this._choiceIcons = this.choiceLabels;
+                console.log('icons not needed');
+                this.choiceIcons = this.choiceLabels;
             }
             if (this.numberOfColumns === '2') {
                 this.dualColumns = true;
             }
 
             //User passes in Label collection of string for box header and Value collection of strings for box description
+            console.log('entering input mode Visual Text Box');
+            console.log('choiceLabels is: ' + this.choiceLabels);
             this.choiceLabels.forEach((label) => {
                 //Add the correct path to custom images
                 if (this.choiceIcons[index].includes(':')) {
