@@ -23,9 +23,8 @@ export default class CrmRelatedList extends LightningElement {
     @api objectName; // Used for the hidden header of each item.
     @api dateField; // Used for the hidden header of each item.
     @api displayedFields;
-
-    relatedRecords;
-    wireFields;
+    @api relatedRecords;
+    @api wireFields;
 
     connectedCallback() {
         //Call apex to retrieve related records

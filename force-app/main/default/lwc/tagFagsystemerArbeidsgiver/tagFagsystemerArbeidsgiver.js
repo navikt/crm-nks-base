@@ -16,11 +16,10 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
     @api recordId;
     @api title;
     @api filterList;
+    @api accountId;
 
     @track showLinks;
     @track inFagsone = true;
-
-    accountId;
 
     possibleLinks = [
         { name: 'AAregister', field: 'AAregisterURL__c' },
