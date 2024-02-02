@@ -241,11 +241,9 @@ export default class NksBrukervarselList extends LightningElement {
             throw new Error('Path must be a string');
         }
 
-        const parts = path.split('.');
-        const result = parts.reduce(function (prev, curr) {
-            return prev ? prev[curr] : undefined;
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
         }, obj || {});
 
-        return result !== undefined ? result : null;
     }
 }
