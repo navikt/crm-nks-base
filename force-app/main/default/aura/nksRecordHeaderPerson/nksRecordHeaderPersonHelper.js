@@ -18,7 +18,7 @@
     },
 
     setGenderIcon: function (cmp) {
-        let gender = 'neutral';
+        let gender;
         switch (cmp.get('v.accountRecord.CRM_Person__r.INT_Sex__c')) {
             case 'Mann':
                 gender = 'male';
@@ -26,6 +26,8 @@
             case 'Kvinne':
                 gender = 'female';
                 break;
+            default:
+                gender = 'neutral';
         }
 
         cmp.set('v.genderIcon', gender);
@@ -51,17 +53,23 @@
     },
 
     copyTextHelper: function (text) {
-        var hiddenInput = document.createElement('input');
+        let hiddenInput = document.createElement('input');
+        // eslint-disable-next-line @locker/locker/distorted-element-set-attribute
         hiddenInput.setAttribute('value', text);
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
+        // eslint-disable-next-line @locker/locker/distorted-document-exec-command
         document.execCommand('copy');
         document.body.removeChild(hiddenInput);
     },
 
     resolve: function (path, obj) {
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
-        }, obj || self);
+        }, obj || {});
     }
 });

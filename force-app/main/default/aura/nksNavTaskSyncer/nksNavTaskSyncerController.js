@@ -1,5 +1,5 @@
 ({
-    doInit: function (component, event, helper) {
+    doInit: function (component) {
         //Call apex to initiate sync activity
         let syncAction = component.get('c.syncOpenAndAssigned');
         syncAction.setCallback(this, function (response) {

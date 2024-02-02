@@ -1,5 +1,3 @@
-export { flowComboboxDefaults, isReference, formattedValue, getDataType, removeFormatting };
-
 const flowComboboxDefaults = {
     stringDataType: 'String',
     referenceDataType: 'reference',
@@ -20,17 +18,15 @@ const isReference = (value) => {
 const getDataType = (currentText) => {
     if (isReference(currentText)) {
         return flowComboboxDefaults.referenceDataType;
-    } else {
-        return flowComboboxDefaults.stringDataType;
     }
+    return flowComboboxDefaults.stringDataType;
 };
 
 const formattedValue = (value, dataType) => {
     if (isReference(value)) {
         return value;
-    } else {
-        return dataType === flowComboboxDefaults.referenceDataType ? '{!' + value + '}' : value;
     }
+    return dataType === flowComboboxDefaults.referenceDataType ? '{!' + value + '}' : value;
 };
 
 const removeFormatting = (value) => {
@@ -41,3 +37,5 @@ const removeFormatting = (value) => {
     let clearValue = isRef ? value.substring(0, value.lastIndexOf('}')).replace('{!', '') : value;
     return clearValue;
 };
+
+export { flowComboboxDefaults, isReference, formattedValue, getDataType, removeFormatting };

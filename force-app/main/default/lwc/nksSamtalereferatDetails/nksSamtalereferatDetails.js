@@ -17,7 +17,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
     renderedCallback() {
         console.log(this.objectInfo);
     }
-    
+
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
         queryFields: 'Id, CRM_conversation_note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
@@ -65,24 +65,24 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
-        if (status === 'FINISHED' &&
-            outputVariables?.some(
-                (output) => output.objectType === 'Conversation_Note__c' && output.value !== null
-            )
+        if (
+            status === 'FINISHED' &&
+            outputVariables?.some((output) => output.objectType === 'Conversation_Note__c' && output.value !== null)
         ) {
             publishToAmplitude('Conversation Note Journaled');
             refreshApex(this._wiredRecord);
-        }        
+        }
     }
 
-    handleChange(event) {;
+    handleChange(event) {
         if (event.detail) {
             const { value } = event.detail;
             let message = {
                 eventType: 'ThemeCategorization',
                 properties: { value: value }
             };
-            value === 'GENERELL_SAK' || value === 'FAGSAK' ? message.eventType += ' - Sakstype endret' : message.eventType += ' - Theme/Gjelder changed';
+            message.eventType +=
+                value === 'GENERELL_SAK' || value === 'FAGSAK' ? ' - Sakstype endret' : ' - Theme/Gjelder changed';
             publishToAmplitude('ThemeCategorization', { value: value });
         }
     }

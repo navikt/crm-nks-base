@@ -31,12 +31,12 @@ export default class NksSingleRecordInputField extends LightningElement {
     }
 
     onChange(event) {
-        if(event.detail.value.length === 0){
+        if (event.detail.value.length === 0) {
             this.value = null;
-        }else{
+        } else {
             this.value = event.detail.value;
         }
-        this.dispatchEvent(new FlowAttributeChangeEvent('value',this.value));
+        this.dispatchEvent(new FlowAttributeChangeEvent('value', this.value));
         const payload = { name: this.fieldName, value: this.value };
         publish(this.messageContext, crmSingleValueUpdate, payload);
     }
@@ -47,11 +47,10 @@ export default class NksSingleRecordInputField extends LightningElement {
         //Theme and theme group must be set
         if (true === this.required && this.value) {
             return { isValid: true };
-        } else {
-            return {
-                isValid: false,
-                errorMessage: VALIDATION_ERROR
-            };
         }
+        return {
+            isValid: false,
+            errorMessage: VALIDATION_ERROR
+        };
     }
 }

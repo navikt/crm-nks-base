@@ -29,7 +29,7 @@ export default class NksThemesPicklists extends LightningElement {
         recordTypeId: '$employerRecordTypeId',
         fieldApiName: THEME_FIELD
     })
-    themeFieldInfo({ data, error }) {
+    themeFieldInfo({ data }) {
         if (data) this.themes = data.values;
     }
 
@@ -41,16 +41,15 @@ export default class NksThemesPicklists extends LightningElement {
         if (data) {
             this.subFieldData = data;
             //get array key for selected theme
-            var selectedThemeKey = 0;
-            for (var i = 0; i < this.themes.length; i++) {
-                if (this.themes[i].value == this.theme) {
+            let selectedThemeKey = 0;
+            for (let i = 0; i < this.themes.length; i++) {
+                if (this.themes[i].value === this.theme) {
                     selectedThemeKey = i;
                 }
             }
             this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(selectedThemeKey));
-        }
-        else {
-            console.log("error: "+error);
+        } else {
+            console.log('error: ' + error);
         }
     }
 

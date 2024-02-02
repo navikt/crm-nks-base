@@ -179,7 +179,7 @@ export default class NksBrukervarselList extends LightningElement {
         });
 
         Promise.allSettled([brukervarsler, brukernotifikasjoner]).finally(() => {
-            this.notifications = new Array().concat(this.varsler).concat(this.brukernotifikasjon);
+            this.notifications = [].concat(this.varsler).concat(this.brukernotifikasjon);
             this.isLoaded = true;
             this.filterNotificationList();
         });
@@ -222,10 +222,6 @@ export default class NksBrukervarselList extends LightningElement {
     showAllNotifications() {
         this.showAll = true;
         this.filterNotificationList();
-        let message = {
-            eventType: 'UN List',
-            properties: { type: 'Show all notifications' }
-        };
         publishToAmplitude('UN List', { type: 'Show all notifications' });
     }
 
@@ -240,14 +236,13 @@ export default class NksBrukervarselList extends LightningElement {
         }
     }
 
-    /**
-     * Retrieves the value from the given object's data path
-     * @param {data path} path
-     * @param {JS object} obj
-     */
     resolve(path, obj) {
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+
         return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
-        }, obj || self);
+        }, obj || {});
     }
 }

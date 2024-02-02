@@ -13,6 +13,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         try {
+            // eslint-disable-next-line @locker/locker/distorted-document-exec-command
             successful = document.execCommand('copy');
             msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);

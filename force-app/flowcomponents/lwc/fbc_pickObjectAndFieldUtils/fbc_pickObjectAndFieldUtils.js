@@ -1,4 +1,3 @@
-export { standardObjectOptions };
 const standardObjectOptions = [
     { value: 'Account', label: 'Account' },
     { value: 'AccountPartner', label: 'Account Partner' },
@@ -56,3 +55,5 @@ const standardObjectOptions = [
     { value: 'WorkOrderLineItem', label: 'Work Order Line Item' },
     { value: 'WorkType', label: 'Work Type' }
 ];
+
+export { standardObjectOptions };
