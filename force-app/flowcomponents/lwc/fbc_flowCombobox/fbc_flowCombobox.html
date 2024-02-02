@@ -29,7 +29,7 @@
                                             data-input-name={name}
                                             data-id="userinput"
                                             variant="label-hidden"
-                                            value={_value}
+                                            value={value}
                                             onchange={handleSearchField}
                                             onkeydown={handleKeyDown}
                                             onclick={handleOpenOptions}
@@ -45,7 +45,7 @@
                                     <div data-input-name={name} class="slds-pill_container" onclick={handleOpenOptions}>
                                         <lightning-pill
                                             class="slds-pill_bare custom-width-full"
-                                            label={_value}
+                                            label={value}
                                             onremove={resetData}
                                             has-error={hasError}
                                         >
