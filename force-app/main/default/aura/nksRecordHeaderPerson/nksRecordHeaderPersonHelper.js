@@ -67,11 +67,9 @@
         if (typeof path !== 'string') {
             throw new Error('Path must be a string');
         }
-        const parts = path.split('.');
-        const result = parts.reduce(function (prev, curr) {
-            return prev ? prev[curr] : undefined;
-        }, obj || {});
 
-        return result !== undefined ? result : null;
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] :null;
+        }, obj || {});
     }
 });
