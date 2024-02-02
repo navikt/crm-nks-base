@@ -139,7 +139,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
             throw new Error('Path must be a string');
         }
 
-        return path.split(function (prev, curr) {
+        return path.split('.').reduce(function (prev, curr) {
             return prev ? prev[curr] : null;
         }, obj || {});
     }
