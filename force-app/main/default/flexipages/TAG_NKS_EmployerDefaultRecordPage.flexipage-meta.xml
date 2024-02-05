@@ -35,7 +35,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
+                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det
+                        inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter
+                        og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver
+                        knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
@@ -523,7 +526,15 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size: 13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra 11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family:
+                        &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116,
+                        116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger
+                        knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive
+                        og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært
+                        en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size:
+                        13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color:
+                        rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra
+                        11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText3</identifier>
@@ -674,7 +685,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;a href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;a
+                        href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot;
+                        rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om
+                        statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText4</identifier>
@@ -907,14 +921,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>maxEARContainerHeight</name>
-                    <value>500</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>shouldDisplayFiltersOnRight</name>
-                    <value>false</value>
-                </componentInstanceProperties>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <identifier>forceKnowledge_articleSearchDesktop</identifier>
             </componentInstance>
@@ -923,7 +929,8 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>flowArguments</name>
-                    <value>[{&quot;label&quot;:&quot;currAccountId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
+                    <value>
+                        [{&quot;label&quot;:&quot;currAccountId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowLayout</name>
