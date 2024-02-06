@@ -119,6 +119,9 @@
         <assignmentItems>
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>THEME_GROUP_NAME</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Call_Case.NKS_Theme_Group__c</assignToReference>
@@ -167,6 +170,9 @@
         <assignmentItems>
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>THEME_GROUP_NAME</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Call_Case.ContactPhone</assignToReference>
@@ -489,6 +495,10 @@
             <assignToReference>THEME_GROUP_ID</assignToReference>
             <field>Id</field>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>THEME_GROUP_NAME</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
         <name>Try_to_get_Person</name>
@@ -624,6 +634,13 @@ PERSON, ARBEIDSGIVER, OTHER</description>
     </variables>
     <variables>
         <name>THEME_GROUP_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>THEME_GROUP_NAME</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
