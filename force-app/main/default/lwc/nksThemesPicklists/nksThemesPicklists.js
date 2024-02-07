@@ -41,9 +41,9 @@ export default class NksThemesPicklists extends LightningElement {
         if (data) {
             this.subFieldData = data;
             //get array key for selected theme
-            let selectedThemeKey = 0;
-            for (let i = 0; i < this.themes.length; i++) {
-                if (this.themes[i].value === this.theme) {
+            var selectedThemeKey = 0;
+            for (var i = 0; i < this.themes.length; i++) {
+                if (this.themes[i].value == this.theme) {
                     selectedThemeKey = i;
                 }
             }
