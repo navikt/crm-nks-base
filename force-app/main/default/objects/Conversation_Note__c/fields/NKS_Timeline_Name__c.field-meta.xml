@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Timeline_Name__c</fullName>
+    <deprecated>false</deprecated>
     <description>Friendly name displayed in timeline component for the conversation notes.</description>
     <externalId>false</externalId>
-    <formula>
-IF(ISBLANK(CRM_Theme_Group__c),
-    &#x27;Øvrige&#x27;,
-	IF(AND(NOT(ISBLANK(CRM_Theme__c)),(CRM_Theme__r.Name != &#x27;Pensjon&#x27;)),
-		CRM_Theme_Group__r.Name + &#x27;, &#x27; + CRM_Theme__r.Name,
-		IF(AND(NOT(ISBLANK(CRM_Subtheme__c)),(CRM_Theme__r.Name == &#x27;Pensjon&#x27;)),
-			CRM_Theme_Group__r.Name + &#x27;, &#x27; + CRM_Subtheme__r.Name,CRM_Theme_Group__r.Name)))
-+ IF(ISBLANK(CRM_Created_By_NAV_Unit__c), &#x27;&#x27;, &#x27; - &#x27; + CRM_Created_By_NAV_Unit__c)
-+ &#x27; (&#x27; + CRM_Is_Read_Formula__c + &#x27;)&#x27;
-    </formula>
+    <formula>&apos;Telefon&apos; + IF(ISBLANK(CRM_Theme_Group__c),
+    &apos; - Øvrige&apos;,
+	IF(AND(NOT(ISBLANK(CRM_Theme__c)),(CRM_Theme__r.Name != &apos;Pensjon&apos;)),
+		&apos; - &apos; + CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Theme__r.Name,
+		IF(AND(NOT(ISBLANK(CRM_Subtheme__c)),(CRM_Theme__r.Name == &apos;Pensjon&apos;)),
+			&apos; - &apos; + CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Subtheme__r.Name, &apos; - &apos; + CRM_Theme_Group__r.Name)))
++ IF(ISBLANK(CRM_Created_By_NAV_Unit__c), &apos;&apos;, &apos; - &apos; + CRM_Created_By_NAV_Unit__c)
++ &apos; (&apos; + CRM_Is_Read_Formula__c + &apos;)&apos;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Timeline Name</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
