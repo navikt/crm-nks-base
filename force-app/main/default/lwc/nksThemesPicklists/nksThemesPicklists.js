@@ -10,8 +10,8 @@ export default class NksThemesPicklists extends LightningElement {
     @api selectedSubTheme;
     @api theme;
     @api subTheme;
-    @track themes;
-    @track subthemes;
+    themes;
+    subthemes;
     
     objectApiName;
     employerRecordTypeId;
