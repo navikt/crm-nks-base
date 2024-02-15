@@ -35,7 +35,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
+                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det
+                        inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter
+                        og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver
+                        knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
@@ -523,7 +526,15 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size: 13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra 11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family:
+                        &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116,
+                        116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger
+                        knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive
+                        og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært
+                        en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size:
+                        13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color:
+                        rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra
+                        11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText3</identifier>
@@ -674,7 +685,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;a href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;a
+                        href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot;
+                        rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om
+                        statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText4</identifier>
@@ -687,6 +701,14 @@
                     <valueList>
                         <valueListItems>
                             <value>New</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>CRM_AbsenceCategory__c|EQUALS|[&quot;VIRKSOMHET&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -713,10 +735,10 @@
                             <value>CRM_YearQuarter__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CRM_VirksomhetTapteDagsverk__c</value>
+                            <value>CRM_LostDaysWork__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CRM_VirksomhetProsent__c</value>
+                            <value>CRM_Percent__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>TAG_Account_Industry__c</value>
@@ -733,11 +755,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
+                    <value>CRM_YearQuarter__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sortFieldOrder</name>
-                    <value>Default</value>
+                    <value>Descending</value>
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList7</identifier>
@@ -907,7 +929,8 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>flowArguments</name>
-                    <value>[{&quot;label&quot;:&quot;currAccountId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
+                    <value>
+                        [{&quot;label&quot;:&quot;currAccountId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowLayout</name>

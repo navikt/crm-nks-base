@@ -1,12 +1,18 @@
-import { LightningElement, track, api, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import NAV_TASK_OBJECT from '@salesforce/schema/NavTask__c';
-
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import SUB_THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_SubTheme__c';
 import THEME_FIELD from '@salesforce/schema/NavTask__c.CRM_Theme__c';
 
 export default class NksThemesPicklists extends LightningElement {
+    @api selectedTheme;
+    @api selectedSubTheme;
+    @api theme;
+    @api subTheme;
+    themes;
+    subthemes;
+    
     objectApiName;
     employerRecordTypeId;
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
@@ -16,14 +22,6 @@ export default class NksThemesPicklists extends LightningElement {
             this.employerRecordTypeId = Object.keys(rtis).find((rti) => rtis[rti].name === 'Employer');
         }
     }
-    @api selectedTheme;
-    @api selectedSubTheme;
-    @api theme;
-    @api subTheme;
-    @track themes;
-    @track subthemes;
-    @track theme = this.theme;
-    @track subTheme = this.subTheme;
 
     @wire(getPicklistValues, {
         recordTypeId: '$employerRecordTypeId',
@@ -40,16 +38,18 @@ export default class NksThemesPicklists extends LightningElement {
     subThemeFieldInfo({ error, data }) {
         if (data) {
             this.subFieldData = data;
-            //get array key for selected theme
             let selectedThemeKey = 0;
-            for (let i = 0; i < this.themes.length; i++) {
-                if (this.themes[i].value === this.theme) {
-                    selectedThemeKey = i;
-                }
+            if (this.themes == null) {
+                return;
             }
+            this.themes.forEach(theme => {
+                if (theme.value === this.theme) {
+                    selectedThemeKey = theme;
+                }
+            });
             this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(selectedThemeKey));
         } else {
-            console.log('error: ' + error);
+            console.error('error: ' + error);
         }
     }
 
@@ -58,11 +58,9 @@ export default class NksThemesPicklists extends LightningElement {
         this.subthemes = this.subFieldData.values.filter((opt) => opt.validFor.includes(key));
 
         this.selectedTheme = event.detail.value;
-
         const selectedThemeEvent = new CustomEvent('themechange', {
             detail: this.selectedTheme
         });
-
         this.dispatchEvent(selectedThemeEvent);
     }
 
@@ -71,7 +69,6 @@ export default class NksThemesPicklists extends LightningElement {
         const selectedSubThemeEvent = new CustomEvent('subthemechange', {
             detail: this.selectedSubTheme
         });
-
         this.dispatchEvent(selectedSubThemeEvent);
     }
 }
