@@ -4,12 +4,12 @@
     <deprecated>false</deprecated>
     <description>Friendly name displayed in timeline component for the conversation notes.</description>
     <externalId>false</externalId>
-    <formula>&apos;Telefon&apos; + IF(ISBLANK(CRM_Theme_Group__c),
+    <formula>&apos;Samtale&apos; + IF(ISBLANK(CRM_Theme_Group__c),
     &apos; - Øvrige&apos;,
 	IF(AND(NOT(ISBLANK(CRM_Theme__c)),(CRM_Theme__r.Name != &apos;Pensjon&apos;)),
-		&apos; - &apos; + CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Theme__r.Name,
+	&apos; - &apos; +	CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Theme__r.Name,
 		IF(AND(NOT(ISBLANK(CRM_Subtheme__c)),(CRM_Theme__r.Name == &apos;Pensjon&apos;)),
-			&apos; - &apos; + CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Subtheme__r.Name, &apos; - &apos; + CRM_Theme_Group__r.Name)))
+		&apos; - &apos; +	CRM_Theme_Group__r.Name + &apos;, &apos; + CRM_Subtheme__r.Name, &apos; - &apos; + CRM_Theme_Group__r.Name)))
 + IF(ISBLANK(CRM_Created_By_NAV_Unit__c), &apos;&apos;, &apos; - &apos; + CRM_Created_By_NAV_Unit__c)
 + &apos; (&apos; + CRM_Is_Read_Formula__c + &apos;)&apos;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
