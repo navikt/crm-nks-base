@@ -75,7 +75,7 @@
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
         <locationX>842</locationX>
-        <locationY>1082</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -145,7 +145,7 @@
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
         <locationX>842</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -230,7 +230,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Try_to_get_Person</targetReference>
+                <targetReference>Case_Assignment_0</targetReference>
             </connector>
             <label>Personbruker</label>
         </rules>
@@ -405,7 +405,7 @@
         <name>Create_Case_0</name>
         <label>Create Case</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
         </connector>
@@ -498,50 +498,6 @@
         <outputAssignments>
             <assignToReference>THEME_GROUP_NAME</assignToReference>
             <field>Name</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Try_to_get_Person</name>
-        <label>Try to get Person</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Case_Assignment_0</targetReference>
-        </connector>
-        <filterLogic>(1 OR 2 OR 3) AND 4</filterLogic>
-        <filters>
-            <field>NKS_Mobile_Phone__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NKS_Phone_1__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>NKS_Phone_2__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Search</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>INT_IsHasTombstone__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Person__c</object>
-        <outputAssignments>
-            <assignToReference>RELATED_ACCOUNT_ID</assignToReference>
-            <field>CRM_Account__c</field>
         </outputAssignments>
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
