@@ -78,6 +78,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Subject</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Common_Code__c.CRM_Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -426,6 +431,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditPublicFilters</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EinsteinArticleRecUser</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
