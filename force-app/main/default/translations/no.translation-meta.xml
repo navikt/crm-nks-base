@@ -13,6 +13,14 @@
         <name>TAG_NAV_default</name>
     </customApplications>
     <customLabels>
+        <label>Saker</label>
+        <name>NKS_Cases_Tab_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Kommunikasjon</label>
+        <name>NKS_Communication_Tab_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Samtalereferatet kan ikke være tomt!</label>
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
@@ -25,12 +33,32 @@
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
+        <label>Detaljer</label>
+        <name>NKS_Details_Tab_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Dokumenter</label>
+        <name>NKS_Documents_Tab_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Ingen saker for valgt temagruppe.</label>
         <name>NKS_No_Cases_for_Selected_Theme_Group</name>
     </customLabels>
     <customLabels>
+        <label>Utbetalinger</label>
+        <name>NKS_Payout_Tab_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Oppdater</label>
+        <name>NKS_Refresh_Button_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Vennligst fyll ut feltet.</label>
         <name>NKS_Single_Record_Input_Validation_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Oppgaver</label>
+        <name>NKS_Tasks_Tab_Label</name>
     </customLabels>
     <customLabels>
         <label>Tilgangsnivå</label>
@@ -159,7 +187,8 @@
         <name>fbc_Users</name>
     </customLabels>
     <customTabs>
-        <label />
+        <label><!-- API Transactions -->
+        </label>
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
@@ -213,12 +242,10 @@
         </flows>
         <fullName>CRM_Patch_Update_NAV_Task</fullName>
     </flowDefinitions>
-    <!--
     <flowDefinitions>
         <flows />
         <fullName>CRM_Retry_NAV_Task_Post</fullName>
     </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -260,12 +287,10 @@
         </flows>
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
-    <!--
     <flowDefinitions>
         <flows />
         <fullName>NKS_Account_Create_New_Case</fullName>
     </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -459,12 +484,10 @@
         </flows>
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
-    <!--
     <flowDefinitions>
         <flows />
         <fullName>NKS_Close_Case_and_Tab</fullName>
     </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -574,7 +597,6 @@
         </flows>
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
-    <!--
     <flowDefinitions>
         <flows />
         <fullName>Opportunity</fullName>
@@ -587,7 +609,6 @@
         <flows />
         <fullName>Reset_Account_Warning_After_6_Months</fullName>
     </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -619,7 +640,6 @@
         </flows>
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
-    <!--
     <flowDefinitions>
         <flows />
         <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
@@ -632,7 +652,6 @@
         <flows />
         <fullName>Temporary_Layoff_Update</fullName>
     </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <choices>
@@ -982,24 +1001,30 @@
             <name>Konto</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- NAV Kontor -->
+            </label>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Temporary Layoffs -->
+            </label>
             <name>Temporary Layoffs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description><!-- Screen Flows -->
+        </description>
+        <label><!-- Screen Flows -->
+        </label>
         <name>screen_flows_prebuilt_crt</name>
         <sections>
-            <label />
+            <label><!-- Flow Interview Log Entries -->
+            </label>
             <name>Flow Interview Log Entries</name>
         </sections>
         <sections>
-            <label />
+            <label><!-- Flow Interview Logs -->
+            </label>
             <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
