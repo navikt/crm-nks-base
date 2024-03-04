@@ -19,8 +19,8 @@
         "scratch:deactivateMock": "echo for (Profile p : [SELECT Id FROM Profile]) {API_Controller_Mock_Settings__c mockSetting = API_Controller_Mock_Settings__c.getInstance(p.Id); mockSetting.Status__c = 'OK'; mockSetting.Status_Code__c = '200'; mockSetting.Use_Mock__c = false; upsert mockSetting;} | sfdx force:apex:execute",
         "scratch:runApex": "sfdx force:apex:execute",
         "scratch:postCreate": "npm run scratch:user:enableDebug && npm run scratch:enableMock:200 && sfdx force:apex:execute -f ./dummy-data/GenerateData.apex",
-        "activateMock": "sfdx force:apex:execute -f post-scratch/activateMock.cls",
-        "deactivateMock": "sfdx force:apex:execute -f post-scratch/deactivateMock.cls"
+        "activateMock": "sf apex execute -f post-scratch/activateMock.cls",
+        "deactivateMock": "sf apex execute -f post-scratch/deactivateMock.cls"
     },
     "engines": {
         "node": ">= 16.0.0",
