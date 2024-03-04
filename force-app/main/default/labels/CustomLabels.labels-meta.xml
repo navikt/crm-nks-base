@@ -338,12 +338,4 @@
         <shortDescription>Payout tab label</shortDescription>
         <value>Payout</value>
     </labels>
-    <labels>
-        <fullName>NKS_Refresh_Button_Label</fullName>
-        <categories>NKS, Refresh</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Refresh button label</shortDescription>
-        <value>Refresh</value>
-    </labels>
 </CustomLabels>
