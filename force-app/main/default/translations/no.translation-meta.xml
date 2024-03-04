@@ -33,10 +33,6 @@
         <name>NKS_Create_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label>Detaljer</label>
-        <name>NKS_Details_Tab_Label</name>
-    </customLabels>
-    <customLabels>
         <label>Dokumenter</label>
         <name>NKS_Documents_Tab_Label</name>
     </customLabels>

@@ -331,14 +331,6 @@
         <value>Cases</value>
     </labels>
     <labels>
-        <fullName>NKS_Details_Tab_Label</fullName>
-        <categories>NKS, Person, Tab</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Details tab label</shortDescription>
-        <value>Details</value>
-    </labels>
-    <labels>
         <fullName>NKS_Payout_Tab_Label</fullName>
         <categories>NKS, Person, Tab</categories>
         <language>en_US</language>
