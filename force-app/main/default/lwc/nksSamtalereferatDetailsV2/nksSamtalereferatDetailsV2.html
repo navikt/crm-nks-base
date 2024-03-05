@@ -1,4 +1,16 @@
 <template>
+    <lightning-layout class="slds-theme_default slds-var-p-horizontal_medium slds-var-p-top_medium" size="12">
+        <lightning-layout-item class="slds-size_6-of-12" style="padding-right: 10px">
+            <c-nks-flow-button
+                flow-name="NKS_Case_Change_Account"
+                button-label="Bytt bruker"
+                input-variables={inputVariables}
+            ></c-nks-flow-button>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_6-of-12">
+            <c-nks-security-routine></c-nks-security-routine>
+        </lightning-layout-item>
+    </lightning-layout>
     <lightning-flow
         flow-api-name="NKS_Case_Log_a_Call"
         flow-input-variables={inputVariables}
