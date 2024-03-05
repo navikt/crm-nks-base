@@ -7,16 +7,13 @@ import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
+
     dataShowing;
     notes;
     expanded = true;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
-
-    renderedCallback() {
-        console.log(this.objectInfo);
-    }
 
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
@@ -35,6 +32,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
         } else if (error) {
             console.log(error);
         }
+    }
+
+    renderedCallback() {
+        console.log(this.objectInfo);
     }
 
     get recordLabel() {
