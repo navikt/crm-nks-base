@@ -184,8 +184,8 @@ operations=(
     creatingScratchOrg
     installDependencies
     deployingMetadata
-#    assignPermission
-   insertingTestData
+    assignPermission
+    insertingTestData
 #    runPostInstallScripts
 #    publishCommunity
     openOrg
