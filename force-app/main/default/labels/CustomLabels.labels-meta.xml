@@ -14,7 +14,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Conversation Note Share With User</shortDescription>
-        <value>Del med bruker</value>
+        <value>Share with user</value>
     </labels>
     <labels>
         <fullName>NKS_Create_Conversation_Note</fullName>
@@ -70,7 +70,9 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ConditionLogicHelpText</shortDescription>
-        <value>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</value>
+        <value>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter
+            “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true
+            or only the fourth condition is true.</value>
     </labels>
     <labels>
         <fullName>fbc_Delete</fullName>
@@ -262,7 +264,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TooManyResultsMessage</shortDescription>
-        <value>Your search found more than 200 results.  Keep typing to make it more specific</value>
+        <value>Your search found more than 200 results. Keep typing to make it more specific</value>
     </labels>
     <labels>
         <fullName>fbc_Type</fullName>
@@ -293,6 +295,55 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>No Conversation Notes Found</shortDescription>
-        <value>Ingen Samtalereferater relatert til denne Henvendelse. Opprett en Samtalereferat først.</value>
+        <value>Ingen Samtalereferater relatert til denne Henvendelse. Opprett en Samtalereferat
+            først.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Create_NAV_Task</fullName>
+        <categories>NKS, NAV Task, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Create NAV Task</shortDescription>
+        <value>Create NAV Task</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal</fullName>
+        <categories>NKS, Journal, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Journal</shortDescription>
+        <value>Journal</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Change_User</fullName>
+        <categories>NKS, Person, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Change User</shortDescription>
+        <value>Change user</value>
+    </labels>
+    <labels>
+        <fullName>NKS_New_Conversation_Note</fullName>
+        <categories>NKS, Conversation Note, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS New Conversation Note</shortDescription>
+        <value>New conversation note</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Journal_Share_With_User</fullName>
+        <categories>NKS, Conversation Note, Journal, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Journal &amp; Share With User</shortDescription>
+        <value>Journal and share with user</value>
+    </labels>
+    <labels>
+        <fullName>Communication_tab_label</fullName>
+        <categories>NKS. Tabs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Communication tab label</shortDescription>
+        <value>Communication</value>
     </labels>
 </CustomLabels>

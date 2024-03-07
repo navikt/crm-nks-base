@@ -3,20 +3,20 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
+import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User_Button_Label';
 import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
+
     dataShowing;
     notes;
     expanded = true;
+    changeUserLabel = CHANGE_USER_LABEL;
+    showFlow = false;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
-
-    renderedCallback() {
-        console.log(this.objectInfo);
-    }
 
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
@@ -56,7 +56,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
     }
 
     get sectionClasses() {
-        return 'slds-section slds-var-m-horizontal_small' + (this.expanded ? ' slds-is-open' : '');
+        return (
+            'slds-section slds-var-m-horizontal_small slds-var-p-bottom_xx-small' +
+            (this.expanded ? ' slds-is-open' : '')
+        );
     }
 
     get hasCNotes() {
@@ -89,5 +92,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     handleExpandClick() {
         this.expanded = !this.expanded;
+    }
+
+    toggleFlow() {
+        publishToAmplitude('Action', { type: this.buttonLabel + ' pressed' });
+        this.showFlow = !this.showFlow;
     }
 }

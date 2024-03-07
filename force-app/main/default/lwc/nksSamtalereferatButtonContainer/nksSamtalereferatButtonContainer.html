@@ -1,0 +1,97 @@
+<template>
+    <!--
+    <lightning-layout class="slds-var-p-top_medium" style="float: right">
+        <lightning-layout-item class="slds-var-p-right_small">
+            <c-nks-flow-button
+                flow-name="Conversation_Note_Journal_From_Case"
+                button-label={journal}
+                button-variant="brand-outline"
+                input-variables={inputVariables}
+            ></c-nks-flow-button>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-var-p-right_small">
+            <c-nks-flow-button
+                flow-name="NKS_Case_Send_NAV_Task"
+                button-label={createNavTask}
+                button-variant="brand-outline"
+                input-variables={inputVariables}
+            ></c-nks-flow-button>
+        </lightning-layout-item>
+        <lightning-layout-item class="">
+            <c-nks-flow-navigation-v-2 action="NEXT" button-label={shareWithUser} button-alignment="RIGHT">
+            </c-nks-flow-navigation-v-2>
+        </lightning-layout-item>
+    </lightning-layout>
+-->
+    <lightning-layout multiple-rows="true" size="12">
+        <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
+            <lightning-layout>
+                <lightning-layout-item class="slds-size_4-of-12">
+                    <c-nks-flow-navigation-v-2
+                        action="BACK"
+                        button-label={back}
+                        button-variant="neutral"
+                        button-alignment="LEFT"
+                    >
+                    </c-nks-flow-navigation-v-2>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-size_8-of-12">
+                    <lightning-layout style="float: right">
+                        <lightning-layout-item class="slds-var-p-right_small">
+                            <lightning-button
+                                label={journal}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-var-p-right_small">
+                            <lightning-button
+                                label={createNavTask}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="">
+                            <c-nks-flow-navigation-v-2
+                                action="NEXT"
+                                button-label={shareWithUser}
+                                button-alignment="RIGHT"
+                            >
+                            </c-nks-flow-navigation-v-2>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_12-of-12">
+            <template if:true={showCreateTaskFlow}>
+                <template if:true={showFlow}>
+                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                        <lightning-card>
+                            <lightning-flow
+                                flow-api-name="NKS_Case_Send_NAV_Task"
+                                flow-input-variables={inputVariables}
+                                onstatuschange={handleStatusChange}
+                            >
+                            </lightning-flow>
+                        </lightning-card>
+                    </div>
+                </template>
+            </template>
+            <template if:true={showJournalFlow}>
+                <template if:true={showFlow}>
+                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                        <lightning-card>
+                            <lightning-flow
+                                flow-api-name="Conversation_Note_Journal_From_Case"
+                                flow-input-variables={inputVariables}
+                                onstatuschange={handleStatusChange}
+                            >
+                            </lightning-flow>
+                        </lightning-card>
+                    </div>
+                </template>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
