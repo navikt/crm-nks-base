@@ -79,7 +79,7 @@ assignPermission() {
     --name NKS_Screen_Reader \
     --name NKS_Topics \
     --name NKS_base \
-    --name NavUnit_Admin \
+    # --name NavUnit_Admin \
     || { error $? '"sf org assign permset" command failed.'; }
 }
 
@@ -196,8 +196,8 @@ operationNames=(
     "Creating scratch org"
     "Installing dependencies"
     "Deploying/Pushing metadata"
-#    "Assigning permissions"
-   "Inserting test data"
+    "Assigning permissions"
+    "Inserting test data"
 #    "Running post install scripts"
 #    "Publishing Aa-registre site"
     "Opening org"
