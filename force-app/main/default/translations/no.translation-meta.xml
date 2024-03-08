@@ -13,6 +13,26 @@
         <name>TAG_NAV_default</name>
     </customApplications>
     <customLabels>
+        <label>Opprett oppgave</label>
+        <name>NKS_Create_NAV_Task</name>
+    </customLabels>
+    <customLabels>
+        <label>Journalfør</label>
+        <name>NKS_Journal</name>
+    </customLabels>
+    <customLabels>
+        <label>Bytt bruker</label>
+        <name>NKS_Change_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Nytt samtalereferat</label>
+        <name>NKS_New_Conversation_Note</name>
+    </customLabels>
+    <customLabels>
+        <label>Journalfør og del med bruker</label>
+        <name>NKS_Journal_Share_With_User</name>
+    </customLabels>
+    <customLabels>
         <label>Samtalereferatet kan ikke være tomt!</label>
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
@@ -159,7 +179,8 @@
         <name>fbc_Users</name>
     </customLabels>
     <customTabs>
-        <label />
+        <label>
+        </label>
         <name>API_Transactions</name>
     </customTabs>
     <customTabs>
@@ -464,7 +485,7 @@
         <flows />
         <fullName>NKS_Close_Case_and_Tab</fullName>
     </flowDefinitions>
-    -->
+-->
     <flowDefinitions>
         <flows>
             <screens>
@@ -587,7 +608,7 @@
         <flows />
         <fullName>Reset_Account_Warning_After_6_Months</fullName>
     </flowDefinitions>
-    -->
+-->
     <flowDefinitions>
         <flows>
             <screens>
@@ -632,7 +653,7 @@
         <flows />
         <fullName>Temporary_Layoff_Update</fullName>
     </flowDefinitions>
-    -->
+-->
     <flowDefinitions>
         <flows>
             <choices>
@@ -982,24 +1003,30 @@
             <name>Konto</name>
         </sections>
         <sections>
-            <label />
+            <label>
+            </label>
             <name>NAV Kontor</name>
         </sections>
         <sections>
-            <label />
+            <label>
+            </label>
             <name>Temporary Layoffs</name>
         </sections>
     </reportTypes>
     <reportTypes>
-        <description />
-        <label />
+        <description>
+        </description>
+        <label>
+        </label>
         <name>screen_flows_prebuilt_crt</name>
         <sections>
-            <label />
+            <label>
+            </label>
             <name>Flow Interview Log Entries</name>
         </sections>
         <sections>
-            <label />
+            <label>
+            </label>
             <name>Flow Interview Logs</name>
         </sections>
     </reportTypes>
