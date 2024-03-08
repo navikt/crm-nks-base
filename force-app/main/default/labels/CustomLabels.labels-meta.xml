@@ -299,6 +299,46 @@
             først.</value>
     </labels>
     <labels>
+        <fullName>NKS_Communication_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Communication tab label</shortDescription>
+        <value>Communication</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Documents_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Documents tab label</shortDescription>
+        <value>Documents</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Tasks_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tasks tab label</shortDescription>
+        <value>Tasks</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Cases_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cases tab label</shortDescription>
+        <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payout_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payout tab label</shortDescription>
+        <value>Payout</value>
+    </labels>
+    <labels>
         <fullName>NKS_Create_NAV_Task</fullName>
         <categories>NKS, NAV Task, Buttons</categories>
         <language>en_US</language>
@@ -337,13 +377,5 @@
         <protected>false</protected>
         <shortDescription>NKS Journal &amp; Share With User</shortDescription>
         <value>Journal and share with user</value>
-    </labels>
-    <labels>
-        <fullName>Communication_tab_label</fullName>
-        <categories>NKS. Tabs</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Communication tab label</shortDescription>
-        <value>Communication</value>
     </labels>
 </CustomLabels>
