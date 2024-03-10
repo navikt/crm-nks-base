@@ -2,13 +2,17 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>59.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>NKS Samtalereferat Button Container</masterLabel>
+    <masterLabel>NKS Conversation Note Button Container</masterLabel>
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="recordId" type="String" />
+            <property name="recordId" label="recordId" type="String" />
+            <property name="conversationNoteButtonLabel" label="Conversation note button label"
+                type="String" />
+            <property name="journalButtonLabel" label="Journal button label"
+                type="String" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

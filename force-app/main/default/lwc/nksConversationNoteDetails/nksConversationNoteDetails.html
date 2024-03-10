@@ -30,12 +30,6 @@
                 </template>
             </lightning-layout-item>
         </lightning-layout>
-        <lightning-flow
-            flow-api-name="NKS_Case_Log_Call_v_2"
-            flow-input-variables={inputVariables}
-            onstatuschange={handleStatusChange}
-            onchange={handleChange}
-        ></lightning-flow>
         <template if:true={hasCNotes}>
             <div class={sectionClasses}>
                 <!-- Expandable button -->
@@ -90,5 +84,11 @@
                 </div>
             </div>
         </template>
+        <lightning-flow
+            flow-api-name="NKS_Case_Log_Call_v_2"
+            flow-input-variables={inputVariables}
+            onstatuschange={handleStatusChange}
+            onchange={handleChange}
+        ></lightning-flow>
     </div>
 </template>

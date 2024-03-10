@@ -378,4 +378,12 @@
         <shortDescription>NKS Journal &amp; Share With User</shortDescription>
         <value>Journal and share with user</value>
     </labels>
+    <labels>
+        <fullName>NKS_Conversation_Note_Empty_Field</fullName>
+        <categories>NKS, Conversation Note, Journal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Conversation Note Empty Field</shortDescription>
+        <value>Either conversation note or theme group field is empty.</value>
+    </labels>
 </CustomLabels>

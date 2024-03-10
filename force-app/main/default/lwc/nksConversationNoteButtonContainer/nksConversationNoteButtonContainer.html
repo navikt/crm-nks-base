@@ -1,0 +1,74 @@
+<template>
+    <lightning-layout multiple-rows="true" size="12">
+        <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
+            <lightning-layout style="float: right">
+                <lightning-layout-item class="slds-var-p-right_small">
+                    <lightning-button
+                        label={journalButtonLabel}
+                        variant="brand-outline"
+                        onclick={toggleFlow}
+                    ></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-var-p-right_small">
+                    <lightning-button
+                        label={createNavTask}
+                        variant="brand-outline"
+                        onclick={toggleFlow}
+                    ></lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item class="">
+                    <c-nks-flow-navigation-v-2
+                        action="NEXT"
+                        button-label={conversationNoteButtonLabel}
+                        button-alignment="RIGHT"
+                    >
+                    </c-nks-flow-navigation-v-2>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-size_12-of-12">
+            <template if:true={showCreateTaskFlow}>
+                <template if:true={showFlow}>
+                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                        <lightning-card>
+                            <lightning-flow
+                                flow-api-name="NKS_Case_Send_NAV_Task"
+                                flow-input-variables={inputVariables}
+                                onstatuschange={handleStatusChange}
+                            >
+                            </lightning-flow>
+                        </lightning-card>
+                    </div>
+                </template>
+            </template>
+            <template if:true={showJournalFlow}>
+                <template if:true={showFlow}>
+                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                        <lightning-card>
+                            <lightning-flow
+                                flow-api-name="Conversation_Note_Journal_From_Case"
+                                flow-input-variables={inputVariables}
+                                onstatuschange={handleStatusChange}
+                            >
+                            </lightning-flow>
+                        </lightning-card>
+                    </div>
+                </template>
+            </template>
+            <template if:true={showJournalAndShareFlow}>
+                <template if:true={showFlow}>
+                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                        <lightning-card>
+                            <lightning-flow
+                                flow-api-name="NKS_Conversation_Note_Create_and_journal"
+                                flow-input-variables={inputVariables}
+                                onstatuschange={handleStatusChange}
+                            >
+                            </lightning-flow>
+                        </lightning-card>
+                    </div>
+                </template>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
