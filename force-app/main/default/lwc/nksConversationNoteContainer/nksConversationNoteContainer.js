@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 import CREATE_CONVERSATION_NOTE_HEADER from '@salesforce/label/c.NKS_Create_Conversation_Note';
+import CONVERSATION_NOTE_DISCLAIMER_TEXT from '@salesforce/label/c.NKS_Conversation_Note_Disclaimer_Text';
 
 export default class NksConversationNoteContainer extends LightningElement {
     @api recordId;
@@ -12,6 +13,7 @@ export default class NksConversationNoteContainer extends LightningElement {
     _themeGroup;
     _theme;
     header = CREATE_CONVERSATION_NOTE_HEADER;
+    disclaimerText = CONVERSATION_NOTE_DISCLAIMER_TEXT;
 
     @api
     get themeGroup() {

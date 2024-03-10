@@ -13,6 +13,10 @@
         <name>TAG_NAV_default</name>
     </customApplications>
     <customLabels>
+        <label>Samtalereferatet blir delt med bruker når det opprettes.</label>
+        <name>NKS_Conversation_Note_Disclaimer_Text</name>
+    </customLabels>
+    <customLabels>
         <label>Opprett oppgave</label>
         <name>NKS_Create_NAV_Task</name>
     </customLabels>
