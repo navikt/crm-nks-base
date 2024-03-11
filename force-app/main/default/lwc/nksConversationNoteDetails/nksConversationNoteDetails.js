@@ -3,7 +3,7 @@ import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.ge
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
-import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User_Button_Label';
+import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatDetails extends LightningElement {

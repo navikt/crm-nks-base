@@ -8,10 +8,6 @@
         <label>Permitteringsvarsler</label>
         <name>Permitteringsvarsler</name>
     </customApplications>
-    <customApplications>
-        <label>NAV</label>
-        <name>TAG_NAV_default</name>
-    </customApplications>
     <customLabels>
         <label>Samtalereferatet blir delt med bruker når det opprettes.</label>
         <name>NKS_Conversation_Note_Disclaimer_Text</name>
@@ -258,12 +254,6 @@
         </flows>
         <fullName>CRM_Patch_Update_NAV_Task</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>CRM_Retry_NAV_Task_Post</fullName>
-    </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -305,12 +295,6 @@
         </flows>
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>NKS_Account_Create_New_Case</fullName>
-    </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -504,12 +488,6 @@
         </flows>
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>NKS_Close_Case_and_Tab</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <screens>
@@ -619,20 +597,6 @@
         </flows>
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>Opportunity</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Remove_Old_TopicAssignment</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Reset_Account_Warning_After_6_Months</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <screens>
@@ -664,20 +628,6 @@
         </flows>
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Task</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Temporary_Layoff_Update</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <choices>

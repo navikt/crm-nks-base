@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import JOURNAL_SHARE_WITH_USER_LABEL from '@salesforce/label/c.NKS_Journal_Share_With_User';
-import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal_Button_Label';
-import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_Task_Button_Label';
+import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
+import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatButtonContainer extends LightningElement {
