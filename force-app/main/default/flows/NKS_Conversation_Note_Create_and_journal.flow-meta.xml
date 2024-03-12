@@ -7,9 +7,6 @@
         <locationY>674</locationY>
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Conversation_Note</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>Journal_Case_ID</name>
@@ -52,29 +49,6 @@
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
-        <name>Assign_Case_Values</name>
-        <label>Assign Case Values</label>
-        <locationX>176</locationX>
-        <locationY>890</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Conversation_Note.CRM_Henvendelse_BehandlingskjedeId__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_Case</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
         <locationX>176</locationX>
@@ -111,7 +85,7 @@
             <assignToReference>Conversation_Note.CRM_Conversation_Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>conversationNote</elementReference>
+                <elementReference>Conversation_Summary.conversationNote</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -229,34 +203,7 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Conversation_Note</name>
-        <label>Get Conversation Note</label>
-        <locationX>176</locationX>
-        <locationY>782</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Case_Values</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Conversation_Note.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Conversation_Note__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Case</name>
-        <label>Update Case</label>
-        <locationX>176</locationX>
-        <locationY>998</locationY>
-        <inputReference>Get_Case</inputReference>
-    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Journal_Case_Screen</name>
         <label>Journal Case Screen</label>
@@ -268,6 +215,51 @@
         <connector>
             <targetReference>Journal_Entry_Assignment</targetReference>
         </connector>
+        <fields>
+            <name>Header</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h2</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <elementReference>$Label.NKS_Create_Conversation_Note</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Disclaimer_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133, 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conversation_Summary</name>
+            <extensionName>c:nksQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>conversationNoteRich</name>
+                <value>
+                    <elementReference>conversationNote</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <fields>
             <name>Journal_Case</name>
             <extensionName>c:crmPersonCaseOverview</extensionName>

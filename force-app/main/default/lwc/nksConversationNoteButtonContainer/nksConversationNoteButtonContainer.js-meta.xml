@@ -8,11 +8,13 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="recordId" label="recordId" type="String" />
+            <property name="recordId" label="recordId" type="String" role="inputOnly" />
             <property name="conversationNoteButtonLabel" label="Conversation note button label"
-                type="String" />
+                type="String" role="inputOnly" />
             <property name="journalButtonLabel" label="Journal button label"
-                type="String" />
+                type="String" role="inputOnly" />
+            <property name="journalConversation" label="Journal conversation"
+                type="Boolean" role="outputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

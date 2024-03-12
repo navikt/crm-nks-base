@@ -394,4 +394,12 @@
         <shortDescription>NKS Conversation Note Disclaimer Text</shortDescription>
         <value>Conversation note is shared with user when it is created.</value>
     </labels>
+    <labels>
+        <fullName>NKS_Case_Completed</fullName>
+        <categories>NKS, Conversation Note, Case</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NKS Case Completed</shortDescription>
+        <value>Case has been completed.</value>
+    </labels>
 </CustomLabels>

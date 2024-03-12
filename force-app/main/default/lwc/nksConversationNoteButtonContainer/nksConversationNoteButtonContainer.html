@@ -8,6 +8,9 @@
                         variant="brand-outline"
                         onclick={toggleFlow}
                     ></lightning-button>
+                    <template if:true={isJournalAndShare}>
+                        <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+                    </template>
                 </lightning-layout-item>
                 <lightning-layout-item class="slds-var-p-right_small">
                     <lightning-button
@@ -47,20 +50,6 @@
                         <lightning-card>
                             <lightning-flow
                                 flow-api-name="Conversation_Note_Journal_From_Case"
-                                flow-input-variables={inputVariables}
-                                onstatuschange={handleStatusChange}
-                            >
-                            </lightning-flow>
-                        </lightning-card>
-                    </div>
-                </template>
-            </template>
-            <template if:true={showJournalAndShareFlow}>
-                <template if:true={showFlow}>
-                    <div class="slds-var-m-top_xx-small" tabindex="0">
-                        <lightning-card>
-                            <lightning-flow
-                                flow-api-name="NKS_Conversation_Note_Create_and_journal"
                                 flow-input-variables={inputVariables}
                                 onstatuschange={handleStatusChange}
                             >

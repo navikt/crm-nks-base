@@ -9,6 +9,10 @@
         <name>Permitteringsvarsler</name>
     </customApplications>
     <customLabels>
+        <label>Henvendelsen er ferdigstilt.</label>
+        <name>NKS_Case_Completed</name>
+    </customLabels>
+    <customLabels>
         <label>Samtalereferatet blir delt med bruker når det opprettes.</label>
         <name>NKS_Conversation_Note_Disclaimer_Text</name>
     </customLabels>

@@ -2,7 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.getReverseRelatedRecord';
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_note__c';
+import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
 
@@ -30,7 +30,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
         const { data, error } = result;
         if (data) {
             this.notes = data.map((x) => {
-                return { ...x, name: x.CRM_Theme__r ? x.CRM_Theme__r.Name : x.CRM_Theme_Group__r.Name };
+                return { ...x, name: x.CRM_Theme__r ? x.CRM_Theme__r?.Name : x.CRM_Theme_Group__r?.Name };
             });
         } else if (error) {
             console.log(error);

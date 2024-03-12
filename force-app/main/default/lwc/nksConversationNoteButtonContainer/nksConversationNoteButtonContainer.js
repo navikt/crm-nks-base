@@ -9,32 +9,27 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api conversationNoteButtonLabel;
     @api journalButtonLabel;
     @api journalFlowName;
-    @api conversationNote;
 
     showFlow = false;
     showCreateTaskFlow = false;
     showJournalFlow = false;
-    showJournalAndShareFlow = false;
+
     createNavTask = CREATE_NAV_TASK_LABEL;
     journal = JOURNAL_LABEL;
     journalAndShare = JOURNAL_SHARE_WITH_USER_LABEL;
     label;
+    _journalConversation;
+
+    @api
+    get journalConversation() {
+        return this._journalConversation;
+    }
+
+    set journalConversation(value) {
+        this._journalConversation = value;
+    }
 
     get inputVariables() {
-        if (this.label === this.journalAndShare) {
-            return [
-                {
-                    name: 'recordId',
-                    type: 'String',
-                    value: this.recordId
-                },
-                {
-                    name: 'conversationNote',
-                    type: 'String',
-                    value: this.conversationNote
-                }
-            ];
-        }
         return [
             {
                 name: 'recordId',
@@ -44,9 +39,16 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         ];
     }
 
+    get isJournalAndShare() {
+        return this.label === this.journalAndShare;
+    }
+
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
         this.label = event.currentTarget.label;
+        if (this.isJournalAndShare) {
+            this._journalConversation = true;
+        }
         this.handleShowFlow();
         publishToAmplitude('Action', { type: this.label + ' pressed' });
     }
@@ -55,19 +57,11 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         if (this.label === this.createNavTask) {
             this.showCreateTaskFlow = true;
             this.showJournalFlow = false;
-            this.showJournalAndShareFlow = false;
         }
 
         if (this.label === this.journal) {
             this.showJournalFlow = true;
             this.showCreateTaskFlow = false;
-            this.showJournalAndShareFlow = false;
-        }
-
-        if (this.label === this.journalAndShare) {
-            this.showJournalAndShareFlow = true;
-            this.showCreateTaskFlow = false;
-            this.showJournalFlow = false;
         }
     }
 
