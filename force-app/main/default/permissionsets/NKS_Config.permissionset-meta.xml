@@ -232,6 +232,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>NavTask__c.NKS_Experience_Site_Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>NavUnit__c.INT_ShutDownDate__c</field>
         <readable>true</readable>
@@ -279,6 +284,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Created_By_NAV_Unit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Thread__c.NKS_Experience_Site_Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -366,10 +376,6 @@
     </tabSettings>
     <tabSettings>
         <tab>standard-OmniSupervisorLightning</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>standard-Workspace</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
