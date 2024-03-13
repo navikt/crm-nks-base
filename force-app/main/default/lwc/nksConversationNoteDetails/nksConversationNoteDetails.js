@@ -95,7 +95,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
     }
 
     toggleFlow(event) {
-        publishToAmplitude('Action', { type: event.target.label + ' pressed' });
         this.showFlow = !this.showFlow;
+        publishToAmplitude('Covnersation note', { type: event.target.label + ' pressed' });
     }
 }
