@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksFlowNavigationV2 extends LightningElement {
     @api action = 'NEXT';
@@ -9,7 +10,7 @@ export default class NksFlowNavigationV2 extends LightningElement {
     @api availableActions = ['NEXT', 'BACK'];
     @api buttonVariant = 'brand';
 
-    handleButtonClick() {
+    handleButtonClick(event) {
         let flowEvent;
 
         switch (this.action) {
@@ -25,8 +26,8 @@ export default class NksFlowNavigationV2 extends LightningElement {
             default:
                 break;
         }
-
         if (flowEvent) this.dispatchEvent(flowEvent);
+        publishToAmplitude('Naviget to', { type: event.target.label });
     }
 
     get alignment() {

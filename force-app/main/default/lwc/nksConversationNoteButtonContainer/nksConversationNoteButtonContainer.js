@@ -53,7 +53,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
             this._journalConversation = true;
         }
         this.handleShowFlow();
-        publishToAmplitude('Action', { type: this.label + ' pressed' });
+        publishToAmplitude('Covnersation note', { type: this.label + ' pressed' });
     }
 
     handleShowFlow() {
@@ -73,6 +73,5 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
             this.showFlow = false;
         }
-        this.dispatchEvent(new CustomEvent('flowfinished'));
     }
 }
