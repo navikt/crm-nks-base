@@ -6,7 +6,7 @@ export default class NksFlowNavigationV2 extends LightningElement {
     @api buttonLabel;
     @api buttonAlignment;
     @api stretched = false;
-    @api availableActions = ['NEXT'];
+    @api availableActions = ['NEXT', 'BACK'];
     @api buttonVariant = 'brand';
 
     handleButtonClick() {

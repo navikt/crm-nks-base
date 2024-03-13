@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 import JOURNAL_SHARE_WITH_USER_LABEL from '@salesforce/label/c.NKS_Journal_Share_With_User';
 import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
 import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
+import BACK_LABEL from '@salesforce/label/c.NKS_Back';
 import { publishToAmplitude } from 'c/amplitude';
 
 export default class NksSamtalereferatButtonContainer extends LightningElement {
@@ -9,15 +10,17 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api conversationNoteButtonLabel;
     @api journalButtonLabel;
     @api journalFlowName;
+    @api showBackButton = false;
 
     showFlow = false;
     showCreateTaskFlow = false;
     showJournalFlow = false;
-    isJournalAndShare = false;
 
     createNavTask = CREATE_NAV_TASK_LABEL;
     journal = JOURNAL_LABEL;
     journalAndShare = JOURNAL_SHARE_WITH_USER_LABEL;
+    back = BACK_LABEL;
+    label;
     _journalConversation;
 
     @api
@@ -39,16 +42,18 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         ];
     }
 
-    toggleFlow(event) {
-        let label = event.target.label;
-        this.showFlow = !this.showFlow;
+    get isJournalAndShare() {
+        return this.label === this.journalAndShare;
+    }
 
-        if (label === this.journalAndShare) {
+    toggleFlow(event) {
+        this.showFlow = !this.showFlow;
+        this.label = event.target.label;
+        if (this.isJournalAndShare) {
             this._journalConversation = true;
-            this.isJournalAndShare = true;
         }
         this.handleShowFlow();
-        publishToAmplitude('Action', { type: label + ' pressed' });
+        publishToAmplitude('Action', { type: this.label + ' pressed' });
     }
 
     handleShowFlow() {

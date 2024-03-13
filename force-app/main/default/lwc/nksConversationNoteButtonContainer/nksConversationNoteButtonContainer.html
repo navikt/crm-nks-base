@@ -3,29 +3,39 @@
         <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
             <lightning-layout style="float: right">
                 <lightning-layout-item class="slds-var-p-right_small">
-                    <lightning-button
-                        label={journalButtonLabel}
-                        variant="brand-outline"
-                        onclick={toggleFlow}
-                    ></lightning-button>
-                    <template if:true={isJournalAndShare}>
-                        <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+                    <template if:true={showBackButton}>
+                        <c-nks-flow-navigation-v-2 action="BACK" button-label={back} button-variant="brand-outline">
+                        </c-nks-flow-navigation-v-2>
                     </template>
                 </lightning-layout-item>
-                <lightning-layout-item class="slds-var-p-right_small">
-                    <lightning-button
-                        label={createNavTask}
-                        variant="brand-outline"
-                        onclick={toggleFlow}
-                    ></lightning-button>
-                </lightning-layout-item>
-                <lightning-layout-item class="">
-                    <c-nks-flow-navigation-v-2
-                        action="NEXT"
-                        button-label={conversationNoteButtonLabel}
-                        button-alignment="RIGHT"
-                    >
-                    </c-nks-flow-navigation-v-2>
+                <lightning-layout-item>
+                    <lightning-layout>
+                        <lightning-layout-item class="slds-var-p-right_small">
+                            <lightning-button
+                                label={journalButtonLabel}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                            <template if:true={isJournalAndShare}>
+                                <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-var-p-right_small">
+                            <lightning-button
+                                label={createNavTask}
+                                variant="brand-outline"
+                                onclick={toggleFlow}
+                            ></lightning-button>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="">
+                            <c-nks-flow-navigation-v-2
+                                action="NEXT"
+                                button-label={conversationNoteButtonLabel}
+                                button-alignment="RIGHT"
+                            >
+                            </c-nks-flow-navigation-v-2>
+                        </lightning-layout-item>
+                    </lightning-layout>
                 </lightning-layout-item>
             </lightning-layout>
         </lightning-layout-item>
