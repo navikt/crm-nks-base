@@ -13,11 +13,11 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     showFlow = false;
     showCreateTaskFlow = false;
     showJournalFlow = false;
+    isJournalAndShare = false;
 
     createNavTask = CREATE_NAV_TASK_LABEL;
     journal = JOURNAL_LABEL;
     journalAndShare = JOURNAL_SHARE_WITH_USER_LABEL;
-    label;
     _journalConversation;
 
     @api
@@ -39,18 +39,16 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         ];
     }
 
-    get isJournalAndShare() {
-        return this.label === this.journalAndShare;
-    }
-
     toggleFlow(event) {
+        let label = event.target.label;
         this.showFlow = !this.showFlow;
-        this.label = event.currentTarget.label;
-        if (this.isJournalAndShare) {
+
+        if (label === this.journalAndShare) {
             this._journalConversation = true;
+            this.isJournalAndShare = true;
         }
         this.handleShowFlow();
-        publishToAmplitude('Action', { type: this.label + ' pressed' });
+        publishToAmplitude('Action', { type: label + ' pressed' });
     }
 
     handleShowFlow() {

@@ -94,8 +94,8 @@ export default class NksSamtalereferatDetails extends LightningElement {
         this.expanded = !this.expanded;
     }
 
-    toggleFlow() {
-        publishToAmplitude('Action', { type: this.buttonLabel + ' pressed' });
+    toggleFlow(event) {
+        publishToAmplitude('Action', { type: event.target.label + ' pressed' });
         this.showFlow = !this.showFlow;
     }
 }
