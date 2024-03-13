@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Post_Journal</name>
+        <label>Post Journal</label>
+        <locationX>248</locationX>
+        <locationY>3212</locationY>
+        <actionName>CRM_ConvNoteJournalHelper</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Get_Conversation_Note_0_0</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Journal_Case_ID</name>
+            <value>
+                <elementReference>Person_Case_Overview.selectedCaseId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Case_Legacy_System</name>
+            <value>
+                <elementReference>Person_Case_Overview.selectedCaseLegacyId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Entry_NAV_Ident</name>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Entry_Unit</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Journal_Theme_Code</name>
+            <value>
+                <elementReference>Person_Case_Overview.selectedCaseTheme</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Conversation_Note_Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>CRM_ConvNoteJournalHelper</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assign_Account_to_Case</name>
@@ -22,7 +72,7 @@
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
         <locationX>380</locationX>
-        <locationY>3296</locationY>
+        <locationY>3512</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -39,6 +89,85 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Conversation_Note_Assignment</name>
+        <label>Conversation Note Assignment</label>
+        <locationX>248</locationX>
+        <locationY>2996</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Conversation_Summary_0.conversationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Created_By_NAV_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Created_By_Ident__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Started</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Conversation_Note</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -78,7 +207,7 @@
             <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>conversationNote</elementReference>
+                <elementReference>Conversation_Summary.conversationNote</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -114,6 +243,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Journal_Theme_Assignment</name>
+        <label>Journal Theme Assignment</label>
+        <locationX>248</locationX>
+        <locationY>2888</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_Case_Overview.selectedThemeGroupSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Person_Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Conversation_Note_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
         <locationX>798</locationX>
@@ -139,36 +291,20 @@
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>themeGroup</elementReference>
+                <elementReference>Theme_Categorization.themeGroup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>theme</elementReference>
+                <elementReference>Theme_Categorization.theme</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Conversation_Note_Assignment_0</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>Create_Nav_Task_Action</name>
-        <choiceText>Opprett oppgave</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>CREATE_NAV_TASK</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>New_Conversation_Note_Action</name>
-        <choiceText>Nytt samtalereferat</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>NEW_CONVERSATION_NOTE</stringValue>
-        </value>
-    </choices>
     <decisions>
         <name>Changed_Account</name>
         <label>Changed Account</label>
@@ -338,7 +474,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Journal_And_Share</targetReference>
+                <targetReference>Journal_Screen</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -366,6 +502,16 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Conversation_Note</name>
+        <label>Create Conversation Note</label>
+        <locationX>248</locationX>
+        <locationY>3104</locationY>
+        <connector>
+            <targetReference>Post_Journal</targetReference>
+        </connector>
+        <inputReference>Conversation_Note_Record</inputReference>
+    </recordCreates>
     <recordCreates>
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note_0</name>
@@ -503,7 +649,7 @@
         <label>Get Conversation Note</label>
         <locationX>314</locationX>
         <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Case_Closed</targetReference>
         </connector>
@@ -515,24 +661,18 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Conversation_Note__c</object>
-        <outputAssignments>
-            <assignToReference>Conversation_Note_Summary</assignToReference>
-            <field>CRM_Conversation_Note__c</field>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>Conversation_Note_Created_Date</assignToReference>
-            <field>CreatedDate</field>
-        </outputAssignments>
         <sortField>Id</sortField>
         <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note_0_0</name>
         <label>Get Conversation Note</label>
         <locationX>380</locationX>
-        <locationY>3188</locationY>
+        <locationY>3404</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment_Default_0_0</targetReference>
@@ -705,7 +845,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>380</locationX>
-        <locationY>3404</locationY>
+        <locationY>3620</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -842,6 +982,93 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Journal_Screen</name>
+        <label>Journal Screen</label>
+        <locationX>248</locationX>
+        <locationY>2780</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Tilbake</backButtonLabel>
+        <connector>
+            <targetReference>Journal_Theme_Assignment</targetReference>
+        </connector>
+        <fields>
+            <name>Header</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <elementReference>$Label.NKS_Create_Conversation_Note</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>center</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h2</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Disclaimer_Text_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(144, 133, 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conversation_Summary_0</name>
+            <extensionName>c:nksQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>conversationNoteRich</name>
+                <value>
+                    <elementReference>Conversation_Summary.conversationNote</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Person_Case_Overview</name>
+            <extensionName>c:crmPersonCaseOverview</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>prefilledThemeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Journalfør og del med bruker</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
         <locationX>380</locationX>
@@ -895,10 +1122,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>conversationNote</assignToReference>
-                <name>conversationNote</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Theme_Categorization</name>
@@ -936,14 +1160,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>themeGroup</assignToReference>
-                <name>themeGroup</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>theme</assignToReference>
-                <name>theme</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Record_Refresher</name>
@@ -1119,46 +1336,9 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Journal_And_Share</name>
-        <label>Journal And Share</label>
-        <locationX>248</locationX>
-        <locationY>2780</locationY>
-        <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
-        </connector>
-        <flowName>NKS_Conversation_Note_Create_and_journal</flowName>
-        <inputAssignments>
-            <name>conversationNote</name>
-            <value>
-                <elementReference>conversationNote</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <textTemplates>
-        <name>Summary_Template</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>Takk for at du tok kontakt
-
-Du har fått informasjon om
--</text>
-    </textTemplates>
     <variables>
         <name>BEHANDLINGS_ID</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Conversation_Note_Created_Date</name>
-        <dataType>DateTime</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -1173,20 +1353,6 @@ Du har fått informasjon om
         <objectType>Conversation_Note__c</objectType>
     </variables>
     <variables>
-        <name>Conversation_Note_Summary</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>conversationNote</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>HAS_PERSON_READ</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -1197,50 +1363,8 @@ Du har fått informasjon om
         </value>
     </variables>
     <variables>
-        <name>journalButtonLabel</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>journalConversation</name>
         <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>journalSelectedCaseId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>journalSelectedCaseLegacyId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>journalTheme</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>journalThemeGroupId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>journalThemeId</name>
-        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -1270,35 +1394,6 @@ Du har fått informasjon om
     <variables>
         <description>Salesforce ID to the Person__c record</description>
         <name>SF_PERSON_ID</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>showFlow</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Task_to_Create</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NavTask__c</objectType>
-    </variables>
-    <variables>
-        <name>theme</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>themeGroup</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

@@ -20,8 +20,8 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     @wire(getReverseRelatedRecord, {
         parentId: '$recordId',
-        queryFields: 'Id, CRM_conversation_note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
-        objectApiName: 'Conversation_note__c',
+        queryFields: 'Id, CRM_Conversation_Note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
+        objectApiName: 'Conversation_Note__c',
         relationshipField: 'CRM_case__c',
         ordering: 'createddate asc'
     })
