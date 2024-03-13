@@ -50,7 +50,7 @@
         <nameSegment>CRM_ConvNoteJournalHelper</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>60.0</apiVersion>
     <assignments>
         <name>Assign_Account_to_Case</name>
         <label>Assign Account to Case</label>
@@ -357,7 +357,8 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Checks the status if the case. If it is closed, the conversation note is already made.</description>
+        <description>Checks the status if the case. If it is closed, the conversation note is
+            already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
         <locationX>380</locationX>
@@ -481,6 +482,11 @@
     </decisions>
     <description>New version of NKS_Case_Log_a_Call</description>
     <environments>Default</environments>
+    <formulas>
+        <name>Show_Back_Button</name>
+        <dataType>Boolean</dataType>
+        <expression>{!Get_Case.IsClosed} = true</expression>
+    </formulas>
     <interviewLabel>NKS Case Log Call v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Case Log Call v. 2</label>
     <processMetadataValues>
@@ -1021,7 +1027,10 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(144, 133, 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>
+                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+                rgb(144, 133,
+                133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1101,7 +1110,9 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133, 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>
+                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+                133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1201,7 +1212,7 @@
             <inputParameters>
                 <name>showBackButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>Show_Back_Button</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1248,7 +1259,8 @@
         </fields>
         <fields>
             <name>Update_Account_Text</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Henvendelsen er ikke tilknyttet en bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Henvendelsen er ikke tilknyttet en
+                bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
