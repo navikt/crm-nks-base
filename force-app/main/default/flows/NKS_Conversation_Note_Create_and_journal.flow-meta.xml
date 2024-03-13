@@ -57,7 +57,7 @@
             <assignToReference>Conversation_Note.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Case.Asset.AccountId</elementReference>
+                <elementReference>Get_Case.AccountId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
