@@ -20,7 +20,8 @@
         "scratch:runApex": "sfdx force:apex:execute",
         "scratch:postCreate": "npm run scratch:user:enableDebug && npm run scratch:enableMock:200 && sfdx force:apex:execute -f ./dummy-data/GenerateData.apex",
         "activateMock": "sfdx force:apex:execute -f post-scratch/activateMock.cls",
-        "deactivateMock": "sfdx force:apex:execute -f post-scratch/deactivateMock.cls"
+        "deactivateMock": "sfdx force:apex:execute -f post-scratch/deactivateMock.cls",
+        "mac:build": "bash bin/install-scratch.sh"
     },
     "engines": {
         "node": ">= 16.0.0",
