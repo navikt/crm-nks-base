@@ -174,7 +174,7 @@
         <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
         <locationX>512</locationX>
-        <locationY>2888</locationY>
+        <locationY>2996</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@
         <name>Theme_Categorization_Assignment</name>
         <label>Theme Categorization Assignment</label>
         <locationX>512</locationX>
-        <locationY>2780</locationY>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -461,7 +461,7 @@
         <locationX>380</locationX>
         <locationY>2672</locationY>
         <defaultConnector>
-            <targetReference>Theme_Categorization_Assignment</targetReference>
+            <targetReference>Theme_Categorization_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -523,7 +523,7 @@
         <name>Create_Conversation_Note_0</name>
         <label>Create Conversation Note</label>
         <locationX>512</locationX>
-        <locationY>2996</locationY>
+        <locationY>3104</locationY>
         <connector>
             <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
@@ -1027,8 +1027,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_0</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1110,8 +1109,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -1129,58 +1127,6 @@
                 <name>required</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Theme_Categorization</name>
-            <extensionName>c:crmThemeCategorization</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>HIDE_SUBTHEME</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>optionalTheme</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>twoColumns</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>themeGroup</name>
-                <value>
-                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theme</name>
-                <value>
-                    <elementReference>Get_Case.NKS_Theme__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Record_Refresher</name>
-            <extensionName>c:nksRecordRefresher</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>recordId</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1338,6 +1284,113 @@
             </visibilityRule>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Theme_Categorization_Screen</name>
+        <label>Theme Categorization Screen</label>
+        <locationX>512</locationX>
+        <locationY>2780</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Tilbake</backButtonLabel>
+        <connector>
+            <targetReference>Theme_Categorization_Assignment</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Header</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <elementReference>$Label.NKS_Create_Conversation_Note</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>center</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h2</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Disclaimer_Text_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+                rgb(144, 133,
+                133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Conversation_Summary_0</name>
+            <extensionName>c:nksQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>conversationNoteRich</name>
+                <value>
+                    <elementReference>Conversation_Summary.conversationNote</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Theme_Categorization</name>
+            <extensionName>c:crmThemeCategorization</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>HIDE_SUBTHEME</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>optionalTheme</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>twoColumns</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Del med bruker</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
