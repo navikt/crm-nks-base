@@ -213,6 +213,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Knowledge__kav.NKS_Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LiveChatTranscript.NKS_Journal_Entry_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -229,11 +234,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NavTask__c.NKS_Henvendelse_BehandlingsId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavTask__c.NKS_Experience_Site_Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -284,11 +284,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Created_By_NAV_Unit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.NKS_Experience_Site_Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -376,6 +371,10 @@
     </tabSettings>
     <tabSettings>
         <tab>standard-OmniSupervisorLightning</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-Workspace</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
