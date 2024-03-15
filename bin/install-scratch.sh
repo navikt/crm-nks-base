@@ -59,28 +59,7 @@ deployingMetadata() {
 }
 
 assignPermission() {
-    sf org assign permset \
-    --name NKS_Announcement_Campaign_Editor \
-    --name NKS_Announcement_News_Editor \
-    --name NKS_Announcement_SF_Update_Editor \
-    --name NKS_Announcement_Traffic_Editor \
-    --name NKS_Announcement_Viewer \
-    --name NKS_Case \
-    --name NKS_Config \
-    --name NKS_Conversation_Note \
-    --name NKS_Edit_User \
-    --name NKS_Knowledge_Editor \
-    --name NKS_Knowledge_Viewer \
-    --name NKS_NAV_Task \
-    --name NKS_Person_Access \
-    --name NKS_PromotedSearchTerms \
-    --name NKS_Quick_Text_Editor \
-    --name NKS_Quick_Text_Reader \
-    --name NKS_Screen_Reader \
-    --name NKS_Topics \
-    --name NKS_base \
-    # --name NavUnit_Admin \
-    || { error $? '"sf org assign permset" command failed.'; }
+    sf project deploy start --source-dir force-app/scratch-org/permissionsetgroups
 }
 
 insertingTestData() {
@@ -130,41 +109,41 @@ elif [[ -z $npm_config_package_key ]] && [[ -z $npm_config_step ]] && [[ -z $npm
     info
 fi
 
-sf version >/dev/null 2>&1 || { 
-    echo >&2 "\"sf cli\" is required, but it's not installed."
-    echo "Follow the instruction here to install it: https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm"
-    echo ""
-    echo "Aborting...."
-    echo ""
-    exit 1
-}
+# sf version >/dev/null 2>&1 || { 
+#     echo >&2 "\"sf cli\" is required, but it's not installed."
+#     echo "Follow the instruction here to install it: https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm"
+#     echo ""
+#     echo "Aborting...."
+#     echo ""
+#     exit 1
+# }
 
-sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
-    echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
-    echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
-    echo ""
-    echo "Aborting...."
-    echo ""
-    exit 1
-}
+# sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
+#     echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
+#     echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
+#     echo ""
+#     echo "Aborting...."
+#     echo ""
+#     exit 1
+# }
 
-sf plugins inspect sfdmu >/dev/null 2>&1 || {
-    echo >&2 "\"sfdmu\" is required, but it's not installed."
-    echo "Run \"sf plugins install sfdmu\" to install it."
-    echo ""
-    echo "Aborting..."
-    echo ""
-    exit 1
-}
+# sf plugins inspect sfdmu >/dev/null 2>&1 || {
+#     echo >&2 "\"sfdmu\" is required, but it's not installed."
+#     echo "Run \"sf plugins install sfdmu\" to install it."
+#     echo ""
+#     echo "Aborting..."
+#     echo ""
+#     exit 1
+# }
 
-command -v jq >/dev/null 2>&1 || {
-    echo >&2 "\"jq\" is required, but it's not installed."
-    echo "Run \"brew install jq\" to install it if you have Homebrew installed."
-    echo ""
-    echo "Aborting..."
-    echo ""
-    exit 1
-}
+# command -v jq >/dev/null 2>&1 || {
+#     echo >&2 "\"jq\" is required, but it's not installed."
+#     echo "Run \"brew install jq\" to install it if you have Homebrew installed."
+#     echo ""
+#     echo "Aborting..."
+#     echo ""
+#     exit 1
+# }
 
 ORG_ALIAS="crm-nks-base"
 secret=$npm_config_package_key
