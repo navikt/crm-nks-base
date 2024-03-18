@@ -50,20 +50,6 @@ installDependencies() {
     sf dependency install --installationkeys "${keys}" --targetusername "$org_alias" --targetdevhubusername "$devHubAlias" || { error $? '"sf dependency install" command failed.'; }
 }
 
-#runPostInstallScripts() {
-#    sf apex run --file ./scripts/apex/activateMock.cls || { error $? '"sf apex run" command failed for Apex class: "activateMock".'; }
-#    sf apex run --file ./scripts/apex/createPortalUser.cls || { error $? '"sf apex run" command failed for Apex class: "createPortalUser".'; }
-#    sf apex run --file ./scripts/apex/createTestData.cls || { error $? '"sf apex run" command failed for Apex class: "createTestData".'; }
-#}
-
-#publishCommunity() {
-#    if [[ $npm_config_without_publish ]]; then
-#        echo "Skipping..."
-#    else
-#        sf community publish --name "arbeidsgiver-dialog" || { error $? '"sf community publish" command failed for community: "arbeidsgiver-dialog".'; }
-#    fi
-#}
-
 deployingMetadata() {
     if [[ $npm_config_without_deploy ]]; then
         echo "Skipping..."
@@ -73,16 +59,25 @@ deployingMetadata() {
 }
 
 assignPermission() {
-    sf org assign permset \
-    --name Arbeidsgiver_base \
-    || { error $? '"sf org assign permset" command failed.'; }
+    sf project deploy start --source-dir force-app/scratch-org/permissionsetgroups
+}
+
+insertingTestData() {
+   #sf data import tree --plan dummy-data/announcements/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/chat/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/common_codes/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/conversation_notes/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/knowledge/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/navunits/plan.json || { error $? '"sf data import tree" command failed.'; }
+   #sf data import tree --plan dummy-data/quicktexts/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf apex run --file dummy-data/GenerateData.apex
 }
 
 openOrg() {
     if [[ -n $npm_config_open_in ]]; then
-        sf org open --browser "$npm_config_open_in" --path "lightning/app/c__TAG_NAV_default" || { error $? '"sf org open" command failed.'; }
+        sf org open --browser "$npm_config_open_in" --path "lightning/" || { error $? '"sf org open" command failed.'; }
     else
-        sf org open --path "lightning/app/c__TAG_NAV_default" || { error $? '"sf org open" command failed.'; }
+        sf org open --path "lightning/" || { error $? '"sf org open" command failed.'; }
     fi
 }
 
@@ -94,13 +89,13 @@ info() {
     echo "  --org-alias=<alias>         Alias for the scratch org"
     echo "  --org-duration=<days>       Duration of the scratch org"
     echo "  --without-deploy            Skip deploy"
-    #echo "  --without-publish           Skip publish of community: \"arbeidsgiver-dialog\""
+    #echo "  --without-publish           Skip publish of community: \"Aa-registret\""
     echo "  --open-in=<option>          Browser where the org opens."
     echo "                              <options: chrome|edge|firefox>"
     echo "  --start-step=<step-nummer>  Start from a specific step"
     echo "  --step=<step-nummer>        Run a specific step"
     #echo "                              <steps: clean=1|create=2|dependencies=3|deploy=4|permissions=5|test data=6|run scripts=7|publishing site=8|open=9>"
-    echo "                              <steps: clean=1|create=2|dependencies=3|deploy=4|permissions=5|test data=6|open=7>"
+    echo "                              <steps: clean=1|create=2|dependencies=3|deploy=4|open=5>"
     echo "  --info                      Show this help"
     echo ""
     exit 0
@@ -114,33 +109,43 @@ elif [[ -z $npm_config_package_key ]] && [[ -z $npm_config_step ]] && [[ -z $npm
     info
 fi
 
-sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
-    echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
-    echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
-    echo ""
-    echo "Aborting...."
-    echo ""
-    exit 1
-}
-sf plugins inspect sfdmu >/dev/null 2>&1 || {
-    echo >&2 "\"sfdmu\" is required, but it's not installed."
-    echo "Run \"sf plugins install sfdmu\" to install it."
-    echo ""
-    echo "Aborting..."
-    echo ""
-    exit 1
-}
+# sf version >/dev/null 2>&1 || { 
+#     echo >&2 "\"sf cli\" is required, but it's not installed."
+#     echo "Follow the instruction here to install it: https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm"
+#     echo ""
+#     echo "Aborting...."
+#     echo ""
+#     exit 1
+# }
 
-command -v jq >/dev/null 2>&1 || {
-    echo >&2 "\"jq\" is required, but it's not installed."
-    echo "Run \"brew install jq\" to install it if you have Homebrew installed."
-    echo ""
-    echo "Aborting..."
-    echo ""
-    exit 1
-}
+# sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
+#     echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
+#     echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
+#     echo ""
+#     echo "Aborting...."
+#     echo ""
+#     exit 1
+# }
 
-ORG_ALIAS="arbeidsgiver-nks"
+# sf plugins inspect sfdmu >/dev/null 2>&1 || {
+#     echo >&2 "\"sfdmu\" is required, but it's not installed."
+#     echo "Run \"sf plugins install sfdmu\" to install it."
+#     echo ""
+#     echo "Aborting..."
+#     echo ""
+#     exit 1
+# }
+
+# command -v jq >/dev/null 2>&1 || {
+#     echo >&2 "\"jq\" is required, but it's not installed."
+#     echo "Run \"brew install jq\" to install it if you have Homebrew installed."
+#     echo ""
+#     echo "Aborting..."
+#     echo ""
+#     exit 1
+# }
+
+ORG_ALIAS="crm-nks-base"
 secret=$npm_config_package_key
 devHubAlias=$(sf config get target-dev-hub --json | jq -r '.result[0].value')
 
@@ -150,7 +155,7 @@ else
     org_alias=$ORG_ALIAS
 fi
 
-echo "Installing crm-nks-base scratch org ($org_alias)"
+echo "Installing crm-platform-base scratch org ($ORG_ALIAS)"
 echo ""
 
 operations=(
@@ -159,9 +164,9 @@ operations=(
     installDependencies
     deployingMetadata
     assignPermission
-    #insertingTestData
-    #runPostInstallScripts
-    #publishCommunity
+    insertingTestData
+#    runPostInstallScripts
+#    publishCommunity
     openOrg
 )
 
@@ -171,9 +176,9 @@ operationNames=(
     "Installing dependencies"
     "Deploying/Pushing metadata"
     "Assigning permissions"
-    #"Inserting test data"
-    #"Running post install scripts"
-    #"Publishing arbeidsgiver-dialog site"
+    "Inserting test data"
+#    "Running post install scripts"
+#    "Publishing Aa-registre site"
     "Opening org"
 )
 
