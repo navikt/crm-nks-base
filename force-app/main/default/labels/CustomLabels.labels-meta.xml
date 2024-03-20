@@ -343,7 +343,7 @@
         <categories>NKS, Person, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Change User</shortDescription>
+        <shortDescription>Change User</shortDescription>
         <value>Change user</value>
     </labels>
     <labels>
@@ -351,7 +351,7 @@
         <categories>NKS, Conversation Note, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS New Conversation Note</shortDescription>
+        <shortDescription>New Conversation Note</shortDescription>
         <value>New conversation note</value>
     </labels>
     <labels>
@@ -359,7 +359,7 @@
         <categories>NKS, Conversation Note, Journal, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Journal &amp; Share With User</shortDescription>
+        <shortDescription>Journal &amp; Share With User</shortDescription>
         <value>Journal and share with user</value>
     </labels>
     <labels>
@@ -367,7 +367,7 @@
         <categories>NKS, Conversation Note, Journal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Conversation Note Empty Field</shortDescription>
+        <shortDescription>Conversation Note Empty Field</shortDescription>
         <value>Either conversation note or theme group field is empty.</value>
     </labels>
     <labels>
@@ -375,7 +375,7 @@
         <categories>NKS, Conversation Note</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Conversation Note Disclaimer Text</shortDescription>
+        <shortDescription>Conversation Note Disclaimer Text</shortDescription>
         <value>Conversation note is shared with user when it is created.</value>
     </labels>
     <labels>
@@ -383,7 +383,7 @@
         <categories>NKS, Conversation Note, Case</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Case Completed</shortDescription>
+        <shortDescription>Case Completed</shortDescription>
         <value>Case has been completed.</value>
     </labels>
     <labels>
@@ -391,7 +391,7 @@
         <categories>NKS, Conversation Note, Buttons</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>NKS Back</shortDescription>
+        <shortDescription>Back</shortDescription>
         <value>Back</value>
     </labels>
 </CustomLabels>
