@@ -371,7 +371,19 @@
     <formulas>
         <name>Subject</name>
         <dataType>String</dataType>
-        <expression>&quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}</expression>
+        <expression>IF(
+    OR(
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt EN&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt NAV-ansatt&quot;
+    ),
+    &quot;Telefon Puzzel - Internasjonal, Internasjonalt EN, Internasjonalt NAV-ansatt&quot;,
+IF(
+        {!PUZZEL_QUEUE_NAME} = &quot;Annet&quot;,
+        &quot;Telefon Puzzel - Felles&quot;,
+        &quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}
+    )
+)</expression>
     </formulas>
     <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Inbound Call</label>
