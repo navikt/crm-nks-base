@@ -339,22 +339,6 @@
         <value>Payout</value>
     </labels>
     <labels>
-        <fullName>NKS_Create_NAV_Task</fullName>
-        <categories>NKS, NAV Task, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NKS Create NAV Task</shortDescription>
-        <value>Create NAV Task</value>
-    </labels>
-    <labels>
-        <fullName>NKS_Journal</fullName>
-        <categories>NKS, Journal, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>NKS Journal</shortDescription>
-        <value>Journal</value>
-    </labels>
-    <labels>
         <fullName>NKS_Change_User</fullName>
         <categories>NKS, Person, Buttons</categories>
         <language>en_US</language>

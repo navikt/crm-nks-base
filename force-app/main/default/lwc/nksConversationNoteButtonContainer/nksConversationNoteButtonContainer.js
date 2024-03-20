@@ -1,7 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import JOURNAL_SHARE_WITH_USER_LABEL from '@salesforce/label/c.NKS_Journal_Share_With_User';
-import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
-import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
+//import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import BACK_LABEL from '@salesforce/label/c.NKS_Back';
 import { publishToAmplitude } from 'c/amplitude';
 
@@ -16,8 +15,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     showCreateTaskFlow = false;
     showJournalFlow = false;
 
-    createNavTask = CREATE_NAV_TASK_LABEL;
-    journal = JOURNAL_LABEL;
+    //createNavTask = CREATE_NAV_TASK_LABEL;
     journalAndShare = JOURNAL_SHARE_WITH_USER_LABEL;
     back = BACK_LABEL;
     label;

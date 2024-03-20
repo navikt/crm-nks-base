@@ -21,14 +21,6 @@
         <name>NKS_Conversation_Note_Disclaimer_Text</name>
     </customLabels>
     <customLabels>
-        <label>Opprett oppgave</label>
-        <name>NKS_Create_NAV_Task</name>
-    </customLabels>
-    <customLabels>
-        <label>Journalfør</label>
-        <name>NKS_Journal</name>
-    </customLabels>
-    <customLabels>
         <label>Bytt bruker</label>
         <name>NKS_Change_User</name>
     </customLabels>
