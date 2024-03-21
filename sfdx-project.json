@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.335.0.NEXT",
+            "versionNumber": "0.336.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.210.0.LATEST"
+                    "versionNumber": "0.217.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -57,7 +57,7 @@
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.334.0.LATEST"
+                    "versionNumber": "1.401.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
@@ -65,7 +65,7 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.114.0.LATEST"
+                    "versionNumber": "0.119.0.3"
                 },
                 {
                     "package": "crm-sf-saf",

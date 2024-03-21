@@ -37,7 +37,7 @@
         <name>Recirect_to_Account_0</name>
         <label>Recirect to Account</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -56,7 +56,7 @@
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
         <locationX>50</locationX>
-        <locationY>1082</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -75,7 +75,7 @@
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
         <locationX>842</locationX>
-        <locationY>1082</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -94,7 +94,7 @@
         <name>Case_Assignment</name>
         <label>Case Assignment</label>
         <locationX>50</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -145,7 +145,7 @@
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
         <locationX>842</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -203,7 +203,7 @@
         <name>Check_Call_Queue_0</name>
         <label>Check Call Queue</label>
         <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationY>650</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Personbruker_0</name>
@@ -265,7 +265,7 @@
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
         <locationX>578</locationX>
-        <locationY>650</locationY>
+        <locationY>542</locationY>
         <defaultConnector>
             <targetReference>Check_Call_Queue_0</targetReference>
         </defaultConnector>
@@ -332,7 +332,7 @@
         <name>Verify_Account</name>
         <label>Verify Account</label>
         <locationX>446</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Account</name>
@@ -369,14 +369,21 @@
 )</expression>
     </formulas>
     <formulas>
-        <name>Loggingmessage</name>
-        <dataType>String</dataType>
-        <expression>&quot;Theme Code: &quot; &amp; {!THEME_GROUP_CODE} &amp; &quot; and Theme Name: &quot; &amp; {!THEME_GROUP_NAME}</expression>
-    </formulas>
-    <formulas>
         <name>Subject</name>
         <dataType>String</dataType>
-        <expression>&quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}</expression>
+        <expression>IF(
+    OR(
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt EN&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt NAV-ansatt&quot;
+    ),
+    &quot;Telefon Puzzel - Internasjonal, Internasjonalt EN, Internasjonalt NAV-ansatt&quot;,
+IF(
+        {!PUZZEL_QUEUE_NAME} = &quot;Annet&quot;,
+        &quot;Telefon Puzzel - Felles&quot;,
+        &quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}
+    )
+)</expression>
     </formulas>
     <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Inbound Call</label>
@@ -400,52 +407,11 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_Application_Log</name>
-        <label>Create Application Log</label>
-        <locationX>446</locationX>
-        <locationY>458</locationY>
-        <connector>
-            <targetReference>Check_Identifier</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Application_Domain__c</field>
-            <value>
-                <stringValue>NKS</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Category__c</field>
-            <value>
-                <stringValue>Subject</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Log_Level__c</field>
-            <value>
-                <stringValue>Info</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Log_Message__c</field>
-            <value>
-                <elementReference>Loggingmessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Source_Class__c</field>
-            <value>
-                <stringValue>Inbound Call</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Application_Log__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case</targetReference>
         </connector>
@@ -456,7 +422,7 @@
         <name>Create_Case_0</name>
         <label>Create Case</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
         </connector>
@@ -467,7 +433,7 @@
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
         <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Account</targetReference>
@@ -490,7 +456,7 @@
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment</targetReference>
@@ -524,7 +490,7 @@
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Application_Log</targetReference>
+            <targetReference>Check_Identifier</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>

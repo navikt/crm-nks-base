@@ -8,10 +8,6 @@
         <label>Permitteringsvarsler</label>
         <name>Permitteringsvarsler</name>
     </customApplications>
-    <customApplications>
-        <label>NAV</label>
-        <name>TAG_NAV_default</name>
-    </customApplications>
     <customLabels>
         <label>Saker</label>
         <name>NKS_Cases_Tab_Label</name>
