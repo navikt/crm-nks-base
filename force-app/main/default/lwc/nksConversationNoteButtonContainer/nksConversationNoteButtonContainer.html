@@ -4,7 +4,11 @@
             <lightning-layout style="float: right">
                 <lightning-layout-item class="slds-var-p-right_small">
                     <template if:true={showBackButton}>
-                        <c-nks-flow-navigation-v-2 action="BACK" button-label={back} button-variant="brand-outline">
+                        <c-nks-flow-navigation-v-2
+                            action="BACK"
+                            button-label={labels.BACK_LABEL}
+                            button-variant="brand-outline"
+                        >
                         </c-nks-flow-navigation-v-2>
                     </template>
                 </lightning-layout-item>
@@ -22,7 +26,7 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
-                                label={createNavTask}
+                                label={labels.CREATE_NAV_TASK_LABEL}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
