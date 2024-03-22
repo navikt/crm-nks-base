@@ -56,7 +56,8 @@
             "sessionSettings": {
                 "forceRelogin": false
             },
-            "enableAdminLoginAsAnyUser": true
+            "enableAdminLoginAsAnyUser": true,
+            "enableAuditFieldsInactiveOwner": true
         },
         "knowledgeSettings": {
             "enableKnowledge": true,
