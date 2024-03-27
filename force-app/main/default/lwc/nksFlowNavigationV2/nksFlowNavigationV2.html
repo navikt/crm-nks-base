@@ -1,0 +1,11 @@
+<template>
+    <lightning-layout horizontal-align={alignment} style="width: 100%">
+        <lightning-button
+            if:true={validAction}
+            style={buttonStyle}
+            variant={buttonVariant}
+            label={buttonLabel}
+            onclick={handleButtonClick}
+        ></lightning-button>
+    </lightning-layout>
+</template>
