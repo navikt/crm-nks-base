@@ -8,11 +8,30 @@ private class NKS_FamilyViewControllerTest {
             INT_FirstName__c = 'TestLastname'
         );
         insert p;
+
         Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
         insert a;
-        //Id accId = [SELECT Id FROM Account WHERE CRM_Person__r.Id = :p.Id LIMIT 1].Id;
+
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+
+        LiveChatVisitor lcv = new LiveChatVisitor();
+        insert lcv;
+
+        LiveChatTranscript lct = new LiveChatTranscript();
+        lct.LiveChatVisitorid = lcv.id;
+        lct.AccountId = a.Id;
+        insert lct;
+
+        Test.startTest();
         List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
-        System.debug(rl);
+        List<NKS_FamilyViewController.Relation> rl2 = NKS_FamilyViewController.getRelations(c.Id, 'Case');
+        List<NKS_FamilyViewController.Relation> rl3 = NKS_FamilyViewController.getRelations(
+            lct.Id,
+            'LiveChatTranscript'
+        );
+        Test.stopTest();
+
         System.assertEquals(false, rl.isEmpty());
     }
 

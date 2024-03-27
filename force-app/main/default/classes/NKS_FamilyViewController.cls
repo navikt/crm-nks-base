@@ -125,11 +125,11 @@ public with sharing class NKS_FamilyViewController {
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelations(Id recordId, String objectApiName) {
         Id personId;
-        if (objectApiName == 'Case')
+        if (objectApiName == 'Case') {
             personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
-        else if (objectApiName == 'Account')
+        } else if (objectApiName == 'Account') {
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
-        else if (objectApiName == 'LiveChatTranscript') {
+        } else if (objectApiName == 'LiveChatTranscript') {
             personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
             .Account.CRM_Person__c;
         }
