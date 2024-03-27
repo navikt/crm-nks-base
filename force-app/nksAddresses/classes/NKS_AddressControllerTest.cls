@@ -6,10 +6,23 @@ public with sharing class NKS_AddressControllerTest {
         insert p;
         Account a = new Account(CRM_Person__c = p.Id, Name = '78912345687');
         insert a;
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+
+        LiveChatVisitor lcv = new LiveChatVisitor();
+        insert lcv;
+
+        LiveChatTranscript lct = new LiveChatTranscript();
+        lct.LiveChatVisitorid = lcv.id;
+        lct.AccountId = a.Id;
+        insert lct;
 
         Test.startTest();
         String personIdent = NKS_AddressController.getPersonIdentAndFullName(a.Id, 'Account')?.Name;
+        String personIdent2 = NKS_AddressController.getPersonIdentAndFullName(c.Id, 'Case')?.Name;
+        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(lct.Id, 'LiveChatTranscript')?.Name;
         Test.stopTest();
+
         System.assertEquals('78912345687', personIdent);
     }
 
@@ -33,7 +46,7 @@ public with sharing class NKS_AddressControllerTest {
         addr.add(NKS_AddressController.getBostedAddress(a.Id, 'Account'));
         addr.add(NKS_AddressController.getBostedAddress(c.Id, 'Case'));
         Test.stopTest();
-        
+
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].address != null);
         System.assertEquals(true, addr[1][0].address != null);
@@ -59,7 +72,7 @@ public with sharing class NKS_AddressControllerTest {
         addr.add(NKS_AddressController.getOppholdsAddress(a.Id, 'Account'));
         addr.add(NKS_AddressController.getOppholdsAddress(c.Id, 'Case'));
         Test.stopTest();
-        
+
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].zipCode != null);
         System.assertEquals(true, addr[1][0].zipCode != null);
@@ -92,7 +105,6 @@ public with sharing class NKS_AddressControllerTest {
         System.assertEquals('4636', addr.zipCode);
     }
 
-
     @isTest
     static void testSetAddressFullNameAndCity() {
         // Create test data
@@ -119,7 +131,7 @@ public with sharing class NKS_AddressControllerTest {
         commonCode2.Name = 'Poststed2';
         List<Common_Code__c> commonCodes = new List<Common_Code__c>{ commonCode1, commonCode2 };
         insert commonCodes;
-       
+
         Test.startTest();
         // Call the method to be tested
         NKS_AddressController.setAddressFullNameAndCity(addresses, p);
