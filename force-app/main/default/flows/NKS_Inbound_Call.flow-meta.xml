@@ -120,7 +120,7 @@
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>THEME_GROUP_NAME</elementReference>
+                <elementReference>Subject</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -171,7 +171,7 @@
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>THEME_GROUP_NAME</elementReference>
+                <elementReference>Subject</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -366,6 +366,23 @@
 11, &apos;PERSON_IDENT&apos;,
 9, &apos;ORG_IDENT&apos;,
 &apos;PHONE_NUMBER&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Subject</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    OR(
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt EN&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt NAV-ansatt&quot;
+    ),
+    &quot;Telefon Puzzel - Internasjonal, Internasjonalt EN, Internasjonalt NAV-ansatt&quot;,
+IF(
+        {!PUZZEL_QUEUE_NAME} = &quot;Annet&quot;,
+        &quot;Telefon Puzzel - Felles&quot;,
+        &quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}
+    )
 )</expression>
     </formulas>
     <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
