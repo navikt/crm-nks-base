@@ -21,6 +21,11 @@
         <label>Arbeid</label>
     </customValue>
     <customValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </customValue>
+    <customValue>
         <fullName>Familie</fullName>
         <default>false</default>
         <label>Familie</label>
