@@ -26,6 +26,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Familie</fullName>
             <default>false</default>
         </values>
