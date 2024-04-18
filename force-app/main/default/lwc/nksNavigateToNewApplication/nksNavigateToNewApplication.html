@@ -1,8 +1,9 @@
 <template>
-    <p> hallo test test</p>
+    <lightning-layout class="slds-box slds-theme_default">
         <lightning-layout-item>
-            <button type="button" title="Prøv nytt design" onclick={switchApplication} class="slds-button slds-button_brand">
-                Prøv nytt design
+            <button type="button" title={buttonTitle} onclick={switchApplication} class="slds-button slds-button_brand">
+                {buttonTitle}
             </button>
         </lightning-layout-item>
+    </lightning-layout>
 </template>
