@@ -19,6 +19,10 @@ export default class NksNavigateToNewApplication extends NavigationMixin(Lightni
         return this.currentApp === 'NAV_Kontaktsenter' ? 'Prøv nytt design' : 'Gå tilbake til originalt design';
     }
 
+    get textDescription() {
+        return this.currentApp === 'NAV_Kontaktsenter' ? 'Trykk på knappen for å teste nytt design i Salesforce.' : 'Trykk på knappen for å gå tilbake til originalt design i Salesforce.'
+    }
+
     // Alternative navigation is through window.open
     /* 
         let baseUrl = window.location.origin + '/lightning/';
