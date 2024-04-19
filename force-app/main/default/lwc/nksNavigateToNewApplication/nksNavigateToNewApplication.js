@@ -37,7 +37,7 @@ export default class NksNavigateToNewApplication extends NavigationMixin(Lightni
                     appTarget: this.nextApp
                 }
             });
-            updateUsersCurrentApp({ appTarget: this.nextApp.replace('c__', '').replace('standard__', '') });
+            updateUsersCurrentApp({ appTarget: this.nextApp.replace('c__', '') });
         } catch (err) {
             console.error(err);
         }
