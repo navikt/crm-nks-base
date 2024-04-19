@@ -16,7 +16,7 @@ export default class NksNavigateToNewApplication extends NavigationMixin(Lightni
     }
 
     get buttonTitle() {
-        return this.currentApp === 'NAV_Kontaktsenter' ? 'Prøv nytt design' : 'Gå tilbake til gammelt design';
+        return this.currentApp === 'NAV_Kontaktsenter' ? 'Prøv nytt design' : 'Gå tilbake til originalt design';
     }
 
     // Alternative navigation is through window.open
