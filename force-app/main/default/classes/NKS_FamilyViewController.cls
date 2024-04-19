@@ -137,6 +137,7 @@ public with sharing class NKS_FamilyViewController {
 
         List<Relation> relations = new List<Relation>();
         Boolean access = false;
+        String personIdent = null;
 
         if (personId != null) {
             Id userId = UserInfo.getUserId();
@@ -146,6 +147,7 @@ public with sharing class NKS_FamilyViewController {
                 WHERE UserId = :userId AND RecordId = :personId
             ]
             .HasReadAccess;
+            personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
         }
 
         if (!access) {
@@ -154,11 +156,6 @@ public with sharing class NKS_FamilyViewController {
             r.name = 'Ikke tilgang til å se relasjoner.';
             relations.add(r);
             return relations;
-        }
-
-        String personIdent = null;
-        if (personId != null) {
-            personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
         }
 
         if (personIdent == null) {
