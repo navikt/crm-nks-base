@@ -6,7 +6,7 @@
                     <template if:true={showBackButton}>
                         <c-nks-flow-navigation-v-2
                             action="BACK"
-                            button-label={labels.BACK_LABEL}
+                            button-label={labels.back}
                             button-variant="brand-outline"
                         >
                         </c-nks-flow-navigation-v-2>
@@ -16,7 +16,8 @@
                     <lightning-layout>
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
-                                label={journalButtonLabel}
+                                label={labels.journal}
+                                title={journalButtonTitle}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
@@ -26,7 +27,8 @@
                         </lightning-layout-item>
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
-                                label={labels.CREATE_NAV_TASK_LABEL}
+                                label={labels.createNavTask}
+                                title="createNavTask"
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
@@ -46,7 +48,7 @@
         <lightning-layout-item class="slds-size_12-of-12">
             <template if:true={showCreateTaskFlow}>
                 <template if:true={showFlow}>
-                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                    <div class="slds-var-m-top_xx-small">
                         <lightning-card>
                             <lightning-flow
                                 flow-api-name="NKS_Case_Send_NAV_Task"
@@ -60,7 +62,7 @@
             </template>
             <template if:true={showJournalFlow}>
                 <template if:true={showFlow}>
-                    <div class="slds-var-m-top_xx-small" tabindex="0">
+                    <div class="slds-var-m-top_xx-small">
                         <lightning-card>
                             <lightning-flow
                                 flow-api-name="Conversation_Note_Journal_From_Case"

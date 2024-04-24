@@ -1,22 +1,30 @@
 import { LightningElement, api } from 'lwc';
-import JOURNAL_SHARE_WITH_USER_LABEL from '@salesforce/label/c.NKS_Journal_Share_With_User';
 import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
 import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import BACK_LABEL from '@salesforce/label/c.NKS_Back';
 import { publishToAmplitude } from 'c/amplitude';
 
+const TITLES = {
+    CREATE_NAV_TASK: 'createNavTask',
+    JOURNAL: 'journal',
+    JOURNAL_AND_SHARE: 'journalAndShare'
+};
+
 export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api recordId;
     @api conversationNoteButtonLabel;
-    @api journalButtonLabel;
-    @api journalFlowName;
+    @api journalButtonTitle = TITLES.JOURNAL;
     @api showBackButton = false;
 
     showFlow = false;
     showCreateTaskFlow = false;
     showJournalFlow = false;
-    labels = { CREATE_NAV_TASK_LABEL, JOURNAL_SHARE_WITH_USER_LABEL, BACK_LABEL, JOURNAL_LABEL };
-    label;
+    labels = {
+        createNavTask: CREATE_NAV_TASK_LABEL,
+        back: BACK_LABEL,
+        journal: JOURNAL_LABEL
+    };
+    title = '';
     _journalConversation;
 
     @api
@@ -39,22 +47,22 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     }
 
     get isJournalAndShare() {
-        return this.label === this.labels.JOURNAL_SHARE_WITH_USER_LABEL;
+        return this.title === TITLES.JOURNAL_AND_SHARE;
     }
 
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
-        this.label = event.target.label;
+        this.title = event.target.title;
         if (this.isJournalAndShare) {
             this._journalConversation = true;
         }
         this.handleShowFlow();
-        publishToAmplitude('Covnersation note', { type: this.label + ' pressed' });
+        publishToAmplitude('Covnersation note', { type: event.target.label + ' pressed' });
     }
 
     handleShowFlow() {
-        this.showCreateTaskFlow = this.label === this.labels.CREATE_NAV_TASK_LABEL;
-        this.showJournalFlow = this.label === this.labels.JOURNAL_LABEL;
+        this.showCreateTaskFlow = this.title === TITLES.CREATE_NAV_TASK;
+        this.showJournalFlow = this.title === TITLES.JOURNAL;
     }
 
     handleStatusChange(event) {

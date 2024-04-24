@@ -176,16 +176,17 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
-        Id personId;
+        Id personId = null;
         if (objectApiName == 'Case') {
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
         } else if (objectApiName == 'Account') {
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
         } else if (objectApiName == 'LiveChatTranscript') {
             personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
-            .Account.CRM_Person__c;
+                ?.Account
+                ?.CRM_Person__c;
         }
-        return [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId];
+        return personId != null ? [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId] : null;
     }
 
     @TestVisible

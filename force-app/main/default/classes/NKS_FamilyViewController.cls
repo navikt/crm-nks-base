@@ -124,25 +124,32 @@ public with sharing class NKS_FamilyViewController {
      */
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelations(Id recordId, String objectApiName) {
-        Id personId;
+        Id personId = null;
         if (objectApiName == 'Case') {
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
         } else if (objectApiName == 'Account') {
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
         } else if (objectApiName == 'LiveChatTranscript') {
             personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
-            .Account.CRM_Person__c;
+                ?.Account
+                ?.CRM_Person__c;
         }
 
         List<Relation> relations = new List<Relation>();
+        Boolean access = false;
+        String personIdent = null;
 
-        Id userId = UserInfo.getUserId();
-        Boolean access = [
-            SELECT RecordId, HasReadAccess
-            FROM UserRecordAccess
-            WHERE UserId = :userId AND RecordId = :personId
-        ]
-        .HasReadAccess;
+        if (personId != null) {
+            Id userId = UserInfo.getUserId();
+            access = [
+                SELECT RecordId, HasReadAccess
+                FROM UserRecordAccess
+                WHERE UserId = :userId AND RecordId = :personId
+            ]
+            .HasReadAccess;
+            personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+        }
+
         if (!access) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -150,7 +157,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
-        String personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+
         if (personIdent == null) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -158,6 +165,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         PDL_API_Response relationsData;
         try {
             relationsData = queryRelationsFromPDL(personIdent);
@@ -178,6 +186,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         Relation person = new Relation();
         person.employee = isNavEmployee(relationsData);
         person.confidentialStatus = getConfidentialStatus(relationsData);

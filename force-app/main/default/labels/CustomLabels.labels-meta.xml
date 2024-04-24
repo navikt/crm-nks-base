@@ -355,14 +355,6 @@
         <value>New conversation note</value>
     </labels>
     <labels>
-        <fullName>NKS_Journal_Share_With_User</fullName>
-        <categories>NKS, Conversation Note, Journal, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Journal &amp; Share With User</shortDescription>
-        <value>Journal and share with user</value>
-    </labels>
-    <labels>
         <fullName>NKS_Conversation_Note_Empty_Field</fullName>
         <categories>NKS, Conversation Note, Journal</categories>
         <language>en_US</language>

@@ -907,12 +907,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>journalButtonLabel</name>
-                <value>
-                    <elementReference>$Label.NKS_Journal</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>recordId</name>
                 <value>
                     <elementReference>recordId</elementReference>
@@ -1144,12 +1138,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>journalButtonLabel</name>
-                <value>
-                    <elementReference>$Label.NKS_Journal_Share_With_User</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>recordId</name>
                 <value>
                     <elementReference>recordId</elementReference>
@@ -1159,6 +1147,12 @@
                 <name>showBackButton</name>
                 <value>
                     <elementReference>Show_Back_Button</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>journalButtonTitle</name>
+                <value>
+                    <stringValue>journalAndShare</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

@@ -29,10 +29,6 @@
         <name>NKS_New_Conversation_Note</name>
     </customLabels>
     <customLabels>
-        <label>Journalfør og del med bruker</label>
-        <name>NKS_Journal_Share_With_User</name>
-    </customLabels>
-    <customLabels>
         <label>Saker</label>
         <name>NKS_Cases_Tab_Label</name>
     </customLabels>
