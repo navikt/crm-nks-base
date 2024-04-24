@@ -1,13 +1,20 @@
 import { LightningElement, api } from 'lwc';
 import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
-
+import templateWithFooter from './templateWithFooter.html';
+import templateWithoutFooter from './templateWithoutFooter.html';
+import { publishToAmplitude } from 'c/amplitude';
 export default class NksFlowNavigation extends LightningElement {
     @api action = 'NEXT';
     @api buttonLabel;
     @api buttonAlignment;
     @api stretched = false;
-    @api availableActions = [];
+    @api availableActions = ['NEXT', 'BACK', 'FINISH'];
     @api buttonVariant = 'brand';
+    @api removeFooter = false;
+
+    render() {
+        return this.removeFooter ? templateWithoutFooter : templateWithFooter;
+    }
 
     handleButtonClick() {
         let flowEvent;
@@ -23,10 +30,14 @@ export default class NksFlowNavigation extends LightningElement {
                 flowEvent = new FlowNavigationFinishEvent();
                 break;
             default:
-                break;
+                console.error('Invalid action:', this.action);
+                return;
         }
 
-        if (flowEvent) this.dispatchEvent(flowEvent);
+        if (flowEvent) {
+            this.dispatchEvent(flowEvent);
+        }
+        publishToAmplitude('Clicked ', { type: this.action });
     }
 
     get alignment() {
@@ -47,6 +58,6 @@ export default class NksFlowNavigation extends LightningElement {
     }
 
     get buttonStyle() {
-        return this.stretched === true ? 'display: grid; width: 100%;' : '';
+        return this.stretched ? 'display: grid; width: 100%;' : '';
     }
 }

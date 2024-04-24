@@ -4,12 +4,13 @@
             <lightning-layout style="float: right">
                 <lightning-layout-item class="slds-var-p-right_small">
                     <template if:true={showBackButton}>
-                        <c-nks-flow-navigation-v-2
+                        <c-nks-flow-navigation
                             action="BACK"
                             button-label={labels.back}
                             button-variant="brand-outline"
+                            remove-footer="true"
                         >
-                        </c-nks-flow-navigation-v-2>
+                        </c-nks-flow-navigation>
                     </template>
                 </lightning-layout-item>
                 <lightning-layout-item>
@@ -34,12 +35,13 @@
                             ></lightning-button>
                         </lightning-layout-item>
                         <lightning-layout-item class="">
-                            <c-nks-flow-navigation-v-2
+                            <c-nks-flow-navigation
                                 action="NEXT"
                                 button-label={conversationNoteButtonLabel}
                                 button-alignment="RIGHT"
+                                remove-footer="true"
                             >
-                            </c-nks-flow-navigation-v-2>
+                            </c-nks-flow-navigation>
                         </lightning-layout-item>
                     </lightning-layout>
                 </lightning-layout-item>
