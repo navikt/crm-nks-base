@@ -19,7 +19,9 @@ export default class nksFamilyViewer extends LightningElement {
     })
     wiredRecordInfo({ data }) {
         if (data) {
-            refreshApex(this.relations).then(() => {this.isLoaded = true;});
+            refreshApex(this.relations).then(() => {
+                this.isLoaded = true;
+            });
         }
     }
 

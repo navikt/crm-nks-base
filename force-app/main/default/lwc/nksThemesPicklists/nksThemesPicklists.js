@@ -12,7 +12,7 @@ export default class NksThemesPicklists extends LightningElement {
     @api subTheme;
     themes;
     subthemes;
-    
+
     objectApiName;
     employerRecordTypeId;
     @wire(getObjectInfo, { objectApiName: NAV_TASK_OBJECT })
@@ -42,7 +42,7 @@ export default class NksThemesPicklists extends LightningElement {
             if (this.themes == null) {
                 return;
             }
-            this.themes.forEach(theme => {
+            this.themes.forEach((theme) => {
                 if (theme.value === this.theme) {
                     selectedThemeKey = theme;
                 }
