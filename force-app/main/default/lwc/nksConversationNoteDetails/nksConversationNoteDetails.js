@@ -10,7 +10,7 @@ export default class NksSamtalereferatDetails extends LightningElement {
     @api recordId;
 
     dataShowing;
-    notes;
+    notes = [];
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
     showFlow = false;
@@ -38,17 +38,11 @@ export default class NksSamtalereferatDetails extends LightningElement {
     }
 
     get recordLabel() {
-        return this.objectInfo?.data?.label ? this.objectInfo.data.label : 'Samtalereferat';
+        return this.objectInfo?.data?.label || 'Samtalereferat';
     }
 
     get inputVariables() {
-        return [
-            {
-                name: 'recordId',
-                type: 'String',
-                value: this.recordId
-            }
-        ];
+        return [{ name: 'recordId', type: 'String', value: this.recordId }];
     }
 
     get reverseExpanded() {
@@ -56,10 +50,9 @@ export default class NksSamtalereferatDetails extends LightningElement {
     }
 
     get sectionClasses() {
-        return (
-            'slds-section slds-var-m-horizontal_small slds-var-p-bottom_xx-small' +
-            (this.expanded ? ' slds-is-open' : '')
-        );
+        return `slds-section slds-var-m-horizontal_small slds-var-p-bottom_xx-small ${
+            this.expanded ? 'slds-is-open' : ''
+        }`;
     }
 
     get hasCNotes() {
@@ -96,6 +89,6 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
-        publishToAmplitude('Covnersation note', { type: event.target.label + ' pressed' });
+        publishToAmplitude('Covnersation note', { type: `${event.target.label} pressed` });
     }
 }
