@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import templateWithFooter from './templateWithFooter.html';
+import templateWithoutFooter from './templateWithoutFooter.html';
 import { publishToAmplitude } from 'c/amplitude';
 export default class NksFlowNavigation extends LightningElement {
     @api action = 'NEXT';
@@ -9,6 +11,10 @@ export default class NksFlowNavigation extends LightningElement {
     @api availableActions = ['NEXT', 'BACK', 'FINISH'];
     @api buttonVariant = 'brand';
     @api removeFooter = false;
+
+    render() {
+        return this.removeFooter ? templateWithoutFooter : templateWithFooter;
+    }
 
     handleButtonClick() {
         let flowEvent;
