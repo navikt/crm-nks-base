@@ -6,7 +6,6 @@ import CONVERSATION_NOTE_CREATE_LABEL from '@salesforce/label/c.NKS_Create_Conve
 import { publishToAmplitude } from 'c/amplitude';
 
 const TITLES = {
-    CREATE_NAV_TASK: 'createNavTask',
     JOURNAL: 'journal',
     JOURNAL_AND_SHARE: 'journalAndShare'
 };
