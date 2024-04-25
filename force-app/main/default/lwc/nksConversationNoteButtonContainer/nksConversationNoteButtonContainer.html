@@ -18,7 +18,7 @@
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
                                 label={labels.journal}
-                                title={journalButtonTitle}
+                                data-id={journalButtonDataId}
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>
@@ -29,6 +29,7 @@
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
                                 label={labels.createNavTask}
+                                data-id="createNavTask"
                                 variant="brand-outline"
                                 onclick={toggleFlow}
                             ></lightning-button>

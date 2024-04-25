@@ -5,7 +5,8 @@ import BACK_LABEL from '@salesforce/label/c.NKS_Back';
 import CONVERSATION_NOTE_CREATE_LABEL from '@salesforce/label/c.NKS_Create_Conversation_Note';
 import { publishToAmplitude } from 'c/amplitude';
 
-const TITLES = {
+const DATA_IDS = {
+    CREATE_NAV_TASK: 'createNavTask',
     JOURNAL: 'journal',
     JOURNAL_AND_SHARE: 'journalAndShare'
 };
@@ -13,7 +14,7 @@ const TITLES = {
 export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api recordId;
     @api conversationNoteButtonLabel;
-    @api journalButtonTitle = TITLES.JOURNAL;
+    @api journalButtonDataId = DATA_IDS.JOURNAL;
     @api showBackButton = false;
 
     showFlow = false;
@@ -25,7 +26,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         journal: JOURNAL_LABEL,
         createConversationNote: CONVERSATION_NOTE_CREATE_LABEL
     };
-    title = '';
+    dataId = '';
     _journalConversation;
 
     @api
@@ -48,7 +49,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     }
 
     get isJournalAndShare() {
-        return this.title === TITLES.JOURNAL_AND_SHARE;
+        return this.dataId === DATA_IDS.JOURNAL_AND_SHARE;
     }
 
     get conversationNoteButtonVariant() {
@@ -57,7 +58,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
 
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
-        this.title = event.target.title;
+        this.dataId = event.target.dataset.id;
         if (this.isJournalAndShare) {
             this._journalConversation = true;
         }
@@ -66,8 +67,8 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     }
 
     handleShowFlow() {
-        this.showCreateTaskFlow = this.title === TITLES.CREATE_NAV_TASK;
-        this.showJournalFlow = this.title === TITLES.JOURNAL;
+        this.showCreateTaskFlow = this.dataId === DATA_IDS.CREATE_NAV_TASK;
+        this.showJournalFlow = this.dataId === DATA_IDS.JOURNAL;
     }
 
     handleStatusChange(event) {
