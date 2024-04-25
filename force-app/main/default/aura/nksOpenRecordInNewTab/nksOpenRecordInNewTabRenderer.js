@@ -1,3 +1,5 @@
 ({
-    // Your renderer method overrides go here
-});
+
+// Your renderer method overrides go here
+
+})

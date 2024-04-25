@@ -31,16 +31,16 @@ export default class NksBostedAddress extends LightningElement {
                 element.address ? element.address : '',
                 element.houseNumber ? ' ' + element.houseNumber : '',
                 element.houseLetter ? ' ' + element.houseLetter : ''
-            ]
-                .join('')
-                .trim();
-            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
-                .join('')
-                .trim();
-            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
-                .join('')
-                .trim();
-
+            ].join('').trim();
+            const postInfo = [
+                element.zipCode ? element.zipCode : '',
+                element.city ? ' ' + element.city : ''
+            ].join('').trim();
+            const region = [
+                element.region ? element.region : '',
+                element.countryCode ? ' ' + element.countryCode : ''
+            ].join('').trim();
+        
             return [fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
         return addressesToReturn.join('\n\n').trim();

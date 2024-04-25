@@ -1,3 +1,5 @@
 ({
-    helperMethod: function () {}
-});
+    helperMethod : function() {
+
+    }
+})
