@@ -1383,7 +1383,7 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Del med bruker</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Del</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
