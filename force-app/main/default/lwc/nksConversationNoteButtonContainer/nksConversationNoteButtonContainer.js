@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 import JOURNAL_LABEL from '@salesforce/label/c.NKS_Journal';
 import CREATE_NAV_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import BACK_LABEL from '@salesforce/label/c.NKS_Back';
-import CONVERSATION_NOTE_CREATE_LABEL from '@salesforce/label/c.NKS_Create_Conversation_Note';
+import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversation_Note';
 import { publishToAmplitude } from 'c/amplitude';
 
 const DATA_IDS = {
@@ -23,7 +23,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         createNavTask: CREATE_NAV_TASK_LABEL,
         back: BACK_LABEL,
         journal: JOURNAL_LABEL,
-        createConversationNote: CONVERSATION_NOTE_CREATE_LABEL
+        newConversationNote: CONVERSATION_NOTE_NEW_LABEL
     };
     dataId = '';
     _journalConversation;
@@ -52,7 +52,7 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     }
 
     get conversationNoteButtonVariant() {
-        return this.conversationNoteButtonLabel === this.labels.createConversationNote ? 'brand-outline' : 'brand';
+        return this.conversationNoteButtonLabel === this.labels.newConversationNote ? 'brand-outline' : 'brand';
     }
 
     toggleFlow(event) {

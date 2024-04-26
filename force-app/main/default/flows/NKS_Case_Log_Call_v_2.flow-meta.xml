@@ -903,7 +903,7 @@
             <inputParameters>
                 <name>conversationNoteButtonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Create_Conversation_Note</elementReference>
+                    <elementReference>$Label.NKS_New_Conversation_Note</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1021,8 +1021,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_0</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1104,8 +1103,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -1316,8 +1314,7 @@
         </fields>
         <fields>
             <name>Copy_1_of_Disclaimer_Text_0</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
