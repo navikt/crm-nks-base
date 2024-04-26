@@ -58,12 +58,17 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
 
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
-        this.dataId = event.target.dataset.id;
-        if (this.isJournalAndShare) {
-            this._journalConversation = true;
+        if (event.target && event.target.dataset.id) {
+            this.dataId = event.target.dataset.id;
+            if (this.isJournalAndShare) {
+                this._journalConversation = true;
+            }
+            this.handleShowFlow();
+            this.changeColor(this.dataId);
+            if (event.target.label) {
+                publishToAmplitude('Conversation note', { type: event.target.label + ' pressed' });
+            }
         }
-        this.handleShowFlow();
-        publishToAmplitude('Covnersation note', { type: event.target.label + ' pressed' });
     }
 
     handleShowFlow() {
@@ -75,6 +80,18 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         let flowStatus = event.detail.status;
         if (flowStatus === 'FINISHED' || flowStatus === 'FINISHED_SCREEN') {
             this.showFlow = false;
+        }
+    }
+
+    changeColor(dataId) {
+        const buttons = this.template.querySelectorAll('lightning-button');
+        buttons.forEach((button) => {
+            button.classList.remove('active');
+        });
+        let currentButton = this.template.querySelector(`lightning-button[data-id="${dataId}"]`);
+        if (currentButton && this.showFlow) {
+            currentButton.classList.add('active');
+            currentButton.blur();
         }
     }
 }
