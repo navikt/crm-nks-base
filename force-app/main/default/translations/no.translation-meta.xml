@@ -9,10 +9,6 @@
         <name>Permitteringsvarsler</name>
     </customApplications>
     <customLabels>
-        <label>Tilbake</label>
-        <name>NKS_Back</name>
-    </customLabels>
-    <customLabels>
         <label>Henvendelsen er ferdigstilt.</label>
         <name>NKS_Case_Completed</name>
     </customLabels>

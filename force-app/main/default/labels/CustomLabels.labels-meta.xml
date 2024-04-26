@@ -378,12 +378,4 @@
         <shortDescription>Case Completed</shortDescription>
         <value>Case has been completed.</value>
     </labels>
-    <labels>
-        <fullName>NKS_Back</fullName>
-        <categories>NKS, Conversation Note, Buttons</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Back</shortDescription>
-        <value>Back</value>
-    </labels>
 </CustomLabels>
