@@ -1146,12 +1146,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>showBackButton</name>
-                <value>
-                    <elementReference>Show_Back_Button</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>journalButtonDataId</name>
                 <value>
                     <stringValue>journalAndShare</stringValue>

@@ -13,8 +13,6 @@
                 type="String" role="inputOnly" />
             <property name="journalButtonDataId" label="Journal button data id"
                 type="String" role="inputOnly" default="journal" />
-            <property name="showBackButton" label="Show back button"
-                type="Boolean" role="inputOnly" default="false" />
             <property name="journalConversation" label="Journal conversation"
                 type="Boolean" role="outputOnly" />
         </targetConfig>

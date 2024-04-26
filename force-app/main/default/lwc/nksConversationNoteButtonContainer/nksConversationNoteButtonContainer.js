@@ -15,7 +15,6 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api recordId;
     @api conversationNoteButtonLabel;
     @api journalButtonDataId = DATA_IDS.JOURNAL;
-    @api showBackButton = false;
 
     showFlow = false;
     showCreateTaskFlow = false;
