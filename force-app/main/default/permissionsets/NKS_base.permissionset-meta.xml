@@ -1106,6 +1106,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>standard-LightningQuickText</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-QuickText</tab>
         <visibility>Visible</visibility>
     </tabSettings>
