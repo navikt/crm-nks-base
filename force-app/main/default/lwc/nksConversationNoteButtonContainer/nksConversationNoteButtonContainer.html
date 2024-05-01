@@ -8,11 +8,12 @@
                         <lightning-layout-item class="slds-var-p-right_small">
                             <lightning-button
                                 label={labels.journal}
-                                data-id={journalButtonDataId}
+                                data-id="journal"
                                 variant="brand-outline"
                                 onclick={toggleFlow}
+                                aria-expanded={showFlow}
                             ></lightning-button>
-                            <template if:true={isJournalAndShare}>
+                            <template lwc:if={isJournalAndShare}>
                                 <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
                             </template>
                         </lightning-layout-item>
@@ -22,6 +23,7 @@
                                 data-id="createNavTask"
                                 variant="brand-outline"
                                 onclick={toggleFlow}
+                                aria-expanded={showFlow}
                             ></lightning-button>
                         </lightning-layout-item>
                         <lightning-layout-item>
@@ -39,33 +41,29 @@
             </lightning-layout>
         </lightning-layout-item>
         <lightning-layout-item class="slds-size_12-of-12">
-            <template if:true={showCreateTaskFlow}>
-                <template if:true={showFlow}>
-                    <div class="slds-var-m-top_xx-small">
-                        <lightning-card>
-                            <lightning-flow
-                                flow-api-name="NKS_Case_Send_NAV_Task"
-                                flow-input-variables={inputVariables}
-                                onstatuschange={handleStatusChange}
-                            >
-                            </lightning-flow>
-                        </lightning-card>
-                    </div>
-                </template>
+            <template lwc:if={showCreateNavTaskFlow}>
+                <div class="slds-var-m-top_xx-small">
+                    <lightning-card>
+                        <lightning-flow
+                            flow-api-name="NKS_Case_Send_NAV_Task"
+                            flow-input-variables={inputVariables}
+                            onstatuschange={handleStatusChange}
+                        >
+                        </lightning-flow>
+                    </lightning-card>
+                </div>
             </template>
-            <template if:true={showJournalFlow}>
-                <template if:true={showFlow}>
-                    <div class="slds-var-m-top_xx-small">
-                        <lightning-card>
-                            <lightning-flow
-                                flow-api-name="Conversation_Note_Journal_From_Case"
-                                flow-input-variables={inputVariables}
-                                onstatuschange={handleStatusChange}
-                            >
-                            </lightning-flow>
-                        </lightning-card>
-                    </div>
-                </template>
+            <template lwc:elseif={showJournalFlow}>
+                <div class="slds-var-m-top_xx-small">
+                    <lightning-card>
+                        <lightning-flow
+                            flow-api-name="Conversation_Note_Journal_From_Case"
+                            flow-input-variables={inputVariables}
+                            onstatuschange={handleStatusChange}
+                        >
+                        </lightning-flow>
+                    </lightning-card>
+                </div>
             </template>
         </lightning-layout-item>
     </lightning-layout>

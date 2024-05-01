@@ -355,14 +355,6 @@
         <value>New conversation note</value>
     </labels>
     <labels>
-        <fullName>NKS_Conversation_Note_Empty_Field</fullName>
-        <categories>NKS, Conversation Note, Journal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Conversation Note Empty Field</shortDescription>
-        <value>Either conversation note or theme group field is empty.</value>
-    </labels>
-    <labels>
         <fullName>NKS_Conversation_Note_Disclaimer_Text</fullName>
         <categories>NKS, Conversation Note</categories>
         <language>en_US</language>

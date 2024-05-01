@@ -6,18 +6,15 @@ import { publishToAmplitude } from 'c/amplitude';
 
 const DATA_IDS = {
     CREATE_NAV_TASK: 'createNavTask',
-    JOURNAL: 'journal',
-    JOURNAL_AND_SHARE: 'journalAndShare'
+    JOURNAL: 'journal'
 };
 
 export default class NksSamtalereferatButtonContainer extends LightningElement {
     @api recordId;
     @api conversationNoteButtonLabel;
-    @api journalButtonDataId = DATA_IDS.JOURNAL;
+    @api journalAndShare = false;
 
     showFlow = false;
-    showCreateTaskFlow = false;
-    showJournalFlow = false;
     labels = {
         createNavTask: CREATE_NAV_TASK_LABEL,
         journal: JOURNAL_LABEL,
@@ -45,32 +42,32 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         ];
     }
 
-    get isJournalAndShare() {
-        return this.dataId === DATA_IDS.JOURNAL_AND_SHARE;
-    }
-
     get conversationNoteButtonVariant() {
         return this.conversationNoteButtonLabel === this.labels.newConversationNote ? 'brand-outline' : 'brand';
     }
 
-    toggleFlow(event) {
-        this.showFlow = !this.showFlow;
-        if (event.target && event.target.dataset.id) {
-            this.dataId = event.target.dataset.id;
-            if (this.isJournalAndShare) {
-                this._journalConversation = true;
-            }
-            this.handleShowFlow();
-            this.changeColor(this.dataId);
-            if (event.target.label) {
-                publishToAmplitude('Conversation note', { type: event.target.label + ' pressed' });
-            }
-        }
+    get showCreateNavTaskFlow() {
+        return this.showFlow && this.dataId === DATA_IDS.CREATE_NAV_TASK;
     }
 
-    handleShowFlow() {
-        this.showCreateTaskFlow = this.dataId === DATA_IDS.CREATE_NAV_TASK;
-        this.showJournalFlow = this.dataId === DATA_IDS.JOURNAL;
+    get showJournalFlow() {
+        return this.showFlow && this.dataId === DATA_IDS.JOURNAL;
+    }
+
+    get isJournalAndShare() {
+        return this.journalConversation && !this.showCreateNavTaskFlow;
+    }
+
+    toggleFlow(event) {
+        this.showFlow = !this.showFlow;
+        if (this.journalAndShare) {
+            this._journalConversation = true;
+        }
+        if (event.target?.dataset.id) {
+            this.dataId = event.target.dataset.id;
+            this.changeColor(this.dataId);
+        }
+        publishToAmplitude('Conversation note', { type: event.target?.label + ' pressed' });
     }
 
     handleStatusChange(event) {
@@ -88,7 +85,6 @@ export default class NksSamtalereferatButtonContainer extends LightningElement {
         let currentButton = this.template.querySelector(`lightning-button[data-id="${dataId}"]`);
         if (currentButton && this.showFlow) {
             currentButton.classList.add('active');
-            currentButton.blur();
         }
     }
 }

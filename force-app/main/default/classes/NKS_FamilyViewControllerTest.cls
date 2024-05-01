@@ -2,37 +2,45 @@
 private class NKS_FamilyViewControllerTest {
     @isTest
     private static void getRelationsTest() {
-        Person__c p = new Person__c(
+        Person__c testPerson = new Person__c(
             Name = '12106519356',
             INT_LastName__c = 'TestName',
             INT_FirstName__c = 'TestLastname'
         );
-        insert p;
+        insert testPerson;
 
-        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
-        insert a;
+        Account testAccount = new Account(CRM_Person__c = testPerson.Id, Name = 'testName');
+        insert testAccount;
 
-        Case c = new Case(AccountId = a.Id);
-        insert c;
+        Case testCase = new Case(AccountId = testAccount.Id);
+        insert testCase;
 
-        LiveChatVisitor lcv = new LiveChatVisitor();
-        insert lcv;
+        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
+        insert testChatVisitor;
 
-        LiveChatTranscript lct = new LiveChatTranscript();
-        lct.LiveChatVisitorid = lcv.id;
-        lct.AccountId = a.Id;
-        insert lct;
+        LiveChatTranscript testChat = new LiveChatTranscript();
+        testChat.LiveChatVisitorid = testChatVisitor.id;
+        testChat.AccountId = testAccount.Id;
+        insert testChat;
 
         Test.startTest();
-        List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
-        List<NKS_FamilyViewController.Relation> rl2 = NKS_FamilyViewController.getRelations(c.Id, 'Case');
-        List<NKS_FamilyViewController.Relation> rl3 = NKS_FamilyViewController.getRelations(
-            lct.Id,
+        List<NKS_FamilyViewController.Relation> testRelation1 = NKS_FamilyViewController.getRelations(
+            testAccount.Id,
+            'Account'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation2 = NKS_FamilyViewController.getRelations(
+            testCase.Id,
+            'Case'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation3 = NKS_FamilyViewController.getRelations(
+            testChat.Id,
             'LiveChatTranscript'
         );
         Test.stopTest();
 
-        System.assertEquals(false, rl.isEmpty());
+        System.assertEquals(false, testRelation1.isEmpty());
+        System.assertEquals(false, testRelation2.isEmpty());
+        System.assertEquals(false, testRelation3.isEmpty());
     }
 
     @isTest

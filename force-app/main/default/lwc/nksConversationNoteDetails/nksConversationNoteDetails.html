@@ -17,7 +17,7 @@
                 </lightning-layout>
             </lightning-layout-item>
             <lightning-layout-item class="slds-size_12-of-12">
-                <template if:true={showFlow}>
+                <template lwc:if={showFlow}>
                     <div class="slds-var-m-top_xx-small">
                         <lightning-card>
                             <lightning-flow
@@ -30,7 +30,7 @@
                 </template>
             </lightning-layout-item>
         </lightning-layout>
-        <template if:true={hasCNotes}>
+        <template lwc:if={hasCNotes}>
             <div class={sectionClasses}>
                 <!-- Expandable button -->
                 <h2 class="slds-section__title">

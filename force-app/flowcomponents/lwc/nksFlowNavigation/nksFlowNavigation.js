@@ -37,7 +37,7 @@ export default class NksFlowNavigation extends LightningElement {
         if (flowEvent) {
             this.dispatchEvent(flowEvent);
         }
-        publishToAmplitude('Clicked ', { type: this.action });
+        publishToAmplitude('Clicked on flow navigation button', { type: this.action });
     }
 
     get alignment() {

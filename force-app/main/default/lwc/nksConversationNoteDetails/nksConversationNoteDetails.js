@@ -6,7 +6,7 @@ import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
 
-export default class NksSamtalereferatDetails extends LightningElement {
+export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
 
     dataShowing;
@@ -89,6 +89,6 @@ export default class NksSamtalereferatDetails extends LightningElement {
 
     toggleFlow(event) {
         this.showFlow = !this.showFlow;
-        publishToAmplitude('Covnersation note', { type: `${event.target.label} pressed` });
+        publishToAmplitude('Conversation note', { type: event.target?.label + ' pressed' });
     }
 }

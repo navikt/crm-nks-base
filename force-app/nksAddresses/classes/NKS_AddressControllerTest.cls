@@ -2,28 +2,30 @@
 public with sharing class NKS_AddressControllerTest {
     @isTest
     static void testGetPersonIdentAndFullName() {
-        Person__c p = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
-        insert p;
-        Account a = new Account(CRM_Person__c = p.Id, Name = '78912345687');
-        insert a;
-        Case c = new Case(AccountId = a.Id);
-        insert c;
+        Person__c testPerson = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
+        insert testPerson;
+        Account testAccount = new Account(CRM_Person__c = testPerson.Id, Name = '78912345687');
+        insert testAccount;
+        Case testCase = new Case(AccountId = testAccount.Id);
+        insert testCase;
 
-        LiveChatVisitor lcv = new LiveChatVisitor();
-        insert lcv;
+        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
+        insert testChatVisitor;
 
-        LiveChatTranscript lct = new LiveChatTranscript();
-        lct.LiveChatVisitorid = lcv.id;
-        lct.AccountId = a.Id;
-        insert lct;
+        LiveChatTranscript testChat = new LiveChatTranscript();
+        testChat.LiveChatVisitorid = testChatVisitor.id;
+        testChat.AccountId = testAccount.Id;
+        insert testChat;
 
         Test.startTest();
-        String personIdent = NKS_AddressController.getPersonIdentAndFullName(a.Id, 'Account')?.Name;
-        String personIdent2 = NKS_AddressController.getPersonIdentAndFullName(c.Id, 'Case')?.Name;
-        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(lct.Id, 'LiveChatTranscript')?.Name;
+        String personIdent = NKS_AddressController.getPersonIdentAndFullName(testAccount.Id, 'Account')?.Name;
+        String personIdent2 = NKS_AddressController.getPersonIdentAndFullName(testCase.Id, 'Case')?.Name;
+        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(testChat.Id, 'LiveChatTranscript')?.Name;
         Test.stopTest();
 
         System.assertEquals('78912345687', personIdent);
+        System.assertEquals('78912345687', personIdent2);
+        System.assertEquals('78912345687', personIdent3);
     }
 
     @isTest

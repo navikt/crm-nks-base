@@ -11,8 +11,8 @@
             <property name="recordId" label="recordId" type="String" role="inputOnly" />
             <property name="conversationNoteButtonLabel" label="Conversation note button label"
                 type="String" role="inputOnly" />
-            <property name="journalButtonDataId" label="Journal button data id"
-                type="String" role="inputOnly" default="journal" />
+            <property name="journalAndShare" label="Journal and share conversation note"
+                type="Boolean" role="inputOnly" default="false" />
             <property name="journalConversation" label="Journal conversation"
                 type="Boolean" role="outputOnly" />
         </targetConfig>

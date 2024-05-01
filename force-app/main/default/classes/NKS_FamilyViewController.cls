@@ -124,7 +124,7 @@ public with sharing class NKS_FamilyViewController {
      */
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelations(Id recordId, String objectApiName) {
-        Id personId = null;
+        Id personId;
         if (objectApiName == 'Case') {
             personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
         } else if (objectApiName == 'Account') {
@@ -140,11 +140,10 @@ public with sharing class NKS_FamilyViewController {
         String personIdent = null;
 
         if (personId != null) {
-            Id userId = UserInfo.getUserId();
             access = [
                 SELECT RecordId, HasReadAccess
                 FROM UserRecordAccess
-                WHERE UserId = :userId AND RecordId = :personId
+                WHERE UserId = :UserInfo.getUserId() AND RecordId = :personId
             ]
             .HasReadAccess;
             personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
