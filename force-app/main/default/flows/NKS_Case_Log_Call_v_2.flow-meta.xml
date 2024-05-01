@@ -874,7 +874,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>test</targetReference>
+            <targetReference>Log_Screen</targetReference>
         </connector>
         <fields>
             <name>Header_0</name>
@@ -1080,7 +1080,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Copy_1_of_test</targetReference>
+            <targetReference>Get_Case_Verify</targetReference>
         </connector>
         <fields>
             <name>Header_1</name>
