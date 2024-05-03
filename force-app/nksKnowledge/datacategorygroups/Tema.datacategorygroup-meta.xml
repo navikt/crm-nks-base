@@ -80,12 +80,12 @@
                 <name>Kontantst_tte</name>
             </dataCategory>
             <dataCategory>
-                <label>Opplæringspenger</label>
-                <name>Opplaeringspenger</name>
-            </dataCategory>
-            <dataCategory>
                 <label>Omsorgspenger</label>
                 <name>Omsorgspenger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Opplæringspenger</label>
+                <name>Opplaeringspenger</name>
             </dataCategory>
             <dataCategory>
                 <label>Pleiepenger i livets sluttfase</label>
@@ -216,8 +216,12 @@
                 <name>Omsorgsopptjening</name>
             </dataCategory>
             <dataCategory>
+                <label>Omstillingsstønad</label>
+                <name>Omstillingsstonad</name>
+            </dataCategory>
+            <dataCategory>
                 <label>Supplerende stønad</label>
-                <name>Supplerende_st_nad</name>
+                <name>Supplerende_stonad</name>
             </dataCategory>
             <label>Pensjon</label>
             <name>Pensjon</name>
@@ -236,7 +240,7 @@
         </dataCategory>
         <dataCategory>
             <label>Teknisk brukerstøtte</label>
-            <name>Teknisk_brukerst_tte</name>
+            <name>Teknisk_brukerstotte</name>
         </dataCategory>
         <dataCategory>
             <label>Uføretrygd</label>
