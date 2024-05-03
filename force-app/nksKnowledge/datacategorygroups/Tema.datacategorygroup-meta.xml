@@ -65,7 +65,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Enslig forsørger</label>
-                <name>Enslig_fors_rger</name>
+                <name>Enslig_forsorger</name>
             </dataCategory>
             <dataCategory>
                 <label>Farskap</label>
@@ -153,7 +153,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Ménerstatning og yrkesskade</label>
-                <name>M_nerstatning_og_yrkesskade</name>
+                <name>Menerstatning_og_yrkesskade</name>
             </dataCategory>
             <dataCategory>
                 <label>Sykepenger</label>
