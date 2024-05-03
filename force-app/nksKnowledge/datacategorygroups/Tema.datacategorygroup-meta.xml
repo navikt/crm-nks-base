@@ -9,7 +9,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Arbeidssøker</label>
-                <name>Arbeidss_ker</name>
+                <name>Arbeidssoker</name>
             </dataCategory>
             <dataCategory>
                 <label>Dagpenger</label>
@@ -21,7 +21,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Tilleggsstønader</label>
-                <name>Tilleggsst_nader</name>
+                <name>Tilleggsstonader</name>
             </dataCategory>
             <dataCategory>
                 <label>Tiltakspenger</label>
@@ -77,7 +77,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Kontantstøtte</label>
-                <name>Kontantst_tte</name>
+                <name>Kontantstotte</name>
             </dataCategory>
             <dataCategory>
                 <label>Omsorgspenger</label>
@@ -137,7 +137,7 @@
         <dataCategory>
             <dataCategory>
                 <label>Gravferdsstønad</label>
-                <name>Gravferdsst_nad</name>
+                <name>Gravferdsstonad</name>
             </dataCategory>
             <dataCategory>
                 <label>Grunn- og hjelpestønad</label>
@@ -233,7 +233,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Økonomisk sosialhjelp</label>
-                <name>konomisk_sosialhjelp</name>
+                <name>Okonomisk_sosialhjelp</name>
             </dataCategory>
             <label>Sosiale tjenester</label>
             <name>SosialeTjenester</name>
