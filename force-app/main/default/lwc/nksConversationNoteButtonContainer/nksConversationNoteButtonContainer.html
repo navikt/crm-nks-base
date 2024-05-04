@@ -1,70 +1,23 @@
 <template>
-    <lightning-layout multiple-rows="true" size="12">
-        <lightning-layout-item class="slds-size_12-of-12 slds-var-p-top_medium">
-            <lightning-layout style="float: right">
-                <lightning-layout-item class="slds-var-p-right_small"> </lightning-layout-item>
-                <lightning-layout-item>
-                    <lightning-layout>
-                        <lightning-layout-item class="slds-var-p-right_small">
-                            <lightning-button
-                                label={labels.journal}
-                                data-id="journal"
-                                variant="brand-outline"
-                                onclick={toggleFlow}
-                                aria-expanded={showFlow}
-                            ></lightning-button>
-                            <template lwc:if={isJournalAndShare}>
-                                <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
-                            </template>
-                        </lightning-layout-item>
-                        <lightning-layout-item class="slds-var-p-right_small">
-                            <lightning-button
-                                label={labels.createNavTask}
-                                data-id="createNavTask"
-                                variant="brand-outline"
-                                onclick={toggleFlow}
-                                aria-expanded={showFlow}
-                            ></lightning-button>
-                        </lightning-layout-item>
-                        <lightning-layout-item>
-                            <c-nks-flow-navigation
-                                action="NEXT"
-                                button-label={conversationNoteButtonLabel}
-                                button-variant={conversationNoteButtonVariant}
-                                button-alignment="RIGHT"
-                                remove-footer="true"
-                            >
-                            </c-nks-flow-navigation>
-                        </lightning-layout-item>
-                    </lightning-layout>
-                </lightning-layout-item>
-            </lightning-layout>
-        </lightning-layout-item>
-        <lightning-layout-item class="slds-size_12-of-12">
-            <template lwc:if={showCreateNavTaskFlow}>
-                <div class="slds-var-m-top_xx-small">
-                    <lightning-card>
-                        <lightning-flow
-                            flow-api-name="NKS_Case_Send_NAV_Task"
-                            flow-input-variables={inputVariables}
-                            onstatuschange={handleStatusChange}
-                        >
-                        </lightning-flow>
-                    </lightning-card>
-                </div>
-            </template>
-            <template lwc:elseif={showJournalFlow}>
-                <div class="slds-var-m-top_xx-small">
-                    <lightning-card>
-                        <lightning-flow
-                            flow-api-name="Conversation_Note_Journal_From_Case"
-                            flow-input-variables={inputVariables}
-                            onstatuschange={handleStatusChange}
-                        >
-                        </lightning-flow>
-                    </lightning-card>
-                </div>
-            </template>
-        </lightning-layout-item>
+    <lightning-layout class="slds-float_right">
+        <template lwc:if={isJournalAndShare}>
+            <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+        </template>
+        <c-nks-flow-button-container
+            record-id={recordId}
+            channel-name="Conversation note"
+            create-nav-task-flow-name="NKS_Case_Send_NAV_Task"
+            journal-flow-name="Conversation_Note_Journal_From_Case"
+            onjournalbuttonclicked={handleJournalButtonClicked}
+        ></c-nks-flow-button-container>
+        <c-nks-flow-navigation
+            class="slds-var-p-vertical_medium"
+            action="NEXT"
+            button-label={conversationNoteButtonLabel}
+            button-variant={conversationNoteButtonVariant}
+            button-alignment="RIGHT"
+            remove-footer="true"
+        >
+        </c-nks-flow-navigation>
     </lightning-layout>
 </template>

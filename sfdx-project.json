@@ -45,7 +45,7 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.27.0.2"
+                    "versionNumber": "0.29.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -65,7 +65,7 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.121.0.2"
+                    "versionNumber": "0.122.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
@@ -73,7 +73,7 @@
                 },
                 {
                     "package": "crm-nks-base-components",
-                    "versionNumber": "0.48.0.LATEST"
+                    "versionNumber": "0.49.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
