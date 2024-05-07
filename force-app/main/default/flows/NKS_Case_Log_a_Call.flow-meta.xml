@@ -420,7 +420,8 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Checks the status if the case. If it is closed, the conversation note is already made.</description>
+        <description>Checks the status if the case. If it is closed, the conversation note is
+            already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
         <locationX>468</locationX>
@@ -573,9 +574,9 @@
         <name>CONV_NOTE_THEME_GROUP_CODDE</name>
         <dataType>String</dataType>
         <expression>IF({!Create_Journal_Entry.value},
-{!Case_Overview.selectedThemeGroup},
-{!Conversation_Theme_Categorization.themeGroupCode}
-)</expression>
+            {!Case_Overview.selectedThemeGroup},
+            {!Conversation_Theme_Categorization.themeGroupCode}
+            )</expression>
     </formulas>
     <interviewLabel>Case Log a Call {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case Log a Call</label>
@@ -1001,7 +1002,8 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Flere handlinger&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(62, 62, 60); background-color:
+                rgb(255, 255, 255);&quot;&gt;Flere handlinger&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1194,7 +1196,9 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(144, 133, 133);&quot;&gt;Samtalereferatet blir delt med bruker når det opprettes.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(144, 133,
+                133);&quot;&gt;Samtalereferatet blir delt med bruker når det
+                opprettes.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1431,7 +1435,7 @@
                     <inputParameters>
                         <name>buttonLabel</name>
                         <value>
-                            <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
+                            <elementReference>$Label.NKS_Share_With_User</elementReference>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -1498,7 +1502,8 @@
         </fields>
         <fields>
             <name>Update_Account_Text</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Henvendelsen er ikke tilknyttet en bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Henvendelsen er ikke tilknyttet en
+                bruker. Vennligst oppdater med riktig bruker referat skal knyttes til.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1610,8 +1615,8 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>Takk for at du tok kontakt
 
-Du har fått informasjon om
--</text>
+            Du har fått informasjon om
+            -</text>
     </textTemplates>
     <variables>
         <name>Account_Name</name>

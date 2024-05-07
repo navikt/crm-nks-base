@@ -1136,7 +1136,7 @@
             <inputParameters>
                 <name>conversationNoteButtonLabel</name>
                 <value>
-                    <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
+                    <elementReference>$Label.NKS_Share_With_User</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
