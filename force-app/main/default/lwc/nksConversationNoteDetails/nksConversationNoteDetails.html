@@ -1,35 +1,11 @@
 <template>
     <div class="slds-card slds-theme_default">
-        <lightning-layout class="slds-var-p-horizontal_medium slds-var-p-top_medium" multiple-rows="true" size="12">
-            <lightning-layout-item class="slds-size_12-of-12">
-                <lightning-layout>
-                    <lightning-layout-item class="slds-size_6-of-12 slds-var-p-right_small">
-                        <lightning-button
-                            style="display: grid; width: 100%"
-                            label={changeUserLabel}
-                            variant="brand"
-                            onclick={toggleFlow}
-                        ></lightning-button>
-                    </lightning-layout-item>
-                    <lightning-layout-item class="slds-size_6-of-12">
-                        <c-nks-security-routine></c-nks-security-routine>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </lightning-layout-item>
-            <lightning-layout-item class="slds-size_12-of-12">
-                <template lwc:if={showFlow}>
-                    <div class="slds-var-m-top_xx-small">
-                        <lightning-card>
-                            <lightning-flow
-                                flow-api-name="NKS_Case_Change_Account"
-                                flow-input-variables={inputVariables}
-                            >
-                            </lightning-flow>
-                        </lightning-card>
-                    </div>
-                </template>
-            </lightning-layout-item>
-        </lightning-layout>
+        <c-nks-button-container-top
+            record-id={recordId}
+            channel-name="Conversation note"
+            flow-button-label={changeUserLabel}
+            flow-api-name="NKS_Case_Change_Account"
+        ></c-nks-button-container-top>
         <template lwc:if={hasCNotes}>
             <div class={sectionClasses}>
                 <!-- Expandable button -->

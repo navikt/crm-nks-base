@@ -13,7 +13,6 @@ export default class NksConversationNoteDetails extends LightningElement {
     notes = [];
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
-    showFlow = false;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
@@ -85,10 +84,5 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     handleExpandClick() {
         this.expanded = !this.expanded;
-    }
-
-    toggleFlow(event) {
-        this.showFlow = !this.showFlow;
-        publishToAmplitude('Conversation note', { type: event.target?.label + ' pressed' });
     }
 }
