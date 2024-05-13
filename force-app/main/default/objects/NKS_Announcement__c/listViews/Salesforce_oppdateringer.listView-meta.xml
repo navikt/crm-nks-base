@@ -10,5 +10,5 @@
         <operation>equals</operation>
         <value>NKS_Announcement__c.Salesforce_Update</value>
     </filters>
-    <label>Salesforce oppdateringer</label>
+    <label>Nytt og nyttig i Salesforce</label>
 </ListView>

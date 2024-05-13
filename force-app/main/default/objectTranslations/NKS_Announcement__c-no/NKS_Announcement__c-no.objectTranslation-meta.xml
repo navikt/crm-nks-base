@@ -106,15 +106,15 @@
         <name>News</name>
     </recordTypes>
     <recordTypes>
-        <label>Teknisk og drift</label>
+        <label>Driftsmelding</label>
         <name>Operational</name>
     </recordTypes>
     <recordTypes>
-        <label>Salesforce oppdatering</label>
+        <label>Nytt og nyttig i Salesforce</label>
         <name>Salesforce_Update</name>
     </recordTypes>
     <recordTypes>
-        <label>Trafikk</label>
+        <label>Trafikkstyrers hjørne</label>
         <name>Traffic</name>
     </recordTypes>
 </CustomObjectTranslation>
