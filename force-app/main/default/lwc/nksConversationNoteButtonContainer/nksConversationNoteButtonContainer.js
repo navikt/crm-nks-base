@@ -25,7 +25,7 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     get isJournalAndShare() {
         return (
             this.journalConversation &&
-            !this.template.querySelector('c-nks-flow-button-container').showCreateNavTaskFlow
+            !this.template.querySelector('c-nks-button-container-bottom').showCreateNavTaskFlow
         );
     }
 
