@@ -3,13 +3,13 @@
         <template lwc:if={isJournalAndShare}>
             <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
         </template>
-        <c-nks-flow-button-container
+        <c-nks-button-container-bottom
             record-id={recordId}
             channel-name="Conversation note"
             create-nav-task-flow-name="NKS_Case_Send_NAV_Task"
             journal-flow-name="Conversation_Note_Journal_From_Case"
             onjournalbuttonclicked={handleJournalButtonClicked}
-        ></c-nks-flow-button-container>
+        ></c-nks-button-container-bottom>
         <c-nks-flow-navigation
             class="slds-var-p-vertical_medium"
             action="NEXT"
