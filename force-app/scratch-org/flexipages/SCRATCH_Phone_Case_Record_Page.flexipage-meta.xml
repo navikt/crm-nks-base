@@ -61,7 +61,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_Full_Name__c,Name,INT_Sex__c,
+                    <value>
+                        NKS_Full_Name__c,Name,INT_Sex__c,
                         INT_LegalStatus__c,INT_Citizenships__c,INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -683,8 +684,8 @@
                     <name>articleId</name>
                     <value>Felles-Trussel-trakassering-og-sjikane</value>
                 </componentInstanceProperties>
-                <componentName>nksSecurityRoutine</componentName>
-                <identifier>c_nksSecurityRoutine1</identifier>
+                <componentName>nksSecurityRoutines</componentName>
+                <identifier>c_nksSecurityRoutines</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
