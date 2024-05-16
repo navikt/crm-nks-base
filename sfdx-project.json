@@ -72,12 +72,12 @@
                     "versionNumber": "0.20.0.LATEST"
                 },
                 {
-                    "package": "crm-nks-base-components",
-                    "versionNumber": "0.50.0.LATEST"
-                },
-                {
                     "package": "crm-nks-integration",
                     "versionNumber": "0.51.0.LATEST"
+                },
+                {
+                    "package": "crm-nks-base-components",
+                    "versionNumber": "0.50.0.LATEST"
                 }
             ]
         }
