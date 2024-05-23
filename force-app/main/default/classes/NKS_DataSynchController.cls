@@ -43,9 +43,11 @@ public without sharing class NKS_DataSynchController {
     private static void updatePersonBankAccount(String ident, KRP_Konto accountInfo) {
         Person__c person = getPerson(ident);
         person.INT_BankAccountNumber__c = accountInfo.kontonummer;
-        if (String.isNotBlank(accountInfo.gyldigFom))
+        person.INT_BankAccountSource__c = accountInfo.kilde;
+        if (String.isNotBlank(accountInfo.gyldigFom)) {
             person.INT_BankAccountNumberLastModified__c = Datetime.valueOf(accountInfo.gyldigFom.replace('T', ' '))
-                .date();
+            .date();
+        }
         update person;
     }
 
