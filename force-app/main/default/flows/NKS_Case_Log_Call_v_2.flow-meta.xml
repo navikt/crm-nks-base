@@ -4,7 +4,7 @@
         <name>Post_Journal</name>
         <label>Post Journal</label>
         <locationX>248</locationX>
-        <locationY>3320</locationY>
+        <locationY>3212</locationY>
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -55,7 +55,7 @@
         <name>Assign_Account_to_Case</name>
         <label>Assign Account to Case</label>
         <locationX>534</locationX>
-        <locationY>1964</locationY>
+        <locationY>1856</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -72,7 +72,7 @@
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
         <locationX>380</locationX>
-        <locationY>3620</locationY>
+        <locationY>3512</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -95,7 +95,7 @@
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
         <locationX>248</locationX>
-        <locationY>3104</locationY>
+        <locationY>2996</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -174,7 +174,7 @@
         <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
         <locationX>512</locationX>
-        <locationY>3104</locationY>
+        <locationY>2996</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
             <operator>Assign</operator>
@@ -246,7 +246,7 @@
         <name>Journal_Theme_Assignment</name>
         <label>Journal Theme Assignment</label>
         <locationX>248</locationX>
-        <locationY>2996</locationY>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@
         <name>Theme_Categorization_Assignment</name>
         <label>Theme Categorization Assignment</label>
         <locationX>512</locationX>
-        <locationY>2996</locationY>
+        <locationY>2888</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +309,7 @@
         <name>Changed_Account</name>
         <label>Changed Account</label>
         <locationX>380</locationX>
-        <locationY>1856</locationY>
+        <locationY>1748</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_to_Case</targetReference>
         </defaultConnector>
@@ -434,7 +434,7 @@
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
         <locationX>534</locationX>
-        <locationY>2288</locationY>
+        <locationY>2180</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry</targetReference>
         </defaultConnector>
@@ -459,7 +459,7 @@
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
         <locationX>380</locationX>
-        <locationY>2780</locationY>
+        <locationY>2672</locationY>
         <defaultConnector>
             <targetReference>Theme_Categorization_Screen</targetReference>
         </defaultConnector>
@@ -512,7 +512,7 @@
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
         <locationX>248</locationX>
-        <locationY>3212</locationY>
+        <locationY>3104</locationY>
         <connector>
             <targetReference>Post_Journal</targetReference>
         </connector>
@@ -523,7 +523,7 @@
         <name>Create_Conversation_Note_0</name>
         <label>Create Conversation Note</label>
         <locationX>512</locationX>
-        <locationY>3212</locationY>
+        <locationY>3104</locationY>
         <connector>
             <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
@@ -562,7 +562,7 @@
         <name>Get_Account_0</name>
         <label>Get Account</label>
         <locationX>534</locationX>
-        <locationY>2072</locationY>
+        <locationY>1964</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access_0</targetReference>
@@ -632,7 +632,7 @@
         <name>Get_Case_Verify</name>
         <label>Get Case</label>
         <locationX>380</locationX>
-        <locationY>1748</locationY>
+        <locationY>1640</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Changed_Account</targetReference>
@@ -678,7 +678,7 @@
         <name>Get_Conversation_Note_0_0</name>
         <label>Get Conversation Note</label>
         <locationX>380</locationX>
-        <locationY>3512</locationY>
+        <locationY>3404</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment_Default_0_0</targetReference>
@@ -737,7 +737,7 @@
         <name>Get_Person_Access_0</name>
         <label>Get Person Access</label>
         <locationX>534</locationX>
-        <locationY>2180</locationY>
+        <locationY>2072</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access_0</targetReference>
@@ -830,7 +830,7 @@
         <name>Set_Case_Closed_0</name>
         <label>Set Case Closed</label>
         <locationX>402</locationX>
-        <locationY>2396</locationY>
+        <locationY>2288</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -851,7 +851,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>380</locationX>
-        <locationY>3728</locationY>
+        <locationY>3620</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -876,26 +876,6 @@
         <connector>
             <targetReference>Log_Screen</targetReference>
         </connector>
-        <fields>
-            <name>Header_0</name>
-            <extensionName>c:nksHeader</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>headertag</name>
-                <value>
-                    <stringValue>h2</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input</name>
-                <value>
-                    <elementReference>$Label.NKS_Case_Completed</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
         <fields>
             <name>Button_Container_0</name>
             <extensionName>c:nksConversationNoteButtonContainer</extensionName>
@@ -985,7 +965,7 @@
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
         <locationX>248</locationX>
-        <locationY>2888</locationY>
+        <locationY>2780</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1021,8 +1001,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_0</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1104,8 +1083,7 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -1280,7 +1258,7 @@
         <name>Theme_Categorization_Screen</name>
         <label>Theme Categorization Screen</label>
         <locationX>512</locationX>
-        <locationY>2888</locationY>
+        <locationY>2780</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1316,8 +1294,7 @@
         </fields>
         <fields>
             <name>Copy_1_of_Disclaimer_Text_0</name>
-            <fieldText>
-                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>

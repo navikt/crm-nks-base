@@ -5,6 +5,9 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
+import { callGetCommonCode, getOutputVariableValue } from 'c/nksButtonContainerUtils';
+import { publish, MessageContext } from 'lightning/messageService';
+import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
@@ -13,6 +16,9 @@ export default class NksConversationNoteDetails extends LightningElement {
     notes = [];
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
+
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
@@ -64,8 +70,9 @@ export default class NksConversationNoteDetails extends LightningElement {
             status === 'FINISHED' &&
             outputVariables?.some((output) => output.objectType === 'Conversation_Note__c' && output.value !== null)
         ) {
-            publishToAmplitude('Conversation Note Journaled');
+            publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
+            this.getJournalThemeValue(outputVariables);
         }
     }
 
@@ -84,5 +91,22 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     handleExpandClick() {
         this.expanded = !this.expanded;
+    }
+
+    async getJournalThemeValue(outputVariables) {
+        try {
+            const selectedThemeId = getOutputVariableValue(outputVariables, 'Selected_Theme_SF_Id');
+            let journalTheme = '';
+
+            if (selectedThemeId) {
+                journalTheme = await callGetCommonCode(selectedThemeId);
+                const payload = {
+                    journalTheme: journalTheme
+                };
+                publish(this.messageContext, CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL, payload);
+            }
+        } catch (error) {
+            console.error('Error getting journal theme: ', error);
+        }
     }
 }

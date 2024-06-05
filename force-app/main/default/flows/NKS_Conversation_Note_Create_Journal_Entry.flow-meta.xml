@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>Conversation Note Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Create Journal Entry</label>
     <processMetadataValues>
@@ -26,7 +27,7 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Journal_Screen</targetReference>
@@ -48,7 +49,7 @@
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -79,7 +80,22 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Selected_Theme</assignToReference>
+                <name>selectedCaseTheme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Case_Id</assignToReference>
+                <name>selectedCaseId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Case_Legacy_System</assignToReference>
+                <name>selectedCaseLegacySystem</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_SF_Id</assignToReference>
+                <name>selectedCaseThemeSfId</name>
+            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Journalfør</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -97,18 +113,18 @@
         <name>Post_Journal_Entry</name>
         <label>Post Journal Entry</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <flowName>CRM_Journal_Conversation_Note</flowName>
         <inputAssignments>
             <name>Journal_Case_ID</name>
             <value>
-                <elementReference>Case_Overview.selectedCaseId</elementReference>
+                <elementReference>Selected_Case_Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>Journal_Case_Legacy_System</name>
             <value>
-                <elementReference>Case_Overview.selectedCaseLegacySystem</elementReference>
+                <elementReference>Case_Legacy_System</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -126,7 +142,7 @@
         <inputAssignments>
             <name>Journal_Theme_Code</name>
             <value>
-                <elementReference>Case_Overview.selectedCaseTheme</elementReference>
+                <elementReference>Selected_Theme</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -138,11 +154,39 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>Case_Legacy_System</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>ID of the conversation note where the flow is triggered from.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Case_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>
