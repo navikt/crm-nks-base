@@ -14,13 +14,13 @@
         <inputParameters>
             <name>Journal_Case_ID</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseId</elementReference>
+                <elementReference>Selected_Case_Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>Journal_Case_Legacy_System</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseLegacyId</elementReference>
+                <elementReference>Selected_Legacy_System</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -38,7 +38,7 @@
         <inputParameters>
             <name>Journal_Theme_Code</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseTheme</elementReference>
+                <elementReference>Selected_Theme_Code</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -251,14 +251,14 @@
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_Case_Overview.selectedThemeGroupSfId</elementReference>
+                <elementReference>Selected_Theme_Group_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseThemeSfId</elementReference>
+                <elementReference>Selected_Theme_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1044,7 +1044,26 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Selected_Case_Id</assignToReference>
+                <name>selectedCaseId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Legacy_System</assignToReference>
+                <name>selectedCaseLegacySystem</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_Code</assignToReference>
+                <name>selectedCaseTheme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_SF_Id</assignToReference>
+                <name>selectedCaseThemeSfId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_Group_SF_Id</assignToReference>
+                <name>selectedThemeGroupSfId</name>
+            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Journalfør og del med brukeren</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1423,6 +1442,41 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Case_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Legacy_System</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_Code</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_Group_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Salesforce ID to the Person__c record</description>
