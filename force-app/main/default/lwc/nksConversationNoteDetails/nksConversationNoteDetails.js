@@ -49,7 +49,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     get sectionClasses() {
-        return `slds-section slds-var-m-horizontal_small slds-var-p-bottom_xx-small ${
+        return `slds-section slds-var-m-horizontal_small slds-var-p-vertical_xx-small ${
             this.expanded ? 'slds-is-open' : ''
         }`;
     }
