@@ -1,23 +1,24 @@
 <template>
-    <lightning-layout class="slds-float_right">
-        <template lwc:if={journalConversation}>
-            <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
-        </template>
-        <c-nks-button-container-bottom
-            record-id={recordId}
-            channel-name="Conversation note"
-            flow-names="Conversation_Note_Journal_From_Case, NKS_Case_Send_NAV_Task"
-            flow-labels="NKS_Journal, NKS_Create_NAV_Task"
-            onflowclicked={handleFlowButtonClicked}
-        ></c-nks-button-container-bottom>
-        <c-nks-flow-navigation
-            class="slds-var-p-vertical_medium"
-            action="NEXT"
-            button-label={conversationNoteButtonLabel}
-            button-variant={conversationNoteButtonVariant}
-            button-alignment="RIGHT"
-            remove-footer="true"
-        >
-        </c-nks-flow-navigation>
-    </lightning-layout>
+    <template lwc:if={journalConversation}>
+        <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+    </template>
+    <c-nks-button-container-bottom
+        record-id={recordId}
+        channel-name="Conversation note"
+        flow-names="Conversation_Note_Journal_From_Case, NKS_Case_Send_NAV_Task"
+        flow-labels="NKS_Journal, NKS_Create_NAV_Task"
+        onflowclicked={handleFlowButtonClicked}
+    >
+        <div slot="navigationButton">
+            <c-nks-flow-navigation
+                class="slds-var-p-vertical_medium"
+                action="NEXT"
+                button-label={conversationNoteButtonLabel}
+                button-variant={conversationNoteButtonVariant}
+                button-alignment="RIGHT"
+                remove-footer="true"
+            >
+            </c-nks-flow-navigation>
+        </div>
+    </c-nks-button-container-bottom>
 </template>
