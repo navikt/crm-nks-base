@@ -38,7 +38,6 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     handleFlowSucceeded(event) {
         const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
-
         if (!outputVariables) {
             console.error('No output variables found in the event detail');
             return;

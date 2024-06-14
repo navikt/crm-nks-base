@@ -123,7 +123,8 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.subscription = subscribe(
             this.messageContext,
             CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
-            (message) => this.handleMessage(message),
+            (message) =>
+                handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate),
             { scope: APPLICATION_SCOPE }
         );
     }
@@ -131,21 +132,5 @@ export default class NksConversationNoteDetails extends LightningElement {
     unsubscribeToMessageChannel() {
         unsubscribe(this.subscription);
         this.subscription = null;
-    }
-
-    handleMessage(message) {
-        try {
-            if (message.flowApiName === FLOW_API_NAMES.JOURNAL) {
-                handleShowNotifications(FLOW_API_NAMES.JOURNAL, message.outputVariables, this.notificationBoxTemplate);
-            } else if (message.flowApiName === FLOW_API_NAMES.CREATE_NAV_TASK) {
-                handleShowNotifications(
-                    FLOW_API_NAMES.CREATE_NAV_TASK,
-                    message.outputVariables,
-                    this.notificationBoxTemplate
-                );
-            }
-        } catch (error) {
-            console.error('Error handling flow succeeded event: ', error);
-        }
     }
 }
