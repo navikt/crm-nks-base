@@ -1,13 +1,11 @@
 <template>
     <div class="slds-card slds-theme_default">
-        <div class="slds-border_bottom">
-            <c-nks-button-container-top
-                record-id={recordId}
-                channel-name="Conversation note"
-                flow-button-label={changeUserLabel}
-                flow-api-name="NKS_Case_Change_Account"
-            ></c-nks-button-container-top>
-        </div>
+        <c-nks-button-container-top
+            record-id={recordId}
+            channel-name="Conversation note"
+            flow-button-label={changeUserLabel}
+            flow-api-name="NKS_Case_Change_Account"
+        ></c-nks-button-container-top>
         <template lwc:if={hasCNotes}>
             <div class={sectionClasses}>
                 <!-- Expandable button -->

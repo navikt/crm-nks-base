@@ -1,11 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
 import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversation_Note';
-import { callGetCommonCode, getOutputVariableValue } from 'c/nksButtonContainerUtils';
+import { handleShowNotifications } from 'c/nksButtonContainerUtils';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 
 const FLOW_API_NAMES = {
-    CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task',
+    CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task_v_2',
     JOURNAL: 'Conversation_Note_Journal_From_Case'
 };
 
@@ -81,7 +81,7 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         }
     }
 
-    async handleFlowSucceeded(event) {
+    handleFlowSucceeded(event) {
         const outputVariables = event.detail?.flowOutput;
 
         if (!outputVariables) {
@@ -90,28 +90,9 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         }
         try {
             if (event.detail?.flowName === FLOW_API_NAMES.JOURNAL) {
-                const selectedThemeId = getOutputVariableValue(outputVariables, 'Selected_Theme_SF_Id');
-                let journalTheme = '';
-
-                if (selectedThemeId) {
-                    journalTheme = await callGetCommonCode(selectedThemeId);
-                }
-
-                this.notificationBoxTemplate.addNotification('Saken er journalført', journalTheme);
+                handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate);
             } else if (event.detail?.flowName === FLOW_API_NAMES.CREATE_NAV_TASK) {
-                const selectedThemeId = getOutputVariableValue(outputVariables, 'Selected_Theme_SF_Id');
-                const unitName = getOutputVariableValue(outputVariables, 'Selected_Unit_Name');
-                const unitNumber = getOutputVariableValue(outputVariables, 'Selected_Unit_Number');
-                let navTaskTheme = '';
-
-                if (selectedThemeId) {
-                    navTaskTheme = await callGetCommonCode(selectedThemeId);
-                }
-
-                this.notificationBoxTemplate.addNotification(
-                    'Oppgave opprettet',
-                    `${navTaskTheme} Sendt til: ${unitNumber} ${unitName}`
-                );
+                handleShowNotifications(FLOW_API_NAMES.CREATE_NAV_TASK, outputVariables, this.notificationBoxTemplate);
             }
         } catch (error) {
             console.error('Error handling flow succeeded event: ', error);
