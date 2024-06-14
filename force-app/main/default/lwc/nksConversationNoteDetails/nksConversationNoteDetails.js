@@ -5,9 +5,14 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
-import { callGetCommonCode, getOutputVariableValue } from 'c/nksButtonContainerUtils';
-import { publish, MessageContext } from 'lightning/messageService';
+import { handleShowNotifications } from 'c/nksButtonContainerUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
+import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
+
+const FLOW_API_NAMES = {
+    CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task_v_2',
+    JOURNAL: 'Conversation_Note_Journal_From_Case'
+};
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
@@ -16,6 +21,20 @@ export default class NksConversationNoteDetails extends LightningElement {
     notes = [];
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
+    subscription = null;
+
+    /*
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+    }*/
+
+    renderedCallback() {
+        this.subscribeToMessageChannel();
+    }
+
+    disconnectedCallback() {
+        this.unsubscribeToMessageChannel();
+    }
 
     @wire(MessageContext)
     messageContext;
@@ -64,6 +83,10 @@ export default class NksConversationNoteDetails extends LightningElement {
         return this.notes != null && this.notes.length > 0;
     }
 
+    get notificationBoxTemplate() {
+        return this.template.querySelector('c-nks-notification-box');
+    }
+
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
         if (
@@ -72,7 +95,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         ) {
             publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
-            this.getJournalThemeValue(outputVariables);
+            handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate, true);
         }
     }
 
@@ -93,20 +116,36 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.expanded = !this.expanded;
     }
 
-    async getJournalThemeValue(outputVariables) {
-        try {
-            const selectedThemeId = getOutputVariableValue(outputVariables, 'Selected_Theme_SF_Id');
-            let journalTheme = '';
+    subscribeToMessageChannel() {
+        if (this.subscription) {
+            return;
+        }
+        this.subscription = subscribe(
+            this.messageContext,
+            CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
+            (message) => this.handleMessage(message),
+            { scope: APPLICATION_SCOPE }
+        );
+    }
 
-            if (selectedThemeId) {
-                journalTheme = await callGetCommonCode(selectedThemeId);
-                const payload = {
-                    journalTheme: journalTheme
-                };
-                publish(this.messageContext, CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL, payload);
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    handleMessage(message) {
+        try {
+            if (message.flowApiName === FLOW_API_NAMES.JOURNAL) {
+                handleShowNotifications(FLOW_API_NAMES.JOURNAL, message.outputVariables, this.notificationBoxTemplate);
+            } else if (message.flowApiName === FLOW_API_NAMES.CREATE_NAV_TASK) {
+                handleShowNotifications(
+                    FLOW_API_NAMES.CREATE_NAV_TASK,
+                    message.outputVariables,
+                    this.notificationBoxTemplate
+                );
             }
         } catch (error) {
-            console.error('Error getting journal theme: ', error);
+            console.error('Error handling flow succeeded event: ', error);
         }
     }
 }

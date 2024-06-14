@@ -1,13 +1,9 @@
 import { LightningElement, api, wire } from 'lwc';
 import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversation_Note';
-import { handleShowNotifications } from 'c/nksButtonContainerUtils';
-import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
+import { publish, MessageContext } from 'lightning/messageService';
 
-const FLOW_API_NAMES = {
-    CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task_v_2',
-    JOURNAL: 'Conversation_Note_Journal_From_Case'
-};
+const JOURNAL_FLOW_API_NAME = 'Conversation_Note_Journal_From_Case';
 
 export default class NksConversationNoteButtonContainer extends LightningElement {
     @api recordId;
@@ -16,7 +12,6 @@ export default class NksConversationNoteButtonContainer extends LightningElement
 
     newConversationNote = CONVERSATION_NOTE_NEW_LABEL;
     _journalConversation;
-    subscription = null;
 
     @api
     get journalConversation() {
@@ -31,57 +26,17 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         return this.conversationNoteButtonLabel === this.newConversationNote ? 'brand-outline' : 'brand';
     }
 
-    get notificationBoxTemplate() {
-        return this.template.querySelector('c-nks-notification-box');
-    }
-
     @wire(MessageContext)
     messageContext;
 
-    /*
-    connectedCallback() {
-        this.subscribeToMessageChannel();
-    }*/
-
-    renderedCallback() {
-        this.subscribeToMessageChannel();
-    }
-
-    disconnectedCallback() {
-        this.unsubscribeToMessageChannel();
-    }
-
-    subscribeToMessageChannel() {
-        if (this.subscription) {
-            return;
-        }
-        this.subscription = subscribe(
-            this.messageContext,
-            CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
-            (message) => this.handleMessage(message),
-            { scope: APPLICATION_SCOPE }
-        );
-    }
-
-    unsubscribeToMessageChannel() {
-        unsubscribe(this.subscription);
-        this.subscription = null;
-    }
-
-    handleMessage(message) {
-        this.notificationBoxTemplate.addNotification(
-            'Samtalereferat er delt med bruker og saken er journalført',
-            message.journalTheme
-        );
-    }
-
     handleFlowButtonClicked(event) {
-        if (this.journalAndShare && event.detail === FLOW_API_NAMES.JOURNAL) {
+        if (this.journalAndShare && event.detail === JOURNAL_FLOW_API_NAME) {
             this._journalConversation = true;
         }
     }
 
     handleFlowSucceeded(event) {
+        const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
 
         if (!outputVariables) {
@@ -89,11 +44,11 @@ export default class NksConversationNoteButtonContainer extends LightningElement
             return;
         }
         try {
-            if (event.detail?.flowName === FLOW_API_NAMES.JOURNAL) {
-                handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate);
-            } else if (event.detail?.flowName === FLOW_API_NAMES.CREATE_NAV_TASK) {
-                handleShowNotifications(FLOW_API_NAMES.CREATE_NAV_TASK, outputVariables, this.notificationBoxTemplate);
-            }
+            const payload = {
+                flowApiName: flowApiName,
+                outputVariables: outputVariables
+            };
+            publish(this.messageContext, CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL, payload);
         } catch (error) {
             console.error('Error handling flow succeeded event: ', error);
         }
