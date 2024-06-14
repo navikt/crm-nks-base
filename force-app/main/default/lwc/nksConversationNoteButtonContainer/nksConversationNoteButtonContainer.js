@@ -3,7 +3,7 @@ import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversatio
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { publish, MessageContext } from 'lightning/messageService';
 
-const JOURNAL_FLOW_API_NAME = 'Conversation_Note_Journal_From_Case';
+const JOURNAL_FLOW_API_NAME = 'NKS_Conversation_Note_Journal_Case_v_2';
 
 export default class NksConversationNoteButtonContainer extends LightningElement {
     @api recordId;
@@ -38,10 +38,6 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     handleFlowSucceeded(event) {
         const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
-        if (!outputVariables) {
-            console.error('No output variables found in the event detail');
-            return;
-        }
         try {
             const payload = {
                 flowApiName: flowApiName,
@@ -49,7 +45,7 @@ export default class NksConversationNoteButtonContainer extends LightningElement
             };
             publish(this.messageContext, CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL, payload);
         } catch (error) {
-            console.error('Error handling flow succeeded event: ', error);
+            console.error('Error publishing message on conversation note message channel: ', error);
         }
     }
 }

@@ -5,13 +5,13 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
-import { handleShowNotifications } from 'c/nksButtonContainerUtils';
+import { getOutputVariableValue, handleShowNotifications } from 'c/nksButtonContainerUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 
 const FLOW_API_NAMES = {
     CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task_v_2',
-    JOURNAL: 'Conversation_Note_Journal_From_Case'
+    JOURNAL: 'NKS_Conversation_Note_Journal_Case_v_2'
 };
 
 export default class NksConversationNoteDetails extends LightningElement {
@@ -89,13 +89,17 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
+        let publishNotification = getOutputVariableValue(outputVariables, 'Publish_Notification');
+
         if (
             status === 'FINISHED' &&
             outputVariables?.some((output) => output.objectType === 'Conversation_Note__c' && output.value !== null)
         ) {
             publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
-            handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate, true);
+            if (publishNotification) {
+                handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate, true);
+            }
         }
     }
 

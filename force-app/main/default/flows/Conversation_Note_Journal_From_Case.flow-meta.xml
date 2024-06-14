@@ -5,7 +5,7 @@
         <name>Concersation_Note_Found</name>
         <label>Concersation Note Found</label>
         <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Not_Found_Screen</targetReference>
         </defaultConnector>
@@ -27,7 +27,6 @@
         </rules>
     </decisions>
     <description>Journaling flow to call from case</description>
-    <environments>Default</environments>
     <interviewLabel>NKS {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Journal From Case</label>
     <processMetadataValues>
@@ -54,7 +53,7 @@
         <name>Get_Cenversation_Note</name>
         <label>Get Cenversation Note</label>
         <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Concersation_Note_Found</targetReference>
@@ -80,7 +79,7 @@
         <name>Not_Found_Screen</name>
         <label>Not_Found_Screen</label>
         <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -104,7 +103,7 @@
         <name>Journal</name>
         <label>Journal</label>
         <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationY>398</locationY>
         <flowName>NKS_Conversation_Note_Create_Journal_Entry</flowName>
         <inputAssignments>
             <name>recordId</name>
@@ -112,10 +111,6 @@
                 <elementReference>Get_Cenversation_Note.Id</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>Selected_Theme_SF_Id</assignToReference>
-            <name>Selected_Theme_SF_Id</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>recordId</name>
@@ -123,12 +118,5 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Theme_SF_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
 </Flow>
