@@ -13,12 +13,13 @@ public class NKS_DataSynchController_Test {
         Test.stopTest();
 
         person = [
-            SELECT Id, INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c
+            SELECT Id, INT_BankAccountNumber__c, INT_BankAccountNumberLastModified__c, INT_BankAccountSource__c
             FROM Person__c
             WHERE Id = :person.Id
         ];
 
         System.assert(String.isNotBlank(person.INT_BankAccountNumber__c), 'Expected bank account number to be set');
+        System.assert(String.isNotBlank(person.INT_BankAccountSource__c), 'Expected bank account source to be set');
         System.assertNotEquals(
             null,
             person.INT_BankAccountNumberLastModified__c,

@@ -9,7 +9,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Arbeidssøker</label>
-                <name>Arbeidss_ker</name>
+                <name>Arbeidssoker</name>
             </dataCategory>
             <dataCategory>
                 <label>Dagpenger</label>
@@ -21,7 +21,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Tilleggsstønader</label>
-                <name>Tilleggsst_nader</name>
+                <name>Tilleggsstonader</name>
             </dataCategory>
             <dataCategory>
                 <label>Tiltakspenger</label>
@@ -65,7 +65,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Enslig forsørger</label>
-                <name>Enslig_fors_rger</name>
+                <name>Enslig_forsorger</name>
             </dataCategory>
             <dataCategory>
                 <label>Farskap</label>
@@ -77,15 +77,15 @@
             </dataCategory>
             <dataCategory>
                 <label>Kontantstøtte</label>
-                <name>Kontantst_tte</name>
-            </dataCategory>
-            <dataCategory>
-                <label>Opplæringspenger</label>
-                <name>Opplaeringspenger</name>
+                <name>Kontantstotte</name>
             </dataCategory>
             <dataCategory>
                 <label>Omsorgspenger</label>
                 <name>Omsorgspenger</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Opplæringspenger</label>
+                <name>Opplaeringspenger</name>
             </dataCategory>
             <dataCategory>
                 <label>Pleiepenger i livets sluttfase</label>
@@ -137,11 +137,11 @@
         <dataCategory>
             <dataCategory>
                 <label>Gravferdsstønad</label>
-                <name>Gravferdsst_nad</name>
+                <name>Gravferdsstonad</name>
             </dataCategory>
             <dataCategory>
                 <label>Grunn- og hjelpestønad</label>
-                <name>Grunn_og_hjelpest_nad</name>
+                <name>Grunn_og_hjelpestonad</name>
             </dataCategory>
             <dataCategory>
                 <label>Hjelpemidler i hjemmet</label>
@@ -153,7 +153,7 @@
             </dataCategory>
             <dataCategory>
                 <label>Ménerstatning og yrkesskade</label>
-                <name>M_nerstatning_og_yrkesskade</name>
+                <name>Menerstatning_og_yrkesskade</name>
             </dataCategory>
             <dataCategory>
                 <label>Sykepenger</label>
@@ -216,8 +216,12 @@
                 <name>Omsorgsopptjening</name>
             </dataCategory>
             <dataCategory>
+                <label>Omstillingsstønad</label>
+                <name>Omstillingsstonad</name>
+            </dataCategory>
+            <dataCategory>
                 <label>Supplerende stønad</label>
-                <name>Supplerende_st_nad</name>
+                <name>Supplerende_stonad</name>
             </dataCategory>
             <label>Pensjon</label>
             <name>Pensjon</name>
@@ -229,14 +233,14 @@
             </dataCategory>
             <dataCategory>
                 <label>Økonomisk sosialhjelp</label>
-                <name>konomisk_sosialhjelp</name>
+                <name>Okonomisk_sosialhjelp</name>
             </dataCategory>
             <label>Sosiale tjenester</label>
             <name>SosialeTjenester</name>
         </dataCategory>
         <dataCategory>
             <label>Teknisk brukerstøtte</label>
-            <name>Teknisk_brukerst_tte</name>
+            <name>Teknisk_brukerstotte</name>
         </dataCategory>
         <dataCategory>
             <label>Uføretrygd</label>
