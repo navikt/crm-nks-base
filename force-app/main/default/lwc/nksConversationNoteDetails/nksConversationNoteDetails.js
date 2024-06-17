@@ -5,7 +5,7 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import { publishToAmplitude } from 'c/amplitude';
-import { getOutputVariableValue, handleShowNotifications } from 'c/nksButtonContainerUtils';
+import { handleShowNotifications } from 'c/nksButtonContainerUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 
@@ -83,8 +83,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     handleStatusChange(event) {
-        const { status, outputVariables, flowTitle } = event.detail;
-        let publishNotification = getOutputVariableValue(outputVariables, 'Publish_Notification');
+        const { status, outputVariables } = event.detail;
 
         if (
             status === 'FINISHED' &&
@@ -92,9 +91,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         ) {
             publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
-            if (publishNotification) {
-                handleShowNotifications(flowTitle, outputVariables, this.notificationBoxTemplate, true);
-            }
+            handleShowNotifications('journal_conversation', outputVariables, this.notificationBoxTemplate, true);
         }
     }
 
