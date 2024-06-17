@@ -9,11 +9,6 @@ import { getOutputVariableValue, handleShowNotifications } from 'c/nksButtonCont
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 
-const FLOW_API_NAMES = {
-    CREATE_NAV_TASK: 'NKS_Case_Send_NAV_Task_v_2',
-    JOURNAL: 'NKS_Conversation_Note_Journal_Case_v_2'
-};
-
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
 
