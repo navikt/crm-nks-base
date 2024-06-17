@@ -88,7 +88,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     handleStatusChange(event) {
-        const { status, outputVariables } = event.detail;
+        const { status, outputVariables, flowTitle } = event.detail;
         let publishNotification = getOutputVariableValue(outputVariables, 'Publish_Notification');
 
         if (
@@ -98,7 +98,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
             if (publishNotification) {
-                handleShowNotifications(FLOW_API_NAMES.JOURNAL, outputVariables, this.notificationBoxTemplate, true);
+                handleShowNotifications(flowTitle, outputVariables, this.notificationBoxTemplate, true);
             }
         }
     }
