@@ -6,6 +6,7 @@ import updateUsersCurrentApp from '@salesforce/apex/NKS_HomePageController.updat
 export default class NksNavigateToNewApplication extends NavigationMixin(LightningElement) {
     currentApp = 'NAV_Kontaktsenter';
     connectedCallback() {
+        // Since the function can't be cacheable, we can't use wire service
         getUsersCurrentApp().then(res => {
             this.currentApp = res;            
         });
