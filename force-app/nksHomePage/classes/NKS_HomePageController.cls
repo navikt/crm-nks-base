@@ -442,4 +442,29 @@ public with sharing class NKS_HomePageController {
         plainTextList.add(richText);
         return plainTextList;
     }
+
+    @AuraEnabled
+    public static String getUsersCurrentApp() {
+        try {
+            UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :UserInfo.getUserId() LIMIT 1];
+            AppDefinition appDefinition = [SELECT DeveloperName FROM AppDefinition WHERE DurableId = :userAppInfo.AppDefinitionId LIMIT 1];
+            return appDefinition.DeveloperName;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    // When navigating with NavigationMixin, the user's current app does not update unless manually updated
+    @AuraEnabled
+    public static void updateUsersCurrentApp(String appTarget) {
+        try {
+            UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :UserInfo.getUserId() LIMIT 1];
+            AppDefinition appDefinition = [SELECT DurableId FROM AppDefinition WHERE DeveloperName = :appTarget LIMIT 1];
+            userAppInfo.AppDefinitionId = appDefinition.DurableId;
+            update userAppInfo;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
+    }
 }
