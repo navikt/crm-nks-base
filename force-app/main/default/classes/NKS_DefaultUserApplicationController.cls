@@ -27,22 +27,28 @@ public with sharing class NKS_DefaultUserApplicationController {
             }
             return appUserCountMap;
         } catch (Exception e) {
-            System.debug(e.getMessage());
-            return new Map<String, Integer>();
+            throw new GetDefaultAppUserCountException(e);
         }
     }
 
     @AuraEnabled(cacheable=true)
     public static String getUsersDefaultApp(String userIdOrUsername) {
-        User user = [SELECT Id FROM User WHERE IsActive = TRUE AND (Id = :userIdOrUsername OR UserName = :userIdOrUsername) LIMIT 1];
-        if (user == null) {
-            return '';
-        }
-        UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :user.Id LIMIT 1];
-        if (userAppInfo != null) {
-            AppDefinition appDefinition = [SELECT DeveloperName FROM AppDefinition WHERE DurableId = :userAppInfo.AppDefinitionId LIMIT 1];
-            return appDefinition != null ? appDefinition.DeveloperName : '';
+        try {
+            User user = [SELECT Id FROM User WHERE IsActive = TRUE AND (Id = :userIdOrUsername OR Name = :userIdOrUsername) LIMIT 1];
+            if (user == null) {
+                return '';
+            }
+            UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :user.Id LIMIT 1];
+            if (userAppInfo != null) {
+                AppDefinition appDefinition = [SELECT DeveloperName FROM AppDefinition WHERE DurableId = :userAppInfo.AppDefinitionId LIMIT 1];
+                return appDefinition != null ? appDefinition.DeveloperName : '';
+            }
+        } catch (Exception e) {
+            throw new NoUserFoundException(e);
         }
         return '';
     }
+
+    private class NoUserFoundException extends Exception {}
+    private class GetDefaultAppUserCountException extends Exception {}
 }
