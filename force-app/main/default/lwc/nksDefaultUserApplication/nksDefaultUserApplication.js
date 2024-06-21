@@ -1,22 +1,34 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import getDefaultAppUserCount from '@salesforce/apex/NKS_DefaultUserApplicationController.getDefaultAppUserCount';
 import getUsersDefaultApp from '@salesforce/apex/NKS_DefaultUserApplicationController.getUsersDefaultApp';
+import { refreshApex } from '@salesforce/apex';
 
 export default class NksDefaultUserApplication extends LightningElement {
     appUserCounts;
     searchQuery = '';
     __searchedAppName = '';
-    error;
+    __error;
     showModal = false;
+    wiredAppUserCountsResult;
 
-    // TODO: Add filter for what apps to show in component
+    appsToShow = [];
+    @api appNamesToShow = '';
+
+    connectedCallback() {
+        if (this.appNamesToShow !== '') {
+            this.appsToShow = this.appNamesToShow.split(',').map(name => name.trim());
+        }
+    }
+
     @wire(getDefaultAppUserCount)
-    wiredAppUserCounts({ error, data }) {
-        if (data) {
-            this.appUserCounts = data;
-        } else if (error) {
-            this.error = error;
-            console.error('Error retrieving app user counts:', error);
+    wiredAppUserCounts(result) {
+        this.wiredAppUserCountsResult = result;
+        if (result?.data) {
+            this.appUserCounts = result.data;
+            this.__error = undefined;
+        } else if (result?.error) {
+            this.__error = result.error;
+            console.error('Error retrieving app user counts:', result.error);
         }
     }
 
@@ -24,17 +36,21 @@ export default class NksDefaultUserApplication extends LightningElement {
         this.searchQuery = event.target.value;
     }
 
-    handleSearch() {
-        if (this.searchQuery.toLowerCase() === 'raptor') {
-            this.showModal = true;
-            return;
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            this.handleSearch();
         }
+    }
+
+    handleSearch() {
         getUsersDefaultApp({ userIdOrUsername: this.searchQuery })
             .then(result => {
                 this.__searchedAppName = result;
+                this.__error = undefined;
             })
             .catch(error => {
-                this.error = error;
+                this.__searchedAppName = undefined;
+                this.__error = error;
                 console.error('Error retrieving user default app:', error);
             });
     }
@@ -43,12 +59,18 @@ export default class NksDefaultUserApplication extends LightningElement {
         this.showModal = false;
     }
 
+    handleRefresh(event) {
+        refreshApex(this.wiredAppUserCountsResult);
+        event.target.blur();
+    }
+
     get appUserCountsArray() {
         if (this.appUserCounts) {
-            return Object.keys(this.appUserCounts).map(key => ({
-                appName: key,
-                userCount: this.appUserCounts[key]
+            const apps = this.appsToShow.map(appName => ({
+                appName: appName,
+                userCount: this.appUserCounts[appName] ? this.appUserCounts[appName] : 0
             }));
+            return apps;
         }
         return [];
     }
@@ -59,5 +81,9 @@ export default class NksDefaultUserApplication extends LightningElement {
 
     get searchedAppName() {
         return this.__searchedAppName;
+    }
+
+    get error() {
+        return JSON.stringify(this.__error);
     }
 }

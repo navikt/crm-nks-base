@@ -3,8 +3,13 @@
     <apiVersion>61.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
-        <target>lightning__AppPage</target>
-        <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property name="appNamesToShow" type="String" label="App Names to Show"
+                description="Comma separated string of app names to display user counts for."
+                default="NAV Kontaktsenter, NKS v. 2" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
