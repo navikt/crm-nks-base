@@ -105,7 +105,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>SCRATCH Case Record Page 1</masterLabel>
+    <masterLabel>SCRATCH Case Record Page 11</masterLabel>
     <parentFlexiPage>sfa__Case_rec_L</parentFlexiPage>
     <sobjectType>Case</sobjectType>
     <template>
