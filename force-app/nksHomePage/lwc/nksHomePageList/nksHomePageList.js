@@ -24,10 +24,9 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api filterbyskills = false;
     @api refreshPageAutomatically = false;
     @api enableRefresh = false;
-
-    @track listCount = 3;
+    
     @track records = [];
-
+    listCount = 3;
     userSkills = [];
     showSpinner = false;
     channelName = '/topic/Announcement_Updates';
@@ -45,22 +44,20 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this._filter = value;
     }
 
-    refreshList = () => {
-        const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
-        // eslint-disable-next-line @locker/locker/distorted-window-set-timeout, @lwc/lwc/no-async-operation
-        setTimeout(() => {
-            this.loadList();
-        }, rand);
-    };
-
     connectedCallback() {
         this.showSpinner = true;
+
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             this._filter += " AND OwnerId='" + userId + "'";
             console.log(this.objectName + ': ' + this.filter);
         }
+        this.loadComponentData();     
+    }
 
-        // Navigate to list
+    loadComponentData() {
+        this.showSpinner = true;
+
+        // Generate URL
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
             attributes: {
@@ -74,39 +71,25 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             this.pageUrl = url;
         });
 
-        if (this.initRun === false) {
+        if (!this.initRun) {
             this.initRun = true;
-            if (this.filterbyskills === true) {
-                getSkills()
-                    .then((data) => {
-                        this.userSkills = data;
-                        this.loadList();
-                    })
-                    .catch((error) => {
-                        let message = 'Unknown error';
-                        if (Array.isArray(error.body)) {
-                            message = error.body.map((e) => e.message).join(', ');
-                        } else if (typeof error.body.message === 'string') {
-                            message = error.body.message;
-                        }
-                        this.dispatchEvent(
-                            new ShowToastEvent({
-                                title: 'Error',
-                                message,
-                                variant: 'error'
-                            })
-                        );
-                    });
+            if (this.filterbyskills) {
+                this.loadUserSkillsAndList();
             } else {
                 this.loadList();
             }
         }
     }
-    handleError() {
-        onError((error) => {
-            console.log('Received error from empApi: ', JSON.stringify(error));
-            this.handleSubscribe();
-        });
+
+    loadUserSkillsAndList() {
+        getSkills()
+            .then((data) => {
+                this.userSkills = data;
+                this.loadList();
+            })
+            .catch((error) => {
+                this.handleError(error);
+            });
     }
 
     loadList() {
@@ -129,31 +112,14 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         promise
             .then((data) => {
                 this.records = data;
-                return this.records;
             })
             .catch((error) => {
-                let message = 'Unknown error';
-                if (Array.isArray(error.body)) {
-                    message = error.body.map((e) => e.message).join(', ');
-                } else if (typeof error.body.message === 'string') {
-                    message = error.body.message;
-                }
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message,
-                        variant: 'error'
-                    })
-                );
+                this.handleError(error);
             })
             .finally(() => {
                 this.showSpinner = false;
+                this.setupEmpSubscription();
             });
-
-        if (!this.isEmpSubscribed) {
-            this.handleSubscribe();
-            this.handleError();
-        }
     }
 
     getKnowledgeList() {
@@ -226,7 +192,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     getList() {
-        console.log('getList');
         return new Promise((resolve, reject) => {
             getList({
                 title: this.title,
@@ -259,15 +224,51 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         });
     }
 
-    handleSubscribe() {
-        if (this.refreshPageAutomatically && this.objectName === 'NKS_Announcement__c')
-            subscribe(this.channelName, -1, this.refreshList).then((response) => {
-                console.log(
-                    `Subscription request for object ${this.objectName} sent to: ${JSON.stringify(response.channel)}`
-                );
-                this.subscription = response;
-            });
+    setupEmpSubscription() {
+        if (this.refreshPageAutomatically && this.objectName === 'NKS_Announcement__c') {
+            subscribe(this.channelName, -1, this.refreshList)
+                .then((response) => {
+                    console.log(`Subscription request for object ${this.objectName} sent to: ${JSON.stringify(response.channel)}`);
+                    this.subscription = response;
+                    if (!this.isEmpSubscribed) {
+                        this.printError();
+                    }
+                })
+                .catch((error) => {
+                    this.printError(error);
+                });
+        }
     }
+
+    handleError(error) {
+        let message = 'Unknown error';
+        if (Array.isArray(error.body)) {
+            message = error.body.map((e) => e.message).join(', ');
+        } else if (typeof error.body.message === 'string') {
+            message = error.body.message;
+        }
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error',
+                message,
+                variant: 'error'
+            })
+        );
+    }
+
+    printError() {
+        onError((error) => {
+            console.log('Received error from empApi: ', JSON.stringify(error));
+        });
+    }
+
+    refreshList = () => {
+        const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
+        // eslint-disable-next-line @locker/locker/distorted-window-set-timeout, @lwc/lwc/no-async-operation
+        setTimeout(() => {
+            this.loadList();
+        }, rand);
+    };
 
     loadMoreList() {
         this.listCount += 3;
@@ -285,63 +286,43 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
+
     get newsRecords() {
-        let sortedList = [];
-        let recordsToSort = [];
-
         if (this.isNews && this.records && Array.isArray(this.records)) {
-            recordsToSort = JSON.parse(JSON.stringify(this.records));
-            sortedList = recordsToSort.sort(function (x, y) {
-                let index = 0;
-
-                // pinned items first
-                if (x.pin === y.pin) {
-                    index = 0;
-                } else {
-                    if (x.pin === true) {
-                        index = -1;
-                    } else {
-                        index = 1;
-                    }
-                }
-                return index;
-            });
+            let sortedList = [...this.records];
+    
+            // Sort by 'pin' property in descending order (pinned items first)
+            sortedList.sort((a, b) => (b.pin === a.pin ? 0 : b.pin ? 1 : -1));
+            return sortedList;
         }
-        return sortedList;
+        return [];
     }
 
     get isNews() {
-        if (this.objectName === 'NKS_Announcement__c' && this.filter && this.filter.includes('News')) {
-            return true;
-        }
-        return false;
+        return this.objectName === 'NKS_Announcement__c' && this.filter && this.filter.includes('News');
     }
 
     get isKnowledge() {
-        return this.objectName === 'Knowledge__kav' ? true : false;
+        return this.objectName === 'Knowledge__kav';
     }
 
     get hasRecord() {
-        return this.records.length > 0 ? true : false;
+        return this.records.length > 0;
     }
 
     get isSTO() {
-        return this.objectName === 'Case' && this.filter.includes('STO_Case') ? true : false;
+        return this.objectName === 'Case' && this.filter.includes('STO_Case');
     }
 
     get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.isSTO ? true : false;
+        return this.objectName === 'LiveChatTranscript' || this.isSTO;
     }
 
     get setEmptyStateForCase() {
-        return !this.hasRecord && this.isSTO ? true : false;
+        return !this.hasRecord && this.isSTO;
     }
 
     get lastIndex() {
-        let index = 0;
-        if (this.objectName === 'LiveChatTranscript' || this.isSTO) {
-            index = this.records.length - 1;
-        }
-        return index;
+        return (this.objectName === 'LiveChatTranscript' || this.isSTO) ? this.records.length - 1 : 0;
     }
 }
