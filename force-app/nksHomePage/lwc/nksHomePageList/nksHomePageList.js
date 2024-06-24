@@ -49,9 +49,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             this._filter += " AND OwnerId='" + userId + "'";
-            console.log(this.objectName + ': ' + this.filter);
         }
-        this.loadComponentData();     
+
+        this.loadComponentData();
+        this.setupEmpSubscription();
     }
 
     loadComponentData() {
@@ -118,7 +119,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             })
             .finally(() => {
                 this.showSpinner = false;
-                this.setupEmpSubscription();
             });
     }
 
@@ -225,6 +225,9 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     setupEmpSubscription() {
+        if (this.isEmpSubscribed) {
+            return;
+        }
         if (this.refreshPageAutomatically && this.objectName === 'NKS_Announcement__c') {
             subscribe(this.channelName, -1, this.refreshList)
                 .then((response) => {
