@@ -1143,6 +1143,20 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
+            <name>Record_Refresher</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
             <name>Button_Container_1</name>
             <extensionName>c:nksConversationNoteButtonContainer</extensionName>
             <fieldType>ComponentInstance</fieldType>
