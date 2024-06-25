@@ -81,7 +81,11 @@ public with sharing class NKS_AddressController {
     private static PDL_Bostedsadresse setLastUpdatedBostedsAdresse(List<PDL_Bostedsadresse> addresses) {
         PDL_Bostedsadresse latestAddress;
         for (PDL_Bostedsadresse addr : addresses) {
-            if (addr.gyldigFraOgMed != null && (latestAddress == null || addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)) {
+            if (
+                addr.gyldigFraOgMed != null &&
+                (latestAddress == null ||
+                addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)
+            ) {
                 latestAddress = addr;
             }
         }
@@ -99,7 +103,11 @@ public with sharing class NKS_AddressController {
     private static PDL_Oppholdsadresse setLastUpdatedOppholdsAdresse(List<PDL_Oppholdsadresse> addresses) {
         PDL_Oppholdsadresse latestAddress;
         for (PDL_Oppholdsadresse addr : addresses) {
-            if (addr.gyldigFraOgMed != null && (latestAddress == null || addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)) {
+            if (
+                addr.gyldigFraOgMed != null &&
+                (latestAddress == null ||
+                addr.gyldigFraOgMed > latestAddress.gyldigFraOgMed)
+            ) {
                 latestAddress = addr;
             }
         }
@@ -117,7 +125,11 @@ public with sharing class NKS_AddressController {
     private static PDL_DeltBosted setLastUpdatedDeltBostedsAddress(List<PDL_DeltBosted> addresses) {
         PDL_DeltBosted latestAddress;
         for (PDL_DeltBosted addr : addresses) {
-            if (addr.startdatoForKontrakt != null && (latestAddress == null || latestAddress.startdatoForKontrakt < addr.startdatoForKontrakt)) {
+            if (
+                addr.startdatoForKontrakt != null &&
+                (latestAddress == null ||
+                latestAddress.startdatoForKontrakt < addr.startdatoForKontrakt)
+            ) {
                 latestAddress = addr;
             }
         }
@@ -147,7 +159,11 @@ public with sharing class NKS_AddressController {
         }
         if (!zipCodesWithoutRegion.isEmpty()) {
             Map<String, Common_Code__c> zipCodeToCityMap = new Map<String, Common_Code__c>();
-            for (Common_Code__c cc : [SELECT CRM_Code__c, Name FROM Common_Code__c WHERE CRM_Code_Set__c = 'Postnummer' AND CRM_Code__c IN :zipCodesWithoutRegion]) {
+            for (Common_Code__c cc : [
+                SELECT CRM_Code__c, Name
+                FROM Common_Code__c
+                WHERE CRM_Code_Set__c = 'Postnummer' AND CRM_Code__c IN :zipCodesWithoutRegion
+            ]) {
                 zipCodeToCityMap.put(cc.CRM_Code__c, cc);
             }
             for (NKS_Address address : addresses) {
@@ -160,13 +176,17 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static Person__c getPersonIdentAndFullName(Id recordId, String objectApiName) {
-        Id personId;
+        Id personId = null;
         if (objectApiName == 'Case') {
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
         } else if (objectApiName == 'Account') {
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
+        } else if (objectApiName == 'LiveChatTranscript') {
+            personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
+                ?.Account
+                ?.CRM_Person__c;
         }
-        return [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId];
+        return personId != null ? [SELECT Name, NKS_Full_Name__c FROM Person__c WHERE Id = :personId] : null;
     }
 
     @TestVisible
@@ -191,7 +211,9 @@ public with sharing class NKS_AddressController {
         Datetime latestUpdate;
 
         for (PDL_Endring endring : metadata.endringer) {
-            if (endring.type == PDL_Endringstype.OPPRETT && (latestUpdate == null || latestUpdate < endring.registrert)) {
+            if (
+                endring.type == PDL_Endringstype.OPPRETT && (latestUpdate == null || latestUpdate < endring.registrert)
+            ) {
                 latestUpdate = endring.registrert;
             }
         }
@@ -216,8 +238,14 @@ public with sharing class NKS_AddressController {
 
     private static void handleException(String addressType, Exception e, String personIdent) {
         logger.error(
-            'Problem getting ' + addressType + ' address for personIdent: ' + personIdent +
-            '\n' + e.getMessage() + '\n' + e.getStackTraceString(),
+            'Problem getting ' +
+                addressType +
+                ' address for personIdent: ' +
+                personIdent +
+                '\n' +
+                e.getMessage() +
+                '\n' +
+                e.getStackTraceString(),
             null,
             CRM_ApplicationDomain.Domain.NKS,
             null
@@ -235,7 +263,7 @@ public with sharing class NKS_AddressController {
         }
 
         List<String> splitDate = inputDate.split('-');
-        return String.join(new List<String>{splitDate[2], splitDate[1], splitDate[0]}, '.');
+        return String.join(new List<String>{ splitDate[2], splitDate[1], splitDate[0] }, '.');
     }
 
     /*
@@ -273,7 +301,7 @@ public with sharing class NKS_AddressController {
         public String zipCode;
         @AuraEnabled
         public String type; // Bosted, delt bosted, opphold
-    
+
         // Includes coordinates
         @TestVisible
         private void setOppholdsAddressFieldsFromVegAdresse(PDL_Vegadresse vegAddr) {
@@ -295,17 +323,19 @@ public with sharing class NKS_AddressController {
 
         @TestVisible
         private void setOppholdsAddressFieldsFromUtenlandskAdresse(PDL_UtenlandskAdresse utenlandsAddr) {
-            this.address = createOppholdsAddressFromUtenlandskAdresse(new List<String>{
-                utenlandsAddr.adressenavnNummer,
-                utenlandsAddr.bygningEtasjeLeilighet,
-                utenlandsAddr.postboksNummerNavn
-            });
+            this.address = createOppholdsAddressFromUtenlandskAdresse(
+                new List<String>{
+                    utenlandsAddr.adressenavnNummer,
+                    utenlandsAddr.bygningEtasjeLeilighet,
+                    utenlandsAddr.postboksNummerNavn
+                }
+            );
             this.zipCode = utenlandsAddr.postkode;
             this.city = utenlandsAddr.bysted;
             this.region = utenlandsAddr.regionDistriktOmraade;
             this.countryCode = utenlandsAddr.landkode;
         }
-        
+
         @TestVisible
         private void setFieldsFromVegAdresse(PDL_Vegadresse vegAddr) {
             this.address = safeUpperCase(vegAddr.adressenavn);
@@ -343,7 +373,9 @@ public with sharing class NKS_AddressController {
 
             PDL_Metadata meta = address?.metadata;
             if (meta != null) {
-                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(NKS_AddressController.getLastUpdateDate(meta).date()));
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(
+                    String.valueOf(NKS_AddressController.getLastUpdateDate(meta).date())
+                );
             }
         }
 
@@ -358,7 +390,9 @@ public with sharing class NKS_AddressController {
             }
             PDL_Metadata meta = address?.metadata;
             if (meta != null) {
-                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(
+                    String.valueOf(meta.endringer[0]?.registrert.date())
+                );
             }
         }
 
@@ -371,7 +405,9 @@ public with sharing class NKS_AddressController {
             }
             PDL_Metadata meta = address?.metadata;
             if (meta != null) {
-                this.changeRegisteredDate = NKS_AddressController.formatDateString(String.valueOf(meta.endringer[0]?.registrert.date()));
+                this.changeRegisteredDate = NKS_AddressController.formatDateString(
+                    String.valueOf(meta.endringer[0]?.registrert.date())
+                );
             }
             this.type = 'DELT BOSTED';
         }
