@@ -16,6 +16,10 @@
         <apexClass>NKS_CallFlowController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_DefaultUserApplicationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Application_Log__c.CRM_Ready_for_Deletion__c</field>
