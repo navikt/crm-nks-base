@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CallCenter xmlns="http://soap.sforce.com/2006/04/metadata">
-    <adapterUrl>/c/NksTestAdapter.app</adapterUrl>
+    <adapterUrl>/apex/NksCallPage</adapterUrl>
     <customSettings
-    >{&quot;reqTimeout&quot;:&quot;10000&quot;,&quot;reqStandbyUrl&quot;:&quot;/c/NksTestAdapter.app&quot;,&quot;reqSoftphoneHeight&quot;:&quot;550&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;400&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Classic_and_Lightning&quot;}</customSettings>
+    >{&quot;reqTimeout&quot;:&quot;10000&quot;,&quot;reqStandbyUrl&quot;:&quot;/apex/NksCallPage&quot;,&quot;reqSoftphoneHeight&quot;:&quot;550&quot;,&quot;reqUseApi&quot;:&quot;true&quot;,&quot;reqSoftphoneWidth&quot;:&quot;400&quot;,&quot;reqSalesforceCompatibilityMode&quot;:&quot;Lightning&quot;}</customSettings>
     <displayName>Demo Call Center Adapter</displayName>
     <displayNameLabel>Display Name</displayNameLabel>
     <internalNameLabel>InternalName</internalNameLabel>
@@ -10,12 +10,12 @@
         <items>
             <label>CTI Adapter URL</label>
             <name>reqAdapterUrl</name>
-            <value>/c/NksTestAdapter.app</value>
+            <value>/apex/NksCallPage</value>
         </items>
         <items>
             <label>CTI Adapter URL2</label>
             <name>reqStandbyUrl</name>
-            <value>/c/NksTestAdapter.app</value>
+            <value>/apex/NksCallPage</value>
         </items>
         <items>
             <label>Timeout</label>
@@ -40,7 +40,7 @@
         <items>
             <label>Salesforce Compatibility Mode</label>
             <name>reqSalesforceCompatibilityMode</name>
-            <value>Classic_and_Lightning</value>
+            <value>Lightning</value>
         </items>
         <label>General Information</label>
         <name>reqGeneralInfo</name>

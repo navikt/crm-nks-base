@@ -21,6 +21,7 @@
     <permissionSets>NKS_Screen_Reader</permissionSets>
     <permissionSets>NKS_Topics</permissionSets>
     <permissionSets>NKS_base</permissionSets>
+    <permissionSets>NKS_Demo_Call_center</permissionSets>
     <permissionSets>NavUnit_Admin</permissionSets>
     <status>Updated</status>
 </PermissionSetGroup>
