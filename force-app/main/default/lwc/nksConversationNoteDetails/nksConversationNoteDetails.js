@@ -18,12 +18,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     changeUserLabel = CHANGE_USER_LABEL;
     subscription = null;
 
-    /*
     connectedCallback() {
-        this.subscribeToMessageChannel();
-    }*/
-
-    renderedCallback() {
         this.subscribeToMessageChannel();
     }
 
