@@ -1,0 +1,6 @@
+.active {
+    --slds-c-button-outline-brand-color-background: #cce1ff;
+    --slds-c-button-outline-brand-color-border: #0056b4;
+    --slds-c-button-outline-brand-color-background-hover: #cce1ff;
+    --slds-c-button-outline-brand-color-background-active: #cce1ff;
+}

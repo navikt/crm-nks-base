@@ -2,18 +2,45 @@
 private class NKS_FamilyViewControllerTest {
     @isTest
     private static void getRelationsTest() {
-        Person__c p = new Person__c(
+        Person__c testPerson = new Person__c(
             Name = '12106519356',
             INT_LastName__c = 'TestName',
             INT_FirstName__c = 'TestLastname'
         );
-        insert p;
-        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
-        insert a;
-        //Id accId = [SELECT Id FROM Account WHERE CRM_Person__r.Id = :p.Id LIMIT 1].Id;
-        List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
-        System.debug(rl);
-        System.assertEquals(false, rl.isEmpty());
+        insert testPerson;
+
+        Account testAccount = new Account(CRM_Person__c = testPerson.Id, Name = 'testName');
+        insert testAccount;
+
+        Case testCase = new Case(AccountId = testAccount.Id);
+        insert testCase;
+
+        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
+        insert testChatVisitor;
+
+        LiveChatTranscript testChat = new LiveChatTranscript();
+        testChat.LiveChatVisitorid = testChatVisitor.id;
+        testChat.AccountId = testAccount.Id;
+        insert testChat;
+
+        Test.startTest();
+        List<NKS_FamilyViewController.Relation> testRelation1 = NKS_FamilyViewController.getRelations(
+            testAccount.Id,
+            'Account'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation2 = NKS_FamilyViewController.getRelations(
+            testCase.Id,
+            'Case'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation3 = NKS_FamilyViewController.getRelations(
+            testChat.Id,
+            'LiveChatTranscript'
+        );
+        Test.stopTest();
+
+        System.assertEquals(false, testRelation1.isEmpty());
+        System.assertEquals(false, testRelation2.isEmpty());
+        System.assertEquals(false, testRelation3.isEmpty());
     }
 
     @isTest
