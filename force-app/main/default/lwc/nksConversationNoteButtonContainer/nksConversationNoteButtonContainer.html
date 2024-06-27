@@ -9,6 +9,18 @@
         flow-labels="NKS_Journal, NKS_Create_NAV_Task"
         onflowclicked={handleFlowButtonClicked}
     >
+        <template if:true={showBackButton}>
+            <div slot="backButton">
+                <c-nks-flow-navigation
+                    action="BACK"
+                    button-label={labels.back}
+                    button-variant="brand-outline"
+                    button-alignment="LEFT"
+                    remove-footer
+                >
+                </c-nks-flow-navigation>
+            </div>
+        </template>
         <div slot="navigationButton">
             <c-nks-flow-navigation
                 class="slds-var-p-vertical_medium"
@@ -16,7 +28,7 @@
                 button-label={conversationNoteButtonLabel}
                 button-variant={conversationNoteButtonVariant}
                 button-alignment="RIGHT"
-                remove-footer="true"
+                remove-footer
             >
             </c-nks-flow-navigation>
         </div>

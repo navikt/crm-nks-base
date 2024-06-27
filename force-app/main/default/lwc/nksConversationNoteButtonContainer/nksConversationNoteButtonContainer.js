@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversation_Note';
+import BACK_LABEL from '@salesforce/label/c.fbc_Back';
 
 const FLOW_API_NAME = 'Conversation_Note_Journal_From_Case';
 
@@ -7,9 +8,13 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     @api recordId;
     @api conversationNoteButtonLabel;
     @api journalAndShare = false;
+    @api showBackButton = false;
 
-    newConversationNote = CONVERSATION_NOTE_NEW_LABEL;
     _journalConversation;
+    labels = {
+        newConversationNote: CONVERSATION_NOTE_NEW_LABEL,
+        back: BACK_LABEL
+    };
 
     @api
     get journalConversation() {
@@ -21,7 +26,7 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     }
 
     get conversationNoteButtonVariant() {
-        return this.conversationNoteButtonLabel === this.newConversationNote ? 'brand-outline' : 'brand';
+        return this.conversationNoteButtonLabel === this.labels.newConversationNote ? 'brand-outline' : 'brand';
     }
 
     handleFlowButtonClicked(event) {
