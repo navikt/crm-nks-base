@@ -8,19 +8,19 @@
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
+            <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>Journal_Case_ID</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseId</elementReference>
+                <elementReference>Selected_Case_Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>Journal_Case_Legacy_System</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseLegacyId</elementReference>
+                <elementReference>Selected_Legacy_System</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -38,7 +38,7 @@
         <inputParameters>
             <name>Journal_Theme_Code</name>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseTheme</elementReference>
+                <elementReference>Selected_Theme_Code</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -72,7 +72,7 @@
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
         <locationX>380</locationX>
-        <locationY>3512</locationY>
+        <locationY>3620</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -251,14 +251,14 @@
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_Case_Overview.selectedThemeGroupSfId</elementReference>
+                <elementReference>Selected_Theme_Group_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Person_Case_Overview.selectedCaseThemeSfId</elementReference>
+                <elementReference>Selected_Theme_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -279,6 +279,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Case_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Publish_Notification_To_True</name>
+        <label>Set Publish Notification To True</label>
+        <locationX>248</locationX>
+        <locationY>3320</locationY>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -678,7 +694,7 @@
         <name>Get_Conversation_Note_0_0</name>
         <label>Get Conversation Note</label>
         <locationX>380</locationX>
-        <locationY>3404</locationY>
+        <locationY>3512</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment_Default_0_0</targetReference>
@@ -851,7 +867,7 @@
         <name>Update_Case</name>
         <label>Update Case</label>
         <locationX>380</locationX>
-        <locationY>3620</locationY>
+        <locationY>3728</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1044,7 +1060,26 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Selected_Case_Id</assignToReference>
+                <name>selectedCaseId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Legacy_System</assignToReference>
+                <name>selectedCaseLegacySystem</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_Code</assignToReference>
+                <name>selectedCaseTheme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_SF_Id</assignToReference>
+                <name>selectedCaseThemeSfId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_Group_SF_Id</assignToReference>
+                <name>selectedThemeGroupSfId</name>
+            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Journalfør og del med brukeren</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1437,12 +1472,57 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>Publish_Notification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <description>Id of the record triggering the flow</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Case_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Legacy_System</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_Code</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_Group_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Salesforce ID to the Person__c record</description>
