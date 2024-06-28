@@ -11,6 +11,18 @@
         onflowclicked={handleFlowButtonClicked}
         onflowsucceeded={handleFlowSucceeded}
     >
+        <template if:true={showBackButton}>
+            <div slot="backButton">
+                <c-nks-flow-navigation
+                    action="BACK"
+                    button-label={labels.back}
+                    button-variant="brand-outline"
+                    button-alignment="LEFT"
+                    remove-footer
+                >
+                </c-nks-flow-navigation>
+            </div>
+        </template>
         <div slot="navigationButton">
             <c-nks-flow-navigation
                 class="slds-var-p-vertical_medium"
