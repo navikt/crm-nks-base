@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NKS_Pensjon_News</fullName>
+    <fullName>NKS_Current_Ufoeretrygd</fullName>
     <booleanFilter>1 AND 2 AND 3</booleanFilter>
     <columns>NAME</columns>
     <columns>NKS_News_Publish_Date__c</columns>
@@ -15,12 +15,12 @@
     <filters>
         <field>Skills__c</field>
         <operation>includes</operation>
-        <value>Pensjon</value>
+        <value>Ufoeretrygd</value>
     </filters>
     <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>NKS_Announcement__c.News</value>
+        <value>NKS_Announcement__c.Current_In_NAV_Contact_Center</value>
     </filters>
-    <label>Nyhet - Pensjon</label>
+    <label>Aktuell - Uføretrygd</label>
 </ListView>

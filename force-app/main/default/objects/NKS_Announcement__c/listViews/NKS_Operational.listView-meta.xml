@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NKS_Teknisk_og_drift</fullName>
+    <fullName>NKS_Operational</fullName>
     <columns>NAME</columns>
     <columns>NKS_Information__c</columns>
     <columns>LAST_UPDATE</columns>
@@ -10,5 +10,5 @@
         <operation>equals</operation>
         <value>NKS_Announcement__c.Operational</value>
     </filters>
-    <label>Driftsmelding</label>
+    <label>Driftsmeldinger</label>
 </ListView>

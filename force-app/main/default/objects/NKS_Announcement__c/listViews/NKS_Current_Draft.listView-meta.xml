@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>News_Non_Scheduled_Deletion</fullName>
-    <booleanFilter>1 AND 2</booleanFilter>
+    <fullName>NKS_Current_Draft</fullName>
     <columns>NAME</columns>
     <columns>CREATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <columns>UPDATEDBY_USER</columns>
     <columns>LAST_UPDATE</columns>
     <columns>NKS_News_Author__c</columns>
-    <columns>NKS_News_Publish_Date__c</columns>
     <columns>Skills__c</columns>
-    <columns>NKS_News_Status__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>RECORDTYPE</field>
         <operation>equals</operation>
-        <value>NKS_Announcement__c.News</value>
+        <value>NKS_Announcement__c.Current_In_NAV_Contact_Center</value>
     </filters>
     <filters>
-        <field>NKS_News_Delete_Date__c</field>
+        <field>NKS_News_Status__c</field>
         <operation>equals</operation>
+        <value>Draft</value>
     </filters>
-    <label>Nyheter - Ikke planlagt for sletting</label>
+    <label>Aktuell - Utkast</label>
     <sharedTo>
         <group>NKS_News_Editors</group>
     </sharedTo>
