@@ -100,10 +100,6 @@
                 <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Task_to_Create.CRM_Subtype__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
         <connector>
             <targetReference>Create_NAV_Task_Flow</targetReference>
         </connector>
@@ -890,7 +886,7 @@
         <locationY>1190</locationY>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Case_Closed_Screen</targetReference>
+            <targetReference>Assign_Task_Defaults</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
