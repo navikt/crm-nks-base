@@ -1,0 +1,56 @@
+.emoji {
+    cursor: pointer;
+    border: transparent;
+}
+
+.emoji:focus {
+    border: solid 1px blue;
+}
+
+[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.textArea {
+    width: 100%;
+    --sds-c-textarea-sizing-min-height: 100px;
+    font-size: 0.813rem;
+    margin-top: -0.75rem;
+}
+
+.button {
+    border: none;
+}
+
+.label {
+    background-color: transparent;
+}
+
+svg:hover .path1 {
+    fill: rgb(246, 201, 18);
+}
+
+svg:hover .path2 {
+    fill: rgb(249, 217, 82);
+}
+
+svg {
+    width: 3.125rem;
+    height: 3.125rem;
+}
+
+.radioButton {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+[type='radio']:checked + label .path1 {
+    fill: rgb(238, 177, 30);
+}
+
+[type='radio']:checked + label .path2 {
+    fill: rgb(249, 205, 24);
+}
