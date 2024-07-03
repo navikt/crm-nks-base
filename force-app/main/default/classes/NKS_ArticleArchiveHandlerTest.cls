@@ -30,7 +30,12 @@ private with sharing class NKS_ArticleArchiveHandlerTest {
     }
     @isTest
     private static void smokeTest() {
-        NKS_Announcement__c a = [SELECT Id FROM NKS_Announcement__c WHERE RecordType.DeveloperName = 'News' LIMIT 1];
+        NKS_Announcement__c a = [
+            SELECT Id, Name, NKS_News_Publish_Date__c
+            FROM NKS_Announcement__c
+            WHERE RecordType.DeveloperName = 'News'
+            LIMIT 1
+        ];
         ApiMock.setTestMock('POST_FILE_TO_WEBSAK', 200, 'OK');
 
         Test.startTest();
@@ -42,7 +47,7 @@ private with sharing class NKS_ArticleArchiveHandlerTest {
     @isTest
     private static void testExecute() {
         NKS_Announcement__c article = [
-            SELECT Id
+            SELECT Id, Name, NKS_News_Publish_Date__c
             FROM NKS_Announcement__c
             WHERE RecordType.DeveloperName = 'Current_In_NAV_Contact_Center'
             LIMIT 1
