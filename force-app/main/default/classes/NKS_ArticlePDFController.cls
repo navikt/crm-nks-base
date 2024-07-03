@@ -1,4 +1,4 @@
-public with sharing class NKS_NewsPDFController {
+public with sharing class NKS_ArticlePDFController {
     public string title { get; set; }
     public string author { get; set; }
     public String publishDate { get; set; }
@@ -7,7 +7,7 @@ public with sharing class NKS_NewsPDFController {
     public string information { get; set; }
     public string imageURL { get; set; }
 
-    public NKS_NewsPDFController() {
+    public NKS_ArticlePDFController() {
         string recordId = ApexPages.CurrentPage().getparameters().get('id');
         NKS_Announcement__c news = NKS_HomePageController.getNews(recordId);
         string userId = news.NKS_News_Author__c;
