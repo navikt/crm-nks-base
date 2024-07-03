@@ -100,7 +100,7 @@ public with sharing class NKS_ArticleArchiveHandler {
         if (Test.isRunningTest()) {
             articlePdf = Blob.valueOf('Unit.Test');
         } else {
-            articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id);
+            articlePdf = NKS_ArticlePDFGenerator.getPdf(article.Id);
         }
 
         Map<String, Blob> filesToSend = new Map<String, Blob>();
@@ -184,7 +184,7 @@ public with sharing class NKS_ArticleArchiveHandler {
         String navIdent,
         String navEnhet
     ) {
-        NKS_NewsXMLGenerator generator = new NKS_NewsXMLGenerator();
+        NKS_ArticleXMLGenerator generator = new NKS_ArticleXMLGenerator();
         generator.businessUnitId = navEnhet;
         generator.businessUnitName = BUSINESS_UNIT;
         generator.journalPostStatus = JOURNAL_POST_STATUS;
