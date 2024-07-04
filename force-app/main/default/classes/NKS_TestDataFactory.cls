@@ -128,8 +128,4 @@ public without sharing class NKS_TestDataFactory {
         insert c;
         return c;
     }
-
-    public static String getRecordTypeId(String developerName) {
-        return [SELECT Id FROM RecordType WHERE DeveloperName = :developerName LIMIT 1].Id;
-    }
 }
