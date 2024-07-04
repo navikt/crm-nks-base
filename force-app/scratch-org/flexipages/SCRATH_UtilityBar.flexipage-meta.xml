@@ -3,12 +3,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>runtime_service_omnichannel:omniWidget</componentName>
-                <identifier>runtime_service_omnichannel_omniWidget</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>eager</name>
                     <type>decorator</type>
@@ -43,6 +37,12 @@
                 <identifier>opencti_softPhone</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+                <identifier>runtime_service_omnichannel_omniWidget</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>utilityItems</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -67,7 +67,7 @@
         <name>one:utilityBarTemplateDesktop</name>
         <properties>
             <name>isLeftAligned</name>
-            <value>true</value>
+            <value>false</value>
         </properties>
     </template>
     <type>UtilityBar</type>
