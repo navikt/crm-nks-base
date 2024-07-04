@@ -85,6 +85,6 @@ public with sharing class NKS_OppgaveCheckFailedTest {
         );
         Test.stopTest();
 
-        // System.assertEquals(3, failedIdents.aktoersNeedCheckedList.size());
+        System.assertEquals(3, failedIdents.aktoersNeedCheckedList.size());
     }
 }
