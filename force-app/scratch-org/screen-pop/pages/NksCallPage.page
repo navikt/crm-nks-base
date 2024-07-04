@@ -6,17 +6,13 @@
   @last modified by  : mamikals
 -->
 <apex:page>
-    <apex:includeLightning/>
+    <apex:includeLightning />
     <script type="text/javascript" src="/support/api/61.0/lightning/opencti.js"></script>
     <div id="lightning"></div>
 
     <script type="text/javascript">
-        $Lightning.use("c:NksTestAdapter", function() {
-            $Lightning.createComponent("c:NksCallSimulater", 
-            {},
-            "lightning",
-            function(cmp) {
-            });
+        $Lightning.use('c:NksTestAdapter', function () {
+            $Lightning.createComponent('c:NksCallSimulater', {}, 'lightning', function (cmp) {});
         });
     </script>
 </apex:page>
