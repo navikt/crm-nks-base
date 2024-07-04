@@ -34,7 +34,7 @@ private with sharing class NKS_ArticleArchiveHandlerTest {
         ApiMock.setTestMock('POST_FILE_TO_WEBSAK', 200, 'OK');
 
         Test.startTest();
-        new NKS_ArticleArchiveHandler('WebsakNewsMapping__mdt', 'Nyheter NKS').execute(a);
+        new NKS_ArticleArchiveHandler('Websak_NKS_News_Setting__mdt', 'Nyheter NKS').execute(a);
         Test.stopTest();
 
         System.assert(true, 'smoke test passed');
@@ -62,7 +62,7 @@ private with sharing class NKS_ArticleArchiveHandlerTest {
         fileInfo.put('filename', 'fileType');
 
         Test.startTest();
-        Blob manifestBlob1 = new NKS_ArticleArchiveHandler('WebsakNewsMapping__mdt', 'Nyheter NKS')
+        Blob manifestBlob1 = new NKS_ArticleArchiveHandler('Websak_NKS_News_Setting__mdt', 'Nyheter NKS')
             .getManifest(fileInfo, 'posttype', 'postName', 'categry', Date.Today(), '4234/03', 'A123456', '1234567');
         Blob manifestBlob2 = new NKS_ArticleArchiveHandler('Websak_NKS_Current_Setting__mdt', 'Aktuelt NKS')
             .getManifest(fileInfo, 'posttype', 'postName', 'categry', Date.Today(), '4234/03', 'A123456', '1234567');
