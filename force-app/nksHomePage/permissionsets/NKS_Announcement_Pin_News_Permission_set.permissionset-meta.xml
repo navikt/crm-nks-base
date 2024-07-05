@@ -27,6 +27,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
+        <recordType>NKS_Announcement__c.Current_In_NAV_Contact_Center</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>NKS_Announcement__c.News</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
