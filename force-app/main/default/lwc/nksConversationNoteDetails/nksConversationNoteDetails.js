@@ -36,7 +36,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         parentId: '$recordId',
         queryFields: 'Id, CRM_Conversation_Note__c, createddate, CRM_Theme__r.Name, CRM_Theme_Group__r.Name',
         objectApiName: 'Conversation_Note__c',
-        relationshipField: 'CRM_case__c',
+        relationshipField: 'CRM_Case__c',
         ordering: 'createddate asc'
     })
     wiredData(result) {
@@ -114,8 +114,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.subscription = subscribe(
             this.messageContext,
             CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
-            (message) =>
-                handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate),
+            (message) => this.handleMessage(message),
             { scope: APPLICATION_SCOPE }
         );
     }
@@ -123,5 +122,11 @@ export default class NksConversationNoteDetails extends LightningElement {
     unsubscribeToMessageChannel() {
         unsubscribe(this.subscription);
         this.subscription = null;
+    }
+
+    handleMessage(message) {
+        if (this.recordId === message.recordId) {
+            handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate);
+        }
     }
 }
