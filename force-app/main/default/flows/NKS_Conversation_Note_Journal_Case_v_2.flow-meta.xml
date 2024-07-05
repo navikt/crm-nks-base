@@ -10,7 +10,14 @@
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>Publish_Notification_From_Subflow</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Existing_Journal</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Existing_Journal_From_Subflow</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -171,7 +178,7 @@
         <connector>
             <targetReference>Set_Publish_Notification_To_True</targetReference>
         </connector>
-        <flowName>CRM_Journal_Conversation_Note</flowName>
+        <flowName>CRM_Journal_Conversation_Note_v_2</flowName>
         <inputAssignments>
             <name>Journal_Case_ID</name>
             <value>
@@ -208,7 +215,14 @@
                 <elementReference>Get_Conversation_Note.Id</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>Existing_Journal_From_Subflow</assignToReference>
+            <name>Existing_Journal</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Publish_Notification_From_Subflow</assignToReference>
+            <name>Publish_Notification</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>Case_Legacy_System</name>
@@ -218,11 +232,41 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>Existing_Journal</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Existing_Journal_From_Subflow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>Publish_Notification</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Publish_Notification_From_Subflow</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
         </value>
