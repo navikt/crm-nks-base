@@ -70,7 +70,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             if (this.objectApiName) {
                 this.getRelatedRecordId('Account.CRM_Person__c', this.objectApiName);
             }
-        }else if (error) {
+        } else if (error) {
             console.error(error);
         }
     }
@@ -139,7 +139,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     get flowButtonLabel() {
-        if(this.readAccessToPerson) {
+        if (this.readAccessToPerson) {
             return this.changeUserLabel;
         } else {
             return this.createTaskLabel;
@@ -147,7 +147,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     get flowApiName() {
-        if(this.readAccessToPerson) {
+        if (this.readAccessToPerson) {
             return 'NKS_Case_Change_Account';
         } else {
             return 'NKS_Case_Send_NAV_Task_v_2';
