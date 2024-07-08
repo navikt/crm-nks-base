@@ -1,9 +1,13 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.getReverseRelatedRecord';
+import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
+import CREATE_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
+import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import { publishToAmplitude } from 'c/amplitude';
 import { handleShowNotifications } from 'c/nksButtonContainerUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
@@ -11,14 +15,20 @@ import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'light
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
+    @api objectApiName;
 
+    readAccessToPerson = false;
     dataShowing;
     notes = [];
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
+    createTaskLabel = CREATE_TASK_LABEL;
     subscription = null;
+    personId;
+    wireFields;
 
     connectedCallback() {
+        this.wireFields = [`${this.objectApiName}.Id`];
         this.subscribeToMessageChannel();
     }
 
@@ -51,6 +61,57 @@ export default class NksConversationNoteDetails extends LightningElement {
         }
     }
 
+    @wire(getRecord, {
+        recordId: '$recordId',
+        fields: '$wireFields'
+    })
+    wiredRecordInfo({ error, data }) {
+        if (data) {
+            if (this.objectApiName) {
+                this.getRelatedRecordId('Account.CRM_Person__c', this.objectApiName);
+            }
+        }else if (error) {
+            console.error(error);
+        }
+    }
+
+    @wire(getRecord, {
+        recordId: '$personId',
+        fields: PERSON_ACTORID_FIELD
+    })
+    wiredPersonInfo({ error, data }) {
+        if (data) {
+            const actorId = getFieldValue(data, PERSON_ACTORID_FIELD);
+            this.readAccessToPerson = actorId ? true : false;
+        } else if (error) {
+            console.error(error);
+        }
+    }
+
+    getRelatedRecordId(relationshipField, objectApiName) {
+        getRelatedRecord({
+            parentId: this.recordId,
+            relationshipField: relationshipField,
+            objectApiName: objectApiName
+        })
+            .then((record) => {
+                this.personId = this.resolve(relationshipField, record);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    resolve(path, obj) {
+        if (typeof path !== 'string') {
+            throw new Error('Path must be a string');
+        }
+
+        return path.split('.').reduce(function (prev, curr) {
+            return prev ? prev[curr] : null;
+        }, obj || {});
+    }
+
     get recordLabel() {
         return this.objectInfo?.data?.label || 'Samtalereferat';
     }
@@ -75,6 +136,22 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     get notificationBoxTemplate() {
         return this.template.querySelector('c-nks-notification-box');
+    }
+
+    get flowButtonLabel() {
+        if(this.readAccessToPerson) {
+            return this.changeUserLabel;
+        } else {
+            return this.createTaskLabel;
+        }
+    }
+
+    get flowApiName() {
+        if(this.readAccessToPerson) {
+            return 'NKS_Case_Change_Account';
+        } else {
+            return 'NKS_Case_Send_NAV_Task_v_2';
+        }
     }
 
     handleStatusChange(event) {
