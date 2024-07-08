@@ -1,6 +1,5 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.getReverseRelatedRecord';
-import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
@@ -61,15 +60,15 @@ export default class NksConversationNoteDetails extends LightningElement {
         }
     }
 
-    @wire(getRecord, {
-        recordId: '$recordId',
-        fields: '$wireFields'
+    @wire(getReverseRelatedRecord, {
+        parentId: '$recordId',
+        queryFields: 'Account.CRM_Person__c',
+        objectApiName: 'Case',
+        relationshipField: 'Id'
     })
-    wiredRecordInfo({ error, data }) {
-        if (data) {
-            if (this.objectApiName) {
-                this.getRelatedRecordId('Account.CRM_Person__c', this.objectApiName);
-            }
+    wierdRelatedRecord({ error, data }) {
+        if (data && data.length > 0) {
+            this.personId = this.resolve('Account.CRM_Person__c', data[0]);
         } else if (error) {
             console.error(error);
         }
@@ -86,20 +85,6 @@ export default class NksConversationNoteDetails extends LightningElement {
         } else if (error) {
             console.error(error);
         }
-    }
-
-    getRelatedRecordId(relationshipField, objectApiName) {
-        getRelatedRecord({
-            parentId: this.recordId,
-            relationshipField: relationshipField,
-            objectApiName: objectApiName
-        })
-            .then((record) => {
-                this.personId = this.resolve(relationshipField, record);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
     }
 
     resolve(path, obj) {
@@ -139,19 +124,11 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     get flowButtonLabel() {
-        if (this.readAccessToPerson) {
-            return this.changeUserLabel;
-        } else {
-            return this.createTaskLabel;
-        }
+        return this.readAccessToPerson ? this.changeUserLabel : this.createTaskLabel;
     }
 
     get flowApiName() {
-        if (this.readAccessToPerson) {
-            return 'NKS_Case_Change_Account';
-        } else {
-            return 'NKS_Case_Send_NAV_Task_v_2';
-        }
+        return this.readAccessToPerson ? 'NKS_Case_Change_Account' : 'NKS_Case_Send_NAV_Task_v_2';
     }
 
     handleStatusChange(event) {
