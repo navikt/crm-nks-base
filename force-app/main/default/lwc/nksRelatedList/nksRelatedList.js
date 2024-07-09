@@ -2,6 +2,7 @@ import { LightningElement, api, track, wire } from 'lwc';
 import getRelatedList from '@salesforce/apex/NKS_RelatedListController.getRelatedList';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
+import { resolve } from 'c/nksComponentsUtils';
 
 export default class NksRelatedList extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -87,7 +88,7 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
                     if (key !== 'Id') {
                         let recordField = {
                             label: key,
-                            value: this.resolve(key, dataRecord)
+                            value: resolve(key, dataRecord)
                         };
                         recordFields.push(recordField);
                     }
@@ -132,15 +133,5 @@ export default class NksRelatedList extends NavigationMixin(LightningElement) {
         if (this.iconName && this.iconName !== '') nameString = this.iconName;
 
         return nameString;
-    }
-
-    resolve(path, obj) {
-        if (typeof path !== 'string') {
-            throw new Error('Path must be a string');
-        }
-
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || {});
     }
 }
