@@ -8,7 +8,7 @@ import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import CREATE_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import { publishToAmplitude } from 'c/amplitude';
-import { handleShowNotifications } from 'c/nksButtonContainerUtils';
+import { handleShowNotifications, resolve } from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 
@@ -68,7 +68,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     })
     wierdRelatedRecord({ error, data }) {
         if (data && data.length > 0) {
-            this.personId = this.resolve('Account.CRM_Person__c', data[0]);
+            this.personId = resolve('Account.CRM_Person__c', data[0]);
         } else if (error) {
             console.error(error);
         }
@@ -85,16 +85,6 @@ export default class NksConversationNoteDetails extends LightningElement {
         } else if (error) {
             console.error(error);
         }
-    }
-
-    resolve(path, obj) {
-        if (typeof path !== 'string') {
-            throw new Error('Path must be a string');
-        }
-
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || {});
     }
 
     get recordLabel() {
