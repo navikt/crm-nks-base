@@ -309,6 +309,7 @@ TODAY())</expression>
                 </conditions>
             </visibilityRule>
         </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
