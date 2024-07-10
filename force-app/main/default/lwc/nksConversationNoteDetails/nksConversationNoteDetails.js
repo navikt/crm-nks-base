@@ -10,6 +10,7 @@ import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import { publishToAmplitude } from 'c/amplitude';
 import { handleShowNotifications, resolve } from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
+import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 
 export default class NksConversationNoteDetails extends LightningElement {
@@ -22,7 +23,8 @@ export default class NksConversationNoteDetails extends LightningElement {
     expanded = true;
     changeUserLabel = CHANGE_USER_LABEL;
     createTaskLabel = CREATE_TASK_LABEL;
-    subscription = null;
+    conversationNoteSubscription = null;
+    buttonContainerSubscription = null;
     personId;
     wireFields;
 
@@ -152,20 +154,35 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     subscribeToMessageChannel() {
-        if (this.subscription) {
-            return;
+        if (!this.conversationNoteSubscription) {
+            this.conversationNoteSubscriptionn = subscribe(
+                this.messageContext,
+                CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
+                (message) => this.handleMessage(message),
+                { scope: APPLICATION_SCOPE }
+            );
         }
-        this.subscription = subscribe(
-            this.messageContext,
-            CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
-            (message) => this.handleMessage(message),
-            { scope: APPLICATION_SCOPE }
-        );
+
+        if (!this.buttonContainerSubscription) {
+            this.buttonContainerSubscription = subscribe(
+                this.messageContext,
+                BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL,
+                (message) => this.handleMessage(message),
+                { scope: APPLICATION_SCOPE }
+            );
+        }
     }
 
     unsubscribeToMessageChannel() {
-        unsubscribe(this.subscription);
-        this.subscription = null;
+        if (this.conversationNoteSubscription) {
+            unsubscribe(this.conversationNoteSubscription);
+            this.conversationNoteSubscription = null;
+        }
+
+        if (this.buttonContainerSubscription) {
+            unsubscribe(this.buttonContainerSubscription);
+            this.buttonContainerSubscription = null;
+        }
     }
 
     handleMessage(message) {
