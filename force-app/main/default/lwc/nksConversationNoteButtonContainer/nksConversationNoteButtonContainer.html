@@ -12,7 +12,7 @@
         onflowsucceeded={handleFlowSucceeded}
     >
         <template if:true={showBackButton}>
-            <div slot="backButton">
+            <div slot="backButton" class="slds-var-p-right_small">
                 <c-nks-flow-navigation
                     action="BACK"
                     button-label={labels.back}
