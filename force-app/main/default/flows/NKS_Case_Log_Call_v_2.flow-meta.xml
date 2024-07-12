@@ -68,43 +68,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Task_Defaults</name>
-        <label>Assign Task Defaults</label>
-        <locationX>930</locationX>
-        <locationY>1298</locationY>
-        <assignmentItems>
-            <assignToReference>Task_to_Create.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Task_to_Create.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Task_to_Create.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Task_to_Create.NKS_Henvendelse_BehandlingsId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_NAV_Task_Flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
@@ -306,7 +269,7 @@
         <name>Set_Account</name>
         <label>Set Account</label>
         <locationX>1150</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -316,6 +279,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Case_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Has_No_Account_To_True</name>
+        <label>Set Has No Account To True</label>
+        <locationX>1150</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>HAS_NO_ACCOUNT</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>No_Account_Screen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -390,7 +369,7 @@
         <locationX>1062</locationX>
         <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>No_Account_Screen</targetReference>
+            <targetReference>Set_Has_No_Account_To_True</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No Account</defaultConnectorLabel>
         <rules>
@@ -462,7 +441,7 @@
         <name>Check_Person_Access</name>
         <label>Check Person Access</label>
         <locationX>1062</locationX>
-        <locationY>1082</locationY>
+        <locationY>1190</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Screen</targetReference>
@@ -588,7 +567,7 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>1062</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Person_Access</targetReference>
@@ -757,7 +736,7 @@
         <name>Get_Person_Access</name>
         <label>Get Person Access</label>
         <locationX>1062</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access</targetReference>
@@ -859,10 +838,7 @@
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
         <locationX>930</locationX>
-        <locationY>1190</locationY>
-        <connector>
-            <targetReference>Assign_Task_Defaults</targetReference>
-        </connector>
+        <locationY>1298</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -911,7 +887,7 @@
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
         <locationX>1150</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -1236,7 +1212,7 @@
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
         <locationX>1150</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1461,26 +1437,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_NAV_Task_Flow</name>
-        <label>Create NAV Task Flow</label>
-        <locationX>930</locationX>
-        <locationY>1406</locationY>
-        <flowName>NKS_Case_Send_NAV_Task_v_2</flowName>
-        <inputAssignments>
-            <name>NavTask</name>
-            <value>
-                <elementReference>Task_to_Create</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <variables>
         <name>BEHANDLINGS_ID</name>
         <dataType>String</dataType>
@@ -1498,11 +1454,21 @@
         <objectType>Conversation_Note__c</objectType>
     </variables>
     <variables>
+        <name>HAS_NO_ACCOUNT</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>HAS_PERSON_READ</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <value>
             <booleanValue>false</booleanValue>
         </value>

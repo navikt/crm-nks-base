@@ -2,13 +2,11 @@ import { LightningElement, api, wire } from 'lwc';
 import getReverseRelatedRecord from '@salesforce/apex/NksRecordInfoController.getReverseRelatedRecord';
 import { refreshApex } from '@salesforce/apex';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import CREATE_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
-import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import { publishToAmplitude } from 'c/amplitude';
-import { handleShowNotifications, resolve } from 'c/nksComponentsUtils';
+import { handleShowNotifications, getOutputVariableValue } from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
@@ -17,7 +15,6 @@ export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
     @api objectApiName;
 
-    readAccessToPerson = false;
     dataShowing;
     notes = [];
     expanded = true;
@@ -27,6 +24,8 @@ export default class NksConversationNoteDetails extends LightningElement {
     buttonContainerSubscription = null;
     personId;
     wireFields;
+    flowButtonLabel;
+    flowApiName;
 
     connectedCallback() {
         this.wireFields = [`${this.objectApiName}.Id`];
@@ -62,33 +61,6 @@ export default class NksConversationNoteDetails extends LightningElement {
         }
     }
 
-    @wire(getReverseRelatedRecord, {
-        parentId: '$recordId',
-        queryFields: 'Account.CRM_Person__c',
-        objectApiName: 'Case',
-        relationshipField: 'Id'
-    })
-    wierdRelatedRecord({ error, data }) {
-        if (data && data.length > 0) {
-            this.personId = resolve('Account.CRM_Person__c', data[0]);
-        } else if (error) {
-            console.error(error);
-        }
-    }
-
-    @wire(getRecord, {
-        recordId: '$personId',
-        fields: PERSON_ACTORID_FIELD
-    })
-    wiredPersonInfo({ error, data }) {
-        if (data) {
-            const actorId = getFieldValue(data, PERSON_ACTORID_FIELD);
-            this.readAccessToPerson = actorId ? true : false;
-        } else if (error) {
-            console.error(error);
-        }
-    }
-
     get recordLabel() {
         return this.objectInfo?.data?.label || 'Samtalereferat';
     }
@@ -115,16 +87,16 @@ export default class NksConversationNoteDetails extends LightningElement {
         return this.template.querySelector('c-nks-notification-box');
     }
 
-    get flowButtonLabel() {
-        return this.readAccessToPerson ? this.changeUserLabel : this.createTaskLabel;
-    }
-
-    get flowApiName() {
-        return this.readAccessToPerson ? 'NKS_Case_Change_Account' : 'NKS_Case_Send_NAV_Task_v_2';
+    handleShowButtons(outputVariables) {
+        const hasReadAccess = getOutputVariableValue(outputVariables, 'HAS_PERSON_READ');
+        const hasNoAccount = getOutputVariableValue(outputVariables, 'HAS_NO_ACCOUNT');
+        this.flowButtonLabel = hasReadAccess || hasNoAccount ? this.changeUserLabel : this.createTaskLabel;
+        this.flowApiName = hasReadAccess || hasNoAccount ? 'NKS_Case_Change_Account' : 'NKS_Case_Send_NAV_Task_v_2';
     }
 
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
+        this.handleShowButtons(outputVariables);
 
         if (
             status === 'FINISHED' &&
