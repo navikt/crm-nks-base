@@ -349,7 +349,7 @@
             <name>Give_Beta_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Beta_tilgang</leftValueReference>
+                <leftValueReference>Beta_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -371,7 +371,7 @@
             <name>Remove_Beta_access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Beta_tilgang</leftValueReference>
+                <leftValueReference>Beta_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -497,7 +497,7 @@
             <name>Give_Knowledge_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>set_Knowledge_User</leftValueReference>
+                <leftValueReference>Knowledge_User_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -519,7 +519,7 @@
             <name>Remove_Knowledge_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>set_Knowledge_User</leftValueReference>
+                <leftValueReference>Knowledge_User_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -583,7 +583,7 @@
             <name>Give_QuickText_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
+                <leftValueReference>Quick_Text_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -605,7 +605,7 @@
             <name>Remove_QuickText_Access_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Quick_Text_Editor</leftValueReference>
+                <leftValueReference>Quick_Text_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -691,7 +691,7 @@
             <name>Give_Topic_Access</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
+                <leftValueReference>Topics_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -713,7 +713,7 @@
             <name>Remove_Topic_Access_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Set_NKS_Topics</leftValueReference>
+                <leftValueReference>Topics_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -777,7 +777,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>set_Knowledge_User</leftValueReference>
+                <leftValueReference>Knowledge_User_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -799,7 +799,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>set_Knowledge_User</leftValueReference>
+                <leftValueReference>Knowledge_User_Permission</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -1542,7 +1542,7 @@
         <inputAssignments>
             <field>NKS_FullNameAlias__c</field>
             <value>
-                <elementReference>Fullt_Navn_Alias</elementReference>
+                <elementReference>Full_Name_Alias</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1554,7 +1554,7 @@
         <inputAssignments>
             <field>UserPermissionsKnowledgeUser</field>
             <value>
-                <elementReference>set_Knowledge_User</elementReference>
+                <elementReference>Knowledge_User_Permission</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1602,7 +1602,7 @@
             <targetReference>Check_Knowledge_Access_Value</targetReference>
         </connector>
         <fields>
-            <name>display</name>
+            <name>Display_Text</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Users_Queue_Names}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -1629,7 +1629,7 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Fullt_Navn_Alias</name>
+            <name>Full_Name_Alias</name>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>Get_User.NKS_FullNameAlias__c</elementReference>
@@ -1758,7 +1758,7 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>set_Knowledge_User</name>
+            <name>Knowledge_User_Permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <elementReference>Knowledge_Editor_Access</elementReference>
@@ -1769,7 +1769,7 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Set_NKS_Quick_Text_Editor</name>
+            <name>Quick_Text_Permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <elementReference>Quick_Text_Access</elementReference>
@@ -1780,7 +1780,7 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Set_NKS_Topics</name>
+            <name>Topics_Permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <elementReference>Topics_Editor_Access</elementReference>
@@ -1791,7 +1791,7 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Beta_tilgang</name>
+            <name>Beta_Permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
                 <elementReference>Beta_Access</elementReference>
