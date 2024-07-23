@@ -1,0 +1,38 @@
+<template>
+    <template lwc:if={journalConversation}>
+        <c-fc-flow-next-screen-navigator></c-fc-flow-next-screen-navigator>
+    </template>
+    <c-nks-button-container-bottom
+        class="slds-p-right_none"
+        record-id={recordId}
+        channel-name="Conversation note"
+        flow-names="NKS_Conversation_Note_Journal_Case_v_2, NKS_Case_Send_NAV_Task_v_2"
+        flow-labels="NKS_Journal, NKS_Create_NAV_Task"
+        onflowclicked={handleFlowButtonClicked}
+        onflowsucceeded={handleFlowSucceeded}
+    >
+        <template if:true={showBackButton}>
+            <div slot="backButton" class="slds-var-p-right_small">
+                <c-nks-flow-navigation
+                    action="BACK"
+                    button-label={labels.back}
+                    button-variant="brand-outline"
+                    button-alignment="LEFT"
+                    remove-footer
+                >
+                </c-nks-flow-navigation>
+            </div>
+        </template>
+        <div slot="navigationButton">
+            <c-nks-flow-navigation
+                class="slds-var-p-vertical_medium"
+                action="NEXT"
+                button-label={conversationNoteButtonLabel}
+                button-variant={conversationNoteButtonVariant}
+                button-alignment="RIGHT"
+                remove-footer
+            >
+            </c-nks-flow-navigation>
+        </div>
+    </c-nks-button-container-bottom>
+</template>

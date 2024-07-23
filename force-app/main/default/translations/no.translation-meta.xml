@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
-        <label />
-        <name>NAV_Kontaktsenter</name>
-    </customApplications>
-    <customApplications>
         <label>Permitteringsvarsler</label>
         <name>Permitteringsvarsler</name>
     </customApplications>
+    <customLabels>
+        <label>Henvendelsen er ferdigstilt.</label>
+        <name>NKS_Case_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label>Samtalereferatet blir delt med bruker når det opprettes.</label>
+        <name>NKS_Conversation_Note_Disclaimer_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>Bytt bruker</label>
+        <name>NKS_Change_User</name>
+    </customLabels>
+    <customLabels>
+        <label>Nytt samtalereferat</label>
+        <name>NKS_New_Conversation_Note</name>
+    </customLabels>
     <customLabels>
         <label>Saker</label>
         <name>NKS_Cases_Tab_Label</name>
@@ -21,7 +33,7 @@
         <name>NKS_Conversation_Note_Blank_Error</name>
     </customLabels>
     <customLabels>
-        <label>Del med bruker</label>
+        <label>Del med brukeren</label>
         <name>NKS_Conversation_Note_Share_With_User</name>
     </customLabels>
     <customLabels>
@@ -230,12 +242,6 @@
         </flows>
         <fullName>CRM_Patch_Update_NAV_Task</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>CRM_Retry_NAV_Task_Post</fullName>
-    </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -277,12 +283,6 @@
         </flows>
         <fullName>CRM_SEND_NAV_TASK_REQUEST_TEMPLATE</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>NKS_Account_Create_New_Case</fullName>
-    </flowDefinitions>
-    -->
     <flowDefinitions>
         <flows>
             <screens>
@@ -476,12 +476,6 @@
         </flows>
         <fullName>NKS_Change_Account</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>NKS_Close_Case_and_Tab</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <screens>
@@ -591,20 +585,6 @@
         </flows>
         <fullName>NKS_Veiledere</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>Opportunity</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Remove_Old_TopicAssignment</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Reset_Account_Warning_After_6_Months</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <screens>
@@ -636,20 +616,6 @@
         </flows>
         <fullName>TAG_Log_Call_in_Account</fullName>
     </flowDefinitions>
-    <!--
-    <flowDefinitions>
-        <flows />
-        <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Task</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Temporary_Layoff_Update</fullName>
-    </flowDefinitions>
--->
     <flowDefinitions>
         <flows>
             <choices>
