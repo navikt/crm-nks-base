@@ -394,6 +394,7 @@ public with sharing class NKS_AddressController {
                     String.valueOf(meta.endringer[0]?.registrert.date())
                 );
             }
+            this.type = 'OPPHOLDSADRESSE';
         }
 
         @TestVisible
