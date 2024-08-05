@@ -45,6 +45,7 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         const outputVariables = event.detail?.flowOutput;
         try {
             const payload = {
+                recordId: this.recordId,
                 flowApiName: flowApiName,
                 outputVariables: outputVariables
             };
