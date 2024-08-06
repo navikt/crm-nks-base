@@ -31,7 +31,7 @@ export default class NksBostedAddress extends LightningElement {
 
         this.showCopyButton = true;
         const addressesToReturn = this._residentialAddresses.map((element) => {
-            const type = element.type ? element.type + ':' : '';
+            const type = element.type ? 'Type: ' + element.type : '';
             const fullName = element.fullName ? element.fullName : '';
             const addressLine = [
                 element.address ? element.address : '',
