@@ -514,50 +514,6 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <screens>
-                <fields>
-                    <name>Alias</name>
-                </fields>
-                <fields>
-                    <name>Chat_user_permission</name>
-                </fields>
-                <fields>
-                    <name>Fullt_Navn_Alias</name>
-                </fields>
-                <fields>
-                    <name>NAV_Ident</name>
-                </fields>
-                <fields>
-                    <name>SelectQueues</name>
-                </fields>
-                <fields>
-                    <name>SetDivision</name>
-                </fields>
-                <fields>
-                    <name>SetQueues</name>
-                </fields>
-                <fields>
-                    <name>Set_NKS_Quick_Text_Editor</name>
-                </fields>
-                <fields>
-                    <name>Set_NKS_Topics</name>
-                </fields>
-                <fields>
-                    <name>UpdateDivision</name>
-                </fields>
-                <fields>
-                    <name>display</name>
-                </fields>
-                <fields>
-                    <name>setKnowledgeUser</name>
-                </fields>
-                <name>UpdateUser</name>
-            </screens>
-        </flows>
-        <fullName>NKS_Update_User</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
             <choices>
                 <name>UsersWithoutQueue</name>
             </choices>
