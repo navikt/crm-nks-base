@@ -204,4 +204,20 @@ public with sharing class NKS_HomePageControllerTest {
 
         System.assertNotEquals(null, testURL);
     }
+
+    // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
+    @isTest
+    static void testGetUsersCurrentApp() {
+        Test.startTest();
+        NKS_HomePageController.getUsersCurrentApp();
+        Test.stopTest();
+    }
+    
+    // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
+    @isTest
+    static void testUpdateUsersCurrentApp() {
+        Test.startTest();
+        NKS_HomePageController.updateUsersCurrentApp('NewApp');
+        Test.stopTest();
+    }
 }
