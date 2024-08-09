@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Participant__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Participant of survey</description>
+    <externalId>false</externalId>
+    <label>Participant</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Survey_Responses1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
