@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>Announcement Publish Scheduled News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Publish Scheduled News</label>
     <processMetadataValues>
@@ -26,7 +27,7 @@
         <name>Update_Scheduled_News</name>
         <label>Update Scheduled News</label>
         <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_News_Status__c</field>
@@ -47,12 +48,19 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>and</filterLogic>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
         <filters>
             <field>NKS_TypeFormula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Nyhet</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>NKS_TypeFormula__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Aktuelt i NAV kontaktsenter</stringValue>
             </value>
         </filters>
         <filters>
