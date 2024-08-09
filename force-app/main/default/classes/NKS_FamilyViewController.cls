@@ -789,13 +789,14 @@ public with sharing class NKS_FamilyViewController {
         if (d == null) {
             return null;
         }
-        if ((d.year() - 1) > 0) {
-            return String.valueOf(d.year() - 1) + ' år';
+        
+        if (d.year() - 1 < 2) {
+            if (d.month() - 1 > 0 || (d.year() - 1) > 0) {
+                return String.valueOf((d.year() - 1) * 12 + d.month() - 1) + ' mnd';
+            }
+            return String.valueOf(d.day() - 1) + ' d';
         }
-        if ((d.month() - 1) > 0) {
-            return String.valueOf(d.month() - 1) + ' mnd';
-        }
-        return String.valueOf(d.day() - 1) + ' d';
+        return String.valueOf(d.year() - 1) + ' år';
     }
 
     @TestVisible

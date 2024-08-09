@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Role__c</fullName>
+    <externalId>false</externalId>
+    <label>Role</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Styringsenheten</fullName>
+                <default>false</default>
+                <label>Styringsenheten</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Arbeid</fullName>
+                <default>false</default>
+                <label>Fagnettverk Arbeid</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_AG_1+4</fullName>
+                <default>false</default>
+                <label>Fagnettverk AG 1+4</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_AG_2</fullName>
+                <default>false</default>
+                <label>Fagnettverk AG 2</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_AG_3</fullName>
+                <default>false</default>
+                <label>Fagnettverk AG 3</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Familie</fullName>
+                <default>false</default>
+                <label>Fagnettverk Familie</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Gjeldsraadgivning</fullName>
+                <default>false</default>
+                <label>Fagnettverk Gjeldsrådgivning</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Helse</fullName>
+                <default>false</default>
+                <label>Fagnettverk Helse</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Internasjonalt</fullName>
+                <default>false</default>
+                <label>Fagnettverk Internasjonalt</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Lege_og_behandler</fullName>
+                <default>false</default>
+                <label>Fagnettverk Lege og behandler</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Pensjon</fullName>
+                <default>false</default>
+                <label>Fagnettverk Pensjon</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Sosiale_tjenester</fullName>
+                <default>false</default>
+                <label>Fagnettverk Sosiale tjenester</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Teknisk_brukerstotte</fullName>
+                <default>false</default>
+                <label>Fagnettverk Teknisk brukerstøtte</label>
+            </value>
+            <value>
+                <fullName>Fagnettverk_Uforetrygd</fullName>
+                <default>false</default>
+                <label>Fagnettverk Uføretrygd</label>
+            </value>
+            <value>
+                <fullName>Annet</fullName>
+                <default>false</default>
+                <label>Annet</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

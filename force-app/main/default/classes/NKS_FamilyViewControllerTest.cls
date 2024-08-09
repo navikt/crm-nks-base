@@ -401,12 +401,26 @@ private class NKS_FamilyViewControllerTest {
         Date d = Date.valueOf('0001-01-02');
         String result = NKS_FamilyViewController.getAgeString(d);
         System.assertEquals('1 d', result);
+
         d = Date.valueOf('0001-02-01');
         result = NKS_FamilyViewController.getAgeString(d);
         System.assertEquals('1 mnd', result);
+
         d = Date.valueOf('0002-01-01');
         result = NKS_FamilyViewController.getAgeString(d);
-        System.assertEquals('1 år', result);
+        System.assertEquals('12 mnd', result);
+
+        d = Date.valueOf('0002-12-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('23 mnd', result);
+
+        d = Date.valueOf('0003-01-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('2 år', result);
+        
+        d = Date.valueOf('0004-01-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('3 år', result);
     }
 
     @isTest
