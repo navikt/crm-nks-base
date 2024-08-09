@@ -935,6 +935,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentDone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentNotification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>UserNotification__c.INT_CaseTheme__c</field>
         <readable>true</readable>
     </fieldPermissions>
