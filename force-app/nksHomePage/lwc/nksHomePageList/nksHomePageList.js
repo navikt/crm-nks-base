@@ -302,7 +302,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get isNews() {
-        return this.objectName === 'NKS_Announcement__c' && this.filter && this.filter.includes('News');
+        return this.objectName === 'NKS_Announcement__c' && this.filter?.includes('News');
     }
 
     get isKnowledge() {
