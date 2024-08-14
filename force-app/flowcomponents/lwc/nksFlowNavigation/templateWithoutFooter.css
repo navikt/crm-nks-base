@@ -1,0 +1,7 @@
+@media only screen and (max-width: 1920px) {
+    .responsive-button {
+        height: 2.5rem; /* Set a fixed height for buttons on smaller screens */
+        line-height: 1.2; /* Reduce space between lines on smaller screens */
+        padding: 4px;
+    }
+}
