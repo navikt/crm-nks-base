@@ -74,7 +74,7 @@
             </value>
         </filters>
         <filters>
-            <field>NKS_Operational_Send_Notification__c</field>
+            <field>NKS_Send_Notification__c</field>
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
