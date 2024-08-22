@@ -50,7 +50,7 @@ public with sharing class NKS_CustomNotificationBatchTest {
         Test.stopTest();
 
         List<AsyncApexJob> jobs = [SELECT Id, Status FROM AsyncApexJob WHERE JobType = 'BatchApex'];
-        System.assertEquals(1, jobs.size(), 'Batch job should have been enqueued');
+        Assert.areEqual(1, jobs.size(), 'Batch job should have been enqueued');
 
     }
 }
