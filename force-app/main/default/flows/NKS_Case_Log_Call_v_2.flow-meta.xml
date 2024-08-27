@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Post_Journal</name>
         <label>Post Journal</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2462</locationY>
         <actionName>CRM_ConvNoteJournalHelper</actionName>
         <actionType>apex</actionType>
@@ -54,7 +54,7 @@
     <assignments>
         <name>Assign_Account_to_Case</name>
         <label>Assign Account to Case</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -71,7 +71,7 @@
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>2870</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Status</assignToReference>
@@ -94,7 +94,7 @@
     <assignments>
         <name>Conversation_Note_Assignment</name>
         <label>Conversation Note Assignment</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -173,7 +173,7 @@
     <assignments>
         <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
-        <locationX>600</locationX>
+        <locationX>644</locationX>
         <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
@@ -245,7 +245,7 @@
     <assignments>
         <name>Journal_Theme_Assignment</name>
         <label>Journal Theme Assignment</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2138</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
@@ -268,7 +268,7 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>1150</locationX>
+        <locationX>1326</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -284,7 +284,7 @@
     <assignments>
         <name>Set_Has_No_Account_To_True</name>
         <label>Set Has No Account To True</label>
-        <locationX>1150</locationX>
+        <locationX>1326</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>HAS_NO_ACCOUNT</assignToReference>
@@ -300,7 +300,7 @@
     <assignments>
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2570</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
@@ -317,7 +317,7 @@
         <description>Assigns updated values for case and conversation note.</description>
         <name>Theme_Categorization_Assignment</name>
         <label>Theme Categorization Assignment</label>
-        <locationX>600</locationX>
+        <locationX>644</locationX>
         <locationY>2138</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
@@ -340,7 +340,7 @@
     <decisions>
         <name>Changed_Account</name>
         <label>Changed Account</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_to_Case</targetReference>
@@ -366,7 +366,7 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>1062</locationX>
+        <locationX>1238</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Set_Has_No_Account_To_True</targetReference>
@@ -393,7 +393,7 @@
             already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
-        <locationX>556</locationX>
+        <locationX>644</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
@@ -438,9 +438,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_If_NAV_Task_Is_Null</name>
+        <label>Check If NAV Task Is Null</label>
+        <locationX>512</locationX>
+        <locationY>3086</locationY>
+        <defaultConnector>
+            <targetReference>Send_NAV_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>navTask</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Is Null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Person_Access</name>
         <label>Check Person Access</label>
-        <locationX>1062</locationX>
+        <locationX>1238</locationX>
         <locationY>1190</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -466,7 +488,7 @@
     <decisions>
         <name>Check_Person_Access_0</name>
         <label>Check Person Access</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Create_Journal_Entry</targetReference>
@@ -491,7 +513,7 @@
     <decisions>
         <name>Create_Journal_Entry</name>
         <label>Create Journal Entry</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1922</locationY>
         <defaultConnector>
             <targetReference>Theme_Categorization_Screen</targetReference>
@@ -511,6 +533,28 @@
                 <targetReference>Journal_Screen</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Verify_Task_Post</name>
+        <label>Verify Task Post</label>
+        <locationX>710</locationX>
+        <locationY>3302</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Successful_Post</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Send_NAV_Task.SUCCESSFUL_POST</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Successful Post</label>
         </rules>
     </decisions>
     <description>New version of NKS_Case_Log_a_Call</description>
@@ -544,7 +588,7 @@
     <recordCreates>
         <name>Create_Conversation_Note</name>
         <label>Create Conversation Note</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2354</locationY>
         <connector>
             <targetReference>Post_Journal</targetReference>
@@ -555,7 +599,7 @@
         <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note_0</name>
         <label>Create Conversation Note</label>
-        <locationX>600</locationX>
+        <locationX>644</locationX>
         <locationY>2354</locationY>
         <connector>
             <targetReference>Get_Conversation_Note_0_0</targetReference>
@@ -566,7 +610,7 @@
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>1062</locationX>
+        <locationX>1238</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -594,7 +638,7 @@
         <description>Queries the account</description>
         <name>Get_Account_0</name>
         <label>Get Account</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -618,7 +662,7 @@
         <description>Queries the account</description>
         <name>Get_Account_Case_Closed</name>
         <label>Get Account</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -642,7 +686,7 @@
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>556</locationX>
+        <locationX>644</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -664,7 +708,7 @@
         <description>Queries information from the case record</description>
         <name>Get_Case_Verify</name>
         <label>Get Case</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -686,7 +730,7 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -710,7 +754,7 @@
         <description>Queries the conversation note created for this case.</description>
         <name>Get_Conversation_Note_0_0</name>
         <label>Get Conversation Note</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>2762</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -735,7 +779,7 @@
     <recordLookups>
         <name>Get_Person_Access</name>
         <label>Get Person Access</label>
-        <locationX>1062</locationX>
+        <locationX>1238</locationX>
         <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -769,7 +813,7 @@
     <recordLookups>
         <name>Get_Person_Access_0</name>
         <label>Get Person Access</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>1322</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -803,7 +847,7 @@
     <recordLookups>
         <name>Get_Person_Access_Case_Closed</name>
         <label>Get Person Access</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -837,7 +881,7 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>1298</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -858,7 +902,7 @@
     <recordUpdates>
         <name>Set_Case_Closed_0</name>
         <label>Set Case Closed</label>
-        <locationX>490</locationX>
+        <locationX>534</locationX>
         <locationY>1538</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -879,14 +923,17 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>2978</locationY>
+        <connector>
+            <targetReference>Check_If_NAV_Task_Is_Null</targetReference>
+        </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Case_Account</name>
         <label>Update Case Account</label>
-        <locationX>1150</locationX>
+        <locationX>1326</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -897,7 +944,7 @@
     <screens>
         <name>Case_Closed_Screen</name>
         <label>Case Closed Screen</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -923,7 +970,10 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>navTask</assignToReference>
+                <name>navTask</name>
+            </outputParameters>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -991,9 +1041,31 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>842</locationX>
+        <locationY>3410</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Header</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Post_Error_Text</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0); font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif;&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1101,7 +1173,7 @@
     <screens>
         <name>Log_Screen</name>
         <label>Log Screen</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1203,6 +1275,10 @@
                 <assignToReference>journalConversation</assignToReference>
                 <name>journalConversation</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>navTask</assignToReference>
+                <name>navTask</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1211,7 +1287,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1150</locationX>
+        <locationX>1326</locationX>
         <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1325,7 +1401,7 @@
     <screens>
         <name>Theme_Categorization_Screen</name>
         <label>Theme Categorization Screen</label>
-        <locationX>600</locationX>
+        <locationX>644</locationX>
         <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1430,13 +1506,36 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>430</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Send_NAV_Task</name>
+        <label>Send NAV Task</label>
+        <locationX>710</locationX>
+        <locationY>3194</locationY>
+        <connector>
+            <targetReference>Verify_Task_Post</targetReference>
+        </connector>
+        <flowName>CRM_Send_NAV_Task_Auto</flowName>
+        <inputAssignments>
+            <name>Created_By_Unit_Number</name>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>NAV_Task</name>
+            <value>
+                <elementReference>navTask</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>BEHANDLINGS_ID</name>
         <dataType>String</dataType>
@@ -1479,6 +1578,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>navTask</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>NavTask__c</objectType>
     </variables>
     <variables>
         <name>PERSON_ID</name>
@@ -1554,13 +1661,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Task_to_Create</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NavTask__c</objectType>
     </variables>
 </Flow>
