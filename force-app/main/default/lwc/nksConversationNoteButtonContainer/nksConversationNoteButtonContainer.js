@@ -18,15 +18,15 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         newConversationNote: CONVERSATION_NOTE_NEW_LABEL,
         back: BACK_LABEL
     };
-    _navTask = null;
+    _navTasks = [];
 
     @api
-    get navTask() {
-        return this._navTask;
+    get navTasks() {
+        return this._navTasks;
     }
 
-    set navTask(value) {
-        this._navTask = value;
+    set navTasks(value) {
+        this._navTasks = value;
     }
 
     @api
@@ -54,7 +54,8 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     handleFlowSucceeded(event) {
         const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
-        this._navTask = getOutputVariableValue(outputVariables, 'NavTask');
+        this._navTasks.push(getOutputVariableValue(outputVariables, 'NavTask'));
+
         try {
             const payload = {
                 recordId: this.recordId,

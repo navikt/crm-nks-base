@@ -136,6 +136,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_NAV_Task_Saved_To_True</name>
+        <label>Set NAV Task Saved To True</label>
+        <locationX>165</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>NAV_Task_Saved</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>429</locationX>
@@ -182,7 +202,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Info_Text</targetReference>
+                <targetReference>Set_NAV_Task_Saved_To_True</targetReference>
             </connector>
             <label>Is Null</label>
         </rules>
@@ -427,23 +447,6 @@ TODAY())</expression>
                     </rightValue>
                 </conditions>
             </visibilityRule>
-        </fields>
-        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Info_Text</name>
-        <label>Info Text</label>
-        <locationX>165</locationX>
-        <locationY>1082</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>NAV_Task_Saved</name>
-            <fieldText>&lt;p&gt;Oppgaven er lagret, og blir sendt når samtalereferat er opprettet.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -710,6 +713,16 @@ TODAY())</expression>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NAV_Task_Saved</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>The NAV task record to perform the action on.</description>
