@@ -68,6 +68,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Processing_Id</name>
+        <label>Assign Processing Id</label>
+        <locationX>1018</locationX>
+        <locationY>3302</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_Through_NAV_Tasks.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_NAV_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Assigns updated values for case</description>
         <name>Case_Assignment_Default_0_0</name>
         <label>Case Assignment</label>
@@ -539,7 +555,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>1018</locationX>
-        <locationY>3410</locationY>
+        <locationY>3518</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -577,7 +593,7 @@
         <collectionReference>navTasks</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Send_NAV_Task</targetReference>
+            <targetReference>Assign_Processing_Id</targetReference>
         </nextValueConnector>
     </loops>
     <processMetadataValues>
@@ -1055,7 +1071,7 @@
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>1106</locationX>
-        <locationY>3518</locationY>
+        <locationY>3626</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1539,7 +1555,7 @@
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>1018</locationX>
-        <locationY>3302</locationY>
+        <locationY>3410</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>
