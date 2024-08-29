@@ -688,6 +688,10 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
