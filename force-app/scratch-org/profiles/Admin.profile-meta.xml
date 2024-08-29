@@ -126,11 +126,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_CustomNotificationBatch</apexClass>
+        <apexClass>NKS_HomePageNotifyOperationalUpdates</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_CustomNotificationController</apexClass>
+        <apexClass>NKS_HomePageNotifyOperationalUpdatesTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -727,7 +727,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Send_Notification__c</field>
+        <field>NKS_Announcement__c.NKS_Operational_Send_Notification__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
