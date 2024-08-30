@@ -1,7 +1,7 @@
 public with sharing class NKS_SendNavTaskHandler {
+
     @AuraEnabled
     public static Boolean invokeSendNavTaskFlow(NavTask__c navTask) {
-        Map<String, Object> resultMap = new Map<String, Object>();
         Boolean res = false;
         try {   
             Map<String, Object> flowInputs = new Map<String, Object>{
@@ -15,24 +15,30 @@ public with sharing class NKS_SendNavTaskHandler {
             res = (Boolean)flowInv.getVariableValue('SUCCESSFUL_POST');
 
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            System.debug('Error in invokeSendNavTaskFlow: ' + e.getMessage());
+            throw new AuraHandledException('An error occurred while processing the NAV task.');
         }
         return res;
     }
 
     @AuraEnabled(cacheable=true)
     public static String getCurrentUserDepartment() {
-        Id currentUserId = UserInfo.getUserId();
-        User currentUser = [SELECT Department FROM User WHERE Id = :currentUserId LIMIT 1];
-        return currentUser.Department;
+        try {
+            Id currentUserId = UserInfo.getUserId();
+            return [SELECT Department FROM User WHERE Id = :currentUserId LIMIT 1]?.Department;
+        } catch (Exception e) {
+            System.debug('Error fetching current user department: ' + e.getMessage());
+            throw new AuraHandledException('Unable to fetch current user department.');
+        }
     }
 
     @AuraEnabled
-    public static string getProcessingId(Id recordId){
+    public static String getProcessingId(Id recordId){
         try {
-            return [SELECT Id, NKS_Henvendelse_BehandlingsId__c FROM Case WHERE Id = :recordId LIMIT 1].NKS_Henvendelse_BehandlingsId__c;
+            return [SELECT NKS_Henvendelse_BehandlingsId__c FROM Case WHERE Id = :recordId LIMIT 1]?.NKS_Henvendelse_BehandlingsId__c;
         } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
+            System.debug('Error in getProcessingId: ' + e.getMessage());
+            throw new AuraHandledException('Unable to fetch processing ID.');
         }
     }
 }
