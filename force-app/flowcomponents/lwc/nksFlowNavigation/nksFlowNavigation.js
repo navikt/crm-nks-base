@@ -60,4 +60,10 @@ export default class NksFlowNavigation extends LightningElement {
     get buttonStyle() {
         return this.stretched ? 'display: grid; width: 100%;' : '';
     }
+
+    get buttonClass() {
+        return `slds-button slds-button_stretch slds-grid slds-grid_align-center responsive-button ${
+            this.buttonVariant === 'brand' ? 'slds-button_brand' : 'slds-button_outline-brand'
+        }`;
+    }
 }
