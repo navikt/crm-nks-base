@@ -26,26 +26,26 @@ export default class NksBostedAddress extends LightningElement {
 
     get residentialAddresses() {
         if (this._residentialAddresses.length === 0) {
-            return;
+            return [];
         }
 
         this.showCopyButton = true;
         const addressesToReturn = this._residentialAddresses.map((element) => {
-            const type = element.type ? element.type + ':' : '';
+            const type = element.type ? 'Type: ' + element.type : '';
             const fullName = element.fullName ? element.fullName : '';
             const addressLine = [
                 element.address ? element.address : '',
                 element.houseNumber ? ' ' + element.houseNumber : '',
                 element.houseLetter ? ' ' + element.houseLetter : ''
-            ].join('').trim();
-            const postInfo = [
-                element.zipCode ? element.zipCode : '',
-                element.city ? ' ' + element.city : ''
-            ].join('').trim();
-            const region = [
-                element.region ? element.region : '',
-                element.countryCode ? ' ' + element.countryCode : ''
-            ].join('').trim();
+            ]
+                .join('')
+                .trim();
+            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
+                .join('')
+                .trim();
+            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
+                .join('')
+                .trim();
 
             return [type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
         });
@@ -73,6 +73,7 @@ export default class NksBostedAddress extends LightningElement {
         clipboardInput.hidden = false;
         clipboardInput.value = this.residentialAddresses;
         clipboardInput.select();
+        // eslint-disable-next-line @locker/locker/distorted-document-exec-command
         document.execCommand('copy');
         clipboardInput.hidden = true;
         clipboardInput.disabled = true;

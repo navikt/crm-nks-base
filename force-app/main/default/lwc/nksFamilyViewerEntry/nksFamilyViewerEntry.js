@@ -13,6 +13,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         try {
+            // eslint-disable-next-line @locker/locker/distorted-document-exec-command
             successful = document.execCommand('copy');
             msg = successful ? 'successful' : 'unsuccessful';
             console.log('Copying text command was ' + msg);
@@ -282,33 +283,35 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getResponsibilityChildText() {
-        var res = '';
-
         if (this.relation.responsible === '' || this.relation.responsible === null) {
-            return '';
+            return 'Informasjon om foreldreansvar finnes ikke.';
         }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            res += 'Bruker har foreldreansvar alene.';
-        } else if (this.relation.responsible === 'felles') {
-            res += 'Bruker har felles foreldreansvar.';
-        } else {
-            res += 'Bruker har ikke foreldreansvar.';
+            return 'Bruker har foreldreansvar alene.';
         }
-        return res;
+        if (this.relation.responsible === 'felles') {
+            return 'Bruker har felles foreldreansvar.';
+        }
+        return 'Bruker har ikke foreldreansvar.';
     }
 
     getResponsibilityParentText() {
+        if (this.relation.responsible === '' || this.relation.responsible === null) {
+            return 'Informasjon om foreldreansvar finnes ikke.';
+        }
         if (
             this.relation.responsible === 'far' ||
             this.relation.responsible === 'mor' ||
-            this.relation.responsible === 'medmor' ||
-            this.relation.responsible === 'felles'
+            this.relation.responsible === 'medmor'
         ) {
-            return 'Har foreldreansvar.';
+            return 'Har foreldreansvar alene.';
+        }
+        if (this.relation.responsible === 'felles') {
+            return 'Har felles foreldreansvar.';
         }
         return 'Har ikke foreldreansvar.';
     }

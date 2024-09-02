@@ -1,5 +1,5 @@
 ({
-    invoke: function (component, event, helper) {
+    invoke: function (component) {
         var workspaceAPI = component.find('workspace');
         var recordId = component.get('v.recordId');
         workspaceAPI

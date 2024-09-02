@@ -20,7 +20,7 @@ export default class nksSecurityMeasures extends LightningElement {
 
     handleClick() {
         var x = this.template.querySelector('[data-id="modal"]');
-        if (x.style.display != 'block') {
+        if (x.style.display !== 'block') {
             x.style.display = 'block';
         } else {
             x.style.display = 'none';

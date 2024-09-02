@@ -43,7 +43,7 @@ public with sharing class NKS_KnowledgeController {
         if (Schema.getGlobalDescribe().containsKey(objectName)) {
             Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();
             Map<String, Schema.SObjectField> fieldsMap = describeResult.fields.getMap();
-    
+
             if (fieldsMap.containsKey(fieldName)) {
                 String label = fieldsMap.get(fieldName).getDescribe().getLabel();
                 fieldLabelsCache.put(fieldName, label);
@@ -76,7 +76,10 @@ public with sharing class NKS_KnowledgeController {
      * @param Map<String, String> map to be checked
      * @return Map<String, List<String>> list of links per field
      */
-    private static Map<String, List<String>> findLinksPerField(Map<String, Object> fieldsToValue, Pattern linksPattern) {
+    private static Map<String, List<String>> findLinksPerField(
+        Map<String, Object> fieldsToValue,
+        Pattern linksPattern
+    ) {
         Map<String, List<String>> matches = new Map<String, List<String>>();
         try {
             for (String fieldName : fieldsToValue.keySet()) {
@@ -107,7 +110,7 @@ public with sharing class NKS_KnowledgeController {
     private static List<String> findMatchesInField(Pattern linksPattern, String fieldValue) {
         List<String> matchesPerField = new List<String>();
         Matcher matcher = linksPattern.matcher(normalizeFieldValue(fieldValue));
-    
+
         // Loop through all matches found in the field value
         while (matcher.find()) {
             String groupValue = matcher.group(); // Get the matched value
@@ -142,20 +145,21 @@ public with sharing class NKS_KnowledgeController {
             List<String> linksToCheck = mapToCheck.get(field);
             List<String> deadLinks = new List<String>();
 
-            for (String str : linksToCheck) { // Loop through each link in the list of links to be checked
+            for (String str : linksToCheck) {
+                // Loop through each link in the list of links to be checked
                 for (String link : linksToBeChecked) {
                     if (str.contains(link) && validateMatchedUrl(str, link)) {
                         String endpoint =
                             'callout:knowledge_' +
                             link.replaceAll('[-.]', '_') +
-                            str.substringAfter(link); 
+                            str.substringAfter(link);
                         HttpRequest req = new HttpRequest();
                         req.setEndpoint(endpoint);
                         req.setMethod('GET');
 
                         try {
                             HttpResponse res = new Http().send(req);
-                            
+
                             // Found broken link
                             if (res.getStatusCode() >= 400) {
                                 deadLinks.add(str);
@@ -187,7 +191,7 @@ public with sharing class NKS_KnowledgeController {
     }
 
     public static void setCompiledRegexPattern() {
-        String regex = 'https?://(?:www\\.)?[\\w-]+(?:\\.[a-zA-Z]{2,})+(?:/[\\w@:%._\\+~#?&//=]*)?';
+        String regex = '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)';
         compiledRegexPattern = Pattern.compile(regex);
     }
 
@@ -203,7 +207,7 @@ public with sharing class NKS_KnowledgeController {
      */
     public static Map<String, List<String>> getBrokenLinks(Knowledge__kav article, Pattern linksPattern) {
         List<String> linksToBeChecked = getLinksToBeChecked();
-        Map<String, List<String>> mapToReturn = new Map<String, List<String>>(); 
+        Map<String, List<String>> mapToReturn = new Map<String, List<String>>();
         Map<String, Object> fieldsToValue = article.getPopulatedFieldsAsMap(); // Retrieve all populated fields (which are stored in memory of the article object)
         Map<String, List<String>> matches = findLinksPerField(fieldsToValue, linksPattern);
 

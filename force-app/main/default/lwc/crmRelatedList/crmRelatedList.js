@@ -6,9 +6,6 @@ import { getRecord } from 'lightning/uiRecordApi';
 export default class CrmRelatedList extends LightningElement {
     @api recordId;
     @api objectApiName;
-    relatedRecords;
-
-    //## DESIGN INPUTS ##
     @api listTitle; //Title of the list.
     @api iconName; //Displayed icon.
     @api relatedObjectApiName; //Object name of the records in the list
@@ -18,14 +15,15 @@ export default class CrmRelatedList extends LightningElement {
     @api orderConditions; //Optional ordering conditions (i.e. Id DESC)
     @api headerColor; // Color for the component header
     @api dynamicUpdate = false; // Flag to set if component should automatically refresh if the an update is triggered on the parent record page
-    @api wireFields;
     @api maxHeight = 20; //Defines the max height in em of the component
     @api clickableRows; //Enables row click to fire navigation event to the clicked record in the table
     @api hideEmptyList; // Hides the list if there are no related records.
     @api objectName; // Used for the hidden header of each item.
     @api dateField; // Used for the hidden header of each item.
-
     @api displayedFields;
+    @api wireFields;
+
+    relatedRecords;
 
     connectedCallback() {
         //Call apex to retrieve related records
@@ -94,7 +92,7 @@ export default class CrmRelatedList extends LightningElement {
     }
 
     get scrollableStyle() {
-        return this.maxHeight != 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
+        return this.maxHeight !== 0 ? 'max-height: ' + this.maxHeight.toString() + 'em' : '';
     }
 
     get usedFields() {
@@ -103,7 +101,7 @@ export default class CrmRelatedList extends LightningElement {
 
     get icon() {
         let nameString = null;
-        if (this.iconName && this.iconName != '') nameString = this.iconName;
+        if (this.iconName && this.iconName !== '') nameString = this.iconName;
 
         return nameString;
     }

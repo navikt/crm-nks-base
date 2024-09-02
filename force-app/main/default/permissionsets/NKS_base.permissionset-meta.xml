@@ -317,6 +317,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_ButtonContainerController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -593,14 +597,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TAG_CustomOpportunityRoutingHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TAG_CustomOpportunityRoutingHandlerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>TAG_FagsystemerArbeidsgiverController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -694,6 +690,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>nksUtilityBackgroundController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
@@ -943,6 +943,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentDone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentNotification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>UserNotification__c.INT_CaseTheme__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1115,6 +1125,10 @@
     </tabSettings>
     <tabSettings>
         <tab>standard-Account</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-LightningQuickText</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

@@ -30,12 +30,51 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>brukerIdentField</name>
+                    <value>INT_OrganizationNumber__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>brukerIdentType</name>
+                    <value>ORGNR</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logDomain</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logException</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logRequests</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>numberOfjournals</name>
+                    <value>150</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>themeGroupField</name>
+                </componentInstanceProperties>
+                <componentName>safDocumentByUser</componentName>
+                <identifier>c_safDocumentByUser</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3317f026-e02e-49dd-a720-18da91adde7f</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>decorate</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
+                    <value>&lt;p&gt;Se nylig kontakt som NAV har utført hos virksomheten. Det
+                        inkluderer:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Møter
+                        og oppgaver knyttet til virksomheten.&lt;/li&gt;&lt;li&gt;Møter og oppgaver
+                        knyttet til varsler, muligheter, avtaler, osv.&lt;/li&gt;&lt;/ul&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
@@ -168,43 +207,81 @@
                 <identifier>force_relatedListSingleContainer4</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>brukerIdentField</name>
-                    <value>INT_OrganizationNumber__c</value>
+                    <name>amountOfMonths</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>brukerIdentType</name>
-                    <value>ORGNR</value>
+                    <name>amountOfMonthsToLoad</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>logDomain</name>
+                    <name>amountOfRecords</name>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>logException</name>
+                    <name>amountOfRecordsToLoad</name>
+                    <value>3</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>buttonIsHidden</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>logRequests</name>
+                    <name>configId</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>customEmptySubtitle</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>filterIsActive</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerIcon</name>
+                    <value>custom:custom18</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerTitleEnglish</name>
+                    <value>Timeline</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>headerTitleNorwegian</name>
+                    <value>Tidslinje</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>hideMyActivitiesFilter</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>numberOfjournals</name>
-                    <value>150</value>
+                    <name>includeAmountInTitle</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>themeGroupField</name>
+                    <name>picklistFilter1Label</name>
+                    <value>{!$Label.Topic}</value>
                 </componentInstanceProperties>
-                <componentName>safDocumentByUser</componentName>
-                <identifier>c_safDocumentByUser</identifier>
+                <componentInstanceProperties>
+                    <name>picklistFilter2Label</name>
+                    <value>{!$Label.Service}</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>timelineParentField</name>
+                </componentInstanceProperties>
+                <componentName>timeline</componentName>
+                <identifier>c_timeline</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Client.formFactor}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Large</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <name>Facet-3317f026-e02e-49dd-a720-18da91adde7f</name>
+        <name>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -523,7 +600,15 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size: 13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra 11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;span style=&quot;font-size: 10pt; font-family:
+                        &amp;quot;Segoe UI&amp;quot;, sans-serif; color: rgb(116, 116,
+                        116);&quot;&gt;Funksjonen er under utprøving og det kan være stillinger
+                        knyttet til arbeidsgiver som ikke fremkommer her. Dette gjelder både aktive
+                        og inaktive. Om det står kilde &quot;DIR&quot;, betyr det at dette har vært
+                        en dirketemeldt stilling. &lt;/span&gt;&lt;span style=&quot;font-size:
+                        13.3333px; font-family: &amp;quot;Segoe UI&amp;quot;, sans-serif; color:
+                        rgb(116, 116, 116);&quot;&gt;Stillingshistorikk er tilgjengelig fra
+                        11.11.2022. &lt;/span&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText3</identifier>
@@ -674,7 +759,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;a href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;a
+                        href=&quot;https://navno.sharepoint.com/sites/intranett-produktomrader-og-utvikling/SitePages/FIA-brukerveiledning.aspx#tilgjengelige-statuser-for-virksomheten&quot;
+                        rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Les mer om
+                        statuser fra Fia - klikk her&lt;/a&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText4</identifier>
@@ -687,6 +775,14 @@
                     <valueList>
                         <valueListItems>
                             <value>New</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>CRM_AbsenceCategory__c|EQUALS|[&quot;VIRKSOMHET&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -713,10 +809,10 @@
                             <value>CRM_YearQuarter__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CRM_VirksomhetTapteDagsverk__c</value>
+                            <value>CRM_LostDaysWork__c</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CRM_VirksomhetProsent__c</value>
+                            <value>CRM_Percent__c</value>
                         </valueListItems>
                         <valueListItems>
                             <value>TAG_Account_Industry__c</value>
@@ -733,11 +829,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sortFieldAlias</name>
-                    <value>__DEFAULT__</value>
+                    <value>CRM_YearQuarter__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sortFieldOrder</name>
-                    <value>Default</value>
+                    <value>Descending</value>
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList7</identifier>
@@ -751,20 +847,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Aktivitet</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>customTab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
                     <value>Facet-3317f026-e02e-49dd-a720-18da91adde7f</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -773,6 +855,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-0ed7db69-f9c9-45df-ab57-9d5ded462959</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Aktivitet</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

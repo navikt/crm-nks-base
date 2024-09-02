@@ -11,15 +11,18 @@ export default class NksAssignTask extends LightningElement {
     @api dueDate;
     @api additionalComments;
     @api conversationNote;
+
     @track units;
     @track defaultQueueId = this.queueId;
     @track createTask;
     @track themeValue;
+
     @wire(getUnits)
     wiredValues({ data, error }) {
         if (data) {
             this.units = JSON.parse(data);
         } else if (error) {
+            console.log(error);
         }
     }
 
@@ -31,11 +34,11 @@ export default class NksAssignTask extends LightningElement {
 
     handleSubThemeChange(event) {
         this.selectedSubTheme = event.detail;
-        if (this.selectedSubTheme == 'Tiltaksøkonomi') {
+        if (this.selectedSubTheme === 'Tiltaksøkonomi') {
             this.template.querySelector('[data-id="toggle"]').className = 'hide';
-        } else if (this.selectedSubTheme == 'Lønnskompensasjon') {
+        } else if (this.selectedSubTheme === 'Lønnskompensasjon') {
             this.template.querySelector('[data-id="toggle"]').className = 'hide';
-        } else if (this.selectedSubTheme == 'Generell sykefraværsoppfølging') {
+        } else if (this.selectedSubTheme === 'Generell sykefraværsoppfølging') {
             this.template.querySelector('[data-id="toggle"]').className = 'hide';
         } else {
             this.template.querySelector('[data-id="toggle"]').className = 'show';

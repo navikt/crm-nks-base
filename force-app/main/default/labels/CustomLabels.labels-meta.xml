@@ -14,7 +14,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Conversation Note Share With User</shortDescription>
-        <value>Del med bruker</value>
+        <value>Share with user</value>
     </labels>
     <labels>
         <fullName>NKS_Create_Conversation_Note</fullName>
@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Create Conversation Note</shortDescription>
-        <value>Opprett samtalereferat</value>
+        <value>Create conversation note</value>
     </labels>
     <labels>
         <fullName>NKS_No_Cases_for_Selected_Theme_Group</fullName>
@@ -70,7 +70,9 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ConditionLogicHelpText</shortDescription>
-        <value>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true or only the fourth condition is true.</value>
+        <value>Use parentheses, AND, OR, and NOT to customize the logic. For example, if you enter
+            “(1 AND 2 AND 3) OR 4”, the flow evaluates whether the first three conditions are true
+            or only the fourth condition is true.</value>
     </labels>
     <labels>
         <fullName>fbc_Delete</fullName>
@@ -262,7 +264,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TooManyResultsMessage</shortDescription>
-        <value>Your search found more than 200 results.  Keep typing to make it more specific</value>
+        <value>Your search found more than 200 results. Keep typing to make it more specific</value>
     </labels>
     <labels>
         <fullName>fbc_Type</fullName>
@@ -293,6 +295,79 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>No Conversation Notes Found</shortDescription>
-        <value>Ingen Samtalereferater relatert til denne Henvendelse. Opprett en Samtalereferat først.</value>
+        <value>Ingen Samtalereferater relatert til denne Henvendelse. Opprett en Samtalereferat
+            først.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Communication_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Communication tab label</shortDescription>
+        <value>Communication</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Documents_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Documents tab label</shortDescription>
+        <value>Documents</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Tasks_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tasks tab label</shortDescription>
+        <value>Tasks</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Cases_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cases tab label</shortDescription>
+        <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Payout_Tab_Label</fullName>
+        <categories>NKS, Person, Tab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Payout tab label</shortDescription>
+        <value>Payout</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Change_User</fullName>
+        <categories>NKS, Person, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Change User</shortDescription>
+        <value>Change user</value>
+    </labels>
+    <labels>
+        <fullName>NKS_New_Conversation_Note</fullName>
+        <categories>NKS, Conversation Note, Buttons</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Conversation Note</shortDescription>
+        <value>New conversation note</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Conversation_Note_Disclaimer_Text</fullName>
+        <categories>NKS, Conversation Note</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Conversation Note Disclaimer Text</shortDescription>
+        <value>Conversation note is shared with user when it is created.</value>
+    </labels>
+    <labels>
+        <fullName>NKS_Case_Completed</fullName>
+        <categories>NKS, Conversation Note, Case</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Completed</shortDescription>
+        <value>Case has been completed.</value>
     </labels>
 </CustomLabels>

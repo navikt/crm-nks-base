@@ -125,20 +125,30 @@ public with sharing class NKS_FamilyViewController {
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelations(Id recordId, String objectApiName) {
         Id personId;
-        if (objectApiName == 'Case')
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
-        else if (objectApiName == 'Account')
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+        if (objectApiName == 'Case') {
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
+        } else if (objectApiName == 'Account') {
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
+        } else if (objectApiName == 'LiveChatTranscript') {
+            personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
+                ?.Account
+                ?.CRM_Person__c;
+        }
 
         List<Relation> relations = new List<Relation>();
+        Boolean access = false;
+        String personIdent = null;
 
-        Id userId = UserInfo.getUserId();
-        Boolean access = [
-            SELECT RecordId, HasReadAccess
-            FROM UserRecordAccess
-            WHERE UserId = :userId AND RecordId = :personId
-        ]
-        .HasReadAccess;
+        if (personId != null) {
+            access = [
+                SELECT RecordId, HasReadAccess
+                FROM UserRecordAccess
+                WHERE UserId = :UserInfo.getUserId() AND RecordId = :personId
+            ]
+            .HasReadAccess;
+            personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+        }
+
         if (!access) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -146,7 +156,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
-        String personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+
         if (personIdent == null) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -154,6 +164,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         PDL_API_Response relationsData;
         try {
             relationsData = queryRelationsFromPDL(personIdent);
@@ -174,6 +185,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         Relation person = new Relation();
         person.employee = isNavEmployee(relationsData);
         person.confidentialStatus = getConfidentialStatus(relationsData);
@@ -696,7 +708,7 @@ public with sharing class NKS_FamilyViewController {
     // part of Address could be missing
     @TestVisible
     private static Boolean compareAddressParts(String parent, String child) {
-        if (parent == child  || (String.isBlank(parent) && String.isBlank(child)) )
+        if (parent == child || (String.isBlank(parent) && String.isBlank(child)))
             return true;
         return false;
     }
@@ -777,13 +789,14 @@ public with sharing class NKS_FamilyViewController {
         if (d == null) {
             return null;
         }
-        if ((d.year() - 1) > 0) {
-            return String.valueOf(d.year() - 1) + ' år';
+        
+        if (d.year() - 1 < 2) {
+            if (d.month() - 1 > 0 || (d.year() - 1) > 0) {
+                return String.valueOf((d.year() - 1) * 12 + d.month() - 1) + ' mnd';
+            }
+            return String.valueOf(d.day() - 1) + ' d';
         }
-        if ((d.month() - 1) > 0) {
-            return String.valueOf(d.month() - 1) + ' mnd';
-        }
-        return String.valueOf(d.day() - 1) + ' d';
+        return String.valueOf(d.year() - 1) + ' år';
     }
 
     @TestVisible

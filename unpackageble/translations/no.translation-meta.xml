@@ -90,19 +90,11 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows />
-        <fullName>Contract</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
         <fullName>NAVTask_Owner_Change</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows />
         <fullName>POST_JOURNAL_TEMPLATE</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Opportunity</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -119,38 +111,6 @@
         <flows />
         <fullName>TAG_Update_NavUnit_in_NavTask</fullName>
     </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Task</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows />
-        <fullName>Temporary_Layoff_Update</fullName>
-    </flowDefinitions>
-    <prompts>
-        <name>Lenketilproffnoerforbedret</name>
-        <promptVersions>
-            <name>Lenke til proff.no er forbedret</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>OmProfflink</name>
-        <promptVersions>
-            <name>Om ny Proff link</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>VelkomstmeldingtilNAVKontorbrukereTAGmedpersmissionsetarbeidsgiver</name>
-        <promptVersions>
-            <name>Velkomst melding til NAV Kontor brukere (TAG) med persmission set arbeidsgiver</name>
-        </promptVersions>
-    </prompts>
-    <prompts>
-        <name>VelkomstmeldingtilNAVKontorbrukereTAG</name>
-        <promptVersions>
-            <name>Velkomst melding til NAV Kontor brukere (TAG)</name>
-        </promptVersions>
-    </prompts>
     <quickActions>
         <label>
             <!-- Log a Call -->

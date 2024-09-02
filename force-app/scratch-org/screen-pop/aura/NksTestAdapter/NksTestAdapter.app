@@ -1,3 +1,7 @@
-<aura:application extends="force:slds">
-    <c:NksCallSimulater></c:NksCallSimulater>
+<aura:application
+    access="GLOBAL"
+    extends="ltng:outApp"
+    description="The Lightning Out app which hosts the demo adapter."
+>
+    <aura:dependency resource="c:NksCallSimulater" />
 </aura:application>

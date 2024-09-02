@@ -1,4 +1,3 @@
-import { getFieldDisplayValue } from 'lightning/uiRecordApi';
 import { LightningElement, api } from 'lwc';
 
 export default class CrmRelatedListItem extends LightningElement {

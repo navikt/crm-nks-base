@@ -15,10 +15,11 @@ const filterFunc = (listToFilterOut, listToFilterIn) => (element) => {
 export default class TagFagsystemerArbeidsgiver extends LightningElement {
     @api recordId;
     @api title;
+    @api filterList;
     @api accountId;
+
     @track showLinks;
     @track inFagsone = true;
-    @api filterList;
 
     possibleLinks = [
         { name: 'AAregister', field: 'AAregisterURL__c' },
@@ -27,16 +28,6 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
         { name: 'Tiltaksgjennomforing', field: 'TiltaksgjennomforingURL__c' },
         { name: 'TiltakRefusjon', field: 'TiltakRefusjonURL__c' }
     ];
-    
-    /*
-    connectedCallback() {
-        checkFagsoneIpRange().then((res) => {
-            this.inFagsone = res.isInFagsone;
-            if (this.inFagsone === false) {
-                console.log('Ip is: ' + res.ip);
-            }
-        });
-    }*/
 
     renderedCallback() {
         const listOfFilter =
@@ -68,12 +59,12 @@ export default class TagFagsystemerArbeidsgiver extends LightningElement {
         }
     }
 
-   get showContent() {
+    get showContent() {
         return this.accountId != null;
     }
 
     get showRefreshButton() {
-        return !(!this.recordId);
+        return !!this.recordId;
     }
 
     handleLoaded() {

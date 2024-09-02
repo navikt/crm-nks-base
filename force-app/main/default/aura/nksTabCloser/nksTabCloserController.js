@@ -1,12 +1,12 @@
 ({
-    invoke: function (component, event, helper) {
+    invoke: function (component) {
         let workspaceAPI = component.find('workspace');
         workspaceAPI
             .getFocusedTabInfo()
             .then((tabInfo) => {
                 workspaceAPI
                     .closeTab({ tabId: tabInfo.tabId })
-                    .then((response) => {
+                    .then(() => {
                         //Success
                     })
                     .catch((error) => {

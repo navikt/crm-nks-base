@@ -4,7 +4,7 @@
         <name>Get_Call_Queue_Info</name>
         <label>Get Call Queue Info</label>
         <locationX>578</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <actionName>NKS_CallFlowController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,6 +17,7 @@
                 <elementReference>SessionId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NKS_CallFlowController</nameSegment>
         <outputParameters>
             <assignToReference>CALLER_CONTEXT</assignToReference>
             <name>callerContext</name>
@@ -29,13 +30,14 @@
             <assignToReference>THEME_GROUP_CODE</assignToReference>
             <name>themeGroup</name>
         </outputParameters>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the organization account</description>
         <name>Recirect_to_Account_0</name>
         <label>Recirect to Account</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -45,14 +47,16 @@
                 <elementReference>RELATED_ACCOUNT_ID</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -62,14 +66,16 @@
                 <elementReference>Call_Case.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
         <locationX>842</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -79,14 +85,16 @@
                 <elementReference>Call_Case.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Case_Assignment</name>
         <label>Case Assignment</label>
         <locationX>50</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -111,6 +119,9 @@
         <assignmentItems>
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Call_Case.NKS_Theme_Group__c</assignToReference>
@@ -134,7 +145,7 @@
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
         <locationX>842</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -159,6 +170,9 @@
         <assignmentItems>
             <assignToReference>Call_Case.Subject</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Call_Case.ContactPhone</assignToReference>
@@ -189,7 +203,7 @@
         <name>Check_Call_Queue_0</name>
         <label>Check Call Queue</label>
         <locationX>1106</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Personbruker_0</name>
@@ -205,7 +219,7 @@
                 <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -234,7 +248,7 @@
                 <leftValueReference>CONTEXT_OVERRIDE</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -251,7 +265,7 @@
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
         <locationX>578</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <defaultConnector>
             <targetReference>Check_Call_Queue_0</targetReference>
         </defaultConnector>
@@ -292,7 +306,7 @@
         <name>Check_Theme_Group</name>
         <label>Check Theme Group</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Identifier</targetReference>
         </defaultConnector>
@@ -304,7 +318,7 @@
                 <leftValueReference>THEME_GROUP_CODE</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -318,7 +332,7 @@
         <name>Verify_Account</name>
         <label>Verify Account</label>
         <locationX>446</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Found_Account</name>
@@ -327,7 +341,7 @@
                 <leftValueReference>RELATED_ACCOUNT_ID</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -343,6 +357,7 @@
             <label>Found Account</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <description>Formula to determine the type of input from the IVR. Either, PHONE_NUMBER, PERSON_IDENT or ORG_IDENT.</description>
         <name>INPUT_TYPE</name>
@@ -351,6 +366,23 @@
 11, &apos;PERSON_IDENT&apos;,
 9, &apos;ORG_IDENT&apos;,
 &apos;PHONE_NUMBER&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Subject</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    OR(
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt EN&quot;,
+        {!PUZZEL_QUEUE_NAME} = &quot;Internasjonalt NAV-ansatt&quot;
+    ),
+    &quot;Telefon Puzzel - Internasjonal, Internasjonalt EN, Internasjonalt NAV-ansatt&quot;,
+IF(
+        {!PUZZEL_QUEUE_NAME} = &quot;Annet&quot;,
+        &quot;Telefon Puzzel - Felles&quot;,
+        &quot;Telefon Puzzel - &quot; &amp; {!THEME_GROUP_NAME}
+    )
 )</expression>
     </formulas>
     <interviewLabel>Inbound Call {!$Flow.CurrentDateTime}</interviewLabel>
@@ -379,7 +411,7 @@
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case</targetReference>
         </connector>
@@ -390,7 +422,7 @@
         <name>Create_Case_0</name>
         <label>Create Case</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
         </connector>
@@ -401,7 +433,7 @@
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
         <locationX>446</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Verify_Account</targetReference>
@@ -424,7 +456,7 @@
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
         <locationX>50</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Assignment</targetReference>
@@ -455,7 +487,7 @@
         <name>Get_Theme_Group</name>
         <label>Get Theme Group</label>
         <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Identifier</targetReference>
@@ -479,6 +511,10 @@
         <outputAssignments>
             <assignToReference>THEME_GROUP_ID</assignToReference>
             <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>THEME_GROUP_NAME</assignToReference>
+            <field>Name</field>
         </outputAssignments>
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
@@ -524,7 +560,7 @@ PERSON, ARBEIDSGIVER, OTHER</description>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </variables>
     <variables>
@@ -566,11 +602,18 @@ PERSON, ARBEIDSGIVER, OTHER</description>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue/>
+            <stringValue></stringValue>
         </value>
     </variables>
     <variables>
         <name>THEME_GROUP_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>THEME_GROUP_NAME</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

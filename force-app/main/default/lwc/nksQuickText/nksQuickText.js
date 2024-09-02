@@ -23,7 +23,7 @@ export default class nksQuickText extends LightningElement {
     @api comments;
     @api required = false;
 
-    recentlyInserted = "";
+    recentlyInserted = '';
 
     get textArea() {
         return this.template.querySelector('.conversationNoteTextArea');
@@ -114,6 +114,7 @@ export default class nksQuickText extends LightningElement {
 
     async focusFirstChild() {
         const children = [...this.querySelectorAll('*')];
+        /* eslint-disable no-await-in-loop */
         for (let child of children) {
             let hasBeenFocused = false;
             if (this._getSlotName(child) === 'body') {
@@ -140,9 +141,8 @@ export default class nksQuickText extends LightningElement {
             const promiseListener = () => resolve(true);
             try {
                 el.addEventListener('focus', promiseListener);
-                el.focus && el.focus();
+                el.focus();
                 el.removeEventListener('focus', promiseListener);
-
                 setTimeout(() => resolve(false), 0);
             } catch (ex) {
                 return resolve(false);
@@ -274,6 +274,7 @@ export default class nksQuickText extends LightningElement {
                 return item;
             }
         }
+        return null;
     }
 
     /**
@@ -299,7 +300,7 @@ export default class nksQuickText extends LightningElement {
 
             let obj = this._getQmappedItem(lastWord);
 
-            if(obj !== undefined) {
+            if (obj !== undefined) {
                 const quickText = obj.content.message;
                 const isCaseSensitive = obj.content.isCaseSensitive;
                 const startindex = carretPositionEnd - lastWord.length - 1;
@@ -311,10 +312,20 @@ export default class nksQuickText extends LightningElement {
                     if (lastItem.charAt(0) === lastItem.charAt(0).toLowerCase()) {
                         words[0] = words[0].toLowerCase();
                         const lowerCaseQuickText = words.join(' ');
-                        this._replaceWithQuickText(editor, lowerCaseQuickText + lastChar, startindex, carretPositionEnd);
+                        this._replaceWithQuickText(
+                            editor,
+                            lowerCaseQuickText + lastChar,
+                            startindex,
+                            carretPositionEnd
+                        );
                     } else if (lastItem.charAt(0) === lastItem.charAt(0).toUpperCase()) {
                         const upperCaseQuickText = quickText.charAt(0).toUpperCase() + quickText.slice(1);
-                        this._replaceWithQuickText(editor, upperCaseQuickText + lastChar, startindex, carretPositionEnd);
+                        this._replaceWithQuickText(
+                            editor,
+                            upperCaseQuickText + lastChar,
+                            startindex,
+                            carretPositionEnd
+                        );
                     }
                 } else {
                     this._replaceWithQuickText(editor, quickText + lastChar, startindex, carretPositionEnd);
@@ -340,8 +351,7 @@ export default class nksQuickText extends LightningElement {
             return this.conversationNote && this.conversationNote.length > 0
                 ? { isValid: true }
                 : { isValid: false, errorMessage: this.labels.BLANK_ERROR }; //CUSTOM LABEL HERE
-        } else {
-            return { isValid: true };
         }
+        return { isValid: true };
     }
 }
