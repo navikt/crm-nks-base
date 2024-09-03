@@ -70,7 +70,8 @@
     <formulas>
         <name>Page_Reference</name>
         <dataType>String</dataType>
-        <expression>&apos;{&quot;type&quot;: &quot;standard__namedPage&quot;,&quot;attributes&quot;: {&quot;pageName&quot;: &quot;home&quot;,&quot;actionName&quot;: &quot;view&quot;}}&apos;</expression>
+        <expression>&apos;{&quot;type&quot;: &quot;standard__namedPage&quot;,&quot;attributes&quot;:
+            {&quot;pageName&quot;: &quot;home&quot;,&quot;actionName&quot;: &quot;view&quot;}}&apos;</expression>
     </formulas>
     <interviewLabel>Announcement Send Notification On Operational Updates {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Operational Updates</label>
@@ -107,7 +108,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Notify_Operational_Updates</stringValue>
+                <stringValue>NKS_Notify_Operational_Updates</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

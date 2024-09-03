@@ -4,7 +4,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>440</locationX>
-        <locationY>647</locationY>
+        <locationY>539</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <dataTypeMappings>
@@ -55,7 +55,7 @@
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationY>431</locationY>
         <actionName>NKS_CustomNotificationController</actionName>
         <actionType>apex</actionType>
         <faultConnector>
@@ -71,7 +71,7 @@
         <inputParameters>
             <name>newsSkills</name>
             <value>
-                <elementReference>News_Skills</elementReference>
+                <elementReference>$Record.Skills__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -102,22 +102,6 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
-    <assignments>
-        <name>Add_News_Skills_To_List</name>
-        <label>Add News Skills To List</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
-        <assignmentItems>
-            <assignToReference>News_Skills</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>$Record.Skills__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Custom_Notification</targetReference>
-        </connector>
-    </assignments>
     <environments>Default</environments>
     <interviewLabel>Announcement Send Notification To Supervisors On Publishing News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification To Supervisors On Publishing News</label>
@@ -144,7 +128,7 @@
         <name>Get_Custom_Notification</name>
         <label>Get Custom Notification</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Notification</targetReference>
@@ -165,7 +149,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Add_News_Skills_To_List</targetReference>
+            <targetReference>Get_Custom_Notification</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -195,11 +179,4 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>News_Skills</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 </Flow>
