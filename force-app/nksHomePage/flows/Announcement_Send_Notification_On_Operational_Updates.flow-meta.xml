@@ -70,8 +70,8 @@
     <formulas>
         <name>Page_Reference</name>
         <dataType>String</dataType>
-        <expression>&apos;{&quot;type&quot;: &quot;standard__namedPage&quot;,&quot;attributes&quot;:
-            {&quot;pageName&quot;: &quot;home&quot;,&quot;actionName&quot;: &quot;view&quot;}}&apos;</expression>
+        <expression>
+            &apos;{&quot;type&quot;:&quot;standard__namedPage&quot;,&quot;attributes&quot;:{&quot;pageName&quot;:&quot;home&quot;,&quot;actionName&quot;:&quot;view&quot;}}&apos;</expression>
     </formulas>
     <interviewLabel>Announcement Send Notification On Operational Updates {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Operational Updates</label>
@@ -140,7 +140,7 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>Message</name>
         <dataType>String</dataType>
