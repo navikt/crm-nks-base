@@ -1203,6 +1203,10 @@
                 <assignToReference>journalConversation</assignToReference>
                 <name>journalConversation</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>navTasks</assignToReference>
+                <name>navTasks</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1481,6 +1485,14 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>navTasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
         <name>PERSON_ID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1554,13 +1566,5 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Task_to_Create</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>NavTask__c</objectType>
     </variables>
 </Flow>
