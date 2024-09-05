@@ -1,34 +1,7 @@
 @isTest
 public with sharing class NKS_CustomNotificationControllerTest {
 
-    @TestSetup
-    static void makeData() {
-        Group testGroup = new Group();
-        testGroup.Name = 'testGroup';
-        testGroup.DeveloperName = 'Test_Group_Main';
-        insert testGroup;
-
-        Group subgroup = new Group();
-        subgroup.Name = 'testSubgroup';
-        subgroup.DeveloperName = 'Test_Subgroup';
-        insert subgroup;
-
-        User testUser = new User(Id = UserInfo.getUserId());
-        testUser.IsActive = true;
-
-        List<GroupMember> testMembers = new List<groupMember>();
-
-        GroupMember gm1 = new GroupMember();
-        gm1.GroupId = testGroup.Id;
-        gm1.UserOrGroupId = testUser.Id;
-        insert gm1;
-
-        GroupMember gm2 = new GroupMember();
-        gm2.GroupId = testGroup.Id;
-        gm2.UserOrGroupId = subgroup.Id;
-        insert gm2;
-    }
-
+    /*
     @isTest
     static void testGetUserIdsFromGroups() {
         Set<Id> ids = new Set<Id>();
@@ -44,13 +17,20 @@ public with sharing class NKS_CustomNotificationControllerTest {
         Assert.areEqual(0, res.size());
         Assert.areEqual(2, members.size());
     }
+        */
 
     @isTest
     static void testSendNotification() {
+        List<Id> userIds = new List<Id>();
+        List<User> users = [SELECT Id FROM User];
+        for (User user : users ) {
+            userIds.add(user.Id);
+        }
+
         List<NKS_CustomNotificationController.Request> requests = new List<NKS_CustomNotificationController.Request>();
 
         NKS_CustomNotificationController.Request req = new NKS_CustomNotificationController.Request();
-        req.groupDeveloperName = 'Test_Group_Main';
+        req.userIds = userIds;
         req.notificationTypeId = [SELECT Id FROM CustomNotificationType WHERE DeveloperName = 'NKS_Announcement_Custom_Notification' LIMIT 1].Id;
         req.notificationTitle = 'Test Notification';
         req.notificationBody = 'Test Body';

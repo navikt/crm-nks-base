@@ -28,7 +28,7 @@ public with sharing class NKS_CustomNotificationBatchTest {
     @isTest
     static void testBatchExecution() {
         List<User> testUsers = [SELECT Id FROM User WHERE Email LIKE 'testuser%'];
-        Set<Id> userIds = new Set<Id>();
+        List<Id> userIds = new List<Id>();
         for (User u : testUsers) {
             userIds.add(u.Id);
         }
