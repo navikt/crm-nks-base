@@ -1,73 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Log_Error</name>
-        <label>Log Error</label>
-        <locationX>440</locationX>
-        <locationY>539</locationY>
-        <actionName>LoggerUtility</actionName>
+        <name>Get_User_IDs</name>
+        <label>Get User IDs</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <actionName>NKS_GetUserIDsController</actionName>
         <actionType>apex</actionType>
-        <dataTypeMappings>
-            <typeName>T__refRecord</typeName>
-            <typeValue>NKS_Announcement__c</typeValue>
-        </dataTypeMappings>
+        <connector>
+            <targetReference>Get_Users_To_Notify</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>category</name>
+            <name>inputGroupIds</name>
             <value>
-                <stringValue>NKS Announcements</stringValue>
+                <elementReference>Get_Group.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>domain</name>
-            <value>
-                <stringValue>NKS</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>logLevel</name>
-            <value>
-                <stringValue>ERROR</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>logMessage</name>
-            <value>
-                <stringValue>Problem sending notification on publishing news</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>refRecord</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>source</name>
-            <value>
-                <stringValue>Announcement_Send_Notification_To_Supervisors_On_Publishing_News</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>LoggerUtility</nameSegment>
+        <nameSegment>NKS_GetUserIDsController</nameSegment>
+        <outputParameters>
+            <assignToReference>UserIDs</assignToReference>
+            <name>userIds</name>
+        </outputParameters>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <name>Send_Notification</name>
-        <label>Send Notification</label>
+        <name>Get_Users_To_Notify</name>
+        <label>Get Users To Notify</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
-        <actionName>NKS_CustomNotificationController</actionName>
+        <locationY>539</locationY>
+        <actionName>NKS_GetUserSkillsController</actionName>
         <actionType>apex</actionType>
-        <faultConnector>
-            <targetReference>Log_Error</targetReference>
-        </faultConnector>
+        <connector>
+            <targetReference>Get_Custom_Notification</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>groupDeveloperName</name>
-            <value>
-                <stringValue>group_41001</stringValue>
-            </value>
-        </inputParameters>
         <inputParameters>
             <name>newsSkills</name>
             <value>
@@ -75,21 +42,48 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>notificationBody</name>
+            <name>userIds</name>
             <value>
-                <elementReference>$Record.Name</elementReference>
+                <elementReference>UserIDs</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NKS_GetUserSkillsController</nameSegment>
+        <outputParameters>
+            <assignToReference>UserIDs_To_Notify</assignToReference>
+            <name>userIds</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Send_Notification</name>
+        <label>Send Notification</label>
+        <locationX>176</locationX>
+        <locationY>755</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>Get_Custom_Notification.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>notificationTitle</name>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>UserIDs_To_Notify</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
             <value>
                 <stringValue>En nyhetsartikkel ble publisert</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>notificationTypeId</name>
+            <name>body</name>
             <value>
-                <elementReference>Get_Custom_Notification.Id</elementReference>
+                <elementReference>$Record.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -98,7 +92,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>NKS_CustomNotificationController</nameSegment>
+        <nameSegment>customNotificationAction</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
@@ -128,7 +122,7 @@
         <name>Get_Custom_Notification</name>
         <label>Get Custom Notification</label>
         <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Notification</targetReference>
@@ -145,11 +139,32 @@
         <object>CustomNotificationType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Group</name>
+        <label>Get Group</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_User_IDs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>group_41001</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Custom_Notification</targetReference>
+            <targetReference>Get_Group</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -179,4 +194,18 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>UserIDs</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UserIDs_To_Notify</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

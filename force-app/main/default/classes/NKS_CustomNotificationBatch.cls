@@ -1,12 +1,12 @@
 public with sharing class NKS_CustomNotificationBatch implements Database.Batchable<SObject>, Database.Stateful {
-    private Set<Id> userIds;
+    private List<Id> userIds;
     private String notificationTypeId;
     private String notificationTitle;
     private String notificationBody;
     private Id targetId;
     private String pageRef;
 
-    public NKS_CustomNotificationBatch(Set<Id> userIds, String notificationTypeId, String notificationTitle, String notificationBody, Id targetId, String pageRef) {
+    public NKS_CustomNotificationBatch(List<Id> userIds, String notificationTypeId, String notificationTitle, String notificationBody, Id targetId, String pageRef) {
         this.userIds = userIds;
         this.notificationTypeId = notificationTypeId;
         this.notificationTitle = notificationTitle;
