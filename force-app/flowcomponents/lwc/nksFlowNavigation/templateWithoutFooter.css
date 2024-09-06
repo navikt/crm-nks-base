@@ -1,7 +1,14 @@
-@media only screen and (max-width: 1920px) {
-    .responsive-button {
-        height: 3rem; /* Set a fixed height for buttons on smaller screens */
-        line-height: 1; /* Reduce space between lines on smaller screens */
-        padding: 4px;
-    }
+.custom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    line-height: 1.2;
+    height: auto;
+    white-space: normal;
+    word-wrap: break-word;
+    --slds-c-button-outline-brand-color-background-hover: #cce1ff;
+    --slds-c-button-outline-brand-color-background-active: #cce1ff;
+    --slds-c-button-outline-brand-color-border-hover: #0056b4;
 }

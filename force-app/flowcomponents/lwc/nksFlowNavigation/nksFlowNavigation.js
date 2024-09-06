@@ -62,7 +62,7 @@ export default class NksFlowNavigation extends LightningElement {
     }
 
     get buttonClass() {
-        return `slds-button slds-button_stretch slds-grid slds-grid_align-center responsive-button ${
+        return `slds-button slds-button_stretch slds-grid slds-grid_align-center custom-button ${
             this.buttonVariant === 'brand' ? 'slds-button_brand' : 'slds-button_outline-brand'
         }`;
     }
