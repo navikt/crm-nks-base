@@ -1,12 +1,11 @@
 public with sharing class NKS_GetUserSkillsController {
-    public static Map<Id, Set<String>> cachedUserSkillsMap = new Map<Id, Set<String>>();
+    private static Map<Id, Set<String>> cachedUserSkillsMap = new Map<Id, Set<String>>();
 
-    @invocableMethod(label='Get User IDs Based on Skill')
+    @InvocableMethod(label='Get User IDs Based on Skill')
     public static List<Result> getUsersToNotify(List<Request> requests) {
         List<Id> usersToNotify = new List<Id>();
 
         for (Request request : requests) {
-
             if (String.isBlank(request.newsSkills)) {
                 return getResultList(request.userIds);
             }
@@ -14,10 +13,10 @@ public with sharing class NKS_GetUserSkillsController {
             Set<Id> userIdsSet = new Set<Id>(request.userIds);
             Map<Id, Set<String>> userSkillsMap = getCachedUserSkills(userIdsSet);
             Set<String> newsSkillsSet = new Set<String>(request.newsSkills.split(';'));
-           
+
             for (Id userId : userIdsSet) {
                 Set<String> userSkills = userSkillsMap.get(userId);
-    
+
                 if (userSkills != null && !userSkills.isEmpty()) {
                     for (String userSkill : userSkills) {
                         if (newsSkillsSet.contains(userSkill)) {
@@ -43,11 +42,31 @@ public with sharing class NKS_GetUserSkillsController {
         }
 
         if (!missingUserIds.isEmpty()) {
-            Database.executeBatch(new NKS_GetUserSkillsBatch(missingUserIds), 10);
+            cachedUserSkillsMap.putAll(fetchUserSkills(missingUserIds));
         }
 
         return cachedUserSkillsMap;
     }
+
+    private static Map<Id, Set<String>> fetchUserSkills(Set<Id> userIds) {
+        Map<Id, Set<String>> userSkillsMap = new Map<Id, Set<String>>();
+
+        try {
+            for (Id userId : userIds) {
+                Set<String> skills = NKS_HomePageController.getUserSkills(userId);
+                Set<String> cleanedSkills = new Set<String>();
+                for (String skill : skills) {
+                    cleanedSkills.add(skill.replaceAll('NKS_Skill_', ''));
+                }
+                userSkillsMap.put(userId, cleanedSkills);
+            }
+        } catch (Exception e) {
+            System.debug('Error fetching user skills: ' + e.getMessage());
+        }
+
+        return userSkillsMap;
+    }
+
 
     public static List<Result> getResultList(List<Id> ids) {
         List<Result> results = new List<Result>();
@@ -55,7 +74,7 @@ public with sharing class NKS_GetUserSkillsController {
         res.userIds = new List<String>(); 
         
         for (Id id : ids) {
-            res.userIds.add((String)id);  
+            res.userIds.add((String) id);  
         }
         
         results.add(res);  
@@ -66,7 +85,7 @@ public with sharing class NKS_GetUserSkillsController {
         @InvocableVariable(required=true)
         public List<Id> userIds;
 
-        @InvocableVariable(required=true)
+        @InvocableVariable
         public String newsSkills;
     }
 
