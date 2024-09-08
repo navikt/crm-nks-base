@@ -39,9 +39,10 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithMatchingSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1'];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2'];
+        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
+        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
         List<User> users = new List<User> {user1, user2};
+
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
@@ -61,9 +62,10 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithNoMatchingSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1'];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2'];
+        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
+        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
         List<User> users = new List<User> {user1, user2};
+
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
@@ -81,9 +83,10 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithBlankNewsSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1'];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2'];
+        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
+        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
         List<User> users = new List<User> {user1, user2};
+
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
@@ -103,9 +106,10 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithBlankUseSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1'];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2'];
+        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
+        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
         List<User> users = new List<User> {user1, user2};
+        
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();

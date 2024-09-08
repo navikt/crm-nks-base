@@ -1,4 +1,5 @@
 public with sharing class NKS_GetUserSkillsController {
+    @TestVisible
     private static Map<Id, Set<String>> cachedUserSkillsMap = new Map<Id, Set<String>>();
 
     @InvocableMethod(label='Get User IDs Based on Skill')
