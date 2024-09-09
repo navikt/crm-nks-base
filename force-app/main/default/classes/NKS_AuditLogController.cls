@@ -13,15 +13,16 @@ public without sharing class NKS_AuditLogController {
             NKS_Audit_Log__c al = new NKS_Audit_Log__c();
             if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
                 al.RecordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
+                al.Knowledge__c = recordId;
             }
             else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
                 al.RecordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
+                al.Announcement__c = recordId;
             }
             else {
                 return;
             }
-            
-            al.Announcement__c = recordId;
+              
             al.User__c = USERID;
             al.Operation__c = 'View';
             
