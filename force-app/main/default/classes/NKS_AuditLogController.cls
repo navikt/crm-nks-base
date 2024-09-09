@@ -10,25 +10,23 @@ public without sharing class NKS_AuditLogController {
     @AuraEnabled
     public static void createAuditLog(Id recordId, String lookupField) {
         try {
+            NKS_Audit_Log__c al = new NKS_Audit_Log__c();
             if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
-                NKS_Audit_Log__c al = new NKS_Audit_Log__c();
                 al.RecordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
-                al.Knowledge__c = recordId;
-                al.User__c = USERID;
-                al.Operation__c = 'View';
-                
-                Database.SaveResult sr = Database.insert(al, false);
-                logErrorMessage (sr);
             }
-
-            if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
-                NKS_Audit_Log__c al = new NKS_Audit_Log__c();
+            else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
                 al.RecordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
-                al.Announcement__c = recordId;
-                al.User__c = USERID;
-                al.Operation__c = 'View';
-                
-                Database.SaveResult sr = Database.insert(al, false);
+            }
+            else {
+                return;
+            }
+            
+            al.Announcement__c = recordId;
+            al.User__c = USERID;
+            al.Operation__c = 'View';
+            
+            Database.SaveResult sr = Database.insert(al, false);
+            if (!sr.isSuccess()) {
                 logErrorMessage (sr);
             }
         } catch (Exception e) {
@@ -70,14 +68,10 @@ public without sharing class NKS_AuditLogController {
     }
 
     private static void logErrorMessage (Database.SaveResult sr) {
-        if (sr.isSuccess()) {
-            System.debug('Successfully inserted Audit Log record');
-         } else {
-            String errorMessage = 'The following error has occurred under creation of Audit Log record:\n';
-            for(Database.Error error : sr.getErrors()) {
-                errorMessage += error.getStatusCode() + ': ' + error.getMessage() + '\n';
-             }
-                logger.error(errorMessage, null, CRM_ApplicationDomain.Domain.NKS);
-            }
+        String errorMessage = 'The following error has occurred under creation of Audit Log record:\n';
+        for(Database.Error error : sr.getErrors()) {
+            errorMessage += error.getStatusCode() + ': ' + error.getMessage() + '\n';
+        }
+        logger.error(errorMessage, null, CRM_ApplicationDomain.Domain.NKS);
     }
 }
