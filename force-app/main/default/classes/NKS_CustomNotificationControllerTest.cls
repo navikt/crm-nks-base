@@ -22,6 +22,5 @@ public with sharing class NKS_CustomNotificationControllerTest {
         Test.startTest();
         NKS_CustomNotificationController.sendNotification(requests);
         Test.stopTest();
-
     }
 }

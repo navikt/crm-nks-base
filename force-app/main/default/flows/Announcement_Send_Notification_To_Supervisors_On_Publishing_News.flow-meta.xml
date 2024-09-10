@@ -32,7 +32,7 @@
         <actionName>NKS_GetUserSkillsController</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Send_Notification_0</targetReference>
+            <targetReference>Send_Notification</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -55,35 +55,29 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <name>Send_Notification_0</name>
+        <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
         <locationY>755</locationY>
-        <actionName>customNotificationAction</actionName>
-        <actionType>customNotificationAction</actionType>
+        <actionName>NKS_CustomNotificationController</actionName>
+        <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>customNotifTypeId</name>
+            <name>notificationBody</name>
             <value>
-                <elementReference>Get_Custom_Notification.Id</elementReference>
+                <elementReference>$Record.Name</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recipientIds</name>
-            <value>
-                <elementReference>UserIDs_To_Notify</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
+            <name>notificationTitle</name>
             <value>
                 <stringValue>En nyhetsartikkel ble publisert</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>body</name>
+            <name>notificationTypeId</name>
             <value>
-                <elementReference>$Record.Name</elementReference>
+                <elementReference>Get_Custom_Notification.Id</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -92,7 +86,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>customNotificationAction</nameSegment>
+        <inputParameters>
+            <name>userIds</name>
+            <value>
+                <elementReference>UserIDs_To_Notify</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NKS_CustomNotificationController</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>

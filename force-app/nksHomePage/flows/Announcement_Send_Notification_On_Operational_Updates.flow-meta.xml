@@ -53,40 +53,40 @@
         <label>Send Notification</label>
         <locationX>176</locationX>
         <locationY>755</locationY>
-        <actionName>customNotificationAction</actionName>
-        <actionType>customNotificationAction</actionType>
+        <actionName>NKS_CustomNotificationController</actionName>
+        <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
-            <name>customNotifTypeId</name>
-            <value>
-                <elementReference>Get_Custom_Notification.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientIds</name>
-            <value>
-                <elementReference>UserIDs</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>NKS Driftsmelding</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>body</name>
+            <name>notificationBody</name>
             <value>
                 <elementReference>Message</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>targetPageRef</name>
+            <name>notificationTitle</name>
+            <value>
+                <stringValue>NKS Driftsmelding</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>notificationTypeId</name>
+            <value>
+                <elementReference>Get_Custom_Notification.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>pageRef</name>
             <value>
                 <elementReference>Page_Reference</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>customNotificationAction</nameSegment>
+        <inputParameters>
+            <name>userIds</name>
+            <value>
+                <elementReference>UserIDs</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NKS_CustomNotificationController</nameSegment>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>

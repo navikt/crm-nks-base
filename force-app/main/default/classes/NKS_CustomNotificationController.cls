@@ -1,21 +1,65 @@
 public with sharing class NKS_CustomNotificationController {
 
-    @invocableMethod(label='Send Custom Notification')
+    @invocableMethod(label='Send Notification')
     public static void sendNotification(List<Request> requests) {
+    
         for (Request request : requests) {
             if (!request.userIds.isEmpty()) {
-                Database.executeBatch(
-                    new NKS_CustomNotificationBatch(
-                        request.userIds, 
-                        request.notificationTypeId, 
-                        request.notificationTitle, 
-                        request.notificationBody, 
-                        request.targetId, 
-                        request.pageRef
-                    ), 
-                    200
-                );
-            }  
+                Set<Id> userIds = new Set<Id>(request.userIds);
+
+                // Convert Set to List for indexing
+                List<Id> userIdList = new List<Id>(userIds);
+
+                // Check if the size exceeds 500
+                if (userIdList.size() > 500) {
+                    List<Set<Id>> res = new List<Set<Id>>();
+                    
+                    // Split List of Ids into smaller lists of 500
+                    for (Integer i = 0; i < (userIdList.size() / 500) + 1; i++) {
+                        Set<Id> tempList = new Set<Id>();
+                        for (Integer j = i * 500; j < (i + 1) * 500 && j < userIdList.size(); j++) {
+                            tempList.add(userIdList[j]);
+                        }
+                        res.add(tempList);
+                    }
+
+                    try {
+                        for (Set<Id> ids : res) {
+                            sendNotificationToUsers(ids, request.notificationTypeId, request.notificationTitle, request.notificationBody, request.targetId, request.pageRef);
+                        }
+                    } catch (Exception ex) {
+                        System.debug('There was a problem sending notifications: ' + ex.getMessage());
+                    }
+                          
+                } else {
+                    Set<Id> ids = new Set<Id>(userIdList);
+                    try {
+                        sendNotificationToUsers(ids, request.notificationTypeId, request.notificationTitle, request.notificationBody, request.targetId, request.pageRef);
+                    } catch (Exception ex) {
+                        System.debug('There was a problem sending notification to users: ' + ex.getMessage());
+                    }
+                }
+            }
+        }
+    }
+    
+    private static void sendNotificationToUsers (Set<Id> userIds, String notificationTypeId, String notificationTitle, String notificationBody, Id targetId, String pageRef) {
+        Set<String> recipientsIds = new Set<String>();
+        for (Id id : userIds) {
+            recipientsIds.add(id.toString());
+        }
+        
+        Messaging.CustomNotification notification = new Messaging.CustomNotification();
+        notification.setNotificationTypeId(notificationTypeId);
+        notification.setTitle(notificationTitle);
+        notification.setBody(notificationBody);
+        notification.setTargetId(targetId);
+        notification.setTargetPageRef(pageRef);
+
+        try {
+            notification.send(recipientsIds);
+        } catch (Exception ex) {
+            System.debug('Problem sending notification: ' + ex.getMessage());
         }
     }
 
