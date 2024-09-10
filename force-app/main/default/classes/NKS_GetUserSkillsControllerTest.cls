@@ -3,13 +3,18 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @TestSetup
     static void setupTestData() {
-        Profile profile = [SELECT Id FROM Profile WHERE Name LIKE 'Standard User' LIMIT 1];
+        Profile profile = [
+            SELECT Id
+            FROM Profile
+            WHERE Name LIKE 'Standard User'
+            LIMIT 1
+        ];
 
         User user1 = new User(
             FirstName = 'Test',
             LastName = 'User1',
             Alias = 'tuser1',
-            Username =  'testuser1' + System.currentTimeMillis() + '@example.com',
+            Username = 'testuser1' + System.currentTimeMillis() + '@example.com',
             Email = 'testuser1@example.com',
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
@@ -18,12 +23,12 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             ProfileId = profile.Id,
             IsActive = true
         );
-        
+
         User user2 = new User(
             FirstName = 'Test',
             LastName = 'User2',
             Alias = 'tuser2',
-            Username =  'testuser2' + System.currentTimeMillis() + '@example.com',
+            Username = 'testuser2' + System.currentTimeMillis() + '@example.com',
             Email = 'testuser2@example.com',
             EmailEncodingKey = 'UTF-8',
             LanguageLocaleKey = 'en_US',
@@ -32,16 +37,25 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             ProfileId = profile.Id,
             IsActive = true
         );
+        
         insert new List<User>{user1, user2};
-
-       
     }
 
     @isTest
     static void testGetUsersToNotify_WithMatchingSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
-        List<User> users = new List<User> {user1, user2};
+        User user1 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User1'
+            LIMIT 1
+        ];
+        User user2 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User2'
+            LIMIT 1
+        ];
+        List<User> users = new List<User>{user1, user2};
 
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
@@ -62,9 +76,19 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithNoMatchingSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
-        List<User> users = new List<User> {user1, user2};
+        User user1 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User1'
+            LIMIT 1
+        ];
+        User user2 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User2'
+            LIMIT 1
+        ];
+        List<User> users = new List<User>{user1, user2};
 
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
@@ -83,16 +107,26 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithBlankNewsSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
-        List<User> users = new List<User> {user1, user2};
+        User user1 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User1'
+            LIMIT 1
+        ];
+        User user2 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User2'
+            LIMIT 1
+        ];
+        List<User> users = new List<User>{user1, user2};
 
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
-        request.newsSkills = '';  
+        request.newsSkills = '';
 
         Test.startTest();
         List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
@@ -106,15 +140,25 @@ public with sharing class NKS_GetUserSkillsControllerTest {
 
     @isTest
     static void testGetUsersToNotify_WithBlankUseSkills() {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
-        List<User> users = new List<User> {user1, user2};
-        
+        User user1 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User1'
+            LIMIT 1
+        ];
+        User user2 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User2'
+            LIMIT 1
+        ];
+        List<User> users = new List<User>{user1, user2};
+
         NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
-        request.newsSkills = 'Sosiale tjenester';  
+        request.newsSkills = 'Sosiale tjenester';
 
         Test.startTest();
         List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
@@ -126,17 +170,27 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         Assert.isFalse(results[0].userIds.contains(users[1].Id), 'User2 should not be in the notification list.');
     }
 
-    @isTest 
-    public static void testInitializeUserSkillsMap () {
-        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
-        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
-        Set<Id> userIds = new Set<Id> {user1.Id, user2.Id};
+    @isTest
+    public static void testInitializeUserSkillsMap() {
+        User user1 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User1'
+            LIMIT 1
+        ];
+        User user2 = [
+            SELECT Id
+            FROM User
+            WHERE LastName = 'User2'
+            LIMIT 1
+        ];
+        Set<Id> userIds = new Set<Id>{user1.Id, user2.Id};
 
         Test.startTest();
-        NKS_GetUserSkillsController.initializeUserSkillsMap (userIds);
+        NKS_GetUserSkillsController.initializeUserSkillsMap(userIds);
         Test.stopTest();
 
-        Assert.areEqual(2,  NKS_GetUserSkillsController.cachedUserSkillsMap.size(), 'The user skills map should have two users.');
+        Assert.AreEqual(2, NKS_GetUserSkillsController.cachedUserSkillsMap.size(), 'The user skills map should have two users.');
         Assert.isTrue(NKS_GetUserSkillsController.cachedUserSkillsMap.keySet().containsAll(userIds), 'The user skills map should contain User1 and User2.');
     }
 }

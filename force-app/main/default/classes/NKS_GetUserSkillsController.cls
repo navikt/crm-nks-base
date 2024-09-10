@@ -3,7 +3,7 @@ public with sharing class NKS_GetUserSkillsController {
     @TestVisible
     private static Map<Id, Set<String>> cachedUserSkillsMap = new Map<Id, Set<String>>();
 
-    @InvocableMethod(label='Get User IDs Filtered By Skill')
+    @InvocableMethod(label = 'Get User IDs Filtered By Skill')
     public static List<Result> getUsersToNotify(List<Request> requests) {
         Set<Id> usersToNotify = new Set<Id>();
 
@@ -26,7 +26,7 @@ public with sharing class NKS_GetUserSkillsController {
         if (cachedUserSkillsMap.isEmpty()) {
             initializeUserSkillsMap(userIds);
         }
-        
+
         // Filter the cached map to get the relevant user IDs
         Set<Id> exactOrNoSkillUserIds = new Set<Id>();
         for (Id userId : userIds) {
@@ -38,7 +38,7 @@ public with sharing class NKS_GetUserSkillsController {
                 exactOrNoSkillUserIds.add(userId);
             }
         }
-        
+
         return exactOrNoSkillUserIds;
     }
 
@@ -70,13 +70,13 @@ public with sharing class NKS_GetUserSkillsController {
         // Fetch users and their skills from GroupMember and Group
         for (Group g : [
             SELECT Id, DeveloperName
-            FROM Group 
+            FROM Group
             WHERE DeveloperName IN :groupSkillNames
                 AND Type = 'Regular'
         ]) {
             for (GroupMember gm : [
-                SELECT UserOrGroupId 
-                FROM GroupMember 
+                SELECT UserOrGroupId
+                FROM GroupMember
                 WHERE UserOrGroupId IN :userIds
                 AND GroupId = :g.Id
             ]) {
@@ -105,18 +105,18 @@ public with sharing class NKS_GetUserSkillsController {
     public static List<Result> getResultList(Set<Id> ids) {
         List<Result> results = new List<Result>();
         Result res = new Result();
-        res.userIds = new List<String>(); 
-        
+        res.userIds = new List<String>();
+
         for (Id id : ids) {
-            res.userIds.add((String) id);  
+            res.userIds.add((String)id);
         }
-        
-        results.add(res);  
+
+        results.add(res);
         return results;
     }
 
     public class Request {
-        @InvocableVariable(required=true)
+        @InvocableVariable(required = true)
         public List<Id> userIds;
 
         @InvocableVariable
@@ -124,7 +124,7 @@ public with sharing class NKS_GetUserSkillsController {
     }
 
     public class Result {
-        @InvocableVariable(label='User IDs')
+        @InvocableVariable(label = 'User IDs')
         public List<String> userIds;
     }
 }

@@ -1,9 +1,9 @@
 public with sharing class NKS_GetUserIDsController {
+
     private static Map<Set<Id>, Set<Id>> cachedUserIdsFromGroups = new Map<Set<Id>, Set<Id>>();
 
-    @invocableMethod(label='Get User IDs')
+    @invocableMethod(label = 'Get User IDs')
     public static List<Result> getUserIdsFromGroups(List<Id> inputGroupIds) {
-
         Set<Id> groupIds = new Set<Id>(inputGroupIds);
 
         if (cachedUserIdsFromGroups.containsKey(groupIds)) {
@@ -22,7 +22,10 @@ public with sharing class NKS_GetUserIDsController {
         ];
 
         Map<Id, User> activeUsersMap = new Map<Id, User>(
-            [SELECT Id FROM User WHERE IsActive = TRUE AND ProfileId IN (SELECT Id FROM Profile WHERE Name LIKE 'NAV Kontaktsenter%')]
+            [SELECT Id
+             FROM User
+             WHERE IsActive = TRUE
+               AND ProfileId IN (SELECT Id FROM Profile WHERE Name LIKE 'NAV Kontaktsenter%')]
         );
 
         for (GroupMember member : groupMembers) {
@@ -41,7 +44,7 @@ public with sharing class NKS_GetUserIDsController {
 
             for (Result res : groupIdProxiesResult) {
                 for (String userId : res.userIds) {
-                    result.add((Id)userId);  
+                    result.add((Id)userId);
                 }
             }
         }
@@ -53,18 +56,18 @@ public with sharing class NKS_GetUserIDsController {
     public static List<Result> getResultList(Set<Id> ids) {
         List<Result> results = new List<Result>();
         Result res = new Result();
-        res.userIds = new List<String>(); 
-        
+        res.userIds = new List<String>();
+
         for (Id id : ids) {
-            res.userIds.add((String)id);  
+            res.userIds.add((String)id);
         }
-        
-        results.add(res);  
+
+        results.add(res);
         return results;
     }
 
     public class Result {
-        @InvocableVariable(label='User IDs')
+        @InvocableVariable(label = 'User IDs')
         public List<String> userIds;
     }
 }
