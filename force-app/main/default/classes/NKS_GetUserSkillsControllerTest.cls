@@ -125,4 +125,18 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         Assert.isTrue(results[0].userIds.contains(users[0].Id), 'User1 should be in the notification list.');
         Assert.isFalse(results[0].userIds.contains(users[1].Id), 'User2 should not be in the notification list.');
     }
+
+    @isTest 
+    public static void testInitializeUserSkillsMap () {
+        User user1 = [SELECT Id FROM User WHERE LastName = 'User1' LIMIT 1];
+        User user2 = [SELECT Id FROM User WHERE LastName = 'User2' LIMIT 1];
+        Set<Id> userIds = new Set<Id> {user1.Id, user2.Id};
+
+        Test.startTest();
+        NKS_GetUserSkillsController.initializeUserSkillsMap (userIds);
+        Test.stopTest();
+
+        Assert.areEqual(2,  NKS_GetUserSkillsController.cachedUserSkillsMap.size(), 'The user skills map should have two users.');
+        Assert.isTrue(NKS_GetUserSkillsController.cachedUserSkillsMap.keySet().containsAll(userIds), 'The user skills map should contain User1 and User2.');
+    }
 }

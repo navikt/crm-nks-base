@@ -8,7 +8,7 @@
         <actionName>NKS_GetUserIDsController</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Users_To_Notify</targetReference>
+            <targetReference>Get_Custom_Notification</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -25,14 +25,14 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <name>Get_Users_To_Notify</name>
-        <label>Get Users To Notify</label>
+        <name>Get_User_IDs_Filtered_By_Skills</name>
+        <label>Get User IDs Filtered By Skills</label>
         <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <actionName>NKS_GetUserSkillsController</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Custom_Notification</targetReference>
+            <targetReference>Send_Notification_0</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -55,7 +55,7 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <name>Send_Notification</name>
+        <name>Send_Notification_0</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
         <locationY>755</locationY>
@@ -122,10 +122,10 @@
         <name>Get_Custom_Notification</name>
         <label>Get Custom Notification</label>
         <locationX>176</locationX>
-        <locationY>647</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Send_Notification</targetReference>
+            <targetReference>Get_User_IDs_Filtered_By_Skills</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
