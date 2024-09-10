@@ -1,0 +1,7 @@
+@import 'c/cssLibrary';
+
+.custom-button {
+    --slds-c-button-outline-brand-color-background-hover: #cce1ff;
+    --slds-c-button-outline-brand-color-background-active: #cce1ff;
+    --slds-c-button-outline-brand-color-border-hover: #0056b4;
+}
