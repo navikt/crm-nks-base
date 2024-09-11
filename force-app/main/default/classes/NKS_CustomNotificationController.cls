@@ -33,10 +33,9 @@ public with sharing class NKS_CustomNotificationController {
                             request.pageRef
                         );
                     }
-                } else {
-                    Set<Id> ids = new Set<Id>(userIdList);
+                } else {                   
                     sendNotificationToUsers(
-                        ids, 
+                        userIds, 
                         request.notificationTypeId, 
                         request.notificationTitle, 
                         request.notificationBody, 
