@@ -1,4 +1,5 @@
 public with sharing class NKS_CustomNotificationController {
+    private static LoggerUtility logger = new LoggerUtility ();
 
     @invocableMethod(label = 'Send Notification')
     public static void sendNotification(List<Request> requests) {
@@ -22,23 +23,7 @@ public with sharing class NKS_CustomNotificationController {
                         res.add(tempList);
                     }
 
-                    try {
-                        for (Set<Id> ids : res) {
-                            sendNotificationToUsers(
-                                ids, 
-                                request.notificationTypeId, 
-                                request.notificationTitle, 
-                                request.notificationBody, 
-                                request.targetId, 
-                                request.pageRef
-                            );
-                        }
-                    } catch (Exception ex) {
-                        System.debug('There was a problem sending notifications: ' + ex.getMessage());
-                    }
-                } else {
-                    Set<Id> ids = new Set<Id>(userIdList);
-                    try {
+                    for (Set<Id> ids : res) {
                         sendNotificationToUsers(
                             ids, 
                             request.notificationTypeId, 
@@ -47,9 +32,17 @@ public with sharing class NKS_CustomNotificationController {
                             request.targetId, 
                             request.pageRef
                         );
-                    } catch (Exception ex) {
-                        System.debug('There was a problem sending notification to users: ' + ex.getMessage());
                     }
+                } else {
+                    Set<Id> ids = new Set<Id>(userIdList);
+                    sendNotificationToUsers(
+                        ids, 
+                        request.notificationTypeId, 
+                        request.notificationTitle, 
+                        request.notificationBody, 
+                        request.targetId, 
+                        request.pageRef
+                    );
                 }
             }
         }
@@ -78,7 +71,8 @@ public with sharing class NKS_CustomNotificationController {
         try {
             notification.send(recipientsIds);
         } catch (Exception ex) {
-            System.debug('Problem sending notification: ' + ex.getMessage());
+            logger.error('Failed to send notification to users: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);   
+            logger.publish(); 
         }
     }
 

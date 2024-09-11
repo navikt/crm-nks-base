@@ -61,7 +61,7 @@ public with sharing class NKS_GetUserSkillsController {
             userSkillsMap.put(srSkill.ServiceResource.RelatedRecordId, userSkills);
         }
 
-        // Transform newSkills to match the Group naming convention: 'NKS_Skill_<SkillName>'
+        // Transform newsSkills to match the Group naming convention: 'NKS_Skill_<SkillName>'
         Set<String> groupSkillNames = new Set<String>();
         for (String skill : userSkillsMap.keySet()) {
             groupSkillNames.add('NKS_Skill_' + skill);
