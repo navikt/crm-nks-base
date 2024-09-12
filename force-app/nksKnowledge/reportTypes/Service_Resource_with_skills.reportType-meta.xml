@@ -22,26 +22,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>HOT_IsAvailableForAcuteAssignments__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_Address__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_AddressOverride__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_AgreementFreelance__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsCapacityBased</field>
             <table>ServiceResource</table>
         </columns>
@@ -67,47 +47,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>FSL__Efficiency__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_Email__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_EmailOverride__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_IsEmployedInterpreter__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_IsFreelanceInterpreter__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FSL__GanttLabel__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IsOptimizationCapable</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_InterpreterSpace__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_InterpreterType__c</field>
             <table>ServiceResource</table>
         </columns>
         <columns>
@@ -141,53 +81,8 @@
             <table>ServiceResource</table>
         </columns>
         <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_MobileDevice__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_MobilePhone__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_MobilePhoneOverride__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_MoreInformation__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Name</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_NotificationChannel__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FSL__Online_Offset__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FSL__Picture_Link__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_PreferredRegions__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FSL__Priority__c</field>
             <table>ServiceResource</table>
         </columns>
         <columns>
@@ -203,26 +98,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ServiceCrew</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_ServiceTerritory__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_ServiceTerritoryLastUpdated__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>HOT_Skilled__c</field>
-            <table>ServiceResource</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>FSL__Travel_Speed__c</field>
             <table>ServiceResource</table>
         </columns>
         <columns>
