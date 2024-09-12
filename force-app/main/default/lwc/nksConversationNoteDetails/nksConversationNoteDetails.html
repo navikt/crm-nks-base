@@ -3,8 +3,8 @@
         <c-nks-button-container-top
             record-id={recordId}
             channel-name="Conversation note"
-            flow-button-label={changeUserLabel}
-            flow-api-name="NKS_Case_Change_Account"
+            flow-button-label={flowButtonLabel}
+            flow-api-name={flowApiName}
         ></c-nks-button-container-top>
         <template lwc:if={hasCNotes}>
             <div class={sectionClasses}>

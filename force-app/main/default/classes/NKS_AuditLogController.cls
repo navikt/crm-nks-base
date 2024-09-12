@@ -5,29 +5,36 @@ public without sharing class NKS_AuditLogController {
     public static final String KNOWLEDGE_AUDIT_LOG = 'Knowledge Audit Log';
     public static final String ANNOUNCEMENT_AUDIT_LOG = 'Announcement Audit Log';
 
+    private static LoggerUtility logger = new LoggerUtility('NKS Audit Log');
+
     @AuraEnabled
     public static void createAuditLog(Id recordId, String lookupField) {
         try {
+            NKS_Audit_Log__c al = new NKS_Audit_Log__c();
             if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
-                NKS_Audit_Log__c al = new NKS_Audit_Log__c();
                 al.RecordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
                 al.Knowledge__c = recordId;
-                al.User__c = USERID;
-                al.Operation__c = 'View';
-                insert al;
             }
-
-            if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
-                NKS_Audit_Log__c al = new NKS_Audit_Log__c();
+            else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
                 al.RecordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
                 al.Announcement__c = recordId;
-                al.User__c = USERID;
-                al.Operation__c = 'View';
-                insert al;
+            }
+            else {
+                return;
+            }
+              
+            al.User__c = USERID;
+            al.Operation__c = 'View';
+            
+            Database.SaveResult sr = Database.insert(al, false);
+            if (!sr.isSuccess()) {
+                logErrorMessage (sr);
             }
         } catch (Exception e) {
-            throw new AuraHandledException('Problem creating NKS_Audit_Log__c: ' + e.getMessage());
-        }
+            logger.error('Failed to create Audit Log record: ' + e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+    } finally {
+        logger.publish();
+    } 
     }
 
     @AuraEnabled(cacheable=true)
@@ -55,9 +62,17 @@ public without sharing class NKS_AuditLogController {
             throw new AuraHandledException('Problem checking knowledge user: ' + e.getMessage());
         }
     }
-
+ 
     @TestVisible
     private static String getRecordTypeId(String recordTypeName) {
         return Schema.SObjectType.NKS_Audit_Log__c.getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
+    }
+
+    private static void logErrorMessage (Database.SaveResult sr) {
+        String errorMessage = 'The following error has occurred under creation of Audit Log record:\n';
+        for(Database.Error error : sr.getErrors()) {
+            errorMessage += error.getStatusCode() + ': ' + error.getMessage() + '\n';
+        }
+        logger.error(errorMessage, null, CRM_ApplicationDomain.Domain.NKS);
     }
 }

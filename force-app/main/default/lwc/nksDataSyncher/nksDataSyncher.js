@@ -6,6 +6,7 @@ import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
 import { syncActorOppgaver } from 'c/crmOppgaveSyncher';
+import { resolve } from 'c/nksComponentsUtils';
 
 const syncStatus = {
     SYNCING: 'SYNCING',
@@ -118,7 +119,7 @@ export default class NksDataSyncher extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
-                let resolvedPersonId = this.resolve(relationshipField, record);
+                let resolvedPersonId = resolve(relationshipField, record);
                 //Only update the wired attribute if it is indeed changed
                 if (this.personId !== resolvedPersonId) {
                     this.setSyncStatus('bankAccount', syncStatus.SYNCING);
@@ -172,15 +173,5 @@ export default class NksDataSyncher extends LightningElement {
 
     getSyncStatus(name) {
         return this.syncStatuses.find((element) => element.name === name);
-    }
-
-    resolve(path, obj) {
-        if (typeof path !== 'string') {
-            throw new Error('Path must be a string');
-        }
-
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || {});
     }
 }

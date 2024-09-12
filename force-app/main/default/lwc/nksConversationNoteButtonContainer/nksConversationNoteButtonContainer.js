@@ -3,6 +3,7 @@ import CONVERSATION_NOTE_NEW_LABEL from '@salesforce/label/c.NKS_New_Conversatio
 import BACK_LABEL from '@salesforce/label/c.fbc_Back';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import { publish, MessageContext } from 'lightning/messageService';
+import { getOutputVariableValue } from 'c/nksComponentsUtils';
 
 const JOURNAL_FLOW_API_NAME = 'NKS_Conversation_Note_Journal_Case_v_2';
 
@@ -17,6 +18,16 @@ export default class NksConversationNoteButtonContainer extends LightningElement
         newConversationNote: CONVERSATION_NOTE_NEW_LABEL,
         back: BACK_LABEL
     };
+    _navTasks = [];
+
+    @api
+    get navTasks() {
+        return this._navTasks;
+    }
+
+    set navTasks(value) {
+        this._navTasks = value;
+    }
 
     @api
     get journalConversation() {
@@ -43,8 +54,11 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     handleFlowSucceeded(event) {
         const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
+        this._navTasks.push(getOutputVariableValue(outputVariables, 'NavTask'));
+
         try {
             const payload = {
+                recordId: this.recordId,
                 flowApiName: flowApiName,
                 outputVariables: outputVariables
             };

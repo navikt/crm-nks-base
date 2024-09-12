@@ -5,6 +5,7 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import { publishToAmplitude } from 'c/amplitude';
+import { resolve } from 'c/nksComponentsUtils';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
@@ -68,7 +69,7 @@ export default class NksBrukervarselList extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
-                this.personId = this.resolve(relationshipField, record);
+                this.personId = resolve(relationshipField, record);
             })
             .catch((error) => {
                 this.addError(error);
@@ -197,15 +198,5 @@ export default class NksBrukervarselList extends LightningElement {
         } else {
             this.errorMessages.push(error.body);
         }
-    }
-
-    resolve(path, obj) {
-        if (typeof path !== 'string') {
-            throw new Error('Path must be a string');
-        }
-
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || {});
     }
 }
