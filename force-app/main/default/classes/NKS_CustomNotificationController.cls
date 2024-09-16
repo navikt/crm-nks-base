@@ -1,12 +1,12 @@
 public with sharing class NKS_CustomNotificationController {
-    private static LoggerUtility logger = new LoggerUtility ();
+    private static LoggerUtility logger = new LoggerUtility();
 
     @invocableMethod(label = 'Send Notification')
     public static void sendNotification(List<Request> requests) {
         for (Request request : requests) {
-            if (!request.userIds.isEmpty()) {
+            if (request.userIds != null && !request.userIds.isEmpty()) {
                 Set<Id> userIds = new Set<Id>(request.userIds);
-
+                
                 // Convert Set to List for indexing
                 List<Id> userIdList = new List<Id>(userIds);
 
@@ -55,9 +55,9 @@ public with sharing class NKS_CustomNotificationController {
         Id targetId, 
         String pageRef
     ) {
-        Set<String> recipientsIds = new Set<String>();
+        Set<String> recipientIds = new Set<String>();
         for (Id id : userIds) {
-            recipientsIds.add(id.toString());
+            recipientIds.add(id.toString());
         }
 
         Messaging.CustomNotification notification = new Messaging.CustomNotification();
@@ -68,10 +68,10 @@ public with sharing class NKS_CustomNotificationController {
         notification.setTargetPageRef(pageRef);
 
         try {
-            notification.send(recipientsIds);
+            notification.send(recipientIds);
         } catch (Exception ex) {
-            logger.error('Failed to send notification to users: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);   
-            logger.publish(); 
+            logger.error('Failed to send notification to users: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
         }
     }
 

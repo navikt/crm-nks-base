@@ -12,8 +12,6 @@ public with sharing class NKS_GetUserIDsController {
 
         Set<Id> result = new Set<Id>();
         Set<Id> groupIdProxies = new Set<Id>();
-        String userType = Schema.SObjectType.User.getKeyPrefix();
-        String groupType = Schema.SObjectType.Group.getKeyPrefix();
 
         List<GroupMember> groupMembers = [
             SELECT UserOrGroupId, GroupId

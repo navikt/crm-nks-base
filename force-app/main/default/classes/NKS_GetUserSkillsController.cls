@@ -72,7 +72,7 @@ public with sharing class NKS_GetUserSkillsController {
             SELECT Id, DeveloperName
             FROM Group
             WHERE DeveloperName IN :groupSkillNames
-                AND Type = 'Regular'
+            AND Type = 'Regular'
         ]) {
             for (GroupMember gm : [
                 SELECT UserOrGroupId
@@ -89,7 +89,6 @@ public with sharing class NKS_GetUserSkillsController {
                 userSkillsMap.put(gm.UserOrGroupId, userSkills);
             }
         }
-
         cachedUserSkillsMap = userSkillsMap;
     }
 
@@ -108,7 +107,7 @@ public with sharing class NKS_GetUserSkillsController {
         res.userIds = new List<String>();
 
         for (Id id : ids) {
-            res.userIds.add((String)id);
+            res.userIds.add((String) id);
         }
 
         results.add(res);
