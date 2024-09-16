@@ -1030,13 +1030,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Log_Screen</targetReference>
-        </connector>
         <fields>
             <name>Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(140, 75, 2); font-size: 14px;&quot;&gt;Temagruppe må være oppfylt for å opprette samtalereferat.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(255, 0, 0);&quot;&gt;Temagruppe må være oppfylt for å opprette samtalereferat.&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
