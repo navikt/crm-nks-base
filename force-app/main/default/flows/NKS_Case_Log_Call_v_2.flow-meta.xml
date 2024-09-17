@@ -69,7 +69,7 @@
     </assignments>
     <assignments>
         <description>Assigns updated values for case</description>
-        <name>Case_Assignment_Default_0_0</name>
+        <name>Case_Assignment_Default</name>
         <label>Case Assignment</label>
         <locationX>512</locationX>
         <locationY>2870</locationY>
@@ -93,85 +93,6 @@
     </assignments>
     <assignments>
         <name>Conversation_Note_Assignment</name>
-        <label>Conversation Note Assignment</label>
-        <locationX>314</locationX>
-        <locationY>2246</locationY>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.AccountId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Case__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Conversation_Summary_0.conversationNote</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_NAV_Unit__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Department</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Created_By_Ident__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Journal Started</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_Conversation_Note</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Conversation_Note_Assignment_0</name>
         <label>Conversation Note Assignment</label>
         <locationX>842</locationX>
         <locationY>2246</locationY>
@@ -239,7 +160,86 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Conversation_Note_0</targetReference>
+            <targetReference>Create_Conversation_Note</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Journal_Conversation_Note_Assignment</name>
+        <label>Conversation Note Assignment</label>
+        <locationX>314</locationX>
+        <locationY>2246</locationY>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Subtheme__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Conversation_Summary_Journal.conversationNote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Created_By_NAV_Unit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Department</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Created_By_Ident__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Henvendelse_BehandlingskjedeId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Verify.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Conversation_Note_Record.CRM_Journal_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Journal Started</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Conversation_Note_Journal</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -262,7 +262,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Conversation_Note_Assignment</targetReference>
+            <targetReference>Journal_Conversation_Note_Assignment</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -310,7 +310,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
+            <targetReference>Get_Conversation_Note_After_Created</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -323,14 +323,14 @@
             <assignToReference>Get_Case.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Theme_Group</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.theme</elementReference>
+                <elementReference>Theme</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -443,7 +443,7 @@
         <locationX>710</locationX>
         <locationY>2138</locationY>
         <defaultConnector>
-            <targetReference>Conversation_Note_Assignment_0</targetReference>
+            <targetReference>Conversation_Note_Assignment</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -505,7 +505,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Has Person Access</defaultConnectorLabel>
         <rules>
-            <name>No_Person_Access_0</name>
+            <name>No_Person_Access_Case_Closed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>HAS_PERSON_READ</leftValueReference>
@@ -574,23 +574,23 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <description>Inserts the conversation note.</description>
         <name>Create_Conversation_Note</name>
+        <label>Create Conversation Note</label>
+        <locationX>842</locationX>
+        <locationY>2354</locationY>
+        <connector>
+            <targetReference>Get_Conversation_Note_After_Created</targetReference>
+        </connector>
+        <inputReference>Conversation_Note_Record</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Conversation_Note_Journal</name>
         <label>Create Conversation Note</label>
         <locationX>314</locationX>
         <locationY>2354</locationY>
         <connector>
             <targetReference>Post_Journal</targetReference>
-        </connector>
-        <inputReference>Conversation_Note_Record</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <description>Inserts the conversation note.</description>
-        <name>Create_Conversation_Note_0</name>
-        <label>Create Conversation Note</label>
-        <locationX>842</locationX>
-        <locationY>2354</locationY>
-        <connector>
-            <targetReference>Get_Conversation_Note_0_0</targetReference>
         </connector>
         <inputReference>Conversation_Note_Record</inputReference>
     </recordCreates>
@@ -740,13 +740,13 @@
     </recordLookups>
     <recordLookups>
         <description>Queries the conversation note created for this case.</description>
-        <name>Get_Conversation_Note_0_0</name>
+        <name>Get_Conversation_Note_After_Created</name>
         <label>Get Conversation Note</label>
         <locationX>512</locationX>
         <locationY>2762</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Assignment_Default_0_0</targetReference>
+            <targetReference>Case_Assignment_Default</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -938,7 +938,7 @@
             <targetReference>Log_Screen</targetReference>
         </connector>
         <fields>
-            <name>Button_Container_0</name>
+            <name>Button_Container_Case_Closed</name>
             <extensionName>c:nksConversationNoteButtonContainer</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -968,7 +968,7 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Record_Refresher_Closed_Case</name>
+            <name>Record_Refresher_Case_Closed</name>
             <extensionName>c:nksRecordRefresher</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1030,6 +1030,9 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Log_Screen_Conversation_Note</targetReference>
+        </connector>
         <fields>
             <name>Error_Text</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(255, 0, 0);&quot;&gt;Temagruppe må være oppfylt for å opprette samtalereferat.&lt;/strong&gt;&lt;/p&gt;</fieldText>
@@ -1052,7 +1055,7 @@
             <targetReference>Journal_Theme_Assignment</targetReference>
         </connector>
         <fields>
-            <name>Header</name>
+            <name>Header_Journal</name>
             <extensionName>c:nksHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1078,14 +1081,14 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Disclaimer_Text_0</name>
+            <name>Disclaimer_Text_Journal</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Conversation_Summary_0</name>
+            <name>Conversation_Summary_Journal</name>
             <extensionName>c:nksQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1159,7 +1162,7 @@
             <targetReference>Get_Case_Verify</targetReference>
         </connector>
         <fields>
-            <name>Header_1</name>
+            <name>Header</name>
             <extensionName>c:nksHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1246,17 +1249,14 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>journalConversation</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+            <outputParameters>
+                <assignToReference>Theme_Group</assignToReference>
+                <name>themeGroup</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Theme</assignToReference>
+                <name>theme</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>Record_Refresher</name>
@@ -1273,7 +1273,172 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>Button_Container_1</name>
+            <name>Button_Container_Log_Screen</name>
+            <extensionName>c:nksConversationNoteButtonContainer</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>conversationNoteButtonLabel</name>
+                <value>
+                    <elementReference>$Label.NKS_Conversation_Note_Share_With_User</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>journalAndShare</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <elementReference>Show_Back_Button</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>journalConversation</assignToReference>
+                <name>journalConversation</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>navTasks</assignToReference>
+                <name>navTasks</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Log_Screen_Conversation_Note</name>
+        <label>Log Screen</label>
+        <locationX>578</locationX>
+        <locationY>2354</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_Case_Verify</targetReference>
+        </connector>
+        <fields>
+            <name>Header_Conversation_Note</name>
+            <extensionName>c:nksHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>headertag</name>
+                <value>
+                    <stringValue>h2</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input</name>
+                <value>
+                    <elementReference>$Label.NKS_Create_Conversation_Note</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Disclaimer_Text_Conversation_Note</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+                133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Conversation_Summary_Conversation_Note</name>
+            <extensionName>c:nksQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>conversationNoteRich</name>
+                <value>
+                    <elementReference>Conversation_Summary.conversationNote</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Theme_Categorization_Conversation_Note</name>
+            <extensionName>c:crmThemeCategorization</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>HIDE_SUBTHEME</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>optionalTheme</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>twoColumns</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>optionalThemeGroup</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>Theme_Group</assignToReference>
+                <name>themeGroup</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Theme</assignToReference>
+                <name>theme</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>Record_Refresher_Conversation_Note</name>
+            <extensionName>c:nksRecordRefresher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>recordId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Button_Container_Conversation_Note</name>
             <extensionName>c:nksConversationNoteButtonContainer</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1561,6 +1726,20 @@
     <variables>
         <description>Salesforce ID to the Person__c record</description>
         <name>SF_PERSON_ID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Theme</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Theme_Group</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
