@@ -1035,7 +1035,7 @@
         </connector>
         <fields>
             <name>Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Temagruppe må være oppfylt for å opprette samtalereferat.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0);&quot;&gt;Velg en temagruppe for å opprette samtalereferat.&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
