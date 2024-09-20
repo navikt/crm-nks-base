@@ -12,6 +12,8 @@ import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/b
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import invokeSendNavTaskFlow from '@salesforce/apex/NKS_SendNavTaskHandler.invokeSendNavTaskFlow';
 import getProcessingId from '@salesforce/apex/NKS_SendNavTaskHandler.getProcessingId';
+import getNavUnitInfo from '@salesforce/apex/NKS_SendNavTaskHandler.getNavUnitInfo';
+import getCommonCodeName from '@salesforce/apex/NKS_ButtonContainerController.getCommonCodeName';
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
@@ -170,7 +172,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             await this.updateNavTasks();
             this.sendNavTasks();
         } catch (error) {
-            console.error('Problem handling navTasks:', error);
+            console.error('Problem handling navTasks:', JSON.stringify(error));
         }
     }
 
@@ -202,13 +204,24 @@ export default class NksConversationNoteDetails extends LightningElement {
     }
 
     sendNavTasks() {
+        this.notificationBoxTemplate.filterNotification('Oppgaven er lagret');
+
         this.navTasks.forEach((navTask) => {
             invokeSendNavTaskFlow({ navTask })
                 .then((result) => {
                     if (result) {
-                        console.log('NAV Task sent successfully!');
-                    } else {
-                        console.log('Problem sending NAV Task!');
+                        getNavUnitInfo({ navUnitId: navTask.CRM_NavUnit__c }).then((unitInfo) => {
+                            if (unitInfo) {
+                                getCommonCodeName({ id: navTask.NKS_Theme__c }).then((theme) => {
+                                    if (theme) {
+                                        const unitNumber = unitInfo.INT_UnitNumber__c;
+                                        const unitName = unitInfo.Name;
+                                        const optionalText = `${theme}\xa0\xa0\xa0\xa0\xa0Sendt til: ${unitNumber} ${unitName}`;
+                                        this.notificationBoxTemplate.addNotification('Oppgave opprettet', optionalText);
+                                    }
+                                });
+                            }
+                        });
                     }
                 })
                 .catch((error) => {
