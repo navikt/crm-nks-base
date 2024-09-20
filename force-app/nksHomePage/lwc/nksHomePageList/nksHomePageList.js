@@ -7,6 +7,7 @@ import getSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
 import userId from '@salesforce/user/Id';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
@@ -26,7 +27,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api enableRefresh = false;
     
     @track records = [];
-    listCount = 3;
     userSkills = [];
     showSpinner = false;
     channelName = '/topic/Announcement_Updates';
@@ -50,15 +50,105 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
             this._filter += " AND OwnerId='" + userId + "'";
         }
-
-        this.loadComponentData();
+        this.fetchComponentData();
+        this.generateListUrl();
         this.setupEmpSubscription();
     }
 
-    loadComponentData() {
+    fetchComponentData() {
         this.showSpinner = true;
 
-        // Generate URL
+        if (!this.initRun) {
+            this.initRun = true;
+            if (this.filterbyskills) {
+                this.fetchUserSkillsAndListOfRecords();
+            } else {
+                this.fetchListOfRecords();
+            }
+        }
+    }
+
+    fetchUserSkillsAndListOfRecords() {
+        getSkills()
+            .then((data) => {
+                this.userSkills = data;
+                this.fetchListOfRecords();
+            })
+            .catch((error) => {
+                this.handleError(error);
+            });
+    }
+
+    fetchListOfRecords() {
+        let promise;
+        switch (this.objectName) {
+            case 'Case':
+                promise = getCaseList({
+                    title: this.title,
+                    content: this.content,
+                    objectName: this.objectName,
+                    filter: this.filter,
+                    orderBy: this.orderby,
+                    limitNumber: this.limit,
+                    dateField: this.datefield
+                });
+                break;
+            case 'NKS_Announcement__c':
+                promise = getAnnouncementList({
+                    title: this.title,
+                    content: this.content,
+                    objectName: this.objectName,
+                    filter: this.filter,
+                    orderBy: this.orderby,
+                    limitNumber: this.limit,
+                    dateField: this.datefield,
+                    showImage: this.showimage,
+                    filterBySkills: this.filterbyskills,
+                    skills: this.userSkills
+                });
+                break;
+            case 'Knowledge__kav':
+                promise = getKnowledgeList({
+                    title: this.title,
+                    content: this.content,
+                    objectName: this.objectName,
+                    filter: this.filter,
+                    orderBy: this.orderby,
+                    limitNumber: this.limit,
+                    dateField: this.datefield,
+                    showImage: this.showimage,
+                    filterBySkills: this.filterbyskills,
+                    skills: this.userSkills
+                });
+                break;
+            default:
+                getList({
+                    title: this.title,
+                    content: this.content,
+                    objectName: this.objectName,
+                    filter: this.filter,
+                    orderBy: this.orderby,
+                    limitNumber: this.limit,
+                    dateField: this.datefield
+                });
+                break;
+        }
+
+        promise
+            .then((data) => {
+                this.records = data;
+                // Only refresh on run
+                this.refreshComponent();
+            })
+            .catch((error) => {
+                this.handleError(error);
+            })
+            .finally(() => {
+                this.showSpinner = false;
+            });
+    }
+
+    generateListUrl() {
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
             attributes: {
@@ -70,144 +160,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             }
         }).then((url) => {
             this.pageUrl = url;
-        });
-
-        if (!this.initRun) {
-            this.initRun = true;
-            if (this.filterbyskills) {
-                this.loadUserSkillsAndList();
-            } else {
-                this.loadList();
-            }
-        }
-    }
-
-    loadUserSkillsAndList() {
-        getSkills()
-            .then((data) => {
-                this.userSkills = data;
-                this.loadList();
-            })
-            .catch((error) => {
-                this.handleError(error);
-            });
-    }
-
-    loadList() {
-        let promise;
-        switch (this.objectName) {
-            case 'Case':
-                promise = this.getCaseList();
-                break;
-            case 'NKS_Announcement__c':
-                promise = this.getAnnouncementList();
-                break;
-            case 'Knowledge__kav':
-                promise = this.getKnowledgeList();
-                break;
-            default:
-                promise = this.getList();
-                break;
-        }
-
-        promise
-            .then((data) => {
-                this.records = data;
-            })
-            .catch((error) => {
-                this.handleError(error);
-            })
-            .finally(() => {
-                this.showSpinner = false;
-            });
-    }
-
-    getKnowledgeList() {
-        console.log('getKnowledgeList');
-        return new Promise((resolve, reject) => {
-            getKnowledgeList({
-                title: this.title,
-                content: this.content,
-                objectName: this.objectName,
-                filter: this.filter,
-                orderBy: this.orderby,
-                limitNumber: this.limit,
-                dateField: this.datefield,
-                showImage: this.showimage,
-                filterBySkills: this.filterbyskills,
-                skills: this.userSkills
-            })
-                .then((data) => {
-                    resolve(data);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-    }
-
-    getCaseList() {
-        console.log('getCaseList');
-        return new Promise((resolve, reject) => {
-            getCaseList({
-                title: this.title,
-                content: this.content,
-                objectName: this.objectName,
-                filter: this.filter,
-                orderBy: this.orderby,
-                limitNumber: this.limit,
-                dateField: this.datefield
-            })
-                .then((data) => {
-                    resolve(data);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-    }
-
-    getAnnouncementList() {
-        console.log('getAnnouncementList');
-        return new Promise((resolve, reject) => {
-            getAnnouncementList({
-                title: this.title,
-                content: this.content,
-                objectName: this.objectName,
-                filter: this.filter,
-                orderBy: this.orderby,
-                limitNumber: this.limit,
-                dateField: this.datefield,
-                showImage: this.showimage,
-                filterBySkills: this.filterbyskills,
-                skills: this.userSkills
-            })
-                .then((data) => {
-                    resolve(data);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-    }
-
-    getList() {
-        return new Promise((resolve, reject) => {
-            getList({
-                title: this.title,
-                content: this.content,
-                objectName: this.objectName,
-                filter: this.filter,
-                orderBy: this.orderby,
-                limitNumber: this.limit,
-                dateField: this.datefield
-            })
-                .then((data) => {
-                    resolve(data);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
         });
     }
 
@@ -261,28 +213,27 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     printError() {
         onError((error) => {
-            console.log('Received error from empApi: ', JSON.stringify(error));
+            console.error('Received error from empApi: ', JSON.stringify(error));
         });
     }
 
-    refreshList = () => {
-        const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
-        // eslint-disable-next-line @locker/locker/distorted-window-set-timeout, @lwc/lwc/no-async-operation
-        setTimeout(() => {
-            this.loadList();
-        }, rand);
-    };
-
-    loadMoreList() {
-        this.listCount += 3;
-        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
-        this.limit = this.listCount;
-        this.loadList();
+    refreshList() {
+        this.fetchListOfRecords()
     }
 
-    refreshComponent() {
+    paginateListOfRecords() {
+        // eslint-disable-next-line @lwc/lwc/no-api-reassignments
+        this.limit += 3;
+        this.fetchListOfRecords();
+    }
+
+    // TODO: See if this works
+    recordIds = [];
+    async refreshComponent() {
         this.showSpinner = true;
-        this.loadList();
+        this.recordIds = this.records.map(record => {return {recordId: record.recordId}});
+        await notifyRecordUpdateAvailable(this.recordIds);
+        this.showSpinner = false;
     }
 
     get isEmpSubscribed() {
