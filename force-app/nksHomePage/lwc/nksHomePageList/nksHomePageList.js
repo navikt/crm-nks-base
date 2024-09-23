@@ -1,151 +1,114 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import getKnowledgeList from '@salesforce/apex/NKS_HomePageController.getKnowledgeList';
 import getCaseList from '@salesforce/apex/NKS_HomePageController.getCaseList';
 import getAnnouncementList from '@salesforce/apex/NKS_HomePageController.getAnnouncementList';
-import getSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
+import getUserSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
+import { refreshApex } from "@salesforce/apex";
 import userId from '@salesforce/user/Id';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
-    @api cardLabel;
-    @api iconName;
-    @api title;
-    @api content;
-    @api objectName;
-    @api orderby;
-    @api limit;
-    @api listviewname;
-    @api linklabel;
-    @api datefield;
+    @api cardLabel = 'Title';
+    @api iconName = 'custom:custom1';
+    @api title = 'Name';
+    @api content = '';
+    @api objectName = 'NKS_Announcement__c';
+    @api orderby = '';
+    @api limit = 10;
+    @api listviewname = 'Recent';
+    @api linklabel = 'Vis alle';
+    @api datefield = 'CreatedDate';
     @api showimage = false;
     @api filterbyskills = false;
     @api refreshPageAutomatically = false;
     @api enableRefresh = false;
-    
-    @track records = [];
+    @api filter = 'Name = \'Navn\'';
+
+    records = [];
     userSkills = [];
     showSpinner = false;
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
-    initRun = false;
-    _filter;
-
-    @api
-    get filter() {
-        return this._filter;
-    }
-
-    set filter(value) {
-        this._filter = value;
-    }
 
     connectedCallback() {
         this.showSpinner = true;
-
+        this.setWireParameters();
         if (this.isSTO || this.objectName === 'LiveChatTranscript') {
-            this._filter += " AND OwnerId='" + userId + "'";
+            this.filter += " AND OwnerId='" + userId + "'";
         }
-        this.fetchComponentData();
+        if (this.filterbyskills) {
+            this.fetchUserSkills();
+        }
         this.generateListUrl();
         this.setupEmpSubscription();
     }
 
-    fetchComponentData() {
-        this.showSpinner = true;
-
-        if (!this.initRun) {
-            this.initRun = true;
-            if (this.filterbyskills) {
-                this.fetchUserSkillsAndListOfRecords();
-            } else {
-                this.fetchListOfRecords();
-            }
-        }
+    objectNameForCase;
+    objectNameForAnnouncement;
+    objectNameForKnowledge;
+    objectNameForGeneral;
+    // Prevent all wires from running by keeping 1 param undefined
+    setWireParameters() {
+        this.objectNameForCase = this.objectName === 'Case' ? this.objectName : undefined;
+        this.objectNameForAnnouncement = this.objectName === 'NKS_Announcement__c' ? this.objectName : undefined;
+        this.objectNameForKnowledge = this.objectName === 'Knowledge__kav' ? this.objectName : undefined;
+        this.objectNameForGeneral = this.objectName === 'General' ? this.objectName : undefined;
     }
 
-    fetchUserSkillsAndListOfRecords() {
-        getSkills()
+    fetchUserSkills() {
+        getUserSkills()
             .then((data) => {
                 this.userSkills = data;
-                this.fetchListOfRecords();
             })
             .catch((error) => {
                 this.handleError(error);
             });
     }
 
-    fetchListOfRecords() {
-        let promise;
-        switch (this.objectName) {
-            case 'Case':
-                promise = getCaseList({
-                    title: this.title,
-                    content: this.content,
-                    objectName: this.objectName,
-                    filter: this.filter,
-                    orderBy: this.orderby,
-                    limitNumber: this.limit,
-                    dateField: this.datefield
-                });
-                break;
-            case 'NKS_Announcement__c':
-                promise = getAnnouncementList({
-                    title: this.title,
-                    content: this.content,
-                    objectName: this.objectName,
-                    filter: this.filter,
-                    orderBy: this.orderby,
-                    limitNumber: this.limit,
-                    dateField: this.datefield,
-                    showImage: this.showimage,
-                    filterBySkills: this.filterbyskills,
-                    skills: this.userSkills
-                });
-                break;
-            case 'Knowledge__kav':
-                promise = getKnowledgeList({
-                    title: this.title,
-                    content: this.content,
-                    objectName: this.objectName,
-                    filter: this.filter,
-                    orderBy: this.orderby,
-                    limitNumber: this.limit,
-                    dateField: this.datefield,
-                    showImage: this.showimage,
-                    filterBySkills: this.filterbyskills,
-                    skills: this.userSkills
-                });
-                break;
-            default:
-                getList({
-                    title: this.title,
-                    content: this.content,
-                    objectName: this.objectName,
-                    filter: this.filter,
-                    orderBy: this.orderby,
-                    limitNumber: this.limit,
-                    dateField: this.datefield
-                });
-                break;
+    wiredResults;
+    @wire(getCaseList, { title: '$title', content: '$content', objectName: '$objectNameForCase', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield' })
+    caseList(result) {
+        if (this.objectNameForCase) {
+            this.handleWireResult(result);
+        }
+    }
+
+    @wire(getAnnouncementList, { title: '$title', content: '$content', objectName: '$objectNameForAnnouncement', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield', showImage: '$showimage', filterBySkills: '$filterbyskills', skills: '$userSkills' })
+    announcementList(result) {
+        if (this.objectNameForAnnouncement) {
+            this.handleWireResult(result);
+        }
+    }
+
+    @wire(getKnowledgeList, { title: '$title', content: '$content', objectName: '$objectNameForKnowledge',  filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield', showImage: '$showimage', filterBySkills: '$filterbyskills', skills: '$userSkills' })
+    knowledgeList(result) {
+        if (this.objectNameForKnowledge) {
+            this.handleWireResult(result);
+        }
+    }
+
+    @wire(getList, { title: '$title', content: '$content', objectName: '$objectNameForGeneral', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield' })
+    generalList(result) {
+        if (this.objectNameForGeneral) {
+            this.handleWireResult(result);
+        }
+    }
+
+    handleWireResult(result) {
+        this.wiredResults = result;
+        if (result.data) {
+            this.records = result.data;
+        } else if (result.error) {
+            this.handleError(result.error);
         }
 
-        promise
-            .then((data) => {
-                this.records = data;
-                // Only refresh on run
-                this.refreshComponent();
-            })
-            .catch((error) => {
-                this.handleError(error);
-            })
-            .finally(() => {
-                this.showSpinner = false;
-            });
+        setTimeout(() => {
+            this.showSpinner = false;
+        }, 100);
     }
 
     generateListUrl() {
@@ -181,9 +144,8 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
             return;
         }
         if (this.refreshPageAutomatically && this.objectName === 'NKS_Announcement__c') {
-            subscribe(this.channelName, -1, this.refreshList)
+            subscribe(this.channelName, -1, this.refreshComponent)
                 .then((response) => {
-                    console.log(`Subscription request for object ${this.objectName} sent to: ${JSON.stringify(response.channel)}`);
                     this.subscription = response;
                     if (!this.isEmpSubscribed) {
                         this.printError();
@@ -217,22 +179,15 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         });
     }
 
-    refreshList() {
-        this.fetchListOfRecords()
-    }
-
     paginateListOfRecords() {
         // eslint-disable-next-line @lwc/lwc/no-api-reassignments
         this.limit += 3;
-        this.fetchListOfRecords();
+        this.refreshComponent();
     }
 
-    // TODO: See if this works
-    recordIds = [];
     async refreshComponent() {
         this.showSpinner = true;
-        this.recordIds = this.records.map(record => {return {recordId: record.recordId}});
-        await notifyRecordUpdateAvailable(this.recordIds);
+        await refreshApex(this.wiredResults);
         this.showSpinner = false;
     }
 

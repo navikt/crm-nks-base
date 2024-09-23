@@ -61,9 +61,7 @@ public with sharing class NKS_HomePageController {
         return announcement[0].NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
     }
 
-    // TODO: Consider replacing getQueryFactory stuff
-    // TODO: Consider replacing lists with sets to reduce heap size
-    @AuraEnabled // TODO: Consider making this cacheable and use refreshApex on refresh button?
+    @AuraEnabled(cacheable=true)
     public static List<RecordWrapper> getCaseList(
         String title,
         String content,
@@ -72,15 +70,28 @@ public with sharing class NKS_HomePageController {
         String limitNumber,
         String dateField
     ) {
-        List<RecordWrapper> records = new List<RecordWrapper>();
+        String query = 'SELECT toLabel(Status), ' + title;
+        if (String.isNotBlank(dateField)) {
+            query += ', ' + dateField;
+        }
+        if (String.isNotBlank(content)) {
+            query += ', ' + content;
+        }
+        query += ' FROM Case';
+        
+        if (String.isNotBlank(filter)) {
+            query += ' WHERE ' + filter;
+        }
 
-        fflib_QueryFactory qf = getQueryFactory(Case.getSObjectType(), title, content, filter, orderBy, limitNumber);
-        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
-        String query = qf.toSOQL().replace('SELECT', 'SELECT toLabel(Status),');
-        List<SObject> listToReturn = Database.query(query);
+        if (String.isNotBlank(orderBy)) {
+            query += ' ORDER BY ' + orderBy;
+        }
 
-        records = createWrapperRecords(listToReturn, 'Case', title, content, dateField, false);
-        return records;
+        if (String.isNotBlank(limitNumber)) {
+            query += ' LIMIT ' + limitNumber;
+        }
+
+        return createWrapperRecords(Database.query(query), 'Case', title, content, dateField, false);
     }
 
     @AuraEnabled(cacheable=true)
@@ -95,16 +106,15 @@ public with sharing class NKS_HomePageController {
         Boolean filterBySkills,
         List<String> skills
     ) {
-        List<RecordWrapper> records = new List<RecordWrapper>();
-
-        String q =
-            'SELECT Id, NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, LastModifiedDate, CreatedDate, ' +
-            title +
-            ', ' +
-            content;
-
-        q = q.removeEnd(',');
-        q += ' FROM NKS_Announcement__c';
+        String query =
+            'SELECT Id, NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, ' + title;
+        if (String.isNotBlank(dateField) && dateField != 'NKS_News_Publish_Date__c') {
+            query += ', ' + dateField;
+        }
+        if (String.isNotBlank(content)) {
+            query += ', ' + content;
+        }
+        query += ' FROM NKS_Announcement__c';
 
         if (filterBySkills && skills != null && !skills.isEmpty()) {
             String skillStringAnnouncement = String.join(skills, '\',\'');
@@ -112,21 +122,18 @@ public with sharing class NKS_HomePageController {
         }
         
         if (String.isNotBlank(filter)) {
-            q += ' WHERE ' + filter;
+            query += ' WHERE ' + filter;
         }
 
         if (String.isNotBlank(orderBy)) {
-            q += ' ORDER BY ' + orderBy;
+            query += ' ORDER BY ' + orderBy;
         }
 
-        Integer maxLimit = 50;
-        if (String.isNotBlank(limitNumber && Integer.valueOf(limitNumber) <= maxLimit)) {
-            q += ' LIMIT ' + limitNumber;
-        } else {
-            q += ' LIMIT ' + maxLimit;
+        if (String.isNotBlank(limitNumber)) {
+            query += ' LIMIT ' + limitNumber;
         }
 
-        return createWrapperRecords(Database.query(q), 'NKS_Announcement__c', title, content, dateField, showImage);
+        return createWrapperRecords(Database.query(query), 'NKS_Announcement__c', title, content, dateField, showImage);
     }
 
     @AuraEnabled(cacheable=true)
@@ -141,29 +148,33 @@ public with sharing class NKS_HomePageController {
         Boolean filterBySkills,
         List<String> skills
     ) {
-        List<RecordWrapper> records = new List<RecordWrapper>();
-
-        fflib_QueryFactory qf = getQueryFactory(
-            Knowledge__kav.getSObjectType(),
-            title,
-            content,
-            filter,
-            orderBy,
-            limitNumber
-        );
+        String query = 'SELECT Id, ' + title;
+        if (String.isNotBlank(dateField)) {
+            query += ', ' + dateField;
+        }
+        if (String.isNotBlank(content)) {
+            query += ', ' + content;
+        }
+        query += ' FROM Knowledge__kav';
 
         if (filterBySkills && skills != null && !skills.isEmpty()) {
             String skillStringKnowledge = String.join(skills, '__c,') + '__c';
-
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
-                skillStringKnowledge +
-                ')';
-            qf.setCondition(filter);
+            filter += (String.isBlank(filter) ? '' : ' AND ') + 
+                      'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillStringKnowledge + ')';
+        }
+        if (String.isNotBlank(filter)) {
+            query += ' WHERE ' + filter;
+        }
+    
+        if (String.isNotBlank(orderBy)) {
+            query += ' ORDER BY ' + orderBy;
+        }
+    
+        if (String.isNotBlank(limitNumber)) {
+            query += ' LIMIT ' + limitNumber;
         }
 
-        return createWrapperRecords(Database.query(qf.toSOQL()), 'Knowledge__kav', title, content, dateField, showImage);
+        return createWrapperRecords(Database.query(query), 'Knowledge__kav', title, content, dateField, showImage);
     }
 
     @AuraEnabled(cacheable=true)
@@ -176,19 +187,31 @@ public with sharing class NKS_HomePageController {
         String limitNumber,
         String dateField
     ) {
-        List<RecordWrapper> records = new List<RecordWrapper>();
-        fflib_QueryFactory qf = getQueryFactory(
-            Schema.getGlobalDescribe().get(objectName),
-            title,
-            content,
-            filter,
-            orderBy,
-            limitNumber
-        );
-        return createWrapperRecords(Database.query(qf.toSOQL()), objectName, title, content, dateField, false);
+        String query = 'SELECT Id, ' + title;
+        if (String.isNotBlank(dateField)) {
+            query += ', ' + dateField;
+        }
+        if (String.isNotBlank(content)) {
+            query += ', ' + content;
+        }
+        query += ' FROM ' + objectName;
+
+        if (String.isNotBlank(filter)) {
+            query += ' WHERE ' + filter;
+        }
+
+        if (String.isNotBlank(orderBy)) {
+            query += ' ORDER BY ' + orderBy;
+        }
+
+        if (String.isNotBlank(limitNumber)) {
+            query += ' LIMIT ' + limitNumber;
+        }
+
+        return createWrapperRecords(Database.query(query), objectName, title, content, dateField, false);
     }
 
-    public static Map<Id, String> getImageUrls(List<Id> recordIds) {
+    public static Map<Id, String> getImageUrls(Set<Id> recordIds) {
         Map<Id, String> urlMap = new Map<Id, String>();
         for (ContentDocumentLink cdl : [
             SELECT
@@ -218,7 +241,7 @@ public with sharing class NKS_HomePageController {
     }
 
     public static String getImageUrl(Id recordId) {
-        return getImageUrls(new List<Id>{ recordId }).get(recordId);
+        return getImageUrls(new Set<Id>{ recordId }).get(recordId);
     }
 
     @AuraEnabled(cacheable=true)
@@ -283,50 +306,6 @@ public with sharing class NKS_HomePageController {
         return readyResponses;
     }
 
-    private static fflib_QueryFactory getQueryFactory(
-        sObjectType objType,
-        String title,
-        String content,
-        String filter,
-        String orderBy,
-        String limitNumber
-    ) {
-        fflib_QueryFactory qf = new fflib_QueryFactory(objType);
-        qf.selectFields(new Set<String>{ 'LastModifiedDate', 'CreatedDate', title });
-        if (String.isNotBlank(content)) {
-            qf.selectFields(content.split(','));
-        }
-
-        qf.setCondition(filter);
-
-        if (String.isNotBlank(orderBy)) {
-            List<String> orderBys = orderBy.normalizeSpace().split(' ');
-            Integer i = 0;
-            Integer n = 1;
-            while (i < orderBys.size()) {
-                fflib_QueryFactory.SortOrder so = fflib_QueryFactory.SortOrder.ASCENDING;
-                String orderByField = orderBys[i];
-                if (n < orderBys.size() && orderBys[n] == 'ASC' || orderBys[n] == 'DESC') {
-                    if (orderBys[n] == 'DESC') {
-                        so = fflib_QueryFactory.SortOrder.DESCENDING;
-                    }
-                    i++;
-                    n++;
-                }
-
-                qf.addOrdering(orderByField, so);
-                i++;
-                n++;
-            }
-        }
-
-        if (String.isNotBlank(limitNumber)) {
-            qf.setLimit(Integer.valueOf(limitNumber));
-        }
-
-        return qf;
-    }
-
     public class RecordWrapper {
         @AuraEnabled
         public String recordId;
@@ -351,7 +330,7 @@ public with sharing class NKS_HomePageController {
     }
 
     private static List<RecordWrapper> createWrapperRecords(
-        List<sObject> listofrecords,
+        List<sObject> listOfWrapperRecords,
         String objectName,
         String title,
         String content,
@@ -361,37 +340,37 @@ public with sharing class NKS_HomePageController {
         List<RecordWrapper> records = new List<RecordWrapper>();
         Map<Id, String> urlMap = new Map<Id, String>();
 
-        if (listofrecords.isEmpty()) {
+        if (listOfWrapperRecords.isEmpty()) {
             return records;
         }
 
         if (showImage) {
-            List<Id> recordIds = new List<Id>();
-            for (sObject r : listofrecords) {
-                recordIds.add(r.Id);
+            Set<Id> recordIds = new Set<Id>();
+            for (sObject wrapperRecord : listOfWrapperRecords) {
+                recordIds.add(wrapperRecord.Id);
             }
             urlMap = getImageUrls(recordIds);
         }
 
-        for (sObject r : listofrecords) {
+        for (sObject wrapperRecord : listOfWrapperRecords) {
             RecordWrapper record = new RecordWrapper();
-            record.recordId = r.Id;
-            record.name = String.valueOf(r.get(title));
-            record.modifiedDate = Datetime.valueOf(r.get(datefield));
+            record.recordId = wrapperRecord.Id;
+            record.name = String.valueOf(wrapperRecord.get(title));
+            record.modifiedDate = Datetime.valueOf(wrapperRecord.get(datefield));
 
             if (showImage) {
-                record.imageurl = urlMap.get(r.Id);
+                record.imageurl = urlMap.get(wrapperRecord.Id);
             }
 
             if (String.isNotBlank(content)) {
-                record.content =  String.valueOf(r.get(content)).replaceAll('\\<.*?\\>', '');
+                record.content =  String.valueOf(wrapperRecord.get(content)).replaceAll('\\<.*?\\>', '');
                 record.summary = (record.content.length() > 600) ? record.content.mid(0, 600) + '...' : record.content;
             }
 
             if (objectName == 'NKS_Announcement__c') {
-                record.pin = Boolean.valueOf(r.get('NKS_News_Pin__c'));
-                record.publishDate = Datetime.valueOf(r.get('NKS_News_Publish_Date__c'));
-                record.lastUpdatedDate = Datetime.valueOf(r.get('NKS_News_Update_Date__c'));
+                record.pin = Boolean.valueOf(wrapperRecord.get('NKS_News_Pin__c'));
+                record.publishDate = Datetime.valueOf(wrapperRecord.get('NKS_News_Publish_Date__c'));
+                record.lastUpdatedDate = Datetime.valueOf(wrapperRecord.get('NKS_News_Update_Date__c'));
             }
             record.status = objectName == 'Case' ? record.status : '';
             records.add(record);
