@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import getKnowledgeList from '@salesforce/apex/NKS_HomePageController.getKnowledgeList';
 import getCaseList from '@salesforce/apex/NKS_HomePageController.getCaseList';
