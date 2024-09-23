@@ -41,4 +41,13 @@ public with sharing class NKS_SendNavTaskHandler {
             throw new AuraHandledException('Unable to fetch processing ID.');
         }
     }
+
+    @AuraEnabled
+    public static NavUnit__c getNavUnitInfo(Id navUnitId) {
+        try {
+            return [SELECT Name, INT_UnitNumber__c FROM NavUnit__c WHERE Id = :navUnitId LIMIT 1];
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving NavUnit information: ' + e.getMessage());
+        }
+    }  
 }

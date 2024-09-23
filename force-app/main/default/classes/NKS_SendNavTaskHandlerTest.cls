@@ -1,5 +1,15 @@
 @isTest
 public class NKS_SendNavTaskHandlerTest {
+
+    @testSetup
+    static void setupTestData() {
+        NavUnit__c navUnit = new NavUnit__c(
+            Name = 'Test Unit',
+            INT_UnitNumber__c = '1234'
+        );
+        insert navUnit;
+    }
+
     
     @isTest
     static void testInvokeSendNavTaskFlowException() {
@@ -23,5 +33,17 @@ public class NKS_SendNavTaskHandlerTest {
         Test.stopTest();
 
         Assert.areEqual('SomeProcessingId', result, 'Processing ID should match the expected value');
+    }
+
+    @isTest
+    static void testGetNavUnitInfo() {
+        NavUnit__c testNavUnit = [SELECT Id FROM NavUnit__c LIMIT 1];
+
+        Test.startTest();
+        NavUnit__c result = NKS_SendNavTaskHandler.getNavUnitInfo(testNavUnit.Id);
+        Test.stopTest();
+
+        Assert.areEqual('Test Unit', result.Name, 'The Name field should match.');
+        Assert.areEqual('1234', result.INT_UnitNumber__c, 'The INT_UnitNumber__c field should match.');
     }
 }
