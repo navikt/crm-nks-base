@@ -205,7 +205,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>navTaskOutput.NKS_Task_Type__c</assignToReference>
+            <assignToReference>navTaskOutput.NKS_TaskType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>tasktype.selectedTaskTypeId</elementReference>
@@ -391,23 +391,21 @@
         <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
-        <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
-            0, {!$Flow.CurrentDate}+ 4,
-            1, {!$Flow.CurrentDate} + 3,
-            2, {!$Flow.CurrentDate} + 2,
-            3, {!$Flow.CurrentDate} + 2,
-            4, {!$Flow.CurrentDate} + 2,
-            5, {!$Flow.CurrentDate} + 2,
-            6, {!$Flow.CurrentDate}+ 2,
-            TODAY())</expression>
+       <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
+0, {!$Flow.CurrentDate}+ 4,
+1, {!$Flow.CurrentDate} + 3,
+2, {!$Flow.CurrentDate} + 2,
+3, {!$Flow.CurrentDate} + 2,
+4, {!$Flow.CurrentDate} + 2,
+5, {!$Flow.CurrentDate} + 2,
+6, {!$Flow.CurrentDate}+ 2,
+TODAY())</expression>
     </formulas>
     <formulas>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt
-            bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder
-            konsekvens for ytelse&apos;)</expression>
+        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
     </formulas>
     <formulas>
         <name>Task_Theme_Code</name>
