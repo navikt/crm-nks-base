@@ -237,9 +237,9 @@ public with sharing class NKS_HomePageController {
             }
 
             String urlString = '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
-                cdl.ContentDocument.FileType == 'PDF'
+                (cdl.ContentDocument.FileType == 'PDF'
                 ? 'SVGZ'
-                : 'ORIGINAL_Png' + '&versionId=' + cdl.ContentDocument.LatestPublishedVersionId;
+                : 'ORIGINAL_Png') + '&versionId=' + cdl.ContentDocument.LatestPublishedVersionId;
 
             urlMap.put(cdl.LinkedEntityId, urlString);
         }
