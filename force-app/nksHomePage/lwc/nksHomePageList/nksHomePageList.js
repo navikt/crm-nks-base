@@ -12,7 +12,7 @@ import userId from '@salesforce/user/Id';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel = 'Title';
-    @api iconName = 'custom:custom1';
+    @api iconName = '';
     @api title = 'Name';
     @api content = '';
     @api objectName = 'NKS_Announcement__c';
