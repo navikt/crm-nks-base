@@ -212,7 +212,7 @@ public with sharing class NKS_HomePageControllerTest {
         NKS_HomePageController.getUsersCurrentApp();
         Test.stopTest();
     }
-    
+
     // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
     @isTest
     static void testUpdateUsersCurrentApp() {

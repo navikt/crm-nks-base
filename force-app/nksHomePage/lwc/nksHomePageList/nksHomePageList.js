@@ -7,7 +7,7 @@ import getUserSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from "@salesforce/apex";
+import { refreshApex } from '@salesforce/apex';
 import userId from '@salesforce/user/Id';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
@@ -25,7 +25,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api filterbyskills = false;
     @api refreshPageAutomatically = false;
     @api enableRefresh = false;
-    @api filter = 'Name = \'Navn\'';
+    @api filter = "Name = 'Navn'";
 
     records = [];
     userSkills = [];
@@ -70,28 +70,66 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     wiredResults;
-    @wire(getCaseList, { title: '$title', content: '$content', objectName: '$objectNameForCase', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield' })
+    @wire(getCaseList, {
+        title: '$title',
+        content: '$content',
+        objectName: '$objectNameForCase',
+        filter: '$filter',
+        orderBy: '$orderby',
+        limitNumber: '$limit',
+        dateField: '$datefield'
+    })
     caseList(result) {
         if (this.objectNameForCase) {
             this.handleWireResult(result);
         }
     }
 
-    @wire(getAnnouncementList, { title: '$title', content: '$content', objectName: '$objectNameForAnnouncement', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield', showImage: '$showimage', filterBySkills: '$filterbyskills', skills: '$userSkills' })
+    @wire(getAnnouncementList, {
+        title: '$title',
+        content: '$content',
+        objectName: '$objectNameForAnnouncement',
+        filter: '$filter',
+        orderBy: '$orderby',
+        limitNumber: '$limit',
+        dateField: '$datefield',
+        showImage: '$showimage',
+        filterBySkills: '$filterbyskills',
+        skills: '$userSkills'
+    })
     announcementList(result) {
         if (this.objectNameForAnnouncement) {
             this.handleWireResult(result);
         }
     }
 
-    @wire(getKnowledgeList, { title: '$title', content: '$content', objectName: '$objectNameForKnowledge',  filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield', showImage: '$showimage', filterBySkills: '$filterbyskills', skills: '$userSkills' })
+    @wire(getKnowledgeList, {
+        title: '$title',
+        content: '$content',
+        objectName: '$objectNameForKnowledge',
+        filter: '$filter',
+        orderBy: '$orderby',
+        limitNumber: '$limit',
+        dateField: '$datefield',
+        showImage: '$showimage',
+        filterBySkills: '$filterbyskills',
+        skills: '$userSkills'
+    })
     knowledgeList(result) {
         if (this.objectNameForKnowledge) {
             this.handleWireResult(result);
         }
     }
 
-    @wire(getList, { title: '$title', content: '$content', objectName: '$objectNameForGeneral', filter: '$filter', orderBy: '$orderby', limitNumber: '$limit', dateField: '$datefield' })
+    @wire(getList, {
+        title: '$title',
+        content: '$content',
+        objectName: '$objectNameForGeneral',
+        filter: '$filter',
+        orderBy: '$orderby',
+        limitNumber: '$limit',
+        dateField: '$datefield'
+    })
     generalList(result) {
         if (this.objectNameForGeneral) {
             this.handleWireResult(result);
@@ -195,11 +233,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
     }
 
-
     get newsRecords() {
         if (this.isNews && this.records && Array.isArray(this.records)) {
             let sortedList = [...this.records];
-    
+
             // Sort by 'pin' property in descending order (pinned items first)
             sortedList.sort((a, b) => (b.pin === a.pin ? 0 : b.pin ? 1 : -1));
             return sortedList;
@@ -232,6 +269,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
-        return (this.objectName === 'LiveChatTranscript' || this.isSTO) ? this.records.length - 1 : 0;
+        return this.objectName === 'LiveChatTranscript' || this.isSTO ? this.records.length - 1 : 0;
     }
 }

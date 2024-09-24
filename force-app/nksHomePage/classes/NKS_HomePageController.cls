@@ -50,10 +50,11 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled(cacheable=true)
     public static String getField(String type) {
         List<NKS_Announcement__c> announcement = [
-            SELECT NKS_Information__c 
+            SELECT NKS_Information__c
             FROM NKS_Announcement__c
             WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
-            ORDER BY SystemModstamp DESC LIMIT 1
+            ORDER BY SystemModstamp DESC
+            LIMIT 1
         ];
         if (announcement.isEmpty() || String.isBlank(announcement[0].NKS_Information__c)) {
             return '';
@@ -78,7 +79,7 @@ public with sharing class NKS_HomePageController {
             query += ', ' + content;
         }
         query += ' FROM Case';
-        
+
         if (String.isNotBlank(filter)) {
             query += ' WHERE ' + filter;
         }
@@ -106,8 +107,7 @@ public with sharing class NKS_HomePageController {
         Boolean filterBySkills,
         List<String> skills
     ) {
-        String query =
-            'SELECT Id, NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, ' + title;
+        String query = 'SELECT Id, NKS_News_Pin__c, NKS_News_Publish_Date__c, NKS_News_Update_Date__c, ' + title;
         if (String.isNotBlank(dateField) && dateField != 'NKS_News_Publish_Date__c') {
             query += ', ' + dateField;
         }
@@ -118,9 +118,13 @@ public with sharing class NKS_HomePageController {
 
         if (filterBySkills && skills != null && !skills.isEmpty()) {
             String skillStringAnnouncement = String.join(skills, '\',\'');
-            filter += (String.isBlank(filter) ? '' : ' AND ') + '(Skills__c INCLUDES (\'' + skillStringAnnouncement + '\'))';
+            filter +=
+                (String.isBlank(filter) ? '' : ' AND ') +
+                '(Skills__c INCLUDES (\'' +
+                skillStringAnnouncement +
+                '\'))';
         }
-        
+
         if (String.isNotBlank(filter)) {
             query += ' WHERE ' + filter;
         }
@@ -159,17 +163,20 @@ public with sharing class NKS_HomePageController {
 
         if (filterBySkills && skills != null && !skills.isEmpty()) {
             String skillStringKnowledge = String.join(skills, '__c,') + '__c';
-            filter += (String.isBlank(filter) ? '' : ' AND ') + 
-                      'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' + skillStringKnowledge + ')';
+            filter +=
+                (String.isBlank(filter) ? '' : ' AND ') +
+                'WITH DATA CATEGORY Tema__c ABOVE_OR_BELOW (' +
+                skillStringKnowledge +
+                ')';
         }
         if (String.isNotBlank(filter)) {
             query += ' WHERE ' + filter;
         }
-    
+
         if (String.isNotBlank(orderBy)) {
             query += ' ORDER BY ' + orderBy;
         }
-    
+
         if (String.isNotBlank(limitNumber)) {
             query += ' LIMIT ' + limitNumber;
         }
@@ -229,12 +236,11 @@ public with sharing class NKS_HomePageController {
                 continue;
             }
 
-            String urlString =
-                '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
-                cdl.ContentDocument.FileType == 'PDF' ? 'SVGZ' : 'ORIGINAL_Png' +
-                '&versionId=' +
-                cdl.ContentDocument.LatestPublishedVersionId;
-                
+            String urlString = '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
+                cdl.ContentDocument.FileType == 'PDF'
+                ? 'SVGZ'
+                : 'ORIGINAL_Png' + '&versionId=' + cdl.ContentDocument.LatestPublishedVersionId;
+
             urlMap.put(cdl.LinkedEntityId, urlString);
         }
         return urlMap;
@@ -363,7 +369,7 @@ public with sharing class NKS_HomePageController {
             }
 
             if (String.isNotBlank(content)) {
-                record.content =  String.valueOf(wrapperRecord.get(content)).replaceAll('\\<.*?\\>', '');
+                record.content = String.valueOf(wrapperRecord.get(content)).replaceAll('\\<.*?\\>', '');
                 record.summary = (record.content.length() > 600) ? record.content.mid(0, 600) + '...' : record.content;
             }
 
@@ -387,15 +393,24 @@ public with sharing class NKS_HomePageController {
         return plainTextList;
     }
 
-
     /*
         Used with nksDefaultUserApplication to track users switching default apps
     */
     @AuraEnabled
     public static String getUsersCurrentApp() {
         try {
-            UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :UserInfo.getUserId() LIMIT 1];
-            AppDefinition appDefinition = [SELECT DeveloperName FROM AppDefinition WHERE DurableId = :userAppInfo.AppDefinitionId LIMIT 1];
+            UserAppInfo userAppInfo = [
+                SELECT AppDefinitionId
+                FROM UserAppInfo
+                WHERE UserId = :UserInfo.getUserId()
+                LIMIT 1
+            ];
+            AppDefinition appDefinition = [
+                SELECT DeveloperName
+                FROM AppDefinition
+                WHERE DurableId = :userAppInfo.AppDefinitionId
+                LIMIT 1
+            ];
             return appDefinition.DeveloperName;
         } catch (Exception e) {
             System.debug(e.getMessage());
@@ -407,8 +422,18 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled
     public static void updateUsersCurrentApp(String appTarget) {
         try {
-            UserAppInfo userAppInfo = [SELECT AppDefinitionId FROM UserAppInfo WHERE UserId = :UserInfo.getUserId() LIMIT 1];
-            AppDefinition appDefinition = [SELECT DurableId FROM AppDefinition WHERE DeveloperName = :appTarget LIMIT 1];
+            UserAppInfo userAppInfo = [
+                SELECT AppDefinitionId
+                FROM UserAppInfo
+                WHERE UserId = :UserInfo.getUserId()
+                LIMIT 1
+            ];
+            AppDefinition appDefinition = [
+                SELECT DurableId
+                FROM AppDefinition
+                WHERE DeveloperName = :appTarget
+                LIMIT 1
+            ];
             userAppInfo.AppDefinitionId = appDefinition.DurableId;
             update userAppInfo;
         } catch (Exception e) {
