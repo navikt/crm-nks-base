@@ -23,7 +23,7 @@ public with sharing class NKS_HomePageController {
         Set<String> skills = new Set<String>();
 
         for (ServiceResourceSkill srSkill : [
-            SELECT Id, Skill.DeveloperName
+            SELECT Skill.DeveloperName
             FROM ServiceResourceSkill
             WHERE ServiceResource.RelatedRecordId = :userId
         ]) {
@@ -35,7 +35,7 @@ public with sharing class NKS_HomePageController {
     public static Set<String> getChatSkills(Id userId) {
         Set<String> skills = new Set<String>();
         for (Group g : [
-            SELECT DeveloperName, Name, Type, Id
+            SELECT DeveloperName
             FROM Group
             WHERE
                 DeveloperName LIKE 'NKS_Skill_%'
@@ -120,7 +120,7 @@ public with sharing class NKS_HomePageController {
             String skillStringAnnouncement = String.join(skills, '\',\'');
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
-                '(Skills__c INCLUDES (\'' +
+                '(Skills__c = \'\' OR Skills__c INCLUDES (\'' +
                 skillStringAnnouncement +
                 '\'))';
         }
@@ -237,9 +237,9 @@ public with sharing class NKS_HomePageController {
             }
 
             String urlString = '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
-                (cdl.ContentDocument.FileType == 'PDF'
+                (cdl.ContentDocument?.FileType == 'PDF'
                 ? 'SVGZ'
-                : 'ORIGINAL_Png') + '&versionId=' + cdl.ContentDocument.LatestPublishedVersionId;
+                : 'ORIGINAL_Png') + '&versionId=' + cdl.ContentDocument?.LatestPublishedVersionId;
 
             urlMap.put(cdl.LinkedEntityId, urlString);
         }
@@ -306,10 +306,7 @@ public with sharing class NKS_HomePageController {
             LIMIT 3
         ];
 
-        if (readyResponses.isEmpty()) {
-            return null;
-        }
-        return readyResponses;
+        return readyResponses.isEmpty() ? null : readyResponses;
     }
 
     public class RecordWrapper {
@@ -362,13 +359,13 @@ public with sharing class NKS_HomePageController {
             RecordWrapper record = new RecordWrapper();
             record.recordId = wrapperRecord.Id;
             record.name = String.valueOf(wrapperRecord.get(title));
-            record.modifiedDate = Datetime.valueOf(wrapperRecord.get(datefield));
+            record.modifiedDate = Datetime.valueOf(wrapperRecord.get(dateField));
 
             if (showImage) {
                 record.imageurl = urlMap.get(wrapperRecord.Id);
             }
 
-            if (String.isNotBlank(content)) {
+            if (String.isNotBlank(content) && String.isNotBlank((String) wrapperRecord.get(content))) {
                 record.content = String.valueOf(wrapperRecord.get(content)).replaceAll('\\<.*?\\>', '');
                 record.summary = (record.content.length() > 600) ? record.content.mid(0, 600) + '...' : record.content;
             }
