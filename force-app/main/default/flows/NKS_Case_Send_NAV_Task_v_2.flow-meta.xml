@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Add_henvendelse_ID</name>
@@ -116,7 +115,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_If_Processing_Id_Is_Null</targetReference>
+            <targetReference>Get_Person_Access</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -140,7 +139,7 @@
         <name>Set_NAV_Task_Saved_To_True</name>
         <label>Set NAV Task Saved To True</label>
         <locationX>165</locationX>
-        <locationY>1082</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task_Saved</assignToReference>
             <operator>Assign</operator>
@@ -244,7 +243,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>429</locationX>
-        <locationY>1298</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -253,45 +252,6 @@
             </value>
         </assignmentItems>
     </assignments>
-    <decisions>
-        <name>Check_If_Processing_Id_Is_Null</name>
-        <label>Check If Processing Id Is Null</label>
-        <locationX>363</locationX>
-        <locationY>974</locationY>
-        <defaultConnector>
-            <targetReference>Send_NAV_Task</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Is_Null</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
-            <conditions>
-                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue></stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Selected_Theme_SF_Id</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>Get_Communal_Service_Theme.Id</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_NAV_Task_Saved_To_True</targetReference>
-            </connector>
-            <label>Is Null</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Create_Task_on_Case_or_Person</name>
         <label>Create Task on Henvendelse or Person</label>
@@ -315,6 +275,52 @@
                 <targetReference>Remove_henvendelse_ID</targetReference>
             </connector>
             <label>Create person Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Save_NAV_Task</name>
+        <label>Save NAV Task</label>
+        <locationX>363</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>Send_NAV_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>save</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Selected_Theme_SF_Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Communal_Service_Theme.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HasPersonRead</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_NAV_Task_Saved_To_True</targetReference>
+            </connector>
+            <label>save</label>
         </rules>
     </decisions>
     <decisions>
@@ -348,7 +354,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>561</locationX>
-        <locationY>1190</locationY>
+        <locationY>1298</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -372,8 +378,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -381,8 +387,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -391,7 +397,7 @@
         <description>Formula for setting the default due date to next friday.</description>
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
-       <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
+        <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
 0, {!$Flow.CurrentDate}+ 4,
 1, {!$Flow.CurrentDate} + 3,
 2, {!$Flow.CurrentDate} + 2,
@@ -488,13 +494,47 @@ TODAY())</expression>
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Access</name>
+        <label>Get Person Access</label>
+        <locationX>363</locationX>
+        <locationY>974</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Save_NAV_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>HasPersonRead</assignToReference>
+            <field>HasReadAccess</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>personId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>176</locationX>
-        <locationY>1766</locationY>
+        <locationY>1874</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -776,7 +816,7 @@ TODAY())</expression>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>561</locationX>
-        <locationY>1082</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>
@@ -808,6 +848,16 @@ TODAY())</expression>
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>HasPersonRead</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>NAV_Task_Saved</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -833,6 +883,13 @@ TODAY())</expression>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
+        <name>personId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>Publish_Notification</name>
