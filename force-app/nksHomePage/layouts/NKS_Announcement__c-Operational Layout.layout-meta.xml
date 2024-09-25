@@ -17,7 +17,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>NKS_Operational_Send_Notification__c</field>
+                <field>NKS_Send_Notification__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
