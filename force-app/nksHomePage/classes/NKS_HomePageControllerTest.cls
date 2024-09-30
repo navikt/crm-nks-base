@@ -48,7 +48,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListAnnouncement() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getAnnouncementList(
+        List<NKS_HomePageController.RecordWrapper> recordlist = NKS_HomePageController.getAnnouncementList(
             'Name',
             'NKS_Information__c',
             'NKS_TypeFormula__c != null',
@@ -67,7 +67,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListKnowledge() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getKnowledgeList(
+        List<NKS_HomePageController.RecordWrapper> recordlist = NKS_HomePageController.getKnowledgeList(
             'Title',
             null,
             'LastModifiedDate = LAST_N_DAYS:30 AND Title != \'\'',
@@ -86,7 +86,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListCase() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getCaseList(
+        List<NKS_HomePageController.RecordWrapper> recordlist = NKS_HomePageController.getCaseList(
             'CaseNumber',
             null,
             'Status IN (\'New\', \'In progress\', \'Reserved\')',
@@ -102,7 +102,7 @@ public with sharing class NKS_HomePageControllerTest {
     @isTest
     static void testGetListWithNullValue() {
         Test.startTest();
-        List<NKS_HomePageController.Record> recordlist = NKS_HomePageController.getList(
+        List<NKS_HomePageController.RecordWrapper> recordlist = NKS_HomePageController.getList(
             'Title',
             null,
             'Knowledge__kav',
@@ -203,5 +203,21 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(null, testURL);
+    }
+
+    // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
+    @isTest
+    static void testGetUsersCurrentApp() {
+        Test.startTest();
+        NKS_HomePageController.getUsersCurrentApp();
+        Test.stopTest();
+    }
+
+    // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
+    @isTest
+    static void testUpdateUsersCurrentApp() {
+        Test.startTest();
+        NKS_HomePageController.updateUsersCurrentApp('NewApp');
+        Test.stopTest();
     }
 }

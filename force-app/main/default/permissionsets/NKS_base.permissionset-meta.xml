@@ -329,11 +329,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HistorikkViewController</apexClass>
+        <apexClass>NKS_FullmaktController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HistorikkViewController_Test</apexClass>
+        <apexClass>NKS_FullmaktControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_InternalSurveyController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -688,6 +692,10 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
@@ -931,6 +939,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.CRM_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentDone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentNotification__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

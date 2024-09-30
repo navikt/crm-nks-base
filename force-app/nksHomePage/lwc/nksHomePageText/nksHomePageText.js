@@ -16,6 +16,14 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     showSpinner = false;
     recordTypeName = '';
 
+    recordTypeMap = {
+        Nyhet: 'News',
+        Kampanje: 'Campaign',
+        'Teknisk og drift': 'Operational',
+        'Salesforce oppdatering': 'Salesforce_Update',
+        Trafikk: 'Traffic'
+    };
+
     @wire(getField, {
         type: '$recordTypeName'
     })
@@ -25,39 +33,24 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-        this.recordTypeName = this.getRecordTypeNameMap();
-        this[NavigationMixin.GenerateUrl]({
-            type: 'standard__objectPage',
-            attributes: {
-                objectApiName: 'NKS_Announcement__c',
-                actionName: 'list'
-            },
-            state: {
-                filterName: this.listViewName
-            }
-        }).then((url) => {
-            this.pageUrl = url;
-        });
+        this.recordTypeName = this.recordTypeMap[this.type] || this.type;
+        this.generatePageUrl();
     }
 
     loadField() {
         const { error, data } = this.wiredField;
         if (data) {
-            this.text = data && data.length > 0 ? data : null;
+            this.text = data?.length > 0 ? data : null;
         } else if (error) {
-            console.log('An error occurred: ' + JSON.stringify(error, null, 2));
+            console.error('An error occurred:', error);
         }
     }
 
     refreshField() {
         this.showSpinner = true;
         refreshApex(this.wiredField)
-            .then(() => {
-                this.loadField();
-            })
-            .finally(() => {
-                this.showSpinner = false;
-            });
+            .then(() => this.loadField())
+            .finally(() => (this.showSpinner = false));
     }
 
     navigateToList() {
@@ -73,71 +66,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         });
     }
 
-    getRecordTypeNameMap() {
-        switch (this.type) {
-            case 'Nyhet':
-                return 'News';
-            case 'Kampanje':
-                return 'Campaign';
-            case 'Teknisk og drift':
-                return 'Operational';
-            case 'Salesforce oppdatering':
-                return 'Salesforce_Update';
-            case 'Trafikk':
-                return 'Traffic';
-            default:
-                return this.type;
-        }
-    }
-
-    get isSalesforceUpdate() {
-        return this.type === 'Salesforce oppdatering';
-    }
-
-    get isTraffic() {
-        return this.type === 'Trafikk';
-    }
-
-    get icon() {
-        let nameString = null;
-        if (this.iconName && this.iconName !== '') nameString = this.iconName;
-
-        return nameString;
-    }
-
-    get isEmpty() {
-        return this.isOperational && !this.text ? true : false;
-    }
-
-    get isOperational() {
-        return this.type === 'Teknisk og drift' ? true : false;
-    }
-
-    /*
-    isInitiated = false;
-    channelName = '/topic/Announcement_Updates';
-    subscription = {};
-
-     get isEmpSubscribed() {
-        return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
-    }
-
-    refreshField = (response) => {
-        if (response.data.sobject.NKS_TypeFormula__c === this.type) {
-            const rand = Math.floor(Math.random() * (60000 - 1 + 1) + 1);
-            //eslint-disable-next-line @lwc/lwc/no-async-operation
-            setTimeout(() => {
-                this.isInitiated = true;
-                this.loadField();
-            }, rand);
-        }
-    };
-
-    connectedCallback() {
-        this.isInitiated = true;
-        this.loadField();
-        this.handleError();
-
+    generatePageUrl() {
         this[NavigationMixin.GenerateUrl]({
             type: 'standard__objectPage',
             attributes: {
@@ -150,36 +79,25 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         }).then((url) => {
             this.pageUrl = url;
         });
-    } 
-
-    loadField() {
-        getField({
-            type: this.recordTypeNameMap
-        })
-            .then((data) => {
-                this.text = data && data.length > 0 ? data : null;
-            })
-            .catch((error) => {
-                console.log('An error occurred: ' + JSON.stringify(error, null, 2));
-            });
-
-        if (!this.isEmpSubscribed) {
-            this.handleSubscribe();
-        }
     }
 
-    handleError() {
-        onError((error) => {
-            console.log('Received error from empApi: ', JSON.stringify(error));
-            this.handleSubscribe();
-        });
+    get isSalesforceUpdate() {
+        return this.type === 'Salesforce oppdatering';
     }
 
-    handleSubscribe() {
-        subscribe(this.channelName, -1, this.refreshField).then((response) => {
-            this.subscription = response;
-            console.log('Successfully subscribed to : ', JSON.stringify(response.channel));
-        });
+    get isTraffic() {
+        return this.type === 'Trafikk';
     }
-    */
+
+    get icon() {
+        return this.iconName && this.iconName.trim() !== '' ? this.iconName : null;
+    }
+
+    get isEmpty() {
+        return this.isOperational && !this.text;
+    }
+
+    get isOperational() {
+        return this.type === 'Teknisk og drift';
+    }
 }

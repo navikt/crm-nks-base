@@ -1,13 +1,7 @@
 <template>
-    <footer class="slds-card__footer" style="width: 100%">
+    <footer class="slds-card__footer" style="width: 100%; padding-right: unset">
         <lightning-layout horizontal-align={alignment}>
-            <lightning-button
-                if:true={validAction}
-                style={buttonStyle}
-                variant={buttonVariant}
-                label={buttonLabel}
-                onclick={handleButtonClick}
-            ></lightning-button>
+            <c-nks-button lwc:if={validAction} button-label={buttonLabel} onclick={handleButtonClick}></c-nks-button>
         </lightning-layout>
     </footer>
 </template>

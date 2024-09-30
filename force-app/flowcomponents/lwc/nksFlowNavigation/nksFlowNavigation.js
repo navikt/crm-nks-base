@@ -56,8 +56,4 @@ export default class NksFlowNavigation extends LightningElement {
     get validAction() {
         return this.availableActions.find((action) => action === this.action);
     }
-
-    get buttonStyle() {
-        return this.stretched ? 'display: grid; width: 100%;' : '';
-    }
 }
