@@ -24,7 +24,7 @@
     </values>
     <values>
         <field>Parents_to_Delete__c</field>
-        <value xsi:type="xsd:string">CaseId</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Policy_Batch_Size__c</field>
