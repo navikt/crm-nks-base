@@ -21,6 +21,7 @@
                             class="slds-float_right"
                             alternative-text="Oppdater"
                             icon-name="utility:refresh"
+                            disabled={isRefreshDisabled}
                             onclick={refreshComponent}
                         ></lightning-button-icon>
                     </lightning-layout-item>
@@ -102,6 +103,7 @@
                         class="slds-float_right"
                         alternative-text="Oppdater"
                         icon-name="utility:refresh"
+                        disabled={isRefreshDisabled}
                         onclick={refreshComponent}
                     ></lightning-button-icon>
                 </lightning-layout-item>
