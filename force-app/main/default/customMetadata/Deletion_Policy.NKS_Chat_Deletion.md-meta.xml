@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>NKS Chat Anonymization</label>
+    <label>NKS Chat Deletion</label>
     <protected>false</protected>
     <values>
         <field>Childs_to_Delete__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Fields_to_Anonymize__c</field>
-        <value xsi:type="xsd:string">Body, NKS_Conversation__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Parents_to_Delete__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Policy_Condition_Field__c</field>
-        <value xsi:type="xsd:string">NKS_Ready_for_Anonymization__c</value>
+        <value xsi:type="xsd:string">NKS_Ready_for_Deletion__c</value>
     </values>
     <values>
         <field>Policy_Object__c</field>
@@ -40,10 +40,10 @@
     </values>
     <values>
         <field>Policy_Success_Field__c</field>
-        <value xsi:type="xsd:string">NKS_Anonymized__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Policy_Type__c</field>
-        <value xsi:type="xsd:string">Field Anonymization</value>
+        <value xsi:type="xsd:string">Record Deletion</value>
     </values>
 </CustomMetadata>
