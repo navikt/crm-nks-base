@@ -1,5 +1,4 @@
 public without sharing class NKS_CallFlowController {
-    private static Map<String, Schema.SObjectType> globalDesc = Schema.getGlobalDescribe();
     private static final List<String> QueryFields = new List<String>{ 'puzzel__SessionId__c', 'puzzel__Queue__c' };
 
     /**
@@ -8,7 +7,7 @@ public without sharing class NKS_CallFlowController {
      * @return Schema.SObjectType
      **/
     private static Schema.SObjectType getEnquiryLogObject() {
-        return globalDesc.containsKey('puzzel__EnquiryLog__c') ? globalDesc.get('puzzel__EnquiryLog__c') : null;
+        return Type.forName('puzzel__EnquiryLog__c') != null ? puzzel__EnquiryLog__c.sObjectType : null;
     }
 
     @InvocableMethod(
