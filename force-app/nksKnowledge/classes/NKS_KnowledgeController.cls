@@ -39,12 +39,19 @@ public with sharing class NKS_KnowledgeController {
         if (fieldLabelsCache.containsKey(fieldName)) {
             return fieldLabelsCache.get(fieldName);
         }
+        
         String objectName = 'Knowledge__kav';
-        if (Schema.getGlobalDescribe().containsKey(objectName)) {
-            Schema.DescribeSObjectResult describeResult = Schema.getGlobalDescribe().get(objectName).getDescribe();
-            Map<String, Schema.SObjectField> fieldsMap = describeResult.fields.getMap();
+        if (Type.forName(objectName) != null) {
+            Schema.DescribeSObjectResult describeResult;
+            try {
+                List<Schema.DescribeSObjectResult> describes = Schema.describeSObjects(new String[] { 'Knowledge__kav' }, SObjectDescribeOptions.DEFERRED);
+                describeResult = describes[0];
+            } catch (InvalidParameterValueException ipve) {
+                describeResult = null;
+            }
+            Map<String, Schema.SObjectField> fieldsMap = describeResult?.fields.getMap();
 
-            if (fieldsMap.containsKey(fieldName)) {
+            if (fieldsMap?.containsKey(fieldName)) {
                 String label = fieldsMap.get(fieldName).getDescribe().getLabel();
                 fieldLabelsCache.put(fieldName, label);
                 return label;
