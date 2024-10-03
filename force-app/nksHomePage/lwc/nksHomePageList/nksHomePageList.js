@@ -33,6 +33,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     channelName = '/topic/Announcement_Updates';
     subscription = {};
     pageurl;
+    isRefreshDisabled = false;
 
     connectedCallback() {
         this.showSpinner = true;
@@ -225,8 +226,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
 
     async refreshComponent() {
         this.showSpinner = true;
+        this.isRefreshDisabled = true;
         await refreshApex(this.wiredResults);
         this.showSpinner = false;
+        setTimeout(() => { // 10 sec delay to avoid spamming requests
+            this.isRefreshDisabled = false;
+        }, 10000);
     }
 
     get isEmpSubscribed() {

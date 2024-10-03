@@ -1,6 +1,6 @@
 public without sharing class NKS_CallFlowController {
-    private static Map<String, Schema.SObjectType> globalDesc = Schema.getGlobalDescribe();
     private static final List<String> QueryFields = new List<String>{ 'puzzel__SessionId__c', 'puzzel__Queue__c' };
+    private static Map<String, Schema.SObjectType> globalDesc = Schema.getGlobalDescribe();
 
     /**
      * @description: Returns the Enquiry log SObject type if it exists
