@@ -704,7 +704,28 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Nav_Task_Quick_Text</name>
+            <extensionName>c:crmNavTaskQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Case.Origin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Task_Description</name>
+            <defaultValue>
+                <stringValue>{!Nav_Task_Quick_Text.selectedValue}</stringValue>
+            </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive
@@ -900,6 +921,14 @@ TODAY())</expression>
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <description>Hurtigtekst hentet fra NKS NAV Task Quick Text LWC</description>
+        <name>Quick_Text_Value</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
