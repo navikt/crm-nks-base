@@ -93,11 +93,15 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         return this.iconName && this.iconName.trim() !== '' ? this.iconName : null;
     }
 
-    get isEmpty() {
-        return this.isOperational && !this.text;
+    get showOperational() {
+        return this.isOperational && this.text;
     }
 
     get isOperational() {
         return this.type === 'Teknisk og drift';
+    }
+
+    get showSalesforceUpdate() {
+        return this.isSalesforceUpdate && this.text;
     }
 }

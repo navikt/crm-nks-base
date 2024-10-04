@@ -1,0 +1,52 @@
+<template>
+    <div class="badge-container">
+        <lightning-badge
+            label={badgeLabel}
+            icon-name={badgeIcon}
+            class={className}
+            onkeypress={toggleDropdown}
+            onclick={toggleDropdown}
+            aria-expanded={ariaExpanded}
+        ></lightning-badge>
+
+        <div class="dropdown-content" lwc:if={showContent}>
+            <div class="headerLine"></div>
+            <div class="slds-var-p-around_large slds-grid slds-grid_vertical">
+                <div>
+                    <template lwc:if={isEditing}>
+                        <lightning-input-rich-text
+                            value={draft}
+                            onchange={handleTextChange}
+                        ></lightning-input-rich-text>
+                    </template>
+                    <template lwc:else>
+                        <lightning-formatted-rich-text value={recordInfo}></lightning-formatted-rich-text>
+                    </template>
+                </div>
+                <div class="slds-var-p-top_small">
+                    <template lwc:if={isEditable}>
+                        <template lwc:if={isEditing}>
+                            <lightning-button
+                                class="slds-var-p-left_small slds-float_right"
+                                label="Lagre"
+                                onclick={handleSave}
+                            ></lightning-button>
+                            <lightning-button
+                                class="slds-float_right"
+                                label="Avbryt"
+                                onclick={handleCancel}
+                            ></lightning-button>
+                        </template>
+                        <template lwc:else>
+                            <lightning-button
+                                class="slds-float_right"
+                                label="Rediger"
+                                onclick={enableEditing}
+                            ></lightning-button>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

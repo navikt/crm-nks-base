@@ -1,0 +1,32 @@
+.container {
+    background-color: #335f67;
+    border-bottom: solid 0.0625rem #75aeb6;
+}
+
+.icon-container {
+    width: 53px;
+    height: 53px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.home-icon {
+    --slds-c-icon-color-foreground-default: #335f67;
+    padding: 5px;
+}
+
+h1 {
+    color: white;
+}
+
+.badge-icon {
+    --slds-c-badge-icon-color-foreground: #fff;
+    border: 2px white solid;
+    font-size: 0.875rem;
+    font-weight: normal;
+}

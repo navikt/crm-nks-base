@@ -5,6 +5,11 @@
         <field>Knowledge__kav.NKS_Publish_On_Home_Page__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Knowledge__kav.Ready_Response_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Communication</label>
     <objectPermissions>

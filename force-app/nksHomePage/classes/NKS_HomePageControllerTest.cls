@@ -11,10 +11,14 @@ public with sharing class NKS_HomePageControllerTest {
         Id newsRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
             .get('News')
             .getRecordTypeId();
+        Id nksStatusRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+        .get('NKS Status')
+        .getRecordTypeId();
 
         NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
+        NKS_TestDataFactory.createAnnouncements(1, nksStatusRecordTypeId);
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
             Title = 'Test Article',
@@ -33,7 +37,7 @@ public with sharing class NKS_HomePageControllerTest {
         String info = NKS_HomePageController.getField('Salesforce_Update');
         Test.stopTest();
 
-        System.assertEquals(700, info.length());
+        Assert.areEqual(700, info.length());
     }
 
     @isTest
@@ -42,7 +46,7 @@ public with sharing class NKS_HomePageControllerTest {
         String info = NKS_HomePageController.getField('Traffic');
         Test.stopTest();
 
-        System.assertEquals('', info);
+        Assert.areEqual('', info);
     }
 
     @isTest
@@ -61,7 +65,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertNotEquals(0, recordlist.size());
+        Assert.areNotEqual(0, recordlist.size());
     }
 
     @isTest
@@ -80,7 +84,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertNotEquals(0, recordlist.size());
+        Assert.areNotEqual(0, recordlist.size());
     }
 
     @isTest
@@ -96,7 +100,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertNotEquals(0, recordlist.size());
+        Assert.areNotEqual(0, recordlist.size());
     }
 
     @isTest
@@ -113,7 +117,7 @@ public with sharing class NKS_HomePageControllerTest {
         );
         Test.stopTest();
 
-        System.assertEquals(0, recordlist.size());
+        Assert.areEqual(0, recordlist.size());
     }
 
     @isTest
@@ -125,9 +129,9 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         if (testSkills.size() > 0) {
-            System.assertNotEquals(0, testSkills.size());
+            Assert.areNotEqual(0, testSkills.size());
         } else {
-            System.assertEquals(0, testSkills.size());
+            Assert.areEqual(0, testSkills.size());
         }
     }
 
@@ -136,7 +140,7 @@ public with sharing class NKS_HomePageControllerTest {
         Test.startTest();
         NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
         Test.stopTest();
-        System.assertEquals(null, testCampaign);
+        Assert.areEqual(null, testCampaign);
     }
 
     @isTest
@@ -145,7 +149,7 @@ public with sharing class NKS_HomePageControllerTest {
         Test.startTest();
         NKS_Announcement__c testNews = NKS_HomePageController.getNews(obj.Id);
         Test.stopTest();
-        System.assertNotEquals(null, testNews);
+        Assert.areNotEqual(null, testNews);
     }
 
     @isTest
@@ -154,7 +158,7 @@ public with sharing class NKS_HomePageControllerTest {
         List<Knowledge__kav> testList = NKS_HomePageController.getReadyResponses();
         Test.stopTest();
 
-        System.assertEquals(null, testList);
+        Assert.areEqual(null, testList);
     }
 
     @isTest
@@ -166,7 +170,7 @@ public with sharing class NKS_HomePageControllerTest {
         List<String> res = NKS_HomePageController.removeHtmlTags(testList);
         Test.stopTest();
 
-        System.assertEquals('Test String', res[0]);
+        Assert.areEqual('Test String', res[0]);
     }
 
     @isTest
@@ -176,7 +180,7 @@ public with sharing class NKS_HomePageControllerTest {
         String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
         Test.stopTest();
 
-        System.assertEquals(null, testURL);
+        Assert.areEqual(null, testURL);
     }
 
     @isTest
@@ -202,7 +206,7 @@ public with sharing class NKS_HomePageControllerTest {
         String testURL = NKS_HomePageController.getImageUrl(testNews.Id);
         Test.stopTest();
 
-        System.assertNotEquals(null, testURL);
+        Assert.areNotEqual(null, testURL);
     }
 
     // Not possible to insert UserAppInfo and AppDefinition, so this is just for coverage
@@ -219,5 +223,30 @@ public with sharing class NKS_HomePageControllerTest {
         Test.startTest();
         NKS_HomePageController.updateUsersCurrentApp('NewApp');
         Test.stopTest();
+    }
+
+    @isTest
+    static void testGetNksStatus () {
+        Test.startTest();
+        NKS_Announcement__c testNksStatus = NKS_HomePageController.getNksStatus('Test 0');
+        Test.stopTest();
+        Assert.areNotEqual(null, testNksStatus);
+    }
+
+    @isTest
+    static void testUpdateNksStatus_SuccessfulUpdate() {
+        NKS_Announcement__c status = [SELECT Id, Name FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'NKS status' LIMIT 1];
+
+        Map<String, String> fields = new Map<String, String>{
+            'Id' => status.Id,
+            'NKS_Information__c' => 'Updated Information'
+        };
+
+        Test.startTest();
+        NKS_HomePageController.updateNksStatus(fields);
+        Test.stopTest();
+
+        NKS_Announcement__c updatedStatus = [SELECT NKS_Information__c FROM NKS_Announcement__c WHERE Id = :status.Id];
+        Assert.areEqual('Updated Information', updatedStatus.NKS_Information__c, 'The NKS_Information__c field should be updated.');
     }
 }

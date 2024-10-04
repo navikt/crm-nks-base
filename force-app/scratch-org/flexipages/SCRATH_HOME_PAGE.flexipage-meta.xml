@@ -3,8 +3,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksHomePageCampaignBanner</componentName>
-                <identifier>c_nksHomePageCampaignBanner1</identifier>
+                <componentInstanceProperties>
+                    <name>fagsystemTitle</name>
+                    <value>Status fagsystemer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>navTitle</name>
+                    <value>Status NAV.no</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageHighlightPanel</componentName>
+                <identifier>c_nksHomePageHighlightPanel</identifier>
             </componentInstance>
         </itemInstances>
         <name>top</name>
@@ -15,7 +23,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
-                    <value>Nyheter</value>
+                    <value>Siste nytt om fag</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>content</name>
@@ -84,12 +92,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksHomePageUsefulLinks</componentName>
-                <identifier>c_nksHomePageUsefulLinks1</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>cardTitle</name>
                     <value>Trafikkstyrers hjørne</value>
@@ -147,13 +149,6 @@
                 </componentInstanceProperties>
                 <componentName>crmNavTaskListView</componentName>
                 <identifier>c_crmNavTaskListView</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>middle</name>
@@ -162,9 +157,15 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>nksNavigateToNewApplication</componentName>
+                <identifier>c_nksNavigateToNewApplication</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
-                    <value>Aktuelt i NAV kontaktsenter</value>
+                    <value>Aktuelt fra NAV</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>content</name>
@@ -194,11 +195,11 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>limit</name>
-                    <value>8</value>
+                    <value>2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>linklabel</name>
-                    <value>Vis alle</value>
+                    <value>Nyhetsarkiv</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>listviewname</name>
@@ -226,6 +227,32 @@
                 </componentInstanceProperties>
                 <componentName>nksHomePageList</componentName>
                 <identifier>nksHomePageList4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>cardTitle</name>
+                    <value>Nytt og nyttig i Salesforce</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableRefresh</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>custom:custom11</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>listViewName</name>
+                    <value>Salesforce_oppdateringer</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>type</name>
+                    <value>Salesforce oppdatering</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageText</componentName>
+                <identifier>c_nksHomePageText</identifier>
             </componentInstance>
         </itemInstances>
         <name>right</name>

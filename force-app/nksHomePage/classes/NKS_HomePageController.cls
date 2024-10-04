@@ -299,13 +299,12 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled(cacheable=true)
     public static List<Knowledge__kav> getReadyResponses() {
         List<Knowledge__kav> readyResponses = [
-            SELECT Id, Title, LastModifiedDate
+            SELECT Id, Title, Ready_Response_Title__c
             FROM Knowledge__kav
             WHERE NKS_Publish_On_Home_Page__c = TRUE AND PublishStatus = 'Online'
             ORDER BY LastModifiedDate DESC
-            LIMIT 3
+            LIMIT 5
         ];
-
         return readyResponses.isEmpty() ? null : readyResponses;
     }
 
@@ -435,6 +434,44 @@ public with sharing class NKS_HomePageController {
             update userAppInfo;
         } catch (Exception e) {
             System.debug(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static NKS_Announcement__c getNksStatus (String title) {
+        List<NKS_Announcement__c> statuses = [
+            SELECT
+                Id,
+                Name,
+                NKS_Information__c
+            FROM NKS_Announcement__c
+            WHERE Name =: title AND 
+            RecordType.DeveloperName = 'NKS_Status'
+            ORDER BY CreatedDate DESC
+        ];
+        if (statuses.isEmpty()) {
+            return null;
+        }
+        return statuses[0];
+    }
+
+    @AuraEnabled
+    public static void updateNksStatus(Map<String, String> fields) { 
+       NKS_Announcement__c status = new NKS_Announcement__c(Id = fields.get('Id'));
+        
+      if (fields.containsKey('NKS_Information__c')) {
+            status.NKS_Information__c = fields.get('NKS_Information__c');
+        }
+
+        try {
+            Database.SaveResult result = Database.update(status, false); 
+            if (result.isSuccess()) {
+                NKS_Home_Page_Event__e event = new NKS_Home_Page_Event__e(
+                RecordId__c = status.Id);
+            EventBus.publish(event);
+            }
+        } catch (DmlException e) {
+            throw new AuraHandledException(e.getMessage());
         }
     }
 }
