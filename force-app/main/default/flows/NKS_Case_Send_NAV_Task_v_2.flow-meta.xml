@@ -408,6 +408,12 @@
 TODAY())</expression>
     </formulas>
     <formulas>
+        <description>Checks if the user has beta access.</description>
+        <name>hasBetaAccess</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Permission.NKS_Beta}</expression>
+    </formulas>
+    <formulas>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
@@ -705,7 +711,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Nav_Task_Quick_Text</name>
-            <extensionName>c:crmNavTaskQuickText</extensionName>
+            <extensionName>c:crmNavTaskCommunalQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
@@ -717,6 +723,13 @@ TODAY())</expression>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>hasBetaAccess</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -921,14 +934,6 @@ TODAY())</expression>
         <value>
             <booleanValue>false</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <description>Hurtigtekst hentet fra NKS NAV Task Quick Text LWC</description>
-        <name>Quick_Text_Value</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
