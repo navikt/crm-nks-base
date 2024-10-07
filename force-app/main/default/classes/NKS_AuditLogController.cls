@@ -9,33 +9,49 @@ public without sharing class NKS_AuditLogController {
 
     @AuraEnabled
     public static void createAuditLog(Id recordId, String lookupField) {
-        try {
-            NKS_Audit_Log__c al = new NKS_Audit_Log__c();
-            if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
-                al.RecordTypeId = getRecordTypeId(KNOWLEDGE_AUDIT_LOG);
-                al.Knowledge__c = recordId;
+        if (recordId == null || lookupField == null) {
+            return;
+        }
+
+        if (lookupField == KNOWLEDGE_LOOKUP_FIELD) { 
+            Knowledge__kav kav = [SELECT Id, PublishStatus, KnowledgeArticleId FROM Knowledge__kav WHERE Id = :recordId LIMIT 1];
+            if (kav.PublishStatus != 'Draft') {
+                createAuditLogRecord(recordId, KNOWLEDGE_AUDIT_LOG, kav.KnowledgeArticleId);
             }
-            else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
-                al.RecordTypeId = getRecordTypeId(ANNOUNCEMENT_AUDIT_LOG);
-                al.Announcement__c = recordId;
+        } 
+        else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
+            NKS_Announcement__c announcement = [SELECT Id, NKS_News_Status__c FROM NKS_Announcement__c WHERE Id = :recordId LIMIT 1];
+            if (announcement.NKS_News_Status__c != 'Draft') {
+                createAuditLogRecord(recordId, ANNOUNCEMENT_AUDIT_LOG, null);
             }
-            else {
-                return;
-            }
-              
-            al.User__c = USERID;
-            al.Operation__c = 'View';
-            
-            Database.SaveResult sr = Database.insert(al, false);
-            if (!sr.isSuccess()) {
-                logErrorMessage (sr);
-            }
-        } catch (Exception e) {
-            logger.error('Failed to create Audit Log record: ' + e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+        }
+}
+
+private static void createAuditLogRecord(Id recordId, String lookupField, String knowledgeArticleId) {
+    try {
+        NKS_Audit_Log__c auditLog = new NKS_Audit_Log__c();
+        auditLog.RecordTypeId = getRecordTypeId(lookupField);
+        auditLog.User__c = USERID;  
+        auditLog.Operation__c = 'View';
+        if (lookupField == KNOWLEDGE_AUDIT_LOG) {
+            auditLog.Knowledge__c = recordId;
+            auditLog.Knowledge_Id__c = recordId;
+            auditLog.Knowledge_Article_Id__c = knowledgeArticleId;
+        } else if (lookupField == ANNOUNCEMENT_AUDIT_LOG) {
+            auditLog.Announcement__c = recordId;
+            auditLog.Announcement_Id__c = recordId;
+        }
+
+        Database.SaveResult sr = Database.insert(auditLog, false);
+        if (!sr.isSuccess()) {
+            logErrorMessage(sr);
+        }
+    } catch (Exception e) {
+        logger.error('Failed to create Audit Log record: ' + e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
     } finally {
         logger.publish();
-    } 
     }
+}
 
     @AuraEnabled(cacheable=true)
     public static Integer countViews(Id recordId, String lookupField) {
