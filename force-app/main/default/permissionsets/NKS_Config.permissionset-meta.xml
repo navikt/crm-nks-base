@@ -237,7 +237,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>NKS_Audit_Log__c.Announcement_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>NKS_Audit_Log__c.Announcement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Audit_Log__c.Knowledge_Article_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Audit_Log__c.Knowledge_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
