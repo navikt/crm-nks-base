@@ -14,14 +14,23 @@ public with sharing class NKS_AuditLogController {
         }
 
         if (lookupField == KNOWLEDGE_LOOKUP_FIELD) {
-            Knowledge__kav kav = [SELECT Id, PublishStatus, KnowledgeArticleId FROM Knowledge__kav WHERE Id = :recordId LIMIT 1];
-            if (kav.PublishStatus!= STATUS_DRAFT) {
+            Knowledge__kav kav = [
+                SELECT Id, PublishStatus, KnowledgeArticleId
+                FROM Knowledge__kav
+                WHERE Id = :recordId
+                LIMIT 1
+            ];
+            if (kav.PublishStatus != STATUS_DRAFT) {
                 createAuditLogRecord(recordId, KNOWLEDGE_AUDIT_LOG, kav.KnowledgeArticleId);
             }
-        } 
-        else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
-            NKS_Announcement__c announcement = [SELECT Id, NKS_News_Status__c FROM NKS_Announcement__c WHERE Id = :recordId LIMIT 1];
-            if (announcement.NKS_News_Status__c!= STATUS_DRAFT) {
+        } else if (lookupField == ANNOUNCEMENT_LOOKUP_FIELD) {
+            NKS_Announcement__c announcement = [
+                SELECT Id, NKS_News_Status__c
+                FROM NKS_Announcement__c
+                WHERE Id = :recordId
+                LIMIT 1
+            ];
+            if (announcement.NKS_News_Status__c != STATUS_DRAFT) {
                 createAuditLogRecord(recordId, ANNOUNCEMENT_AUDIT_LOG, null);
             }
         }
@@ -31,8 +40,9 @@ public with sharing class NKS_AuditLogController {
         try {
             NKS_Audit_Log__c auditLog = new NKS_Audit_Log__c();
             auditLog.RecordTypeId = getRecordTypeId(lookupField);
-            auditLog.User__c = USERID;  
+            auditLog.User__c = USERID;
             auditLog.Operation__c = 'View';
+
             if (lookupField == KNOWLEDGE_AUDIT_LOG) {
                 auditLog.Knowledge__c = recordId;
                 auditLog.Knowledge_Id__c = recordId;
@@ -47,7 +57,11 @@ public with sharing class NKS_AuditLogController {
                 logErrorMessage(sr);
             }
         } catch (Exception e) {
-            logger.error('Failed to create Audit Log record: ' + e.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error(
+                'Failed to create Audit Log record: ' + e.getMessage(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
+            );
         } finally {
             logger.publish();
         }
@@ -59,9 +73,10 @@ public with sharing class NKS_AuditLogController {
         Set<Id> resultList = new Set<Id>();
         Map<String, Object> bindParams = new Map<String, Object>{ 'recordId' => recordId };
         String query =
-        'SELECT COUNT_DISTINCT(User__c) nmbOfUniqueViews FROM NKS_Audit_Log__c WHERE ' +
-        lookupField +
-        ' = :recordId';
+            'SELECT COUNT_DISTINCT(User__c) nmbOfUniqueViews FROM NKS_Audit_Log__c WHERE ' +
+            lookupField +
+            ' = :recordId';
+
         try {
             AggregateResult[] countResult = Database.queryWithBinds(query, bindParams, AccessLevel.SYSTEM_MODE);
             return Integer.valueOf(countResult[0].get('nmbOfUniqueViews'));
@@ -78,15 +93,15 @@ public with sharing class NKS_AuditLogController {
             throw new AuraHandledException('Problem checking knowledge user: ' + e.getMessage());
         }
     }
- 
+
     @TestVisible
     private static String getRecordTypeId(String recordTypeName) {
         return Schema.SObjectType.NKS_Audit_Log__c.getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
     }
 
-    private static void logErrorMessage (Database.SaveResult sr) {
+    private static void logErrorMessage(Database.SaveResult sr) {
         String errorMessage = 'The following error has occurred under creation of Audit Log record:\n';
-        for(Database.Error error : sr.getErrors()) {
+        for (Database.Error error : sr.getErrors()) {
             errorMessage += error.getStatusCode() + ': ' + error.getMessage() + '\n';
         }
         logger.error(errorMessage, null, CRM_ApplicationDomain.Domain.NKS);
