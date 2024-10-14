@@ -1,11 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
 import getNksStatus from '@salesforce/apex/NKS_HomePageController.getNksStatus';
 import { refreshApex } from '@salesforce/apex';
-import { subscribe, unsubscribe, onError, setDebugFlag } from 'lightning/empApi';
+import { subscribe, unsubscribe, onError } from 'lightning/empApi';
 
 export default class NksHomePageHighlightPanelTop extends LightningElement {
     @api fagsystemTitle = 'Status fagsystemer';
-    @api navTitle = 'status NAV.no';
+    @api navTitle = 'Status NAV.no';
 
     wiredFagsystem;
     wiredNav;
@@ -118,11 +118,6 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
             }
             this.lastClickedBadge = 'nav';
         }
-    }
-
-    handleRecordUpdated() {
-        refreshApex(this.wiredFagsystem);
-        refreshApex(this.wiredNav);
     }
 
     handleSubscribe() {

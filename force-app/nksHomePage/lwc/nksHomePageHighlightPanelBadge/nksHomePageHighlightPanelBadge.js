@@ -47,8 +47,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     }
 
     get isEditable() {
-        return hasPermission;
-        //return false;
+        return hasPermission || false;
     }
 
     updateBadgeClass() {
@@ -61,16 +60,13 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
             this.className = this.className.replace('disabled-badge', '').trim();
         }
 
-        if (hasPermission && !this.className.includes('cursor-pointer')) {
+        if (hasPermission) {
             this.className += ' cursor-pointer';
         }
 
         if (this.recordInfo) {
             this.className = 'custom-badge slds-theme_error cursor-pointer';
             this.badgeIcon = 'utility:error';
-        } else {
-            this.className = 'custom-badge slds-theme_success cursor-pointer';
-            this.badgeIcon = 'utility:success';
         }
     }
 
