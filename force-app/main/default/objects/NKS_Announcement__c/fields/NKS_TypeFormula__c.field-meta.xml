@@ -3,8 +3,7 @@
     <fullName>NKS_TypeFormula__c</fullName>
     <externalId>false</externalId>
     <formula>CASE(RecordType.DeveloperName, &apos;News&apos;, &apos;Nyhet&apos;, &apos;Campaign&apos;, &apos;Kampanje&apos;, &apos;Operational&apos;, &apos;Teknisk og drift&apos;, 
-        &apos;Salesforce_Update&apos;, &apos;Salesforce oppdatering&apos;, &apos;Traffic&apos;, &apos;Trafikk&apos;, 
-        &apos;Current_In_NAV_Contact_Center&apos;, &apos;Aktuelt i NAV kontaktsenter&apos;,
+        &apos;Salesforce_Update&apos;, &apos;Salesforce oppdatering&apos;, &apos;Traffic&apos;, &apos;Trafikk&apos;,
         &apos;NKS_Status&apos;, &apos;NKS status&apos;, &apos;&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Type</label>

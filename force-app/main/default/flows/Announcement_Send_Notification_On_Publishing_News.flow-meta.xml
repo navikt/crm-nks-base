@@ -171,19 +171,12 @@
             <targetReference>Get_Notification</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>NKS_TypeFormula__c</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Nyhet</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>NKS_TypeFormula__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Aktuelt i NAV kontaktsenter</stringValue>
             </value>
         </filters>
         <filters>
