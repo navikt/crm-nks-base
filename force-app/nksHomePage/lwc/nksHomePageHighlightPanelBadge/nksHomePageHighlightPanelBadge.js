@@ -9,7 +9,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     _recordId;
     _recordInfo;
     badgeIcon = 'utility:success';
-    className = 'custom-badge slds-theme_success';
+    className = 'slds-badge slds-theme_success custom-badge';
     isEditing = false;
     draft;
 
@@ -51,7 +51,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     }
 
     updateBadgeClass() {
-        this.className = 'custom-badge slds-theme_success';
+        this.className = 'slds-badge slds-theme_success custom-badge';
         this.badgeIcon = 'utility:success';
 
         if (!this.recordId) {
@@ -65,7 +65,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
         }
 
         if (this.recordInfo) {
-            this.className = 'custom-badge slds-theme_error cursor-pointer';
+            this.className = 'slds-badge slds-theme_error cursor-pointer custom-badge';
             this.badgeIcon = 'utility:error';
         }
     }

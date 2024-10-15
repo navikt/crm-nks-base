@@ -1,13 +1,17 @@
 <template>
     <div class="badge-container">
-        <lightning-badge
-            label={badgeLabel}
-            icon-name={badgeIcon}
-            class={className}
-            onkeypress={toggleDropdown}
-            onclick={toggleDropdown}
-            aria-expanded={ariaExpanded}
-        ></lightning-badge>
+        <span class={className} onclick={toggleDropdown} onkeypress={toggleDropdown} aria-expanded={ariaExpanded}>
+            <span class="slds-badge__icon" title="">
+                <lightning-icon
+                    icon-name={badgeIcon}
+                    size="x-small"
+                    class="slds-var-p-right_xx-small badge-icon"
+                    aria-hidden="true"
+                ></lightning-icon>
+
+                <span class="badge-label">{badgeLabel}</span>
+            </span>
+        </span>
 
         <div class="dropdown-content" lwc:if={showContent}>
             <div class="headerLine"></div>

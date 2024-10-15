@@ -4,12 +4,22 @@
 }
 
 .custom-badge {
-    --slds-c-badge-icon-color-foreground: #fff;
+    color: white;
     border: 2px white solid;
     padding-right: 1rem;
     padding-left: 1rem;
     font-size: 0.875rem;
     font-weight: normal;
+    display: flex;
+    align-items: center;
+}
+
+.badge-icon {
+    --slds-c-icon-color-foreground-default: #fff;
+}
+
+.badge-label {
+    color: #fff;
 }
 
 .dropdown-content {
