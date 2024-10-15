@@ -7,20 +7,25 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     @api fagsystemTitle = 'Status fagsystemer';
     @api navTitle = 'Status NAV.no';
 
-    wiredFagsystem;
-    wiredNav;
-
     fagsystem;
+    nav;
+
     _fagsystemId;
     _fagsystemInfo;
-    nav;
     _navId;
     _navInfo;
+
     showFagsystemContent = false;
     showNavContent = false;
     lastClickedBadge = '';
+    isFagsystemDataLoaded = false;
+    isNavDataLoaded = false;
+
     subscription = {};
     channelName = '/event/NKS_Home_Page_Event__e';
+
+    wiredFagsystem;
+    wiredNav;
 
     connectedCallback() {
         this.handleSubscribe();
@@ -68,64 +73,56 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     }
 
     @wire(getNksStatus, { title: '$fagsystemTitle' })
-    wiredFagsystemData(value) {
-        const { data, error } = value;
-        this.wiredFagsystem = value;
+    handleFagsystemData({ data, error }) {
+        this.wiredFagsystem = data;
         if (data) {
-            this.fagsystem = this.wiredFagsystem.data;
-            if (this.fagsystem) {
-                this._fagsystemId = this.fagsystem.Id;
-                this._fagsystemInfo = this.fagsystem.NKS_Information__c;
-            }
+            this.fagsystem = data;
+            this._fagsystemId = data.Id;
+            this._fagsystemInfo = data.NKS_Information__c;
+            this.isFagsystemDataLoaded = true;
         } else if (error) {
-            console.error('Det har oppstått en feil ved henting av fagsystem status: ', error);
+            console.error('Error fetching fagsystem status: ', error);
         }
     }
 
     @wire(getNksStatus, { title: '$navTitle' })
-    wiredNavData(value) {
-        const { data, error } = value;
-        this.wiredNav = value;
-
+    handleNavData({ data, error }) {
+        this.wiredNav = data;
         if (data) {
-            this.nav = this.wiredNav.data;
-            if (this.nav) {
-                this._navId = this.nav.Id;
-                this._navInfo = this.nav.NKS_Information__c;
-            }
+            this.nav = data;
+            this._navId = data.Id;
+            this._navInfo = data.NKS_Information__c;
+            this.isNavDataLoaded = true;
         } else if (error) {
-            console.error('Det har oppstått en feil ved henting av nav status: ', error);
+            console.error('Error fetching NAV status: ', error);
         }
     }
 
     handleBadgeClick(event) {
         const badgeLabel = event.detail.label;
 
-        if (badgeLabel === 'Status fagsystemer') {
-            if (this.lastClickedBadge === 'fagsystem') {
-                this.showFagsystemContent = !this.showFagsystemContent;
-            } else {
-                this.showFagsystemContent = true;
-                this.showNavContent = false;
-            }
-            this.lastClickedBadge = 'fagsystem';
-        } else if (badgeLabel === 'Status NAV.no') {
-            if (this.lastClickedBadge === 'nav') {
-                this.showNavContent = !this.showNavContent;
-            } else {
-                this.showNavContent = true;
-                this.showFagsystemContent = false;
-            }
-            this.lastClickedBadge = 'nav';
+        if (badgeLabel === this.fagsystemTitle) {
+            this.toggleContent('fagsystem');
+        } else if (badgeLabel === this.navTitle) {
+            this.toggleContent('nav');
         }
+    }
+
+    toggleContent(badgeType) {
+        if (badgeType === 'fagsystem') {
+            this.showFagsystemContent = this.lastClickedBadge !== 'fagsystem' || !this.showFagsystemContent;
+            this.showNavContent = false;
+        } else if (badgeType === 'nav') {
+            this.showNavContent = this.lastClickedBadge !== 'nav' || !this.showNavContent;
+            this.showFagsystemContent = false;
+        }
+        this.lastClickedBadge = badgeType;
     }
 
     handleSubscribe() {
         const messageCallback = (response) => {
             console.log('New message received: ', JSON.stringify(response));
-            const eventData = response.data.payload;
-            const recordId = eventData.RecordId__c;
-
+            const recordId = response.data.payload.RecordId__c;
             this.refreshData(recordId);
         };
 
@@ -143,7 +140,7 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
 
     registerErrorListener() {
         onError((error) => {
-            console.error('Error received: ', JSON.stringify(error));
+            console.error('EMP API error: ', JSON.stringify(error));
         });
     }
 
@@ -151,7 +148,6 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
         if (recordId === this.fagsystemId) {
             refreshApex(this.wiredFagsystem);
         }
-
         if (recordId === this.navId) {
             refreshApex(this.wiredNav);
         }

@@ -7,9 +7,14 @@ export default class NksPersonHighlightPanelMid extends LightningElement {
     @wire(getReadyResponse)
     wiredRecords({ error, data }) {
         if (data) {
-            this.records = data;
+            this.records = data.length > 0 ? data : [];
         } else if (error) {
-            console.error(`Feil ved henting av svarberedskaper: ${error}`);
+            this.records = [];
+            console.error(`There was an error fetching data: ${error.body.message}`);
         }
+    }
+
+    get hasRecords() {
+        return this.records && this.records.length > 0;
     }
 }

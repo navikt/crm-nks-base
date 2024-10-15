@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import hasPermission from '@salesforce/customPermission/Manage_Traffic_Updates';
 import updateNksStatus from '@salesforce/apex/NKS_HomePageController.updateNksStatus';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class NksHomePageHighlightPanelBadge extends LightningElement {
     @api badgeLabel;
@@ -24,7 +25,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     set recordId(value) {
         this._recordId = value;
-        if (this.recordId) {
+        if (value) {
             this.updateBadgeClass();
         }
     }
@@ -36,9 +37,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     set recordInfo(value) {
         this._recordInfo = value;
-        if (this.recordInfo) {
-            this.draft = this.recordInfo;
-        }
+        this.draft = value;
         this.updateBadgeClass();
     }
 
@@ -47,36 +46,32 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     }
 
     get isEditable() {
-        return hasPermission || false;
+        return hasPermission;
     }
 
     updateBadgeClass() {
-        this.className = 'slds-badge slds-theme_success custom-badge';
-        this.badgeIcon = 'utility:success';
-
+        let baseClass = 'slds-badge custom-badge';
         if (!this.recordId) {
-            this.className += ' disabled-badge';
-        } else {
-            this.className = this.className.replace('disabled-badge', '').trim();
-        }
-
-        if (hasPermission) {
-            this.className += ' cursor-pointer';
-        }
-
-        if (this.recordInfo) {
-            this.className = 'slds-badge slds-theme_error cursor-pointer custom-badge';
+            this.className = `${baseClass} slds-theme_success disabled-badge`;
+            this.badgeIcon = 'utility:success';
+        } else if (this.recordInfo) {
+            this.className = `${baseClass} slds-theme_error cursor-pointer`;
             this.badgeIcon = 'utility:error';
+        } else {
+            this.className = `${baseClass} slds-theme_success ${hasPermission ? 'cursor-pointer' : ''}`.trim();
+            this.badgeIcon = 'utility:success';
         }
     }
 
     toggleDropdown() {
-        if (this.recordInfo || this.isEditable) {
-            const clickEvent = new CustomEvent('badgeclick', {
-                detail: { label: this.badgeLabel }
-            });
-            this.dispatchEvent(clickEvent);
+        if (!(this.recordInfo || this.isEditable)) {
+            return;
         }
+        this.dispatchEvent(
+            new CustomEvent('badgeclick', {
+                detail: { label: this.badgeLabel }
+            })
+        );
     }
 
     handleTextChange(event) {
@@ -98,6 +93,11 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     }
 
     updateRecord() {
+        if (!this.recordId) {
+            this.showError('Missing required data.');
+            return;
+        }
+
         const fields = {
             Id: this.recordId,
             NKS_Information__c: this.draft
@@ -107,9 +107,29 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
             .then(() => {
                 this._recordInfo = this.draft;
                 this.updateBadgeClass();
+                this.showSuccess('Record updated successfully');
             })
             .catch((error) => {
                 console.error('Error updating record:', error);
+                this.showError('Error updating record: ' + error.body.message);
             });
+    }
+
+    showSuccess(message) {
+        const evt = new ShowToastEvent({
+            title: 'Success',
+            message: message,
+            variant: 'success'
+        });
+        this.dispatchEvent(evt);
+    }
+
+    showError(message) {
+        const evt = new ShowToastEvent({
+            title: 'Error',
+            message: message,
+            variant: 'error'
+        });
+        this.dispatchEvent(evt);
     }
 }

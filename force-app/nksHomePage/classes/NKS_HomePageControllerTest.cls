@@ -230,6 +230,7 @@ public with sharing class NKS_HomePageControllerTest {
         Test.startTest();
         NKS_Announcement__c testNksStatus = NKS_HomePageController.getNksStatus('Test 0');
         Test.stopTest();
+        
         Assert.areNotEqual(null, testNksStatus);
     }
 
