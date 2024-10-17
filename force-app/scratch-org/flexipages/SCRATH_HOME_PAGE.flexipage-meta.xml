@@ -164,6 +164,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>cardLabel</name>
+                    <value>Aktuelt fra Navet</value>
+                </componentInstanceProperties>
+                <componentName>nksHomePageCurrent</componentName>
+                <identifier>c_nksHomePageCurrent</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>cardTitle</name>
                     <value>Nytt og nyttig i Salesforce</value>
                 </componentInstanceProperties>

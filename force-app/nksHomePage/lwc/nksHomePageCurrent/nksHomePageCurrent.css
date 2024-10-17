@@ -1,0 +1,11 @@
+.slds-card__footer-action {
+    text-align: left;
+}
+
+.modal-container {
+    height: 24rem;
+}
+
+.slds-card__footer {
+    border-top: none !important;
+}

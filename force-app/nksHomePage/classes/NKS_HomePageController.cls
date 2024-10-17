@@ -482,4 +482,36 @@ public with sharing class NKS_HomePageController {
             throw new AuraHandledException('Update failed: ' + e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<NKS_Announcement__c> getNksCurrents() {
+        List<NKS_Announcement__c> currents = [
+            SELECT Id, Name, NKS_Link_URL__c
+            FROM NKS_Announcement__c
+            WHERE  RecordType.DeveloperName = 'NKS_Current'
+            ORDER BY LastModifiedDate DESC
+            LIMIT 5
+        ];
+        return currents.isEmpty() ? null : currents;
+    }
+
+    @AuraEnabled
+    public static void createNksCurrent(String title, String URL) {
+        try {
+            RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType = 'NKS_Announcement__c' AND DeveloperName = 'NKS_Current' LIMIT 1];
+
+            NKS_Announcement__c current = new NKS_Announcement__c(
+                Name = title,
+                NKS_Link_URL__c = URL,  
+                RecordTypeId = rt.Id
+            );
+
+            Database.SaveResult sr = Database.insert(current, false);
+            if (!sr.isSuccess()) {
+                throw new AuraHandledException('Failed to create NKS current record.');
+            }
+        } catch (DmlException e) {
+            throw new AuraHandledException('Creation failed: ' + e.getMessage());
+        }
+    }
 }
