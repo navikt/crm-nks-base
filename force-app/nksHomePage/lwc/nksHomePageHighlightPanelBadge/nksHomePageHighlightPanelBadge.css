@@ -10,7 +10,11 @@
     padding-left: 1rem;
     font-size: 0.875rem;
     font-weight: normal;
+}
+
+.slds-badge__icon {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 

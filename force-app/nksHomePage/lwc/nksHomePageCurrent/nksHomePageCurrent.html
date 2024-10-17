@@ -76,50 +76,48 @@
             </a>
         </footer>
     </article>
-    <div class="modal-container">
-        <section role="dialog" class={modalClass}>
-            <div class="slds-modal__container">
-                <div class="slds-modal__header">
-                    <h1 class="slds-text-heading_medium" id="prompt-heading-id">Legg til ny lenke</h1>
-                </div>
-                <div class="slds-modal__content slds-p-around_medium">
-                    <form onsubmit={handleSubmit}>
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control">
-                                <lightning-input
-                                    type="text"
-                                    label="Tittel"
-                                    name="title"
-                                    placeholder="Tittel for lenken..."
-                                    required
-                                    onchange={handleInputChange}
-                                ></lightning-input>
-                            </div>
-                        </div>
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control">
-                                <lightning-input
-                                    type="url"
-                                    label="URL"
-                                    name="url"
-                                    placeholder="URL for lenken..."
-                                    required
-                                    onchange={handleInputChange}
-                                ></lightning-input>
-                            </div>
-                        </div>
-                        <div class="slds-var-p-top_small slds-float_right">
-                            <lightning-button
-                                label="Avbryt"
-                                class="slds-var-p-right_small"
-                                onclick={handleCancel}
-                            ></lightning-button>
-                            <lightning-button type="submit" variant="brand" label="Legg til"></lightning-button>
-                        </div>
-                    </form>
-                </div>
+    <section role="dialog" class={modalClass}>
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <h1 class="slds-text-heading_medium" id="prompt-heading-id">Legg til ny lenke</h1>
             </div>
-            <div class="slds-backdrop"></div>
-        </section>
-    </div>
+            <div class="slds-modal__content slds-p-around_medium">
+                <form onsubmit={handleSubmit}>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-input
+                                type="text"
+                                label="Tittel"
+                                name="title"
+                                placeholder="Tittel for lenken..."
+                                required
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <lightning-input
+                                type="url"
+                                label="URL"
+                                name="url"
+                                placeholder="URL for lenken..."
+                                required
+                                onchange={handleInputChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-var-p-top_small slds-float_right">
+                        <lightning-button
+                            label="Avbryt"
+                            class="slds-var-p-right_small"
+                            onclick={handleCancel}
+                        ></lightning-button>
+                        <lightning-button type="submit" variant="brand" label="Legg til"></lightning-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="slds-backdrop"></div>
+    </section>
 </template>
