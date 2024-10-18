@@ -16,8 +16,9 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
     url = '';
 
     @wire(getNksCurrents)
-    wiredCurrents({ error, data }) {
-        this.wiredRecords = { error, data };
+    wiredCurrents(result) {
+        this.wiredRecords = result;
+        const { data, error } = result;
         if (data) {
             this.records = data;
         } else if (error) {
@@ -72,7 +73,7 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
 
         createNksCurrent({ title: this.title, URL: this.url })
             .then(() => {
-                this.refreshData();
+                this.refreshData(); // Correctly refresh data after successful creation
                 console.log('NKS current created successfully');
             })
             .catch((error) => {
