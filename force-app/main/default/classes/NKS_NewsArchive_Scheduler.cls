@@ -23,11 +23,9 @@ global class NKS_NewsArchive_Scheduler implements Schedulable, Database.Batchabl
         for(NKS_Announcement__c article:scope){
             handler.execute(article);
         }
-     }
+    }
    
      public void finish(Database.BatchableContext context) {
        return;
-     }
-
-
+    }
 }
