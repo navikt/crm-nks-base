@@ -99,23 +99,19 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     }
 
     handleBadgeClick(event) {
-        const badgeLabel = event.detail.label;
+        const { label } = event.detail;
 
-        if (badgeLabel === this.fagsystemTitle) {
+        if (label === this.fagsystemTitle) {
             this.toggleContent('fagsystem');
-        } else if (badgeLabel === this.navTitle) {
+        } else if (label === this.navTitle) {
             this.toggleContent('nav');
         }
     }
 
     toggleContent(badgeType) {
-        if (badgeType === 'fagsystem') {
-            this.showFagsystemContent = this.lastClickedBadge !== 'fagsystem' || !this.showFagsystemContent;
-            this.showNavContent = false;
-        } else if (badgeType === 'nav') {
-            this.showNavContent = this.lastClickedBadge !== 'nav' || !this.showNavContent;
-            this.showFagsystemContent = false;
-        }
+        const isFagsystem = badgeType === 'fagsystem';
+        this.showFagsystemContent = isFagsystem ? !this.showFagsystemContent : false;
+        this.showNavContent = isFagsystem ? false : !this.showNavContent;
         this.lastClickedBadge = badgeType;
     }
 
@@ -126,10 +122,14 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
             this.refreshData(recordId);
         };
 
-        subscribe(this.channelName, -1, messageCallback).then((response) => {
-            console.log('Subscription request sent to: ', JSON.stringify(response.channel));
-            this.subscription = response;
-        });
+        subscribe(this.channelName, -1, messageCallback)
+            .then((response) => {
+                console.log('Subscription request sent to: ', JSON.stringify(response.channel));
+                this.subscription = response;
+            })
+            .catch((error) => {
+                console.error('Subscription failed: ', error);
+            });
     }
 
     handleUnsubscribe() {

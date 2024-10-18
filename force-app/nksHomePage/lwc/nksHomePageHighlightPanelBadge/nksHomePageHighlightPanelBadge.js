@@ -1,7 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import hasPermission from '@salesforce/customPermission/Manage_Traffic_Updates';
 import updateNksStatus from '@salesforce/apex/NKS_HomePageController.updateNksStatus';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class NksHomePageHighlightPanelBadge extends LightningElement {
     @api badgeLabel;
@@ -9,8 +8,9 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     _recordId;
     _recordInfo;
-    badgeIcon = 'utility:success';
-    className = 'slds-badge slds-theme_success custom-badge';
+    badgeClass = 'slds-badge slds-badge_centered custom-badge';
+    iconClass = 'slds-icon_container custom-icon';
+    iconName = 'utility:success';
     isEditing = false;
     draft;
 
@@ -50,16 +50,24 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     }
 
     updateBadgeClass() {
-        let baseClass = 'slds-badge custom-badge';
+        const baseBadgeClass = 'slds-badge slds-badge_centered custom-badge';
+        const baseIconClass = 'slds-icon_container custom-icon';
+
+        this.badgeClass = baseBadgeClass;
+        this.iconClass = baseIconClass;
+
         if (!this.recordId) {
-            this.className = `${baseClass} slds-theme_success disabled-badge`;
-            this.badgeIcon = 'utility:success';
+            this.badgeClass = `${baseBadgeClass} slds-theme_success disabled-badge`;
+            this.iconClass = `${baseIconClass} slds-icon-utility-success`;
+            this.iconName = 'utility:success';
         } else if (this.recordInfo) {
-            this.className = `${baseClass} slds-theme_error cursor-pointer`;
-            this.badgeIcon = 'utility:error';
+            this.badgeClass = `${baseBadgeClass} slds-theme_error cursor-pointer`;
+            this.iconClass = `${baseIconClass} slds-icon-utility-error`;
+            this.iconName = 'utility:error';
         } else {
-            this.className = `${baseClass} slds-theme_success ${hasPermission ? 'cursor-pointer' : ''}`.trim();
-            this.badgeIcon = 'utility:success';
+            this.badgeClass = `${baseBadgeClass} slds-theme_success ${this.isEditable ? 'cursor-pointer' : ''}`.trim();
+            this.iconClass = `${baseIconClass} slds-icon-utility-success`;
+            this.iconName = 'utility:success';
         }
     }
 
@@ -80,6 +88,12 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     enableEditing() {
         this.isEditing = true;
+        setTimeout(() => {
+            const inputElement = this.template.querySelector('.input');
+            if (inputElement) {
+                inputElement.focus();
+            }
+        }, 0);
     }
 
     handleSave() {
@@ -89,12 +103,12 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     handleCancel() {
         this.isEditing = false;
-        this.draft = this.recordInfo;
+        this.draft = this.recordInfo || '';
     }
 
     updateRecord() {
         if (!this.recordId) {
-            this.showError('Missing required data.');
+            console.log('Missing required data.');
             return;
         }
 
@@ -107,29 +121,11 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
             .then(() => {
                 this._recordInfo = this.draft;
                 this.updateBadgeClass();
-                this.showSuccess('Record updated successfully');
+                console.log('NKS status updated successfully');
             })
             .catch((error) => {
-                console.error('Error updating record:', error);
-                this.showError('Error updating record: ' + error.body.message);
+                const errorMessage = error?.body?.message || 'An unknown error occurred';
+                console.error('Error updating record:', errorMessage);
             });
-    }
-
-    showSuccess(message) {
-        const evt = new ShowToastEvent({
-            title: 'Success',
-            message: message,
-            variant: 'success'
-        });
-        this.dispatchEvent(evt);
-    }
-
-    showError(message) {
-        const evt = new ShowToastEvent({
-            title: 'Error',
-            message: message,
-            variant: 'error'
-        });
-        this.dispatchEvent(evt);
     }
 }

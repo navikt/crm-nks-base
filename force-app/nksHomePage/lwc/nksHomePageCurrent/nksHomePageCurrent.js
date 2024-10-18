@@ -12,8 +12,8 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
     records = [];
     showModal = false;
     wiredRecords;
-    title;
-    url;
+    title = '';
+    url = '';
 
     @wire(getNksCurrents)
     wiredCurrents({ error, data }) {
@@ -26,8 +26,9 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
     }
 
     get buttonClass() {
-        let btnClass = 'slds-dropdown-trigger slds-dropdown-trigger_click';
-        return `${btnClass}  ${this.showDropdown ? ' slds-is-open' : ' slds-is-close'}`;
+        return `slds-dropdown-trigger slds-dropdown-trigger_click ${
+            this.showDropdown ? 'slds-is-open' : 'slds-is-close'
+        }`;
     }
 
     get hasRecords() {
@@ -35,8 +36,7 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
     }
 
     get modalClass() {
-        let modalClass = 'slds-modal slds-modal_prompt';
-        return `${modalClass} ${this.showModal ? ' slds-fade-in-open' : ' slds-fade-in-close'}`;
+        return `slds-modal slds-modal_prompt ${this.showModal ? 'slds-fade-in-open' : 'slds-fade-in-close'}`;
     }
 
     get hasPermission() {
@@ -60,11 +60,11 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
 
     handleCancel() {
         this.showModal = false;
-        this.showDropdown = false;
     }
 
     handleInputChange(event) {
-        this[event.target.name] = event.target.value;
+        const { name, value } = event.target;
+        this[name] = value;
     }
 
     handleSubmit(event) {
@@ -73,9 +73,10 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
         createNksCurrent({ title: this.title, URL: this.url })
             .then(() => {
                 this.refreshData();
+                console.log('NKS current created successfully');
             })
             .catch((error) => {
-                const errorMessage = error.body ? error.body.message : 'Unknown error occurred';
+                const errorMessage = error.body?.message || 'Unknown error occurred';
                 console.error(`Error creating NKS current: ${errorMessage}`);
             });
 

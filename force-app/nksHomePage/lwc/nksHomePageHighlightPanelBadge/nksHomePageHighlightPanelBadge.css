@@ -10,9 +10,11 @@
     padding-left: 1rem;
     font-size: 0.875rem;
     font-weight: normal;
+    align-items: center;
+    justify-content: center;
 }
 
-.slds-badge__icon {
+.custom-icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,10 +22,6 @@
 
 .badge-icon {
     --slds-c-icon-color-foreground-default: #fff;
-}
-
-.badge-label {
-    color: #fff;
 }
 
 .dropdown-content {
