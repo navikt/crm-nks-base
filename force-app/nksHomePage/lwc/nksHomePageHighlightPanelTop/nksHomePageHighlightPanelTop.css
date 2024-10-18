@@ -4,11 +4,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
 }
 
 .icon-container {
-    width: 53px;
-    height: 53px;
+    width: 48px;
+    height: 48px;
     background-color: white;
     border-radius: 50%;
     display: flex;
@@ -25,4 +26,8 @@
 
 h1 {
     color: white;
+}
+
+.custom-padding-left {
+    padding-left: 1rem;
 }

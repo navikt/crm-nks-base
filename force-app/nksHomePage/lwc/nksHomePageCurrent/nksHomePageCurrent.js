@@ -73,7 +73,7 @@ export default class NksHomePageCurrent extends NavigationMixin(LightningElement
 
         createNksCurrent({ title: this.title, URL: this.url })
             .then(() => {
-                this.refreshData(); // Correctly refresh data after successful creation
+                this.refreshData();
                 console.log('NKS current created successfully');
             })
             .catch((error) => {
