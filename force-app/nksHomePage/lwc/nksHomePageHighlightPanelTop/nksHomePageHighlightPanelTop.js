@@ -4,8 +4,8 @@ import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe, onError } from 'lightning/empApi';
 
 export default class NksHomePageHighlightPanelTop extends LightningElement {
-    @api fagsystemTitle = 'Status fagsystemer';
-    @api navTitle = 'Status NAV.no';
+    @api fagsystemTitle;
+    @api navTitle;
 
     fagsystem;
     nav;
