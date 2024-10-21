@@ -57,7 +57,7 @@ public with sharing class NKS_AuditLogControllerTest {
 
     @IsTest
     static void testLogErrorMessage() {
-        Database.SaveResult sr = (Database.SaveResult)JSON.deserialize(
+        Database.SaveResult sr = (Database.SaveResult) JSON.deserialize(
             '{"success":false,"errors":[{"message":"Required fields are missing: [Name]","statusCode":"REQUIRED_FIELD_MISSING"}]}',
             Database.SaveResult.class
         );

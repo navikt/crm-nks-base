@@ -12,26 +12,28 @@ public with sharing class NKS_HomePageControllerTest {
             .get('News')
             .getRecordTypeId();
         Id nksStatusRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
-        .get('NKS Status')
-        .getRecordTypeId();
+            .get('NKS Status')
+            .getRecordTypeId();
         Id nksCurrentRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
-        .get('NKS Current')
-        .getRecordTypeId();
+            .get('NKS Current')
+            .getRecordTypeId();
 
         NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, nksStatusRecordTypeId);
-        
-         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
-         for (Integer i = 0; i < 6; i++) {
-             announcements.add(new NKS_Announcement__c(
-                 Name = 'Test Announcement ' + i,
-                 NKS_Link_URL__c = 'https://example.com/' + i,
-                 RecordTypeId = nksCurrentRecordTypeId
-             ));
-         }
-         insert announcements;
+
+        List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
+        for (Integer i = 0; i < 6; i++) {
+            announcements.add(
+                new NKS_Announcement__c(
+                    Name = 'Test Announcement ' + i,
+                    NKS_Link_URL__c = 'https://example.com/' + i,
+                    RecordTypeId = nksCurrentRecordTypeId
+                )
+            );
+        }
+        insert announcements;
 
         Knowledge__kav testKnowledge = new Knowledge__kav(
             Title = 'Test Article',
@@ -239,17 +241,22 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetNksStatus () {
+    static void testGetNksStatus() {
         Test.startTest();
         NKS_Announcement__c testNksStatus = NKS_HomePageController.getNksStatus('Test 0');
         Test.stopTest();
-        
+
         Assert.areNotEqual(null, testNksStatus);
     }
 
     @isTest
     static void testUpdateNksStatus_SuccessfulUpdate() {
-        NKS_Announcement__c status = [SELECT Id, Name FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'NKS status' LIMIT 1];
+        NKS_Announcement__c status = [
+            SELECT Id, Name
+            FROM NKS_Announcement__c
+            WHERE NKS_TypeFormula__c = 'NKS status'
+            LIMIT 1
+        ];
 
         Map<String, String> fields = new Map<String, String>{
             'Id' => status.Id,
@@ -261,19 +268,25 @@ public with sharing class NKS_HomePageControllerTest {
         Test.stopTest();
 
         NKS_Announcement__c updatedStatus = [SELECT NKS_Information__c FROM NKS_Announcement__c WHERE Id = :status.Id];
-        Assert.areEqual('Updated Information', updatedStatus.NKS_Information__c, 'The NKS_Information__c field should be updated.');
+        Assert.areEqual(
+            'Updated Information',
+            updatedStatus.NKS_Information__c,
+            'The NKS_Information__c field should be updated.'
+        );
     }
 
     @isTest
     static void testGetNksCurrents() {
-        
         Test.startTest();
         List<NKS_Announcement__c> result = NKS_HomePageController.getNksCurrents();
         Test.stopTest();
 
         Assert.areNotEqual(null, result, 'Result should not be null');
         Assert.areEqual(5, result.size(), 'Should return only 5 latest announcements');
-        Assert.isTrue(result[0].NKS_Link_URL__c.startsWith('https://example.com'), 'URL should be present in the result');
+        Assert.isTrue(
+            result[0].NKS_Link_URL__c.startsWith('https://example.com'),
+            'URL should be present in the result'
+        );
     }
 
     @isTest
@@ -294,6 +307,10 @@ public with sharing class NKS_HomePageControllerTest {
         Assert.areEqual(1, insertedRecords.size(), 'A new Announcement should have been created.');
         Assert.areEqual(testTitle, insertedRecords[0].Name, 'The title of the record should match the input.');
         Assert.areEqual(testURL, insertedRecords[0].NKS_Link_URL__c, 'The URL of the record should match the input.');
-        Assert.areEqual('NKS_Current', insertedRecords[0].RecordType.DeveloperName, 'The RecordType should be NKS_Current.');
+        Assert.areEqual(
+            'NKS_Current',
+            insertedRecords[0].RecordType.DeveloperName,
+            'The RecordType should be NKS_Current.'
+        );
     }
 }
