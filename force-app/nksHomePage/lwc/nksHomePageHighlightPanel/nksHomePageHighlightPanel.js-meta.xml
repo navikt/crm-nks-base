@@ -10,8 +10,8 @@
         <targetConfig targets="lightning__HomePage">
             <property name="fagsystemTitle" label="Status Fagsystemer Title" type="String"
                 default="Status fagsystemer" />
-            <property name="navTitle" label="Status NAV.no Title" type="String"
-                default="Status NAV.no" />
+            <property name="navTitle" label="Status Nav.no Title" type="String"
+                default="Status Nav.no" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
