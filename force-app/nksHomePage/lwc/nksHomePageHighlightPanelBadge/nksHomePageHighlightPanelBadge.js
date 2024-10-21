@@ -88,6 +88,7 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     enableEditing() {
         this.isEditing = true;
+        // eslint-disable-next-line @lwc/lwc/no-async-operation, @locker/locker/distorted-window-set-timeout
         setTimeout(() => {
             const inputElement = this.template.querySelector('.input');
             if (inputElement) {
