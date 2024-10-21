@@ -666,19 +666,6 @@
     <reportTypes>
         <description />
         <label />
-        <name>Admin_dashboard_Rapport</name>
-        <sections>
-            <label />
-            <name>Dashboard Components</name>
-        </sections>
-        <sections>
-            <label />
-            <name>Dashboards</name>
-        </sections>
-    </reportTypes>
-    <reportTypes>
-        <description />
-        <label />
         <name>Admin_rapport_over_Rapporter</name>
         <sections>
             <label />
