@@ -4,12 +4,7 @@
         <lightning-layout-item class="slds-grid slds-wrap content-area">
             <template for:each={links} for:item="link">
                 <lightning-layout-item key={link.id} class="font-style">
-                    <template lwc:if={link.custom}>
-                        <a onclick={navigateToKnowledge}>{link.title}</a>
-                    </template>
-                    <template lwc:else>
-                        <a href={link.url} target="_blank" rel="noopener noreferrer"> {link.title} </a>
-                    </template>
+                    <a href={link.url} target="_blank" rel="noopener noreferrer"> {link.title} </a>
                 </lightning-layout-item>
             </template>
         </lightning-layout-item>
