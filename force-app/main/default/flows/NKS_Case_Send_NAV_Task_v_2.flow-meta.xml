@@ -408,6 +408,12 @@
 TODAY())</expression>
     </formulas>
     <formulas>
+        <description>Checks if the user has beta access.</description>
+        <name>hasBetaAccess</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Permission.NKS_Beta}</expression>
+    </formulas>
+    <formulas>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
@@ -704,7 +710,28 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Nav_Task_Quick_Text</name>
+            <extensionName>c:crmNavTaskCommunalQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Case.Origin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Task_Description</name>
+            <defaultValue>
+                <stringValue>{!Nav_Task_Quick_Text.selectedValue}</stringValue>
+            </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive
