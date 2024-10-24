@@ -4,7 +4,7 @@
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>242</locationX>
-        <locationY>768</locationY>
+        <locationY>708</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,9 +15,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>body</name>
+            <name>recipientIds</name>
             <value>
-                <stringValue>Det ser ut til at du har glemt å laste opp forsidebilde til en nyhetsartikkel. Vennligst last opp et bilde for å unngå publisering av artikler uten forsidebilde.</stringValue>
+                <elementReference>RecipientIDs</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -27,9 +27,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>recipientIds</name>
+            <name>body</name>
             <value>
-                <elementReference>RecipientIDs</elementReference>
+                <stringValue>Det ser ut til at du har glemt å laste opp forsidebilde til en nyhetsartikkel. Vennligst last opp et bilde for å unngå publisering av artikler uten forsidebilde.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -38,13 +38,15 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
         <name>Assign_RecipientID</name>
         <label>Assign RecipientID</label>
         <locationX>242</locationX>
-        <locationY>528</locationY>
+        <locationY>492</locationY>
         <assignmentItems>
             <assignToReference>RecipientIDs</assignToReference>
             <operator>Add</operator>
@@ -60,7 +62,7 @@
         <name>Check_if_any_image_is_uploaded</name>
         <label>Check if any image is uploaded</label>
         <locationX>374</locationX>
-        <locationY>408</locationY>
+        <locationY>384</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>notUploaded</name>
@@ -78,6 +80,7 @@
             <label>notUploaded</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>Announcement Send Notification On Not Uploaded Image {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Not Uploaded Image</label>
     <processMetadataValues>
@@ -103,7 +106,7 @@
         <name>Get_ContestDocumentLink</name>
         <label>Get ContestDocumentLink</label>
         <locationX>374</locationX>
-        <locationY>288</locationY>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_any_image_is_uploaded</targetReference>
@@ -124,7 +127,7 @@
         <name>Get_Notification</name>
         <label>Get Notification</label>
         <locationX>242</locationX>
-        <locationY>648</locationY>
+        <locationY>600</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Send_Notification</targetReference>
