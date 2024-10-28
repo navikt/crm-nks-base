@@ -112,6 +112,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Knowledge__kav.Question_and_Answer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Knowledge__kav.WhoDoesWhat__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -141,6 +146,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Knowledge__kav.Internal_Routine</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Knowledge__kav.Response_Readiness</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
