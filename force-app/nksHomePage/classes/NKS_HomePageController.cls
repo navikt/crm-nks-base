@@ -302,7 +302,10 @@ public with sharing class NKS_HomePageController {
         List<Knowledge__kav> readyResponses = [
             SELECT Id, Title, Ready_Response_Title__c
             FROM Knowledge__kav
-            WHERE NKS_Publish_On_Home_Page__c = TRUE AND PublishStatus = 'Online'
+            WHERE
+                RecordType.DeveloperName = 'Response_Readiness'
+                AND NKS_Publish_On_Home_Page__c = TRUE
+                AND PublishStatus = 'Online'
             ORDER BY LastModifiedDate DESC
             LIMIT 5
         ];
