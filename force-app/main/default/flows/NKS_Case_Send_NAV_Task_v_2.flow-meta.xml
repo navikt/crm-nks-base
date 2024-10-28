@@ -725,13 +725,6 @@ TODAY())</expression>
                         <stringValue>Phone</stringValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>hasBetaAccess</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
