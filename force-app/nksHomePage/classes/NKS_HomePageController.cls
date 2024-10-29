@@ -452,7 +452,7 @@ public with sharing class NKS_HomePageController {
                 LIMIT 1
             ];
 
-            return status != null ? status : null;
+            return status;
         } catch (Exception e) {
             throw new AuraHandledException('Error retrieving NKS status: ' + e.getMessage());
         }
