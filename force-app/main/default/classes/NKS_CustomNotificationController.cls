@@ -1,23 +1,25 @@
 public with sharing class NKS_CustomNotificationController {
     private static LoggerUtility logger = new LoggerUtility();
+    private static Integer max = 500;
 
-    @invocableMethod(label = 'Send Notification')
+    @invocableMethod(label='Send Notification')
     public static void sendNotification(List<Request> requests) {
         for (Request request : requests) {
             if (request.userIds != null && !request.userIds.isEmpty()) {
                 Set<Id> userIds = new Set<Id>(request.userIds);
-                
+
                 // Convert Set to List for indexing
                 List<Id> userIdList = new List<Id>(userIds);
 
-                // Check if the size exceeds 500
-                if (userIdList.size() > 500) {
+                // Check if the size exceeds limit'
+                Integer localLimit = Test.isRunningTest() ? 50 : max;
+                if (userIdList.size() > localLimit) {
                     List<Set<Id>> res = new List<Set<Id>>();
 
-                    // Split List of Ids into smaller lists of 500
-                    for (Integer i = 0; i < (userIdList.size() / 500) + 1; i++) {
+                    // Split List of Ids into smaller sets based on the limit
+                    for (Integer i = 0; i < (userIdList.size() / localLimit) + 1; i++) {
                         Set<Id> tempList = new Set<Id>();
-                        for (Integer j = i * 500; j < (i + 1) * 500 && j < userIdList.size(); j++) {
+                        for (Integer j = i * localLimit; j < (i + 1) * localLimit && j < userIdList.size(); j++) {
                             tempList.add(userIdList[j]);
                         }
                         res.add(tempList);
@@ -25,21 +27,21 @@ public with sharing class NKS_CustomNotificationController {
 
                     for (Set<Id> ids : res) {
                         sendNotificationToUsers(
-                            ids, 
-                            request.notificationTypeId, 
-                            request.notificationTitle, 
-                            request.notificationBody, 
-                            request.targetId, 
+                            ids,
+                            request.notificationTypeId,
+                            request.notificationTitle,
+                            request.notificationBody,
+                            request.targetId,
                             request.pageRef
                         );
                     }
-                } else {                   
+                } else {
                     sendNotificationToUsers(
-                        userIds, 
-                        request.notificationTypeId, 
-                        request.notificationTitle, 
-                        request.notificationBody, 
-                        request.targetId, 
+                        userIds,
+                        request.notificationTypeId,
+                        request.notificationTitle,
+                        request.notificationBody,
+                        request.targetId,
                         request.pageRef
                     );
                 }
@@ -48,11 +50,11 @@ public with sharing class NKS_CustomNotificationController {
     }
 
     private static void sendNotificationToUsers(
-        Set<Id> userIds, 
-        String notificationTypeId, 
-        String notificationTitle, 
-        String notificationBody, 
-        Id targetId, 
+        Set<Id> userIds,
+        String notificationTypeId,
+        String notificationTitle,
+        String notificationBody,
+        Id targetId,
         String pageRef
     ) {
         Set<String> recipientIds = new Set<String>();
@@ -70,22 +72,26 @@ public with sharing class NKS_CustomNotificationController {
         try {
             notification.send(recipientIds);
         } catch (Exception ex) {
-            logger.error('Failed to send notification to users: ' + ex.getMessage(), null, CRM_ApplicationDomain.Domain.NKS);
+            logger.error(
+                'Failed to send notification to users: ' + ex.getMessage(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
+            );
             logger.publish();
         }
     }
 
     public class Request {
-        @InvocableVariable(required = true)
+        @InvocableVariable(required=true)
         public List<Id> userIds;
 
-        @InvocableVariable(required = true)
+        @InvocableVariable(required=true)
         public String notificationTypeId;
 
-        @InvocableVariable(required = true)
+        @InvocableVariable(required=true)
         public String notificationTitle;
 
-        @InvocableVariable(required = true)
+        @InvocableVariable(required=true)
         public String notificationBody;
 
         @InvocableVariable

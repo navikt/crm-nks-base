@@ -236,10 +236,11 @@ public with sharing class NKS_HomePageController {
                 continue;
             }
 
-            String urlString = '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
-                (cdl.ContentDocument?.FileType == 'PDF'
-                ? 'SVGZ'
-                : 'ORIGINAL_Png') + '&versionId=' + cdl.ContentDocument?.LatestPublishedVersionId;
+            String urlString =
+                '/sfc/servlet.shepherd/version/renditionDownload?rendition=' +
+                (cdl.ContentDocument?.FileType == 'PDF' ? 'SVGZ' : 'ORIGINAL_Png') +
+                '&versionId=' +
+                cdl.ContentDocument?.LatestPublishedVersionId;
 
             urlMap.put(cdl.LinkedEntityId, urlString);
         }
@@ -299,13 +300,15 @@ public with sharing class NKS_HomePageController {
     @AuraEnabled(cacheable=true)
     public static List<Knowledge__kav> getReadyResponses() {
         List<Knowledge__kav> readyResponses = [
-            SELECT Id, Title, LastModifiedDate
+            SELECT Id, Title, Ready_Response_Title__c
             FROM Knowledge__kav
-            WHERE NKS_Publish_On_Home_Page__c = TRUE AND PublishStatus = 'Online'
+            WHERE
+                RecordType.DeveloperName = 'Response_Readiness'
+                AND NKS_Publish_On_Home_Page__c = TRUE
+                AND PublishStatus = 'Online'
             ORDER BY LastModifiedDate DESC
-            LIMIT 3
+            LIMIT 5
         ];
-
         return readyResponses.isEmpty() ? null : readyResponses;
     }
 
@@ -435,6 +438,86 @@ public with sharing class NKS_HomePageController {
             update userAppInfo;
         } catch (Exception e) {
             System.debug(e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static NKS_Announcement__c getNksStatus(String title) {
+        try {
+            NKS_Announcement__c status = [
+                SELECT Id, Name, NKS_Information__c
+                FROM NKS_Announcement__c
+                WHERE Name = :title AND RecordType.DeveloperName = 'NKS_Status'
+                ORDER BY CreatedDate DESC
+                LIMIT 1
+            ];
+
+            return status;
+        } catch (Exception e) {
+            throw new AuraHandledException('Error retrieving NKS status: ' + e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static void updateNksStatus(Map<String, String> fields) {
+        if (fields == null || !fields.containsKey('Id')) {
+            throw new AuraHandledException('Record ID is required');
+        }
+
+        NKS_Announcement__c status = new NKS_Announcement__c(Id = fields.get('Id'));
+
+        if (fields.containsKey('NKS_Information__c')) {
+            status.NKS_Information__c = fields.get('NKS_Information__c');
+        }
+
+        try {
+            Database.SaveResult result = Database.update(status, false);
+
+            if (result.isSuccess()) {
+                NKS_Home_Page_Event__e event = new NKS_Home_Page_Event__e(RecordId__c = status.Id);
+                EventBus.publish(event);
+            } else {
+                throw new AuraHandledException('Failed to update the NKS status.');
+            }
+        } catch (DmlException e) {
+            throw new AuraHandledException('Update failed: ' + e.getMessage());
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<NKS_Announcement__c> getNksCurrents() {
+        List<NKS_Announcement__c> currents = [
+            SELECT Id, Name, NKS_Link_URL__c
+            FROM NKS_Announcement__c
+            WHERE RecordType.DeveloperName = 'NKS_Current'
+            ORDER BY LastModifiedDate DESC
+            LIMIT 5
+        ];
+        return currents.isEmpty() ? null : currents;
+    }
+
+    @AuraEnabled
+    public static void createNksCurrent(String title, String URL) {
+        try {
+            RecordType rt = [
+                SELECT Id
+                FROM RecordType
+                WHERE SObjectType = 'NKS_Announcement__c' AND DeveloperName = 'NKS_Current'
+                LIMIT 1
+            ];
+
+            NKS_Announcement__c current = new NKS_Announcement__c(
+                Name = title,
+                NKS_Link_URL__c = URL,
+                RecordTypeId = rt.Id
+            );
+
+            Database.SaveResult sr = Database.insert(current, false);
+            if (!sr.isSuccess()) {
+                throw new AuraHandledException('Failed to create NKS current record.');
+            }
+        } catch (DmlException e) {
+            throw new AuraHandledException('Creation failed: ' + e.getMessage());
         }
     }
 }
