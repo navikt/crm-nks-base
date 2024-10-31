@@ -99,6 +99,7 @@ public with sharing class NKS_AuditLogController {
         return Schema.SObjectType.NKS_Audit_Log__c.getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
     }
 
+    @TestVisible
     private static void logErrorMessage(Database.SaveResult sr) {
         String errorMessage = 'The following error has occurred under creation of Audit Log record:\n';
         for (Database.Error error : sr.getErrors()) {
