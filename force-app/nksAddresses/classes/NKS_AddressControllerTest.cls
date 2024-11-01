@@ -12,7 +12,7 @@ public with sharing class NKS_AddressControllerTest {
         LiveChatVisitor testChatVisitor = new LiveChatVisitor();
         insert testChatVisitor;
 
-        LiveChatTranscript testChat = new LiveChatTranscript();
+        MessagingSession testChat = new MessagingSession();
         testChat.LiveChatVisitorid = testChatVisitor.id;
         testChat.AccountId = testAccount.Id;
         insert testChat;
@@ -20,7 +20,7 @@ public with sharing class NKS_AddressControllerTest {
         Test.startTest();
         String personIdent = NKS_AddressController.getPersonIdentAndFullName(testAccount.Id, 'Account')?.Name;
         String personIdent2 = NKS_AddressController.getPersonIdentAndFullName(testCase.Id, 'Case')?.Name;
-        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(testChat.Id, 'LiveChatTranscript')?.Name;
+        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(testChat.Id, 'MessagingSession')?.Name;
         Test.stopTest();
 
         System.assertEquals('78912345687', personIdent);
