@@ -59,7 +59,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'tilbakemelding.EPOST':
                 return 'E-post = ';
             case 'tilbakemelding.NAV.NO':
-                return 'Sendt til Ditt NAV';
+                return 'Sendt til Ditt Nav';
             case 'tilbakemelding.SMS':
                 return 'Tlf. = ';
             case '1.GangVarselBrevPensj':
@@ -87,7 +87,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'DittNAV_000011':
                 return 'Dokument - Endringsoppgave';
             case 'DittNAV_000001_temp':
-                return 'Innkalling til møte med NAV';
+                return 'Innkalling til møte med Nav';
             case 'EessiPenVarsleBrukerUfore':
                 return 'EØS- Opplysninger';
             case 'ForeldrepengerSoknadsvarsel':
@@ -161,7 +161,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'PAM_KONV01':
                 return 'Ny og forbedret CV-løsning';
             case 'PAM_SYNLIGHET_01':
-                return 'Informasjon om CV på Ditt NAV';
+                return 'Informasjon om CV på Ditt Nav';
             case 'SyfomoteNyetidspunkt':
                 return 'Forespørsel om nye tidspunkt for møte';
             case 'NaermesteLederMoteAvbrutt':
