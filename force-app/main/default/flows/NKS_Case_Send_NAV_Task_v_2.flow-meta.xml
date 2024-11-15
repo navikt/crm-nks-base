@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Add_henvendelse_ID</name>
@@ -305,7 +304,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_reporting_data</targetReference>
+                <targetReference>Create_reporting_data_for_communal_quick_text</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -411,8 +410,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -420,8 +419,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -450,7 +449,7 @@ TODAY())</expression>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-       <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
+        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
     </formulas>
     <formulas>
         <name>Task_Theme_Code</name>
@@ -480,10 +479,16 @@ TODAY())</expression>
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
-        <name>Create_reporting_data</name>
-        <label>Create reporting data</label>
+        <name>Create_reporting_data_for_communal_quick_text</name>
+        <label>Create reporting data for communal quick text</label>
         <locationX>390</locationX>
         <locationY>1622</locationY>
+        <inputAssignments>
+            <field>CRM_Category__c</field>
+            <value>
+                <stringValue>Kommunal hurtigtekst</stringValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Name</field>
             <value>
