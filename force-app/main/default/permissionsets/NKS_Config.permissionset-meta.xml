@@ -312,6 +312,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Person__c.INT_GuardianshipOrFuturePowerOfAttorney__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServiceResource.AccountId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -433,6 +438,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>NavUnit__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Person__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <tabSettings>
         <tab>KafkaMessage__c</tab>
