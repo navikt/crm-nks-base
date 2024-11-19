@@ -215,7 +215,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if (this.relation.employee === true) {
             let badge = {
                 name: 'isNavEmployee',
-                label: 'Skjermet person (NAV Ansatt)'
+                label: 'Skjermet person (Nav Ansatt)'
             };
             badgesArray.push(badge);
         }
