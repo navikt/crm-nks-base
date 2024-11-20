@@ -172,11 +172,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Journal_Entry__c.Duplicate_Journal_Entry_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Journal_Entry__c.Journal_Entry_ID__c</field>
         <readable>true</readable>
     </fieldPermissions>
