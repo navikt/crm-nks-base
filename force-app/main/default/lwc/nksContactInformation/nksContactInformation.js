@@ -35,17 +35,17 @@ export default class NksContactInformation extends LightningElement {
     @api objectApiName;
     @api relationshipField;
 
-    email; //KRR
-    phone; //KRR
-    phone1; //PDL
-    phone2; //PDL
-    bankAccount; //KRP
-    bankAccountLastUpdated; //KRP
-    bankAccountSource; //KRP
-    krrReservation; //KRR
-    krrVerified; //KRR
-    krrLastUpdated; //KRR
-    pdlLastUpdated; //PDL
+    email;
+    phone;
+    phone1;
+    phone2;
+    bankAccount;
+    bankAccountLastUpdated;
+    bankAccountSource;
+    krrReservation;
+    krrVerified;
+    krrLastUpdated;
+    pdlLastUpdated;
     personId;
     wireFields;
 
