@@ -33,7 +33,7 @@
     <customValue>
         <fullName>Gjeldsraadgivning</fullName>
         <default>false</default>
-        <label>Gjeldsrådgivning</label>
+        <label>Gjeldsveiledning</label>
     </customValue>
     <customValue>
         <fullName>Helse</fullName>
