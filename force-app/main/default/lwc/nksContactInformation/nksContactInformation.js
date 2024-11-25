@@ -13,6 +13,7 @@ import KRR_RESERVATION_FIELD from '@salesforce/schema/Person__c.INT_KRR_Reservat
 import KRR_VERIFIED_FIELD from '@salesforce/schema/Person__c.INT_VerifiedFromKRR__c';
 import PDL_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromPDL__c';
 import KRR_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromKRR__c';
+import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 
@@ -27,7 +28,8 @@ const PERSON_CONTACT_FIELDS = [
     KRR_VERIFIED_FIELD,
     KRR_LAST_UPDATED_FIELD,
     PDL_LAST_UPDATED_FIELD,
-    BANK_ACCOUNT_SOURCE_FIELD
+    BANK_ACCOUNT_SOURCE_FIELD,
+    COUNTY_FIELD
 ];
 
 export default class NksContactInformation extends LightningElement {
@@ -48,6 +50,7 @@ export default class NksContactInformation extends LightningElement {
     pdlLastUpdated;
     personId;
     wireFields;
+    county;
 
     connectedCallback() {
         this.wireFields = [`${this.objectApiName}.Id`];
@@ -86,6 +89,7 @@ export default class NksContactInformation extends LightningElement {
             this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
             this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
             this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
+            this.county = getFieldValue(data, COUNTY_FIELD);
         } else if (error) {
             console.error(error);
         }

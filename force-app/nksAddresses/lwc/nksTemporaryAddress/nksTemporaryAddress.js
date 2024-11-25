@@ -8,6 +8,7 @@ export default class NksBostedAddress extends LightningElement {
     @api recordId;
     @api useNewDesign;
     @api pdlLastUpdatedFormatted;
+    @api county;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
     _temporaryAddresses = [];
@@ -116,7 +117,7 @@ export default class NksBostedAddress extends LightningElement {
                 .trim();
 
             const typeAndFullName = [type, fullName].filter(Boolean).join(' ');
-            const otherParts = [addressLine, postInfo, region || 'Norge NO'].filter(Boolean).join(', ');
+            const otherParts = [addressLine, postInfo, this.county || region || 'Norge NO'].filter(Boolean).join(', ');
 
             return [typeAndFullName, otherParts].filter(Boolean).join(', ');
         });
