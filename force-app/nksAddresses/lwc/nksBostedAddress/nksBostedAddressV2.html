@@ -1,7 +1,7 @@
 <template>
     <c-nks-expandable-panel title="Bostedsadresse" is-first chevron-left>
         <lightning-layout aria-hidden={ariaHidden}>
-            <lightning-layout-item class="slds-size_4-of-7">
+            <lightning-layout-item class="slds-size_3-of-7">
                 <template for:each={residentialAddressesNewDesign} for:item="residentialAddress">
                     <div key={residentialAddress.address} class="slds-var-p-bottom_small">
                         <lightning-formatted-text value={residentialAddress}></lightning-formatted-text>
@@ -19,6 +19,7 @@
                     </div>
                 </template>
             </lightning-layout-item>
+            <lightning-layout-item class="slds-size_1-of-7"></lightning-layout-item>
             <lightning-layout-item class="slds-size_3-of-7">
                 <p style="font-style: italic">{pdlLastUpdatedFormatted}</p>
             </lightning-layout-item>
