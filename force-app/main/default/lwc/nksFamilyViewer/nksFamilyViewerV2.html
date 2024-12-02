@@ -1,0 +1,41 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item class="custom-padding-top-bottom" size="12">
+            <lightning-card title="Familie" icon-name="custom:custom1">
+                <div class="custom-horizontal-padding">
+                    <lightning-spinner
+                        if:false={isLoaded}
+                        alternative-text="Laster familierelasjoner"
+                        size="medium"
+                    ></lightning-spinner>
+                    <template lwc:if={isLoaded}>
+                        <template if:true={relations.data}>
+                            <div class="custom-left-padding-large custom-padding-top slds-grid slds-wrap table-header">
+                                <div
+                                    class="slds-truncate custom-left-padding-medium slds-size_4-of-12 custom-font-size"
+                                >
+                                    Navn
+                                </div>
+                                <div class="slds-truncate slds-size_2-of-12 custom-font-size">Relasjon</div>
+                                <div class="slds-truncate custom-left-padding-small slds-size_2-of-12 custom-font-size">
+                                    Fødselsnummer
+                                </div>
+                                <div class="slds-size_4-of-12"></div>
+                            </div>
+                            <div class="custom-horizontal-padding-large">
+                                <div class="custom-padding-top custom-divider"></div>
+                            </div>
+                            <template for:each={relations.data} for:item="relation">
+                                <c-anks-family-viewer-entry-v2
+                                    key={relation.personIdent}
+                                    relation={relation}
+                                    use-new-design={useNewDesign}
+                                ></c-anks-family-viewer-entry-v2>
+                            </template>
+                        </template>
+                    </template>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

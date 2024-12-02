@@ -1,0 +1,38 @@
+.custom-padding-top-bottom {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.custom-horizontal-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.custom-left-padding-large {
+    padding-left: 3rem;
+}
+
+.custom-padding-top {
+    padding-top: 1rem;
+}
+
+.custom-left-padding-medium {
+    padding-left: 1.25rem;
+}
+
+.custom-left-padding-small {
+    padding-left: 0.25rem;
+}
+
+.custom-font-size {
+    font-size: 15px;
+}
+
+.custom-horizontal-padding-large {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.custom-divider {
+    border-bottom: 1px solid #a9a9a9;
+}
