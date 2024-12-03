@@ -1,8 +1,8 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
-import nksFamilyViewerEntryHTML from './anksFamilyViewerEntry.html';
-import nksFamilyViewerEntryV2HTML from './anksFamilyViewerEntryV2.html';
+import nksFamilyViewerEntryHTML from './nksFamilyViewerEntry.html';
+import nksFamilyViewerEntryV2HTML from './nksFamilyViewerEntryV2.html';
 
 export default class nksFamilyViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
