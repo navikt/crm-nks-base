@@ -216,9 +216,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             if (this.useNewDesign && this.relation.role === 'UGIFT') {
                 return 'Ugift';
             }
-            if (this.relation.role === 'REGISTRERT_PARTNER') {
-                return this.useNewDesign ? 'Registrert partner' : 'REGISTRERT PARTNER';
-            }
             if (this.relation.role === 'ENKE_ELLER_ENKEMANN') {
                 if (this.relation.sex === 'MANN') {
                     return this.useNewDesign ? 'Enke' : 'ENKE';
