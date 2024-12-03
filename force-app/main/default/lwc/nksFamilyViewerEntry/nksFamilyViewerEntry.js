@@ -330,6 +330,9 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getAge() {
+        if (this.useNewDesign && this.relation.age != null) {
+            return this.relation.age;
+        }
         if (this.relation.ageString != null) {
             return this.relation.ageString;
         }
@@ -369,11 +372,11 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            return 'Har foreldreansvar alene.';
+            return this.useNewDesign ? 'Foreldreansvar alene' : 'Har foreldreansvar alene.';
         }
         if (this.relation.responsible === 'felles') {
-            return 'Har felles foreldreansvar.';
+            return this.useNewDesign ? 'Felles foreldreansvar' : 'Har felles foreldreansvar.';
         }
-        return 'Har ikke foreldreansvar.';
+        return this.useNewDesign ? 'Ikke foreldreansvar' : 'Har ikke foreldreansvar.';
     }
 }
