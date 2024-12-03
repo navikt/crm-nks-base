@@ -159,14 +159,14 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
-        return this.getLiveWithText() + (this.useNewDesign ? '  |  ' : '\n') + this.getResponsibilityChildText();
+        return this.getLiveWithText + '\n' + this.getResponsibilityChildText;
     }
 
     get getParentText() {
         if (this.relation.unauthorized === true || this.relation.deceased) {
             return '';
         }
-        return this.getLiveWithText() + (this.useNewDesign ? '  |  ' : '\n') + this.getResponsibilityParentText();
+        return this.getLiveWithText + '\n' + this.getResponsibilityParentText;
     }
 
     get showCardTile() {
@@ -336,14 +336,14 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.useNewDesign ? 'Ukjent alder' : 'UKJENT ALDER';
     }
 
-    getLiveWithText() {
+    get getLiveWithText() {
         if (this.relation.livesWith === true) {
             return 'Bor med bruker';
         }
         return 'Bor ikke med bruker';
     }
 
-    getResponsibilityChildText() {
+    get getResponsibilityChildText() {
         if (this.relation.responsible === '' || this.relation.responsible === null) {
             return 'Informasjon om foreldreansvar finnes ikke.';
         }
@@ -360,7 +360,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.useNewDesign ? 'Ikke foreldreansvar' : 'Bruker har ikke foreldreansvar.';
     }
 
-    getResponsibilityParentText() {
+    get getResponsibilityParentText() {
         if (this.relation.responsible === '' || this.relation.responsible === null) {
             return 'Informasjon om foreldreansvar finnes ikke.';
         }

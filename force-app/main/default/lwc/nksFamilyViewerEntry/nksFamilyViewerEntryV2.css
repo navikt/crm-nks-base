@@ -42,3 +42,16 @@
 .custom-padding-bottom-small {
     padding-top: 0.25rem;
 }
+
+.text-divider {
+    display: inline;
+    margin: 0 0.8rem;
+}
+
+.text-divider::after {
+    content: '|';
+}
+
+.custom-font-size {
+    font-size: 14px;
+}

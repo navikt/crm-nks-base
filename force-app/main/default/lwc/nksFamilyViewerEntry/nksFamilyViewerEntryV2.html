@@ -11,12 +11,12 @@
                             </svg>
                             <span class="slds-assistive-text">{altText}</span>
                         </div>
-                        <p class="custom-left-padding-small" style="font-size: 14px; font-weight: bold">
+                        <p class="custom-left-padding-small custom-font-size" style="font-weight: bold">
                             {getTileName}
                         </p>
                     </div>
 
-                    <div class="custom-left-padding-medium slds-size_2-of-12" style="font-size: 14px">
+                    <div class="custom-left-padding-medium slds-size_2-of-12 custom-font-size">
                         {getRole}
                         <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="custom-left-padding-medium slds-size_2-of-12">
                             <template lwc:if={relation.personIdent}>
                                 <div class="slds-grid slds-wrap icon-container">
-                                    <p style="font-size: 14px">{personIdentFormatted}</p>
+                                    <p class="custom-font-size">{personIdentFormatted}</p>
                                     <lightning-button-icon
                                         class="copy-icon"
                                         icon-name="utility:copy"
@@ -42,16 +42,20 @@
                             <div class="slds-grid slds-wrap">
                                 <template lwc:if={isChild}>
                                     <template lwc:if={getChildText}>
-                                        <p style="font-size: 14px">{getChildText}</p>
+                                        <p class="custom-font-size">{getLiveWithText}</p>
+                                        <div aria-hidden="true" class="text-divider"></div>
+                                        <p class="custom-font-size">{getResponsibilityChildText}</p>
                                     </template>
                                 </template>
                                 <template lwc:if={isParent}>
                                     <template lwc:if={getParentText}>
-                                        <p style="font-size: 14px">{getParentText}</p>
+                                        <p class="custom-font-size">{getLiveWithText}</p>
+                                        <div aria-hidden="true" class="text-divider"></div>
+                                        <p class="custom-font-size">{getResponsibilityParentText}</p>
                                     </template>
                                 </template>
                                 <template if:true={relation.deceased}>
-                                    <p style="font-size: 14px">Død - {getDateOfDeath}</p>
+                                    <p class="custom-font-size">Død - {getDateOfDeath}</p>
                                 </template>
                             </div>
                             <template lwc:if={hasBadges}>
@@ -82,7 +86,7 @@
             <template lwc:else>
                 <div class="custom-left-padding-large slds-grid slds-wrap table-row icon-container">
                     <template lwc:if={isMarital}>
-                        <div class="custom-left-padding-medium slds-size_2-of-12" style="font-size: 14px">
+                        <div class="custom-left-padding-medium slds-size_2-of-12 custom-font-size">
                             <strong> Sivilstand: </strong>{getRole}
                             <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
                         </div>
@@ -94,14 +98,14 @@
                                     <use xlink:href={genderIconNewDesignSrc}></use>
                                 </svg>
                             </div>
-                            <p class="custom-left-padding-small" style="font-size: 14px; font-weight: bold">
+                            <p class="custom-left-padding-small custom-font-size" style="font-weight: bold">
                                 {getRole}
                             </p>
                         </div>
                         <template lwc:if={hasEventDate}>
                             <div class="slds-size_2-of-12"></div>
                             <div class="slds-grid custom-left-padding-medium slds-size_4-of-12 icon-container">
-                                <p style="font-size: 14px">{relation.eventDate}</p>
+                                <p class="custom-font-size">{relation.eventDate}</p>
                             </div></template
                         >
                     </template>
