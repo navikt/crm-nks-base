@@ -21,11 +21,11 @@
                                 <div class="custom-padding-top custom-divider"></div>
                             </div>
                             <template for:each={relations.data} for:item="relation">
-                                <c-nks-family-viewer-entry-v2
+                                <c-nks-family-viewer-entry
                                     key={relation.personIdent}
                                     relation={relation}
                                     use-new-design={useNewDesign}
-                                ></c-nks-family-viewer-entry-v2>
+                                ></c-nks-family-viewer-entry>
                             </template>
                         </template>
                     </template>
