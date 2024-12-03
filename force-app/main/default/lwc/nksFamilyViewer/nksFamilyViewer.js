@@ -44,9 +44,7 @@ export default class nksFamilyViewer extends LightningElement {
             const maritalRolesWithLessInfo = ['UGIFT', 'UOPPGITT', 'SKILT', 'SKILT_PARTNER'];
             const hasMaritalRoleWithLessInfo = maritalRolesWithLessInfo.includes(relation.role);
 
-            return isMarital
-                ? isMaritalType && hasMaritalRoleWithLessInfo
-                : !(isMaritalType && hasMaritalRoleWithLessInfo);
+            return isMarital === (isMaritalType && hasMaritalRoleWithLessInfo);
         });
     }
 
