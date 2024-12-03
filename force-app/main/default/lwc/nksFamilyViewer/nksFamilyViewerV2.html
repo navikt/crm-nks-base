@@ -1,0 +1,56 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item class="custom-padding-top-bottom" size="12">
+            <lightning-card title="Familie" icon-name="custom:custom1">
+                <div class="custom-horizontal-padding">
+                    <template lwc:if={isLoaded}>
+                        <template lwc:if={relations.data}>
+                            <template for:each={maritalRelationsWithLessInfo} for:item="relation">
+                                <div
+                                    key={relation.personIdent}
+                                    class="custom-left-padding-medium custom-padding-top-bottom-small"
+                                    style="font-size: 14px"
+                                >
+                                    <strong> Sivilstand: </strong>{relation.roleLabel} {relation.eventDate}
+                                </div>
+                            </template>
+                            <template lwc:if={otherRelations.length}>
+                                <div
+                                    class="custom-left-padding-large custom-padding-top slds-grid slds-wrap table-header"
+                                >
+                                    <div
+                                        class="slds-truncate custom-left-padding-medium slds-size_4-of-12 custom-font-size"
+                                    >
+                                        Navn
+                                    </div>
+                                    <div class="slds-truncate slds-size_1-of-12 custom-font-size">Relasjon</div>
+                                    <div
+                                        class="slds-truncate custom-left-padding-medium slds-size_3-of-12 custom-font-size"
+                                    >
+                                        Fødselsnummer
+                                    </div>
+                                    <div class="slds-size_4-of-12"></div>
+                                </div>
+                                <div class="custom-horizontal-padding-large">
+                                    <div class="custom-padding-top custom-divider"></div>
+                                </div>
+                            </template>
+                            <template for:each={otherRelations} for:item="relation">
+                                <c-nks-family-viewer-entry
+                                    key={relation.personIdent}
+                                    relation={relation}
+                                    use-new-design={useNewDesign}
+                                ></c-nks-family-viewer-entry>
+                            </template>
+                        </template>
+                    </template>
+                    <lightning-spinner
+                        lwc:else
+                        alternative-text="Laster familierelasjoner"
+                        size="medium"
+                    ></lightning-spinner>
+                </div>
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
