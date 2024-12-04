@@ -1,14 +1,24 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
+import nksBostedAddressHTML from './nksBostedAddress.html';
+import nksBostedAddressV2HTML from './nksBostedAddressV2.html';
+import { handleCopy } from 'c/nksComponentsUtils';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
+    @api useNewDesign;
+    @api pdlLastUpdatedFormatted;
+    @api county;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
     _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
     showCopyButton = false;
+
+    render() {
+        return this.useNewDesign ? nksBostedAddressV2HTML : nksBostedAddressHTML;
+    }
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
@@ -24,32 +34,55 @@ export default class NksBostedAddress extends LightningElement {
         }
     }
 
-    get residentialAddresses() {
+    capitalizeWords(str) {
+        return str
+            ? str
+                  .split(' ')
+                  .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+                  .join(' ')
+            : '';
+    }
+
+    formatAddressComponent(component) {
+        return component ? component[0].toUpperCase() + component.slice(1).toLowerCase() : '';
+    }
+
+    buildAddressLine(address, houseNumber, houseLetter) {
+        return [
+            this.formatAddressComponent(address),
+            houseNumber ? ` ${houseNumber}` : '',
+            houseLetter ? ` ${houseLetter}` : ''
+        ]
+            .join('')
+            .trim();
+    }
+
+    buildPostInfo(zipCode, city) {
+        return [zipCode || '', city ? ` ${this.formatAddressComponent(city)}` : ''].join('').trim();
+    }
+
+    buildRegion(region, countryCode) {
+        return [this.formatAddressComponent(region), countryCode ? ` ${countryCode}` : ''].join('').trim();
+    }
+
+    get residentialAddressesNewDesign() {
         if (this._residentialAddresses.length === 0) {
             return [];
         }
 
         this.showCopyButton = true;
-        const addressesToReturn = this._residentialAddresses.map((element) => {
-            const type = element.type ? 'Type: ' + element.type : '';
-            const fullName = element.fullName ? element.fullName : '';
-            const addressLine = [
-                element.address ? element.address : '',
-                element.houseNumber ? ' ' + element.houseNumber : '',
-                element.houseLetter ? ' ' + element.houseLetter : ''
-            ]
-                .join('')
-                .trim();
-            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
-                .join('')
-                .trim();
-            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
-                .join('')
-                .trim();
 
-            return [type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+        return this._residentialAddresses.map((element) => {
+            const type = element.type ? `${element.type[0].toUpperCase()}${element.type.slice(1).toLowerCase()}:` : '';
+            const fullName = this.capitalizeWords(element.fullName);
+            const addressLine = this.buildAddressLine(element.address, element.houseNumber, element.houseLetter);
+            const postInfo = this.buildPostInfo(element.zipCode, element.city);
+            const region = this.buildRegion(element.region, element.countryCode);
+            const typeAndFullName = [type, fullName].filter(Boolean).join(' ');
+            const otherParts = [addressLine, postInfo, this.county || region || 'Norge NO'].filter(Boolean).join(', ');
+
+            return [typeAndFullName, otherParts].filter(Boolean).join(', ');
         });
-        return addressesToReturn.join('\n\n').trim();
     }
 
     /* Function to handle open/close section */
@@ -77,5 +110,9 @@ export default class NksBostedAddress extends LightningElement {
         document.execCommand('copy');
         clipboardInput.hidden = true;
         clipboardInput.disabled = true;
+    }
+
+    handleCopy(event) {
+        handleCopy(event);
     }
 }
