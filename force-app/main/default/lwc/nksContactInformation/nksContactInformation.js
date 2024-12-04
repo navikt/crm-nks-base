@@ -17,6 +17,11 @@ import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 
+const LABELS = {
+    mobile: 'Mobilnummer',
+    phoneFromNav: 'Telefon fra nav.no'
+};
+
 const PERSON_CONTACT_FIELDS = [
     EMAIL_FIELD,
     PHONE_FIELD,
@@ -51,6 +56,9 @@ export default class NksContactInformation extends LightningElement {
     personId;
     wireFields;
     county;
+    errorMessage;
+    isError = false;
+    isLoadning = true;
 
     connectedCallback() {
         this.wireFields = [`${this.objectApiName}.Id`];
@@ -65,10 +73,12 @@ export default class NksContactInformation extends LightningElement {
             if (this.relationshipField && this.objectApiName) {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
+            this.isLoadning = false;
         }
         if (error) {
-            this.addErrorMessage('wiredRecordInfo', error);
+            this.handleError(error);
             console.error(error);
+            this.isLoadning = false;
         }
     }
 
@@ -109,8 +119,38 @@ export default class NksContactInformation extends LightningElement {
             });
     }
 
+    handleError(error) {
+        this.errorMessage = 'Unknown error';
+        if (Array.isArray(error.body)) {
+            this.errorMessage = error.body.map((e) => e.message).join(', ');
+        } else if (typeof error.body.message === 'string') {
+            this.errorMessage = error.body.message;
+        }
+        this.isError = true;
+    }
+
+    getFormattedPhone(phone, label) {
+        return phone ? `${label}: ${phone}` : '';
+    }
+
+    get formattedPhone() {
+        return this.getFormattedPhone(this.phone, LABELS.mobile);
+    }
+
+    get formattedPhone1() {
+        return this.getFormattedPhone(this.phone1, LABELS.phoneFromNav);
+    }
+
+    get formattedPhone2() {
+        return this.getFormattedPhone(this.phone2, LABELS.phoneFromNav);
+    }
+
+    get fancyError() {
+        return JSON.stringify(this.errorMessage);
+    }
+
     get krrReservationTranslation() {
-        return this.krrReservation === false ? 'Nei' : 'Ja';
+        return this.krrReservation ? 'Ja' : 'Nei';
     }
 
     get krrLastUpdatedFormatted() {
@@ -123,27 +163,6 @@ export default class NksContactInformation extends LightningElement {
 
     get bankAccountLastUpdatedFormatted() {
         return this.formatSystemDate(this.bankAccountLastUpdated, 'KRP');
-    }
-
-    get formattedPhone() {
-        if (!this.phone) {
-            return '';
-        }
-        return `Mobilnummer: ${this.phone}`;
-    }
-
-    get formattedPhone1() {
-        if (!this.phone1) {
-            return '';
-        }
-        return `Telefon fra nav.no: ${this.phone1}`;
-    }
-
-    get formattedPhone2() {
-        if (!this.phone2) {
-            return '';
-        }
-        return `Telefon fra nav.no: ${this.phone2}`;
     }
 
     formatSystemDate(updatedDate, sourceSystem) {
