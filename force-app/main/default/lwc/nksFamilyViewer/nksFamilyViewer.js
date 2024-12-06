@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import getRelations from '@salesforce/apex/NKS_FamilyViewController.getRelations';
@@ -9,6 +9,7 @@ export default class nksFamilyViewer extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api useNewDesign;
+    @track errorMessage;
     wireFields;
     isLoaded = false;
 
@@ -62,6 +63,10 @@ export default class nksFamilyViewer extends LightningElement {
             return 'Skilt partner';
         }
         return relation.role;
+    }
+
+    handleError(event) {
+        this.errorMessage = event.detail.message;
     }
 
     get divider() {
