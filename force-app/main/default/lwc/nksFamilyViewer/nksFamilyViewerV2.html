@@ -4,7 +4,7 @@
             <lightning-card title="Familie" icon-name="custom:custom1">
                 <div class="custom-horizontal-padding">
                     <template lwc:if={isLoaded}>
-                        <template lwc:if={errorMessage}> FEIL: {errorMessage} </template>
+                        <template lwc:if={isError}> FEIL: {errorMessage} </template>
                         <template lwc:else>
                             <template lwc:if={relations.data}>
                                 <template for:each={maritalRelationsWithLessInfo} for:item="relation">
@@ -42,7 +42,6 @@
                                         key={relation.personIdent}
                                         relation={relation}
                                         use-new-design={useNewDesign}
-                                        onerror={handleError}
                                     ></c-nks-family-viewer-entry>
                                 </template>
                             </template>

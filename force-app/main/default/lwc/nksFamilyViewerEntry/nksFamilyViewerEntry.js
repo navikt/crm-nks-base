@@ -12,12 +12,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.useNewDesign ? nksFamilyViewerEntryV2HTML : nksFamilyViewerEntryHTML;
     }
 
-    connectedCallback() {
-        if (this.isError) {
-            this.dispatchErrorEvent();
-        }
-    }
-
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
         var successful = false;
@@ -35,15 +29,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
 
         document.body.removeChild(hiddenInput);
-    }
-
-    dispatchErrorEvent() {
-        const event = new CustomEvent('error', {
-            detail: {
-                message: this.getErrorMsg
-            }
-        });
-        this.dispatchEvent(event);
     }
 
     get isMarital() {
