@@ -41,7 +41,7 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.123.0.LATEST"
+                    "versionNumber": "0.138.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -73,7 +73,7 @@
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.70.0.LATEST"
+                    "versionNumber": "0.77.0.LATEST"
                 },
                 {
                     "package": "crm-nks-base-components",
