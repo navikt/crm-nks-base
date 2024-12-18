@@ -1,8 +1,52 @@
 <template>
-    <template if:false={isOperational}>
+    <template lwc:if={showOperational}>
+        <section class="slds-box slds-theme_default slds-m-bottom_none">
+            <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
+                <div class="slds-media__figure">
+                    <lightning-icon
+                        aria-hidden="true"
+                        icon-name={iconName}
+                        class="slds-icon_container icon"
+                        size="small"
+                    ></lightning-icon>
+                </div>
+                <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+            </lightning-layout>
+            <p class="slds-var-p-horizontal_medium">
+                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            </p>
+        </section>
+    </template>
+    <template lwc:elseif={showSalesforceUpdate}>
+        <section class="slds-box slds-theme_default slds-m-bottom_none">
+            <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
+                <div class="slds-media__figure">
+                    <lightning-icon
+                        aria-hidden="true"
+                        icon-name={iconName}
+                        class="slds-icon_container"
+                        size="small"
+                    ></lightning-icon>
+                </div>
+                <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+            </lightning-layout>
+            <p class="slds-var-p-horizontal_medium">
+                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+            </p>
+            <div class="slds-var-p-top_small">
+                <lightning-formatted-url
+                    value={pageUrl}
+                    label="Se alle Salesforce oppdateringer"
+                    onclick={navigateToList}
+                >
+                </lightning-formatted-url>
+            </div>
+        </section>
+    </template>
+    <template lwc:elseif={isTraffic}>
         <section class="slds-box slds-theme_default slds-is-relative">
             <lightning-layout class="slds-grid slds-wrapp slds-var-p-bottom_small">
-                <template if:true={iconName}>
+                <template lwc:if={iconName}>
                     <lightning-layout-item class="slds-media__figure">
                         <lightning-icon
                             aria-hidden="true"
@@ -15,7 +59,7 @@
                 <lightning-layout-item>
                     <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
                 </lightning-layout-item>
-                <template if:true={enableRefresh}>
+                <template lwc:if={enableRefresh}>
                     <lightning-layout-item class="slds-col">
                         <lightning-button-icon
                             class="slds-float_right"
@@ -24,17 +68,17 @@
                             onclick={refreshField}
                         ></lightning-button-icon>
                     </lightning-layout-item>
-                    <template if:true={showSpinner} class="slds-spinner_container">
+                    <template lwc:if={showSpinner} class="slds-spinner_container">
                         <lightning-spinner title="Loading" size="small" type="brand"></lightning-spinner>
                     </template>
                 </template>
             </lightning-layout>
-            <template if:true={text}>
+            <template lwc:if={text}>
                 <p class="slds-var-p-horizontal_medium">
                     <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
                 </p>
             </template>
-            <template if:false={text}>
+            <template lwc:else>
                 <div class="slds-illustration slds-illustration_small">
                     <svg
                         class="slds-illustration__svg"
@@ -261,58 +305,21 @@
                             </g>
                         </g>
                     </svg>
-                    <template if:true={isTraffic}>
+                    <template lwc:if={isTraffic}>
                         <div class="slds-text-longform">
                             <h3 class="slds-text-heading_small">Trafikkstyrers hjørne er for øyeblikket tomt.</h3>
                         </div>
                     </template>
-                    <template if:true={isSalesforceUpdate}>
-                        <div class="slds-text-longform">
-                            <h3 class="slds-text-heading_small">Det er ingen nylige oppdateringer!</h3>
-                        </div>
-                    </template>
                 </div>
             </template>
-            <template if:true={isSalesforceUpdate}>
-                <div class="slds-var-p-top_small">
-                    <lightning-formatted-url
-                        value={pageUrl}
-                        label="Se alle Salesforce oppdateringer"
-                        onclick={navigateToList}
-                    >
-                    </lightning-formatted-url>
-                </div>
-            </template>
-            <template if:true={isTraffic}>
-                <div class="slds-var-p-top_small">
-                    <lightning-formatted-url
-                        value={pageUrl}
-                        label="Se alle tidligere oppdateringer"
-                        onclick={navigateToList}
-                    >
-                    </lightning-formatted-url>
-                </div>
-            </template>
+            <div class="slds-var-p-top_small">
+                <lightning-formatted-url
+                    value={pageUrl}
+                    label="Se alle tidligere oppdateringer"
+                    onclick={navigateToList}
+                >
+                </lightning-formatted-url>
+            </div>
         </section>
-    </template>
-    <template if:true={isOperational}>
-        <template if:false={isEmpty}>
-            <section class="slds-box slds-theme_default slds-m-bottom_none">
-                <lightning-layout vertical-align="center" class="slds-var-p-bottom_small">
-                    <div class="slds-media__figure">
-                        <lightning-icon
-                            aria-hidden="true"
-                            icon-name={iconName}
-                            class="slds-icon_container icon"
-                            size="small"
-                        ></lightning-icon>
-                    </div>
-                    <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
-                </lightning-layout>
-                <p class="slds-var-p-horizontal_medium">
-                    <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
-                </p>
-            </section>
-        </template>
     </template>
 </template>
