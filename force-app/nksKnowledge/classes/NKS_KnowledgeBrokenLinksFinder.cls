@@ -10,8 +10,9 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
     public void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
         // Set regex pattern only once to avoid "Regex too complicated" err
         NKS_KnowledgeController.setCompiledRegexPattern();
-        Pattern linksPattern = NKS_KnowledgeController.getCompiledRegexPattern();    
-          
+        Pattern linksPattern = NKS_KnowledgeController.getCompiledRegexPattern();
+        
+        Map<Id, Knowledge__kav> scopeMap = new Map<Id, Knowledge__kav>(scope);
         for (Knowledge__kav article : [
             SELECT
                 Title,
@@ -31,7 +32,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
                 NKS_UserInformation__c,
                 WhoDoesWhat__c
             FROM Knowledge__kav
-            WHERE Id IN :scope
+            WHERE Id IN :scopeMap.keySet()
         ]) {
             if (Test.isRunningTest()) {
                 Map<String, List<String>> testMap = new Map<String, List<String>>();
