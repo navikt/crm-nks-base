@@ -4,7 +4,7 @@ public class NKS_NavCaseService {
         get {
             Map<String, String> returnMap = new Map<String, String>();
             for (Common_Code__c theme : [
-                SELECT Id, Name, CRM_Code__c, CRM_Code_Set__c
+                SELECT Id, Name, CRM_Code__c
                 FROM Common_Code__c
                 WHERE CRM_Code_set__c = 'Tema'
                 ORDER BY Name
