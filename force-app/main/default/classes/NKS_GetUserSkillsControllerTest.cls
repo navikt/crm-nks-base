@@ -57,8 +57,8 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         ];
         List<User> users = new List<User>{user1, user2};
 
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
@@ -90,8 +90,8 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         ];
         List<User> users = new List<User>{user1, user2};
 
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
@@ -121,8 +121,8 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         ];
         List<User> users = new List<User>{user1, user2};
 
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
@@ -154,7 +154,7 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         ];
         List<User> users = new List<User>{user1, user2};
 
-        NKS_GetUserSkillsController.cachedUserSkillsMap.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
         request.userIds = new List<Id>{users[0].Id, users[1].Id};
@@ -171,7 +171,7 @@ public with sharing class NKS_GetUserSkillsControllerTest {
     }
 
     @isTest
-    public static void testInitializeUserSkillsMap() {
+    public static void testpopulateUserSkillsCache() {
         User user1 = [
             SELECT Id
             FROM User
@@ -187,10 +187,10 @@ public with sharing class NKS_GetUserSkillsControllerTest {
         Set<Id> userIds = new Set<Id>{user1.Id, user2.Id};
 
         Test.startTest();
-        NKS_GetUserSkillsController.initializeUserSkillsMap(userIds);
+        NKS_GetUserSkillsController.populateUserSkillsCache(userIds);
         Test.stopTest();
 
-        Assert.AreEqual(2, NKS_GetUserSkillsController.cachedUserSkillsMap.size(), 'The user skills map should have two users.');
-        Assert.isTrue(NKS_GetUserSkillsController.cachedUserSkillsMap.keySet().containsAll(userIds), 'The user skills map should contain User1 and User2.');
+        Assert.AreEqual(2, NKS_GetUserSkillsController.userSkillsCache.size(), 'The user skills map should have two users.');
+        Assert.isTrue(NKS_GetUserSkillsController.userSkillsCache.keySet().containsAll(userIds), 'The user skills map should contain User1 and User2.');
     }
 }
