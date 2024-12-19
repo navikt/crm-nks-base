@@ -1,0 +1,66 @@
+<template>
+    <lightning-card>
+        <div class="custom-padding-left-right-small">
+            <div class="custom-padding-around-medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning-icon
+                            icon-name="action:call"
+                            alternative-text="Call Icon"
+                            size="x-small"
+                            title="Call Icon"
+                            class="icon-container"
+                        >
+                        </lightning-icon>
+                    </div>
+                    <div class="slds-col">
+                        <h1 class="custom-p-top-xx-small slds-text-title_bold" style="font-size: 16px">{getTitle}</h1>
+                    </div>
+                </div>
+            </div>
+            <template if:true={conversationNote}>
+                <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
+                    <div class="slds-box">
+                        <p>{conversationNote}</p>
+                    </div>
+                </div>
+            </template>
+            <template if:false={conversationNote}>
+                <p class="slds-text-align_center">Ingen informasjon tilgjengelig.</p>
+            </template>
+
+            <!-- Button Section -->
+            <div class="custom-padding-around-small slds-grid slds-grid_align-end">
+                <lightning-button
+                    label="Journalfør"
+                    variant="neutral"
+                    onclick={handleJournal}
+                    class="custom-margin-right-small"
+                >
+                </lightning-button>
+                <lightning-button
+                    label="Sett til sladding"
+                    variant="neutral"
+                    onclick={handleRedact}
+                    class="custom-margin-right-small"
+                >
+                </lightning-button>
+                <lightning-button label="Opprett oppgave" variant="brand" onclick={handleCreateTask}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <template if:true={showFlow}>
+            <lightning-flow
+                flow-api-name={activeFlowApiName}
+                onstatuschange={handleFlowStatusChange}
+                flow-input-variables={inputVariables}
+            >
+            </lightning-flow>
+        </template>
+
+        <div class="slds-var-m-horizontal_medium slds-var-m-vertical_medium">
+            <c-nks-notification-box></c-nks-notification-box>
+        </div>
+    </lightning-card>
+</template>
