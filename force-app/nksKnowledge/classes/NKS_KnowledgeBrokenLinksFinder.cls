@@ -11,7 +11,7 @@ public with sharing class NKS_KnowledgeBrokenLinksFinder implements Database.Bat
         // Set regex pattern only once to avoid "Regex too complicated" err
         NKS_KnowledgeController.setCompiledRegexPattern();
         Pattern linksPattern = NKS_KnowledgeController.getCompiledRegexPattern();
-        
+
         Map<Id, Knowledge__kav> scopeMap = new Map<Id, Knowledge__kav>(scope);
         for (Knowledge__kav article : [
             SELECT

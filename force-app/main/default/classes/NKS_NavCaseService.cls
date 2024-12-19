@@ -43,11 +43,11 @@ public class NKS_NavCaseService {
             LoggerUtility logger = new LoggerUtility();
             logger.error(
                 'Error retrieving person cases \n ' +
-                'Status: ' +
-                apiCtrl.getResponse().getStatus() +
-                '\n' +
-                'Body: ' +
-                apiCtrl.getResponse().getBody(),
+                    'Status: ' +
+                    apiCtrl.getResponse().getStatus() +
+                    '\n' +
+                    'Body: ' +
+                    apiCtrl.getResponse().getBody(),
                 null
             );
             logger.peek().Payload__c = 'REQUEST: \n\n' + JSON.serializePretty(apiCtrl.getRequest().getBody());

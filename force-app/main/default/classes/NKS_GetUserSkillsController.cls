@@ -1,10 +1,9 @@
 public with sharing class NKS_GetUserSkillsController {
-
     @TestVisible
     private static Map<Id, Set<String>> userSkillsCache = new Map<Id, Set<String>>();
 
     // Used to send notification to supervisors when news is published
-    @InvocableMethod(label = 'Get User IDs Filtered By Skill')
+    @InvocableMethod(label='Get User IDs Filtered By Skill')
     public static List<Result> getUsersToNotify(List<Request> requests) {
         Set<Id> usersToNotify = new Set<Id>();
 
@@ -23,7 +22,7 @@ public with sharing class NKS_GetUserSkillsController {
     }
 
     public static Set<Id> getUsersWithMatchingSkills(Set<Id> userIds, Set<String> newsSkills) {
-        // Check if cached data is available 
+        // Check if cached data is available
         if (userSkillsCache.isEmpty()) {
             populateUserSkillsCache(userIds);
         }
@@ -54,8 +53,7 @@ public with sharing class NKS_GetUserSkillsController {
             FROM ServiceResourceSkill
             WHERE ServiceResource.RelatedRecordId IN :userIds
         ]) {
-            userSkillsMap.get(srSkill.ServiceResource.RelatedRecordId)
-                .add(srSkill.Skill.DeveloperName);
+            userSkillsMap.get(srSkill.ServiceResource.RelatedRecordId).add(srSkill.Skill.DeveloperName);
         }
 
         // Transform newsSkills to match the Group naming convention: 'NKS_Skill_<SkillName>'
@@ -70,23 +68,21 @@ public with sharing class NKS_GetUserSkillsController {
         for (Group grp : [
             SELECT Id, DeveloperName
             FROM Group
-            WHERE DeveloperName IN :groupSkillNames
-            AND Type = 'Regular'
+            WHERE DeveloperName IN :groupSkillNames AND Type = 'Regular'
         ]) {
             String skillName = grp.DeveloperName.replace('NKS_SKill_', '');
             groupIdToSkillMap.put(grp.Id, skillName);
         }
-        
+
         for (GroupMember grpMember : [
             SELECT UserOrGroupId
             FROM GroupMember
-            WHERE UserOrGroupId IN :userIds
-            AND GroupId IN :groupIdToSkillMap.keySet()
+            WHERE UserOrGroupId IN :userIds AND GroupId IN :groupIdToSkillMap.keySet()
         ]) {
             String skillName = groupIdToSkillMap.get(grpMember.GroupId);
             userSkillsMap.get(grpMember.UserOrGroupId).add(skillName);
         }
-        
+
         userSkillsCache = userSkillsMap;
     }
 
@@ -113,7 +109,7 @@ public with sharing class NKS_GetUserSkillsController {
     }
 
     public class Request {
-        @InvocableVariable(required = true)
+        @InvocableVariable(required=true)
         public List<Id> userIds;
 
         @InvocableVariable
@@ -121,7 +117,7 @@ public with sharing class NKS_GetUserSkillsController {
     }
 
     public class Result {
-        @InvocableVariable(label = 'User IDs')
+        @InvocableVariable(label='User IDs')
         public List<String> userIds;
     }
 }

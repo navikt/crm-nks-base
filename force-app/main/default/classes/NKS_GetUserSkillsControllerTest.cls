@@ -1,6 +1,5 @@
 @isTest
 public with sharing class NKS_GetUserSkillsControllerTest {
-
     @TestSetup
     static void setupTestData() {
         Profile profile = [
@@ -37,8 +36,8 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             ProfileId = profile.Id,
             IsActive = true
         );
-        
-        insert new List<User>{user1, user2};
+
+        insert new List<User>{ user1, user2 };
     }
 
     @isTest
@@ -55,21 +54,27 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             WHERE LastName = 'User2'
             LIMIT 1
         ];
-        List<User> users = new List<User>{user1, user2};
+        List<User> users = new List<User>{ user1, user2 };
 
-        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{ 'Arbeid', 'Helse' });
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{ 'Familie' });
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
-        request.userIds = new List<Id>{users[0].Id, users[1].Id};
+        request.userIds = new List<Id>{ users[0].Id, users[1].Id };
         request.newsSkills = 'Arbeid;Familie';
 
         Test.startTest();
-        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
+        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(
+            new List<NKS_GetUserSkillsController.Request>{ request }
+        );
         Test.stopTest();
 
         Assert.AreEqual(1, results.size(), 'There should be one result returned.');
-        Assert.AreEqual(2, results[0].userIds.size(), 'Both users should be notified because they have matching skills.');
+        Assert.AreEqual(
+            2,
+            results[0].userIds.size(),
+            'Both users should be notified because they have matching skills.'
+        );
         Assert.isTrue(results[0].userIds.contains(users[0].Id), 'User1 should be in the notification list.');
         Assert.isTrue(results[0].userIds.contains(users[1].Id), 'User2 should be in the notification list.');
     }
@@ -88,21 +93,27 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             WHERE LastName = 'User2'
             LIMIT 1
         ];
-        List<User> users = new List<User>{user1, user2};
+        List<User> users = new List<User>{ user1, user2 };
 
-        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{ 'Arbeid', 'Helse' });
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{ 'Familie' });
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
-        request.userIds = new List<Id>{users[0].Id, users[1].Id};
+        request.userIds = new List<Id>{ users[0].Id, users[1].Id };
         request.newsSkills = 'Pensjon';
 
         Test.startTest();
-        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
+        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(
+            new List<NKS_GetUserSkillsController.Request>{ request }
+        );
         Test.stopTest();
 
         Assert.AreEqual(1, results.size(), 'There should be one result returned.');
-        Assert.AreEqual(0, results[0].userIds.size(), 'No users should be notified because there are no matching skills.');
+        Assert.AreEqual(
+            0,
+            results[0].userIds.size(),
+            'No users should be notified because there are no matching skills.'
+        );
     }
 
     @isTest
@@ -119,17 +130,19 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             WHERE LastName = 'User2'
             LIMIT 1
         ];
-        List<User> users = new List<User>{user1, user2};
+        List<User> users = new List<User>{ user1, user2 };
 
-        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{'Arbeid', 'Helse'});
-        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user1.Id, new Set<String>{ 'Arbeid', 'Helse' });
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{ 'Familie' });
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
-        request.userIds = new List<Id>{users[0].Id, users[1].Id};
+        request.userIds = new List<Id>{ users[0].Id, users[1].Id };
         request.newsSkills = '';
 
         Test.startTest();
-        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
+        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(
+            new List<NKS_GetUserSkillsController.Request>{ request }
+        );
         Test.stopTest();
 
         Assert.AreEqual(1, results.size(), 'There should be one result returned.');
@@ -152,16 +165,18 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             WHERE LastName = 'User2'
             LIMIT 1
         ];
-        List<User> users = new List<User>{user1, user2};
+        List<User> users = new List<User>{ user1, user2 };
 
-        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{'Familie'});
+        NKS_GetUserSkillsController.userSkillsCache.put(user2.Id, new Set<String>{ 'Familie' });
 
         NKS_GetUserSkillsController.Request request = new NKS_GetUserSkillsController.Request();
-        request.userIds = new List<Id>{users[0].Id, users[1].Id};
+        request.userIds = new List<Id>{ users[0].Id, users[1].Id };
         request.newsSkills = 'Sosiale tjenester';
 
         Test.startTest();
-        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(new List<NKS_GetUserSkillsController.Request>{request});
+        List<NKS_GetUserSkillsController.Result> results = NKS_GetUserSkillsController.getUsersToNotify(
+            new List<NKS_GetUserSkillsController.Request>{ request }
+        );
         Test.stopTest();
 
         Assert.AreEqual(1, results.size(), 'There should be one result returned.');
@@ -184,13 +199,20 @@ public with sharing class NKS_GetUserSkillsControllerTest {
             WHERE LastName = 'User2'
             LIMIT 1
         ];
-        Set<Id> userIds = new Set<Id>{user1.Id, user2.Id};
+        Set<Id> userIds = new Set<Id>{ user1.Id, user2.Id };
 
         Test.startTest();
         NKS_GetUserSkillsController.populateUserSkillsCache(userIds);
         Test.stopTest();
 
-        Assert.AreEqual(2, NKS_GetUserSkillsController.userSkillsCache.size(), 'The user skills map should have two users.');
-        Assert.isTrue(NKS_GetUserSkillsController.userSkillsCache.keySet().containsAll(userIds), 'The user skills map should contain User1 and User2.');
+        Assert.AreEqual(
+            2,
+            NKS_GetUserSkillsController.userSkillsCache.size(),
+            'The user skills map should have two users.'
+        );
+        Assert.isTrue(
+            NKS_GetUserSkillsController.userSkillsCache.keySet().containsAll(userIds),
+            'The user skills map should contain User1 and User2.'
+        );
     }
 }
