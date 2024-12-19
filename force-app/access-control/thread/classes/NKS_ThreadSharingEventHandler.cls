@@ -20,7 +20,7 @@ public without sharing class NKS_ThreadSharingEventHandler extends RecordSharing
             new NKS_ThreadAccessHandler().grantAccessToNewThreads(threads);
         } else {
             logger.critical('Recieved Record Sharing event but found no Threads: \n' + String.join(recordIds, ', '), null,
-            CRM_ApplicationDomain.Domain.NKS));
+            CRM_ApplicationDomain.Domain.NKS);
         }
         } catch (Exception ex) {
             String recordIdsString = String.join( recordIds, ', ' );  
