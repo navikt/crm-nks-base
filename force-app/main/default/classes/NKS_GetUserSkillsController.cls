@@ -3,6 +3,7 @@ public with sharing class NKS_GetUserSkillsController {
     private static Map<Id, Set<String>> userSkillsCache = new Map<Id, Set<String>>();
 
     // Used to send notification to supervisors when news is published
+    // Notifies users with skills equal to Announcement skill
     @InvocableMethod(label='Get User IDs Filtered By Skill')
     public static List<Result> getUsersToNotify(List<Request> requests) {
         Set<Id> usersToNotify = new Set<Id>();
@@ -47,7 +48,7 @@ public with sharing class NKS_GetUserSkillsController {
             userSkillsMap.put(userId, new Set<String>());
         }
 
-        // Fetch users and their skills from ServiceResourceSkill
+        // Fetch users and their skills from ServiceResourceSkill (ServiceResources are used for STO/BTO)
         for (ServiceResourceSkill srSkill : [
             SELECT ServiceResource.RelatedRecordId, Skill.DeveloperName
             FROM ServiceResourceSkill
@@ -56,7 +57,7 @@ public with sharing class NKS_GetUserSkillsController {
             userSkillsMap.get(srSkill.ServiceResource.RelatedRecordId).add(srSkill.Skill.DeveloperName);
         }
 
-        // Transform newsSkills to match the Group naming convention: 'NKS_Skill_<SkillName>'
+        // Transform user skills to match the Group naming convention: 'NKS_Skill_<SkillName>'
         Set<String> groupSkillNames = new Set<String>();
         for (Id userId : userSkillsMap.keySet()) {
             for (String skill : userSkillsMap.get(userId)) {
@@ -70,12 +71,13 @@ public with sharing class NKS_GetUserSkillsController {
             FROM Group
             WHERE DeveloperName IN :groupSkillNames AND Type = 'Regular'
         ]) {
-            String skillName = grp.DeveloperName.replace('NKS_SKill_', '');
+            String skillName = grp.DeveloperName.replace('NKS_Skill_', '');
             groupIdToSkillMap.put(grp.Id, skillName);
         }
 
+        // Add all skills for all Group Memberships (Groups are used for chat)
         for (GroupMember grpMember : [
-            SELECT UserOrGroupId
+            SELECT UserOrGroupId, GroupId
             FROM GroupMember
             WHERE UserOrGroupId IN :userIds AND GroupId IN :groupIdToSkillMap.keySet()
         ]) {
