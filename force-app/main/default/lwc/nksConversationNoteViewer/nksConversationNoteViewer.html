@@ -14,18 +14,20 @@
                         </lightning-icon>
                     </div>
                     <div class="slds-col">
-                        <h1 class="custom-p-top-xx-small slds-text-title_bold" style="font-size: 16px">{getTitle}</h1>
+                        <h2 class="custom-p-top-xx-small slds-text-title_bold" style="font-size: 16px">
+                            {timelineName}
+                        </h2>
                     </div>
                 </div>
             </div>
-            <template if:true={conversationNote}>
+            <template lwc:if={conversationNote}>
                 <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
                     <div class="slds-box">
                         <p>{conversationNote}</p>
                     </div>
                 </div>
             </template>
-            <template if:false={conversationNote}>
+            <template lwc:else>
                 <p class="slds-text-align_center">Ingen informasjon tilgjengelig.</p>
             </template>
 
