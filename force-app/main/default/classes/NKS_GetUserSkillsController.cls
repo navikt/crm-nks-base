@@ -32,7 +32,7 @@ public with sharing class NKS_GetUserSkillsController {
         Set<Id> matchingUserIds = new Set<Id>();
         for (Id userId : userIds) {
             Set<String> userSkills = userSkillsCache.get(userId) ?? new Set<String>();
-            if (userSkills.isEmpty() || hasMatchingNewsSkill(newsSkills, userSkills)) {
+            if (!userSkills.isEmpty() || hasMatchingNewsSkill(newsSkills, userSkills)) {
                 matchingUserIds.add(userId);
             }
         }
