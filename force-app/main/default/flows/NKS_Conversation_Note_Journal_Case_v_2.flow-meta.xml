@@ -57,9 +57,16 @@
         <connector>
             <targetReference>Check_If_Has_Conversation_Note</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>CRM_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>recordId</elementReference>
