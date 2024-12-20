@@ -38,7 +38,7 @@ export default class NksBostedAddress extends LightningElement {
         return str
             ? str
                   .split(' ')
-                  .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+                  .map((word) => word[0]?.toUpperCase() + word.slice(1).toLowerCase())
                   .join(' ')
             : '';
     }
@@ -63,6 +63,34 @@ export default class NksBostedAddress extends LightningElement {
 
     buildRegion(region, countryCode) {
         return [this.formatAddressComponent(region), countryCode ? ` ${countryCode}` : ''].join('').trim();
+    }
+
+    get residentialAddresses() {
+        if (this._residentialAddresses.length === 0) {
+            return [];
+        }
+
+        this.showCopyButton = true;
+        const addressesToReturn = this._residentialAddresses.map((element) => {
+            const type = element.type ? 'Type: ' + element.type : '';
+            const fullName = element.fullName ? element.fullName : '';
+            const addressLine = [
+                element.address ? element.address : '',
+                element.houseNumber ? ' ' + element.houseNumber : '',
+                element.houseLetter ? ' ' + element.houseLetter : ''
+            ]
+                .join('')
+                .trim();
+            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
+                .join('')
+                .trim();
+            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
+                .join('')
+                .trim();
+
+            return [type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
+        });
+        return addressesToReturn.join('\n\n').trim();
     }
 
     get residentialAddressesNewDesign() {
