@@ -15,6 +15,10 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>ClampLines__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
         <field>CreateableObject_Field1__c</field>
         <value xsi:nil="true"/>
     </values>
