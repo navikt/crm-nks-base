@@ -1,0 +1,34 @@
+<template>
+    <c-nks-expandable-panel is-expandable chevron-right ontoggle={onShowHide}>
+        <div slot="date">{getDate}</div>
+        <div slot="type">{varselType}</div>
+        <div slot="channel">
+            <ul class="slds-list_horizontal slds-has-dividers_left slds-wrap">
+                <template lwc:if={channelList} for:each={channelList} for:item="channel">
+                    <li class="slds-item" key={channel}>{channel}</li>
+                </template>
+            </ul>
+        </div>
+        <template lwc:if={showVarselListe}>
+            <div class="slds-box slds-var-m-vertical_x-small">
+                <ol class="slds-has-dividers_bottom-space">
+                    <template iterator:it={sortedVarselList}>
+                        <li if:false={it.last} class="slds-item" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+                        <li if:true={it.last} class="slds-p-left_x-small slds-p-top_x-small" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+                    </template>
+                </ol>
+            </div>
+        </template>
+        <template lwc:if={showNotifikasjon}>
+            <div class="slds-box slds-var-m-vertical_x-small">
+                <c-nks-brukervarsel-notifikasjon
+                    usernotification={brukervarsel.brukernotifikasjon}
+                ></c-nks-brukervarsel-notifikasjon>
+            </div>
+        </template>
+    </c-nks-expandable-panel>
+</template>
