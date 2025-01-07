@@ -213,7 +213,7 @@ public with sharing class NKS_NewsArchiveHandler {
 
     private String formatDateString(Date input) {
         Datetime dateToFormat = input;
-        return dateToFormat.formatGmt('YYYYMMdd');
+        return dateToFormat.formatGmt('yyyyMMdd');
     }
 
     @TestVisible
