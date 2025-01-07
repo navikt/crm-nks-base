@@ -1,11 +1,11 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-
+import { publishToAmplitude } from 'c/amplitude';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningElement) {
     @api recordId;
-
+    @api logEvent;
     conversationNote;
     error = false;
 
@@ -43,9 +43,9 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
                 actionName: 'view'
             }
         });
-        // if (this.logEvent) {
-        //     publishToAmplitude('Timeline', { type: 'Navigate to record' });
-        // }
+        if (this.logEvent) {
+            publishToAmplitude('Timeline', { type: 'Navigate to record' });
+        }
     }
 
     get isLoading() {
