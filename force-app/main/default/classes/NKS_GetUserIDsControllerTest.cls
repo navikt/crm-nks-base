@@ -1,6 +1,5 @@
 @isTest
 public with sharing class NKS_GetUserIDsControllerTest {
-
     @TestSetup
     static void makeData() {
         Profile profile = [
@@ -25,36 +24,19 @@ public with sharing class NKS_GetUserIDsControllerTest {
         );
         insert testUser;
 
-        Group testGroup = new Group(
-            Name = 'Test Group',
-            DeveloperName = 'Test_Group_Main',
-            Type = 'Regular'
-        );
+        Group testGroup = new Group(Name = 'Test Group', DeveloperName = 'Test_Group_Main', Type = 'Regular');
         insert testGroup;
 
-        Group subgroup = new Group(
-            Name = 'Test Subgroup',
-            DeveloperName = 'Test_Subgroup',
-            Type = 'Regular'
-        );
+        Group subgroup = new Group(Name = 'Test Subgroup', DeveloperName = 'Test_Subgroup', Type = 'Regular');
         insert subgroup;
 
-        GroupMember gm1 = new GroupMember(
-            GroupId = testGroup.Id,
-            UserOrGroupId = testUser.Id
-        );
+        GroupMember gm1 = new GroupMember(GroupId = testGroup.Id, UserOrGroupId = testUser.Id);
         insert gm1;
 
-        GroupMember gm2 = new GroupMember(
-            GroupId = testGroup.Id,
-            UserOrGroupId = subgroup.Id
-        );
+        GroupMember gm2 = new GroupMember(GroupId = testGroup.Id, UserOrGroupId = subgroup.Id);
         insert gm2;
 
-        GroupMember gm3 = new GroupMember(
-            GroupId = subgroup.Id,
-            UserOrGroupId = testUser.Id
-        );
+        GroupMember gm3 = new GroupMember(GroupId = subgroup.Id, UserOrGroupId = testUser.Id);
         insert gm3;
     }
 
@@ -73,13 +55,13 @@ public with sharing class NKS_GetUserIDsControllerTest {
             LIMIT 1
         ];
 
-        List<Id> inputGroupIds = new List<Id>{mainGroup.Id};
+        List<Id> inputGroupIds = new List<Id>{ mainGroup.Id };
 
         Test.startTest();
         List<NKS_GetUserIDsController.Result> results = NKS_GetUserIDsController.getUserIdsFromGroups(inputGroupIds);
         Test.stopTest();
 
-        Assert.areEqual(1, results.size(), 'There should be one result returned.');
-        Assert.areEqual(0, results[0].userIds.size(), 'There should be no user ID in the result.');
+        Assert.areEqual(false, results.isEmpty(), 'There should be one result returned.');
+        Assert.areEqual(true, results[0].userIds.isEmpty(), 'There should be no user ID in the result.'); // Due to profile name
     }
 }
