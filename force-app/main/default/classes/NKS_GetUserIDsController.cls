@@ -37,7 +37,7 @@ public with sharing class NKS_GetUserIDsController {
         for (GroupMember member : groupMembers) {
             if (member.UserOrGroupId.getSObjectType() == Schema.Group.SObjectType) {
                 nestedGroupIds.add(member.UserOrGroupId);
-            } else {
+            } else if (activeUsersMap.get(member.UserOrGroupId) != null) {
                 result.add(member.UserOrGroupId);
             }
         }
