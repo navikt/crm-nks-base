@@ -32,7 +32,8 @@ public with sharing class NKS_GetUserSkillsController {
         Set<Id> matchingUserIds = new Set<Id>();
         for (Id userId : userIds) {
             Set<String> userSkills = userSkillsCache.get(userId) ?? new Set<String>();
-            if (!userSkills.isEmpty() && hasMatchingNewsSkill(newsSkills, userSkills)) {
+            // If user has no skill they should have access to all news -> send notification
+            if (userSkills.isEmpty() || hasMatchingNewsSkill(newsSkills, userSkills)) {
                 matchingUserIds.add(userId);
             }
         }
