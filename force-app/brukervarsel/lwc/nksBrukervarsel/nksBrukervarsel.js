@@ -190,7 +190,7 @@ export default class NksBrukervarsel extends LightningElement {
     }
 
     onShowHide(event) {
-        this.showDetails = event.detail.isExpanded;
+        this.showDetails = this.newDesign ? event?.detail?.isExpanded : !this.showDetails;
         publishToAmplitude('UN List', { type: 'toggle show details' });
     }
 }
