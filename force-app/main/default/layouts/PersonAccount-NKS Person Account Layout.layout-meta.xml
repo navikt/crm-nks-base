@@ -83,7 +83,7 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>NKS_Theme__c</fields>
+        <fields>NKS_Themeformula__c</fields>
         <fields>CRM_GjelderFormula__c</fields>
         <fields>NKS_StatusFormula__c</fields>
         <fields>CRM_Priority__c</fields>
@@ -119,7 +119,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5r000000Vb2R</masterLabel>
+        <masterLabel>00h2o00000lslqV</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
