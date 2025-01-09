@@ -4,7 +4,7 @@
         <name>Log_Error</name>
         <label>Log Error</label>
         <locationX>440</locationX>
-        <locationY>755</locationY>
+        <locationY>947</locationY>
         <actionName>LoggerUtility</actionName>
         <actionType>apex</actionType>
         <dataTypeMappings>
@@ -43,7 +43,7 @@
         <name>Send_Notification</name>
         <label>Send Notification</label>
         <locationX>176</locationX>
-        <locationY>647</locationY>
+        <locationY>839</locationY>
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <faultConnector>
@@ -87,22 +87,36 @@
     <assignments>
         <name>Add_UserIds</name>
         <label>Add UserIds</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationX>264</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>RecipientIDs</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>Loop_Through_Users.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_Notification</targetReference>
+            <targetReference>Loop_Through_Users</targetReference>
         </connector>
     </assignments>
     <environments>Default</environments>
     <interviewLabel>Announcement Send Notification On Publishing News {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Announcement Send Notification On Publishing News</label>
+    <loops>
+        <name>Loop_Through_Users</name>
+        <label>Loop Through Users</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <collectionReference>Get_Users</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_UserIds</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Send_Notification</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -129,7 +143,7 @@
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_User</targetReference>
+            <targetReference>Get_Users</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -144,23 +158,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_User</name>
-        <label>Get User</label>
+        <name>Get_Users</name>
+        <label>Get Users</label>
         <locationX>176</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Add_UserIds</targetReference>
+            <targetReference>Loop_Through_Users</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>0052o000009cP69AAE</stringValue>
+                <stringValue>0052o000009cvzJAAQ</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0052o000009d70TAAQ</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>User</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
