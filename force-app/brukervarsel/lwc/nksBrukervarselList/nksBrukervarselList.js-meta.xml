@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <isExposed>true</isExposed>
     <description>Display the result from the BrukerVarsel API</description>
     <masterLabel>Brukervarsel</masterLabel>
@@ -11,7 +11,9 @@
 
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property name="relationshipField" label="Relationship field" description="Field pointing to the Person ID" type="String" />
+            <property name="relationshipField" label="Relationship field"
+                description="Field pointing to the Person ID" type="String" />
+            <property name="newDesign" type="Boolean" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
