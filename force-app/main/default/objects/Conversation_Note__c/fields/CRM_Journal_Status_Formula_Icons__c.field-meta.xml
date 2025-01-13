@@ -3,11 +3,15 @@
     <fullName>CRM_Journal_Status_Formula_Icons__c</fullName>
     <externalId>false</externalId>
     <formula>CASE(CRM_Journal_Status__c,
-&apos;Journal Completed&apos;, IMAGE(&apos;/resource/circles/circle_green.svg&apos;, &apos;Journalført&apos;, 18,18)+ &apos; Journalført&apos;,
-&apos;Journal Started&apos;, IMAGE(&apos;/resource/circles/circle_grey.svg&apos;, &apos;Journalført&apos;, 18,18)+ &apos; Ikke journalført&apos;,
-&apos;Journal Error&apos;, IMAGE(&apos;/resource/circles/circle_red.svg&apos;, &apos;Journalføring feilet&apos;, 18,18)+ &apos; Journalføring feilet&apos;,
-IMAGE(&apos;/resource/circles/circle_grey.svg&apos;, &apos;Ikke journalført&apos;, 18,18) + &apos; Ikke journalført&apos;
-)</formula>
+        &apos;Journal Completed&apos;, IMAGE(&apos;/resource/circles/circle_green.svg&apos;,
+        &apos;Journalført&apos;, 18,18)+ &apos; Journalført&apos;,
+        &apos;Journal Started&apos;, IMAGE(&apos;/resource/circles/circle_grey.svg&apos;,
+        &apos;Journalført&apos;, 18,18)+ &apos; Ikke journalført&apos;,
+        &apos;Journal Error&apos;, IMAGE(&apos;/resource/circles/circle_red.svg&apos;,
+        &apos;Journalføring feilet&apos;, 18,18)+ &apos; Journalføring feilet&apos;,
+        IMAGE(&apos;/resource/circles/circle_grey.svg&apos;, &apos;Ikke journalført&apos;, 18,18) +
+        &apos; Ikke journalført&apos;
+        )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Journal Status</label>
     <required>false</required>
