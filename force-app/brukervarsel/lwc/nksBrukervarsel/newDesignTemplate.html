@@ -24,11 +24,13 @@
             </div>
         </template>
         <template lwc:if={showNotifikasjon}>
-            <div class="slds-box slds-var-m-vertical_x-small">
-                <c-nks-brukervarsel-notifikasjon
-                    usernotification={brukervarsel.brukernotifikasjon}
-                ></c-nks-brukervarsel-notifikasjon>
-            </div>
+            <lightning-layout class="slds-var-p-horizontal_medium slds-var-p-bottom_small">
+                <lightning-layout-item size="2"></lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <strong><p>{brukervarsel.brukernotifikasjon.tekst}</p></strong>
+                    <p>{brukervarsel.brukernotifikasjon.link}</p>
+                </lightning-layout-item>
+            </lightning-layout>
         </template>
     </c-nks-expandable-panel>
 </template>
