@@ -1,0 +1,36 @@
+<template>
+    <c-nks-expandable-panel is-expandable chevron-right ontoggle={onShowHide}>
+        <div slot="date">{getDate}</div>
+        <div slot="type">{varselType}</div>
+        <div slot="channel">
+            <ul class="slds-list_horizontal slds-has-dividers_left slds-wrap">
+                <template lwc:if={channelList} for:each={channelList} for:item="channel">
+                    <li class="slds-item" key={channel}>{channel}</li>
+                </template>
+            </ul>
+        </div>
+        <template lwc:if={showVarselListe}>
+            <div class="slds-box slds-var-m-vertical_x-small">
+                <ol class="slds-has-dividers_bottom-space">
+                    <template iterator:it={sortedVarselList}>
+                        <li lwc:if={it.last} class="slds-p-left_x-small slds-p-top_x-small" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+                        <li lwc:else class="slds-item" key={it.value.sendt}>
+                            <c-nks-brukervarsel-melding message={it.value}></c-nks-brukervarsel-melding>
+                        </li>
+                    </template>
+                </ol>
+            </div>
+        </template>
+        <template lwc:if={showNotifikasjon}>
+            <lightning-layout class="slds-var-p-horizontal_medium slds-var-p-bottom_small">
+                <lightning-layout-item size="2"></lightning-layout-item>
+                <lightning-layout-item>
+                    <strong><p>{brukervarsel.brukernotifikasjon.tekst}</p></strong>
+                    <p>{brukervarsel.brukernotifikasjon.link}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </c-nks-expandable-panel>
+</template>

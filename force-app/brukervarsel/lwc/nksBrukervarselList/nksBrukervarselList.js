@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.getBrukerNotifikasjonFromIdent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
@@ -6,15 +6,18 @@ import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import { publishToAmplitude } from 'c/amplitude';
 import { resolve } from 'c/nksComponentsUtils';
+import newDesignTemplate from './newDesignTemplate.html';
+import standardTemplate from './nksBrukervarselList.html';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
+    @api newDesign = false;
 
-    @track notifications = [];
-    @track filteredNotificationList = [];
-    @track errorMessages = [];
+    notifications = [];
+    filteredNotificationList = [];
+    errorMessages = [];
 
     showAll = false;
     personId;
@@ -24,6 +27,10 @@ export default class NksBrukervarselList extends LightningElement {
     fromDate;
     toDate;
     wiredBrukerVarsel;
+
+    render() {
+        return this.newDesign ? newDesignTemplate : standardTemplate;
+    }
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
