@@ -23,7 +23,7 @@
             <template lwc:if={conversationNote}>
                 <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
                     <div class="slds-box">
-                        <p>{conversationNote}</p>
+                        <lightning-formatted-text value={conversationNote}></lightning-formatted-text>
                     </div>
                 </div>
             </template>
@@ -47,7 +47,12 @@
                     class="custom-margin-right-small"
                 >
                 </lightning-button>
-                <lightning-button label="Opprett oppgave" variant="brand" onclick={handleCreateTask}>
+                <lightning-button
+                    class="slds-p-right_x-small"
+                    label="Opprett oppgave"
+                    variant="brand"
+                    onclick={handleCreateTask}
+                >
                 </lightning-button>
             </div>
         </div>
