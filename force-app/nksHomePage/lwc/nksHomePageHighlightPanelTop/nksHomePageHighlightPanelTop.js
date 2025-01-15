@@ -73,8 +73,9 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     }
 
     @wire(getNksStatus, { title: '$fagsystemTitle' })
-    handleFagsystemData({ data, error }) {
-        this.wiredFagsystem = data;
+    handleFagsystemData(result) {
+        this.wiredFagsystem = result;
+        const { data, error } = result;
         if (data) {
             this.fagsystem = data;
             this._fagsystemId = data.Id;
@@ -86,8 +87,9 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     }
 
     @wire(getNksStatus, { title: '$navTitle' })
-    handleNavData({ data, error }) {
-        this.wiredNav = data;
+    handleNavData(result) {
+        this.wiredNav = result;
+        const { data, error } = result;
         if (data) {
             this.nav = data;
             this._navId = data.Id;
