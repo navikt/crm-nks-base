@@ -36,6 +36,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>Journal_Subtheme_Code</name>
+            <value>
+                <elementReference>Case_Overview.selectedSubtheme</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>Journal_Theme_Code</name>
             <value>
                 <elementReference>Case_Overview.selectedCaseTheme</elementReference>
@@ -47,6 +53,8 @@
                 <elementReference>Conversation_Note_Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>CRM_ConvNoteJournalHelper</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
@@ -299,6 +307,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Case_Overview.selectedCaseThemeSfId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Case_Overview.selectedSubtheme</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1022,6 +1037,7 @@
             <defaultSelectedChoiceReference>Create_Nav_Task_Action</defaultSelectedChoiceReference>
             <fieldText>Velg handling:</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
