@@ -100,6 +100,13 @@
                 <elementReference>Selected_Subtype_SF_Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Send_NAV_Task</targetReference>
         </connector>
