@@ -1,11 +1,11 @@
 <template>
     <lightning-card>
-        <div slot="title" class="slds-var-p-top_xx-small">
+        <div slot="title" class="slds-var-p-top_x-small">
             <lightning-icon icon-name="standard:voice_call" size="small"></lightning-icon>
             <span class="slds-var-p-left_small">{timelineName}</span>
         </div>
         <template lwc:if={conversationNote}>
-            <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
+            <div class="slds-var-p-horizontal_medium custom-padding-top-bottom-small">
                 <div class="slds-box">
                     <lightning-formatted-text value={conversationNote}></lightning-formatted-text>
                 </div>
