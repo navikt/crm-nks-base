@@ -100,7 +100,7 @@
     </values>
     <values>
         <field>SLDS_Icon__c</field>
-        <value xsi:type="xsd:string">custom:custom83</value>
+        <value xsi:type="xsd:string">standard:voice_call</value>
     </values>
     <values>
         <field>SLDS_Timeline_Color__c</field>
