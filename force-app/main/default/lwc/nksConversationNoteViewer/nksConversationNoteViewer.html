@@ -1,73 +1,28 @@
 <template>
     <lightning-card>
-        <div class="custom-padding-left-right-small">
-            <div class="custom-padding-around-medium">
-                <div class="slds-grid">
-                    <div class="slds-col slds-size_1-of-12">
-                        <lightning-icon
-                            icon-name="action:call"
-                            alternative-text="Call Icon"
-                            size="x-small"
-                            title="Call Icon"
-                            class="icon-container"
-                        >
-                        </lightning-icon>
-                    </div>
-                    <div class="slds-col">
-                        <h2 class="custom-p-top-xx-small slds-text-title_bold" style="font-size: 16px">
-                            {timelineName}
-                        </h2>
-                    </div>
-                </div>
-            </div>
-            <template lwc:if={conversationNote}>
-                <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
-                    <div class="slds-box">
-                        <lightning-formatted-text value={conversationNote}></lightning-formatted-text>
-                    </div>
-                </div>
-            </template>
-            <template lwc:else>
-                <p class="slds-text-align_center">Ingen informasjon tilgjengelig.</p>
-            </template>
-
-            <!-- Button Section -->
-            <div class="custom-padding-around-small slds-grid slds-grid_align-end">
-                <lightning-button
-                    label="Journalfør"
-                    variant="neutral"
-                    onclick={handleJournal}
-                    class="custom-margin-right-small"
-                >
-                </lightning-button>
-                <lightning-button
-                    label="Sett til sladding"
-                    variant="neutral"
-                    onclick={handleRedact}
-                    class="custom-margin-right-small"
-                >
-                </lightning-button>
-                <lightning-button
-                    class="slds-p-right_x-small"
-                    label="Opprett oppgave"
-                    variant="brand"
-                    onclick={handleCreateTask}
-                >
-                </lightning-button>
-            </div>
+        <div slot="title" class="slds-var-p-top_xx-small">
+            <lightning-icon icon-name="standard:voice_call" size="small"></lightning-icon>
+            <span class="slds-var-p-left_small">{timelineName}</span>
         </div>
-
-        <template if:true={showFlow}>
-            <lightning-flow
-                flow-api-name={activeFlowApiName}
-                onstatuschange={handleFlowStatusChange}
-                flow-input-variables={inputVariables}
-            >
-            </lightning-flow>
+        <template lwc:if={conversationNote}>
+            <div class="custom-padding-left-right-medium custom-padding-top-bottom-small">
+                <div class="slds-box">
+                    <lightning-formatted-text value={conversationNote}></lightning-formatted-text>
+                </div>
+            </div>
+            <div>
+                <c-nks-button-container-bottom
+                    record-id={recordId}
+                    flow-names="NKS_Conversation_Note_Journal_Case_v_2,NKS_Conversation_Note_Set_Redaction_v_2,NKS_Conversation_Note_Send_NAV_Task_v_2"
+                    flow-labels="NKS_Journal, NKS_Set_To_Redaction, NKS_Create_NAV_Task"
+                    button-stylings="secondary, secondary, primary"
+                    show-notifications
+                >
+                </c-nks-button-container-bottom>
+            </div>
         </template>
-
-        <div class="slds-var-m-horizontal_medium slds-var-m-vertical_medium">
-            <c-nks-notification-box></c-nks-notification-box>
-        </div>
+        <template lwc:else>
+            <p class="slds-text-align_center">Ingen informasjon tilgjengelig.</p>
+        </template>
     </lightning-card>
 </template>
