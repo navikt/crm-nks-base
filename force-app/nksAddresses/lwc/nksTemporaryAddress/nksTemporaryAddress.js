@@ -2,7 +2,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getOppholdsAddress from '@salesforce/apex/NKS_AddressController.getOppholdsAddress';
 import nksTemporaryAddressHTML from './nksTemporaryAddress.html';
 import nksTemporaryAddressV2HTML from './nksTemporaryAddressV2.html';
-import { handleCopy } from 'c/nksComponentsUtils';
+import { handleAddressCopy } from 'c/nksComponentsUtils';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -50,7 +50,7 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     handleCopy(event) {
-        handleCopy(event);
+        handleAddressCopy(event);
     }
 
     capitalizeWords(str) {

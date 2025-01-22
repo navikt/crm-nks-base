@@ -2,7 +2,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
 import nksBostedAddressHTML from './nksBostedAddress.html';
 import nksBostedAddressV2HTML from './nksBostedAddressV2.html';
-import { handleCopy } from 'c/nksComponentsUtils';
+import { handleAddressCopy } from 'c/nksComponentsUtils';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
@@ -141,6 +141,6 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     handleCopy(event) {
-        handleCopy(event);
+        handleAddressCopy(event);
     }
 }
