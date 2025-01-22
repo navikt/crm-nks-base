@@ -785,14 +785,14 @@ public with sharing class NKS_FamilyViewController {
     }
 
     @TestVisible
-    private static String getAgeString(Date date) {
-        if (date == null) {
+    private static String getAgeString(Date d) {
+        if (d == null) {
             return null;
         }
 
-        Integer years = date.year() - 1;
-        Integer months = date.month() - 1;
-        Integer days = date.day() - 1;
+        Integer years = d.year() - 1;
+        Integer months = d.month() - 1;
+        Integer days = d.day() - 1;
 
         if (years < 3) {
             if (months > 0 || years > 0) {
