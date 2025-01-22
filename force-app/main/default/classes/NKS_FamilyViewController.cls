@@ -785,18 +785,24 @@ public with sharing class NKS_FamilyViewController {
     }
 
     @TestVisible
-    private static String getAgeString(Date d) {
-        if (d == null) {
+    private static String getAgeString(Date date) {
+        if (date == null) {
             return null;
         }
 
-        if (d.year() - 1 < 3) {
-            if (d.month() - 1 > 0 || (d.year() - 1) > 0) {
-                return String.valueOf((d.year() - 1) * 12 + d.month() - 1) + ' mnd';
+        Integer years = date.year() - 1;
+        Integer months = date.month() - 1;
+        Integer days = date.day() - 1;
+
+        if (years < 3) {
+            if (months > 0 || years > 0) {
+                Integer totalMonths = years * 12 + months;
+                return totalMonths + ' mnd';
             }
-            return String.valueOf(d.day() - 1) + ' d';
+            return days + ' d';
         }
-        return String.valueOf(d.year() - 1) + ' år';
+
+        return years + ' år';
     }
 
     @TestVisible
