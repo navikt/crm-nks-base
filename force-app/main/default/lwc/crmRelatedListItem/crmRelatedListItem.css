@@ -11,5 +11,6 @@
 }
 
 .hide-list {
+    flex: auto;
     list-style-type: none;
 }
