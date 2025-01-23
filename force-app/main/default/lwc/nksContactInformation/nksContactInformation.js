@@ -58,7 +58,7 @@ export default class NksContactInformation extends LightningElement {
     county;
     errorMessage;
     isError = false;
-    isLoadning = true;
+    isLoading = true;
 
     connectedCallback() {
         this.wireFields = [`${this.objectApiName}.Id`];
@@ -73,12 +73,11 @@ export default class NksContactInformation extends LightningElement {
             if (this.relationshipField && this.objectApiName) {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
-            this.isLoadning = false;
         }
         if (error) {
             this.handleError(error);
             console.error(error);
-            this.isLoadning = false;
+            this.isLoading = false;
         }
     }
 
@@ -100,7 +99,9 @@ export default class NksContactInformation extends LightningElement {
             this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
             this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
             this.county = getFieldValue(data, COUNTY_FIELD);
+            this.isLoading = false;
         } else if (error) {
+            this.handleError(error);
             console.error(error);
         }
     }
