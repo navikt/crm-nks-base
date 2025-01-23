@@ -103,6 +103,7 @@ export default class NksContactInformation extends LightningElement {
         } else if (error) {
             this.handleError(error);
             console.error(error);
+            this.isLoading = false;
         }
     }
 
@@ -116,7 +117,9 @@ export default class NksContactInformation extends LightningElement {
                 this.personId = resolve(relationshipField, record);
             })
             .catch((error) => {
+                this.handleError(error);
                 console.error(error);
+                this.isLoading = false;
             });
     }
 
