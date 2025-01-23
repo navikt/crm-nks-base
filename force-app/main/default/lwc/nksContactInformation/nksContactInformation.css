@@ -33,3 +33,9 @@
 .italic-text {
     font-style: italic;
 }
+
+.custom-divider {
+    border-bottom: 1px solid #a9a9a9;
+    padding-bottom: 0.8rem;
+    padding-top: 0.8rem;
+}
