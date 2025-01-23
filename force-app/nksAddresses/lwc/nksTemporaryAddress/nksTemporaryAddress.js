@@ -58,7 +58,7 @@ export default class NksBostedAddress extends LightningElement {
             ? str
                   .split(' ')
                   .filter((word) => word)
-                  .map((word) => word[0]?.toUpperCase() + word.slice(1).toLowerCase())
+                  .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
                   .join(' ')
             : '';
     }
