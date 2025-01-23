@@ -189,7 +189,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
     get getRole() {
         if (this.relation.recordType === 'stillborn') {
-            return this.useNewDesign ? 'Døfødt barn' : 'DØDFØDT BARN';
+            return this.useNewDesign ? 'Dødfødt barn' : 'DØDFØDT BARN';
         }
         if (this.relation.recordType === 'child') {
             if (this.relation.sex === 'MANN') {
