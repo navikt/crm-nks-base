@@ -32,6 +32,7 @@ public with sharing class NKS_AuditLogController {
             ];
             if (announcement.NKS_News_Status__c != STATUS_DRAFT) {
                 createAuditLogRecord(recordId, ANNOUNCEMENT_AUDIT_LOG, null);
+                // test
             }
         }
     }
