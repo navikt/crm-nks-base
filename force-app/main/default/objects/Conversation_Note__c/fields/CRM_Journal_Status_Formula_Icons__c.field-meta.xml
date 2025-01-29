@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Journal_Status_Formula_Icons__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(CRM_Journal_Status__c,
+        &apos;Journal Completed&apos;, IMAGE(&apos;/resource/circles/circle_green.svg&apos;,
+        &apos;Journalført&apos;, 15,15)+ &apos;  Journalført&apos;,
+        &apos;Journal Started&apos;, IMAGE(&apos;/resource/circles/circle_grey.svg&apos;,
+        &apos;Journalført&apos;, 15,15)+ &apos;  Ikke journalført&apos;,
+        &apos;Journal Error&apos;, IMAGE(&apos;/resource/circles/circle_red.svg&apos;,
+        &apos;Journalføring feilet&apos;, 15,15)+ &apos;  Journalføring feilet&apos;,
+        IMAGE(&apos;/resource/circles/circle_grey.svg&apos;, &apos;Ikke journalført&apos;, 15,15) +
+        &apos;  Ikke journalført&apos;
+        )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Journal Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

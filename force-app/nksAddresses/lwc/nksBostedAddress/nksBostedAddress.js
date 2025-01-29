@@ -2,13 +2,12 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
 import nksBostedAddressHTML from './nksBostedAddress.html';
 import nksBostedAddressV2HTML from './nksBostedAddressV2.html';
-import { handleCopy } from 'c/nksComponentsUtils';
+import { handleAddressCopy } from 'c/nksComponentsUtils';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api useNewDesign;
     @api pdlLastUpdatedFormatted;
-    @api county;
     @track sectionClass = 'slds-section section';
     @track sectionIconName = 'utility:chevronright';
     _residentialAddresses = [];
@@ -38,7 +37,8 @@ export default class NksBostedAddress extends LightningElement {
         return str
             ? str
                   .split(' ')
-                  .map((word) => word[0]?.toUpperCase() + word.slice(1).toLowerCase())
+                  .filter((word) => word)
+                  .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
                   .join(' ')
             : '';
     }
@@ -107,7 +107,7 @@ export default class NksBostedAddress extends LightningElement {
             const postInfo = this.buildPostInfo(element.zipCode, element.city);
             const region = this.buildRegion(element.region, element.countryCode);
             const typeAndFullName = [type, fullName].filter(Boolean).join(' ');
-            const otherParts = [addressLine, postInfo, this.county || region || 'Norge NO'].filter(Boolean).join(', ');
+            const otherParts = [addressLine, postInfo, region || 'Norge NO'].filter(Boolean).join(', ');
 
             return [typeAndFullName, otherParts].filter(Boolean).join(', ');
         });
@@ -141,6 +141,6 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     handleCopy(event) {
-        handleCopy(event);
+        handleAddressCopy(event);
     }
 }

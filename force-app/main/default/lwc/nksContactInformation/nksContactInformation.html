@@ -1,7 +1,10 @@
 <template>
     <lightning-card title="Kontaktinformasjon" icon-name="standard:call_coaching">
-        <lightning-layout multiple-rows="true" class="custom-padding-left-large custom-padding-top-small">
-            <template lwc:if={isLoadning}>
+        <lightning-layout
+            multiple-rows="true"
+            class="custom-padding-left-large slds-p-right_x-large custom-padding-top-small"
+        >
+            <template lwc:if={isLoading}>
                 <div>
                     <lightning-spinner alternative-text="Laster kontaktinfomrasjon" size="medium"></lightning-spinner>
                 </div>
@@ -20,7 +23,7 @@
                     </div>
                 </template>
                 <template lwc:else>
-                    <lightning-layout-item size="12" class="slds-grid custom-padding-bottom-medium">
+                    <lightning-layout-item size="12" class="slds-grid custom-divider">
                         <div class="slds-grid slds-size_4-of-7">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -41,10 +44,10 @@
                             <p class="custom-margin-left-small custom-margin-right-small bold-text">E-post:</p>
                             <p>{email}</p>
                         </div>
-                        <p class="slds-size_3-of-7 italic-text">{krrLastUpdatedFormatted}</p>
+                        <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{krrLastUpdatedFormatted}</p>
                     </lightning-layout-item>
 
-                    <lightning-layout-item size="12" class="custom-padding-bottom-medium">
+                    <lightning-layout-item size="12" class="custom-divider">
                         <lightning-layout-item class="slds-grid">
                             <div class="slds-size_4-of-7">
                                 <div class="slds-grid">
@@ -73,19 +76,19 @@
                             <div class="slds-size_4-of-7">
                                 <p class="custom-padding-left-large">{formattedPhone}</p>
                             </div>
-                            <p class="slds-size_3-of-7 italic-text">{krrLastUpdatedFormatted}</p>
+                            <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{krrLastUpdatedFormatted}</p>
                         </lightning-layout-item>
 
                         <lightning-layout-item lwc:if={formattedPhone1}>
                             <div class="slds-grid">
                                 <p class="custom-padding-left-large slds-size_4-of-7">{formattedPhone1}</p>
-                                <p class="slds-size_3-of-7 italic-text">{pdlLastUpdatedFormatted}</p>
+                                <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{pdlLastUpdatedFormatted}</p>
                             </div>
                             <p class="custom-padding-left-large slds-size_4-of-7">{formattedPhone2}</p>
                         </lightning-layout-item>
                     </lightning-layout-item>
 
-                    <lightning-layout-item size="12" class="slds-grid custom-padding-bottom-medium">
+                    <lightning-layout-item size="12" class="slds-grid custom-divider">
                         <div class="slds-grid slds-size_4-of-7">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -106,10 +109,10 @@
                             <p class="custom-margin-right-small custom-margin-left-small bold-text">Bankkontonummer:</p>
                             <p>{bankAccount}</p>
                         </div>
-                        <p class="slds-size_3-of-7 italic-text">{bankAccountLastUpdatedFormatted}</p>
+                        <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{bankAccountLastUpdatedFormatted}</p>
                     </lightning-layout-item>
 
-                    <lightning-layout-item size="12" class="slds-grid custom-padding-bottom-medium">
+                    <lightning-layout-item size="12" class="slds-grid slds-p-bottom_xx-small custom-padding-top-medium">
                         <div class="slds-grid slds-size_4-of-7">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -130,14 +133,14 @@
                             <p class="custom-margin-right-small custom-margin-left-small bold-text">Reservert i KRR:</p>
                             <p>{krrReservationTranslation}</p>
                         </div>
-                        <p class="slds-size_3-of-7 italic-text">{krrLastUpdatedFormatted}</p>
+                        <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{krrLastUpdatedFormatted}</p>
                     </lightning-layout-item>
                 </template>
             </template>
         </lightning-layout>
     </lightning-card>
 
-    <div class="custom-padding-left-large custom-padding-right-large">
+    <div class="custom-padding-left-large custom-padding-bottom-medium custom-padding-right-large">
         <c-nks-bosted-address
             record-id={recordId}
             object-api-name={objectApiName}
@@ -145,7 +148,7 @@
             pdl-last-updated-formatted={pdlLastUpdatedFormatted}
             county={county}
         ></c-nks-bosted-address>
-        <c-nks-expandable-panel title="Postadresse" chevron-left>
+        <c-nks-expandable-panel title="Postadresse" chevron-left is-expandable>
             <c-nks-post-address
                 record-id={recordId}
                 object-api-name={objectApiName}
