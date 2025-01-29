@@ -29,6 +29,16 @@
                 <lightning-layout-item>
                     <strong><p>{brukervarsel.brukernotifikasjon.tekst}</p></strong>
                     <p>{brukervarsel.brukernotifikasjon.link}</p>
+                    <p lwc:if={brukervarsel.brukernotifikasjon.eksternVarsling}>
+                        <template
+                            lwc:if={brukervarsel.brukernotifikasjon.eksternVarsling.sendteKanaler}
+                            for:each={brukervarsel.brukernotifikasjon.eksternVarsling.sendteKanaler}
+                            for:item="kanal"
+                        >
+                            <span key={kanal} class="kanal">{kanal}</span>
+                        </template>
+                        <span></span>
+                    </p>
                 </lightning-layout-item>
             </lightning-layout>
         </template>
