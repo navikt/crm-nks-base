@@ -12,6 +12,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.useNewDesign ? nksFamilyViewerEntryV2HTML : nksFamilyViewerEntryHTML;
     }
 
+    connectedCallback() {
+        console.log(JSON.stringify(this.relation));
+    }
+
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
         var successful = false;
@@ -32,23 +36,19 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get isMarital() {
-        if (this.relation.recordType === 'marital') return true;
-        return false;
+        return this.relation.recordType === 'marital';
     }
 
     get isChild() {
-        if (this.relation.recordType === 'child') return true;
-        return false;
+        return this.relation.recordType === 'child';
     }
 
     get isParent() {
-        if (this.relation.recordType === 'parent') return true;
-        return false;
+        return this.relation.recordType === 'parent';
     }
 
     get isStillBorn() {
-        if (this.relation.recordType === 'stillborn') return true;
-        return false;
+        return this.relation.recordType === 'stillborn';
     }
 
     get isError() {
@@ -56,8 +56,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get getErrorMsg() {
-        if (this.relation.name != null) return this.relation.name;
-        return '';
+        return this.relation.name ?? '';
     }
 
     get genderIcon() {
@@ -159,7 +158,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         ) {
             return false;
         }
-        return !this.relation.recordType === 'stillborn';
+        return this.relation.recordType !== 'stillborn';
     }
 
     get showInfoCard() {
