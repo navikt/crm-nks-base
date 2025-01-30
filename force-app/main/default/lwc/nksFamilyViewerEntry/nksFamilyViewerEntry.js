@@ -12,10 +12,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return this.useNewDesign ? nksFamilyViewerEntryV2HTML : nksFamilyViewerEntryHTML;
     }
 
-    connectedCallback() {
-        console.log(JSON.stringify(this.relation));
-    }
-
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
         var successful = false;
