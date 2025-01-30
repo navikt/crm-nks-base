@@ -300,11 +300,12 @@ export default class nksQuickText extends LightningElement {
 
             let obj = this._getQmappedItem(lastWord);
 
-            if (obj !== undefined) {
+            if (obj != null) {
                 const quickText = obj.content.message;
                 const isCaseSensitive = obj.content.isCaseSensitive;
                 const startindex = carretPositionEnd - lastWord.length - 1;
                 const lastChar = event.key === 'Enter' ? '\n' : event.key;
+                if (obj.content.message === lastWord) return;
 
                 if (isCaseSensitive) {
                     const words = quickText.split(' ');
