@@ -88,8 +88,8 @@ export default class NksContactInformation extends LightningElement {
             this.populatePersonFields(result.data);
             this.isLoading = false;
         } else if (result?.error) {
-            this.handleError(error);
-            console.error(error);
+            this.handleError(result.error);
+            console.error(result.error);
             this.isLoading = false;
         }
     }
