@@ -1,7 +1,8 @@
 import { LightningElement, api, wire } from 'lwc';
 import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
 import { resolve } from 'c/nksComponentsUtils';
-
+import { refreshApex } from '@salesforce/apex';
+import LoggerUtility from 'c/loggerUtility';
 import EMAIL_FIELD from '@salesforce/schema/Person__c.NKS_Email__c';
 import PHONE_FIELD from '@salesforce/schema/Person__c.NKS_Mobile_Phone__c';
 import PHONE_1_FIELD from '@salesforce/schema/Person__c.NKS_Phone_1__c';
@@ -54,15 +55,11 @@ export default class NksContactInformation extends LightningElement {
     krrLastUpdated;
     pdlLastUpdated;
     personId;
-    wireFields;
     county;
+    wiredPersonInfoResult;
     errorMessage;
     isError = false;
     isLoading = true;
-
-    connectedCallback() {
-        this.wireFields = [`${this.objectApiName}.Id`];
-    }
 
     @wire(getRecord, {
         recordId: '$recordId',
@@ -85,26 +82,31 @@ export default class NksContactInformation extends LightningElement {
         recordId: '$personId',
         fields: PERSON_CONTACT_FIELDS
     })
-    wiredPersonInfo({ error, data }) {
-        if (data) {
-            this.email = getFieldValue(data, EMAIL_FIELD);
-            this.phone = getFieldValue(data, PHONE_FIELD);
-            this.phone1 = getFieldValue(data, PHONE_1_FIELD);
-            this.phone2 = getFieldValue(data, PHONE_2_FIELD);
-            this.bankAccount = getFieldValue(data, BANK_ACCOUNT_FIELD);
-            this.bankAccountLastUpdated = getFieldValue(data, BANK_ACCOUNT_UDATED_FIELD);
-            this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
-            this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
-            this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
-            this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
-            this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
-            this.county = getFieldValue(data, COUNTY_FIELD);
+    wiredPersonInfo(result) {
+        this.wiredPersonInfoResult = result;
+        if (result?.data) {
+            this.populatePersonFields(result.data);
             this.isLoading = false;
-        } else if (error) {
-            this.handleError(error);
-            console.error(error);
+        } else if (result?.error) {
+            this.handleError(result.error);
+            console.error(result.error);
             this.isLoading = false;
         }
+    }
+
+    populatePersonFields(data) {
+        this.email = getFieldValue(data, EMAIL_FIELD);
+        this.phone = getFieldValue(data, PHONE_FIELD);
+        this.phone1 = getFieldValue(data, PHONE_1_FIELD);
+        this.phone2 = getFieldValue(data, PHONE_2_FIELD);
+        this.bankAccount = getFieldValue(data, BANK_ACCOUNT_FIELD);
+        this.bankAccountLastUpdated = getFieldValue(data, BANK_ACCOUNT_UDATED_FIELD);
+        this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
+        this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
+        this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
+        this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
+        this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
+        this.county = getFieldValue(data, COUNTY_FIELD);
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -114,9 +116,21 @@ export default class NksContactInformation extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
+                if (!record) {
+                    LoggerUtility.logError(
+                        'NKS',
+                        'ContactInformation',
+                        null,
+                        'No related record found for relationshipField: ' + relationshipField,
+                        ' and objectApiName: ' + objectApiName,
+                        this.recordId
+                    );
+                }
                 this.personId = resolve(relationshipField, record);
+                refreshApex(this.wiredPersonInfoResult); // In case wiredPersonInfo is cached to empty values before getRelatedRecord is finished
             })
             .catch((error) => {
+                LoggerUtility.logError('NKS', 'ContactInformation', error, 'Error on getRelatedRecord', this.recordId);
                 this.handleError(error);
                 console.error(error);
                 this.isLoading = false;
@@ -167,6 +181,10 @@ export default class NksContactInformation extends LightningElement {
 
     get bankAccountLastUpdatedFormatted() {
         return this.formatSystemDate(this.bankAccountLastUpdated, 'KRP');
+    }
+
+    get wireFields() {
+        return this.objectApiName ? [`${this.objectApiName}.Id`] : [];
     }
 
     formatSystemDate(updatedDate, sourceSystem) {
