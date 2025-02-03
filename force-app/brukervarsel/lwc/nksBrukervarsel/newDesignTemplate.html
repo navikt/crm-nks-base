@@ -24,11 +24,20 @@
             </div>
         </template>
         <template lwc:if={showNotifikasjon}>
-            <lightning-layout class="slds-var-p-horizontal_medium slds-var-p-bottom_small">
+            <lightning-layout class="slds-var-p-horizontal_medium" style="padding-bottom: 1rem">
                 <lightning-layout-item size="2"></lightning-layout-item>
                 <lightning-layout-item>
                     <strong><p>{brukervarsel.brukernotifikasjon.tekst}</p></strong>
                     <p>{brukervarsel.brukernotifikasjon.link}</p>
+                    <p lwc:if={brukervarsel.brukernotifikasjon.eksternVarsling}>
+                        <template
+                            lwc:if={brukervarsel.brukernotifikasjon.eksternVarsling.sendteKanaler}
+                            for:each={brukervarsel.brukernotifikasjon.eksternVarsling.sendteKanaler}
+                            for:item="kanal"
+                        >
+                            <span key={kanal} class="kanal">{kanal}</span>
+                        </template>
+                    </p>
                 </lightning-layout-item>
             </lightning-layout>
         </template>
