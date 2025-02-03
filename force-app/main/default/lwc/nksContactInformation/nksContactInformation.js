@@ -116,14 +116,16 @@ export default class NksContactInformation extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
-                LoggerUtility.logError(
-                    'NKS',
-                    'ContactInformation',
-                    null,
-                    'No related record found for relationshipField: ' + relationshipField,
-                    ' and objectApiName: ' + objectApiName,
-                    this.recordId
-                );
+                if (!record) {
+                    LoggerUtility.logError(
+                        'NKS',
+                        'ContactInformation',
+                        null,
+                        'No related record found for relationshipField: ' + relationshipField,
+                        ' and objectApiName: ' + objectApiName,
+                        this.recordId
+                    );
+                }
                 this.personId = resolve(relationshipField, record);
                 refreshApex(this.wiredPersonInfoResult); // In case wiredPersonInfo is cached to empty values before getRelatedRecord is finished
             })
