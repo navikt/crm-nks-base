@@ -458,6 +458,10 @@
         <object>Person__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Thread__c.NKS_Thread</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <tabSettings>
         <tab>KafkaMessage__c</tab>
         <visibility>Visible</visibility>
