@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>49.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>Conversation Note Create Journal Entry {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Conversation Note Create Journal Entry</label>
     <processMetadataValues>
@@ -26,7 +27,7 @@
         <name>Get_Conversation_Note</name>
         <label>Get Conversation Note</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Journal_Screen</targetReference>
@@ -48,7 +49,7 @@
         <name>Journal_Screen</name>
         <label>Journal Screen</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -97,7 +98,7 @@
         <name>Post_Journal_Entry</name>
         <label>Post Journal Entry</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <flowName>CRM_Journal_Conversation_Note</flowName>
         <inputAssignments>
             <name>Journal_Case_ID</name>
@@ -121,6 +122,12 @@
             <name>Journal_Entry_Unit</name>
             <value>
                 <elementReference>$User.Department</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Journal_Subtheme_Code</name>
+            <value>
+                <elementReference>Case_Overview.selectedSubtheme</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
