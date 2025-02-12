@@ -95,7 +95,7 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     async syncOppgave(personActorId) {
-        if (this.getSyncStatus('oppgave') !== SYNC_STATUS.SYNCING) return;
+        if (this.getSyncStatus('oppgave').status !== SYNC_STATUS.SYNCING) return;
 
         try {
             await syncActorOppgaver(personActorId);
@@ -108,7 +108,7 @@ export default class NksDataSyncher extends LightningElement {
     }
 
     async syncBankAccountNumber(ident) {
-        if (this.getSyncStatus('bankAccount') !== SYNC_STATUS.SYNCING) return;
+        if (this.getSyncStatus('bankAccount').status !== SYNC_STATUS.SYNCING) return;
 
         try {
             await syncBankAccountNumber({ ident: ident });
