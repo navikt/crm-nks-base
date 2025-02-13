@@ -2,6 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
 import { resolve } from 'c/nksComponentsUtils';
 import { refreshApex } from '@salesforce/apex';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import LoggerUtility from 'c/loggerUtility';
 import EMAIL_FIELD from '@salesforce/schema/Person__c.NKS_Email__c';
 import PHONE_FIELD from '@salesforce/schema/Person__c.NKS_Mobile_Phone__c';
@@ -15,7 +16,7 @@ import KRR_VERIFIED_FIELD from '@salesforce/schema/Person__c.INT_VerifiedFromKRR
 import PDL_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromPDL__c';
 import KRR_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromKRR__c';
 import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
-
+import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 
 const LABELS = {
@@ -60,6 +61,38 @@ export default class NksContactInformation extends LightningElement {
     errorMessage;
     isError = false;
     isLoading = true;
+
+    subscription = null;
+
+    @wire(MessageContext)
+    messageContext;
+
+    connectedCallback() {
+        this.subscribeToMessageChannel();
+    }
+
+    disconnectedCallback() {
+        this.unsubscribeToMessageChannel();
+    }
+
+    subscribeToMessageChannel() {
+        if (!this.subscription) {
+            this.subscription = subscribe(this.messageContext, DATA_SYNC_CHANNEL, (message) =>
+                this.handleMessage(message)
+            );
+        }
+    }
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    handleMessage(message) {
+        if (message.status === 'SYNC_COMPLETE') {
+            refreshApex(this.wiredPersonInfoResult);
+        }
+    }
 
     @wire(getRecord, {
         recordId: '$recordId',
