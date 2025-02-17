@@ -33,7 +33,7 @@
     <customValue>
         <fullName>Gjeldsraadgivning</fullName>
         <default>false</default>
-        <label>Gjeldsrådgivning</label>
+        <label>Gjeldsveiledning</label>
     </customValue>
     <customValue>
         <fullName>Helse</fullName>
@@ -69,6 +69,11 @@
         <fullName>Ufoeretrygd</fullName>
         <default>false</default>
         <label>Uføretrygd</label>
+    </customValue>
+    <customValue>
+        <fullName>Stilling</fullName>
+        <default>false</default>
+        <label>Stilling</label>
     </customValue>
     <customValue>
         <fullName>Felles</fullName>
