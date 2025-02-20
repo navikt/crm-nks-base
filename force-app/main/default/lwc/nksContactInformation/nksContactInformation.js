@@ -134,7 +134,7 @@ export default class NksContactInformation extends LightningElement {
 
     populatePersonFields(data) {
         this.personIdent = getFieldValue(data, NAME_FIELD);
-        if (this.personIdent !== '' && this.personIdent !== null) {
+        if (!!this.personIdent) {
             this.updateKrrInformation(this.personIdent);
         }
         this.email = getFieldValue(data, EMAIL_FIELD);
