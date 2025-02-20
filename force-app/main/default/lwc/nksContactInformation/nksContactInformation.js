@@ -15,9 +15,11 @@ import KRR_RESERVATION_FIELD from '@salesforce/schema/Person__c.INT_KRR_Reservat
 import KRR_VERIFIED_FIELD from '@salesforce/schema/Person__c.INT_VerifiedFromKRR__c';
 import PDL_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromPDL__c';
 import KRR_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromKRR__c';
+import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import updateKrrInfo from '@salesforce/apex/NKS_KrrInformationController.updateKrrInformation';
 
 const LABELS = {
     mobile: 'Mobilnummer',
@@ -36,7 +38,8 @@ const PERSON_CONTACT_FIELDS = [
     KRR_LAST_UPDATED_FIELD,
     PDL_LAST_UPDATED_FIELD,
     BANK_ACCOUNT_SOURCE_FIELD,
-    COUNTY_FIELD
+    COUNTY_FIELD,
+    NAME_FIELD
 ];
 
 export default class NksContactInformation extends LightningElement {
@@ -56,11 +59,13 @@ export default class NksContactInformation extends LightningElement {
     krrLastUpdated;
     pdlLastUpdated;
     personId;
+    personIdent;
     county;
     wiredPersonInfoResult;
     errorMessage;
     isError = false;
     isLoading = true;
+    updated = false;
 
     subscription = null;
 
@@ -128,6 +133,10 @@ export default class NksContactInformation extends LightningElement {
     }
 
     populatePersonFields(data) {
+        this.personIdent = getFieldValue(data, NAME_FIELD);
+        if (this.personIdent) {
+            this.updateKrrInformation(this.personIdent);
+        }
         this.email = getFieldValue(data, EMAIL_FIELD);
         this.phone = getFieldValue(data, PHONE_FIELD);
         this.phone1 = getFieldValue(data, PHONE_1_FIELD);
@@ -166,6 +175,35 @@ export default class NksContactInformation extends LightningElement {
                 LoggerUtility.logError('NKS', 'ContactInformation', error, 'Error on getRelatedRecord', this.recordId);
                 this.handleError(error);
                 console.error(error);
+                this.isLoading = false;
+            });
+    }
+
+    updateKrrInformation(personIdent) {
+        if (this.updated === false) {
+            this.isLoading = true;
+            updateKrrInfo({ personIdent: personIdent })
+                .then(() => {
+                    this.refreshRecord();
+                    console.log('Successfully updated krr information');
+                })
+                .catch((error) => {
+                    console.log('Krr informaion update failed:  ' + JSON.stringify(error, null, 2));
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                    this.updated = true;
+                });
+        }
+    }
+
+    refreshRecord() {
+        this.isLoading = true;
+        refreshApex(this.wiredPersonInfoResult)
+            .then(() => {
+                //Successful refresh
+            })
+            .finally(() => {
                 this.isLoading = false;
             });
     }
