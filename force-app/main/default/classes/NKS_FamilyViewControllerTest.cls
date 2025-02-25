@@ -18,7 +18,7 @@ private class NKS_FamilyViewControllerTest {
         LiveChatVisitor testChatVisitor = new LiveChatVisitor();
         insert testChatVisitor;
 
-        LiveChatTranscript testChat = new LiveChatTranscript();
+        MessagingSession testChat = new MessagingSession();
         testChat.LiveChatVisitorid = testChatVisitor.id;
         testChat.AccountId = testAccount.Id;
         insert testChat;
@@ -34,7 +34,7 @@ private class NKS_FamilyViewControllerTest {
         );
         List<NKS_FamilyViewController.Relation> testRelation3 = NKS_FamilyViewController.getRelations(
             testChat.Id,
-            'LiveChatTranscript'
+            'MessagingSession'
         );
         Test.stopTest();
 
