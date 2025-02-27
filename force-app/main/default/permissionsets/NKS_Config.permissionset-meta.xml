@@ -474,10 +474,6 @@
         <tab>standard-OmniSupervisorLightning</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
-        <tab>standard-Workspace</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>AccessCMC</name>
@@ -540,10 +536,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>EinsteinArticleRecUser</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ExportReport</name>
     </userPermissions>
     <userPermissions>
@@ -565,6 +557,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManagePvtRptsAndDashbds</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageRemoteAccess</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
