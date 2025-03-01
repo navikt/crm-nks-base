@@ -8,6 +8,7 @@
 @isTest
 public without sharing class NKS_TestDataFactory {
     public static List<Person__c> createPersons(Integer amount) {
+        TestDataFactory.getPublicGroup('Municipality group', 'group_0301');
         List<Person__c> persons = new List<Person__c>();
         for (Integer i = 0; i < amount; i++) {
             Person__c p = new Person__c(
