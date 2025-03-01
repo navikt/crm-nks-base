@@ -8,12 +8,12 @@
 @isTest
 public without sharing class NKS_TestDataFactory {
     public static List<Person__c> createPersons(Integer amount) {
-        TestDataFactory.getPublicGroup('Municipality group', 'group_0301');
+        TestDataFactory.getPublicGroup('Municipality group', 'group_4719');
         List<Person__c> persons = new List<Person__c>();
         for (Integer i = 0; i < amount; i++) {
             Person__c p = new Person__c(
                 Name = '1234567890' + i,
-                INT_MunicipalityNumber__c = '0301',
+                INT_MunicipalityNumber__c = '5501',
                 INT_LastName__c = 'Test' + i,
                 INT_Confidential__c = 'UGRADERT',
                 INT_MaritalStatus__c = 'UOPPGITT'
