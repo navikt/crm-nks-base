@@ -606,12 +606,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>crmSecurityQuestion</componentName>
-                <identifier>crmSecurityQuestion</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-7559848c-76c3-4a70-a5de-d060fa3ded77</value>
