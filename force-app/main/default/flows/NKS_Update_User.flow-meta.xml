@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <name>Get_Current_Memberships</name>
         <label>Get Current Memberships</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>7226</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
@@ -43,7 +44,7 @@
     <actionCalls>
         <name>Get_Picklist_Values</name>
         <label>Get Picklist Values</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>350</locationY>
         <actionName>GetPicklistValues</actionName>
         <actionType>apex</actionType>
@@ -73,7 +74,7 @@
     <actionCalls>
         <name>Get_User_Queues</name>
         <label>Get User Queues</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>242</locationY>
         <actionName>FlowFindCollection</actionName>
         <actionType>apex</actionType>
@@ -110,11 +111,51 @@
         </outputParameters>
         <versionSegment>1</versionSegment>
     </actionCalls>
+    <actionCalls>
+        <name>Get_User_Queues_after_update</name>
+        <label>Get User Queues after update</label>
+        <locationX>314</locationX>
+        <locationY>8558</locationY>
+        <actionName>FlowFindCollection</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_if_user_has_assigned_Queues</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>U__outputCollection</typeName>
+            <typeValue>Group</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>FieldApiINames</name>
+            <value>
+                <stringValue>Name, Id</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectName</name>
+            <value>
+                <stringValue>Group</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>WhereClause</name>
+            <value>
+                <elementReference>WhereClause</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowFindCollection</nameSegment>
+        <outputParameters>
+            <assignToReference>UserGroupsAfterUpdate</assignToReference>
+            <name>outputCollection</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
         <name>Add_Queue_Name</name>
         <label>Add Queue Name</label>
-        <locationX>633</locationX>
+        <locationX>864</locationX>
         <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>Users_Queue_Names</assignToReference>
@@ -130,7 +171,7 @@
     <assignments>
         <name>Add_To_Collection_Variable</name>
         <label>Add To Collection Variable</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>7226</locationY>
         <assignmentItems>
             <assignToReference>Single_Group_String</assignToReference>
@@ -153,7 +194,7 @@
     <assignments>
         <name>Add_To_Selectable_Divisions</name>
         <label>Add To Selectable Divisions</label>
-        <locationX>633</locationX>
+        <locationX>864</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Selectable_Divisions</assignToReference>
@@ -169,7 +210,7 @@
     <assignments>
         <name>Assign_Beta_Permset_Value</name>
         <label>Assign Beta Permset Value</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>3338</locationY>
         <assignmentItems>
             <assignToReference>Beta_Access</assignToReference>
@@ -185,7 +226,7 @@
     <assignments>
         <name>Assign_Knowledge_Editor_Value</name>
         <label>Assign Knowledge Editor Value</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>Knowledge_Editor_Access</assignToReference>
@@ -201,7 +242,7 @@
     <assignments>
         <name>Assign_quick_text_variable</name>
         <label>Assign quick text variable</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>Quick_Text_Access</assignToReference>
@@ -217,7 +258,7 @@
     <assignments>
         <name>Assign_Selected_Value_To_String</name>
         <label>Assign Selected Value To String</label>
-        <locationX>336</locationX>
+        <locationX>534</locationX>
         <locationY>7010</locationY>
         <assignmentItems>
             <assignToReference>selected_GroupIds</assignToReference>
@@ -248,7 +289,7 @@
     <assignments>
         <name>Assign_Send_Notification_Value</name>
         <label>Assign Send Notification Value</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>3854</locationY>
         <assignmentItems>
             <assignToReference>Send_Notification_Access</assignToReference>
@@ -264,7 +305,7 @@
     <assignments>
         <name>Assign_Topics_Editor_Value</name>
         <label>Assign Topics Editor Value</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>2822</locationY>
         <assignmentItems>
             <assignToReference>Topics_Editor_Access</assignToReference>
@@ -278,9 +319,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assigne_Remove_Messaging_Permission_Variable</name>
+        <label>Assigne Remove Messaging Permission Variable</label>
+        <locationX>402</locationX>
+        <locationY>8774</locationY>
+        <assignmentItems>
+            <assignToReference>Remove_Messaging_Permissions</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_if_User_has_NKS_Messaging_Permset_License</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Knowledge_User_To_False</name>
         <label>Set Knowledge User To False</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4370</locationY>
         <assignmentItems>
             <assignToReference>Get_User.UserPermissionsKnowledgeUser</assignToReference>
@@ -296,7 +353,7 @@
     <assignments>
         <name>Set_Knowledge_User_To_True</name>
         <label>Set Knowledge User To True</label>
-        <locationX>61</locationX>
+        <locationX>292</locationX>
         <locationY>4370</locationY>
         <assignmentItems>
             <assignToReference>Get_User.UserPermissionsKnowledgeUser</assignToReference>
@@ -313,7 +370,7 @@
     <assignments>
         <name>Update_Selected_Account_String</name>
         <label>Update Selected Account String</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>7334</locationY>
         <assignmentItems>
             <assignToReference>selected_GroupIds</assignToReference>
@@ -330,7 +387,7 @@
     <decisions>
         <name>Check_Beta_Access</name>
         <label>Check Beta Access</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3230</locationY>
         <defaultConnector>
             <targetReference>Get_Announcement_Send_Notification_Permset</targetReference>
@@ -355,7 +412,7 @@
     <decisions>
         <name>Check_Beta_Access_Value</name>
         <label>Check Beta Access Value</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5894</locationY>
         <defaultConnector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -409,7 +466,7 @@
     <decisions>
         <name>Check_If_Division_Is_Edited</name>
         <label>Check If Division Is Edited</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6602</locationY>
         <defaultConnector>
             <targetReference>Check_If_Queues_Is_Edited</targetReference>
@@ -434,7 +491,7 @@
     <decisions>
         <name>Check_If_List_Is_Empty</name>
         <label>Check If List Is Empty</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>7742</locationY>
         <defaultConnector>
             <targetReference>Create_Group_Membership</targetReference>
@@ -450,13 +507,17 @@
                     <elementReference>Empty_String_Collection</elementReference>
                 </rightValue>
             </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_NKS_Messaging_Permset</targetReference>
+            </connector>
             <label>Empty</label>
         </rules>
     </decisions>
     <decisions>
         <name>Check_If_Queues_Is_Edited</name>
         <label>Check If Queues Is Edited</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6902</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -478,7 +539,7 @@
     <decisions>
         <name>Check_If_there_Is_Any_Membership_For_Deletion</name>
         <label>Check If there Is Any Membership For Deletion</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>7334</locationY>
         <defaultConnector>
             <targetReference>Loop_String_Collection</targetReference>
@@ -501,9 +562,139 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_user_has_assigned_Queues</name>
+        <label>Check if user has assigned Queues</label>
+        <locationX>314</locationX>
+        <locationY>8666</locationY>
+        <defaultConnector>
+            <targetReference>Assigne_Remove_Messaging_Permission_Variable</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not assigned any Queues</defaultConnectorLabel>
+        <rules>
+            <name>Has_assigned_Queues</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserGroupsAfterUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_User_has_NKS_Messaging_Permset_License</targetReference>
+            </connector>
+            <label>Has assigned Queues</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_User_has_NKS_Messaging_Permset</name>
+        <label>Check if User has NKS Messaging Permset</label>
+        <locationX>314</locationX>
+        <locationY>9266</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_not_Messagin_Permset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NKS_Messagin_Permset_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Remove_Messaging_Permissions</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_NKS_Messaging_Access_Permset_Assignment</targetReference>
+            </connector>
+            <label>Has not Messagin Permset</label>
+        </rules>
+        <rules>
+            <name>Remove_NKS_Messaging_Permset</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NKS_Messagin_Permset_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Remove_Messaging_Permissions</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_NKS_Messaging_Access_Permset_Assignment</targetReference>
+            </connector>
+            <label>Remove NKS Messaging Permset</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_User_has_NKS_Messaging_Permset_License</name>
+        <label>Check if User has NKS Messaging Permset License</label>
+        <locationX>314</locationX>
+        <locationY>8966</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_User_has_NKS_Messaging_Permset</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_not_Messagin_Permset_License</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NKS_Messagin_Permset_License_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Remove_Messaging_Permissions</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_NKS_Messaging_Access_Permset_License_Assignment</targetReference>
+            </connector>
+            <label>Has not Messagin Permset License</label>
+        </rules>
+        <rules>
+            <name>Remove_NKS_Messaging_Permset_License</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NKS_Messagin_Permset_License_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Remove_Messaging_Permissions</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_NKS_Messaging_Access_Permset_License_Assignment</targetReference>
+            </connector>
+            <label>Remove NKS Messaging Permset License</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Knowledge_Access_Value</name>
         <label>Check Knowledge Access Value</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>4154</locationY>
         <defaultConnector>
             <targetReference>Check_Quick_Text_Access_Value</targetReference>
@@ -557,7 +748,7 @@
     <decisions>
         <name>Check_Knowledge_Editor_Access</name>
         <label>Check Knowledge Editor Access</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Get_Permset_Topics</targetReference>
@@ -589,7 +780,7 @@
     <decisions>
         <name>Check_Quick_Text_Access_Value</name>
         <label>Check Quick Text Access Value</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5186</locationY>
         <defaultConnector>
             <targetReference>Check_Topics_Access_Value</targetReference>
@@ -643,7 +834,7 @@
     <decisions>
         <name>Check_Quick_Text_Editor_Access</name>
         <label>Check Quick Text Editor Access</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Get_Permset_Knowledge_Editor</targetReference>
@@ -675,7 +866,7 @@
     <decisions>
         <name>Check_Selected_String</name>
         <label>Check Selected String</label>
-        <locationX>336</locationX>
+        <locationX>534</locationX>
         <locationY>7118</locationY>
         <defaultConnector>
             <targetReference>Add_To_Collection_Variable</targetReference>
@@ -697,7 +888,7 @@
     <decisions>
         <name>Check_Send_Notification_Access</name>
         <label>Check Send Notification Access</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3746</locationY>
         <defaultConnector>
             <targetReference>Update_User_Screen</targetReference>
@@ -722,7 +913,7 @@
     <decisions>
         <name>Check_Send_Notification_Access_Value</name>
         <label>Check Send Notification Access Value</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6194</locationY>
         <defaultConnector>
             <targetReference>Update_User_1</targetReference>
@@ -776,7 +967,7 @@
     <decisions>
         <name>Check_Topics_Access_Value</name>
         <label>Check Topics Access Value</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5594</locationY>
         <defaultConnector>
             <targetReference>Check_Beta_Access_Value</targetReference>
@@ -830,7 +1021,7 @@
     <decisions>
         <name>Check_Topics_Editor_Access</name>
         <label>Check Topics Editor Access</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>2714</locationY>
         <defaultConnector>
             <targetReference>Get_Beta_Permset</targetReference>
@@ -855,7 +1046,7 @@
     <decisions>
         <name>Is_Not_Group_Member</name>
         <label>Is Not Group Member</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4802</locationY>
         <defaultConnector>
             <targetReference>Check_Quick_Text_Access_Value</targetReference>
@@ -909,7 +1100,7 @@
     <decisions>
         <name>Users_Divisions</name>
         <label>Users Divisions</label>
-        <locationX>765</locationX>
+        <locationX>996</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Loop_Picklist_Values</targetReference>
@@ -949,8 +1140,8 @@
     <dynamicChoiceSets>
         <name>Role_Pick_List</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Role__c</picklistField>
         <picklistObject>User</picklistObject>
     </dynamicChoiceSets>
@@ -968,7 +1159,8 @@
     <formulas>
         <name>singleGroup</name>
         <dataType>String</dataType>
-        <expression>TRIM(SUBSTITUTE(LEFT({!selected_GroupIds},FIND(&quot;;&quot;,{!selected_GroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
+        <expression>
+            TRIM(SUBSTITUTE(LEFT({!selected_GroupIds},FIND(&quot;;&quot;,{!selected_GroupIds})),&quot;;&quot;,&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>test</name>
@@ -978,24 +1170,28 @@
     <formulas>
         <name>UpdatedSelectedGroupString</name>
         <dataType>String</dataType>
-        <expression>TRIM(SUBSTITUTE({!selected_GroupIds},{!Single_Group_String}+&quot;;&quot;,&quot;&quot;))</expression>
+        <expression>
+            TRIM(SUBSTITUTE({!selected_GroupIds},{!Single_Group_String}+&quot;;&quot;,&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>WhereClause</name>
         <dataType>String</dataType>
-        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos;) AND DeveloperName LIKE &apos;NKS_SKILL%&apos;&quot;</expression>
+        <expression>&quot;Id in (SELECT GroupId FROM GroupMember WHERE UserOrGroupId =
+            &apos;&quot;+{!recordId}+&quot;&apos;) AND DeveloperName LIKE
+            &apos;NKS_SKILL%&apos;&quot;</expression>
     </formulas>
     <formulas>
         <name>WhereClauseForMembers</name>
         <dataType>String</dataType>
-        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND Group.DeveloperName LIKE &apos;NKS_Skill%&apos;&quot;</expression>
+        <expression>&quot;UserOrGroupId = &apos;&quot;+{!recordId}+&quot;&apos; AND
+            Group.DeveloperName LIKE &apos;NKS_Skill%&apos;&quot;</expression>
     </formulas>
-    <interviewLabel>Update User {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>NKS_Update_User_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Update User</label>
     <loops>
         <name>Loop_Picklist_Values</name>
         <label>Loop Picklist Values</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>458</locationY>
         <collectionReference>All_Picklist_Values</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1009,7 +1205,7 @@
     <loops>
         <name>Loop_Queues</name>
         <label>Loop Queues</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>950</locationY>
         <collectionReference>UserGroups</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1023,13 +1219,16 @@
     <loops>
         <name>Loop_String_Collection</name>
         <label>Loop String Collection</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>7634</locationY>
         <collectionReference>Selected_Group_List</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Check_If_List_Is_Empty</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_NKS_Messaging_Permset</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -1053,7 +1252,7 @@
     <recordCreates>
         <name>Create_Beta_Access_Permset_Assignment</name>
         <label>Create Beta Access Permset Assignment</label>
-        <locationX>281</locationX>
+        <locationX>512</locationX>
         <locationY>6002</locationY>
         <connector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -1076,7 +1275,7 @@
     <recordCreates>
         <name>Create_Group_Membership</name>
         <label>Create Group Membership</label>
-        <locationX>534</locationX>
+        <locationX>666</locationX>
         <locationY>7850</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
@@ -1099,7 +1298,7 @@
     <recordCreates>
         <name>Create_Knowledge_Editor_Permset_Assignment</name>
         <label>Create Knowledge Editor Permset Assignment</label>
-        <locationX>61</locationX>
+        <locationX>292</locationX>
         <locationY>4262</locationY>
         <connector>
             <targetReference>Set_Knowledge_User_To_True</targetReference>
@@ -1122,7 +1321,7 @@
     <recordCreates>
         <name>Create_Knowledge_Group_Member</name>
         <label>Create Knowledge Group Member</label>
-        <locationX>325</locationX>
+        <locationX>556</locationX>
         <locationY>4910</locationY>
         <connector>
             <targetReference>Check_Quick_Text_Access_Value</targetReference>
@@ -1143,9 +1342,52 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Create_NKS_Messaging_Access_Permset_Assignment</name>
+        <label>Create NKS Messaging Access Permset Assignment</label>
+        <locationX>50</locationX>
+        <locationY>9374</locationY>
+        <inputAssignments>
+            <field>AssigneeId</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PermissionSetId</field>
+            <value>
+                <elementReference>Get_NKS_Messaging_Permset.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_NKS_Messaging_Access_Permset_License_Assignment</name>
+        <label>Create NKS Messaging Access Permset License Assignment</label>
+        <locationX>50</locationX>
+        <locationY>9074</locationY>
+        <connector>
+            <targetReference>Check_if_User_has_NKS_Messaging_Permset</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AssigneeId</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PermissionSetLicenseId</field>
+            <value>
+                <elementReference>Get_NKS_Messaging_Permset_license.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>PermissionSetLicenseAssign</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Create_Quick_Text_Editor_Permset_Assignement</name>
         <label>Create Quick Text Editor Permset Assignement</label>
-        <locationX>281</locationX>
+        <locationX>512</locationX>
         <locationY>5294</locationY>
         <connector>
             <targetReference>Create_Quick_Text_Editor_SF_Permset_Assignment</targetReference>
@@ -1168,7 +1410,7 @@
     <recordCreates>
         <name>Create_Quick_Text_Editor_SF_Permset_Assignment</name>
         <label>Create Quick Text Editor SF Permset Assignment</label>
-        <locationX>281</locationX>
+        <locationX>512</locationX>
         <locationY>5402</locationY>
         <connector>
             <targetReference>Check_Topics_Access_Value</targetReference>
@@ -1191,7 +1433,7 @@
     <recordCreates>
         <name>Create_Send_Notification_Permset_Assignment</name>
         <label>Create Send Notification Permset Assignment</label>
-        <locationX>281</locationX>
+        <locationX>512</locationX>
         <locationY>6302</locationY>
         <connector>
             <targetReference>Update_User_1</targetReference>
@@ -1214,7 +1456,7 @@
     <recordCreates>
         <name>Create_Topics_Permset_Assignment</name>
         <label>Create Topics Permset Assignment</label>
-        <locationX>281</locationX>
+        <locationX>512</locationX>
         <locationY>5702</locationY>
         <connector>
             <targetReference>Check_Beta_Access_Value</targetReference>
@@ -1237,7 +1479,7 @@
     <recordDeletes>
         <name>Delete_current_memberships</name>
         <label>Delete current memberships</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>7442</locationY>
         <connector>
             <targetReference>Loop_String_Collection</targetReference>
@@ -1247,7 +1489,7 @@
     <recordDeletes>
         <name>Delete_Knowledge_Group_Member</name>
         <label>Delete Knowledge Group Member</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4910</locationY>
         <connector>
             <targetReference>Check_Quick_Text_Access_Value</targetReference>
@@ -1257,7 +1499,7 @@
     <recordDeletes>
         <name>Remove_Beta_Access_Permset_Assignment</name>
         <label>Remove Beta Access Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6002</locationY>
         <connector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -1267,7 +1509,7 @@
     <recordDeletes>
         <name>Remove_Knowledge_Editor_Permset_Assignment</name>
         <label>Remove Knowledge Editor Permset Assignment</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4262</locationY>
         <connector>
             <targetReference>Set_Knowledge_User_To_False</targetReference>
@@ -1275,9 +1517,26 @@
         <inputReference>Get_Permset_Assignment_Knowledge_Editor</inputReference>
     </recordDeletes>
     <recordDeletes>
+        <name>Remove_NKS_Messaging_Access_Permset_Assignment</name>
+        <label>Remove NKS Messaging Access Permset Assignment</label>
+        <locationX>314</locationX>
+        <locationY>9374</locationY>
+        <inputReference>Get_NKS_Messagin_Permset_Assignment</inputReference>
+    </recordDeletes>
+    <recordDeletes>
+        <name>Remove_NKS_Messaging_Access_Permset_License_Assignment</name>
+        <label>Remove NKS Messaging Access Permset License Assignment</label>
+        <locationX>314</locationX>
+        <locationY>9074</locationY>
+        <connector>
+            <targetReference>Check_if_User_has_NKS_Messaging_Permset</targetReference>
+        </connector>
+        <inputReference>Get_NKS_Messagin_Permset_License_Assignment</inputReference>
+    </recordDeletes>
+    <recordDeletes>
         <name>Remove_Quick_Text_Editor_permset_assignment</name>
         <label>Remove Quick Text Editor permset assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5294</locationY>
         <connector>
             <targetReference>Remove_Quick_Text_Editor_SF_Permset_Assignment</targetReference>
@@ -1287,7 +1546,7 @@
     <recordDeletes>
         <name>Remove_Quick_Text_Editor_SF_Permset_Assignment</name>
         <label>Remove Quick Text Editor SF Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5402</locationY>
         <connector>
             <targetReference>Check_Topics_Access_Value</targetReference>
@@ -1297,7 +1556,7 @@
     <recordDeletes>
         <name>Remove_Send_Notification_Permset_Assignment</name>
         <label>Remove Send Notification Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6302</locationY>
         <connector>
             <targetReference>Update_User_1</targetReference>
@@ -1307,7 +1566,7 @@
     <recordDeletes>
         <name>Remove_Topics_Permset_Assignment</name>
         <label>Remove Topics Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>5702</locationY>
         <connector>
             <targetReference>Check_Beta_Access_Value</targetReference>
@@ -1317,7 +1576,7 @@
     <recordLookups>
         <name>Get_Announcement_Send_Notification_Permset</name>
         <label>Get Announcement Send Notification Permset</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3530</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1338,7 +1597,7 @@
     <recordLookups>
         <name>Get_Announcement_Send_Notification_Permset_Assignment</name>
         <label>Get Announcement Send Notification Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1366,7 +1625,7 @@
     <recordLookups>
         <name>Get_Beta_Permset</name>
         <label>Get Beta Permset</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3014</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1387,7 +1646,7 @@
     <recordLookups>
         <name>Get_Beta_Permset_Assignment</name>
         <label>Get Beta Permset Assignment</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>3122</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1415,7 +1674,7 @@
     <recordLookups>
         <name>Get_Knowledge_Editor_Group</name>
         <label>Get Knowledge Editor Group</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4586</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1436,7 +1695,7 @@
     <recordLookups>
         <name>Get_Knowledge_Group_Member</name>
         <label>Get Knowledge Group Member</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1462,9 +1721,107 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_NKS_Messagin_Permset_Assignment</name>
+        <label>Get NKS Messagin Permset Assignment</label>
+        <locationX>314</locationX>
+        <locationY>8342</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_NKS_Messagin_Permset_License_Assignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_NKS_Messaging_Permset.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_NKS_Messagin_Permset_License_Assignment</name>
+        <label>Get NKS Messagin Permset License Assignment</label>
+        <locationX>314</locationX>
+        <locationY>8450</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_User_Queues_after_update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AssigneeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>PermissionSetLicenseId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_NKS_Messaging_Permset_license.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetLicenseAssign</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_NKS_Messaging_Permset</name>
+        <label>Get NKS Messaging Permset</label>
+        <locationX>314</locationX>
+        <locationY>8126</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_NKS_Messaging_Permset_license</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NKS_Messaging_Permissions</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_NKS_Messaging_Permset_license</name>
+        <label>Get NKS Messaging Permset license</label>
+        <locationX>314</locationX>
+        <locationY>8234</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_NKS_Messagin_Permset_Assignment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>EmbeddedServiceMessagingUserPsl</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSetLicense</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Permset_Assignmennt_Quick_Text_Editor_SF</name>
         <label>Get Permset Assignmennt Quick Text Editor SF</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1492,7 +1849,7 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Knowledge_Editor</name>
         <label>Get Permset Assignment Knowledge Editor</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>2090</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1520,7 +1877,7 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Quick_Text_Editor</name>
         <label>Get Permset Assignment Quick Text Editor</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1466</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1548,7 +1905,7 @@
     <recordLookups>
         <name>Get_Permset_Assignment_Topics</name>
         <label>Get Permset Assignment Topics</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>2606</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1576,7 +1933,7 @@
     <recordLookups>
         <name>Get_Permset_Knowledge_Editor</name>
         <label>Get Permset Knowledge Editor</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1597,7 +1954,7 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor</name>
         <label>Get Permset Quick Text Editor</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1618,7 +1975,7 @@
     <recordLookups>
         <name>Get_Permset_Quick_Text_Editor_SF</name>
         <label>Get Permset Quick Text Editor SF</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1639,7 +1996,7 @@
     <recordLookups>
         <name>Get_Permset_Topics</name>
         <label>Get Permset Topics</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>2498</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1660,7 +2017,7 @@
     <recordLookups>
         <name>Get_User</name>
         <label>Get User</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1681,7 +2038,7 @@
     <recordUpdates>
         <name>Update_User_0</name>
         <label>Update User</label>
-        <locationX>589</locationX>
+        <locationX>820</locationX>
         <locationY>4478</locationY>
         <connector>
             <targetReference>Get_Knowledge_Editor_Group</targetReference>
@@ -1691,7 +2048,7 @@
     <recordUpdates>
         <name>Update_User_1</name>
         <label>Update User</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>6494</locationY>
         <connector>
             <targetReference>Check_If_Division_Is_Edited</targetReference>
@@ -1734,18 +2091,12 @@
                 <elementReference>Knowledge_User_Permission</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>UserPermissionsLiveAgentUser</field>
-            <value>
-                <elementReference>Chat_User_Permission</elementReference>
-            </value>
-        </inputAssignments>
         <object>User</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_User_2</name>
         <label>Update User</label>
-        <locationX>413</locationX>
+        <locationX>644</locationX>
         <locationY>6710</locationY>
         <connector>
             <targetReference>Check_If_Queues_Is_Edited</targetReference>
@@ -1770,7 +2121,7 @@
     <screens>
         <name>Update_User_Screen</name>
         <label>Update User Screen</label>
-        <locationX>545</locationX>
+        <locationX>776</locationX>
         <locationY>4046</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1780,7 +2131,19 @@
         </connector>
         <fields>
             <name>Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Users_Queue_Names}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size:
+                12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0,
+                0, 0); font-size: 12px; background-color: rgb(255, 255,
+                255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b
+                style=&quot;color: rgb(0, 0, 0); font-size:
+                12px;&quot;&gt;{!Get_User.NKS_Division__c}.
+                &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+                style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat
+                er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size:
+                12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span
+                style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag
+                disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size:
+                12px;&quot;&gt;{!Users_Queue_Names}&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1924,17 +2287,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Chat_User_Permission</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>Get_User.UserPermissionsLiveAgentUser</elementReference>
-            </defaultValue>
-            <fieldText>Chat tilgang</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
             <name>Knowledge_User_Permission</name>
             <dataType>Boolean</dataType>
             <defaultValue>
@@ -1994,13 +2346,13 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>419</locationX>
+        <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_User</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>All_Picklist_Values</name>
         <dataType>String</dataType>
@@ -2058,6 +2410,16 @@
         <objectType>GroupMember</objectType>
     </variables>
     <variables>
+        <name>Has_NKS_Messaging_Permission</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>Knowledge_Editor_Access</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -2091,6 +2453,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Remove_Messaging_Permissions</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>Selectable_Divisions</name>
@@ -2142,6 +2514,14 @@
     </variables>
     <variables>
         <name>UserGroups</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <name>UserGroupsAfterUpdate</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
