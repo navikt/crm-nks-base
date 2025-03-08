@@ -29,6 +29,13 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     private static void testExecute() {
         ApiMock.setTestMock('POST_FILE_TO_WEBSAK', 200, 'OK');
 
+        NKS_NewsArchiveSettings__c setting = new NKS_NewsArchiveSettings__c();
+        setting.SetupOwnerId = UserInfo.getOrganizationId();
+        setting.CalloutName__c = 'UnitTest';
+        setting.UsePublic360__c = false;
+        setting.UseWebSak__c = true;
+        insert setting;
+
         NKS_Announcement__c a = new NKS_Announcement__c();
         a.Name = 'News Article';
         a.Skills__c = 'Arbeid';
@@ -79,5 +86,97 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         Test.stopTest();
 
         System.assertNotEquals(null,EncodingUtil.base64Encode(manifestBlob), 'Expect a blob');
+    }
+
+    /**
+     * Test for createRequestBody(String caseNumber, String navIdent, NKS_Announcement__c article, Blob articlePdf)
+     * 
+     * Verifies JSON structure and fields match expectations.
+     */
+    @IsTest
+    static void testCreateRequestBody() {
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler();
+        
+        NKS_Announcement__c article = new NKS_Announcement__c(Name='Test Nyhetsartikkel No. 1');
+        Blob articlePdf = Blob.toPdf('This is a test PDF');
+
+        System.Test.startTest();
+        String requestBody = handler.createRequestBody('25/12742', 'A133191', article, articlePdf);
+        System.Test.stopTest();
+        
+        System.assertNotEquals(null, requestBody, 'The generated JSON should not be null');
+        
+        Map<String,Object> rootMap = (Map<String,Object>) JSON.deserializeUntyped(requestBody);
+        System.Assert.areEqual('Test Nyhetsartikkel No. 1', rootMap.get('Title'), 'Title should match article.Name');
+        System.Assert.areEqual('NKSSalesForce', rootMap.get('DefaultValueSet'), 'DefaultValueSet mismatch');
+        System.Assert.areEqual('25/12742', rootMap.get('CaseNumber'), 'Incorrect CaseNumber');
+        System.Assert.areEqual('Alle ansatte i Nav', rootMap.get('AccessGroup'), 'Incorrect AccessGroup');
+        System.Assert.areEqual('A133191', rootMap.get('ResponsiblePersonIdNumber'), 'Incorrect navIdent');
+        
+        List<Object> files = (List<Object>) rootMap.get('Files');
+        System.Assert.areEqual(1, files.size(), 'Should have exactly one file in the Files array');
+        
+        Map<String,Object> fileObj = (Map<String,Object>) files[0];
+        System.Assert.areEqual('Test Nyhetsartikkel No. 1', fileObj.get('Title'), 'File Title mismatch');
+        System.Assert.areEqual('pdf', fileObj.get('Format'), 'File format mismatch');
+        System.Assert.areNotEqual(null, fileObj.get('Base64Data'), 'Base64 PDF data should not be null');
+    }
+    
+    /**
+     * Test for send(String requestBody).
+     */
+    @IsTest
+    static void testSendMethodAndGet400() {
+        NKS_NewsArchiveSettings__c settings = new NKS_NewsArchiveSettings__c(
+            SetupOwnerId   = UserInfo.getOrganizationId(),
+            CalloutName__c = 'TestCallout',
+            UsePublic360__c = true,
+            UseWebSak__c = false
+        );
+        insert settings;
+        
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler();
+        
+        SingleRequestMock mock = new SingleRequestMock(
+            400,
+            'Bad Request',
+            '{"error": "Invalid request"}',
+            new Map<String, String>()
+        );
+        System.Test.setMock(HttpCalloutMock.class, mock);
+        
+        System.Test.startTest();
+        Boolean result = handler.send('{"dummyJson":"test"}');
+        System.Test.stopTest();
+        
+        System.Assert.areEqual(false, result, 'Expected false with a 400 HTTP response');
+    }
+    
+    /**
+     * Test for callout(String operationType, String requestBody, String calloutName).
+     * 
+     * Because it’s @TestVisible, we can call it directly.
+     * Verifies we get the expected HttpResponse from the mock.
+     */
+    @IsTest
+    static void testCalloutDirect() {
+        SingleRequestMock mock = new SingleRequestMock(
+            200,
+            'OK',
+            '{"Recno": 203385,"DocumentNumber": "25/12742-3","UID": "d34963ee-6b14-400c-b991-7cbecef4fd6b","UIDOrigin": "360","Successful": true}',
+            new Map<String, String>()
+        );
+        System.Test.setMock(HttpCalloutMock.class, mock);
+
+        System.Test.startTest();
+        HttpResponse response = NKS_NewsArchiveHandler.callout(
+            'CreateDocument', 
+            '{"fakeJson":"data"}', 
+            'SomeCalloutName'
+        );
+        System.Test.stopTest();
+        
+        System.Assert.areEqual(200, response.getStatusCode(), 'Should match the mock status code');
+        System.Assert.areEqual('OK', response.getStatus(), 'Should match the mock status message');
     }
 }

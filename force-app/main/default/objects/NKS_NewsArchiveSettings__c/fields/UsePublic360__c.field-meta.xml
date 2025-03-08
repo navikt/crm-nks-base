@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UsePublic360__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Is used to define if Public 360 should be use for archive the news articles.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select if you want to use Public 360 to archive the news articles.</inlineHelpText>
+    <label>Use Public 360</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
