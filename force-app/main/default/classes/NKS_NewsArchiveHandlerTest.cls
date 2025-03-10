@@ -89,9 +89,12 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     }
 
     /**
-     * Test for createRequestBody(String caseNumber, String navIdent, NKS_Announcement__c article, Blob articlePdf)
+     * @description Test for createRequestBody(String caseNumber, String navIdent, NKS_Announcement__c article, Blob articlePdf)
      * 
      * Verifies JSON structure and fields match expectations.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
+     * @since 0.1.0, March 2025
      */
     @IsTest
     static void testCreateRequestBody() {
@@ -123,7 +126,45 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     }
     
     /**
-     * Test for send(String requestBody).
+     * @description Test for send(String requestBody).
+     * 
+     * Covers a successful 200 response → returns true.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
+     * @since 0.1.0, March 2025
+     */
+    @IsTest
+    static void testSendMethod() {
+        NKS_NewsArchiveSettings__c settings = new NKS_NewsArchiveSettings__c(
+            SetupOwnerId   = UserInfo.getOrganizationId(),
+            CalloutName__c = 'TestCallout',
+            UsePublic360__c = true,
+            UseWebSak__c = false
+        );
+        insert settings;
+        
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler();
+        
+        SingleRequestMock mock = new SingleRequestMock(
+            200,
+            'OK',
+            '{"Recno": 203385,"DocumentNumber": "25/12742-3","UID": "d34963ee-6b14-400c-b991-7cbecef4fd6b","UIDOrigin": "360","Successful": true}',
+            new Map<String, String>()
+        );
+        Test.setMock(HttpCalloutMock.class, mock);
+        
+        Test.startTest();
+        Boolean resultOk = handler.send('{"dummyJson":"test"}');
+        Test.stopTest();
+        
+        System.assertEquals(true, resultOk, 'Expected true with a 200 HTTP response');
+    }
+    
+    /**
+     * @description Test for send(String requestBody).
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
+     * @since 0.1.0, March 2025
      */
     @IsTest
     static void testSendMethodAndGet400() {
@@ -153,10 +194,13 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     }
     
     /**
-     * Test for callout(String operationType, String requestBody, String calloutName).
+     * @description Test for callout(String operationType, String requestBody, String calloutName).
      * 
      * Because it’s @TestVisible, we can call it directly.
      * Verifies we get the expected HttpResponse from the mock.
+     *
+     * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
+     * @since 0.1.0, March 2025
      */
     @IsTest
     static void testCalloutDirect() {
