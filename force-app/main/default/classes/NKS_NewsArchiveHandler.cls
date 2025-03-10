@@ -129,12 +129,12 @@ public with sharing class NKS_NewsArchiveHandler {
 
     /**
      * @description This method is used to archive the article to the FTPS catalouge.
-     * 
+     *
      * @param article Article to archive
      * @param caseNumber Case number
      * @param navIdent Nav ident
      * @param navEnhet Nav enhet
-     * @param ftpsCatalouge fps catalouge 
+     * @param ftpsCatalouge fps catalouge
      * @return  `Boolean` Indicate the status if the article was successfully archived.
      */
     @SuppressWarnings('PMD.ExcessiveParameterList')
@@ -150,11 +150,10 @@ public with sharing class NKS_NewsArchiveHandler {
         if (Test.isRunningTest()) {
             articlePdf = blob.valueOf('Unit.Test');
         } else {
-           articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id);
-           //articlePdf = Blob.toPdf('This is a test PDF');
+            articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id);
+            //articlePdf = Blob.toPdf('This is a test PDF');
         }
 
-        
         Map<String, Blob> filesToSend = new Map<String, Blob>();
         Map<String, String> fileNameFormatMap = new Map<String, String>();
         String manifestName;
@@ -188,7 +187,7 @@ public with sharing class NKS_NewsArchiveHandler {
         if (this.useWebSak) {
             isSuccess = sendFiles(filesToSend, manifestName, ftpsCatalouge);
         }
-        
+
         if (isSuccess) {
             LoggerUtility logger = new LoggerUtility();
             logger.info(manifestName, null, CRM_ApplicationDomain.Domain.NKS);
@@ -323,7 +322,7 @@ public with sharing class NKS_NewsArchiveHandler {
 
     /**
      * @description This method is used to create the request body for the Public 360 API with the given article and article PDF.
-     * 
+     *
      * Body:
      * {
      *     "Title":"Test Nyhetsartikkel No. 1",
@@ -338,8 +337,8 @@ public with sharing class NKS_NewsArchiveHandler {
      *             "Base64Data": "RGV0dGUgZXIgYmVycmUgZWluIGVua2VsIHRlc3Q="
      *         }
      *     ]
-     *  } 
-     * 
+     *  }
+     *
      * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
      * @since 0.1.0, March 2025
      * @param caseNumber The case number for the article.
@@ -378,11 +377,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @return `Boolean` Indicate the status if the request was successfully sent.
      */
     public Boolean send(String requestBody) {
-        this.operationResponse = callout(
-            CREATE_DOCUMENT,
-            requestBody,
-            this.newsArchiveSettings.CalloutName__c
-        );
+        this.operationResponse = callout(CREATE_DOCUMENT, requestBody, this.newsArchiveSettings.CalloutName__c);
 
         if (this.operationResponse.getStatusCode() != 200) {
             LoggerUtility logger = new LoggerUtility();
@@ -399,7 +394,7 @@ public with sharing class NKS_NewsArchiveHandler {
     }
 
     /**
-     * @description This method is used to perform the callout to the Public 360 API. 
+     * @description This method is used to perform the callout to the Public 360 API.
      *
      * @author Kenneth Soerensen <kenneth.sorensen@nav.no>, Nav
      * @since 0.1.0, March 2025
@@ -408,15 +403,9 @@ public with sharing class NKS_NewsArchiveHandler {
      * @param calloutName The name of the callout to use.
      */
     @TestVisible
-    private static HttpResponse callout(
-        String operationType,
-        String requestBody,
-        String calloutName
-    ) {
+    private static HttpResponse callout(String operationType, String requestBody, String calloutName) {
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(
-            'callout:' + calloutName + '/' + DOCUMENT_SERVICE + '/' + operationType
-        );
+        request.setEndpoint('callout:' + calloutName + '/' + DOCUMENT_SERVICE + '/' + operationType);
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json');
         request.setBody(requestBody);
