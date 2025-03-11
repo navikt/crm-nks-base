@@ -1103,7 +1103,7 @@
         </fields>
         <fields>
             <name>Conversation_Summary_Journal</name>
-            <extensionName>c:crmQuickText</extensionName>
+            <extensionName>c:crmMessagingQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>conversationNoteRich</name>
@@ -1218,7 +1218,7 @@
         </fields>
         <fields>
             <name>Conversation_Summary</name>
-            <extensionName>c:crmQuickText</extensionName>
+            <extensionName>c:crmMessagingQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>conversationNoteRich</name>
@@ -1390,7 +1390,7 @@
         </fields>
         <fields>
             <name>Conversation_Summary_Conversation_Note</name>
-            <extensionName>c:crmQuickText</extensionName>
+            <extensionName>c:crmMessagingQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>conversationNoteRich</name>

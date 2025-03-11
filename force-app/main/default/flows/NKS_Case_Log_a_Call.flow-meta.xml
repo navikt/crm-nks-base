@@ -1218,7 +1218,7 @@
         </fields>
         <fields>
             <name>Dialogue_Summary</name>
-            <extensionName>c:crmQuickText</extensionName>
+            <extensionName>c:crmMessagingQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>required</name>
