@@ -17,9 +17,9 @@
                 <label>Arbeid</label>
             </value>
             <value>
-                <fullName>Refusjoner og tiltaksøkonomi</fullName>
+                <fullName>AG - Refusjoner og tiltaksøkonomi</fullName>
                 <default>false</default>
-                <label>Refusjoner og tiltaksøkonomi</label>
+                <label>AG - Refusjoner og tiltaksøkonomi</label>
             </value>
             <value>
                 <fullName>Familie</fullName>
