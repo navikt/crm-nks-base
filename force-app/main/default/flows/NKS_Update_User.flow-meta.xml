@@ -38,7 +38,6 @@
             <assignToReference>groupMembershipsToDelete</assignToReference>
             <name>outputCollection</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Get_Picklist_Values</name>
@@ -68,7 +67,6 @@
             <assignToReference>All_Picklist_Values</assignToReference>
             <name>picklistValues</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Get_User_Queues</name>
@@ -108,7 +106,6 @@
             <assignToReference>UserGroups</assignToReference>
             <name>outputCollection</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
@@ -932,6 +929,22 @@
         </rules>
     </decisions>
     <dynamicChoiceSets>
+        <name>FA_Fagomraader_picklist</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NKS_FA_Fagomrader__c</picklistField>
+        <picklistObject>User</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>FK_Fagomraader_picklist</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>NKS_FK_Fagomrader__c</picklistField>
+        <picklistObject>User</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>Queues</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
@@ -1717,6 +1730,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>NKS_FA_Fagomrader__c</field>
+            <value>
+                <elementReference>FA_Fagomraader</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_FK_Fagomrader__c</field>
+            <value>
+                <elementReference>FK_Fagomraader</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>NKS_FullNameAlias__c</field>
             <value>
                 <elementReference>Full_Name_Alias</elementReference>
@@ -1780,7 +1805,7 @@
         </connector>
         <fields>
             <name>Display_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Veilederens har i dag disse køene: &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;{!Users_Queue_Names}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.FirstName} &lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.LastName} er på avdeling &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_Division__c}. &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veileder sitt navn i chat er: &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Get_User.NKS_GreetingName__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Veilederen har i dag disse køene: &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!Users_Queue_Names}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Veilederen er fagansvarlig for disse områdene: &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.NKS_FA_Fagomrader__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Veilederen er fagkoordinator for disse områdene: &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_User.NKS_FK_Fagomrader__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1988,6 +2013,66 @@
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Rediger_Fagansvarlig</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Rediger Fagansvarlig</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>FA_Fagomraader</name>
+            <choiceReferences>FA_Fagomraader_picklist</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_User.NKS_FA_Fagomrader__c</elementReference>
+            </defaultValue>
+            <fieldText>Velg fagområder</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Rediger_Fagansvarlig</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Rediger_Fagkoordinator</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Rediger Fagkoordinator</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>FK_Fagomraader</name>
+            <choiceReferences>FK_Fagomraader_picklist</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_User.NKS_FK_Fagomrader__c</elementReference>
+            </defaultValue>
+            <fieldText>Velg fagområder</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Rediger_Fagkoordinator</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <nextOrFinishButtonLabel>Oppdater</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
