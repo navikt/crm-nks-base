@@ -5,5 +5,10 @@
         <sharedTo>vegard.sorheller@nav.no</sharedTo>
         <sharedToType>User</sharedToType>
     </folderShares>
+    <folderShares>
+        <accessLevel>Manage</accessLevel>
+        <sharedTo>group_4100</sharedTo>
+        <sharedToType>Group</sharedToType>
+    </folderShares>
     <name>NKS FA/FK</name>
 </ReportFolder>
