@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_FA_Fagomrader__c</fullName>
+    <deprecated>false</deprecated>
     <description>List the areas of expertise for which the user is subject responsible.</description>
     <externalId>false</externalId>
     <label>FA Fagområder</label>
@@ -70,6 +71,11 @@
                 <fullName>Uforetrygd</fullName>
                 <default>false</default>
                 <label>Uføretrygd</label>
+            </value>
+            <value>
+                <fullName>Arbeidsmetode og IT</fullName>
+                <default>false</default>
+                <label>Arbeidsmetode og IT</label>
             </value>
         </valueSetDefinition>
     </valueSet>
