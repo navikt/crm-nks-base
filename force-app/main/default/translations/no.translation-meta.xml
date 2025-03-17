@@ -183,11 +183,6 @@
         <name>fbc_Users</name>
     </customLabels>
     <customTabs>
-        <label>
-        </label>
-        <name>API_Transactions</name>
-    </customTabs>
-    <customTabs>
         <label>Administrer veiledere</label>
         <name>NKS_User_administration</name>
     </customTabs>
