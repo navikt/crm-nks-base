@@ -15,6 +15,10 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>Delete_Related_Files__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Fields_to_Anonymize__c</field>
         <value xsi:type="xsd:string">Body, NKS_Conversation__c</value>
     </values>

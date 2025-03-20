@@ -2,18 +2,45 @@
 private class NKS_FamilyViewControllerTest {
     @isTest
     private static void getRelationsTest() {
-        Person__c p = new Person__c(
+        Person__c testPerson = new Person__c(
             Name = '12106519356',
             INT_LastName__c = 'TestName',
             INT_FirstName__c = 'TestLastname'
         );
-        insert p;
-        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
-        insert a;
-        //Id accId = [SELECT Id FROM Account WHERE CRM_Person__r.Id = :p.Id LIMIT 1].Id;
-        List<NKS_FamilyViewController.Relation> rl = NKS_FamilyViewController.getRelations(a.Id, 'Account');
-        System.debug(rl);
-        System.assertEquals(false, rl.isEmpty());
+        insert testPerson;
+
+        Account testAccount = new Account(CRM_Person__c = testPerson.Id, Name = 'testName');
+        insert testAccount;
+
+        Case testCase = new Case(AccountId = testAccount.Id);
+        insert testCase;
+
+        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
+        insert testChatVisitor;
+
+        LiveChatTranscript testChat = new LiveChatTranscript();
+        testChat.LiveChatVisitorid = testChatVisitor.id;
+        testChat.AccountId = testAccount.Id;
+        insert testChat;
+
+        Test.startTest();
+        List<NKS_FamilyViewController.Relation> testRelation1 = NKS_FamilyViewController.getRelations(
+            testAccount.Id,
+            'Account'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation2 = NKS_FamilyViewController.getRelations(
+            testCase.Id,
+            'Case'
+        );
+        List<NKS_FamilyViewController.Relation> testRelation3 = NKS_FamilyViewController.getRelations(
+            testChat.Id,
+            'LiveChatTranscript'
+        );
+        Test.stopTest();
+
+        System.assertEquals(false, testRelation1.isEmpty());
+        System.assertEquals(false, testRelation2.isEmpty());
+        System.assertEquals(false, testRelation3.isEmpty());
     }
 
     @isTest
@@ -69,12 +96,9 @@ private class NKS_FamilyViewControllerTest {
             '{' +
             '"data" : {' +
             '"hentPerson" : {' +
-            '"foedsel" : [ {' +
+            '"foedselsdato" : [ {' +
             '"foedselsdato" : "1965-10-12",' +
-            '"foedselsaar" : 1965,' +
-            '"foedested" : "Fødested i/på Gjemnes",' +
-            '"foedeland" : "NOR",' +
-            '"foedekommune" : null' +
+            '"foedselsaar" : 1965' +
             '} ]' +
             '}' +
             '}' +
@@ -345,13 +369,13 @@ private class NKS_FamilyViewControllerTest {
         String person =
             '{' +
             '"data" : {' +
-            '"hentPerson" : {"foedsel" : [{"foedselsaar":"2023"}],"doedsfall" : [{"doedsdato" : "2023-01-2"}]}' +
+            '"hentPerson" : {"foedselsdato" : [{"foedselsaar":"2023"}],"doedsfall" : [{"doedsdato" : "2023-01-2"}]}' +
             '}' +
             '}';
         PDL_API_Response response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
         Date result = NKS_FamilyViewController.getAgeDate(response);
         System.assertEquals(Date.valueOf('0001-01-02'), result);
-        person = '{' + '"data" : {' + '"hentPerson" : {"foedsel" : [{}]}' + '}' + '}';
+        person = '{' + '"data" : {' + '"hentPerson" : {"foedselsdato" : [{}]}' + '}' + '}';
         response = (PDL_API_Response) System.JSON.deserialize(person, PDL_API_Response.class);
         result = NKS_FamilyViewController.getAgeDate(response);
         System.assertEquals(null, result);
@@ -374,12 +398,30 @@ private class NKS_FamilyViewControllerTest {
         Date d = Date.valueOf('0001-01-02');
         String result = NKS_FamilyViewController.getAgeString(d);
         System.assertEquals('1 d', result);
+
         d = Date.valueOf('0001-02-01');
         result = NKS_FamilyViewController.getAgeString(d);
         System.assertEquals('1 mnd', result);
+
         d = Date.valueOf('0002-01-01');
         result = NKS_FamilyViewController.getAgeString(d);
-        System.assertEquals('1 år', result);
+        System.assertEquals('12 mnd', result);
+
+        d = Date.valueOf('0002-12-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('23 mnd', result);
+
+        d = Date.valueOf('0003-01-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('24 mnd', result);
+
+        d = Date.valueOf('0003-05-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('28 mnd', result);
+
+        d = Date.valueOf('0004-01-01');
+        result = NKS_FamilyViewController.getAgeString(d);
+        System.assertEquals('3 år', result);
     }
 
     @isTest

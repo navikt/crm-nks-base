@@ -6,14 +6,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>CRM_SecurityQuestionPicker</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_SecurityQuestionTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FlowFindCollection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -126,14 +118,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HomePageNotifyOperationalUpdates</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_HomePageNotifyOperationalUpdatesTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_Kodeverk</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -187,14 +171,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_NavUnitsControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -727,7 +703,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NKS_Announcement__c.NKS_Operational_Send_Notification__c</field>
+        <field>NKS_Announcement__c.NKS_Send_Notification__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Survey__c</fullName>
+    <description>Related survey for a response</description>
+    <externalId>false</externalId>
+    <label>Survey</label>
+    <referenceTo>NKS_Survey__c</referenceTo>
+    <relationshipLabel>Survey Responses</relationshipLabel>
+    <relationshipName>NKS_Survey_Responses</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

@@ -41,12 +41,6 @@
                 <identifier>c_nksPersonHeader</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>crmSecurityQuestion</componentName>
-                <identifier>c_crmSecurityQuestion</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>

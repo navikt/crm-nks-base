@@ -169,10 +169,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AzureAccessTokenController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AzureAccessTokenService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -214,10 +210,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CRM_NavTaskWorkAllocationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_SecurityQuestionPicker</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -317,6 +309,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_ButtonContainerController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_CallFlowController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -325,11 +321,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HistorikkViewController</apexClass>
+        <apexClass>NKS_FullmaktController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_HistorikkViewController_Test</apexClass>
+        <apexClass>NKS_FullmaktControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_InternalSurveyController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -378,14 +378,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_PostAddressController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -684,6 +676,10 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
@@ -831,6 +827,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Journal_Entry__c.CRM_Theme_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Journal_Entry__c.CRM_Thread__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -927,6 +928,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.CRM_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentDone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>UserNotification__c.CRM_SuccessfullySentNotification__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1061,6 +1072,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>NKS_Announcement__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>NKS_Home_Page_Event__e</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>

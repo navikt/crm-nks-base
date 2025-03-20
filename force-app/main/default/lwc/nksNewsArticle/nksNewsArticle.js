@@ -31,9 +31,8 @@ export default class NksHomePageNews extends LightningElement {
 
     renderedCallback() {
         if (!this.isRendered) {
-            createAuditLog({ recordId: this.recordId, lookupField: 'Announcement__c' }).then(() => {
-                this.isRendered = true;
-            });
+            this.isRendered = true;
+            createAuditLog({ recordId: this.recordId, lookupField: 'Announcement__c' });
         }
     }
 

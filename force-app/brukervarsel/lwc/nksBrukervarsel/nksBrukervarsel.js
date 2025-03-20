@@ -1,14 +1,21 @@
 import { LightningElement, api } from 'lwc';
 import { publishToAmplitude } from 'c/amplitude';
+import newDesignTemplate from './newDesignTemplate.html';
+import standardTemplate from './nksBrukervarsel.html';
 
 export default class NksBrukervarsel extends LightningElement {
     @api brukervarsel;
+    @api newDesign = false;
 
     sortedVarselList;
     showDetails = false;
 
+    render() {
+        return this.newDesign ? newDesignTemplate : standardTemplate;
+    }
+
     get showVarselListe() {
-        let retValue = this.hasMessageList && this.showDetails === true;
+        let retValue = this.hasMessageList && this.showDetails;
         if (retValue && this.sortedVarselList == null)
             this.sortedVarselList = [...this.brukervarsel.varselListe].sort(
                 (a, b) => (a.sendt < b.sendt) - (a.sendt > b.sendt)
@@ -17,11 +24,11 @@ export default class NksBrukervarsel extends LightningElement {
     }
 
     get showNotifikasjon() {
-        return this.brukervarsel.brukernotifikasjon && this.showDetails === true;
+        return this.brukervarsel.brukernotifikasjon && this.showDetails;
     }
 
     get hasMessageList() {
-        return this.brukervarsel.varselListe && this.brukervarsel.varselListe.length > 0 ? true : false;
+        return this.brukervarsel.varselListe && this.brukervarsel.varselListe.length > 0;
     }
 
     get getDate() {
@@ -48,7 +55,7 @@ export default class NksBrukervarsel extends LightningElement {
         }
 
         if (this.brukervarsel.brukernotifikasjon) {
-            channels.push(`NOTIFIKASJON${this.brukervarsel.brukernotifikasjon.aktiv === true ? '' : ' (Inaktiv)'}`);
+            channels.push(`NOTIFIKASJON${this.brukervarsel.brukernotifikasjon.aktiv ? '' : ' (Inaktiv)'}`);
         }
 
         return channels;
@@ -59,7 +66,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'tilbakemelding.EPOST':
                 return 'E-post = ';
             case 'tilbakemelding.NAV.NO':
-                return 'Sendt til Ditt NAV';
+                return 'Sendt til Ditt Nav';
             case 'tilbakemelding.SMS':
                 return 'Tlf. = ';
             case '1.GangVarselBrevPensj':
@@ -87,7 +94,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'DittNAV_000011':
                 return 'Dokument - Endringsoppgave';
             case 'DittNAV_000001_temp':
-                return 'Innkalling til møte med NAV';
+                return 'Innkalling til møte med Nav';
             case 'EessiPenVarsleBrukerUfore':
                 return 'EØS- Opplysninger';
             case 'ForeldrepengerSoknadsvarsel':
@@ -161,7 +168,7 @@ export default class NksBrukervarsel extends LightningElement {
             case 'PAM_KONV01':
                 return 'Ny og forbedret CV-løsning';
             case 'PAM_SYNLIGHET_01':
-                return 'Informasjon om CV på Ditt NAV';
+                return 'Informasjon om CV på Ditt Nav';
             case 'SyfomoteNyetidspunkt':
                 return 'Forespørsel om nye tidspunkt for møte';
             case 'NaermesteLederMoteAvbrutt':
@@ -182,8 +189,8 @@ export default class NksBrukervarsel extends LightningElement {
         }
     }
 
-    onShowHide() {
-        this.showDetails = !this.showDetails;
+    onShowHide(event) {
+        this.showDetails = this.newDesign ? event?.detail?.isExpanded : !this.showDetails;
         publishToAmplitude('UN List', { type: 'toggle show details' });
     }
 }

@@ -21,6 +21,7 @@
                             class="slds-float_right"
                             alternative-text="Oppdater"
                             icon-name="utility:refresh"
+                            disabled={isRefreshDisabled}
                             onclick={refreshComponent}
                         ></lightning-button-icon>
                     </lightning-layout-item>
@@ -82,7 +83,7 @@
                         </li>
                     </template>
                     <div class="slds-text-align_center">
-                        <button class="slds-button slds-var-p-vertical_xxx-small" onclick={loadMoreList}>
+                        <button class="slds-button slds-var-p-vertical_xxx-small" onclick={paginateListOfRecords}>
                             Last flere
                         </button>
                     </div>
@@ -102,6 +103,7 @@
                         class="slds-float_right"
                         alternative-text="Oppdater"
                         icon-name="utility:refresh"
+                        disabled={isRefreshDisabled}
                         onclick={refreshComponent}
                     ></lightning-button-icon>
                 </lightning-layout-item>

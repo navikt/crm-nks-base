@@ -2,15 +2,30 @@
 public with sharing class NKS_AddressControllerTest {
     @isTest
     static void testGetPersonIdentAndFullName() {
-        Person__c p = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
-        insert p;
-        Account a = new Account(CRM_Person__c = p.Id, Name = '78912345687');
-        insert a;
+        Person__c testPerson = new Person__c(Name = '78912345687', INT_LastName__c = 'Ole', INT_FirstName__c = 'Olsen');
+        insert testPerson;
+        Account testAccount = new Account(CRM_Person__c = testPerson.Id, Name = '78912345687');
+        insert testAccount;
+        Case testCase = new Case(AccountId = testAccount.Id);
+        insert testCase;
+
+        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
+        insert testChatVisitor;
+
+        LiveChatTranscript testChat = new LiveChatTranscript();
+        testChat.LiveChatVisitorid = testChatVisitor.id;
+        testChat.AccountId = testAccount.Id;
+        insert testChat;
 
         Test.startTest();
-        String personIdent = NKS_AddressController.getPersonIdentAndFullName(a.Id, 'Account')?.Name;
+        String personIdent = NKS_AddressController.getPersonIdentAndFullName(testAccount.Id, 'Account')?.Name;
+        String personIdent2 = NKS_AddressController.getPersonIdentAndFullName(testCase.Id, 'Case')?.Name;
+        String personIdent3 = NKS_AddressController.getPersonIdentAndFullName(testChat.Id, 'LiveChatTranscript')?.Name;
         Test.stopTest();
+
         System.assertEquals('78912345687', personIdent);
+        System.assertEquals('78912345687', personIdent2);
+        System.assertEquals('78912345687', personIdent3);
     }
 
     @isTest
@@ -33,7 +48,7 @@ public with sharing class NKS_AddressControllerTest {
         addr.add(NKS_AddressController.getBostedAddress(a.Id, 'Account'));
         addr.add(NKS_AddressController.getBostedAddress(c.Id, 'Case'));
         Test.stopTest();
-        
+
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].address != null);
         System.assertEquals(true, addr[1][0].address != null);
@@ -59,7 +74,7 @@ public with sharing class NKS_AddressControllerTest {
         addr.add(NKS_AddressController.getOppholdsAddress(a.Id, 'Account'));
         addr.add(NKS_AddressController.getOppholdsAddress(c.Id, 'Case'));
         Test.stopTest();
-        
+
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].zipCode != null);
         System.assertEquals(true, addr[1][0].zipCode != null);
@@ -92,7 +107,6 @@ public with sharing class NKS_AddressControllerTest {
         System.assertEquals('4636', addr.zipCode);
     }
 
-
     @isTest
     static void testSetAddressFullNameAndCity() {
         // Create test data
@@ -119,7 +133,7 @@ public with sharing class NKS_AddressControllerTest {
         commonCode2.Name = 'Poststed2';
         List<Common_Code__c> commonCodes = new List<Common_Code__c>{ commonCode1, commonCode2 };
         insert commonCodes;
-       
+
         Test.startTest();
         // Call the method to be tested
         NKS_AddressController.setAddressFullNameAndCity(addresses, p);

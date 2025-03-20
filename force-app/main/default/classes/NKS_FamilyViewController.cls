@@ -67,8 +67,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
-        query.hentPerson.foedsel.foedselsaar = true;
-        query.hentPerson.foedsel.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
         query.hentPerson.kjoenn.kjoenn = true;
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
@@ -85,8 +85,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.doedfoedtBarn.selectAll();
         query.hentPerson.adressebeskyttelse.gradering = true;
         query.hentPerson.foreldreansvar.selectAll();
-        query.hentPerson.foedsel.foedselsdato = true;
-        query.hentPerson.foedsel.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
         query.hentPerson.bostedsadresse.vegadresse.selectAll();
         query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
         query.hentPerson.deltBosted.vegadresse.selectAll();
@@ -101,8 +101,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
-        query.hentPerson.foedsel.foedselsaar = true;
-        query.hentPerson.foedsel.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
         query.hentPerson.kjoenn.kjoenn = true;
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
@@ -125,20 +125,30 @@ public with sharing class NKS_FamilyViewController {
     @AuraEnabled(cacheable=true)
     public static List<Relation> getRelations(Id recordId, String objectApiName) {
         Id personId;
-        if (objectApiName == 'Case')
-            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId].Account.CRM_Person__c;
-        else if (objectApiName == 'Account')
-            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId].CRM_Person__c;
+        if (objectApiName == 'Case') {
+            personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
+        } else if (objectApiName == 'Account') {
+            personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
+        } else if (objectApiName == 'LiveChatTranscript') {
+            personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
+                ?.Account
+                ?.CRM_Person__c;
+        }
 
         List<Relation> relations = new List<Relation>();
+        Boolean access = false;
+        String personIdent = null;
 
-        Id userId = UserInfo.getUserId();
-        Boolean access = [
-            SELECT RecordId, HasReadAccess
-            FROM UserRecordAccess
-            WHERE UserId = :userId AND RecordId = :personId
-        ]
-        .HasReadAccess;
+        if (personId != null) {
+            access = [
+                SELECT RecordId, HasReadAccess
+                FROM UserRecordAccess
+                WHERE UserId = :UserInfo.getUserId() AND RecordId = :personId
+            ]
+            .HasReadAccess;
+            personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+        }
+
         if (!access) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -146,7 +156,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
-        String personIdent = [SELECT Id, Name FROM Person__c WHERE Id = :personId]?.Name;
+
         if (personIdent == null) {
             Relation r = new Relation();
             r.recordType = 'ERROR';
@@ -154,6 +164,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         PDL_API_Response relationsData;
         try {
             relationsData = queryRelationsFromPDL(personIdent);
@@ -174,6 +185,7 @@ public with sharing class NKS_FamilyViewController {
             relations.add(r);
             return relations;
         }
+
         Relation person = new Relation();
         person.employee = isNavEmployee(relationsData);
         person.confidentialStatus = getConfidentialStatus(relationsData);
@@ -436,27 +448,27 @@ public with sharing class NKS_FamilyViewController {
 
     @TestVisible
     private static String getBirthdate(PDL_API_Response response) {
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato == null) {
+        if (foedselsdato[0]?.foedselsdato == null) {
             return null;
         }
-        return formatDate(foedsel[0].foedselsdato);
+        return formatDate(foedselsdato[0].foedselsdato);
     }
 
     @TestVisible
     private static Date getAgeDate(PDL_API_Response response) {
         Date birthDate;
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato != null) {
-            birthDate = foedsel[0].foedselsdato;
-        } else if (foedsel[0]?.foedselsaar != null) {
-            birthDate = Date.newInstance(foedsel[0].foedselsaar, 1, 1);
+        if (foedselsdato[0]?.foedselsdato != null) {
+            birthDate = foedselsdato[0].foedselsdato;
+        } else if (foedselsdato[0]?.foedselsaar != null) {
+            birthDate = Date.newInstance(foedselsdato[0].foedselsaar, 1, 1);
         } else {
             return null;
         }
@@ -696,7 +708,7 @@ public with sharing class NKS_FamilyViewController {
     // part of Address could be missing
     @TestVisible
     private static Boolean compareAddressParts(String parent, String child) {
-        if (parent == child  || (String.isBlank(parent) && String.isBlank(child)) )
+        if (parent == child || (String.isBlank(parent) && String.isBlank(child)))
             return true;
         return false;
     }
@@ -777,13 +789,20 @@ public with sharing class NKS_FamilyViewController {
         if (d == null) {
             return null;
         }
-        if ((d.year() - 1) > 0) {
-            return String.valueOf(d.year() - 1) + ' år';
+
+        Integer years = d.year() - 1;
+        Integer months = d.month() - 1;
+        Integer days = d.day() - 1;
+
+        if (years < 3) {
+            if (months > 0 || years > 0) {
+                Integer totalMonths = years * 12 + months;
+                return totalMonths + ' mnd';
+            }
+            return days + ' d';
         }
-        if ((d.month() - 1) > 0) {
-            return String.valueOf(d.month() - 1) + ' mnd';
-        }
-        return String.valueOf(d.day() - 1) + ' d';
+
+        return years + ' år';
     }
 
     @TestVisible
@@ -795,14 +814,14 @@ public with sharing class NKS_FamilyViewController {
     }
 
     private static Date getBirthdayDate(PDL_API_Response response) {
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato == null) {
+        if (foedselsdato[0]?.foedselsdato == null) {
             return null;
         }
-        return foedsel[0].foedselsdato;
+        return foedselsdato[0].foedselsdato;
     }
 
     @TestVisible

@@ -1,5 +1,5 @@
 <aura:component>
-    <ltng:require scripts="/support/api/50.0/lightning/opencti_min.js" afterScriptsLoaded="{!c.ctiLoaded}" />
+    <ltng:require scripts="/support/api/61.0/lightning/opencti_min.js" afterScriptsLoaded="{!c.ctiLoaded}" />
 
     <aura:attribute name="ctiLoaded" type="Boolean" default="false" />
     <aura:attribute name="identifier" type="String" default="" />

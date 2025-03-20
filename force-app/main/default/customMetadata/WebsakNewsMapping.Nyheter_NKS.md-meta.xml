@@ -34,6 +34,6 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:type="xsd:double">3.0</value>
+        <value xsi:type="xsd:double">4.0</value>
     </values>
 </CustomMetadata>
