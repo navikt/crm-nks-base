@@ -1,32 +1,36 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import getBrukerVarsel from '@salesforce/apex/NKS_BrukervarselController.getBrukerVarselFromActorId';
 import getBrukernotifikasjon from '@salesforce/apex/NKS_BrukervarselController.getBrukerNotifikasjonFromIdent';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import { publishToAmplitude } from 'c/amplitude';
+import { resolve } from 'c/nksComponentsUtils';
+import newDesignTemplate from './newDesignTemplate.html';
+import standardTemplate from './nksBrukervarselList.html';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
+    @api newDesign = false;
 
-    @track notifications = [];
-    @track filteredNotificationList = [];
-    @track errorMessages = [];
+    notifications = [];
+    filteredNotificationList = [];
+    errorMessages = [];
 
     showAll = false;
     personId;
     wireFields;
     isLoaded = false;
     wiredPerson = null;
-    varsler = [];
-    brukernotifikasjon = [];
     fromDate;
     toDate;
     wiredBrukerVarsel;
-    usernotificationsLoaded = false;
+
+    render() {
+        return this.newDesign ? newDesignTemplate : standardTemplate;
+    }
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
@@ -35,32 +39,6 @@ export default class NksBrukervarselList extends LightningElement {
 
     get showNotifications() {
         return this.filteredNotificationList.length > 0;
-    }
-
-    filterNotificationList() {
-        let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
-        let getLatestDate = (e) => {
-            return e.sisteVarselutsendelse != null
-                ? e.sisteVarselutsendelse
-                : e.varselListe.reduce(reduceToMaxDate).sendt;
-        };
-
-        /*
-         * sort list descending by date in sisteVarselutsendelse
-         * if missing, then looking for the latest date in varselListe.sendt
-         */
-        let n = [...this.notifications]
-            .filter(
-                (notification) =>
-                    getLatestDate(notification) >= this.fromDate && getLatestDate(notification) <= this.toDate
-            )
-            .sort((a, b) => {
-                let ad = getLatestDate(a);
-                let bd = getLatestDate(b);
-                return (ad < bd) - (ad > bd);
-            });
-
-        this.filteredNotificationList = n;
     }
 
     get maxDate() {
@@ -98,7 +76,7 @@ export default class NksBrukervarselList extends LightningElement {
             objectApiName: objectApiName
         })
             .then((record) => {
-                this.personId = this.resolve(relationshipField, record);
+                this.personId = resolve(relationshipField, record);
             })
             .catch((error) => {
                 this.addError(error);
@@ -114,11 +92,8 @@ export default class NksBrukervarselList extends LightningElement {
         this.wiredPerson = value;
 
         if (data) {
-            this.usernotificationsLoaded = false;
-            this.brukernotifikasjon = [];
             this.getNotifications();
         }
-
         if (error) {
             this.addError(error);
         }
@@ -134,7 +109,6 @@ export default class NksBrukervarselList extends LightningElement {
                 this.getRelatedRecordId(this.relationshipField, this.objectApiName);
             }
         }
-
         if (error) {
             this.addError(error);
         }
@@ -143,46 +117,43 @@ export default class NksBrukervarselList extends LightningElement {
     getNotifications() {
         this.isLoaded = false;
         this.errorMessages = [];
-        this.varsler = [];
 
-        const brukervarsler = new Promise((resolve, reject) => {
-            getBrukerVarsel({
-                actorId: this.personActorId,
-                fromDate: this.fromDate,
-                toDate: this.toDate
+        getBrukernotifikasjon({ fnr: this.personIdent })
+            .then((data) => {
+                this.notifications = data;
+                this.filterNotificationList();
+                this.isLoaded = true;
             })
-                .then((data) => {
-                    this.varsler = data;
-                    resolve();
-                })
-                .catch((error) => {
-                    this.addError(error);
-                    reject();
-                });
-        });
+            .catch((error) => {
+                this.addError(error);
+                this.isLoaded = true;
+            });
+    }
 
-        const brukernotifikasjoner = new Promise((resolve, reject) => {
-            if (this.usernotificationsLoaded === true) {
-                resolve();
-            } else {
-                getBrukernotifikasjon({ fnr: this.personIdent })
-                    .then((data) => {
-                        this.brukernotifikasjon = data;
-                        this.usernotificationsLoaded = true;
-                        resolve();
-                    })
-                    .catch((error) => {
-                        this.addError(error);
-                        reject();
-                    });
-            }
-        });
+    filterNotificationList() {
+        let reduceToMaxDate = (c, d) => (c.sendt > d.sendt ? c : d);
+        let getLatestDate = (e) => {
+            return e.sisteVarselutsendelse != null
+                ? e.sisteVarselutsendelse
+                : e.varselListe.reduce(reduceToMaxDate).sendt;
+        };
 
-        Promise.allSettled([brukervarsler, brukernotifikasjoner]).finally(() => {
-            this.notifications = [].concat(this.varsler).concat(this.brukernotifikasjon);
-            this.isLoaded = true;
-            this.filterNotificationList();
-        });
+        /*
+         * sort list descending by date in sisteVarselutsendelse
+         * if missing, then looking for the latest date in varselListe.sendt
+         */
+        let n = [...this.notifications]
+            .filter(
+                (notification) =>
+                    getLatestDate(notification) >= this.fromDate && getLatestDate(notification) <= this.toDate
+            )
+            .sort((a, b) => {
+                let ad = getLatestDate(a);
+                let bd = getLatestDate(b);
+                return (ad < bd) - (ad > bd);
+            });
+
+        this.filteredNotificationList = n;
     }
 
     refreshNotificationList() {
@@ -234,15 +205,5 @@ export default class NksBrukervarselList extends LightningElement {
         } else {
             this.errorMessages.push(error.body);
         }
-    }
-
-    resolve(path, obj) {
-        if (typeof path !== 'string') {
-            throw new Error('Path must be a string');
-        }
-
-        return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : null;
-        }, obj || {});
     }
 }

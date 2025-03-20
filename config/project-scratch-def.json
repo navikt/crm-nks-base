@@ -18,7 +18,8 @@
         "Knowledge",
         "ProcessBuilder",
         "API",
-        "FieldService:1"
+        "FieldService:1",
+        "LiveMessage"
     ],
     "country": "NO",
     "language": "en_US",
@@ -56,7 +57,8 @@
             "sessionSettings": {
                 "forceRelogin": false
             },
-            "enableAdminLoginAsAnyUser": true
+            "enableAdminLoginAsAnyUser": true,
+            "enableAuditFieldsInactiveOwner": true
         },
         "knowledgeSettings": {
             "enableKnowledge": true,
@@ -85,6 +87,9 @@
         "quickTextSettings": {
             "lightningQuickTextEnabled": true,
             "quickTextsInFolders": true
+        },
+        "liveMessageSettings": {
+            "enableLiveMessage": true
         }
     }
 }

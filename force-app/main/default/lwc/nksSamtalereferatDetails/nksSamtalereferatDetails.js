@@ -14,6 +14,10 @@ export default class NksSamtalereferatDetails extends LightningElement {
     @wire(getObjectInfo, { objectApiName: CONVERSATION_NOTE_OBJECT })
     objectInfo;
 
+    connectedCallback() {
+        publishToAmplitude('Conversation Note Case Opened');
+    }
+
     renderedCallback() {
         console.log(this.objectInfo);
     }

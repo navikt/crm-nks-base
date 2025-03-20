@@ -2,11 +2,34 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>51.0</apiVersion>
     <assignments>
+        <name>Add_henvendelse_ID</name>
+        <label>Add henvendelse ID</label>
+        <locationX>462</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Case__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NAV_Task_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>330</locationX>
-        <locationY>518</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -85,36 +108,64 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NavTask.NKS_Case__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>NavTask.CRM_Subtype__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Theme_Categorization.subtype</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case.NKS_Henvendelse_BehandlingsId__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Send_NAV_Task</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Remove_henvendelse_ID</name>
+        <label>Remove henvendelse ID</label>
+        <locationX>198</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NavTask.NKS_Case__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>NAV_Task_Assignment</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Create_Task_on_Henvendelse_or_Person</name>
+        <label>Create Task on Henvendelse or Person</label>
+        <locationX>330</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Add_henvendelse_ID</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create Henvendelse Task</defaultConnectorLabel>
+        <rules>
+            <name>Create_person_Task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Theme_Categorization.theme</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Communal_Service_Theme.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_henvendelse_ID</targetReference>
+            </connector>
+            <label>Create person Task</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Check if the case is related to an account before allowing to create task.</description>
         <name>Validate_Account</name>
         <label>Validate Account</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
         </defaultConnector>
@@ -140,7 +191,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>330</locationX>
-        <locationY>758</locationY>
+        <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -232,7 +283,7 @@ TODAY())</expression>
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Validate_Account</targetReference>
@@ -252,13 +303,42 @@ TODAY())</expression>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Communal_Service_Theme</name>
+        <label>Get Communal Service Theme</label>
+        <locationX>330</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Task_on_Henvendelse_or_Person</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Code__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>KOM</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Code_Set__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tema</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Common_Code__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>176</locationX>
-        <locationY>1310</locationY>
+        <locationY>1574</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -304,7 +384,7 @@ TODAY())</expression>
         <name>Finish_modal</name>
         <label>Finish_modal</label>
         <locationX>198</locationX>
-        <locationY>878</locationY>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -353,12 +433,12 @@ TODAY())</expression>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>330</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>NAV_Task_Assignment</targetReference>
+            <targetReference>Get_Communal_Service_Theme</targetReference>
         </connector>
         <fields>
             <name>Ny_Oppgave_Display</name>
@@ -444,6 +524,7 @@ TODAY())</expression>
             </defaultValue>
             <fieldText>Prioritet</fieldText>
             <fieldType>RadioButtons</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -451,6 +532,7 @@ TODAY())</expression>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -500,8 +582,8 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>638</locationX>
-        <locationY>278</locationY>
+        <locationX>726</locationX>
+        <locationY>242</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
@@ -542,7 +624,7 @@ TODAY())</expression>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>330</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>

@@ -34,7 +34,7 @@ creatingScratchOrg () {
     if [[ -n $npm_config_org_duration ]]; then
         days=$npm_config_org_duration
     else
-        days=7
+        days=30
     fi
 
     echo "Scratch org duration: $days days"
@@ -63,13 +63,13 @@ assignPermission() {
 }
 
 insertingTestData() {
-   #sf data import tree --plan dummy-data/announcements/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/announcements/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf data import tree --plan dummy-data/chat/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf data import tree --plan dummy-data/common_codes/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf data import tree --plan dummy-data/conversation_notes/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf data import tree --plan dummy-data/knowledge/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf data import tree --plan dummy-data/navunits/plan.json || { error $? '"sf data import tree" command failed.'; }
-   #sf data import tree --plan dummy-data/quicktexts/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/quicktexts/plan.json || { error $? '"sf data import tree" command failed.'; }
    sf apex run --file dummy-data/GenerateData.apex
 }
 
@@ -109,41 +109,41 @@ elif [[ -z $npm_config_package_key ]] && [[ -z $npm_config_step ]] && [[ -z $npm
     info
 fi
 
-# sf version >/dev/null 2>&1 || { 
-#     echo >&2 "\"sf cli\" is required, but it's not installed."
-#     echo "Follow the instruction here to install it: https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm"
-#     echo ""
-#     echo "Aborting...."
-#     echo ""
-#     exit 1
-# }
+ sf version >/dev/null 2>&1 || { 
+     echo >&2 "\"sf cli\" is required, but it's not installed."
+     echo "Follow the instruction here to install it: https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm"
+     echo ""
+     echo "Aborting...."
+     echo ""
+     exit 1
+ }
 
-# sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
-#     echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
-#     echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
-#     echo ""
-#     echo "Aborting...."
-#     echo ""
-#     exit 1
-# }
+ sf plugins inspect @dxatscale/sfpowerscripts >/dev/null 2>&1 || { 
+     echo >&2 "\"@dxatscale/sfpowerscripts\" is required, but it's not installed."
+     echo "Run \"sf plugins install @dxatscale/sfpowerscripts\" to install it."
+     echo ""
+     echo "Aborting...."
+     echo ""
+     exit 1
+ }
 
-# sf plugins inspect sfdmu >/dev/null 2>&1 || {
-#     echo >&2 "\"sfdmu\" is required, but it's not installed."
-#     echo "Run \"sf plugins install sfdmu\" to install it."
-#     echo ""
-#     echo "Aborting..."
-#     echo ""
-#     exit 1
-# }
+ sf plugins inspect sfdmu >/dev/null 2>&1 || {
+     echo >&2 "\"sfdmu\" is required, but it's not installed."
+     echo "Run \"sf plugins install sfdmu\" to install it."
+     echo ""
+     echo "Aborting..."
+     echo ""
+     exit 1
+ }
 
-# command -v jq >/dev/null 2>&1 || {
-#     echo >&2 "\"jq\" is required, but it's not installed."
-#     echo "Run \"brew install jq\" to install it if you have Homebrew installed."
-#     echo ""
-#     echo "Aborting..."
-#     echo ""
-#     exit 1
-# }
+ command -v jq >/dev/null 2>&1 || {
+     echo >&2 "\"jq\" is required, but it's not installed."
+     echo "Run \"brew install jq\" to install it if you have Homebrew installed."
+     echo ""
+     echo "Aborting..."
+     echo ""
+     exit 1
+ }
 
 ORG_ALIAS="crm-nks-base"
 secret=$npm_config_package_key

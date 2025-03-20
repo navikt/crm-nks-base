@@ -3,6 +3,7 @@ public with sharing class NKS_AuditLogControllerTest {
     @TestSetup
     static void makeData() {
         NKS_Announcement__c news = new NKS_Announcement__c();
+        news.NKS_News_Status__c = 'Published';
         insert news;
 
         Knowledge__kav article = new Knowledge__kav();
@@ -10,11 +11,16 @@ public with sharing class NKS_AuditLogControllerTest {
         article.UrlName = 'Test-Article';
         insert article;
 
+        Knowledge__kav kav = [SELECT id, KnowledgeArticleId FROM Knowledge__kav WHERE id = :article.Id LIMIT 1];
+        KbManagement.PublishingService.publishArticle(kav.KnowledgeArticleId, true);
+
         Id rtId = NKS_AuditLogController.getRecordTypeId('Knowledge Audit Log');
         NKS_Audit_Log__c al = new NKS_Audit_Log__c();
         al.User__c = UserInfo.getUserId();
         al.RecordTypeId = rtId;
         al.Knowledge__c = article.Id;
+        al.Knowledge_Article_Id__c = article.KnowledgeArticleId;
+        al.Operation__c = 'View';
         insert al;
     }
 
@@ -46,6 +52,18 @@ public with sharing class NKS_AuditLogControllerTest {
     static void testIsKnowledgeUser() {
         Test.startTest();
         Boolean result = NKS_AuditLogController.isKnowledgeUser();
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void testLogErrorMessage() {
+        Database.SaveResult sr = (Database.SaveResult) JSON.deserialize(
+            '{"success":false,"errors":[{"message":"Required fields are missing: [Name]","statusCode":"REQUIRED_FIELD_MISSING"}]}',
+            Database.SaveResult.class
+        );
+
+        Test.startTest();
+        NKS_AuditLogController.logErrorMessage(sr);
         Test.stopTest();
     }
 }

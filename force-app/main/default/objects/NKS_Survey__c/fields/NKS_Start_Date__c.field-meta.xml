@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Start_Date__c</fullName>
+    <description>Start date of survey</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set et starttidspunkt for undersøkelsen.</inlineHelpText>
+    <label>Start Date</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>
