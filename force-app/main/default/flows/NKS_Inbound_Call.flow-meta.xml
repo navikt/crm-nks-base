@@ -19,6 +19,10 @@
         </inputParameters>
         <nameSegment>NKS_CallFlowController</nameSegment>
         <outputParameters>
+            <assignToReference>ACCESS_NUMBER</assignToReference>
+            <name>accessNumber</name>
+        </outputParameters>
+        <outputParameters>
             <assignToReference>CALLER_CONTEXT</assignToReference>
             <name>callerContext</name>
         </outputParameters>
@@ -30,7 +34,6 @@
             <assignToReference>THEME_GROUP_CODE</assignToReference>
             <name>themeGroup</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the organization account</description>
@@ -49,14 +52,13 @@
         </inputParameters>
         <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -68,14 +70,13 @@
         </inputParameters>
         <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -87,7 +88,6 @@
         </inputParameters>
         <nameSegment>c:nksFlowRedirect</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
@@ -407,13 +407,95 @@ IF(
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Create_Call_Log</name>
+        <label>Create Call Log</label>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>Redirect_To_Case</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>NKS_Advisor_Ident__c</field>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Call_Time__c</field>
+            <value>
+                <elementReference>$System.OriginDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Case__c</field>
+            <value>
+                <elementReference>Create_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Phone_Number__c</field>
+            <value>
+                <elementReference>ACCESS_NUMBER</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_SessionId__c</field>
+            <value>
+                <elementReference>SessionId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NKS_Call_Log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_Call_Log_0</name>
+        <label>Create Call Log</label>
+        <locationX>842</locationX>
+        <locationY>974</locationY>
+        <connector>
+            <targetReference>Redirect_To_Case_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>NKS_Advisor_Ident__c</field>
+            <value>
+                <elementReference>$User.CRM_NAV_Ident__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Call_Time__c</field>
+            <value>
+                <elementReference>$System.OriginDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Case__c</field>
+            <value>
+                <elementReference>Create_Case_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Phone_Number__c</field>
+            <value>
+                <elementReference>ACCESS_NUMBER</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_SessionId__c</field>
+            <value>
+                <elementReference>SessionId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NKS_Call_Log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case</name>
         <label>Create Case</label>
         <locationX>50</locationX>
         <locationY>866</locationY>
         <connector>
-            <targetReference>Redirect_To_Case</targetReference>
+            <targetReference>Create_Call_Log</targetReference>
         </connector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
@@ -424,7 +506,7 @@ IF(
         <locationX>842</locationX>
         <locationY>866</locationY>
         <connector>
-            <targetReference>Redirect_To_Case_0</targetReference>
+            <targetReference>Create_Call_Log_0</targetReference>
         </connector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
@@ -531,6 +613,13 @@ IF(
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>Ingen virksomhet funnet for virksomhetsnummer: {!Search}</text>
     </textTemplates>
+    <variables>
+        <name>ACCESS_NUMBER</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <description>Case to be created for person phone queues.</description>
         <name>Call_Case</name>

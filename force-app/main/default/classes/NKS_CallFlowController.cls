@@ -1,5 +1,9 @@
 public without sharing class NKS_CallFlowController {
-    private static final List<String> QueryFields = new List<String>{ 'puzzel__SessionId__c', 'puzzel__Queue__c' };
+    private static final List<String> QueryFields = new List<String>{
+        'puzzel__SessionId__c',
+        'puzzel__Queue__c',
+        'puzzel__AccessNumber__c'
+    };
     private static Map<String, Schema.SObjectType> globalDesc = Schema.getGlobalDescribe();
 
     /**
@@ -21,7 +25,7 @@ public without sharing class NKS_CallFlowController {
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String puzSessionId : sessionIds) {
-                respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE')); //Person is fallback when there is no match
+                respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE', '')); //Person is fallback when there is no match
             }
         } else {
             List<Object> enqLogs = getEnquiryLogs(sessionIds);
@@ -32,8 +36,27 @@ public without sharing class NKS_CallFlowController {
                     queueNames.add((String) enqMap.get('puzzel__Queue__c'));
             }
 
-            for (Puzzel_Queue_Mapping__mdt queueMapping : getQueueMappings(queueNames)) {
-                respList.add(new CallQueueResponse(queueMapping.Theme_Group_Code__c, queueMapping.Caller_Context__c, queueMapping.Puzzel_Queue_Name__c));
+            List<Puzzel_Queue_Mapping__mdt> queueContextMapping = getQueueMappings(queueNames);
+            Map<String, Puzzel_Queue_Mapping__mdt> contextMap = new Map<String, Puzzel_Queue_Mapping__mdt>();
+            for (Puzzel_Queue_Mapping__mdt queueMapping : queueContextMapping) {
+                contextMap.put(queueMapping.Puzzel_Queue_Name__c, queueMapping);
+            }
+
+            for (Object enqLog : enqLogs) {
+                Map<String, Object> enqMap = (Map<String, Object>) enqLog;
+                String queue = enqMap.containsKey('puzzel__Queue__c') ? (String) enqMap.get('puzzel__Queue__c') : '';
+                String accessNumber = enqMap.containsKey('puzzel__AccessNumber__c')
+                    ? (String) enqMap.get('puzzel__AccessNumber__c')
+                    : '';
+                Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue);
+                respList.add(
+                    new CallQueueResponse(
+                        queueMapping.Theme_Group_Code__c,
+                        queueMapping.Caller_Context__c,
+                        queueMapping.Puzzel_Queue_Name__c,
+                        accessNumber
+                    )
+                );
             }
         }
         return respList;
@@ -64,7 +87,15 @@ public without sharing class NKS_CallFlowController {
 
         return Test.isRunningTest()
             ? (List<Object>) JSON.deserializeUntyped(NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG)
-            : (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(queryFactory.selectFields(QueryFields).setCondition('puzzel__SessionId__c in :sessionIds').toSOQL())));
+            : (List<Object>) JSON.deserializeUntyped(
+                  JSON.serialize(
+                      Database.query(
+                          queryFactory.selectFields(QueryFields)
+                              .setCondition('puzzel__SessionId__c in :sessionIds')
+                              .toSOQL()
+                      )
+                  )
+              );
     }
 
     public class CallQueueResponse {
@@ -74,11 +105,14 @@ public without sharing class NKS_CallFlowController {
         public String callerContext;
         @invocableVariable
         public String queueName;
+        @invocableVariable
+        public String accessNumber;
 
-        public CallQueueResponse(String themeGroup, String callerContext, String queueName) {
+        public CallQueueResponse(String themeGroup, String callerContext, String queueName, String accessNumber) {
             this.themeGroup = themeGroup;
             this.callerContext = callerContext;
             this.queueName = queueName;
+            this.accessNumber = accessNumber;
         }
     }
 }
