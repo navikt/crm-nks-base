@@ -41,7 +41,7 @@
                 "type": "NKS_Announcement__c",
                 "referenceId": "NKS_Announcement__cRef4"
             },
-            "Name": "OPPDATERT: Arena – Ikke mulig å slette diagnoser",
+            "Name": "OPPDATERT: Arena - Ikke mulig å slette diagnoser",
             "RecordType": {
                 "Name": "Operational"
             },
@@ -56,7 +56,7 @@
             "RecordType": {
                 "Name": "Operational"
             },
-            "NKS_Information__c": "<p><b>PC/klienter og skjermer</b> (Dustin) : <b>1. november </b>(NB! PC bør bestilles så snart beslutning om innkjøp er tatt pga leveringsutfordringer)</p><p><br></p><p><b>Videoutstyr</b> (Kinly) : <b>15. oktober</b></p><p>AV-utstyr m installasjon (Kinly) : 25. oktober</p><p><br></p><p><b>Skrivere</b> (Atea) : <b>20. november</b></p><p><br></p><p>Minner også på at det <b>IKKE</b> er tillatt med forskuddsfaktura!</p>"
+            "NKS_Information__c": "<p><b>PC/klienter og skjermer</b> (Dustin) : <b>1. november </b>(NB! PC bør bestilles så snart beslutning om innkjøp er tatt pga leveringsutfordringer)</p><p><br></p><p><b>Videoutstyr</b> (Kinly) : <b>15. oktober</b></p><p>AV-utstyr m installasjon (Kinly) : 25. oktober</p><p><br></p><p><b>Skrivere</b> (Atea) : <b>20. november</b></p><p><br></p><p>Minner også på at det <b>IKKE</b> er tillatt med forskuddsfaktura!</p>"
         },
         {
             "attributes": {
