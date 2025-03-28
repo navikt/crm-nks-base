@@ -3,7 +3,7 @@
     <fullName>NKS_SessionId__c</fullName>
     <externalId>false</externalId>
     <label>SessionId</label>
-    <length>15</length>
+    <length>40</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
