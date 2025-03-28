@@ -29,9 +29,12 @@ public without sharing class NKS_CallFlowController {
             }
         } else {
             List<Object> enqLogs = getEnquiryLogs(sessionIds);
+            Map<String, Object> enqLogsMap = new Map<String, Object>();
             Set<String> queueNames = new Set<String>();
             for (Object enqLog : enqLogs) {
                 Map<String, Object> enqMap = (Map<String, Object>) enqLog;
+                if (enqMap.containsKey('puzzel__SessionId__c'))
+                    enqLogsmap.put((String) enqMap.get('puzzel__SessionId__c'), enqLog);
                 if (enqMap.containsKey('puzzel__Queue__c'))
                     queueNames.add((String) enqMap.get('puzzel__Queue__c'));
             }
@@ -42,7 +45,12 @@ public without sharing class NKS_CallFlowController {
                 contextMap.put(queueMapping.Puzzel_Queue_Name__c, queueMapping);
             }
 
-            for (Object enqLog : enqLogs) {
+            for (String sessionId : sessionIds) {
+                Object enqLog = enqLogsMap.get(sessionId);
+                if (enqLog == null) {
+                    respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE', ''));
+                    continue;
+                }
                 Map<String, Object> enqMap = (Map<String, Object>) enqLog;
                 String queue = enqMap.containsKey('puzzel__Queue__c') ? (String) enqMap.get('puzzel__Queue__c') : '';
                 String accessNumber = enqMap.containsKey('puzzel__AccessNumber__c')

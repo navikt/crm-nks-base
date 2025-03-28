@@ -423,13 +423,13 @@ IF(
         <inputAssignments>
             <field>NKS_Call_Time__c</field>
             <value>
-                <elementReference>$System.OriginDateTime</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NKS_Case__c</field>
             <value>
-                <elementReference>Create_Case</elementReference>
+                <elementReference>Call_Case.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -464,13 +464,13 @@ IF(
         <inputAssignments>
             <field>NKS_Call_Time__c</field>
             <value>
-                <elementReference>$System.OriginDateTime</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NKS_Case__c</field>
             <value>
-                <elementReference>Create_Case_0</elementReference>
+                <elementReference>Call_Case.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
