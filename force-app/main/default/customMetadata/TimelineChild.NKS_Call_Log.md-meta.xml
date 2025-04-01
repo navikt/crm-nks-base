@@ -120,7 +120,7 @@
     </values>
     <values>
         <field>SObjectRelatedUserId__c</field>
-        <value xsi:type="xsd:string">NKS_Account__c</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>SObjectSubtitle__c</field>
