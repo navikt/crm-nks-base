@@ -74,17 +74,55 @@
 
                         <lightning-layout-item lwc:if={formattedPhone} size="12" class="slds-grid">
                             <div class="slds-size_4-of-7">
-                                <p class="custom-padding-left-large">{formattedPhone}</p>
+                                <div class="slds-grid slds-wrap icon-container">
+                                    <p class="custom-padding-left-large">{formattedPhone}</p>
+                                    <lightning-button-icon
+                                        class="copy-icon"
+                                        icon-name="utility:copy"
+                                        variant="bare"
+                                        onclick={handleCopyPhone}
+                                        data-phone={phone}
+                                        alternative-text="Kopier telefonnummer"
+                                        title="Kopier telefonnummer"
+                                    ></lightning-button-icon>
+                                </div>
                             </div>
                             <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{krrLastUpdatedFormatted}</p>
                         </lightning-layout-item>
-
-                        <lightning-layout-item lwc:if={formattedPhone1}>
-                            <div class="slds-grid">
-                                <p class="custom-padding-left-large slds-size_4-of-7">{formattedPhone1}</p>
-                                <p class="slds-size_3-of-7 slds-p-left_medium italic-text">{pdlLastUpdatedFormatted}</p>
+                        <lightning-layout-item lwc:if={formattedPhone1} size="12" class="slds-grid">
+                            <div class="slds-size_4-of-7">
+                                <div class="slds-grid slds-wrap icon-container">
+                                    <p class="custom-padding-left-large">{formattedPhone1}</p>
+                                    <lightning-button-icon
+                                        class="copy-icon"
+                                        icon-name="utility:copy"
+                                        variant="bare"
+                                        onclick={handleCopyPhone}
+                                        data-phone={phone1}
+                                        alternative-text="Kopier telefonnummer"
+                                        title="Kopier telefonnummer"
+                                    ></lightning-button-icon>
+                                </div>
                             </div>
-                            <p class="custom-padding-left-large slds-size_4-of-7">{formattedPhone2}</p>
+                            <p class="slds-size_3-of-7 slds-p-left_medium slds-p-top_x-small italic-text">
+                                {pdlLastUpdatedFormatted}
+                            </p>
+                        </lightning-layout-item>
+                        <lightning-layout-item lwc:if={formattedPhone2} size="12" class="slds-grid">
+                            <div class="slds-size_4-of-7">
+                                <div class="slds-grid slds-wrap icon-container">
+                                    <p class="custom-padding-left-large">{formattedPhone2}</p>
+                                    <lightning-button-icon
+                                        class="copy-icon"
+                                        icon-name="utility:copy"
+                                        variant="bare"
+                                        onclick={handleCopyPhone}
+                                        data-phone={phone2}
+                                        alternative-text="Kopier telefonnummer"
+                                        title="Kopier telefonnummer"
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
                         </lightning-layout-item>
                     </lightning-layout-item>
 
