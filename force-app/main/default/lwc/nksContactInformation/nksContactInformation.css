@@ -39,3 +39,15 @@
     padding-bottom: 0.8rem;
     padding-top: 0.8rem;
 }
+
+.copy-icon {
+    padding-bottom: 12px;
+    padding-left: 2px;
+    float: right;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}

@@ -222,6 +222,26 @@ export default class NksContactInformation extends LightningElement {
         return phone ? `${label}: ${phone}` : '';
     }
 
+    handleCopyPhone(event) {
+        const phoneNumber = event.target.dataset.phone;
+
+        var hiddenInput = document.createElement('input');
+        var successful = false;
+        var msg = '';
+        hiddenInput.value = phoneNumber;
+        document.body.appendChild(hiddenInput);
+        hiddenInput.select();
+        try {
+            // eslint-disable-next-line @locker/locker/distorted-document-exec-command
+            successful = document.execCommand('copy');
+            msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        document.body.removeChild(hiddenInput);
+    }
+
     get formattedPhone() {
         return this.getFormattedPhone(this.phone, LABELS.mobile);
     }
