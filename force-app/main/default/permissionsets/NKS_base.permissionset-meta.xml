@@ -397,6 +397,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_TestDataFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -676,10 +680,6 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SendNavTaskHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
@@ -863,6 +863,56 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Announcement__c.NKS_TypeFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Advisor_Ident__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Call_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Phone_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_SessionId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Theme_Group_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Theme_Group__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Timeline_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>NKS_Call_Log__c.NKS_Timeline_Phone__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
