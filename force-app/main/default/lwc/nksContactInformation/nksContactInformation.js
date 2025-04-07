@@ -223,7 +223,7 @@ export default class NksContactInformation extends LightningElement {
     }
 
     handleCopyPhone(event) {
-        const phoneNumber = event.target.dataset.phone;
+        const phoneNumber = this.removeCountryCode(event.target.dataset.phone);
 
         var hiddenInput = document.createElement('input');
         var successful = false;
@@ -240,6 +240,13 @@ export default class NksContactInformation extends LightningElement {
             console.log('Oops, unable to copy');
         }
         document.body.removeChild(hiddenInput);
+    }
+
+    removeCountryCode(phoneNumber) {
+        if (phoneNumber?.startsWith('+') && phoneNumber.length > 2) {
+            return phoneNumber.replace(/^\+\d{2}/, '');
+        }
+        return phoneNumber;
     }
 
     get formattedPhone() {
