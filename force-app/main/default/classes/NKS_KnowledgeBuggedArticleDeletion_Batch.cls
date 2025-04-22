@@ -8,9 +8,8 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String titleQuery = escapeTitles(titles);
         String query =
-            'SELECT KnowledgeArticleId From Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN (:titleQuery)';
+            'SELECT KnowledgeArticleId From Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
         return Database.getQueryLocator(query);
     }
 
@@ -59,13 +58,5 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
     }
 
     global void finish(Database.BatchableContext bc) {
-    }
-
-    public static String escapeTitles(List<String> titles) {
-        List<String> escapedTitles = new List<String>();
-        for (String title : titles) {
-            escapedTitles.add('\'' + String.escapeSingleQuotes(title) + '\'');
-        }
-        return String.join(escapedTitles, ', ');
     }
 }
