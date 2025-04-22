@@ -14,10 +14,9 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
         return Database.getQueryLocator(query);
     }
 
-    global void execute(Database.BatchableContext bc, List<SObject> scope) {
+    global void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
         Set<Id> articleIds = new Set<Id>();
-        for (SObject sObj : scope) {
-            Knowledge__kav kav = (Knowledge__kav) sObj;
+        for (Knowledge__kav kav : scope) {
             articleIds.add(kav.KnowledgeArticleId);
         }
 
