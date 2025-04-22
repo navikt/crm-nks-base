@@ -1,9 +1,9 @@
 // Knowledge Articles do not support DML inserts - so no test class for this batch.
-global class NKS_KnowledgeBuggedArticleDeletion implements Database.Batchable<sObject> {
+global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('Knowledge Bugged Article Deletion');
     private List<String> titles;
 
-    global NKS_KnowledgeBuggedArticleDeletion(List<String> titles) {
+    global NKS_KnowledgeBuggedArticleDeletion_Batch(List<String> titles) {
         this.titles = titles;
     }
 
@@ -47,7 +47,10 @@ global class NKS_KnowledgeBuggedArticleDeletion implements Database.Batchable<sO
                 }
             } catch (Exception e) {
                 logger.error(
-                    'NKS_KnowledgeBuggedArticleDeletion failed: ' + e.getMessage() + '. ' + e.getStackTraceString(),
+                    'NKS_KnowledgeBuggedArticleDeletion_Batch failed: ' +
+                        e.getMessage() +
+                        '. ' +
+                        e.getStackTraceString(),
                     null,
                     CRM_ApplicationDomain.Domain.NKS
                 );
