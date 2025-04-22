@@ -54,7 +54,6 @@
             </value>
         </inputParameters>
         <nameSegment>CRM_ConvNoteJournalHelper</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
@@ -1219,7 +1218,7 @@
         </fields>
         <fields>
             <name>Dialogue_Summary</name>
-            <extensionName>c:nksQuickText</extensionName>
+            <extensionName>c:crmMessagingQuickText</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>required</name>
@@ -1231,6 +1230,12 @@
                 <name>conversationNoteRich</name>
                 <value>
                     <stringValue></stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>useForConversationNote</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

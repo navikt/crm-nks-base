@@ -34,7 +34,7 @@ global class NKS_ConversationNotePersonAccessHandler extends MyTriggers {
 
     private List<Conversation_Note__c> getConversationNotesFromPersonIds(Set<Id> personIds) {
         return [
-            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
+            SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c, CRM_Theme_Group_Name__c 
             FROM Conversation_Note__c
             WHERE CRM_Account__r.CRM_Person__c IN :personIds
         ];
