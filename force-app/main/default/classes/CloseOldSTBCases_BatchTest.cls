@@ -1,24 +1,17 @@
 @isTest
 private class CloseOldSTBCases_BatchTest {
-    private static void createTestData() {
+    @isTest
+    static void testBatchExecution() {
         List<Thread__c> threads = new List<Thread__c>();
         for (Integer i = 0; i < 10; i++) {
             Thread__c thread = new Thread__c(
                 CRM_Thread_Type__c = 'STB',
                 CRM_Latest_Message_Datetime__c = System.now().addDays(-61),
-                CRM_isActive__c = true,
-                RecordTypeId = Schema.SObjectType.Thread__c.getRecordTypeInfosByDeveloperName()
-                    .get('NKS_Thread')
-                    .getRecordTypeId()
+                CRM_isActive__c = true
             );
             threads.add(thread);
         }
         insert threads;
-    }
-
-    @isTest
-    static void testBatchExecution() {
-        createTestData();
 
         CloseOldSTBCases_Batch batch = new CloseOldSTBCases_Batch();
 
@@ -43,10 +36,7 @@ private class CloseOldSTBCases_BatchTest {
             Thread__c thread = new Thread__c(
                 CRM_Thread_Type__c = 'STB',
                 CRM_Latest_Message_Datetime__c = System.now().addDays(-30), // Threads with messages within 60 days
-                CRM_isActive__c = true,
-                RecordTypeId = Schema.SObjectType.Thread__c.getRecordTypeInfosByDeveloperName()
-                    .get('NKS_Thread')
-                    .getRecordTypeId()
+                CRM_isActive__c = true
             );
             threads.add(thread);
         }

@@ -1,6 +1,6 @@
 global class CloseOldSTBCases_Batch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('CloseOldSTBCases_Batch');
-    private String query = 'SELECT Id, CRM_isActive__c FROM Thread__c WHERE RecordType.DeveloperName = \'NKS_Thread\' AND CRM_Thread_Type__c = \'STB\' AND CRM_Latest_Message_Datetime__c <= N_DAYS_AGO:60 AND CRM_isActive__c = TRUE';
+    private String query = 'SELECT Id, CRM_isActive__c FROM Thread__c WHERE CRM_Thread_Type__c = \'STB\' AND CRM_Latest_Message_Datetime__c <= N_DAYS_AGO:60 AND CRM_isActive__c = TRUE';
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
         return Database.getQueryLocator(query);
