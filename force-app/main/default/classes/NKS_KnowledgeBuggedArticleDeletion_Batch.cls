@@ -3,11 +3,16 @@
 global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('Knowledge Bugged Article Deletion');
     private List<String> titles;
-    private Boolean deleteArticleVersion = true;
+    private Boolean deleteArticleVersion; // True to delete Article Version - False to delete Article
 
     global NKS_KnowledgeBuggedArticleDeletion_Batch(List<String> titles, Boolean deleteArticleVersion) {
         this.titles = titles;
         this.deleteArticleVersion = deleteArticleVersion;
+    }
+
+    global NKS_KnowledgeBuggedArticleDeletion_Batch(List<String> titles) {
+        this.titles = titles;
+        this.deleteArticleVersion = true;
     }
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
