@@ -18,60 +18,68 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
     global Database.QueryLocator start(Database.BatchableContext BC) {
         String query;
         if (deleteArticleVersion) {
-            query = 'SELECT Id From Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
+            query = 'SELECT Id, KnowledgeArticleId, VersionNumber FROM Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
         } else {
-            query = 'SELECT KnowledgeArticleId From Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
+            query = 'SELECT KnowledgeArticleId FROM Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
         }
         return Database.getQueryLocator(query);
     }
 
     global void execute(Database.BatchableContext bc, List<Knowledge__kav> scope) {
-        List<Id> idsToDelete = new List<Id>();
-
-        if (deleteArticleVersion) {
-            for (Knowledge__kav kav : scope) {
-                idsToDelete.add(kav.Id);
-            }
-        } else {
-            Set<Id> articleIds = new Set<Id>(); // Set to prevent duplicates
-            for (Knowledge__kav kav : scope) {
-                if (kav.KnowledgeArticleId != null) {
-                    articleIds.add(kav.KnowledgeArticleId);
-                }
-            }
-            idsToDelete.addAll(articleIds);
-        }
-
-        if (idsToDelete.isEmpty())
-            return;
-
-        try {
-            Database.DeleteResult[] results = Database.delete(idsToDelete, false);
-            for (Database.DeleteResult result : results) {
-                if (!result.isSuccess()) {
-                    logger.error(
-                        'Article deletion failed for ArticleId: ' +
-                            result.getId() +
-                            '\n' +
-                            'Error: ' +
-                            result.getErrors()[0]?.getMessage(),
-                        null,
-                        CRM_ApplicationDomain.Domain.NKS
-                    );
+        for (Knowledge__kav kav : scope) {
+            try {
+                if (deleteArticleVersion) {
+                    if (kav.KnowledgeArticleId != null && kav.VersionNumber != null) {
+                        KbManagement.PublishingService.deleteArchivedArticleVersion(
+                            kav.KnowledgeArticleId,
+                            kav.VersionNumber
+                        );
+                        logger.info(
+                            'Successfully deleted Article Version. ArticleId: ' +
+                                kav.KnowledgeArticleId +
+                                ', VersionNumber: ' +
+                                kav.VersionNumber,
+                            null,
+                            CRM_ApplicationDomain.Domain.NKS
+                        );
+                    } else {
+                        logger.error(
+                            'Missing KnowledgeArticleId or VersionNumber for KAV Id: ' + kav.Id,
+                            null,
+                            CRM_ApplicationDomain.Domain.NKS
+                        );
+                    }
                 } else {
-                    logger.info(
-                        'Successfully deleted ArticleId: ' + result.getId(),
-                        null,
-                        CRM_ApplicationDomain.Domain.NKS
-                    );
+                    if (kav.KnowledgeArticleId != null) {
+                        KbManagement.PublishingService.deleteArchivedArticle(kav.KnowledgeArticleId);
+                        logger.info(
+                            'Successfully deleted full Article. ArticleId: ' + kav.KnowledgeArticleId,
+                            null,
+                            CRM_ApplicationDomain.Domain.NKS
+                        );
+                    } else {
+                        logger.error(
+                            'Missing KnowledgeArticleId for KAV Id: ' + kav.Id,
+                            null,
+                            CRM_ApplicationDomain.Domain.NKS
+                        );
+                    }
                 }
+            } catch (Exception e) {
+                logger.error(
+                    'Failed to delete ' +
+                        (deleteArticleVersion ? 'Article Version' : 'Article') +
+                        ' for KAV Id: ' +
+                        kav.Id +
+                        (deleteArticleVersion ? ' and KAV VersionNumber: ' + kav.VersionNumber : '') +
+                        '. Error: ' +
+                        e.getMessage() +
+                        '. ' +
+                        e.getStackTraceString(),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
             }
-        } catch (Exception e) {
-            logger.error(
-                'NKS_KnowledgeBuggedArticleDeletion_Batch failed: ' + e.getMessage() + '. ' + e.getStackTraceString(),
-                null,
-                CRM_ApplicationDomain.Domain.NKS
-            );
         }
         logger.publish();
     }
