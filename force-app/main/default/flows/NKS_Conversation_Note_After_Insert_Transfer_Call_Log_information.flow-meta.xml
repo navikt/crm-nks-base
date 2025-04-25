@@ -4,8 +4,8 @@
     <assignments>
         <name>Call_log</name>
         <label>Call log</label>
-        <locationX>176</locationX>
-        <locationY>539</locationY>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>Get_Call_Log.NKS_Conversation_Note_Created__c</assignToReference>
             <operator>Assign</operator>
@@ -17,6 +17,28 @@
             <targetReference>Conversation_created_for_Call_Log</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_if_Call_Log_exists</name>
+        <label>Check if Call Log exists</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Call_Log_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Call_Log</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Phone_number</targetReference>
+            </connector>
+            <label>Call Log exists</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>Conversation Note - After Insert - Transfer Call Log information
         {!$Flow.CurrentDateTime}</interviewLabel>
@@ -43,11 +65,11 @@
     <recordLookups>
         <name>Get_Call_Log</name>
         <label>Get Call Log</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Add_Phone_number</targetReference>
+            <targetReference>Check_if_Call_Log_exists</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -66,8 +88,8 @@
     <recordUpdates>
         <name>Add_Phone_number</name>
         <label>Add Phone number</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
         <connector>
             <targetReference>Call_log</targetReference>
         </connector>
@@ -84,12 +106,12 @@
             removing sharing.</description>
         <name>Conversation_created_for_Call_Log</name>
         <label>Conversation created for Call Log</label>
-        <locationX>176</locationX>
-        <locationY>647</locationY>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
         <inputReference>Get_Call_Log</inputReference>
     </recordUpdates>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Call_Log</targetReference>
