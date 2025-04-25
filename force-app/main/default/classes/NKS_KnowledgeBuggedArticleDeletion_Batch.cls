@@ -71,6 +71,7 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
                         (deleteArticleVersion ? 'Article Version' : 'Article') +
                         ' for KAV Id: ' +
                         kav.Id +
+                        (deleteArticleVersion ? ' and KAV VersionNumber: ' + kav.VersionNumber : '') +
                         '. Error: ' +
                         e.getMessage() +
                         '. ' +
