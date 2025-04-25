@@ -20,7 +20,7 @@ global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batcha
         if (deleteArticleVersion) {
             query = 'SELECT Id, KnowledgeArticleId, VersionNumber FROM Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
         } else {
-            query = 'SELECT KnowledgeArticleId From Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
+            query = 'SELECT KnowledgeArticleId FROM Knowledge__kav WHERE PublishStatus = \'Archived\' AND Title IN :titles';
         }
         return Database.getQueryLocator(query);
     }
