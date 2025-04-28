@@ -1,7 +1,7 @@
 // Knowledge Articles do not support DML inserts - so no test class for this batch.
 // Run with batch size 1 to avoid issues
 global class NKS_KnowledgeBuggedArticleDeletion_Batch implements Database.Batchable<sObject> {
-    private static LoggerUtility logger = new LoggerUtility('Knowledge Bugged Article Deletion');
+    private static LoggerUtility logger = new LoggerUtility('Knowledge Article Deletion');
     private List<String> titles;
     private Boolean deleteArticleVersion; // True to delete Article Version - False to delete Article
 
