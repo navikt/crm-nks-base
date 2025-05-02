@@ -1158,7 +1158,7 @@
     <decisions>
         <name>Check_News_Chatter_Access_Remove</name>
         <label>Check News Chatter Access</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>9590</locationY>
         <defaultConnector>
             <targetReference>Get_NKS_News_Editors_Group</targetReference>
@@ -1183,7 +1183,7 @@
     <decisions>
         <name>Check_News_Chatter_Value</name>
         <label>Check News Chatter Value</label>
-        <locationX>567</locationX>
+        <locationX>523</locationX>
         <locationY>9590</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -1604,7 +1604,7 @@
     <decisions>
         <name>Is_Not_Group_Member_News</name>
         <label>Is Not Group Member</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>10106</locationY>
         <defaultConnector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -1855,7 +1855,7 @@
         <inputAssignments>
             <field>UserOrGroupId</field>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <object>GroupMember</object>
@@ -1971,7 +1971,7 @@
         <inputAssignments>
             <field>UserOrGroupId</field>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <object>GroupMember</object>
@@ -1980,7 +1980,7 @@
     <recordCreates>
         <name>Create_News_Access_Permset_Assignment</name>
         <label>Create News Access Permset Assignment</label>
-        <locationX>567</locationX>
+        <locationX>523</locationX>
         <locationY>9482</locationY>
         <connector>
             <targetReference>Check_News_Chatter_Value</targetReference>
@@ -2003,7 +2003,7 @@
     <recordCreates>
         <name>Create_News_Chatter_Access_Permset_Assignment</name>
         <label>Create News Chatter Access Permset Assignment</label>
-        <locationX>435</locationX>
+        <locationX>391</locationX>
         <locationY>9698</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -2027,7 +2027,7 @@
     <recordCreates>
         <name>Create_News_Group_Member</name>
         <label>Create News Group Member</label>
-        <locationX>875</locationX>
+        <locationX>919</locationX>
         <locationY>10214</locationY>
         <connector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -2041,7 +2041,7 @@
         <inputAssignments>
             <field>UserOrGroupId</field>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <object>GroupMember</object>
@@ -2195,7 +2195,7 @@
     <recordDeletes>
         <name>Delete_News_Group_Member</name>
         <label>Delete News Group Member</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>10214</locationY>
         <connector>
             <targetReference>Check_Send_Notification_Access_Value</targetReference>
@@ -2245,7 +2245,7 @@
     <recordDeletes>
         <name>Remove_News_Access_Permset_Assignment</name>
         <label>Remove News Access Permset Assignment</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>9482</locationY>
         <connector>
             <targetReference>Check_News_Chatter_Access_Remove</targetReference>
@@ -2255,7 +2255,7 @@
     <recordDeletes>
         <name>Remove_News_Chatter_Access_Permset_Assignment</name>
         <label>Remove News Chatter Access Permset Assignment</label>
-        <locationX>1007</locationX>
+        <locationX>1051</locationX>
         <locationY>9698</locationY>
         <connector>
             <targetReference>Get_NKS_News_Editors_Group</targetReference>
@@ -2550,7 +2550,7 @@
             <field>UserOrGroupId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2697,7 +2697,7 @@
             <field>UserOrGroupId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2707,7 +2707,7 @@
     <recordLookups>
         <name>Get_NKS_News_Editors_Group</name>
         <label>Get NKS News Editors Group</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>9890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2728,7 +2728,7 @@
     <recordLookups>
         <name>Get_NKS_News_Group_Member</name>
         <label>Get NKS News Group Member</label>
-        <locationX>1139</locationX>
+        <locationX>1183</locationX>
         <locationY>9998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2746,7 +2746,7 @@
             <field>UserOrGroupId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_User.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
