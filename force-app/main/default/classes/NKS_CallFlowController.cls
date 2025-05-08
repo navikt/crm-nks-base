@@ -39,9 +39,8 @@ public without sharing class NKS_CallFlowController {
                     queueNames.add((String) enqMap.get('puzzel__Queue__c'));
             }
 
-            List<Puzzel_Queue_Mapping__mdt> queueContextMapping = getQueueMappings(queueNames);
             Map<String, Puzzel_Queue_Mapping__mdt> contextMap = new Map<String, Puzzel_Queue_Mapping__mdt>();
-            for (Puzzel_Queue_Mapping__mdt queueMapping : queueContextMapping) {
+            for (Puzzel_Queue_Mapping__mdt queueMapping : getQueueMappings(queueNames)) {
                 contextMap.put(queueMapping.Puzzel_Queue_Name__c, queueMapping);
             }
 
