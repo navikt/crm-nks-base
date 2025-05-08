@@ -116,7 +116,9 @@ public with sharing class NKS_HomePageController {
         }
         query += ' FROM NKS_Announcement__c';
 
-        if (filterBySkills && skills != null && !skills.isEmpty()) {
+        Boolean hasAllNewsSkill = skills != null && skills.contains('NKS_News_All_Skill');
+
+        if (filterBySkills && skills != null && !skills.isEmpty() && !hasAllNewsSkill) {
             String skillStringAnnouncement = String.join(skills, '\',\'');
             filter +=
                 (String.isBlank(filter) ? '' : ' AND ') +
