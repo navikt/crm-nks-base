@@ -116,15 +116,13 @@ public with sharing class NKS_HomePageController {
         }
         query += ' FROM NKS_Announcement__c';
 
-        Boolean hasAllNewsSkill = skills != null && skills.contains('NKS_News_All_Skill');
+        Boolean hasSkills = skills != null && !skills.isEmpty();
+        Boolean hasAllNewsSkill = hasSkills && skills.contains('NKS_News_All_Skill');
 
-        if (filterBySkills && skills != null && !skills.isEmpty() && !hasAllNewsSkill) {
-            String skillStringAnnouncement = String.join(skills, '\',\'');
-            filter +=
-                (String.isBlank(filter) ? '' : ' AND ') +
-                '(Skills__c = \'\' OR Skills__c INCLUDES (\'' +
-                skillStringAnnouncement +
-                '\'))';
+        if (filterBySkills && hasSkills && !hasAllNewsSkill) {
+            String skillString = String.join(skills, '\',\'');
+            String skillFilter = '(Skills__c = \'\' OR Skills__c INCLUDES (\'' + skillString + '\'))';
+            filter += String.isBlank(filter) ? '' : ' AND ' + skillFilter;
         }
 
         if (String.isNotBlank(filter)) {
