@@ -397,6 +397,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_TestDataFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -674,10 +678,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>nksUtilityBackgroundController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SendNavTaskHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <fieldPermissions>
