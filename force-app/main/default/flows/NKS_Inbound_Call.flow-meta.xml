@@ -444,6 +444,12 @@ IF(
                 <elementReference>SessionId</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Theme_Group__c</field>
+            <value>
+                <elementReference>THEME_GROUP_ID</elementReference>
+            </value>
+        </inputAssignments>
         <object>NKS_Call_Log__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -483,6 +489,12 @@ IF(
             <field>NKS_SessionId__c</field>
             <value>
                 <elementReference>SessionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NKS_Theme_Group__c</field>
+            <value>
+                <elementReference>THEME_GROUP_ID</elementReference>
             </value>
         </inputAssignments>
         <object>NKS_Call_Log__c</object>
