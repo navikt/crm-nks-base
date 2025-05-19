@@ -131,13 +131,6 @@ public without sharing class NKS_CallFlowController {
         @invocableVariable
         public String accessNumber;
 
-        public CallQueueResponse(String themeGroup, String callerContext, String queueName, String accessNumber) {
-            this.themeGroup = themeGroup;
-            this.callerContext = callerContext;
-            this.queueName = queueName;
-            this.accessNumber = accessNumber;
-        }
-
         public CallQueueResponse(Puzzel_Queue_Mapping__mdt mapping, String accessNumber) {
             if (mapping != null) {
                 this.themeGroup = mapping.Theme_Group_Code__c;

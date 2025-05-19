@@ -25,4 +25,25 @@ public class NKS_CallFlowController_Test {
         System.assertEquals(resp[0].queueName, TEST_QUEUE);
         System.assertEquals(resp[0].accessNumber, TEST_ACCESSNUMBER);
     }
+
+    @isTest
+    static void testGetCallQueueInfo_InvalidId() {
+        List<Application_Log__c> beforeLogs = [
+            SELECT Id
+            FROM Application_Log__c
+            WHERE Category__c = 'Inbound Call'
+        ];
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> resp = NKS_CallFlowController.getCallQueueInfo(
+            new List<String>{ 'INVALID_ID' }
+        );
+        Test.stopTest();
+        List<Application_Log__c> afterLogs = [SELECT Id FROM Application_Log__c WHERE Category__c = 'Inbound Call'];
+
+        Assert.areEqual(0, beforeLogs.size());
+        Assert.areEqual(1, afterLogs.size());
+        System.assertEquals('', resp[0].themeGroup);
+        System.assertEquals('TEST QUEUE', resp[0].queueName);
+        System.assertEquals('', resp[0].accessNumber);
+    }
 }
