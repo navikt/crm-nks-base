@@ -25,7 +25,7 @@ public without sharing class NKS_CallFlowController {
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String puzSessionId : sessionIds) {
-                respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE', '')); //Person is fallback when there is no match
+                respList.add(new CallQueueResponse(null, '')); //Person is fallback when there is no match
             }
         } else {
             List<Object> enqLogs = getEnquiryLogs(sessionIds);
@@ -47,7 +47,7 @@ public without sharing class NKS_CallFlowController {
             for (String sessionId : sessionIds) {
                 Object enqLog = enqLogsMap.get(sessionId);
                 if (enqLog == null) {
-                    respList.add(new CallQueueResponse('', 'PERSON', 'TEST QUEUE', ''));
+                    respList.add(new CallQueueResponse(null, ''));
                     continue;
                 }
                 Map<String, Object> enqMap = (Map<String, Object>) enqLog;
@@ -56,14 +56,7 @@ public without sharing class NKS_CallFlowController {
                     ? (String) enqMap.get('puzzel__AccessNumber__c')
                     : '';
                 Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue);
-                respList.add(
-                    new CallQueueResponse(
-                        queueMapping.Theme_Group_Code__c,
-                        queueMapping.Caller_Context__c,
-                        queueMapping.Puzzel_Queue_Name__c,
-                        accessNumber
-                    )
-                );
+                respList.add(new CallQueueResponse(queueMapping, accessNumber));
             }
         }
         return respList;
@@ -119,6 +112,19 @@ public without sharing class NKS_CallFlowController {
             this.themeGroup = themeGroup;
             this.callerContext = callerContext;
             this.queueName = queueName;
+            this.accessNumber = accessNumber;
+        }
+
+        public CallQueueResponse(Puzzel_Queue_Mapping__mdt mapping, String accessNumber) {
+            if (mapping != null) {
+                this.themeGroup = mapping.Theme_Group_Code__c;
+                this.callerContext = mapping.Caller_Context__c;
+                this.queueName = mapping.Puzzel_Queue_Name__c;
+            } else {
+                this.themeGroup = '';
+                this.callerContext = 'PERSON';
+                this.queueName = 'TEST QUEUE';
+            }
             this.accessNumber = accessNumber;
         }
     }
