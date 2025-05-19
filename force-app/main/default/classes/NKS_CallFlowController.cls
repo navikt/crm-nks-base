@@ -21,10 +21,12 @@ public without sharing class NKS_CallFlowController {
         category='Call Flow'
     )
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
+        LoggerUtility logger = new LoggerUtility('Inbound call');
         List<CallQueueResponse> respList = new List<CallQueueResponse>();
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String puzSessionId : sessionIds) {
+                logger.error('Could not find Enquiry Log schema', null, CRM_ApplicationDomain.Domain.NKS);
                 respList.add(new CallQueueResponse(null, '')); //Person is fallback when there is no match
             }
         } else {
@@ -47,6 +49,14 @@ public without sharing class NKS_CallFlowController {
             for (String sessionId : sessionIds) {
                 Object enqLog = enqLogsMap.get(sessionId);
                 if (enqLog == null) {
+                    logger.error(
+                        'Could not find enquiry log for sessionId ' +
+                            sessionId +
+                            ' with queue map ' +
+                            JSON.serialize(enqLogsMap),
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS
+                    );
                     respList.add(new CallQueueResponse(null, ''));
                     continue;
                 }
@@ -56,9 +66,22 @@ public without sharing class NKS_CallFlowController {
                     ? (String) enqMap.get('puzzel__AccessNumber__c')
                     : '';
                 Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue.toLowerCase());
+                if (queueMapping == null) {
+                    logger.error(
+                        'Could not find queue mapping for sessionId ' +
+                            sessionId +
+                            ' with queue name ' +
+                            queue +
+                            ' and map ' +
+                            JSON.serialize(contextMap),
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS
+                    );
+                }
                 respList.add(new CallQueueResponse(queueMapping, accessNumber));
             }
         }
+        logger.publish();
         return respList;
     }
 
