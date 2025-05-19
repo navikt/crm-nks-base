@@ -2,12 +2,15 @@
 public class NKS_CallFlowController_Test {
     public static final String TEST_SESSION_ID = '1234TEST';
     public static final String TEST_QUEUE = 'TEST_QUEUE';
+    public static final String TEST_ACCESSNUMBER = '12345678';
 
     public static final String MOCK_ENQUIRY_LOG =
         '[{"puzzel__SessionId__c":"' +
         TEST_SESSION_ID +
         '", "puzzel__Queue__c": "' +
         TEST_QUEUE +
+        '", "puzzel__AccessNumber__c": "' +
+        TEST_ACCESSNUMBER +
         '"}]';
 
     @isTest
@@ -20,5 +23,6 @@ public class NKS_CallFlowController_Test {
 
         System.assertEquals(resp[0].themeGroup, 'ARBD');
         System.assertEquals(resp[0].queueName, TEST_QUEUE);
+        System.assertEquals(resp[0].accessNumber, TEST_ACCESSNUMBER);
     }
 }
