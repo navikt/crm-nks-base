@@ -41,7 +41,7 @@ public without sharing class NKS_CallFlowController {
 
             Map<String, Puzzel_Queue_Mapping__mdt> contextMap = new Map<String, Puzzel_Queue_Mapping__mdt>();
             for (Puzzel_Queue_Mapping__mdt queueMapping : getQueueMappings(queueNames)) {
-                contextMap.put(queueMapping.Puzzel_Queue_Name__c, queueMapping);
+                contextMap.put(queueMapping.Puzzel_Queue_Name__c.toLowerCase(), queueMapping);
             }
 
             for (String sessionId : sessionIds) {
@@ -55,7 +55,7 @@ public without sharing class NKS_CallFlowController {
                 String accessNumber = enqMap.containsKey('puzzel__AccessNumber__c')
                     ? (String) enqMap.get('puzzel__AccessNumber__c')
                     : '';
-                Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue);
+                Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue.toLowerCase());
                 respList.add(new CallQueueResponse(queueMapping, accessNumber));
             }
         }
