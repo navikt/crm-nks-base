@@ -2,9 +2,25 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <assignments>
+        <name>Assign_to_queue</name>
+        <label>Assign to queue</label>
+        <locationX>314</locationX>
+        <locationY>1079</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Call_Log.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Call_Log_queue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Conversation_created_for_Call_Log</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Call_log</name>
         <label>Call log</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>Get_Call_Log.NKS_Conversation_Note_Created__c</assignToReference>
@@ -14,13 +30,54 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Get_Account_User</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Call_Log_Owner</name>
+        <label>Call Log Owner</label>
+        <locationX>50</locationX>
+        <locationY>971</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Call_Log.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account_User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Conversation_created_for_Call_Log</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <name>Account_has_active_User</name>
+        <label>Account has active User</label>
+        <locationX>182</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>Get_Call_Log_queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Assign to call log queue</defaultConnectorLabel>
+        <rules>
+            <name>Assign_user_as_owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account_User</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Call_Log_Owner</targetReference>
+            </connector>
+            <label>Assign user as owner</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_if_Call_Log_exists</name>
         <label>Check if Call Log exists</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -63,9 +120,38 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Account_User</name>
+        <label>Get Account User</label>
+        <locationX>182</locationX>
+        <locationY>755</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_has_active_User</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CRM_Account__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Call_Log</name>
         <label>Get Call Log</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -85,10 +171,38 @@
         <queriedFields>NKS_Phone_Number__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Call_Log_queue</name>
+        <label>Get Call Log queue</label>
+        <locationX>314</locationX>
+        <locationY>971</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_to_queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed_Call_Log</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Add_Phone_number</name>
         <label>Add Phone number</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>539</locationY>
         <connector>
             <targetReference>Call_log</targetReference>
@@ -106,12 +220,12 @@
             removing sharing.</description>
         <name>Conversation_created_for_Call_Log</name>
         <label>Conversation created for Call Log</label>
-        <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationX>182</locationX>
+        <locationY>1271</locationY>
         <inputReference>Get_Call_Log</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Call_Log</targetReference>
