@@ -53,7 +53,9 @@ public without sharing class NKS_CallFlowController {
                         'Could not find enquiry log for sessionId ' +
                             sessionId +
                             ' with queue map ' +
-                            JSON.serialize(enqLogsMap),
+                            JSON.serialize(enqLogsMap) +
+                            ' with and logs ' +
+                            JSON.serialize(enqLogs),
                         null,
                         CRM_ApplicationDomain.Domain.NKS
                     );
