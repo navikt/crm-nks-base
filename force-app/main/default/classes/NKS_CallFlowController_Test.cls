@@ -21,9 +21,9 @@ public class NKS_CallFlowController_Test {
         );
         Test.stopTest();
 
-        System.assertEquals(resp[0].themeGroup, 'ARBD');
-        System.assertEquals(resp[0].queueName, TEST_QUEUE);
-        System.assertEquals(resp[0].accessNumber, TEST_ACCESSNUMBER);
+        Assert.areEqual('ARBD', resp[0].themeGroup);
+        Assert.areEqual(TEST_QUEUE, resp[0].queueName);
+        Assert.areEqual(TEST_ACCESSNUMBER, resp[0].accessNumber);
     }
 
     @isTest
@@ -42,8 +42,8 @@ public class NKS_CallFlowController_Test {
 
         Assert.areEqual(0, beforeLogs.size());
         Assert.areEqual(1, afterLogs.size());
-        System.assertEquals('', resp[0].themeGroup);
-        System.assertEquals('TEST QUEUE', resp[0].queueName);
-        System.assertEquals('', resp[0].accessNumber);
+        Assert.areEqual(null, resp[0].themeGroup);
+        Assert.areEqual(null, resp[0].queueName);
+        Assert.areEqual(null, resp[0].accessNumber);
     }
 }

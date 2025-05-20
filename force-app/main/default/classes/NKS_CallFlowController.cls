@@ -49,7 +49,7 @@ public without sharing class NKS_CallFlowController {
             for (String sessionId : sessionIds) {
                 Object enqLog = enqLogsMap.get(sessionId);
                 if (enqLog == null) {
-                    logger.error(
+                    logger.warning(
                         'Could not find enquiry log for sessionId ' +
                             sessionId +
                             ' with queue map ' +
@@ -59,7 +59,7 @@ public without sharing class NKS_CallFlowController {
                         null,
                         CRM_ApplicationDomain.Domain.NKS
                     );
-                    respList.add(new CallQueueResponse(null, ''));
+                    respList.add(new CallQueueResponse());
                     continue;
                 }
                 Map<String, Object> enqMap = (Map<String, Object>) enqLog;
@@ -132,6 +132,9 @@ public without sharing class NKS_CallFlowController {
         public String queueName;
         @invocableVariable
         public String accessNumber;
+
+        public CallQueueResponse() {
+        }
 
         public CallQueueResponse(Puzzel_Queue_Mapping__mdt mapping, String accessNumber) {
             if (mapping != null) {
