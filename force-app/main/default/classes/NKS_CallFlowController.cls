@@ -21,10 +21,12 @@ public without sharing class NKS_CallFlowController {
         category='Call Flow'
     )
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
+        LoggerUtility logger = new LoggerUtility('Inbound call');
         List<CallQueueResponse> respList = new List<CallQueueResponse>();
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String puzSessionId : sessionIds) {
+                logger.error('Could not find Enquiry Log schema', null, CRM_ApplicationDomain.Domain.NKS);
                 respList.add(new CallQueueResponse(null, '')); //Person is fallback when there is no match
             }
         } else {
@@ -41,12 +43,20 @@ public without sharing class NKS_CallFlowController {
 
             Map<String, Puzzel_Queue_Mapping__mdt> contextMap = new Map<String, Puzzel_Queue_Mapping__mdt>();
             for (Puzzel_Queue_Mapping__mdt queueMapping : getQueueMappings(queueNames)) {
-                contextMap.put(queueMapping.Puzzel_Queue_Name__c, queueMapping);
+                contextMap.put(queueMapping.Puzzel_Queue_Name__c.toLowerCase(), queueMapping);
             }
 
             for (String sessionId : sessionIds) {
                 Object enqLog = enqLogsMap.get(sessionId);
                 if (enqLog == null) {
+                    logger.error(
+                        'Could not find enquiry log for sessionId ' +
+                            sessionId +
+                            ' with queue map ' +
+                            JSON.serialize(enqLogsMap),
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS
+                    );
                     respList.add(new CallQueueResponse(null, ''));
                     continue;
                 }
@@ -55,10 +65,23 @@ public without sharing class NKS_CallFlowController {
                 String accessNumber = enqMap.containsKey('puzzel__AccessNumber__c')
                     ? (String) enqMap.get('puzzel__AccessNumber__c')
                     : '';
-                Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue);
+                Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue.toLowerCase());
+                if (queueMapping == null) {
+                    logger.error(
+                        'Could not find queue mapping for sessionId ' +
+                            sessionId +
+                            ' with queue name ' +
+                            queue +
+                            ' and map ' +
+                            JSON.serialize(contextMap),
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS
+                    );
+                }
                 respList.add(new CallQueueResponse(queueMapping, accessNumber));
             }
         }
+        logger.publish();
         return respList;
     }
 
@@ -107,13 +130,6 @@ public without sharing class NKS_CallFlowController {
         public String queueName;
         @invocableVariable
         public String accessNumber;
-
-        public CallQueueResponse(String themeGroup, String callerContext, String queueName, String accessNumber) {
-            this.themeGroup = themeGroup;
-            this.callerContext = callerContext;
-            this.queueName = queueName;
-            this.accessNumber = accessNumber;
-        }
 
         public CallQueueResponse(Puzzel_Queue_Mapping__mdt mapping, String accessNumber) {
             if (mapping != null) {
