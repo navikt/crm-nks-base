@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Account__c</fullName>
+    <description>We only get the AccountId from the case if no conversation note has been created. This is so the Call Log only shows in the timeline component if there is no conversation note.</description>
     <externalId>false</externalId>
-    <formula>CASESAFEID(NKS_Case__r.AccountId)</formula>
+    <formula>IF(NKS_Conversation_Note_Created__c == true,
+&apos;&apos;,
+CASESAFEID(NKS_Case__r.AccountId))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Account</label>
     <required>false</required>
