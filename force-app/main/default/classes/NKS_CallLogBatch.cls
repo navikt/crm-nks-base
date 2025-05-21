@@ -69,9 +69,9 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
                 }
             }
 
-            this.updateAndLog(scope, 'Failed to update callLogs with Id:');
-            this.updateAndLog(cases.values(), 'Failed to update cases with Id:');
-            this.updateAndLog(cnotes.values(), 'Failed to update cNotes with Id:');
+            updateAndLog(scope, 'Failed to update callLogs with Id:');
+            updateAndLog(cases.values(), 'Failed to update cases with Id:');
+            updateAndLog(cnotes.values(), 'Failed to update cNotes with Id:');
         } catch (Exception e) {
             logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
         }
