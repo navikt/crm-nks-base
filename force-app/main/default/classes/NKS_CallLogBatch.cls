@@ -1,6 +1,6 @@
 global class NKS_CallLogBatch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('NKS_CallLogBatch');
-    private String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null and NKS_SessionId__c = \'1234TEST\'';
+    private String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null';
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
         return Database.getQueryLocator(query);
