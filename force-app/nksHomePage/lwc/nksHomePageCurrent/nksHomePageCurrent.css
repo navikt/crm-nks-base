@@ -4,4 +4,5 @@
 
 .slds-card__footer {
     border-top: none !important;
+    justify-content: start;
 }
