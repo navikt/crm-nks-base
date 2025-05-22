@@ -59,7 +59,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
                 c.NKS_Puzzel_Queue_Name__c = queueInfo.queueName;
                 if (themeGroup != null) {
                     callLog.NKS_Theme_Group__c = themeGroup.Id;
-                    if (c.NKS_Theme_group__c == null) {
+                    if (c.NKS_Theme_Group__c == null) {
                         c.NKS_Theme_Group__c = themeGroup.Id;
                     }
                 }
@@ -71,7 +71,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
 
             updateAndLog(scope, 'Failed to update callLogs with Id:');
             updateAndLog(cases.values(), 'Failed to update cases with Id:');
-            updateAndLog(cnotes.values(), 'Failed to update cNotes with Id:');
+            updateAndLog(cNotes.values(), 'Failed to update cNotes with Id:');
         } catch (Exception e) {
             logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
         }
