@@ -6,3 +6,11 @@
     border-top: none !important;
     justify-content: start;
 }
+
+.footer-padding {
+    padding-top: 0;
+}
+
+.header-icon {
+    background-color: #4bca81;
+}
