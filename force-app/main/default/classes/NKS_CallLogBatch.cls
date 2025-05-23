@@ -1,6 +1,15 @@
 global class NKS_CallLogBatch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('NKS_CallLogBatch');
-    private String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null';
+    private String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null or NKS_Case__r.NKS_Puzzel_Queue_Name__c in :puzzelQueuesNotToLog';
+
+    private static final List<String> puzzelQueuesNotToLog = new List<String>{
+        'gjeldsrådgivning',
+        'gjeldsrådgivning nav-ansatt',
+        'gjeldsveiledning',
+        'gjeldsveiledning nav-ansatt',
+        'sosiale tjenester',
+        'sosiale tjenester nav-ansatt'
+    };
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
         return Database.getQueryLocator(query);
@@ -8,6 +17,9 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
 
     global void execute(Database.BatchableContext bc, List<NKS_Call_Log__c> scope) {
         try {
+            List<NKS_Call_Log__c> callLogsToUpdate = new List<NKS_Call_Log__c>();
+            List<NKS_Call_Log__c> callLogsToDelete = new List<NKS_Call_Log__c>();
+
             List<String> sessionIds = new List<String>();
             List<String> caseIds = new List<String>();
             for (NKS_Call_Log__c callLog : scope) {
@@ -53,9 +65,10 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
             for (Integer i = 0; i < scope.size(); i++) {
                 NKS_Call_Log__c callLog = scope[i];
                 NKS_CallFlowController.CallQueueResponse queueInfo = callQueueInfo[i];
+                Boolean logNeedsToBeDeleted = puzzelQueuesNotToLog.contains(queueInfo.queueName.toLowerCase());
+
                 Case c = cases.get(callLog.NKS_Case__c);
                 Common_Code__c themeGroup = themeMap.get(queueInfo.themeGroup);
-                callLog.NKS_Phone_Number__c = queueInfo.accessNumber;
                 c.NKS_Puzzel_Queue_Name__c = queueInfo.queueName;
                 if (themeGroup != null) {
                     callLog.NKS_Theme_Group__c = themeGroup.Id;
@@ -65,12 +78,20 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
                 }
                 Conversation_note__c conv = cNotes.get(c.Id);
                 if (conv != null) {
-                    conv.NKS_Access_Number__c = queueInfo.accessNumber;
+                    conv.NKS_Access_Number__c = logNeedsToBeDeleted ? null : queueInfo.accessNumber;
+                }
+
+                if (logNeedsToBeDeleted) {
+                    callLogsToDelete.add(callLog);
+                } else {
+                    callLog.NKS_Phone_Number__c = queueInfo.accessNumber;
+                    callLogsToUpdate.add(callLog);
                 }
             }
 
-            updateAndLog(scope, 'Failed to update callLogs with Id:');
+            updateAndLog(callLogsToUpdate, 'Failed to update callLogs with Id:');
             updateAndLog(cases.values(), 'Failed to update cases with Id:');
+            deleteAndLog(callLogsToDelete, 'Failed to delete callLogs with Id:');
             updateAndLog(cNotes.values(), 'Failed to update cNotes with Id:');
         } catch (Exception e) {
             logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
@@ -82,6 +103,35 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
         try {
             Database.SaveResult[] results = Database.update(records, false);
             for (Database.SaveResult result : results) {
+                if (Test.isRunningTest() || !result.isSuccess()) {
+                    logger.error(
+                        message +
+                            ' ' +
+                            result.getId() +
+                            '\n' +
+                            'Status code: ' +
+                            result.getErrors()[0]?.getStatusCode() +
+                            '\n' +
+                            'Error: ' +
+                            result.getErrors()[0]?.getMessage(),
+                        null,
+                        CRM_ApplicationDomain.Domain.NKS
+                    );
+                }
+            }
+        } catch (Exception e) {
+            logger.error(
+                'NKS_CallLogBatch failed: ' + e.getMessage() + '. ' + e.getStackTraceString(),
+                null,
+                CRM_ApplicationDomain.Domain.NKS
+            );
+        }
+    }
+
+    private void deleteAndLog(List<SObject> records, String message) {
+        try {
+            Database.DeleteResult[] results = Database.delete(records, false);
+            for (Database.DeleteResult result : results) {
                 if (Test.isRunningTest() || !result.isSuccess()) {
                     logger.error(
                         message +
