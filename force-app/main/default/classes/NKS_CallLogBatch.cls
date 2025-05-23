@@ -1,7 +1,5 @@
 global class NKS_CallLogBatch implements Database.Batchable<sObject> {
     private static LoggerUtility logger = new LoggerUtility('NKS_CallLogBatch');
-    private String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null or NKS_Case__r.NKS_Puzzel_Queue_Name__c in :puzzelQueuesNotToLog';
-
     private static final List<String> puzzelQueuesNotToLog = new List<String>{
         'gjeldsrådgivning',
         'gjeldsrådgivning nav-ansatt',
@@ -12,6 +10,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
     };
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
+        String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null or NKS_Case__r.NKS_Puzzel_Queue_Name__c in :puzzelQueuesNotToLog';
         return Database.getQueryLocator(query);
     }
 
@@ -21,7 +20,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
             List<NKS_Call_Log__c> callLogsToDelete = new List<NKS_Call_Log__c>();
 
             List<String> sessionIds = new List<String>();
-            List<String> caseIds = new List<String>();
+            Set<String> caseIds = new Set<String>();
             for (NKS_Call_Log__c callLog : scope) {
                 sessionIds.add(callLog.NKS_SessionId__c);
                 caseIds.add(callLog.NKS_Case__c);
@@ -40,7 +39,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
 
             Map<Id, Case> cases = new Map<Id, Case>([SELECT Id, NKS_Theme_Group__c FROM Case WHERE Id = :caseIds]);
 
-            Map<String, Conversation_note__c> cNotes = new Map<String, Conversation_note__c>();
+            Map<Id, Conversation_note__c> conversationsByCaseId = new Map<Id, Conversation_note__c>();
             List<Conversation_note__c> cNotesList = [
                 SELECT Id, CRM_Case__c
                 FROM Conversation_Note__c
@@ -48,7 +47,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
             ];
 
             for (Conversation_note__c cNote : cNotesList) {
-                cNotes.put(cNote.CRM_Case__c, cNote);
+                conversationsByCaseId.put(cNote.CRM_Case__c, cNote);
             }
 
             Map<String, Common_Code__c> themeMap = new Map<String, Common_code__c>();
@@ -65,18 +64,19 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
             for (Integer i = 0; i < scope.size(); i++) {
                 NKS_Call_Log__c callLog = scope[i];
                 NKS_CallFlowController.CallQueueResponse queueInfo = callQueueInfo[i];
-                Boolean logNeedsToBeDeleted = puzzelQueuesNotToLog.contains(queueInfo.queueName.toLowerCase());
+                Boolean logNeedsToBeDeleted =
+                    queueInfo.queueName != null && puzzelQueuesNotToLog.contains(queueInfo.queueName.toLowerCase());
 
-                Case c = cases.get(callLog.NKS_Case__c);
+                Case casey = cases.get(callLog.NKS_Case__c);
                 Common_Code__c themeGroup = themeMap.get(queueInfo.themeGroup);
-                c.NKS_Puzzel_Queue_Name__c = queueInfo.queueName;
+                casey.NKS_Puzzel_Queue_Name__c = queueInfo.queueName;
                 if (themeGroup != null) {
                     callLog.NKS_Theme_Group__c = themeGroup.Id;
-                    if (c.NKS_Theme_Group__c == null) {
-                        c.NKS_Theme_Group__c = themeGroup.Id;
+                    if (casey.NKS_Theme_Group__c == null) {
+                        casey.NKS_Theme_Group__c = themeGroup.Id;
                     }
                 }
-                Conversation_note__c conv = cNotes.get(c.Id);
+                Conversation_note__c conv = conversationsByCaseId.get(casey.Id);
                 if (conv != null) {
                     conv.NKS_Access_Number__c = logNeedsToBeDeleted ? null : queueInfo.accessNumber;
                 }
@@ -92,7 +92,7 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
             updateAndLog(callLogsToUpdate, 'Failed to update callLogs with Id:');
             updateAndLog(cases.values(), 'Failed to update cases with Id:');
             deleteAndLog(callLogsToDelete, 'Failed to delete callLogs with Id:');
-            updateAndLog(cNotes.values(), 'Failed to update cNotes with Id:');
+            updateAndLog(conversationsByCaseId.values(), 'Failed to update conversationsByCaseId with Id:');
         } catch (Exception e) {
             logger.exception(e, null, CRM_ApplicationDomain.Domain.NKS);
         }
