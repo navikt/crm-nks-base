@@ -2,6 +2,14 @@
     <article class="slds-card">
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon
+                        icon-name="standard:news"
+                        alternative-text="Aktuelt fra Navet"
+                        size="small"
+                        class="header-icon"
+                    ></lightning-icon>
+                </div>
                 <div class="slds-media__body">
                     <h2 class="slds-text-heading_medium slds-truncate">{cardLabel}</h2>
                 </div>
@@ -40,20 +48,14 @@
             <template lwc:if={hasRecords}>
                 <ul class="slds-border_top">
                     <template for:each={records} for:item="record">
-                        <li class="slds-item slds-var-p-top_small" key={record.Id}>
-                            <a
-                                class="slds-button slds-button_brand slds-button_stretch"
-                                href={record.NKS_Link_URL__c}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                >{record.Name}</a
-                            >
+                        <li class="slds-item slds-var-p-vertical_x-small slds-border_bottom" key={record.Id}>
+                            <a href={record.NKS_Link_URL__c} target="_blank" rel="noopener noreferrer">{record.Name}</a>
                         </li>
                     </template>
                 </ul>
             </template>
         </div>
-        <footer class="slds-card__footer slds-var-p-bottom_medium">
+        <footer class="slds-card__footer slds-var-p-bottom_medium footer-padding">
             <a
                 class="slds-card__footer-action"
                 href="https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Nyhetsarkiv---Toppsaker.aspx"
