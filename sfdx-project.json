@@ -5,7 +5,7 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.418.0.NEXT",
+            "versionNumber": "0.426.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
@@ -25,11 +25,11 @@
                 },
                 {
                     "package": "crm-thread-view",
-                    "versionNumber": "0.3.0.LATEST"
+                    "versionNumber": "0.6.0.LATEST"
                 },
                 {
                     "package": "crm-shared-timeline",
-                    "versionNumber": "1.28.0.LATEST"
+                    "versionNumber": "1.30.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -69,7 +69,7 @@
                 },
                 {
                     "package": "crm-sf-saf",
-                    "versionNumber": "0.23.0.LATEST"
+                    "versionNumber": "0.34.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
