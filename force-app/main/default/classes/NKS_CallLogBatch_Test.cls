@@ -184,4 +184,61 @@ public with sharing class NKS_CallLogBatch_Test {
 
         Assert.areEqual(NKS_CallFlowController_Test.TEST_QUEUE, casey.NKS_Puzzel_Queue_Name__c);
     }
+
+    @IsTest
+    static void NKS_CallLogBatch_deleteSosial() {
+        String testSessionId = 'Sosial_Test';
+        String testQueueName = 'Sosiale Tjenester';
+        String testAccessNumber = '12345678';
+
+        NKS_Call_log__c callLog = new NKS_Call_Log__c();
+        Case casey = new Case();
+        Conversation_note__c cNote = new Conversation_Note__c();
+
+        casey.NKS_Puzzel_Queue_Name__c = testQueueName;
+
+        insert casey;
+
+        callLog.NKS_Case__c = casey.Id;
+        callLog.NKS_SessionId__c = testSessionId;
+        cNote.CRM_Case__c = casey.Id;
+        cNote.NKS_Access_Number__c = testAccessNumber;
+
+        insert callLog;
+        insert cNote;
+
+        Id callLogId = callLog.Id;
+        Id cNoteId = cNote.Id;
+
+        List<Object> originalList = (List<Object>) JSON.deserializeUntyped(
+            NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG
+        );
+        originalList.add(
+            (Object) JSON.deserializeUntyped(
+                '{"puzzel__SessionId__c":"' +
+                    testSessionId +
+                    '", "puzzel__Queue__c": "' +
+                    testQueueName +
+                    '", "puzzel__AccessNumber__c": "' +
+                    testAccessNumber +
+                    '"}'
+            )
+        );
+        NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG = JSON.serialize(originalList);
+        NKS_CallLogBatch batch = new NKS_CallLogBatch();
+
+        Test.startTest();
+        Id batchProcessId = Database.executeBatch(batch);
+        Test.stopTest();
+        List<NKS_Call_log__c> callLogResult = [SELECT Id FROM NKS_Call_Log__c WHERE Id = :callLogId];
+        Conversation_Note__c cNoteResult = [
+            SELECT Id, NKS_Access_Number__c
+            FROM Conversation_note__c
+            WHERE Id = :cNoteId
+            LIMIT 1
+        ];
+
+        Assert.areEqual(0, callLogResult.size());
+        Assert.isNull(cNoteResult.NKS_Access_Number__c);
+    }
 }
