@@ -381,6 +381,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>NKS_RecordPrintController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>NKS_RelatedListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1104,6 +1108,10 @@
         <object>UserNotification__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>NKS_RecordPrint</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account.Employer</recordType>
         <visible>true</visible>
