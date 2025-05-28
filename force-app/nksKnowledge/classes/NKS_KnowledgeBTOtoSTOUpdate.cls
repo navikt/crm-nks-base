@@ -5,7 +5,8 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
         String query =
             'SELECT Id, KnowledgeArticleId, Title, Article__c, NKS_English__c, ' +
             'NKS_Nynorsk__c, NKS_Resources__c, NKS_Legislation__c, NKS_Summary__c, ' +
-            'NKS_UserInformation__c, WhoDoesWhat__c ' +
+            'NKS_UserInformation__c, WhoDoesWhat__c, EmployerInformation__c, EmployerInformationInternal__c, ' +
+            'NKS_English_Employer__c, NKS_Nynorsk_Employer__c ' +
             'FROM Knowledge__kav ' +
             'WHERE IsLatestVersion = TRUE AND PublishStatus = \'Online\' ' +
             'AND RecordType.DeveloperName != \'HOT_Kunnskapsartikkel\'';
@@ -98,6 +99,30 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 changed = true;
             }
 
+            String newEmpInf = replaceIfChanged(draft.EmployerInformation__c);
+            if (newEmpInf != draft.EmployerInformation__c) {
+                draft.EmployerInformation__c = newEmpInf;
+                changed = true;
+            }
+
+            String newEmpInfInt = replaceIfChanged(draft.EmployerInformationInternal__c);
+            if (newEmpInfInt != draft.EmployerInformationInternal__c) {
+                draft.EmployerInformationInternal__c = newEmpInfInt;
+                changed = true;
+            }
+
+            String newNksEmpEng = replaceIfChanged(draft.NKS_English_Employer__c);
+            if (newNksEmpEng != draft.NKS_English_Employer__c) {
+                draft.NKS_English_Employer__c = newNksEmpEng;
+                changed = true;
+            }
+
+            String newNksEmpNyn = replaceIfChanged(draft.NKS_Nynorsk_Employer__c);
+            if (newNksEmpNyn != draft.NKS_Nynorsk_Employer__c) {
+                draft.NKS_Nynorsk_Employer__c = newNksEmpNyn;
+                changed = true;
+            }
+
             if (changed) {
                 modifiedDrafts.add(draft);
             }
@@ -148,7 +173,11 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 NKS_Resources__c,
                 NKS_Legislation__c,
                 NKS_UserInformation__c,
-                WhoDoesWhat__c
+                WhoDoesWhat__c,
+                EmployerInformation__c,
+                EmployerInformationInternal__c,
+                NKS_English_Employer__c,
+                NKS_Nynorsk_Employer__c
             FROM Knowledge__kav
             WHERE Id = :articleId
         ];
@@ -174,7 +203,11 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
             containsTarget(article.NKS_Resources__c) ||
             containsTarget(article.NKS_Legislation__c) ||
             containsTarget(article.NKS_UserInformation__c) ||
-            containsTarget(article.WhoDoesWhat__c);
+            containsTarget(article.WhoDoesWhat__c) ||
+            containsTarget(article.EmployerInformation__c) ||
+            containsTarget(article.EmployerInformationInternal__c) ||
+            containsTarget(article.NKS_English_Employer__c) ||
+            containsTarget(article.NKS_Nynorsk_Employer__c);
     }
 
     private Boolean containsTarget(String input) {
