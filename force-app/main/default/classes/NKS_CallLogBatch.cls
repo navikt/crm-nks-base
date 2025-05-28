@@ -9,6 +9,15 @@ global class NKS_CallLogBatch implements Database.Batchable<sObject> {
         'sosiale tjenester nav-ansatt'
     };
 
+    @InvocableMethod(
+        label='Initiate Call Log Batch'
+        description='Starts a batch job to fix all skipped Call Logs'
+        category='Call Log'
+    )
+    public static void initCallLogBatch() {
+        Database.executeBatch(new NKS_CallLogBatch());
+    }
+
     global Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Id, NKS_SessionId__c, NKS_Case__c FROM NKS_Call_Log__c WHERE NKS_Phone_Number__c = null or NKS_Case__r.NKS_Puzzel_Queue_Name__c in :puzzelQueuesNotToLog';
         return Database.getQueryLocator(query);

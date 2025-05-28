@@ -144,6 +144,48 @@ public with sharing class NKS_CallLogBatch_Test {
     }
 
     @IsTest
+    static void NKS_CallLogBatch_initWorks() {
+        Test.startTest();
+        NKS_CallLogBatch.initCallLogBatch();
+        Test.stopTest();
+        NKS_Call_Log__c callLog = [
+            SELECT
+                Id,
+                NKS_Theme_Group__c,
+                NKS_Theme_Group__r.CRM_Code__c,
+                NKS_SessionId__c,
+                NKS_Case__c,
+                NKS_Phone_Number__c
+            FROM NKS_Call_Log__c
+            WHERE NKS_SessionId__c = :NKS_CallFlowController_Test.TEST_SESSION_ID
+            LIMIT 1
+        ];
+        Conversation_Note__c conv = [
+            SELECT Id, NKS_Access_Number__c
+            FROM Conversation_note__c
+            WHERE CRM_Case__c = :callLog.NKS_Case__c
+            LIMIT 1
+        ];
+        Case casey = [
+            SELECT Id, NKS_Theme_Group__c, NKS_Theme_Group__r.CRM_Code__c, NKS_Puzzel_Queue_Name__c
+            FROM Case
+            WHERE Id = :callLog.NKS_Case__c
+            LIMIT 1
+        ];
+
+        Assert.isNotNull(callLog.NKS_Theme_Group__c);
+        Assert.areEqual('ARBD', callLog.NKS_Theme_Group__r.CRM_Code__c);
+
+        Assert.isNotNull(casey.NKS_Theme_Group__c);
+        Assert.areEqual('ARBD', casey.NKS_Theme_Group__r.CRM_Code__c);
+
+        Assert.areEqual(NKS_CallFlowController_Test.TEST_ACCESSNUMBER, callLog.NKS_Phone_Number__c);
+        Assert.areEqual(NKS_CallFlowController_Test.TEST_ACCESSNUMBER, conv.NKS_Access_Number__c);
+
+        Assert.areEqual(NKS_CallFlowController_Test.TEST_QUEUE, casey.NKS_Puzzel_Queue_Name__c);
+    }
+
+    @IsTest
     static void NKS_CallLogBatch_deleteSosial() {
         String testSessionId = 'Sosial_Test';
         String testQueueName = 'Sosiale Tjenester';
