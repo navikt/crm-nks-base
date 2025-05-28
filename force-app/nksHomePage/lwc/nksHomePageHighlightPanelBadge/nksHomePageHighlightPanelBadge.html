@@ -9,10 +9,10 @@
                     aria-hidden="true"
                 ></lightning-icon>
             </span>
-            <span class="slds-badge__text">{badgeLabel}</span>
+            <span class="slds-badge__text badge-text">{badgeLabel}</span>
         </div>
         <div class="dropdown-content" lwc:if={showContent}>
-            <div class="headerLine"></div>
+            <div class={headerLineClass}></div>
             <div class="slds-var-p-around_large slds-grid slds-grid_vertical">
                 <div>
                     <template lwc:if={isEditing}>
