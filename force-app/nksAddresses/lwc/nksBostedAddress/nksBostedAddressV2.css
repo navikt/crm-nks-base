@@ -1,0 +1,10 @@
+.copy-icon {
+    padding-bottom: 3px;
+    padding-left: 2px;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
