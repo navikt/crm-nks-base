@@ -15,7 +15,7 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
     }
 
     global void execute(Database.BatchableContext BC, List<Knowledge__kav> latestVersions) {
-        List<Knowledge__kav> modifiedDrafts = new List<Knowledge__kav>();
+        List<String> articleIdsFromPublishingService = new List<String>();
 
         for (Knowledge__kav article : latestVersions) {
             if (!hasTextToReplace(article)) {
@@ -23,9 +23,14 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 continue;
             }
 
-            String newDraftArticleId = '';
             try {
-                newDraftArticleId = KbManagement.PublishingService.editOnlineArticle(article.KnowledgeArticleId, true);
+                String newDraftArticleId = KbManagement.PublishingService.editOnlineArticle(
+                    article.KnowledgeArticleId,
+                    true
+                );
+                if (!String.isBlank(newDraftArticleId)) {
+                    articleIdsFromPublishingService.add(newDraftArticleId);
+                }
             } catch (Exception e) {
                 logger.error(
                     'KbManagement.PublishingService.editOnlineArticle failed on Article Id: ' +
@@ -36,92 +41,50 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                     CRM_ApplicationDomain.Domain.NKS
                 );
             }
+        }
 
-            Knowledge__kav draft = getDraftArticle(newDraftArticleId);
+        Map<String, Knowledge__kav> draftsByDraftId = populateDraftsMap(articleIdsFromPublishingService);
+        System.debug('draftsByDraftId: ' + draftsByDraftId);
+        List<Knowledge__kav> modifiedDrafts = new List<Knowledge__kav>();
+
+        for (String draftId : articleIdsFromPublishingService) {
+            System.debug('draftId: ' + draftId);
+            Knowledge__kav draft = draftsByDraftId.get(draftId);
+            System.debug('draft from get: ' + draft);
+
             if (draft == null) {
-                logger.error('Draft from getDraftArticle was null.', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.error('Draft not found for id: ' + draftId, null, CRM_ApplicationDomain.Domain.NKS);
                 continue;
             }
 
             Boolean changed = false;
 
-            String newTitle = replaceIfChanged(draft.Title);
-            if (newTitle != draft.Title) {
-                draft.Title = newTitle;
+            if (replaceValuesInField(draft, 'Title'))
                 changed = true;
-            }
-
-            String newSummary = replaceIfChanged(draft.NKS_Summary__c);
-            if (newSummary != draft.NKS_Summary__c) {
-                draft.NKS_Summary__c = newSummary;
+            if (replaceValuesInField(draft, 'NKS_Summary__c'))
                 changed = true;
-            }
-
-            String newArticle = replaceIfChanged(draft.Article__c);
-            if (newArticle != draft.Article__c) {
-                draft.Article__c = newArticle;
+            if (replaceValuesInField(draft, 'Article__c'))
                 changed = true;
-            }
-
-            String newEng = replaceIfChanged(draft.NKS_English__c);
-            if (newEng != draft.NKS_English__c) {
-                draft.NKS_English__c = newEng;
+            if (replaceValuesInField(draft, 'NKS_English__c'))
                 changed = true;
-            }
-
-            String newNyn = replaceIfChanged(draft.NKS_Nynorsk__c);
-            if (newNyn != draft.NKS_Nynorsk__c) {
-                draft.NKS_Nynorsk__c = newNyn;
+            if (replaceValuesInField(draft, 'NKS_Nynorsk__c'))
                 changed = true;
-            }
-
-            String newRes = replaceIfChanged(draft.NKS_Resources__c);
-            if (newRes != draft.NKS_Resources__c) {
-                draft.NKS_Resources__c = newRes;
+            if (replaceValuesInField(draft, 'NKS_Resources__c'))
                 changed = true;
-            }
-
-            String newLegal = replaceIfChanged(draft.NKS_Legislation__c);
-            if (newLegal != draft.NKS_Legislation__c) {
-                draft.NKS_Legislation__c = newLegal;
+            if (replaceValuesInField(draft, 'NKS_Legislation__c'))
                 changed = true;
-            }
-
-            String newInfo = replaceIfChanged(draft.NKS_UserInformation__c);
-            if (newInfo != draft.NKS_UserInformation__c) {
-                draft.NKS_UserInformation__c = newInfo;
+            if (replaceValuesInField(draft, 'NKS_UserInformation__c'))
                 changed = true;
-            }
-
-            String newWho = replaceIfChanged(draft.WhoDoesWhat__c);
-            if (newWho != draft.WhoDoesWhat__c) {
-                draft.WhoDoesWhat__c = newWho;
+            if (replaceValuesInField(draft, 'WhoDoesWhat__c'))
                 changed = true;
-            }
-
-            String newEmpInf = replaceIfChanged(draft.EmployerInformation__c);
-            if (newEmpInf != draft.EmployerInformation__c) {
-                draft.EmployerInformation__c = newEmpInf;
+            if (replaceValuesInField(draft, 'EmployerInformation__c'))
                 changed = true;
-            }
-
-            String newEmpInfInt = replaceIfChanged(draft.EmployerInformationInternal__c);
-            if (newEmpInfInt != draft.EmployerInformationInternal__c) {
-                draft.EmployerInformationInternal__c = newEmpInfInt;
+            if (replaceValuesInField(draft, 'EmployerInformationInternal__c'))
                 changed = true;
-            }
-
-            String newNksEmpEng = replaceIfChanged(draft.NKS_English_Employer__c);
-            if (newNksEmpEng != draft.NKS_English_Employer__c) {
-                draft.NKS_English_Employer__c = newNksEmpEng;
+            if (replaceValuesInField(draft, 'NKS_English_Employer__c'))
                 changed = true;
-            }
-
-            String newNksEmpNyn = replaceIfChanged(draft.NKS_Nynorsk_Employer__c);
-            if (newNksEmpNyn != draft.NKS_Nynorsk_Employer__c) {
-                draft.NKS_Nynorsk_Employer__c = newNksEmpNyn;
+            if (replaceValuesInField(draft, 'NKS_Nynorsk_Employer__c'))
                 changed = true;
-            }
 
             if (changed) {
                 modifiedDrafts.add(draft);
@@ -160,8 +123,9 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
     global void finish(Database.BatchableContext BC) {
     }
 
-    private Knowledge__kav getDraftArticle(String articleId) {
-        List<Knowledge__kav> draft = [
+    private Map<String, Knowledge__kav> populateDraftsMap(List<String> articleIdsFromPublishingService) {
+        Map<String, Knowledge__kav> draftsMap = new Map<String, Knowledge__kav>();
+        for (Knowledge__kav draft : [
             SELECT
                 Id,
                 KnowledgeArticleId,
@@ -179,16 +143,24 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 NKS_English_Employer__c,
                 NKS_Nynorsk_Employer__c
             FROM Knowledge__kav
-            WHERE Id = :articleId
-        ];
-
-        if (draft.isEmpty()) {
-            return null;
+            WHERE Id IN :articleIdsFromPublishingService
+        ]) {
+            draftsMap.put(Id.valueOf(draft.Id).to15(), draft); // editOnlineArticle returns 15 digit Id, so we have to convert
         }
-        return draft[0];
+        return draftsMap;
     }
 
-    private String replaceIfChanged(String original) {
+    private Boolean replaceValuesInField(Knowledge__kav article, String fieldName) {
+        String oldValue = (String) article.get(fieldName);
+        String newValue = replaceBtoWithSto(oldValue);
+        if (newValue != oldValue) {
+            article.put(fieldName, newValue);
+            return true;
+        }
+        return false;
+    }
+
+    private String replaceBtoWithSto(String original) {
         if (String.isBlank(original))
             return original;
         return original.replaceAll('(?i)\\bBTO\\b', 'STO').replaceAll('(?i)Beskjed til oss', 'Skriv til oss');
