@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Get_Call_Queue_Info</name>
         <label>Get Call Queue Info</label>
-        <locationX>578</locationX>
+        <locationX>688</locationX>
         <locationY>134</locationY>
         <actionName>NKS_CallFlowController</actionName>
         <actionType>apex</actionType>
@@ -39,7 +39,7 @@
         <description>Redirects user to the organization account</description>
         <name>Recirect_to_Account_0</name>
         <label>Recirect to Account</label>
-        <locationX>314</locationX>
+        <locationX>402</locationX>
         <locationY>866</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
@@ -58,7 +58,7 @@
         <name>Redirect_To_Case</name>
         <label>Redirect To Case</label>
         <locationX>50</locationX>
-        <locationY>1082</locationY>
+        <locationY>1274</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -75,8 +75,8 @@
         <description>Redirects user to the created case</description>
         <name>Redirect_To_Case_0</name>
         <label>Redirect To Case</label>
-        <locationX>842</locationX>
-        <locationY>1082</locationY>
+        <locationX>1018</locationX>
+        <locationY>1274</locationY>
         <actionName>c:nksFlowRedirect</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -144,7 +144,7 @@
     <assignments>
         <name>Case_Assignment_0</name>
         <label>Case Assignment</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Call_Case.AccountId</assignToReference>
@@ -202,7 +202,7 @@
     <decisions>
         <name>Check_Call_Queue_0</name>
         <label>Check Call Queue</label>
-        <locationX>1106</locationX>
+        <locationX>1326</locationX>
         <locationY>650</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
@@ -264,7 +264,7 @@
     <decisions>
         <name>Check_Identifier</name>
         <label>Check Identifier</label>
-        <locationX>578</locationX>
+        <locationX>688</locationX>
         <locationY>542</locationY>
         <defaultConnector>
             <targetReference>Check_Call_Queue_0</targetReference>
@@ -305,7 +305,7 @@
         <description>Checks if the call queue had a theme group mapped</description>
         <name>Check_Theme_Group</name>
         <label>Check Theme Group</label>
-        <locationX>578</locationX>
+        <locationX>688</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Identifier</targetReference>
@@ -328,10 +328,130 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Copy_1_of_Only_create_log_if_not_sosial_or_gjeldsr_dgiving</name>
+        <label>Only create log if not sosial or gjeldsrådgiving</label>
+        <locationX>1018</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Create_Call_Log_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create log</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_No_log</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsrådgivning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsrådgivning NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsveiledning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsveiledning NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sosiale Tjenester</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sosiale Tjenester NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Redirect_To_Case_0</targetReference>
+            </connector>
+            <label>No log</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Only_create_log_if_not_sosial_or_gjeldsr_dgiving</name>
+        <label>Only create log if not sosial or gjeldsrådgiving</label>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Create_Call_Log</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create log</defaultConnectorLabel>
+        <rules>
+            <name>Create_log</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsrådgivning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsrådgivning NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsveiledning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gjeldsveiledning NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sosiale Tjenester</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>PUZZEL_QUEUE_NAME</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sosiale Tjenester NAV-ansatt</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Redirect_To_Case</targetReference>
+            </connector>
+            <label>No log</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks if the input resulted in an account match</description>
         <name>Verify_Account</name>
         <label>Verify Account</label>
-        <locationX>446</locationX>
+        <locationX>534</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -409,8 +529,8 @@ IF(
     <recordCreates>
         <name>Create_Call_Log</name>
         <label>Create Call Log</label>
-        <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationX>138</locationX>
+        <locationY>1082</locationY>
         <connector>
             <targetReference>Redirect_To_Case</targetReference>
         </connector>
@@ -456,8 +576,8 @@ IF(
     <recordCreates>
         <name>Create_Call_Log_0</name>
         <label>Create Call Log</label>
-        <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationX>1106</locationX>
+        <locationY>1082</locationY>
         <connector>
             <targetReference>Redirect_To_Case_0</targetReference>
         </connector>
@@ -507,7 +627,7 @@ IF(
         <locationX>50</locationX>
         <locationY>866</locationY>
         <connector>
-            <targetReference>Create_Call_Log</targetReference>
+            <targetReference>Only_create_log_if_not_sosial_or_gjeldsr_dgiving</targetReference>
         </connector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
@@ -515,10 +635,10 @@ IF(
         <description>Creates a case for the incoming phone call.</description>
         <name>Create_Case_0</name>
         <label>Create Case</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>866</locationY>
         <connector>
-            <targetReference>Create_Call_Log_0</targetReference>
+            <targetReference>Copy_1_of_Only_create_log_if_not_sosial_or_gjeldsr_dgiving</targetReference>
         </connector>
         <inputReference>Call_Case</inputReference>
     </recordCreates>
@@ -526,7 +646,7 @@ IF(
         <description>Queries the organization account.</description>
         <name>Get_Organization_Account</name>
         <label>Get Organization Account</label>
-        <locationX>446</locationX>
+        <locationX>534</locationX>
         <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -580,7 +700,7 @@ IF(
         <description>Queries the theme group that was mapped to the queue.</description>
         <name>Get_Theme_Group</name>
         <label>Get Theme Group</label>
-        <locationX>446</locationX>
+        <locationX>556</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -613,7 +733,7 @@ IF(
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>452</locationX>
+        <locationX>562</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Call_Queue_Info</targetReference>

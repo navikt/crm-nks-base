@@ -4,7 +4,7 @@ public class NKS_CallFlowController_Test {
     public static final String TEST_QUEUE = 'TEST_QUEUE';
     public static final String TEST_ACCESSNUMBER = '12345678';
 
-    public static final String MOCK_ENQUIRY_LOG =
+    public static String MOCK_ENQUIRY_LOG =
         '[{"puzzel__SessionId__c":"' +
         TEST_SESSION_ID +
         '", "puzzel__Queue__c": "' +
@@ -31,14 +31,18 @@ public class NKS_CallFlowController_Test {
         List<Application_Log__c> beforeLogs = [
             SELECT Id
             FROM Application_Log__c
-            WHERE Category__c = 'Inbound Call'
+            WHERE Category__c = 'CallFlowController'
         ];
         Test.startTest();
         List<NKS_CallFlowController.CallQueueResponse> resp = NKS_CallFlowController.getCallQueueInfo(
             new List<String>{ 'INVALID_ID' }
         );
         Test.stopTest();
-        List<Application_Log__c> afterLogs = [SELECT Id FROM Application_Log__c WHERE Category__c = 'Inbound Call'];
+        List<Application_Log__c> afterLogs = [
+            SELECT Id
+            FROM Application_Log__c
+            WHERE Category__c = 'CallFlowController'
+        ];
 
         Assert.areEqual(0, beforeLogs.size());
         Assert.areEqual(1, afterLogs.size());

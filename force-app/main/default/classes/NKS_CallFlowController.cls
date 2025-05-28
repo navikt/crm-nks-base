@@ -21,7 +21,7 @@ public without sharing class NKS_CallFlowController {
         category='Call Flow'
     )
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
-        LoggerUtility logger = new LoggerUtility('Inbound call');
+        LoggerUtility logger = new LoggerUtility('CallFlowController');
         List<CallQueueResponse> respList = new List<CallQueueResponse>();
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
