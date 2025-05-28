@@ -44,13 +44,10 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
         }
 
         Map<String, Knowledge__kav> draftsByDraftId = populateDraftsMap(articleIdsFromPublishingService);
-        System.debug('draftsByDraftId: ' + draftsByDraftId);
         List<Knowledge__kav> modifiedDrafts = new List<Knowledge__kav>();
 
         for (String draftId : articleIdsFromPublishingService) {
-            System.debug('draftId: ' + draftId);
             Knowledge__kav draft = draftsByDraftId.get(draftId);
-            System.debug('draft from get: ' + draft);
 
             if (draft == null) {
                 logger.error('Draft not found for id: ' + draftId, null, CRM_ApplicationDomain.Domain.NKS);
