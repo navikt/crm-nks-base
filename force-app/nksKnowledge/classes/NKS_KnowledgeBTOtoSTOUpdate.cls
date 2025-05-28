@@ -2,64 +2,44 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
     private static LoggerUtility logger = new LoggerUtility('NKS_KnowledgeBTOtoSTOUpdate');
 
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        return Database.getQueryLocator(
-            [
-                SELECT
-                    Id,
-                    KnowledgeArticleId,
-                    Title,
-                    Summary,
-                    Article__c,
-                    NKS_English__c,
-                    NKS_Nynorsk__c,
-                    NKS_Resources__c,
-                    NKS_UserInformation__c,
-                    WhoDoesWhat__c,
-                    PublishStatus,
-                    IsLatestVersion,
-                    UrlName
-                FROM Knowledge__kav
-                WHERE IsLatestVersion = TRUE AND PublishStatus IN ('Draft', 'Online')
-            ]
-        );
+        String query =
+            'SELECT Id, KnowledgeArticleId, Title, Article__c, NKS_English__c, ' +
+            'NKS_Nynorsk__c, NKS_Resources__c, NKS_Legislation__c, NKS_Summary__c, ' +
+            'NKS_UserInformation__c, WhoDoesWhat__c ' +
+            'FROM Knowledge__kav ' +
+            'WHERE IsLatestVersion = TRUE AND PublishStatus = \'Online\' ' +
+            'AND RecordType.DeveloperName != \'HOT_Kunnskapsartikkel\'';
+
+        return Database.getQueryLocator(query);
     }
 
     global void execute(Database.BatchableContext BC, List<Knowledge__kav> latestVersions) {
         List<Knowledge__kav> modifiedDrafts = new List<Knowledge__kav>();
 
         for (Knowledge__kav article : latestVersions) {
-            Knowledge__kav draft;
-
             if (!hasTextToReplace(article)) {
                 // Skip unpublishing and creating new draft if no replacement needed
                 continue;
             }
 
-            if (article.PublishStatus == 'Online') {
-                String newDraftArticleId = '';
-                try {
-                    newDraftArticleId = KbManagement.PublishingService.editOnlineArticle(
-                        article.KnowledgeArticleId,
-                        true
-                    );
-                } catch (Exception e) {
-                    logger.error(
-                        'KbManagement.PublishingService.editOnlineArticle failed on Article Id: ' +
-                            article.Id +
-                            '\n' +
-                            e.getMessage(),
-                        null,
-                        CRM_ApplicationDomain.Domain.NKS
-                    );
-                }
+            String newDraftArticleId = '';
+            try {
+                newDraftArticleId = KbManagement.PublishingService.editOnlineArticle(article.KnowledgeArticleId, true);
+            } catch (Exception e) {
+                logger.error(
+                    'KbManagement.PublishingService.editOnlineArticle failed on Article Id: ' +
+                        article.Id +
+                        '\n' +
+                        e.getMessage(),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
+            }
 
-                draft = getDraftArticle(newDraftArticleId);
-                if (draft == null) {
-                    logger.error('Draft from getDraftArticle was null.', null, CRM_ApplicationDomain.Domain.NKS);
-                    continue;
-                }
-            } else {
-                draft = article;
+            Knowledge__kav draft = getDraftArticle(newDraftArticleId);
+            if (draft == null) {
+                logger.error('Draft from getDraftArticle was null.', null, CRM_ApplicationDomain.Domain.NKS);
+                continue;
             }
 
             Boolean changed = false;
@@ -70,9 +50,9 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 changed = true;
             }
 
-            String newSummary = replaceIfChanged(draft.Summary);
-            if (newSummary != draft.Summary) {
-                draft.Summary = newSummary;
+            String newSummary = replaceIfChanged(draft.NKS_Summary__c);
+            if (newSummary != draft.NKS_Summary__c) {
+                draft.NKS_Summary__c = newSummary;
                 changed = true;
             }
 
@@ -100,6 +80,12 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 changed = true;
             }
 
+            String newLegal = replaceIfChanged(draft.NKS_Legislation__c);
+            if (newLegal != draft.NKS_Legislation__c) {
+                draft.NKS_Legislation__c = newLegal;
+                changed = true;
+            }
+
             String newInfo = replaceIfChanged(draft.NKS_UserInformation__c);
             if (newInfo != draft.NKS_UserInformation__c) {
                 draft.NKS_UserInformation__c = newInfo;
@@ -119,7 +105,7 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
 
         if (!modifiedDrafts.isEmpty()) {
             try {
-                upsert modifiedDrafts;
+                update modifiedDrafts;
             } catch (Exception e) {
                 logger.error(
                     'Updating modified draft articles failed: ' + e.getMessage(),
@@ -142,8 +128,8 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                     );
                 }
             }
-            logger.publish();
         }
+        logger.publish();
     }
 
     global void finish(Database.BatchableContext BC) {
@@ -155,16 +141,14 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
                 Id,
                 KnowledgeArticleId,
                 Title,
-                Summary,
+                NKS_Summary__c,
                 Article__c,
                 NKS_English__c,
                 NKS_Nynorsk__c,
                 NKS_Resources__c,
+                NKS_Legislation__c,
                 NKS_UserInformation__c,
-                WhoDoesWhat__c,
-                PublishStatus,
-                IsLatestVersion,
-                UrlName
+                WhoDoesWhat__c
             FROM Knowledge__kav
             WHERE Id = :articleId
         ];
@@ -183,11 +167,12 @@ global class NKS_KnowledgeBTOtoSTOUpdate implements Database.Batchable<SObject>,
 
     private Boolean hasTextToReplace(Knowledge__kav article) {
         return containsTarget(article.Title) ||
-            containsTarget(article.Summary) ||
+            containsTarget(article.NKS_Summary__c) ||
             containsTarget(article.Article__c) ||
             containsTarget(article.NKS_English__c) ||
             containsTarget(article.NKS_Nynorsk__c) ||
             containsTarget(article.NKS_Resources__c) ||
+            containsTarget(article.NKS_Legislation__c) ||
             containsTarget(article.NKS_UserInformation__c) ||
             containsTarget(article.WhoDoesWhat__c);
     }
