@@ -16,10 +16,6 @@ export default class NksFlowNavigation extends LightningElement {
 
     static stylesheets = [sharedStyling];
 
-    connectedCallback() {
-        console.log('buttonLabel: ', this.buttonLabel);
-    }
-
     render() {
         return this.removeFooter ? templateWithoutFooter : templateWithFooter;
     }
