@@ -3,6 +3,8 @@ import { FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationFinishE
 import templateWithFooter from './templateWithFooter.html';
 import templateWithoutFooter from './templateWithoutFooter.html';
 import { publishToAmplitude } from 'c/amplitude';
+import sharedStyling from './sharedStyling.css';
+
 export default class NksFlowNavigation extends LightningElement {
     @api action = 'NEXT';
     @api buttonLabel;
@@ -11,6 +13,12 @@ export default class NksFlowNavigation extends LightningElement {
     @api availableActions = ['NEXT', 'BACK', 'FINISH'];
     @api buttonVariant = 'brand';
     @api removeFooter = false;
+
+    static stylesheets = [sharedStyling];
+
+    connectedCallback() {
+        console.log('buttonLabel: ', this.buttonLabel);
+    }
 
     render() {
         return this.removeFooter ? templateWithoutFooter : templateWithFooter;
