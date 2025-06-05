@@ -55,6 +55,33 @@ public with sharing class NKS_AddressControllerTest {
     }
 
     @isTest
+    static void getBostedAddressOppholdTest() {
+        Person__c p = new Person__c(
+            Name = '12106519356',
+            INT_LastName__c = 'TestLastName',
+            INT_FirstName__c = 'TestFirstname'
+        );
+        insert p;
+        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
+        insert a;
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+        String mockBody = '{"data": {"hentPerson": {"oppholdsadresse": [{"vegadresse": {"adressenavn": "Testveien 1", "husnummer": "1", "postnummer": "1234", "poststed": "Testby"}, "matrikkeladresse": null, "utenlandskAdresse": null}]}}}';
+
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', mockBody, null));
+        List<List<NKS_AddressController.NKS_Address>> addr = new List<List<NKS_AddressController.NKS_Address>>();
+
+        Test.startTest();
+        addr.add(NKS_AddressController.getBostedAddress(a.Id, 'Account'));
+        addr.add(NKS_AddressController.getBostedAddress(c.Id, 'Case'));
+        Test.stopTest();
+
+        System.assert(addr.size() == 2);
+        System.assertEquals(true, addr[0][0].address != null);
+        System.assertEquals(true, addr[1][0].address != null);
+    }
+
+    @isTest
     static void getOppholdsAddressTest() {
         Person__c p = new Person__c(
             Name = '12106519356',
@@ -78,6 +105,60 @@ public with sharing class NKS_AddressControllerTest {
         System.assert(addr.size() == 2);
         System.assertEquals(true, addr[0][0].zipCode != null);
         System.assertEquals(true, addr[1][0].zipCode != null);
+    }
+
+    @isTest
+    static void getMatrikkeladresseAddressTest() {
+        Person__c p = new Person__c(
+            Name = '12106519356',
+            INT_LastName__c = 'TestLastName',
+            INT_FirstName__c = 'TestFirstname'
+        );
+        insert p;
+        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
+        insert a;
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+
+        String mockBody = '{"data": {"hentPerson": {"oppholdsadresse": [{"vegadresse": null, "matrikkeladresse": {"adressenavn": "Testveien 1", "husnummer": "1", "postnummer": "1234", "poststed": "Testby"}, "utenlandskAdresse": null}]}}}';
+
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', mockBody, null));
+        List<List<NKS_AddressController.NKS_Address>> addr = new List<List<NKS_AddressController.NKS_Address>>();
+
+        Test.startTest();
+        addr.add(NKS_AddressController.getOppholdsAddress(a.Id, 'Account'));
+        addr.add(NKS_AddressController.getOppholdsAddress(c.Id, 'Case'));
+        Test.stopTest();
+
+        System.assert(addr.size() == 2);
+        System.assertEquals(true, addr[0][0].zipCode != null);
+        System.assertEquals(true, addr[1][0].zipCode != null);
+    }
+
+    @isTest
+    static void getUtenlandskAdresseTest() {
+        Person__c p = new Person__c(
+            Name = '12106519356',
+            INT_LastName__c = 'TestLastName',
+            INT_FirstName__c = 'TestFirstname'
+        );
+        insert p;
+        Account a = new Account(CRM_Person__c = p.Id, Name = 'testName');
+        insert a;
+        Case c = new Case(AccountId = a.Id);
+        insert c;
+
+        String mockBody = '{"data": {"hentPerson": {"oppholdsadresse": [{"vegadresse": null, "matrikkeladresse": null, "utenlandskAdresse": {"adressenavnNummer": "Testveien 1", "postnummer": "1234", "poststed": "Testby", "landkode": "NO"}}]}}}';
+
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(200, 'OK', mockBody, null));
+        List<List<NKS_AddressController.NKS_Address>> addr = new List<List<NKS_AddressController.NKS_Address>>();
+
+        Test.startTest();
+        addr.add(NKS_AddressController.getOppholdsAddress(a.Id, 'Account'));
+        addr.add(NKS_AddressController.getOppholdsAddress(c.Id, 'Case'));
+        Test.stopTest();
+
+        System.assert(addr.size() == 2);
     }
 
     @isTest
@@ -166,5 +247,15 @@ public with sharing class NKS_AddressControllerTest {
         Test.stopTest();
 
         System.assertNotEquals(null, testAddress);
+    }
+
+    @isTest
+    static void testSetAddressDataNull() {
+        List<NKS_AddressController.NKS_Address> addr = new List<NKS_AddressController.NKS_Address>();
+        Test.startTest();
+        addr = NKS_AddressController.setAddressData(null);
+        Test.stopTest();
+
+        Assert.areEqual(1, addr.size());
     }
 }
