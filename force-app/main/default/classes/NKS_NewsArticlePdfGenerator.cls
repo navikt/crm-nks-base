@@ -5,7 +5,7 @@ public with sharing class NKS_NewsArticlePdfGenerator {
         PDf.setRedirect(true);
 
         Blob b;
-        b = PDf.getContent();
+        b = Test.isRunningTest() ? Blob.valueOf('Unit.Test') : PDf.getContent();
         return b;
     }
 }
