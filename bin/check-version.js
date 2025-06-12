@@ -1,4 +1,4 @@
-const semver = require('../node_modules/semver');
+const semver = require('semver');
 const pjson = require('../package.json');
 
 const version = pjson.engines.node;
