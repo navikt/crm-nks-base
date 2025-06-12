@@ -225,9 +225,9 @@ export default class NksContactInformation extends LightningElement {
     handleCopyPhone(event) {
         const phoneNumber = this.removeCountryCode(event.target.dataset.phone);
 
-        var hiddenInput = document.createElement('input');
-        var successful = false;
-        var msg = '';
+        let hiddenInput = document.createElement('input');
+        let successful = false;
+        let msg = '';
         hiddenInput.value = phoneNumber;
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
@@ -235,16 +235,16 @@ export default class NksContactInformation extends LightningElement {
             // eslint-disable-next-line @locker/locker/distorted-document-exec-command
             successful = document.execCommand('copy');
             msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Copying text command was ' + msg);
+            console.error('Copying text command was ', msg);
         } catch (err) {
-            console.log('Oops, unable to copy');
+            console.error('Oops, unable to copy: ', err);
         }
         document.body.removeChild(hiddenInput);
     }
 
     removeCountryCode(phoneNumber) {
-        if (phoneNumber?.startsWith('+') && phoneNumber.length > 2) {
-            return phoneNumber.replace(/^\+\d{2}/, '');
+        if (phoneNumber?.startsWith('+47') && phoneNumber.length > 2) {
+            return phoneNumber.replace(/^\+47/, '');
         }
         return phoneNumber;
     }
