@@ -1,0 +1,5 @@
+DeveloperName,MasterLabel,Field1__c,Field2__c,Field3__c,Field4__c,Operator1__c,Operator2__c,Operator3__c,Operator4__c,Order__c,UnitNumber__c,Values1__c,Values2__c,Values3__c,Values4__c,sObjectType__c
+HOT_ST_Thread_Fortrolig_Skjermet,HOT_ST_Thread_Fortrolig_Skjermet,Confidential,Is Nav Employee,Office Restriction,Category,equals,equals,equals,equals,2.0,470014,FORTROLIG,TRUE,FALSE,Hjelpemidler,Thread__c
+HOT_ST_Thread_Fortrolig,HOT_ST_Thread_Fortrolig,Confidential,Is Nav Employee,Office Restriction,Category,equals,equals,equals,equals,2.0,470012,FORTROLIG,FALSE,FALSE,Hjelpemidler,Thread__c
+HOT_ST_Thread_Skjermet,HOT_ST_Thread_Skjermet,Confidential,Is Nav Employee,Office Restriction,Category,equals,equals,equals,equals,2.0,470013,UGRADERT,TRUE,FALSE,Hjelpemidler,Thread__c
+HOT_ST_Thread_Veiledere,HOT_ST_Thread_Veiledere,Confidential,Is Nav Employee,Office Restriction,Category,equals,equals,equals,equals,2.0,470011,UGRADERT,FALSE,FALSE,Hjelpemidler,Thread__c
