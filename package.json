@@ -12,7 +12,7 @@
         "test:unit:coverage": "sfdx-lwc-jest --coverage",
         "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
         "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
-        "comment_postinstall": "node bin/check-version.js",
+        "postinstall": "node bin/check-version.js",
         "mac:build": "bash bin/install-scratch.sh",
         "scratch:user:enableDebug": "sfdx force:data:record:update -s User -w \"Name='User User'\" -v \"UserPreferencesUserDebugModePref=true\"",
         "scratch:enableMock:200": "echo for (Profile p : [SELECT Id FROM Profile]) {API_Controller_Mock_Settings__c mockSetting = API_Controller_Mock_Settings__c.getInstance(p.Id); mockSetting.Status__c = 'OK'; mockSetting.Status_Code__c = '200'; mockSetting.Use_Mock__c = true; upsert mockSetting;} | sfdx force:apex:execute",
