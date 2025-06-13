@@ -48,20 +48,21 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
         }
     }
 
-    handlePrint() {
-        console.log(this.recordId);
+    handlePrint(event) {
+        event.preventDefault();
+
         if (!this.recordId) {
             console.error('No record ID found!');
             return;
         }
-        this[NavigationMixin.GenerateUrl]({
+
+        const vfPageUrl = `/apex/NKS_RecordPrintWrapper?id=${this.recordId}`;
+
+        this[NavigationMixin.Navigate]({
             type: 'standard__webPage',
             attributes: {
-                url: `/apex/NKS_RecordPrint?id=${this.recordId}`
+                url: vfPageUrl
             }
-        }).then((url) => {
-            console.log('Opening URL:', url);
-            window.open(url, '_self');
         });
     }
 
