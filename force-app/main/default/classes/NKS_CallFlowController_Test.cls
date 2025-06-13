@@ -50,4 +50,16 @@ public class NKS_CallFlowController_Test {
         Assert.areEqual(null, resp[0].queueName);
         Assert.areEqual(null, resp[0].accessNumber);
     }
+
+    @IsTest
+    static void testCallQueueResponseNullMapping() {
+        NKS_CallFlowController.CallQueueResponse response;
+
+        Test.startTest();
+        response = new NKS_CallFlowController.CallQueueResponse(null, '12345678');
+        Test.stopTest();
+
+        Assert.areEqual('PERSON', response.callerContext);
+        Assert.areEqual('TEST QUEUE', response.queueName);
+    }
 }

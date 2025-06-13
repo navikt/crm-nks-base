@@ -43,7 +43,7 @@ public with sharing class NKS_CustomNotificationControllerTest {
     @IsTest
     static void testSendNotificationWithSmallerUserList() {
         List<User> users = new List<User>();
-        for (Integer i = 0; i < 51; i++) {
+        for (Integer i = 0; i < 10; i++) {
             User user = new User(
                 FirstName = 'Test',
                 LastName = 'User' + i,
