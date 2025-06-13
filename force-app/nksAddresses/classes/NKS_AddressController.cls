@@ -55,15 +55,15 @@ public with sharing class NKS_AddressController {
     private static List<NKS_Address> setAddressData(PDL_API_Response addressData) {
         List<NKS_Address> addrData = new List<NKS_Address>();
         NKS_Address addr = new NKS_Address();
-        if (addressData.data.hentPerson.bostedsadresse?.size() > 0) {
+        if (addressData?.data?.hentPerson?.bostedsadresse?.size() > 0) {
             addr.setBostedVegMatrikkAddress(setLastUpdatedBostedsAdresse(addressData.data.hentPerson.bostedsadresse));
             addrData.add(addr);
-        } else if (addressData.data.hentPerson.oppholdsadresse?.size() > 0) {
+        } else if (addressData?.data?.hentPerson?.oppholdsadresse?.size() > 0) {
             addr.setOppholdsAddress(setLastUpdatedOppholdsAdresse(addressData.data.hentPerson.oppholdsadresse));
             addrData.add(addr);
         }
         // Always append delt bosted address if it exists
-        if (addressData.data.hentPerson.deltBosted?.size() > 0) {
+        if (addressData?.data?.hentPerson?.deltBosted?.size() > 0) {
             addr = new NKS_Address(); // Wipe in case bostedsAdresse > 0
             addr.setDeltBostedsAddress(setLastUpdatedDeltBostedsAddress(addressData.data.hentPerson?.deltBosted));
             addrData.add(addr);
@@ -199,7 +199,7 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static Datetime getCreatedDate(PDL_Metadata metadata) {
-        for (PDL_Endring endring : metadata.endringer) {
+        for (PDL_Endring endring : metadata?.endringer) {
             if (endring.type == PDL_Endringstype.OPPRETT)
                 return endring.registrert;
         }
