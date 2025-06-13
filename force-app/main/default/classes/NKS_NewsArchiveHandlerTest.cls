@@ -19,7 +19,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
             new NKS_NewsArchiveHandler().execute(a);
             Test.stopTest();
         } catch (Exception e) {
-            System.assert(false, 'should not feil here' + e.getMessage());
+            System.assert(false, 'should not fail here' + e.getMessage());
         }
         System.assert(true, 'smoke test passed');
     }

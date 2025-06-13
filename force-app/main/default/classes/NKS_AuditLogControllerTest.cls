@@ -33,6 +33,19 @@ public with sharing class NKS_AuditLogControllerTest {
         NKS_AuditLogController.createAuditLog(articleId, 'Knowledge__c');
         NKS_AuditLogController.createAuditLog(newsId, 'Announcement__c');
         Test.stopTest();
+
+        List<NKS_Audit_Log__c> logs = [SELECT Id FROM NKS_Audit_Log__c];
+        Assert.areEqual(3, logs.size());
+    }
+
+    @IsTest
+    static void testCreateAuditLogNullInputs() {
+        Test.startTest();
+        NKS_AuditLogController.createAuditLog(null, null);
+        Test.stopTest();
+
+        List<NKS_Audit_Log__c> logs = [SELECT Id FROM NKS_Audit_Log__c];
+        Assert.areEqual(1, logs.size());
     }
 
     @isTest
@@ -46,6 +59,23 @@ public with sharing class NKS_AuditLogControllerTest {
         Test.stopTest();
         System.assertEquals(1, articleViews);
         System.assertEquals(0, newsViews);
+    }
+
+    @IsTest
+    static void testCountViewsException() {
+        Id articleId = [SELECT Id FROM Knowledge__kav LIMIT 1]?.Id;
+        String nonExistentField = 'NonExistentField__c';
+        Exception ex;
+
+        Test.startTest();
+        try {
+            NKS_AuditLogController.countViews(articleId, nonExistentField);
+        } catch (Exception e) {
+            ex = e;
+        }
+        Test.stopTest();
+
+        Assert.areNotEqual(null, ex);
     }
 
     @isTest
