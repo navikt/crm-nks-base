@@ -1,34 +1,42 @@
 public without sharing class NKS_ThreadSharingEventHandler extends RecordSharingEvent {
     private static LoggerUtility logger = new LoggerUtility('NAV Task');
-    List<Id> recordIds=new List<Id>();
+    List<Id> recordIds = new List<Id>();
 
     public override void execute(List<RecordSharingEvent__e> recordSharingEvents) {
-        try{
-            for(RecordSharingEvent__e sharingEvent:recordSharingEvents){
-                if(sharingEvent.ObjectType__c!='Thread__c'){
+        try {
+            for (RecordSharingEvent__e sharingEvent : recordSharingEvents) {
+                if (sharingEvent.ObjectType__c != 'Thread__c') {
                     continue;
-                } 
+                }
                 recordIds.add(sharingEvent.RecordId__c);
             }
 
             List<Thread__c> threads = [
-                SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c
+                SELECT
+                    Id,
+                    CRM_Account__c,
+                    CRM_Henvendelse_BehandlingsId__c,
+                    CRM_Office_Restriction__c,
+                    CRM_Theme_Code__c,
+                    CRM_Theme_Group_Name__c,
+                    STO_Category__c,
+                    CRM_Theme__c,
+                    CRM_Thread_Type__c
                 FROM Thread__c
-                WHERE Id in:recordIds
-        ];
-        if (threads.size() > 0) {
-            new NKS_ThreadAccessHandler().grantAccessToNewThreads(threads);
-        }
+                WHERE Id IN :recordIds
+            ];
+            if (threads.size() > 0) {
+                new NKS_ThreadAccessHandler().grantAccessToNewThreads(threads);
+            }
         } catch (Exception ex) {
-            String recordIdsString = String.join( recordIds, ', ' );  
+            String recordIdsString = String.join(recordIds, ', ');
             logger.error(
-
                 'Failed to share records: ' +
-                recordIdsString +
-                '\n' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                    recordIdsString +
+                    '\n' +
+                    ex.getMessage() +
+                    '\n' +
+                    ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 null
@@ -36,6 +44,5 @@ public without sharing class NKS_ThreadSharingEventHandler extends RecordSharing
         } finally {
             logger.publish();
         }
+    }
 }
-}
-
