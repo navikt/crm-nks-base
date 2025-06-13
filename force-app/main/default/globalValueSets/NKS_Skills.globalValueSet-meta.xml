@@ -71,6 +71,11 @@
         <label>Uføretrygd</label>
     </customValue>
     <customValue>
+        <fullName>Stilling</fullName>
+        <default>false</default>
+        <label>Stilling</label>
+    </customValue>
+    <customValue>
         <fullName>Felles</fullName>
         <default>false</default>
         <isActive>false</isActive>

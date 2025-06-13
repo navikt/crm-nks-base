@@ -1,0 +1,110 @@
+<template>
+    <article class="slds-card">
+        <!-- Card Header -->
+        <div class="slds-card__header slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+            <header
+                class="slds-media slds-media_center slds-has-flexi-truncate slds-grid slds-align-middle slds-justify_center"
+            >
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="custom:custom53" size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">Varsler ({numberOfNotifications})</h2>
+                </div>
+                <div>
+                    <lightning-layout horizontal-align="end" vertical-align="end">
+                        <lightning-layout-item size="4" class="slds-var-p-right_xx-small">
+                            <lightning-input
+                                type="date"
+                                name="fromDate"
+                                label="Fra"
+                                value={fromDate}
+                                onchange={onDateFilterChange}
+                                min="2000-01-01"
+                                max={maxDate}
+                            ></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" class="slds-var-p-right_xx-small">
+                            <lightning-input
+                                type="date"
+                                name="toDate"
+                                label="Til"
+                                value={toDate}
+                                onchange={onDateFilterChange}
+                                min="2000-01-01"
+                                max={maxDate}
+                            ></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1">
+                            <lightning-button-icon
+                                icon-name="utility:refresh"
+                                variant="border-filled"
+                                alternative-text="Hent varsler på nytt"
+                                title="Hent varsler på nytt"
+                                aria-label="Hent varsler på nytt"
+                                onclick={refreshNotificationList}
+                            ></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </header>
+        </div>
+
+        <!-- Card Body -->
+        <div class="slds-card__body slds-card__body_inner slds-scrollable_y" style="max-height: 48em">
+            <div>
+                <template lwc:if={isLoaded}></template>
+                <template lwc:else>
+                    <lightning-spinner alternative-text="Laster brukervarsler" size="medium"></lightning-spinner>
+                </template>
+            </div>
+
+            <div
+                class="slds-grid slds-border_top slds-border_bottom slds-p-vertical_small slds-p-horizontal_medium slds-theme_shade"
+            >
+                <div class="slds-col slds-size_2-of-12 slds-text-title_bold">Dato</div>
+                <div class="slds-col slds-size_6-of-12 slds-text-title_bold">Type</div>
+                <div class="slds-col slds-size_3-of-12 slds-text-title_bold">Kanal</div>
+            </div>
+
+            <!-- Error Message -->
+            <div lwc:if={showErrors} class="slds-text-color_error slds-m-top_medium">
+                Noe har gått feil i innlastingen av varsler:
+                <ul class="slds-list_dotted">
+                    <template for:each={errorMessages} for:item="error">
+                        <li key={error}>{error}</li>
+                    </template>
+                </ul>
+            </div>
+
+            <!-- Notification List -->
+            <div lwc:elseif={showNotifications}>
+                <template for:each={notificationList} for:item="notification">
+                    <c-nks-brukervarsel
+                        key={notification.bestilt}
+                        brukervarsel={notification}
+                        new-design
+                    ></c-nks-brukervarsel>
+                </template>
+            </div>
+
+            <!-- No Notifications Message -->
+            <div lwc:else class="slds-text-align_center slds-p-top_medium">
+                <p>Ingen varsler funnet for det valgte datoområdet.</p>
+            </div>
+        </div>
+
+        <!-- Card Footer -->
+        <footer class="slds-card__footer" style="border: none">
+            <template lwc:if={showFooter}>
+                <lightning-button
+                    variant="base"
+                    label="Vis alle"
+                    aria-label="Vis alle varsler"
+                    onclick={showAllNotifications}
+                    class="slds-card__footer-action"
+                ></lightning-button>
+            </template>
+        </footer>
+    </article>
+</template>

@@ -2,7 +2,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getOppholdsAddress from '@salesforce/apex/NKS_AddressController.getOppholdsAddress';
 import nksTemporaryAddressHTML from './nksTemporaryAddress.html';
 import nksTemporaryAddressV2HTML from './nksTemporaryAddressV2.html';
-import { handleCopy } from 'c/nksComponentsUtils';
+import { handleAddressCopy } from 'c/nksComponentsUtils';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -50,14 +50,15 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     handleCopy(event) {
-        handleCopy(event);
+        handleAddressCopy(event);
     }
 
     capitalizeWords(str) {
         return str
             ? str
                   .split(' ')
-                  .map((word) => word[0]?.toUpperCase() + word.slice(1).toLowerCase())
+                  .filter((word) => word)
+                  .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
                   .join(' ')
             : '';
     }
@@ -120,7 +121,7 @@ export default class NksBostedAddress extends LightningElement {
             const postInfo = this.buildPostInfo(element.zipCode, element.city);
             const region = this.buildRegion(element.region, element.countryCode);
             const typeAndFullName = [type, fullName].filter(Boolean).join(' ');
-            const otherParts = [addressLine, postInfo, this.county || region || 'Norge NO'].filter(Boolean).join(', ');
+            const otherParts = [addressLine, postInfo, region || 'Norge NO'].filter(Boolean).join(', ');
 
             return [typeAndFullName, otherParts].filter(Boolean).join(', ');
         });

@@ -1,0 +1,3 @@
+.kanal ~ .kanal::before {
+    content: ', ';
+}

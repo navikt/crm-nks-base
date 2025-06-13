@@ -174,10 +174,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>EinsteinArticleRecUser</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>ShareInternalArticles</name>
     </userPermissions>
 </PermissionSet>

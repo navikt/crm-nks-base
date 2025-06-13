@@ -169,10 +169,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AzureAccessTokenController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AzureAccessTokenService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -214,10 +210,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CRM_NavTaskWorkAllocationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_SecurityQuestionPicker</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -389,14 +381,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_QuickTextSearchController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_RelatedListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -410,6 +394,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_SecurityMeasuresControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NKS_SendNavTaskHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -692,10 +680,6 @@
         <apexClass>nksUtilityBackgroundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_SendNavTaskHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CRM_AccountType__c</field>
@@ -804,11 +788,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.ShippingAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account.TAG_Main_Industry__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
