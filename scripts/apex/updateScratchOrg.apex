@@ -1,12 +1,12 @@
 connectAccountToChat();
 
 public void connectAccountToChat() {
-    List<LiveChatTranscript> chats = [
+    List<MessagingSession> chats = [
         SELECT Id, AccountId
-        FROM LiveChatTranscript
+        FROM MessagingSession
     ];
     List<Account> accounts = [SELECT Id FROM Account];
-    for (LiveChatTranscript c : chats) {
+    for (MessagingSession c : chats) {
         c.AccountId = accounts[0].Id;
     }
     update chats;
