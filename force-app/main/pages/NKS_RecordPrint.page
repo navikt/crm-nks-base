@@ -32,14 +32,15 @@
                             <p>
                                 <b>Mottatt/Sendt:</b> {!msg.createdDate} </p>
                             <p>
-                                <b>Lest/Ulest:</b> {!msg['messageRead']} </p>
+                                <b>Lest/Ulest:</b> {!msg.messageRead} </p>
                         </div>
                     </div>
                     <div class="message-content">
                         <p>
                             <b>Innhold:</b>
+                            <br/>
+                            {!msg.message['CRM_Message_Text__c']}
                         </p>
-                        <p>{!msg.message['CRM_Message_Text__c']}</p>
                     </div>
                     <hr />
                 </apex:repeat>
