@@ -6,14 +6,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>CRM_SecurityQuestionPicker</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_SecurityQuestionTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FlowFindCollection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -179,14 +171,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_NavUnitsControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

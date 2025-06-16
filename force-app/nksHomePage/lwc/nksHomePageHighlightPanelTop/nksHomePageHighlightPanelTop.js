@@ -10,10 +10,10 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     fagsystem;
     nav;
 
-    _fagsystemId;
-    _fagsystemInfo;
-    _navId;
-    _navInfo;
+    fagsystemId;
+    navId;
+    fagsystemInfo;
+    navInfo;
 
     showFagsystemContent = false;
     showNavContent = false;
@@ -36,49 +36,14 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
         this.handleUnsubscribe();
     }
 
-    @api
-    get fagsystemId() {
-        return this._fagsystemId;
-    }
-
-    set fagsystemId(value) {
-        this._fagsystemId = value;
-    }
-
-    @api
-    get fagsystemInfo() {
-        return this._fagsystemInfo;
-    }
-
-    set fagsystemInfo(value) {
-        this._fagsystemInfo = value;
-    }
-
-    @api
-    get navId() {
-        return this._navId;
-    }
-
-    set navId(value) {
-        this._navId = value;
-    }
-
-    @api
-    get navInfo() {
-        return this._navInfo;
-    }
-
-    set navInfo(value) {
-        this._navInfo = value;
-    }
-
     @wire(getNksStatus, { title: '$fagsystemTitle' })
-    handleFagsystemData({ data, error }) {
-        this.wiredFagsystem = data;
+    handleFagsystemData(result) {
+        this.wiredFagsystem = result;
+        const { data, error } = result;
         if (data) {
             this.fagsystem = data;
-            this._fagsystemId = data.Id;
-            this._fagsystemInfo = data.NKS_Information__c;
+            this.fagsystemId = data.Id;
+            this.fagsystemInfo = data.NKS_Information__c;
             this.isFagsystemDataLoaded = true;
         } else if (error) {
             console.error('Error fetching fagsystem status: ', error);
@@ -86,12 +51,13 @@ export default class NksHomePageHighlightPanelTop extends LightningElement {
     }
 
     @wire(getNksStatus, { title: '$navTitle' })
-    handleNavData({ data, error }) {
-        this.wiredNav = data;
+    handleNavData(result) {
+        this.wiredNav = result;
+        const { data, error } = result;
         if (data) {
             this.nav = data;
-            this._navId = data.Id;
-            this._navInfo = data.NKS_Information__c;
+            this.navId = data.Id;
+            this.navInfo = data.NKS_Information__c;
             this.isNavDataLoaded = true;
         } else if (error) {
             console.error('Error fetching NAV status: ', error);

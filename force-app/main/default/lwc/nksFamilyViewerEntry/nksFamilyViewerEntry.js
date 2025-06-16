@@ -32,39 +32,27 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get isMarital() {
-        if (this.relation.recordType === 'marital') return true;
-        return false;
+        return this.relation.recordType === 'marital';
     }
 
     get isChild() {
-        if (this.relation.recordType === 'child') return true;
-        return false;
+        return this.relation.recordType === 'child';
     }
 
     get isParent() {
-        if (this.relation.recordType === 'parent') return true;
-        return false;
+        return this.relation.recordType === 'parent';
     }
 
     get isStillBorn() {
-        if (this.relation.recordType === 'stillborn') return true;
-        return false;
+        return this.relation.recordType === 'stillborn';
     }
 
     get isError() {
-        if (
-            this.relation.recordType === 'marital' ||
-            this.relation.recordType === 'child' ||
-            this.relation.recordType === 'parent' ||
-            this.relation.recordType === 'stillborn'
-        )
-            return false;
-        return true;
+        return !['marital', 'child', 'parent', 'stillborn'].includes(this.relation.recordType);
     }
 
     get getErrorMsg() {
-        if (this.relation.name != null) return this.relation.name;
-        return '';
+        return this.relation.name ?? '';
     }
 
     get genderIcon() {
@@ -95,14 +83,13 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             if (isFemale) {
                 return isChild ? 'IconFemaleChildDeceasedFamily' : 'IconFemaleDeceasedFamily';
             }
-            return 'UnknownCircleFilled';
-        }
-
-        if (isMale) {
-            return isChild ? 'IconMaleChildFamily' : 'IconMaleFamily';
-        }
-        if (isFemale) {
-            return isChild ? 'IconFemaleChildFamily' : 'IconFemaleFamily';
+        } else {
+            if (isMale) {
+                return isChild ? 'IconMaleChildFamily' : 'IconMaleFamily';
+            }
+            if (isFemale) {
+                return isChild ? 'IconFemaleChildFamily' : 'IconFemaleFamily';
+            }
         }
         return 'UnknownCircleFilled';
     }
@@ -120,53 +107,41 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get hasEventDate() {
-        if (this.relation.eventDate != null) return true;
-        return false;
+        return this.relation.eventDate != null;
     }
 
     get getTileName() {
-        if (this.relation.unauthorized === true) {
+        if (this.relation.unauthorized) {
             return this.getName();
         }
-        if (this.relation.deceased === true) {
+        if (this.relation.deceased) {
             return this.getName() + ' (Død)';
         }
         return this.getName() + ' (' + this.getAge() + ')';
     }
 
     get getDateOfDeath() {
-        if (this.relation.dateOfDeath != null) {
-            return this.relation.dateOfDeath;
-        }
-        return this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATE';
+        return this.relation.dateOfDeath ?? (this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATO');
     }
 
     get getBirthDate() {
-        if (this.relation.birthDate != null) {
-            return this.relation.birthDate;
-        }
-        return this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATE';
+        return this.relation.birthDate ?? (this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATO');
     }
 
     get getSex() {
-        if (this.relation.sex != null) {
-            return this.relation.sex;
-        }
-        return this.useNewDesign ? 'Ukjent kjønn' : 'UKJENT KJØNN';
+        return this.relation.sex ?? (this.useNewDesign ? 'Ukjent kjønn' : 'UKJENT KJØNN');
     }
 
     get getChildText() {
-        if (this.relation.unauthorized === true || this.relation.deceased) {
-            return '';
-        }
-        return this.getLiveWithText + '\n' + this.getResponsibilityChildText;
+        return this.relation.unauthorized || this.relation.deceased
+            ? ''
+            : this.getLiveWithText + '\n' + this.getResponsibilityChildText;
     }
 
     get getParentText() {
-        if (this.relation.unauthorized === true || this.relation.deceased) {
-            return '';
-        }
-        return this.getLiveWithText + '\n' + this.getResponsibilityParentText;
+        return this.relation.unauthorized || this.relation.deceased
+            ? ''
+            : this.getLiveWithText + '\n' + this.getResponsibilityParentText;
     }
 
     get showCardTile() {
@@ -176,69 +151,51 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
                 this.relation.role === 'UOPPGITT' ||
                 this.relation.role === 'SKILT' ||
                 this.relation.role === 'SKILT_PARTNER')
-        )
+        ) {
             return false;
-        if (this.relation.recordType === 'stillborn') return false;
-        return true;
+        }
+        return this.relation.recordType !== 'stillborn';
     }
 
     get showInfoCard() {
-        if (this.relation.unauthorized === true) return false;
-        return true;
+        return !this.relation.unauthorized;
     }
 
     get getRole() {
-        if (this.relation.recordType === 'stillborn') {
-            return this.useNewDesign ? 'Døfødt barn' : 'DØDFØDT BARN';
+        const { recordType, sex, role } = this.relation;
+
+        if (recordType === 'stillborn') {
+            return this.useNewDesign ? 'Dødfødt barn' : 'DØDFØDT BARN';
         }
-        if (this.relation.recordType === 'child') {
-            if (this.relation.sex === 'MANN') {
-                return this.useNewDesign ? 'Sønn' : 'GUTT';
-            }
-            if (this.relation.sex === 'KVINNE') {
-                return this.useNewDesign ? 'Datter' : 'JENTE';
-            }
-            return this.relation.role;
+
+        if (recordType === 'child') {
+            if (sex === 'MANN') return this.useNewDesign ? 'Sønn' : 'GUTT';
+            if (sex === 'KVINNE') return this.useNewDesign ? 'Datter' : 'JENTE';
+            return role;
         }
-        if (this.useNewDesign && this.relation.role === 'MOR') {
-            return 'Mor';
+
+        if (recordType === 'marital' && role === 'ENKE_ELLER_ENKEMANN') {
+            if (sex === 'MANN') return this.useNewDesign ? 'Enke' : 'ENKE';
+            if (sex === 'KVINNE') return this.useNewDesign ? 'Enkemann' : 'ENKEMANN';
+            return this.useNewDesign ? 'Enke eller Enkemann' : 'ENKE ELLER ENKEMANN';
         }
-        if (this.useNewDesign && this.relation.role === 'MEDMOR') {
-            return 'Medmor';
+
+        const newDesignRoles = {
+            MOR: 'Mor',
+            MEDMOR: 'Medmor',
+            FAR: 'Far',
+            GIFT: 'Gift',
+            UGIFT: 'Ugift',
+            REGISTRERT_PARTNER: 'Registrert partner',
+            SEPARERT_PARTNER: 'Separert partner',
+            SKILT_PARTNER: 'Skilt partner',
+            'GJENLEVENDE PARTNER': 'Gjenlevende partner'
+        };
+
+        if (this.useNewDesign && newDesignRoles[role]) {
+            return newDesignRoles[role];
         }
-        if (this.useNewDesign && this.relation.role === 'FAR') {
-            return 'Far';
-        }
-        if (this.relation.recordType === 'marital') {
-            if (this.useNewDesign && this.relation.role === 'GIFT') {
-                return 'Gift';
-            }
-            if (this.useNewDesign && this.relation.role === 'UGIFT') {
-                return 'Ugift';
-            }
-            if (this.relation.role === 'ENKE_ELLER_ENKEMANN') {
-                if (this.relation.sex === 'MANN') {
-                    return this.useNewDesign ? 'Enke' : 'ENKE';
-                }
-                if (this.relation.sex === 'KVINNE') {
-                    return this.useNewDesign ? 'Enkemann' : 'ENKEMANN';
-                }
-                return this.useNewDesign ? 'Enke eller Enkemann' : 'ENKE ELLER ENKEMANN';
-            }
-            if (this.relation.role === 'REGISTRERT_PARTNER') {
-                return this.useNewDesign ? 'Registrert partner' : 'REGISTRERT PARTNER';
-            }
-            if (this.relation.role === 'SEPARERT_PARTNER') {
-                return this.useNewDesign ? 'Separert partner' : 'SEPARERT PARTNER';
-            }
-            if (this.relation.role === 'SKILT_PARTNER') {
-                return this.useNewDesign ? 'Skilt partner' : 'SKILT PARTNER';
-            }
-            if (this.relation.role === 'GJENLEVENDE PARTNER') {
-                return this.useNewDesign ? 'Gjenlevende partner' : 'GJENLEVENDE PARTNER';
-            }
-        }
-        return this.relation.role;
+        return role;
     }
 
     get uuAlertText() {
@@ -265,54 +222,45 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get badges() {
-        let badgesArray = [];
-        if (this.relation.employee === true) {
-            let badge = {
+        const badgesArray = [];
+
+        if (this.relation.employee) {
+            badgesArray.push({
                 name: 'isNavEmployee',
                 label: 'Skjermet person (Nav Ansatt)'
-            };
-            badgesArray.push(badge);
+            });
         }
-        if (this.relation.confidential === true) {
-            if (this.relation.confidentialStatus === 'FORTROLIG') {
-                let badge = {
+
+        if (this.relation.confidential) {
+            const confidentialLabels = {
+                FORTROLIG: 'Skjermet adresse - fortrolig',
+                STRENGT_FORTROLIG: 'Skjermet adresse - strengt fortrolig',
+                STRENGT_FORTROLIG_UTLAND: 'Skjermet adresse - strengt fortrolig'
+            };
+
+            const label = confidentialLabels[this.relation.confidentialStatus];
+            if (label) {
+                badgesArray.push({
                     name: 'isConfidential',
-                    label: 'Skjermet adresse - fortrolig'
-                };
-                badgesArray.push(badge);
-            } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG') {
-                let badge = {
-                    name: 'isConfidential',
-                    label: 'Skjermet adresse - strengt fortrolig'
-                };
-                badgesArray.push(badge);
-            } else if (this.relation.confidentialStatus === 'STRENGT_FORTROLIG_UTLAND') {
-                let badge = {
-                    name: 'isConfidential',
-                    label: 'Skjermet adresse - strengt fortrolig'
-                };
-                badgesArray.push(badge);
+                    label
+                });
             }
         }
         return badgesArray;
     }
 
     get hasBadges() {
-        if (this.relation.employee === true || this.relation.confidential === true) {
-            return true;
-        }
-        return false;
+        return this.relation.employee || this.relation.confidential;
     }
 
     get personIdentFormatted() {
-        if (this.relation.personIdent != null) {
-            return this.relation.personIdent.slice(0, 6) + ' ' + this.relation.personIdent.slice(6);
-        }
-        return '';
+        return this.relation.personIdent
+            ? this.relation.personIdent.slice(0, 6) + ' ' + this.relation.personIdent.slice(6)
+            : '';
     }
 
     getName() {
-        if (this.relation.unauthorized === true) {
+        if (this.relation.unauthorized) {
             return this.useNewDesign ? 'Skjermet' : 'SKJERMET';
         }
         if (this.relation.name == null) {
@@ -330,20 +278,11 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getAge() {
-        if (this.useNewDesign && this.relation.age != null) {
-            return this.relation.age;
-        }
-        if (this.relation.ageString != null) {
-            return this.relation.ageString;
-        }
-        return this.useNewDesign ? 'Ukjent alder' : 'UKJENT ALDER';
+        return this.relation.ageString ?? (this.useNewDesign ? 'Ukjent alder' : 'UKJENT ALDER');
     }
 
     get getLiveWithText() {
-        if (this.relation.livesWith === true) {
-            return 'Bor med bruker';
-        }
-        return 'Bor ikke med bruker';
+        return this.relation.livesWith ? 'Bor med bruker' : 'Bor ikke med bruker';
     }
 
     get getResponsibilityChildText() {

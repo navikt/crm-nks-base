@@ -12,10 +12,10 @@
                     <p class="custom-left-padding-small" style="font-weight: bold">{getTileName}</p>
                 </div>
 
-                <div class="custom-left-padding-medium slds-size_1-of-12">
-                    {getRole}
-                    <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
-                </div>
+                    <div class="custom-left-padding-medium slds-size_1-of-12">
+                        {getRole}
+                        <template lwc:if={hasEventDate}> {relation.eventDate} </template>
+                    </div>
 
                 <template lwc:if={showInfoCard}>
                     <div class="custom-left-padding-x-large slds-size_3-of-12">
@@ -79,34 +79,35 @@
             </div>
         </template>
 
-        <template lwc:else>
-            <div class="custom-left-padding-large slds-grid slds-wrap table-row icon-container">
-                <template lwc:if={isMarital}>
-                    <div class="custom-left-padding-medium slds-size_2-of-12">
-                        <strong> Sivilstand: </strong>{getRole}
-                        <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
-                    </div>
-                </template>
-                <template if:true={isStillBorn}>
-                    <div class="slds-grid slds-size_4-of-12 icon-container">
-                        <div class="slds-icon_container">
-                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" viewBox={viewBox}>
-                                <use xlink:href={genderIconNewDesignSrc}></use>
-                            </svg>
+            <template lwc:else>
+                <div class="custom-left-padding-large slds-grid slds-wrap table-row icon-container">
+                    <template lwc:if={isMarital}>
+                        <div class="custom-left-padding-medium slds-size_2-of-12">
+                            <strong> Sivilstand: </strong>{getRole}
+                            <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
                         </div>
-                        <p class="custom-left-padding-small" style="font-weight: bold">{getRole}</p>
-                    </div>
-                    <template lwc:if={hasEventDate}>
-                        <div class="slds-size_2-of-12"></div>
-                        <div class="slds-grid custom-left-padding-medium slds-size_4-of-12 icon-container">
-                            <p class="">{relation.eventDate}</p>
-                        </div></template
-                    >
-                </template>
-            </div>
-            <div class="custom-horizontal-padding-large">
-                <div style="border-bottom: 1px solid #a9a9a9"></div>
-            </div>
+                    </template>
+                    <template if:true={isStillBorn}>
+                        <div class="slds-grid slds-size_4-of-12 icon-container">
+                            <div class="slds-icon_container">
+                                <svg class="slds-icon slds-icon-text-default" aria-hidden="true" viewBox={viewBox}>
+                                    <use xlink:href={genderIconNewDesignSrc}></use>
+                                </svg>
+                            </div>
+                            <p class="custom-left-padding-small" style="font-weight: bold">{getRole}</p>
+                        </div>
+                        <template lwc:if={hasEventDate}>
+                            <div class="slds-size_1-of-12"></div>
+                            <div class="slds-grid custom-left-padding-x-large slds-size_3-of-12 icon-container">
+                                <p>{relation.eventDate}</p>
+                            </div></template
+                        >
+                    </template>
+                </div>
+                <div class="custom-horizontal-padding-large">
+                    <div style="border-bottom: 1px solid #a9a9a9"></div>
+                </div>
+            </template>
         </template>
     </div>
 </template>

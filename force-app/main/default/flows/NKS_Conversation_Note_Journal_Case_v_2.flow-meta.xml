@@ -57,9 +57,16 @@
         <connector>
             <targetReference>Check_If_Has_Conversation_Note</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>or</filterLogic>
         <filters>
             <field>CRM_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -109,6 +116,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>useNewDesign</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -126,6 +139,14 @@
             <outputParameters>
                 <assignToReference>Selected_Theme_SF_Id</assignToReference>
                 <name>selectedCaseThemeSfId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Subtheme</assignToReference>
+                <name>selectedSubtheme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Subtheme_Id</assignToReference>
+                <name>selectedSubthemeSfId</name>
             </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Journalfør</nextOrFinishButtonLabel>
@@ -188,6 +209,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>Journal_Subtheme_Code</name>
+            <value>
+                <elementReference>Selected_Subtheme</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>Journal_Theme_Code</name>
             <value>
                 <elementReference>Selected_Theme</elementReference>
@@ -245,6 +272,20 @@
     </variables>
     <variables>
         <name>Selected_Case_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Subtheme</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Subtheme_Id</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

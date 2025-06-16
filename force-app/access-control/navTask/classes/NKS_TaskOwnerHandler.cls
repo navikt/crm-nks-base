@@ -5,7 +5,8 @@ public without sharing class NKS_TaskOwnerHandler extends MyTriggers {
         'NAV Kontaktsenter - Redaktør',
         'NAV Kontaktsenter (Sanitized)',
         'NAV Kontaktsenter - Pilot',
-        'NAV Kontaktsenter - Trafikk'
+        'NAV Kontaktsenter - Trafikk',
+        'HOT Servicetjenesten'
     };
     public override void onBeforeInsert() {
         Id newOwnerId = RecordOwnerService.getDefaultOwner();

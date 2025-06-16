@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customApplications>
-        <label>Permitteringsvarsler</label>
-        <name>Permitteringsvarsler</name>
-    </customApplications>
     <customLabels>
         <label>Henvendelsen er ferdigstilt.</label>
         <name>NKS_Case_Completed</name>
@@ -186,11 +182,6 @@
         <label>Users</label>
         <name>fbc_Users</name>
     </customLabels>
-    <customTabs>
-        <label>
-        </label>
-        <name>API_Transactions</name>
-    </customTabs>
     <customTabs>
         <label>Administrer veiledere</label>
         <name>NKS_User_administration</name>

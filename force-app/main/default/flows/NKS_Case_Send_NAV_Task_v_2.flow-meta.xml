@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_henvendelse_ID</name>
         <label>Add henvendelse ID</label>
-        <locationX>533</locationX>
+        <locationX>544</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
@@ -28,7 +28,7 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
@@ -128,7 +128,7 @@
     <assignments>
         <name>Remove_henvendelse_ID</name>
         <label>Remove henvendelse ID</label>
-        <locationX>269</locationX>
+        <locationX>280</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
@@ -145,7 +145,7 @@
     <assignments>
         <name>Set_NAV_Task_Saved_To_True</name>
         <label>Set NAV Task Saved To True</label>
-        <locationX>126</locationX>
+        <locationX>115</locationX>
         <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>NAV_Task_Saved</assignToReference>
@@ -249,7 +249,7 @@
     <assignments>
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
-        <locationX>522</locationX>
+        <locationX>511</locationX>
         <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
@@ -265,7 +265,7 @@
     <decisions>
         <name>Create_Task_on_Case_or_Person</name>
         <label>Create Task on Henvendelse or Person</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Add_henvendelse_ID</targetReference>
@@ -290,7 +290,7 @@
     <decisions>
         <name>Is_communal_quick_text_used</name>
         <label>Is communal quick text used?</label>
-        <locationX>522</locationX>
+        <locationX>511</locationX>
         <locationY>1514</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -312,7 +312,7 @@
     <decisions>
         <name>Save_NAV_Task</name>
         <label>Save NAV Task</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>Send_NAV_Task</targetReference>
@@ -385,7 +385,7 @@
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
-        <locationX>676</locationX>
+        <locationX>709</locationX>
         <locationY>1298</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -481,7 +481,7 @@ TODAY())</expression>
     <recordCreates>
         <name>Create_reporting_data_for_communal_quick_text</name>
         <label>Create reporting data for communal quick text</label>
-        <locationX>390</locationX>
+        <locationX>379</locationX>
         <locationY>1622</locationY>
         <inputAssignments>
             <field>CRM_Category__c</field>
@@ -526,7 +526,7 @@ TODAY())</expression>
     <recordLookups>
         <name>Get_Communal_Service_Theme</name>
         <label>Get Communal Service Theme</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -555,7 +555,7 @@ TODAY())</expression>
     <recordLookups>
         <name>Get_Person_Access</name>
         <label>Get Person Access</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -645,7 +645,7 @@ TODAY())</expression>
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>401</locationX>
+        <locationX>412</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -708,6 +708,18 @@ TODAY())</expression>
                 <name>optionalTheme</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>checkIfGjelderIsRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>useNewDesign</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -853,7 +865,7 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>1006</locationX>
+        <locationX>1083</locationX>
         <locationY>242</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -894,7 +906,7 @@ TODAY())</expression>
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>676</locationX>
+        <locationX>709</locationX>
         <locationY>1190</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
