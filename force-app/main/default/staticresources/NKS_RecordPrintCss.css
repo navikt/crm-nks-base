@@ -1,0 +1,36 @@
+
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+#navLogo {
+    display: block;
+    margin: 0 auto;
+    max-width: 150px;
+}
+#userName, #userIdent {
+    margin: 5px 0;
+}
+
+.message-container {
+    overflow: hidden;
+    align-items: center;
+}
+
+.message-info-left {
+    float: left;
+    width: 60%;
+    text-align: left;
+}
+
+.message-info-right {
+    float: right;
+    width: 40%;
+    text-align: left;
+}
+  
+
+p, h2 {
+    font-family: Arial, Helvetica, sans-serif;
+}
