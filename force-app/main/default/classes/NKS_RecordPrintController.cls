@@ -30,36 +30,36 @@ public with sharing class NKS_RecordPrintController {
             SELECT
                 Id,
                 CRM_Theme_Group_Name__c,
+                CRM_Conversation_Summary__c,
                 STO_Category__c,
                 CRM_Thread_Type__c,
                 Name,
                 CRM_Account__r.CRM_Person__r.Name,
-                CRM_Account__r.Name
+                CRM_Account__r.Name,
+                (
+                    SELECT
+                        CRM_Message_Text__c,
+                        CRM_External_Message__c,
+                        CRM_Sent_date__c,
+                        CRM_Read__c,
+                        CRM_Read_Datetime__c,
+                        CRM_From_First_Name__c,
+                        CRM_From_Ident_Formula__c
+                    FROM Messages__r
+                )
             FROM Thread__c
             WHERE Id = :recordId
         ];
 
-        //personIdent = thread.CRM_Account__r.INT_PersonIdent__c;
         personIdent = thread.CRM_Account__r.CRM_Person__r.Name;
         accountName = thread.CRM_Account__r.Name;
 
-        List<Message__c> threadMessages = [
-            SELECT
-                CRM_Message_Text__c,
-                CRM_External_Message__c,
-                CRM_Sent_date__c,
-                CRM_Read__c,
-                CRM_Read_Datetime__c,
-                CRM_From_First_Name__c,
-                CRM_From_Ident_Formula__c
-            FROM Message__c
-            WHERE CRM_Thread__c = :recordId
-        ];
-
         List<MessageWrapper> messages = new List<MessageWrapper>();
-        for (Message__c message : threadMessages) {
-            messages.add(new MessageWrapper(message, personIdent));
+
+        for (Message__c msg : thread.Messages__r) {
+            messages.add(new MessageWrapper(msg, personIdent));
         }
+
         threadWrapper = new RecordPrintWrapper(thread, messages);
     }
 
