@@ -26,4 +26,24 @@ public class NKS_DataSynchController_Test {
             'Expected bank account last updated to be set'
         );
     }
+
+    @isTest
+    static void testBankAccountSyncHttpError() {
+        Person__c person = (Person__c) UTIL_TestDataFactory.createRecord(
+            new Person__c(INT_ActorId__c = '123456789', Name = '01234567890')
+        );
+        ApiMock.setTestMock('POST_HENT_AKTIV_KONTO', 400, 'Bad Request');
+
+        Test.startTest();
+        NKS_DataSynchController.doBankAccountNumberSync('01234567890');
+        Test.stopTest();
+
+        List<Application_Log__c> logs = [
+            SELECT Id
+            FROM Application_Log__c
+            LIMIT 1
+        ];
+
+        Assert.areEqual(1, logs.size());
+    }
 }

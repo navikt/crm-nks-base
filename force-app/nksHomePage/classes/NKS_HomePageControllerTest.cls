@@ -276,6 +276,21 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
+    static void testUpdateNksStatusError() {
+        Exception ex;
+
+        Test.startTest();
+        try {
+            NKS_HomePageController.updateNksStatus(null);
+        } catch (Exception e) {
+            ex = e;
+        }
+        Test.stopTest();
+
+        Assert.areNotEqual(null, ex);
+    }
+
+    @isTest
     static void testGetNksCurrents() {
         Test.startTest();
         List<NKS_Announcement__c> result = NKS_HomePageController.getNksCurrents();
@@ -312,5 +327,22 @@ public with sharing class NKS_HomePageControllerTest {
             insertedRecords[0].RecordType.DeveloperName,
             'The RecordType should be NKS_Current.'
         );
+    }
+
+    @IsTest
+    static void testCreateNksCurrentError() {
+        String invalidURL = String.valueOf('https://example.com/' + 'a'.repeat(1000));
+        String title = 'Test Title';
+        Exception ex;
+
+        Test.startTest();
+        try {
+            NKS_HomePageController.createNksCurrent(title, invalidURL);
+        } catch (Exception e) {
+            ex = e;
+        }
+        Test.stopTest();
+
+        Assert.areNotEqual(null, ex);
     }
 }
