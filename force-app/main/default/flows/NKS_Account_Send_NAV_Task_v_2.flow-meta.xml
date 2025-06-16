@@ -300,7 +300,7 @@ TODAY())</expression>
             <inputParameters>
                 <name>useNewDesign</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
