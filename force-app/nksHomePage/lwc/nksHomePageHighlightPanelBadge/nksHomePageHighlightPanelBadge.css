@@ -15,6 +15,10 @@
     align-items: center;
 }
 
+.input {
+    color: #000000;
+}
+
 .badge-icon {
     --slds-c-icon-color-foreground-default: #fff;
 }
