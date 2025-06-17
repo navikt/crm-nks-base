@@ -1,8 +1,7 @@
 public with sharing class NKS_RecordPrintController {
     public Id recordId { get; set; }
     public String objectType { get; set; }
-    public RecordPrintWrapper convoWrapper { get; set; }
-    public RecordPrintWrapper threadWrapper { get; set; }
+    public RecordPrintWrapper recordWrapper { get; set; }
     public String personIdent { get; set; }
     public String navUnitName { get; set; }
     public String accountName { get; set; }
@@ -61,7 +60,7 @@ public with sharing class NKS_RecordPrintController {
             messages.add(new MessageWrapper(msg, personIdent));
         }
 
-        threadWrapper = new RecordPrintWrapper(thread, messages);
+        recordWrapper = new RecordPrintWrapper(thread, messages);
     }
 
     private void fetchConversationNoteData() {
@@ -91,7 +90,7 @@ public with sharing class NKS_RecordPrintController {
 
         personIdent = cnote.CRM_Account__r.CRM_Person__r.Name;
         accountName = cnote.CRM_Account__r.Name;
-        convoWrapper = new RecordPrintWrapper(cnote);
+        recordWrapper = new RecordPrintWrapper(cnote);
     }
 
     public class RecordPrintWrapper {

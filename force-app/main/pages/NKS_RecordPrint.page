@@ -11,18 +11,18 @@
 
             <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
                 <p>
-                    <b>Type:</b> {!threadWrapper.mainRecord['CRM_Thread_Type__c']}</p>
-                <apex:outputText rendered="{!NOT(ISNULL(threadWrapper.mainRecord['STO_Category__c']))}">
+                    <b>Type:</b> {!recordWrapper.mainRecord['CRM_Thread_Type__c']}</p>
+                <apex:outputText rendered="{!NOT(ISNULL(recordWrapper.mainRecord['STO_Category__c']))}">
                     <p>
-                        <b>Tema:</b> {!threadWrapper.mainRecord['STO_Category__c']}</p>
+                        <b>Tema:</b> {!recordWrapper.mainRecord['STO_Category__c']}</p>
                 </apex:outputText>
             </apex:outputPanel>
         </div>
 
         <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
-            <apex:outputPanel rendered="{!NOT(ISNULL(threadWrapper.messages))}">
+            <apex:outputPanel rendered="{!NOT(ISNULL(recordWrapper.messages))}">
                 <h2>Meldinger</h2>
-                <apex:repeat value="{!threadWrapper.messages}" var="msg">
+                <apex:repeat value="{!recordWrapper.messages}" var="msg">
                     <div class="message-container">
                         <div class="message-info-left">
                             <p>
@@ -48,29 +48,29 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!objectType == 'Conversation_Note__c'}">
-            <h2>Samtalereferat {!convoWrapper.comChannelNorwegian} - {!convoWrapper.mainRecord['CRM_Theme_Group_Name__c']}</h2>
+            <h2>Samtalereferat {!recordWrapper.comChannelNorwegian} - {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</h2>
             <div class="message-container">
                 <div class="message-info-left">
                     <p>
-                        <b>Registrert: </b> {!convoWrapper.createdDate}</p>
+                        <b>Registrert: </b> {!recordWrapper.createdDate}</p>
                     <p>
-                        <b>Opprettet av: </b> {!convoWrapper.mainRecord['CRM_Created_By_Ident__c']} </p>
+                        <b>Opprettet av: </b> {!recordWrapper.mainRecord['CRM_Created_By_Ident__c']} </p>
                     <p>
-                        <b>Opprettet av enhet: </b> {!navUnitName} ({!convoWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})</p>
+                        <b>Opprettet av enhet: </b> {!navUnitName} ({!recordWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})</p>
                 </div>
 
                 <div class="message-info-right">
                     <p>
-                        <b>Temagruppe: </b> {!convoWrapper.mainRecord['CRM_Theme_Group_Name__c']}</p>
+                        <b>Temagruppe: </b> {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</p>
                     <p>
-                        <b>Tema: </b> {!convoWrapper.mainRecord['CRM_Theme_Name__c']}</p>
+                        <b>Tema: </b> {!recordWrapper.mainRecord['CRM_Theme_Name__c']}</p>
                 </div>
             </div>
             <div class="message-content">
                 <p>
                     <b>Innhold:</b>
                 </p>
-                <p>{!convoWrapper.mainRecord['CRM_Conversation_Note__c']}</p>
+                <p>{!recordWrapper.mainRecord['CRM_Conversation_Note__c']}</p>
             </div>
         </apex:outputPanel>
     </apex:outputPanel>
