@@ -56,7 +56,7 @@
                     <p>
                         <b>Opprettet av: </b> {!convoWrapper.mainRecord['CRM_Created_By_Ident__c']} </p>
                     <p>
-                        <b>Opprettet av enhet: </b> {!convoWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']} {!navUnitName}</p>
+                        <b>Opprettet av enhet: </b> {!navUnitName} ({!convoWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})</p>
                 </div>
 
                 <div class="message-info-right">
