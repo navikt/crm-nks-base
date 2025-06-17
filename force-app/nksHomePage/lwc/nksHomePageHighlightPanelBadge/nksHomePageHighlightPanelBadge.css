@@ -4,12 +4,7 @@
 }
 
 .custom-badge {
-    color: white;
-    border: 2px white solid;
-    padding-right: 1rem;
-    padding-left: 1rem;
     font-size: 0.875rem;
-    font-weight: normal;
     align-items: center;
     justify-content: center;
 }
@@ -39,10 +34,13 @@
     cursor: pointer;
 }
 
+.badge-text {
+    margin-left: 0.25rem;
+}
+
 .headerLine {
     width: 100%;
     height: 0.5rem;
-    background: var(--badge-line, #ad0000);
 }
 
 .disabled-badge {

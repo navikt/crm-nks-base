@@ -1,5 +1,5 @@
 public without sharing class NKS_ThreadSharingEventHandler extends RecordSharingEvent {
-    private static LoggerUtility logger = new LoggerUtility('NAV Task');
+    private static LoggerUtility logger = new LoggerUtility('STO');
     List<Id> recordIds = new List<Id>();
 
     public override void execute(List<RecordSharingEvent__e> recordSharingEvents) {
@@ -27,10 +27,16 @@ public without sharing class NKS_ThreadSharingEventHandler extends RecordSharing
             ];
             if (threads.size() > 0) {
                 new NKS_ThreadAccessHandler().grantAccessToNewThreads(threads);
+            } else {
+                logger.critical(
+                    'Recieved Record Sharing event but found no Threads: \n' + String.join(recordIds, ', '),
+                    null,
+                    CRM_ApplicationDomain.Domain.NKS
+                );
             }
         } catch (Exception ex) {
             String recordIdsString = String.join(recordIds, ', ');
-            logger.error(
+            logger.critical(
                 'Failed to share records: ' +
                     recordIdsString +
                     '\n' +
@@ -38,8 +44,7 @@ public without sharing class NKS_ThreadSharingEventHandler extends RecordSharing
                     '\n' +
                     ex.getStackTraceString(),
                 null,
-                CRM_ApplicationDomain.Domain.NKS,
-                null
+                CRM_ApplicationDomain.Domain.NKS
             );
         } finally {
             logger.publish();
