@@ -29,7 +29,9 @@
                         </div>
                         <div class="message-info-right">
                             <p><b>Mottatt/Sendt:</b> {!msg.createdDate}</p>
-                            <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'nei')}</p>
+                            <apex:outputPanel rendered="{!recordWrapper.mainRecord['CRM_Thread_Type__c'] != 'CHAT'}">
+                                <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'nei')}</p>
+                            </apex:outputPanel>
                         </div>
                     </div>
                     <div class="message-content">
