@@ -46,6 +46,7 @@ public with sharing class NKS_RecordPrintController {
                         CRM_From_First_Name__c,
                         CRM_From_Ident_Formula__c
                     FROM Messages__r
+                    ORDER BY CRM_Sent_date__c DESC
                 )
             FROM Thread__c
             WHERE Id = :recordId
@@ -86,7 +87,7 @@ public with sharing class NKS_RecordPrintController {
             WHERE INT_UnitNumber__c = :cnote.CRM_Created_By_NAV_Unit__c
         ];
 
-        navUnitName = getUnitName.Name;
+        navUnitName = getUnitName?.Name ?? 'Ukjent enhet';
 
         personIdent = cnote.CRM_Account__r.CRM_Person__r.Name;
         accountName = cnote.CRM_Account__r.Name;
