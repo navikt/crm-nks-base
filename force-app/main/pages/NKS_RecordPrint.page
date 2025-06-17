@@ -3,18 +3,18 @@
 
     <apex:outputPanel rendered="{!NOT(ISNULL(objectType))}">
         <div class="header">
-            <apex:image id="navLogo" url="{!URLFOR($Resource.stoLogos,
-                'navLogo.png')}" />
+            <apex:image
+                id="navLogo"
+                url="{!URLFOR($Resource.stoLogos,
+                'navLogo.png')}"
+            />
             <p>{!accountName}</p>
-            <p id="userIdent">
-                <b>Fødselsnummer: </b> {!personIdent}</p>
+            <p id="userIdent"><b>Fødselsnummer: </b> {!personIdent}</p>
 
             <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
-                <p>
-                    <b>Type:</b> {!recordWrapper.mainRecord['CRM_Thread_Type__c']}</p>
+                <p><b>Type:</b> {!recordWrapper.mainRecord['CRM_Thread_Type__c']}</p>
                 <apex:outputText rendered="{!NOT(ISNULL(recordWrapper.mainRecord['STO_Category__c']))}">
-                    <p>
-                        <b>Tema:</b> {!recordWrapper.mainRecord['STO_Category__c']}</p>
+                    <p><b>Tema:</b> {!recordWrapper.mainRecord['STO_Category__c']}</p>
                 </apex:outputText>
             </apex:outputPanel>
         </div>
@@ -25,20 +25,17 @@
                 <apex:repeat value="{!recordWrapper.messages}" var="msg">
                     <div class="message-container">
                         <div class="message-info-left">
-                            <p>
-                                <b>Skrevet av: </b>{!msg['messageFrom']}</p>
+                            <p><b>Skrevet av: </b>{!msg['messageFrom']}</p>
                         </div>
                         <div class="message-info-right">
-                            <p>
-                                <b>Mottatt/Sendt:</b> {!msg.createdDate} </p>
-                            <p>
-                                <b>Lest/Ulest:</b> {!msg.messageRead} </p>
+                            <p><b>Mottatt/Sendt:</b> {!msg.createdDate}</p>
+                            <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'nei')}</p>
                         </div>
                     </div>
                     <div class="message-content">
                         <p>
                             <b>Innhold:</b>
-                            <br/>
+                            <br />
                             {!msg.message['CRM_Message_Text__c']}
                         </p>
                     </div>
@@ -48,22 +45,23 @@
         </apex:outputPanel>
 
         <apex:outputPanel rendered="{!objectType == 'Conversation_Note__c'}">
-            <h2>Samtalereferat {!recordWrapper.comChannelNorwegian} - {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</h2>
+            <h2>
+                Samtalereferat {!recordWrapper.comChannelNorwegian} -
+                {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}
+            </h2>
             <div class="message-container">
                 <div class="message-info-left">
+                    <p><b>Registrert: </b> {!recordWrapper.createdDate}</p>
+                    <p><b>Opprettet av: </b> {!recordWrapper.mainRecord['CRM_Created_By_Ident__c']}</p>
                     <p>
-                        <b>Registrert: </b> {!recordWrapper.createdDate}</p>
-                    <p>
-                        <b>Opprettet av: </b> {!recordWrapper.mainRecord['CRM_Created_By_Ident__c']} </p>
-                    <p>
-                        <b>Opprettet av enhet: </b> {!navUnitName} ({!recordWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})</p>
+                        <b>Opprettet av enhet: </b> {!navUnitName}
+                        ({!recordWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})
+                    </p>
                 </div>
 
                 <div class="message-info-right">
-                    <p>
-                        <b>Temagruppe: </b> {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</p>
-                    <p>
-                        <b>Tema: </b> {!recordWrapper.mainRecord['CRM_Theme_Name__c']}</p>
+                    <p><b>Temagruppe: </b> {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</p>
+                    <p><b>Tema: </b> {!recordWrapper.mainRecord['CRM_Theme_Name__c']}</p>
                 </div>
             </div>
             <div class="message-content">

@@ -169,7 +169,11 @@ public with sharing class NKS_RecordPrintController {
             if (msg == null) {
                 return '';
             }
-            return msg.CRM_Read__c ? 'Lest: ' + msg.CRM_Read_Datetime__c : 'Ulest';
+            return msg.CRM_Read__c ? dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'nei';
+        }
+
+        private String dateTimeFormatter(Datetime dt) {
+            return dt?.format();
         }
     }
 }
