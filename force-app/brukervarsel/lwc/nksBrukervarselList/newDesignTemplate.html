@@ -1,5 +1,5 @@
 <template>
-    <article class="slds-card">
+    <article class="slds-card" style="margin: 0 1.25rem">
         <!-- Card Header -->
         <div class="slds-card__header slds-grid slds-grid_align-center slds-grid_vertical-align-center">
             <header
@@ -13,7 +13,7 @@
                 </div>
                 <div>
                     <lightning-layout horizontal-align="end" vertical-align="end">
-                        <lightning-layout-item size="4" class="slds-var-p-right_xx-small">
+                        <lightning-layout-item size="4" class="slds-var-p-right_x-small">
                             <lightning-input
                                 type="date"
                                 name="fromDate"
@@ -24,7 +24,7 @@
                                 max={maxDate}
                             ></lightning-input>
                         </lightning-layout-item>
-                        <lightning-layout-item size="4" class="slds-var-p-right_xx-small">
+                        <lightning-layout-item size="4" class="slds-var-p-right_x-small">
                             <lightning-input
                                 type="date"
                                 name="toDate"
@@ -35,7 +35,7 @@
                                 max={maxDate}
                             ></lightning-input>
                         </lightning-layout-item>
-                        <lightning-layout-item size="1">
+                        <lightning-layout-item size="1" class="slds-m-bottom_xxx-small">
                             <lightning-button-icon
                                 icon-name="utility:refresh"
                                 variant="border-filled"
