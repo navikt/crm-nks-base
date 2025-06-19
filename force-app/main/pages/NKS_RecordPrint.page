@@ -28,20 +28,18 @@
                             <p><b>Skrevet av: </b>{!msg['messageFrom']}</p>
                         </div>
                         <div class="message-info-right">
-                            <p><b>Mottatt/Sendt:</b> {!msg.createdDate}</p>
-                            <apex:outputPanel rendered="{!recordWrapper.mainRecord['CRM_Thread_Type__c'] != 'CHAT'}">
-                                <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'nei')}</p>
-                            </apex:outputPanel>
+                            <p><b>Mottatt/Sendt:</b> {!msg['createdDate']}</p>
+                            <apex:outputText rendered="{!recordWrapper.mainRecord['CRM_Thread_Type__c'] != 'CHAT'}">
+                                <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'Ulest')}</p>
+                            </apex:outputText>
                         </div>
                     </div>
-                    <div class="message-content">
-                        <p>
-                            <b>Innhold:</b>
-                            <br />
-                            {!msg.message['CRM_Message_Text__c']}
-                        </p>
-                    </div>
+
+                    <apex:outputField styleClass="message-content" Label="Innhold:" value="{!msg.message['CRM_Message_Text__c']}">
+                    </apex:outputField>
+                    <br />
                     <hr />
+                    <br />
                 </apex:repeat>
             </apex:outputPanel>
         </apex:outputPanel>

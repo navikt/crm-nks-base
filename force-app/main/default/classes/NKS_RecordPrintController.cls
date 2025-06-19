@@ -37,15 +37,18 @@ public with sharing class NKS_RecordPrintController {
                 CRM_Account__r.Name,
                 (
                     SELECT
+                        Id,
                         CRM_Message_Text__c,
                         CRM_External_Message__c,
                         CRM_Sent_date__c,
                         CRM_Read__c,
                         CRM_Read_Datetime__c,
                         CRM_From_First_Name__c,
-                        CRM_From_Ident_Formula__c
+                        CRM_From_Last_Name__c,
+                        CRM_From_Ident_Formula__c,
+                        CRM_Type__c
                     FROM Messages__r
-                    ORDER BY CRM_Sent_date__c DESC
+                    ORDER BY CRM_Sent_date__c ASC
                 )
             FROM Thread__c
             WHERE Id = :recordId
@@ -57,7 +60,7 @@ public with sharing class NKS_RecordPrintController {
         List<MessageWrapper> messages = new List<MessageWrapper>();
 
         for (Message__c msg : thread.Messages__r) {
-            messages.add(new MessageWrapper(msg, personIdent));
+            messages.add(new MessageWrapper(msg));
         }
 
         recordWrapper = new RecordPrintWrapper(thread, messages);
@@ -102,8 +105,6 @@ public with sharing class NKS_RecordPrintController {
 
         // Thread fields
         public List<MessageWrapper> messages { get; set; }
-        public String messageFrom { get; set; }
-        public String messageRead { get; set; }
 
         // Thread constructor
         public RecordPrintWrapper(sObject mainRecord, List<MessageWrapper> messages) {
@@ -121,7 +122,7 @@ public with sharing class NKS_RecordPrintController {
         }
 
         private String dateTimeFormatter(Datetime dt) {
-            return dt?.format();
+            return dt?.format('dd.MM.yyyy') + ', kl ' + dt.format('HH:mm');
         }
 
         private String translateCommunicationChannel(String communicationChannel) {
@@ -143,12 +144,10 @@ public with sharing class NKS_RecordPrintController {
         public String createdDate { get; set; }
         public String messageFrom { get; set; }
         public String messageRead { get; set; }
-        public String personIdent { get; set; }
 
-        public MessageWrapper(Message__c message, String personIdent) {
+        public MessageWrapper(Message__c message) {
             this.message = message;
-            this.personIdent = personIdent;
-            this.createdDate = message?.CRM_Sent_date__c != null ? message.CRM_Sent_date__c.format() : '';
+            this.createdDate = message?.CRM_Sent_date__c != null ? dateTimeFormatter(message.CRM_Sent_date__c) : '';
             this.messageFrom = setMessageFrom(message);
             this.messageRead = setMessageRead(message);
         }
@@ -157,11 +156,15 @@ public with sharing class NKS_RecordPrintController {
             if (msg == null) {
                 return '';
             }
-            if (msg.CRM_External_Message__c) {
-                return (personIdent != null ? personIdent : 'Ukjent') + ' (Bruker)';
+
+            String fullName = message.CRM_From_First_Name__c + ' ' + message.CRM_From_Last_Name__c;
+
+            if (message.CRM_Type__c != 'Message') {
+                return 'Systemmelding';
             } else {
-                return (msg.CRM_From_Ident_Formula__c != null ? msg.CRM_From_Ident_Formula__c : 'Ukjent') +
-                    ' (Veileder)';
+                return String.isBlank(message.CRM_From_Last_Name__c)
+                    ? 'Ukjent'
+                    : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
         }
 
@@ -169,11 +172,11 @@ public with sharing class NKS_RecordPrintController {
             if (msg == null) {
                 return '';
             }
-            return msg.CRM_Read__c ? dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'nei';
+            return msg.CRM_Read__c ? dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'ulest';
         }
 
         private String dateTimeFormatter(Datetime dt) {
-            return dt?.format();
+            return dt?.format('dd.MM.yyyy') + ', kl ' + dt.format('HH:mm');
         }
     }
 }
