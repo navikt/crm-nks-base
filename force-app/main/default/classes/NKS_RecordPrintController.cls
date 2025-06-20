@@ -122,7 +122,7 @@ public with sharing class NKS_RecordPrintController {
         }
 
         private String dateTimeFormatter(Datetime dt) {
-            return dt?.format('dd.MM.yyyy') + ', kl ' + dt.format('HH:mm');
+            return dt?.format('dd.MM.yyyy') + ', kl ' + dt?.format('HH:mm');
         }
 
         private String translateCommunicationChannel(String communicationChannel) {
@@ -176,7 +176,7 @@ public with sharing class NKS_RecordPrintController {
         }
 
         private String dateTimeFormatter(Datetime dt) {
-            return dt?.format('dd.MM.yyyy') + ', kl ' + dt.format('HH:mm');
+            return dt?.format('dd.MM.yyyy') + ', kl ' + dt?.format('HH:mm');
         }
     }
 }
