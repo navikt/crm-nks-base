@@ -1,0 +1,8 @@
+<apex:page title="Utskrift" showHeader="false" sidebar="false" standardStylesheets="false" cache="false" controller="NKS_RecordPrintController">
+    <iframe
+        src="/apex/NKS_RecordPrint?id={!recordId}"
+        width="100%"
+        height="1000px"
+        style="border: none;">
+    </iframe>
+</apex:page>
