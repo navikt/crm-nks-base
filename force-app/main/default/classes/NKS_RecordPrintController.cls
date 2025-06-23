@@ -44,7 +44,6 @@ public with sharing class NKS_RecordPrintController {
                         CRM_Read__c,
                         CRM_Read_Datetime__c,
                         CRM_From_First_Name__c,
-                        CRM_From_Last_Name__c,
                         CRM_From_Ident_Formula__c,
                         CRM_Type__c
                     FROM Messages__r
@@ -53,6 +52,8 @@ public with sharing class NKS_RecordPrintController {
             FROM Thread__c
             WHERE Id = :recordId
         ];
+
+        //FROM HERE HIHIHIHIHHI
 
         personIdent = thread.CRM_Account__r.CRM_Person__r.Name;
         accountName = thread.CRM_Account__r.Name;
@@ -157,10 +158,9 @@ public with sharing class NKS_RecordPrintController {
                 return '';
             }
 
-            String fullName =
-                (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
-                ' ' +
-                (String.isBlank(msg.CRM_From_Last_Name__c) ? '' : msg.CRM_From_Last_Name__c);
+            String fullName = (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c);
+
+            System.debug(fullName);
 
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
