@@ -157,7 +157,7 @@ public with sharing class NKS_RecordPrintController {
                 return '';
             }
 
-            String fullName = message.CRM_From_First_Name__c + ' ' + message.CRM_From_Last_Name__c;
+            String fullName = message.CRM_From_First_Name__c + ' ' + String.isBlank(message.CRM_From_Last_Name__c);
 
             if (message.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
