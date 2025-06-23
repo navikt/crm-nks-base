@@ -157,12 +157,15 @@ public with sharing class NKS_RecordPrintController {
                 return '';
             }
 
-            String fullName = message.CRM_From_First_Name__c + ' ' + String.isBlank(message.CRM_From_Last_Name__c);
+            String fullName =
+                (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
+                ' ' +
+                (String.isBlank(msg.CRM_From_Last_Name__c) ? '' : msg.CRM_From_Last_Name__c);
 
-            if (message.CRM_Type__c != 'Message') {
+            if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return String.isBlank(message.CRM_From_Last_Name__c)
+                return String.isBlank(msg.CRM_From_Last_Name__c)
                     ? 'Ukjent'
                     : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
