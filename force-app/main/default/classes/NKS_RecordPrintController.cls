@@ -162,13 +162,14 @@ public with sharing class NKS_RecordPrintController {
                 ' ' +
                 (String.isBlank(msg.CRM_From_Last_Name__c) ? '' : msg.CRM_From_Last_Name__c);
 
+            System.debug(msg.CRM_From_First_Name__c);
             System.debug(msg.CRM_From_Last_Name__c);
             System.debug(fullName);
 
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return String.isBlank(msg.CRM_From_Last_Name__c)
+                return String.isBlank(fullName)
                     ? 'Ukjent'
                     : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
