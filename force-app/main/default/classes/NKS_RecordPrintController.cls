@@ -44,7 +44,7 @@ public with sharing class NKS_RecordPrintController {
                         CRM_Read__c,
                         CRM_Read_Datetime__c,
                         CRM_From_First_Name__c,
-                        CRM_From_Last_Name__c,
+                        //CRM_From_Last_Name__c,
                         CRM_From_Ident_Formula__c,
                         CRM_Type__c
                     FROM Messages__r
@@ -159,8 +159,8 @@ public with sharing class NKS_RecordPrintController {
             }
 
             String firstName = (msg.CRM_From_First_Name__c != null) ? msg.CRM_From_First_Name__c : '';
-            String lastName = (msg.CRM_From_Last_Name__c != null) ? msg.CRM_From_Last_Name__c : '';
-            String fullName = firstName + ' ' + lastName;
+            //String lastName = (msg.CRM_From_Last_Name__c != null) ? msg.CRM_From_Last_Name__c : '';
+            String fullName = firstName + ' '; // + lastName;
 
             // String fullName =
             //     (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
@@ -170,7 +170,7 @@ public with sharing class NKS_RecordPrintController {
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return (fullName == '')
+                return (fullName == ' ')
                     ? 'Ukjent'
                     : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
