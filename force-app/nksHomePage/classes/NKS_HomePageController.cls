@@ -59,7 +59,8 @@ public with sharing class NKS_HomePageController {
         if (announcement.isEmpty() || String.isBlank(announcement[0].NKS_Information__c)) {
             return null;
         }
-        announcement[0].NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+        announcement[0].NKS_Information__c = announcement[0]
+            .NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
         return announcement[0];
     }
 

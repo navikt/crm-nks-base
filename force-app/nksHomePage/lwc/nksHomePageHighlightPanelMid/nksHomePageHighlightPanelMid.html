@@ -2,7 +2,7 @@
     <lightning-layout class="container">
         <lightning-layout-item class="margin-area"></lightning-layout-item>
         <template for:each={links} for:item="link">
-            <lightning-layout-item key={link.id} class="font-style">
+            <lightning-layout-item key={link.url} class="font-style">
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
                     {link.title}
                     <svg
@@ -11,7 +11,6 @@
                         xmlns="http://www.w3.org/2000/svg"
                         style="aspect-ratio: 1; height: 1.2rem; margin-bottom: 6px"
                     >
-                        ;
                         <use href={link.imageUrl}></use>
                     </svg>
                 </a>
