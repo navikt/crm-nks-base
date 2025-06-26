@@ -1,5 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
-import getField from '@salesforce/apex/NKS_HomePageController.getField';
+import getAnnouncement from '@salesforce/apex/NKS_HomePageController.getAnnouncement';
 import { NavigationMixin } from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 
@@ -10,11 +10,13 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     @api listViewName;
     @api enableRefresh = false;
 
-    text;
+    wiredAnnouncement;
     pageUrl;
-    wiredField;
     showSpinner = false;
     recordTypeName = '';
+    information;
+    openingsHoursLable;
+    openingHoursInformation;
 
     recordTypeMap = {
         Nyhet: 'News',
@@ -24,12 +26,12 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         Trafikk: 'Traffic'
     };
 
-    @wire(getField, {
+    @wire(getAnnouncement, {
         type: '$recordTypeName'
     })
     wiredData(result) {
-        this.wiredField = result;
-        this.loadField();
+        this.wiredAnnouncement = result;
+        this.loadAnnouncement();
     }
 
     connectedCallback() {
@@ -37,19 +39,21 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         this.generatePageUrl();
     }
 
-    loadField() {
-        const { error, data } = this.wiredField;
+    loadAnnouncement() {
+        const { error, data } = this.wiredAnnouncement;
         if (data) {
-            this.text = data?.length > 0 ? data : null;
+            this.information = data?.NKS_Information__c;
+            this.openingsHoursLable = data?.NKS_Opening_Hours_Label__c;
+            this.openingHoursInformation = data?.NKS_Opening_Hours_Information__c;
         } else if (error) {
-            console.error('An error occurred:', error);
+            console.error('An error occurred: ', error);
         }
     }
 
-    refreshField() {
+    refreshAnnouncement() {
         this.showSpinner = true;
-        refreshApex(this.wiredField)
-            .then(() => this.loadField())
+        refreshApex(this.wiredAnnouncement)
+            .then(() => this.loadAnnouncement())
             .finally(() => (this.showSpinner = false));
     }
 
@@ -94,7 +98,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     }
 
     get showOperational() {
-        return this.isOperational && this.text;
+        return this.isOperational && this.information;
     }
 
     get isOperational() {
@@ -102,6 +106,10 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     }
 
     get showSalesforceUpdate() {
-        return this.isSalesforceUpdate && this.text;
+        return this.isSalesforceUpdate && this.information;
+    }
+
+    get hasOpeningHours() {
+        return this.openingsHoursLable && this.openingHoursInformation;
     }
 }
