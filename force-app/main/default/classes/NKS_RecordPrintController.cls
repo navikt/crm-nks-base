@@ -148,7 +148,6 @@ public with sharing class NKS_RecordPrintController {
 
         public MessageWrapper(Message__c message) {
             this.message = message;
-            this.lastName = msg.CRM_From_Last_Name__c;
             this.createdDate = message?.CRM_Sent_date__c != null ? dateTimeFormatter(message.CRM_Sent_date__c) : '';
             this.messageFrom = setMessageFrom(message);
             this.messageRead = setMessageRead(message);
@@ -159,15 +158,19 @@ public with sharing class NKS_RecordPrintController {
                 return '';
             }
 
-            String fullName =
-                (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
-                ' ' +
-                (String.isBlank(msg.lastName) ? '' : msg.lastName);
+            String firstName = (msg.CRM_From_First_Name__c != null) ? msg.CRM_From_First_Name__c : '';
+            String lastName = (msg.CRM_From_Last_Name__c != null) ? msg.CRM_From_Last_Name__c : '';
+            String fullName = firstName + ' ' + lastName;
+
+            // String fullName =
+            //     (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
+            //     ' ' +
+            //     (String.isBlank(msg.lastName) ? '' : msg.lastName);
 
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return String.isBlank(msg.lastName)
+                return (fullName == '')
                     ? 'Ukjent'
                     : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
