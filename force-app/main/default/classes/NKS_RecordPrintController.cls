@@ -144,9 +144,11 @@ public with sharing class NKS_RecordPrintController {
         public String createdDate { get; set; }
         public String messageFrom { get; set; }
         public String messageRead { get; set; }
+        public String lastName { get; set; }
 
         public MessageWrapper(Message__c message) {
             this.message = message;
+            this.lastName = msg.CRM_From_Last_Name__c;
             this.createdDate = message?.CRM_Sent_date__c != null ? dateTimeFormatter(message.CRM_Sent_date__c) : '';
             this.messageFrom = setMessageFrom(message);
             this.messageRead = setMessageRead(message);
@@ -160,16 +162,12 @@ public with sharing class NKS_RecordPrintController {
             String fullName =
                 (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
                 ' ' +
-                (String.isBlank(msg.CRM_From_Last_Name__c) ? '' : msg.CRM_From_Last_Name__c);
-
-            System.debug(msg.CRM_From_First_Name__c);
-            System.debug(msg.CRM_From_Last_Name__c);
-            System.debug(fullName);
+                (String.isBlank(msg.lastName) ? '' : msg.lastName);
 
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return String.isBlank(fullName)
+                return String.isBlank(msg.lastName)
                     ? 'Ukjent'
                     : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
             }
