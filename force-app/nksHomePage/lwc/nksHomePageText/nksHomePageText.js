@@ -26,21 +26,21 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         Trafikk: 'Traffic'
     };
 
-    @wire(getAnnouncement, {
-        type: '$recordTypeName'
-    })
-    wiredData(result) {
-        this.wiredAnnouncement = result;
-        this.loadAnnouncement();
-    }
-
     connectedCallback() {
         this.recordTypeName = this.recordTypeMap[this.type] || this.type;
         this.generatePageUrl();
     }
 
-    loadAnnouncement() {
-        const { error, data } = this.wiredAnnouncement;
+    @wire(getAnnouncement, {
+        type: '$recordTypeName'
+    })
+    wiredData(result) {
+        this.wiredAnnouncement = result;
+        this.loadAnnouncement(result);
+    }
+
+    loadAnnouncement(result = this.wiredAnnouncement) {
+        const { error, data } = result;
         if (data) {
             this.information = data?.NKS_Information__c;
             this.openingsHoursLabel = data?.NKS_Opening_Hours_Label__c;
@@ -93,10 +93,6 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         return this.type === 'Trafikk';
     }
 
-    get icon() {
-        return this.iconName && this.iconName.trim() !== '' ? this.iconName : null;
-    }
-
     get showOperational() {
         return this.isOperational && this.information;
     }
@@ -110,6 +106,6 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     }
 
     get hasOpeningHours() {
-        return this.openingsHoursLabel && this.openingHoursInformation;
+        return !!(this.openingsHoursLabel && this.openingHoursInformation);
     }
 }

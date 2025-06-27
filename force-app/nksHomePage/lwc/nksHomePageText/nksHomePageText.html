@@ -45,7 +45,7 @@
     </template>
     <template lwc:elseif={isTraffic}>
         <section class="slds-box slds-theme_default slds-is-relative">
-            <lightning-layout class="slds-grid slds-wrapp slds-var-p-bottom_small">
+            <lightning-layout class="slds-grid slds-wrap slds-var-p-bottom_small">
                 <template lwc:if={iconName}>
                     <lightning-layout-item class="slds-media__figure">
                         <lightning-icon
@@ -68,8 +68,10 @@
                             onclick={refreshField}
                         ></lightning-button-icon>
                     </lightning-layout-item>
-                    <template lwc:if={showSpinner} class="slds-spinner_container">
-                        <lightning-spinner title="Loading" size="small" type="brand"></lightning-spinner>
+                    <template lwc:if={showSpinner}>
+                        <div class="slds-spinner_container">
+                            <lightning-spinner title="Loading" size="small" type="brand"></lightning-spinner>
+                        </div>
                     </template>
                 </template>
             </lightning-layout>
@@ -77,7 +79,7 @@
                 <p class="slds-var-p-horizontal_medium">
                     <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
                 </p>
-                <tempalte lwc:if={hasOpeningHours}>
+                <template lwc:if={hasOpeningHours}>
                     <div class="slds-var-m-top_large">
                         <c-nks-expandable-panel title={openingsHoursLabel} is-expandable chevron-left is-first>
                             <lightning-formatted-rich-text
@@ -85,7 +87,7 @@
                             ></lightning-formatted-rich-text>
                         </c-nks-expandable-panel>
                     </div>
-                </tempalte>
+                </template>
             </template>
             <template lwc:else>
                 <div class="slds-illustration slds-illustration_small">
