@@ -1,22 +1,27 @@
 <template>
-    <template if:true={hasRecord}>
+    <template lwc:if={hasRecord}>
         <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
-            <lightning-layout class="slds-grid slds-wrap slds-var-p-bottom_small">
-                <template if:true={iconName}>
-                    <lightning-layout-item class="slds-media__figure">
+            <template lwc:if={showSpinner}>
+                <div class="slds-spinner_container">
+                    <lightning-spinner alternative-text="Laster" size="medium" variant="brand"></lightning-spinner>
+                </div>
+            </template>
+            <div class="slds-media slds-align-middle slds-var-p-bottom_small">
+                <template lwc:if={iconName}>
+                    <div class="slds-media__figure slds-align_absolute-center">
                         <lightning-icon
                             aria-hidden="true"
                             icon-name={iconName}
                             class="slds-icon_container"
                             size="small"
                         ></lightning-icon>
-                    </lightning-layout-item>
+                    </div>
                 </template>
-                <lightning-layout-item>
+                <div class="slds-media__body">
                     <h2 id="nav1" class="slds-text-heading_medium slds-truncate">{cardLabel}</h2>
-                </lightning-layout-item>
-                <template if:true={enableRefresh}>
-                    <lightning-layout-item class="slds-col">
+                </div>
+                <template lwc:if={enableRefresh}>
+                    <div class="slds-media__body">
                         <lightning-button-icon
                             class="slds-float_right"
                             alternative-text="Oppdater"
@@ -24,52 +29,10 @@
                             disabled={isRefreshDisabled}
                             onclick={refreshComponent}
                         ></lightning-button-icon>
-                    </lightning-layout-item>
-                    <template if:true={showSpinner} class="slds-spinner_container">
-                        <lightning-spinner alternative-text="Laster" size="medium" variant="brand"></lightning-spinner>
-                    </template>
+                    </div>
                 </template>
-            </lightning-layout>
-            <template if:false={isKnowledge}>
-                <template if:false={isStripedList}>
-                    <template if:false={isNews}>
-                        <ul class="slds-list_vertical-space-medium">
-                            <template for:each={records} for:item="record">
-                                <li class="slds-item" key={record.recordId}>
-                                    <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
-                                </li>
-                            </template>
-                        </ul>
-                    </template>
-                    <template if:true={isNews}>
-                        <ul>
-                            <template for:each={newsRecords} for:item="record">
-                                <li class="slds-item slds-var-p-vertical_small slds-border_top" key={record.recordId}>
-                                    <c-nks-home-page-list-entry
-                                        record={record}
-                                        is-news={isNews}
-                                        is-pinned={record.pin}
-                                    ></c-nks-home-page-list-entry>
-                                </li>
-                            </template>
-                        </ul>
-                    </template>
-                </template>
-                <template if:true={isStripedList}>
-                    <ul class="stripedList">
-                        <template for:each={records} for:item="record" for:index="index">
-                            <li class="slds-item" key={record.recordId}>
-                                <c-nks-home-page-striped-list-entry
-                                    record={record}
-                                    index={index}
-                                    last-index={lastIndex}
-                                ></c-nks-home-page-striped-list-entry>
-                            </li>
-                        </template>
-                    </ul>
-                </template>
-            </template>
-            <div if:true={isKnowledge} class="slds-box slds-p-vertical_none slds-p-horizontal_none slds-theme_default">
+            </div>
+            <div lwc:if={isKnowledge} class="slds-box slds-p-vertical_none slds-p-horizontal_none slds-theme_default">
                 <ul>
                     <template for:each={records} for:item="record">
                         <li
@@ -89,15 +52,50 @@
                     </div>
                 </ul>
             </div>
+            <template lwc:elseif={isNews}>
+                <ul>
+                    <template for:each={newsRecords} for:item="record">
+                        <li class="slds-item slds-var-p-vertical_small slds-border_top" key={record.recordId}>
+                            <c-nks-home-page-list-entry
+                                record={record}
+                                is-news={isNews}
+                                is-pinned={record.pin}
+                            ></c-nks-home-page-list-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template lwc:elseif={isStripedList}>
+                <ul class="stripedList">
+                    <template for:each={records} for:item="record" for:index="index">
+                        <li class="slds-item" key={record.recordId}>
+                            <c-nks-home-page-striped-list-entry
+                                record={record}
+                                index={index}
+                                last-index={lastIndex}
+                            ></c-nks-home-page-striped-list-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template lwc:else>
+                <ul class="slds-list_vertical-space-medium">
+                    <template for:each={records} for:item="record">
+                        <li class="slds-item" key={record.recordId}>
+                            <c-nks-home-page-list-entry record={record}></c-nks-home-page-list-entry>
+                        </li>
+                    </template>
+                </ul>
+            </template>
             <div class="slds-var-p-top_small">
                 <lightning-formatted-url value={pageUrl} label={linklabel} onclick={navigateToList}>
                 </lightning-formatted-url>
             </div>
         </section>
     </template>
-    <template if:true={setEmptyStateForCase}>
+    <template lwc:if={setEmptyStateForCase}>
         <section class="slds-box slds-theme_default slds-is-relative" aria-labelledby="nav1">
-            <template if:true={enableRefresh}>
+            <template lwc:if={enableRefresh}>
                 <lightning-layout-item class="slds-col">
                     <lightning-button-icon
                         class="slds-float_right"
@@ -107,9 +105,6 @@
                         onclick={refreshComponent}
                     ></lightning-button-icon>
                 </lightning-layout-item>
-                <template if:true={showSpinner} class="slds-spinner_container">
-                    <lightning-spinner alternative-text="Laster" size="medium" variant="brand"></lightning-spinner>
-                </template>
             </template>
             <div class="slds-illustration slds-illustration_small">
                 <svg
