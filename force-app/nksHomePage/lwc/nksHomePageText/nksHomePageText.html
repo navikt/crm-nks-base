@@ -13,7 +13,7 @@
                 <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
             </lightning-layout>
             <p class="slds-var-p-horizontal_medium">
-                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+                <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
             </p>
         </section>
     </template>
@@ -31,7 +31,7 @@
                 <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
             </lightning-layout>
             <p class="slds-var-p-horizontal_medium">
-                <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+                <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
             </p>
             <div class="slds-var-p-top_small">
                 <lightning-formatted-url
@@ -73,10 +73,19 @@
                     </template>
                 </template>
             </lightning-layout>
-            <template lwc:if={text}>
+            <template lwc:if={information}>
                 <p class="slds-var-p-horizontal_medium">
-                    <lightning-formatted-rich-text value={text}></lightning-formatted-rich-text>
+                    <lightning-formatted-rich-text value={information}></lightning-formatted-rich-text>
                 </p>
+                <tempalte lwc:if={hasOpeningHours}>
+                    <div class="slds-var-m-top_large">
+                        <c-nks-expandable-panel title={openingsHoursLabel} is-expandable chevron-left is-first>
+                            <lightning-formatted-rich-text
+                                value={openingHoursInformation}
+                            ></lightning-formatted-rich-text>
+                        </c-nks-expandable-panel>
+                    </div>
+                </tempalte>
             </template>
             <template lwc:else>
                 <div class="slds-illustration slds-illustration_small">

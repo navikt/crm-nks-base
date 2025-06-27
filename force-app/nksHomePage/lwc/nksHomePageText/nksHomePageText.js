@@ -15,7 +15,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     showSpinner = false;
     recordTypeName = '';
     information;
-    openingsHoursLable;
+    openingsHoursLabel;
     openingHoursInformation;
 
     recordTypeMap = {
@@ -43,7 +43,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         const { error, data } = this.wiredAnnouncement;
         if (data) {
             this.information = data?.NKS_Information__c;
-            this.openingsHoursLable = data?.NKS_Opening_Hours_Label__c;
+            this.openingsHoursLabel = data?.NKS_Opening_Hours_Label__c;
             this.openingHoursInformation = data?.NKS_Opening_Hours_Information__c;
         } else if (error) {
             console.error('An error occurred: ', error);
@@ -110,6 +110,6 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     }
 
     get hasOpeningHours() {
-        return this.openingsHoursLable && this.openingHoursInformation;
+        return this.openingsHoursLabel && this.openingHoursInformation;
     }
 }
