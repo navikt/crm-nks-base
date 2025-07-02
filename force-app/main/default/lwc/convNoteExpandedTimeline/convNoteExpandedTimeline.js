@@ -53,6 +53,7 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
 
         if (!this.recordId) {
             console.error('No record ID found!');
+            this.btnDisabled = true;
             return;
         }
 
