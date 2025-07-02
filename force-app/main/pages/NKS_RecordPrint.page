@@ -8,13 +8,13 @@
                 url="{!URLFOR($Resource.stoLogos,
                 'navLogo.png')}"
             />
-            <p>{!accountName}</p>
-            <p id="userIdent"><b>Fødselsnummer: </b> {!personIdent}</p>
+            <p><b>{!accountName}</b></p>
+            <p id="userIdent">Fødselsnummer: <b> {!personIdent}</b></p>
 
             <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
-                <p><b>Type:</b> {!recordWrapper.mainRecord['CRM_Thread_Type__c']}</p>
+                <p>Type: <b>{!recordWrapper.mainRecord['CRM_Thread_Type__c']}</b></p>
                 <apex:outputText rendered="{!NOT(ISNULL(recordWrapper.mainRecord['STO_Category__c']))}">
-                    <p><b>Tema:</b> {!recordWrapper.mainRecord['STO_Category__c']}</p>
+                    <p>Tema: <b>{!recordWrapper.mainRecord['STO_Category__c']}</b></p>
                 </apex:outputText>
             </apex:outputPanel>
         </div>
@@ -25,20 +25,22 @@
                 <apex:repeat value="{!recordWrapper.messages}" var="msg">
                     <div class="message-container">
                         <div class="message-info-left">
-                            <p><b>Skrevet av: </b>{!msg['messageFrom']}</p>
+                            <p><b>Skrevet av {!msg['messageFrom']} - {!msg['createdDate']}</b></p>
                         </div>
                         <div class="message-info-right">
-                            <p><b>Mottatt/Sendt:</b> {!msg['createdDate']}</p>
                             <apex:outputText rendered="{!recordWrapper.mainRecord['CRM_Thread_Type__c'] != 'CHAT'}">
-                                <p><b>Lest:</b> {!IF(msg.messageRead != 'ulest', msg.messageRead, 'Ulest')}</p>
+                                <p>{!IF(msg.messageRead != 'ulest', msg.messageRead, 'Ulest')}</p>
                             </apex:outputText>
                         </div>
+
                     </div>
 
                     <span class="message-container">
                         <apex:outputField label="Innhold:" value="{!msg.message['CRM_Message_Text__c']}">
                         </apex:outputField>
                     </span>
+                    <br />
+                    <br />
                     <br />
                     <hr />
                     <br />

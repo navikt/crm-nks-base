@@ -20,13 +20,13 @@
 
 .message-info-left {
     float: left;
-    width: 60%;
+    width: 70%;
     text-align: left;
 }
 
 .message-info-right {
     float: right;
-    width: 40%;
+    width: 30%;
     text-align: left;
 }
   
