@@ -8,15 +8,8 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     _recordId;
     _recordInfo;
-    badgeClass = 'slds-badge slds-badge_centered custom-badge';
-    iconClass = 'slds-icon_container custom-icon';
-    iconName = 'utility:success';
     isEditing = false;
     draft;
-
-    connectedCallback() {
-        this.updateBadgeClass();
-    }
 
     @api
     get recordId() {
@@ -25,9 +18,6 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
 
     set recordId(value) {
         this._recordId = value;
-        if (value) {
-            this.updateBadgeClass();
-        }
     }
 
     @api
@@ -38,7 +28,6 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
     set recordInfo(value) {
         this._recordInfo = value;
         this.draft = value;
-        this.updateBadgeClass();
     }
 
     get ariaExpanded() {
@@ -49,26 +38,34 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
         return hasPermission;
     }
 
-    updateBadgeClass() {
-        const baseBadgeClass = 'slds-badge slds-badge_centered custom-badge';
-        const baseIconClass = 'slds-icon_container custom-icon';
-
-        this.badgeClass = baseBadgeClass;
-        this.iconClass = baseIconClass;
+    get badgeClass() {
+        const base = 'slds-badge slds-badge_centered custom-badge';
 
         if (!this.recordId) {
-            this.badgeClass = `${baseBadgeClass} slds-theme_success disabled-badge`;
-            this.iconClass = `${baseIconClass} slds-icon-utility-success`;
-            this.iconName = 'utility:success';
-        } else if (this.recordInfo) {
-            this.badgeClass = `${baseBadgeClass} slds-theme_error cursor-pointer`;
-            this.iconClass = `${baseIconClass} slds-icon-utility-error`;
-            this.iconName = 'utility:error';
-        } else {
-            this.badgeClass = `${baseBadgeClass} slds-theme_success ${this.isEditable ? 'cursor-pointer' : ''}`.trim();
-            this.iconClass = `${baseIconClass} slds-icon-utility-success`;
-            this.iconName = 'utility:success';
+            return `${base} slds-theme_success disabled-badge`;
         }
+
+        if (this.recordInfo) {
+            return `${base} slds-theme_error cursor-pointer`;
+        }
+
+        return `${base} slds-theme_success ${this.isEditable ? 'cursor-pointer' : ''}`.trim();
+    }
+
+    get iconClass() {
+        return `slds-icon_container custom-icon ${this.iconName === 'utility:error' ? 'slds-icon-utility-error' : 'slds-icon-utility-success'}`;
+    }
+
+    get iconName() {
+        if (!this.recordId) {
+            return 'utility:success';
+        }
+
+        return this.recordInfo ? 'utility:error' : 'utility:success';
+    }
+
+    get headerLineClass() {
+        return this.recordInfo ? 'headerLine slds-theme_error' : 'headerLine slds-theme_success';
     }
 
     toggleDropdown() {
@@ -121,7 +118,6 @@ export default class NksHomePageHighlightPanelBadge extends LightningElement {
         updateNksStatus({ fields })
             .then(() => {
                 this._recordInfo = this.draft;
-                this.updateBadgeClass();
                 console.log('NKS status updated successfully');
             })
             .catch((error) => {
