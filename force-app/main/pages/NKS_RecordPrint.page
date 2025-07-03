@@ -12,7 +12,7 @@
             <p id="userIdent">Fødselsnummer: <b> {!personIdent}</b></p>
 
             <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
-                <p>Type: <b>{!recordWrapper.mainRecord['CRM_Thread_Type__c']}</b></p>
+                <p>Type: <b>{!recordWrapper.threadTypeName}</b></p>
                 <apex:outputText rendered="{!NOT(ISNULL(recordWrapper.mainRecord['STO_Category__c']))}">
                     <p>Tema: <b>{!recordWrapper.mainRecord['STO_Category__c']}</b></p>
                 </apex:outputText>

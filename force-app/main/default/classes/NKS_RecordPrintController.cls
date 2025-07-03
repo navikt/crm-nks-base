@@ -44,7 +44,6 @@ public with sharing class NKS_RecordPrintController {
                         CRM_Read__c,
                         CRM_Read_Datetime__c,
                         CRM_From_First_Name__c,
-                        //CRM_From_Last_Name__c,
                         CRM_From_Ident_Formula__c,
                         CRM_Type__c
                     FROM Messages__r
@@ -105,11 +104,13 @@ public with sharing class NKS_RecordPrintController {
 
         // Thread fields
         public List<MessageWrapper> messages { get; set; }
+        public String threadTypeName { get; set; }
 
         // Thread constructor
         public RecordPrintWrapper(sObject mainRecord, List<MessageWrapper> messages) {
             this.mainRecord = mainRecord;
             this.messages = messages;
+            this.threadTypeName = btoToMeldIFra((String) mainRecord.get('CRM_Thread_Type__c'));
         }
 
         // Conversation Note constructor
@@ -137,6 +138,13 @@ public with sharing class NKS_RecordPrintController {
 
             return '';
         }
+
+        private String btoToMeldIFra(String threadType) {
+            if (threadType == 'BTO') {
+                return 'Meld i fra';
+            }
+            return threadType;
+        }
     }
 
     public class MessageWrapper {
@@ -158,21 +166,10 @@ public with sharing class NKS_RecordPrintController {
                 return '';
             }
 
-            String firstName = (msg.CRM_From_First_Name__c != null) ? msg.CRM_From_First_Name__c : '';
-            //String lastName = (msg.CRM_From_Last_Name__c != null) ? msg.CRM_From_Last_Name__c : '';
-            String fullName = firstName + ' '; // + lastName;
-
-            // String fullName =
-            //     (String.isBlank(msg.CRM_From_First_Name__c) ? '' : msg.CRM_From_First_Name__c) +
-            //     ' ' +
-            //     (String.isBlank(msg.lastName) ? '' : msg.lastName);
-
             if (msg.CRM_Type__c != 'Message') {
                 return 'Systemmelding';
             } else {
-                return (fullName == ' ')
-                    ? 'Ukjent'
-                    : fullName + (msg.CRM_External_Message__c ? ' (Bruker)' : ' (Veileder)');
+                return msg.CRM_From_First_Name__c;
             }
         }
 
@@ -180,11 +177,11 @@ public with sharing class NKS_RecordPrintController {
             if (msg == null) {
                 return '';
             }
-            return msg.CRM_Read__c ? dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'ulest';
+            return msg.CRM_Read__c ? 'Lest ' + dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'ulest';
         }
 
         private String dateTimeFormatter(Datetime dt) {
-            return dt?.format('dd.MM.yyyy') + ', kl ' + dt?.format('HH:mm');
+            return dt?.format('dd.MM.yyyy') + ' kl ' + dt?.format('HH:mm');
         }
     }
 }
