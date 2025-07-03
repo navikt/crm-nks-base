@@ -58,6 +58,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Conversation_Note__c.CRM_Journal_Status_Formula_Icons__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Conversation_Note__c.CRM_Journal_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
