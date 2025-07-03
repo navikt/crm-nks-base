@@ -20,13 +20,20 @@
     </div>
     <div lwc:if={isLoading}></div>
     <div lwc:else>
-        <div class="button-padding-bottom">
-            <c-nks-button
-                button-label="Behandle henvendelse"
-                onclick={openRecord}
-                is-link
-                standard-length
-            ></c-nks-button>
+        <div class="button-container">
+            <div class="button-padding-bottom">
+                <c-nks-button
+                    button-label="Behandle henvendelse"
+                    onbuttonclick={openRecord}
+                    is-link
+                    standard-length
+                ></c-nks-button>
+            </div>
+            <div class="button-padding">
+                <button class="slds-button slds-button_neutral" disabled={btnDisabled} onclick={handlePrint}>
+                    Utskrift
+                </button>
+            </div>
         </div>
     </div>
 </template>
