@@ -437,6 +437,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Conversation_Note__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Journal_Entry__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -517,10 +526,6 @@
     </tabSettings>
     <tabSettings>
         <tab>standard-OmniSupervisorLightning</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>standard-Workspace</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
