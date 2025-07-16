@@ -910,10 +910,6 @@
         <tab>NKS_Announcement__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
-    <tabVisibilities>
-        <tab>NKS_User_administration</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>

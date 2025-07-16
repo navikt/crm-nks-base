@@ -501,35 +501,6 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <choices>
-                <name>UsersWithoutQueue</name>
-            </choices>
-            <choices>
-                <name>userchoice</name>
-            </choices>
-            <screens>
-                <fields>
-                    <name>Choose_Queue</name>
-                </fields>
-                <name>First_screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>DisplayMembers</name>
-                </fields>
-                <name>Show_members</name>
-            </screens>
-            <textTemplates>
-                <name>indent</name>
-            </textTemplates>
-            <textTemplates>
-                <name>linebreak</name>
-            </textTemplates>
-        </flows>
-        <fullName>NKS_Veiledere</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
             <screens>
                 <fields>
                     <name>Info</name>

@@ -68,8 +68,4 @@
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Edit User</label>
-    <tabSettings>
-        <tab>NKS_User_administration</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>

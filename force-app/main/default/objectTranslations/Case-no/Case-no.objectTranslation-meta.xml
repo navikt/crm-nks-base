@@ -23,10 +23,6 @@
         <name>Journal</name>
     </quickActions>
     <quickActions>
-        <label>Lukk henvendelse</label>
-        <name>Close_Case_and_Tab</name>
-    </quickActions>
-    <quickActions>
         <label>
             <!-- Opprett NAV-oppgave -->
         </label>
