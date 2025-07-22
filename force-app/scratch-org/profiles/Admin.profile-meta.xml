@@ -403,6 +403,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Conversation_Note__c.CRM_Number_of_API_Retries__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Office_Restriction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
