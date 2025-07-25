@@ -314,6 +314,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Message__c.CRM_Is_logged_in_User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Message__c.CRM_Message_Text__c</field>
         <readable>true</readable>
     </fieldPermissions>
