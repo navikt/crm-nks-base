@@ -66,14 +66,6 @@
         <enabled>true</enabled>
         <flow>NKS_Update_User</flow>
     </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NKS_Veiledere</flow>
-    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Edit User</label>
-    <tabSettings>
-        <tab>NKS_User_administration</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
