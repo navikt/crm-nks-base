@@ -5,9 +5,6 @@ public with sharing class NKS_HomePageControllerTest {
         Id SFUpdateRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
             .get('Salesforce Update')
             .getRecordTypeId();
-        Id campaignRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
-            .get('Campaign')
-            .getRecordTypeId();
         Id newsRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
             .get('News')
             .getRecordTypeId();
@@ -17,11 +14,21 @@ public with sharing class NKS_HomePageControllerTest {
         Id nksCurrentRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
             .get('NKS Current')
             .getRecordTypeId();
+        Id trafficRecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+            .get('Traffic')
+            .getRecordTypeId();
 
         NKS_TestDataFactory.createAnnouncements(1, SFUpdateRecordTypeId);
-        NKS_TestDataFactory.createAnnouncements(1, campaignRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, newsRecordTypeId);
         NKS_TestDataFactory.createAnnouncements(1, nksStatusRecordTypeId);
+        NKS_Announcement__c traffic = new NKS_Announcement__c(
+            Name = 'Test Traffic',
+            NKS_Information__c = 'Leveransen lørdag 31. oktober ble levert som planlagt, og NAV Arbeid og ytelser kan derfor nå innvilge dagpenger til personer også fra den 1. november eller senere. Opprinnelig melding 29.10.20: Hvis bruker har søkt om dagpenger med virkningstidspunkt fra 1.november eller senere, så kan vi få henvendelser hvor bruker etterlyser svar på søknaden. NAV Arbeid og ytelser behandler for tiden ingen søknader om dagpenger med virkningstidspunkt (startdato) fra 1. november eller senere. Årsaken er regelverksendringer fra den datoen, som vi må få oppdatert i fagsystemene først, for at utfall i saken skal bli rett.Informer gjerne bruker om dette, og henvis eller til saksbehandlingstidene på nav.no.!!!!',
+            RecordTypeId = trafficRecordTypeId,
+            NKS_Opening_Hours_Label__c = 'Sommer 2025',
+            NKS_Opening_Hours_Information__c = 'Vi har redusert åpningstidene i sommer.'
+        );
+        insert traffic;
 
         List<NKS_Announcement__c> announcements = new List<NKS_Announcement__c>();
         for (Integer i = 0; i < 6; i++) {
@@ -47,21 +54,22 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetField() {
+    static void testGetAnnouncementSfUpdates() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Salesforce_Update');
+        NKS_Announcement__c sfUpdates = NKS_HomePageController.getAnnouncement('Salesforce_Update');
         Test.stopTest();
 
-        Assert.areEqual(700, info.length());
+        Assert.areEqual(700, sfUpdates.NKS_Information__c.length());
     }
 
     @isTest
-    static void testGetFieldWithNullValue() {
+    static void testGetAnnouncementTraffic() {
         Test.startTest();
-        String info = NKS_HomePageController.getField('Traffic');
+        NKS_Announcement__c traffic = NKS_HomePageController.getAnnouncement('Traffic');
         Test.stopTest();
 
-        Assert.areEqual('', info);
+        Assert.areEqual('Sommer 2025', traffic.NKS_Opening_Hours_Label__c);
+        Assert.areEqual('Vi har redusert åpningstidene i sommer.', traffic.NKS_Opening_Hours_Information__c);
     }
 
     @isTest
