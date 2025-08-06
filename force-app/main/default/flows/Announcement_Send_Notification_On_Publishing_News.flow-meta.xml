@@ -37,7 +37,6 @@
             </value>
         </inputParameters>
         <nameSegment>LoggerUtility</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Send_Notification</name>
@@ -81,7 +80,6 @@
             </value>
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
@@ -167,13 +165,6 @@
             <targetReference>Loop_Through_Users</targetReference>
         </connector>
         <filterLogic>or</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>0052o000009cvzJAAQ</stringValue>
-            </value>
-        </filters>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>

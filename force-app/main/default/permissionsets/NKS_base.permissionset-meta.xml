@@ -837,11 +837,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Journal_Entry__c.NKS_Chat_Transcript__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Journal_Entry__c.Theme__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -902,11 +897,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>UserNotification__c.CRM_CaseTheme__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>UserNotification__c.CRM_Done__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -933,11 +923,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.CRM_SuccessfullySentNotification__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>UserNotification__c.INT_CaseTheme__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -973,11 +958,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>UserNotification__c.INT_GroupingId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>UserNotification__c.INT_InternalStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
