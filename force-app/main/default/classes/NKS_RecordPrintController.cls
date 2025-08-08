@@ -139,7 +139,7 @@ public with sharing class NKS_RecordPrintController {
 
         private String btoToMeldIFra(String threadType) {
             if (threadType == 'BTO') {
-                return 'Meld fra om endringer';
+                return 'Meld fra om endring';
             }
             return threadType;
         }
