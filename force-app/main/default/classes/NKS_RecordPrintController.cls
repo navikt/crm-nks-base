@@ -116,14 +116,12 @@ public with sharing class NKS_RecordPrintController {
         // Conversation Note constructor
         public RecordPrintWrapper(sObject mainRecord) {
             this.mainRecord = mainRecord;
-            this.createdDate = dateTimeFormatter((Datetime) mainRecord.get('CRM_Date_Time_Registered__c'));
+            this.createdDate = NKS_RecordPrintController.dateTimeFormatter(
+                (Datetime) mainRecord.get('CRM_Date_Time_Registered__c')
+            );
             this.comChannelNorwegian = translateCommunicationChannel(
                 (String) mainRecord.get('CRM_Communication_Channel__c')
             );
-        }
-
-        private String dateTimeFormatter(Datetime dt) {
-            return dt?.format('dd.MM.yyyy') + ', kl ' + dt?.format('HH:mm');
         }
 
         private String translateCommunicationChannel(String communicationChannel) {
@@ -152,11 +150,12 @@ public with sharing class NKS_RecordPrintController {
         public String createdDate { get; set; }
         public String messageFrom { get; set; }
         public String messageRead { get; set; }
-        public String lastName { get; set; }
 
         public MessageWrapper(Message__c message) {
             this.message = message;
-            this.createdDate = message?.CRM_Sent_date__c != null ? dateTimeFormatter(message.CRM_Sent_date__c) : '';
+            this.createdDate = message?.CRM_Sent_date__c != null
+                ? NKS_RecordPrintController.dateTimeFormatter(message.CRM_Sent_date__c)
+                : '';
             this.messageFrom = setMessageFrom(message);
             this.messageRead = setMessageRead(message);
         }
@@ -179,9 +178,9 @@ public with sharing class NKS_RecordPrintController {
             }
             return msg.CRM_Read__c ? 'Lest ' + dateTimeFormatter(msg.CRM_Read_Datetime__c) : 'ulest';
         }
+    }
 
-        private String dateTimeFormatter(Datetime dt) {
-            return dt?.format('dd.MM.yyyy') + ' kl ' + dt?.format('HH:mm');
-        }
+    private static String dateTimeFormatter(Datetime dt) {
+        return dt?.format('dd.MM.yyyy') + ' kl ' + dt?.format('HH:mm');
     }
 }
