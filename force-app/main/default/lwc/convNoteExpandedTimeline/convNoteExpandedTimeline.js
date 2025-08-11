@@ -8,6 +8,7 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
     @api logEvent;
     conversationNote;
     error = false;
+    btnDisabled = false;
 
     @wire(getRecord, {
         recordId: '$recordId',
@@ -46,6 +47,25 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
         if (this.logEvent) {
             publishToAmplitude('Timeline', { type: 'Navigate to record' });
         }
+    }
+
+    handlePrint(event) {
+        event.preventDefault();
+
+        if (!this.recordId) {
+            console.error('No record ID found!');
+            this.btnDisabled = true;
+            return;
+        }
+
+        const vfPageUrl = `/apex/NKS_RecordPrintWrapper?id=${this.recordId}`;
+
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: vfPageUrl
+            }
+        });
     }
 
     get isLoading() {
