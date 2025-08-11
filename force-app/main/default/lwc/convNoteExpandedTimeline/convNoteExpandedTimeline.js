@@ -8,6 +8,7 @@ export default class ConvNoteExpandedTimeline extends NavigationMixin(LightningE
     @api logEvent;
     conversationNote;
     error = false;
+    btnDisabled = false;
 
     @wire(getRecord, {
         recordId: '$recordId',
