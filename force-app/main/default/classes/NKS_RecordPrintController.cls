@@ -154,7 +154,7 @@ public with sharing class NKS_RecordPrintController {
         public MessageWrapper(Message__c message) {
             this.message = message;
             this.createdDate = message?.CRM_Sent_date__c != null
-                ? NKS_RecordPrintController.dateTimeFormatter(message.CRM_Sent_date__c)
+                ? dateTimeFormatter(message.CRM_Sent_date__c)
                 : '';
             this.messageFrom = setMessageFrom(message);
             this.messageRead = setMessageRead(message);
