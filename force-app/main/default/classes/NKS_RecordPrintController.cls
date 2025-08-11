@@ -116,7 +116,7 @@ public with sharing class NKS_RecordPrintController {
         // Conversation Note constructor
         public RecordPrintWrapper(sObject mainRecord) {
             this.mainRecord = mainRecord;
-            this.createdDate = NKS_RecordPrintController.dateTimeFormatter(
+            this.createdDate = dateTimeFormatter(
                 (Datetime) mainRecord.get('CRM_Date_Time_Registered__c')
             );
             this.comChannelNorwegian = translateCommunicationChannel(
