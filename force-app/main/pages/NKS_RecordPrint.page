@@ -1,0 +1,79 @@
+<apex:page renderAs="pdf" controller="NKS_RecordPrintController">
+    <apex:stylesheet value="{!URLFOR($Resource.NKS_RecordPrintCss)}" />
+
+    <apex:outputPanel rendered="{!NOT(ISNULL(objectType))}">
+        <div class="header">
+            <apex:image
+                id="navLogo"
+                url="{!URLFOR($Resource.stoLogos,
+                'navLogo.png')}"
+            />
+            <p><b>{!accountName}</b></p>
+            <p id="userIdent">Fødselsnummer: <b> {!personIdent}</b></p>
+
+            <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
+                <p>Type: <b>{!recordWrapper.threadTypeName}</b></p>
+                <apex:outputText rendered="{!NOT(ISNULL(recordWrapper.mainRecord['STO_Category__c']))}">
+                    <p>Tema: <b>{!recordWrapper.mainRecord['STO_Category__c']}</b></p>
+                </apex:outputText>
+            </apex:outputPanel>
+        </div>
+
+        <apex:outputPanel rendered="{!objectType == 'Thread__c'}">
+            <apex:outputPanel rendered="{!NOT(ISNULL(recordWrapper.messages))}">
+                <h2>Meldinger</h2>
+                <apex:repeat value="{!recordWrapper.messages}" var="msg">
+                    <div class="message-container">
+                        <div class="message-info-left">
+                            <p><b>Skrevet av {!msg['messageFrom']} - {!msg['createdDate']}</b></p>
+                        </div>
+                        <div class="message-info-right">
+                            <apex:outputText rendered="{!recordWrapper.mainRecord['CRM_Thread_Type__c'] != 'CHAT'}">
+                                <p>{!IF(msg.messageRead != 'ulest', msg.messageRead, 'Ulest')}</p>
+                            </apex:outputText>
+                        </div>
+
+                    </div>
+
+                    <span class="message-container">
+                        <apex:outputField label="Innhold:" value="{!msg.message['CRM_Message_Text__c']}">
+                        </apex:outputField>
+                    </span>
+                    <br />
+                    <br />
+                    <br />
+                    <hr />
+                    <br />
+                </apex:repeat>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!objectType == 'Conversation_Note__c'}">
+            <h2>
+                Samtalereferat {!recordWrapper.comChannelNorwegian} -
+                {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}
+            </h2>
+            <div class="message-container">
+                <div class="message-info-left">
+                    <p><b>Registrert: </b> {!recordWrapper.createdDate}</p>
+                    <p><b>Opprettet av: </b> {!recordWrapper.mainRecord['CRM_Created_By_Ident__c']}</p>
+                    <p>
+                        <b>Opprettet av enhet: </b> {!navUnitName}
+                        ({!recordWrapper.mainRecord['CRM_Created_By_NAV_Unit__c']})
+                    </p>
+                </div>
+
+                <div class="message-info-right">
+                    <p><b>Temagruppe: </b> {!recordWrapper.mainRecord['CRM_Theme_Group_Name__c']}</p>
+                    <p><b>Tema: </b> {!recordWrapper.mainRecord['CRM_Theme_Name__c']}</p>
+                </div>
+            </div>
+            <div class="message-content">
+                <p>
+                    <b>Innhold:</b>
+                </p>
+                <p>{!recordWrapper.mainRecord['CRM_Conversation_Note__c']}</p>
+            </div>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

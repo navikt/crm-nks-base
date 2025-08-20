@@ -48,18 +48,20 @@ public with sharing class NKS_HomePageController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getField(String type) {
+    public static NKS_Announcement__c getAnnouncement(String type) {
         List<NKS_Announcement__c> announcement = [
-            SELECT NKS_Information__c
+            SELECT NKS_Information__c, NKS_Opening_Hours_Label__c, NKS_Opening_Hours_Information__c
             FROM NKS_Announcement__c
             WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
             ORDER BY SystemModstamp DESC
             LIMIT 1
         ];
         if (announcement.isEmpty() || String.isBlank(announcement[0].NKS_Information__c)) {
-            return '';
+            return null;
         }
-        return announcement[0].NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+        announcement[0].NKS_Information__c = announcement[0]
+            .NKS_Information__c.replace('<img', '<img style="max-height: 100px"');
+        return announcement[0];
     }
 
     @AuraEnabled(cacheable=true)

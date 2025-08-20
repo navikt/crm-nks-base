@@ -1,26 +1,20 @@
-import { LightningElement } from 'lwc';
-import bobLogo from '@salesforce/resourceUrl/bobLogo';
+import { LightningElement, wire } from 'lwc';
+import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponses';
+
 export default class NksHomePageHighlightPanelBottom extends LightningElement {
-    get links() {
-        return [
-            {
-                title: 'Kontaktsenterportalen',
-                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/'
-            },
-            {
-                title: 'Norsk-engelsk ordliste',
-                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Ordliste-Norsk-Engelsk.aspx'
-            },
-            {
-                title: 'Teknisk hjelp - IT',
-                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Teknisk-hjelp---Prosjektgruppe.aspx'
-            },
-            {
-                title: `Bob `,
-                url: 'https://bob.ansatt.nav.no/',
-                imageUrl: `${bobLogo}#logo`,
-                showImage: true
-            }
-        ];
+    records = [];
+
+    @wire(getReadyResponse)
+    wiredRecords({ error, data }) {
+        if (data) {
+            this.records = data.length > 0 ? data : [];
+        } else if (error) {
+            this.records = [];
+            console.error(`There was an error fetching data: ${error.body.message}`);
+        }
+    }
+
+    get hasRecords() {
+        return this.records && this.records.length > 0;
     }
 }

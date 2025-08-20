@@ -24,3 +24,19 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
+
+.button-padding {
+    padding-bottom: 1rem;
+    padding-top: 1.5rem;
+}
+
+.padding-border-bottom {
+    border-bottom: 1px solid black;
+    padding-bottom: 1.5rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

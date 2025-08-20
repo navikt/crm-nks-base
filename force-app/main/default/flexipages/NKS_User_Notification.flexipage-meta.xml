@@ -73,23 +73,6 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.INT_InternalStatus__c</fieldItem>
-                <identifier>RecordINT_InternalStatus__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>STATUSOPPDATERING</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.INT_Link__c</fieldItem>
                 <identifier>RecordINT_Link__cField</identifier>
             </fieldInstance>
@@ -253,23 +236,6 @@
                         <leftValue>{!Record.INT_Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>OPPGAVE</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CRM_CaseTheme__c</fieldItem>
-                <identifier>RecordCRM_CaseTheme__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.INT_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>STATUSOPPDATERING</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>

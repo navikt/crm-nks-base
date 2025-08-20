@@ -1,20 +1,26 @@
-import { LightningElement, wire } from 'lwc';
-import getReadyResponse from '@salesforce/apex/NKS_HomePageController.getReadyResponses';
-
-export default class NksPersonHighlightPanelMid extends LightningElement {
-    records = [];
-
-    @wire(getReadyResponse)
-    wiredRecords({ error, data }) {
-        if (data) {
-            this.records = data.length > 0 ? data : [];
-        } else if (error) {
-            this.records = [];
-            console.error(`There was an error fetching data: ${error.body.message}`);
-        }
-    }
-
-    get hasRecords() {
-        return this.records && this.records.length > 0;
+import { LightningElement } from 'lwc';
+import bobLogo from '@salesforce/resourceUrl/bobLogo';
+export default class NksHomePageHighlightPanelMid extends LightningElement {
+    get links() {
+        return [
+            {
+                title: `Bob `,
+                url: 'https://bob.ansatt.nav.no/',
+                imageUrl: `${bobLogo}#logo`,
+                showImage: true
+            },
+            {
+                title: 'Teknisk hjelp - IT',
+                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Teknisk-hjelp---Prosjektgruppe.aspx'
+            },
+            {
+                title: 'Norsk-engelsk ordliste',
+                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Ordliste-Norsk-Engelsk.aspx'
+            },
+            {
+                title: 'Kontaktsenterportalen',
+                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/'
+            }
+        ];
     }
 }
