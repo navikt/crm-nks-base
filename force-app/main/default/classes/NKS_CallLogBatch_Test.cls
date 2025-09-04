@@ -210,20 +210,22 @@ public with sharing class NKS_CallLogBatch_Test {
         Id callLogId = callLog.Id;
         Id cNoteId = cNote.Id;
 
-        List<Object> originalList = (List<Object>) JSON.deserializeUntyped(
-            NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG
+        List<SObject> originalList = (List<SObject>) JSON.deserialize(
+            NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG,
+            SObject[].class
         );
-        originalList.add(
-            (Object) JSON.deserializeUntyped(
-                '{"puzzel__SessionId__c":"' +
-                    testSessionId +
-                    '", "puzzel__Queue__c": "' +
-                    testQueueName +
-                    '", "puzzel__AccessNumber__c": "' +
-                    testAccessNumber +
-                    '"}'
-            )
-        );
+        String newEntry =
+            '{"attributes":{"type":"puzzel__EnquiryLog__c"},' +
+            '"puzzel__SessionId__c":"' +
+            testSessionId +
+            '",' +
+            '"puzzel__Queue__c":"' +
+            testQueueName +
+            '",' +
+            '"puzzel__AccessNumber__c":"' +
+            testAccessNumber +
+            '"}';
+        originalList.addAll((List<SObject>) JSON.deserialize('[' + newEntry + ']', SObject[].class));
         NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG = JSON.serialize(originalList);
         NKS_CallLogBatch batch = new NKS_CallLogBatch();
 

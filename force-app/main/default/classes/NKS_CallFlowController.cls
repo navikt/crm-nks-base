@@ -87,7 +87,13 @@ public without sharing class NKS_CallFlowController {
             }
 
             String queue = (String) log.get('puzzel__Queue__c');
+            if (queue == null) {
+                queue = '';
+            }
             String accessNumber = (String) log.get('puzzel__AccessNumber__c');
+            if (accessNumber == null) {
+                accessNumber = '';
+            }
 
             Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue?.toLowerCase());
             if (queueMapping == null) {
@@ -110,7 +116,6 @@ public without sharing class NKS_CallFlowController {
         return responses;
     }
 
-    // --- RESPONSE CLASS ---
     public class CallQueueResponse {
         @InvocableVariable
         public String themeGroup;
