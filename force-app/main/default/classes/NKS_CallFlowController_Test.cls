@@ -5,11 +5,14 @@ public class NKS_CallFlowController_Test {
     public static final String TEST_ACCESSNUMBER = '12345678';
 
     public static String MOCK_ENQUIRY_LOG =
-        '[{"puzzel__SessionId__c":"' +
+        '[{"attributes":{"type":"puzzel__EnquiryLog__c"},' +
+        '"puzzel__SessionId__c":"' +
         TEST_SESSION_ID +
-        '", "puzzel__Queue__c": "' +
+        '",' +
+        '"puzzel__Queue__c":"' +
         TEST_QUEUE +
-        '", "puzzel__AccessNumber__c": "' +
+        '",' +
+        '"puzzel__AccessNumber__c":"' +
         TEST_ACCESSNUMBER +
         '"}]';
 
