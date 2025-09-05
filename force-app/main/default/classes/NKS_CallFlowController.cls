@@ -87,13 +87,9 @@ public without sharing class NKS_CallFlowController {
             }
 
             String queue = (String) log.get('puzzel__Queue__c');
-            if (queue == null) {
-                queue = '';
-            }
+            queue = String.isBlank(queue) ? '' : queue;
             String accessNumber = (String) log.get('puzzel__AccessNumber__c');
-            if (accessNumber == null) {
-                accessNumber = '';
-            }
+            accessNumber = String.isBlank(accessNumber) ? '' : accessNumber;
 
             Puzzel_Queue_Mapping__mdt queueMapping = contextMap.get(queue?.toLowerCase());
             if (queueMapping == null) {
