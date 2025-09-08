@@ -9,6 +9,7 @@ export default class nksFamilyViewer extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api useNewDesign;
+    errorMessage;
     wireFields;
     isLoaded = false;
 
@@ -83,5 +84,19 @@ export default class nksFamilyViewer extends LightningElement {
             return this.filterRelationsByType(false);
         }
         return [];
+    }
+
+    get isError() {
+        if (!this.relations.data) {
+            this.errorMessage = 'Kunne ikke hente relasjoner';
+            return true;
+        }
+        const errorRelation = this.relations.data.find((relation) => relation.recordType === 'ERROR');
+
+        if (errorRelation) {
+            this.errorMessage = errorRelation.name ? errorRelation.name : '';
+            return true;
+        }
+        return false;
     }
 }
