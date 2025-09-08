@@ -70,10 +70,8 @@ public without sharing class NKS_CallFlowController {
             }
 
             Map<String, Object> log = (Map<String, Object>) enquiryLog;
-            String queue = log.containsKey('puzzel__Queue__c') ? (String) log.get('puzzel__Queue__c') : '';
-            String accessNumber = log.containsKey('puzzel__AccessNumber__c')
-                ? (String) log.get('puzzel__AccessNumber__c')
-                : '';
+            String queue = (String) log.get('puzzel__Queue__c') ?? '';
+            String accessNumber = (String) log.get('puzzel__AccessNumber__c') ?? '';
 
             Puzzel_Queue_Mapping__mdt queueMapping = mappingsByQueue.get(queue.toLowerCase());
             if (queueMapping == null) {
