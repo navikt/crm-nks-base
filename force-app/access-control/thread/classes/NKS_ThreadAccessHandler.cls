@@ -1,5 +1,6 @@
 global class NKS_ThreadAccessHandler extends MyTriggers {
     private static final List<String> THREAD_TYPES_OF_INTEREST = new List<String>{ 'STO', 'STB', 'BTO', 'CHAT' };
+    private static final Set<String> TOLK_THREAD_TYPES = new Set<String>{ 'HOT_BRUKER-TOLK' };
 
     global override void onAfterUpdate(Map<Id, sObject> triggerOldMap) {
         List<String> fieldNamesToCheck = new List<String>{
@@ -42,7 +43,10 @@ global class NKS_ThreadAccessHandler extends MyTriggers {
         //run sharing in a platform event
 
         for (Thread__c thread : (List<Thread__c>) records) {
-            if (THREAD_TYPES_OF_INTEREST.contains(thread.CRM_Thread_Type__c)) {
+            if (
+                THREAD_TYPES_OF_INTEREST.contains(thread.CRM_Thread_Type__c) ||
+                TOLK_THREAD_TYPES.contains(thread.CRM_Thread_Type__c) // fire event for TOLK threads as well
+            ) {
                 RecordSharingEvent__e event = new RecordSharingEvent__e();
                 event.RecordId__c = thread.Id;
                 event.ObjectType__c = 'Thread__c';
