@@ -1,18 +1,11 @@
 import { LightningElement, api } from 'lwc';
 import { publishToAmplitude } from 'c/amplitude';
-import newDesignTemplate from './newDesignTemplate.html';
-import standardTemplate from './nksBrukervarsel.html';
 
 export default class NksBrukervarsel extends LightningElement {
     @api brukervarsel;
-    @api newDesign = false;
 
     sortedVarselList;
     showDetails = false;
-
-    render() {
-        return this.newDesign ? newDesignTemplate : standardTemplate;
-    }
 
     get showVarselListe() {
         let retValue = this.hasMessageList && this.showDetails;

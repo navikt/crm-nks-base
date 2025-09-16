@@ -1,7 +1,5 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
-import nksBostedAddressHTML from './nksBostedAddress.html';
-import nksBostedAddressV2HTML from './nksBostedAddressV2.html';
 import { handleAddressCopy } from 'c/nksComponentsUtils';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
@@ -9,16 +7,13 @@ export default class NksBostedAddress extends LightningElement {
     @api useNewDesign;
     @api pdlLastUpdatedFormatted;
     @api county;
-    @track sectionClass = 'slds-section section';
-    @track sectionIconName = 'utility:chevronright';
+
+   sectionClass = 'slds-section section';
+    sectionIconName = 'utility:chevronright';
     _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
     showCopyButton = false;
-
-    render() {
-        return this.useNewDesign ? nksBostedAddressV2HTML : nksBostedAddressHTML;
-    }
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',

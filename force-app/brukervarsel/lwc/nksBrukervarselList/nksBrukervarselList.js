@@ -6,14 +6,12 @@ import PERSON_ACTOR_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
 import { publishToAmplitude } from 'c/amplitude';
 import { resolve } from 'c/nksComponentsUtils';
-import newDesignTemplate from './newDesignTemplate.html';
-import standardTemplate from './nksBrukervarselList.html';
 
 export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
-    @api newDesign = false;
+    @api newDesign = false; // deprecated
 
     notifications = [];
     filteredNotificationList = [];
@@ -27,10 +25,6 @@ export default class NksBrukervarselList extends LightningElement {
     fromDate;
     toDate;
     wiredBrukerVarsel;
-
-    render() {
-        return this.newDesign ? newDesignTemplate : standardTemplate;
-    }
 
     connectedCallback() {
         this.wireFields = [this.objectApiName + '.Id'];
