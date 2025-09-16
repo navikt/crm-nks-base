@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Add_henvendelse_ID</name>
@@ -410,8 +411,8 @@
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -419,8 +420,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -430,14 +431,14 @@
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
-0, {!$Flow.CurrentDate}+ 4,
-1, {!$Flow.CurrentDate} + 3,
-2, {!$Flow.CurrentDate} + 2,
-3, {!$Flow.CurrentDate} + 2,
-4, {!$Flow.CurrentDate} + 2,
-5, {!$Flow.CurrentDate} + 2,
-6, {!$Flow.CurrentDate}+ 2,
-TODAY())</expression>
+            0, {!$Flow.CurrentDate}+ 4,
+            1, {!$Flow.CurrentDate} + 3,
+            2, {!$Flow.CurrentDate} + 2,
+            3, {!$Flow.CurrentDate} + 2,
+            4, {!$Flow.CurrentDate} + 2,
+            5, {!$Flow.CurrentDate} + 2,
+            6, {!$Flow.CurrentDate}+ 2,
+            TODAY())</expression>
     </formulas>
     <formulas>
         <description>Checks if the user has beta access.</description>
@@ -449,16 +450,18 @@ TODAY())</expression>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
+        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt
+            bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder
+            konsekvens for ytelse&apos;)</expression>
     </formulas>
     <formulas>
         <name>Task_Theme_Code</name>
         <dataType>String</dataType>
         <expression>{!NavTask.NKS_Theme__r.CRM_Code__c}</expression>
     </formulas>
-    <interviewLabel>NKS Case Send NAV Task v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>NKS Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>NKS Case Send NAV Task v. 2</label>
+    <label>NKS Case Send NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

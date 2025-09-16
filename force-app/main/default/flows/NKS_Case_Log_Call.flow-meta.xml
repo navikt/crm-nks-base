@@ -564,8 +564,8 @@
         <dataType>Boolean</dataType>
         <expression>{!Get_Case.IsClosed} = true</expression>
     </formulas>
-    <interviewLabel>NKS Case Log Call v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Case Log Call v. 2</label>
+    <interviewLabel>NKS Case Log Call {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Case Log Call</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -1095,7 +1095,8 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_Journal</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+            <fieldText>
+                &lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
                 rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -1216,7 +1217,8 @@
         </fields>
         <fields>
             <name>Disclaimer_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+            <fieldText>
+                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -1387,7 +1389,8 @@
         </fields>
         <fields>
             <name>Disclaimer_Text_Conversation_Note</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
+            <fieldText>
+                &lt;p&gt;&lt;span style=&quot;color: rgb(144, 133,
                 133);&quot;&gt;{!$Label.NKS_Conversation_Note_Disclaimer_Text}﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>

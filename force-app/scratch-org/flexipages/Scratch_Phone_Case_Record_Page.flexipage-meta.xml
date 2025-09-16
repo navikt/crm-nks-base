@@ -340,7 +340,8 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
+                            <value>
+                                NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -661,7 +662,7 @@
         <name>leftsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>NKS Phone Case Record Page v. 2</masterLabel>
+    <masterLabel>NKS Phone Case Record Page</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>

@@ -119,8 +119,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>NKS_Conversation_Note_Set_Redaction_v_2 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Conversation Note Set Redaction v 2</label>
+    <interviewLabel>NKS_Conversation_Note_Set_Redaction {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Conversation Note Set Redaction</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -182,7 +182,9 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Klarte ikke å sette samtalereferatet til sladding.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
+                rgb(68, 68, 68);&quot;&gt;Klarte ikke å sette samtalereferatet til
+                sladding.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>

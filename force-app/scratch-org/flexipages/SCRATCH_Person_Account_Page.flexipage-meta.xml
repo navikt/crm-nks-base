@@ -26,7 +26,9 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c,                        INT_Citizenships__c,                        INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c</value>
+                    <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c,
+                        INT_Citizenships__c,
+                        INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -75,7 +77,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>NKS_Mobile_Phone__c, NKS_Phone_1__c, NKS_Email__c, NKS_Phone_2__c,                        INT_KRR_Reservation__c, NKS_County__c, INT_VerifiedFromKRR__c</value>
+                    <value>NKS_Mobile_Phone__c, NKS_Phone_1__c, NKS_Email__c, NKS_Phone_2__c,
+                        INT_KRR_Reservation__c, NKS_County__c, INT_VerifiedFromKRR__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -142,7 +145,8 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>displayedFields</name>
-                    <value>INT_MovedFromCountry__c, INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+                    <value>INT_MovedFromCountry__c,
+                        INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -344,7 +348,8 @@
                     <name>adminFilters</name>
                     <valueList>
                         <valueListItems>
-                            <value>NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
+                            <value>
+                                NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -683,7 +688,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>NKS Person Account Record Page v. 2</masterLabel>
+    <masterLabel>NKS Person Account Record Page</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
