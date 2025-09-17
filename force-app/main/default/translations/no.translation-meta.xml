@@ -362,17 +362,6 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <screens>
-                <fields>
-                    <name>Case_Overview</name>
-                </fields>
-                <name>Journal_Screen</name>
-            </screens>
-        </flows>
-        <fullName>NKS_Conversation_Note_Create_Journal_Entry</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
             <textTemplates>
                 <name>ORG_NO_MATCH_TEXT</name>
             </textTemplates>
