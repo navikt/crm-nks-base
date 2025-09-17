@@ -1,16 +1,9 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
-import nksFamilyViewerEntryHTML from './nksFamilyViewerEntry.html';
-import nksFamilyViewerEntryV2HTML from './nksFamilyViewerEntryV2.html';
 
 export default class nksFamilyViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
-    @api useNewDesign;
-
-    render() {
-        return this.useNewDesign ? nksFamilyViewerEntryV2HTML : nksFamilyViewerEntryHTML;
-    }
 
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');

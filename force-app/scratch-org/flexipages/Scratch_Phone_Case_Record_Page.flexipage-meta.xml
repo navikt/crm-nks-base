@@ -4,49 +4,17 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>collapsed</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsConfiguration</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableActionsInNative</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideChatterActions</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>3</value>
-                </componentInstanceProperties>
-                <componentName>force:highlightsPanel</componentName>
-                <identifier>force_highlightsPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>leftAlignBadges</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>relationshipField</name>
                     <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showExtraInfo</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showPersonBadges</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>nksPersonHeader</componentName>
-                <identifier>nksPersonHeader</identifier>
+                <componentName>nksPersonHighlightPanel</componentName>
+                <identifier>c_nksPersonHighlightPanel</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <name>header</name>
@@ -212,13 +180,21 @@
                 <componentName>nksRecordInfo</componentName>
                 <identifier>nksRecordInfo4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToCountry__r.Name}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.INT_MovedToPlace__c}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromCountry__r.Name}</leftValue>
+                        <operator>NE</operator>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Account.CRM_Person__r.INT_MovedFromPlace__c}</leftValue>
                         <operator>NE</operator>
                     </criteria>
                 </visibilityRule>
@@ -359,6 +335,15 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>adminFilters</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>
+                                NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
+                        </valueListItems>
+                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>maxRecordsToDisplay</name>
@@ -515,6 +500,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-5help7w53xj</value>
                 </componentInstanceProperties>
@@ -538,7 +527,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Kommunikasjon</value>
+                    <value>{!$Label.NKS_Communication_Tab_Label}</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>customTab</identifier>
@@ -552,10 +541,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.tasks</value>
+                    <value>{!$Label.NKS_Tasks_Tab_Label}</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>tasksTab</identifier>
+                <identifier>customTab2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -566,10 +555,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Dokumenter</value>
+                    <value>{!$Label.NKS_Documents_Tab_Label}</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>customTab2</identifier>
+                <identifier>customTab3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -580,10 +569,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.rebateMemberPayout</value>
+                    <value>{!$Label.NKS_Payout_Tab_Label}</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>rebateMemberPayoutTab</identifier>
+                <identifier>customTab4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -594,10 +583,10 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>title</name>
-                    <value>Standard.Tab.cases</value>
+                    <value>{!$Label.NKS_Cases_Tab_Label}</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab</identifier>
+                <identifier>customTab5</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-7559848c-76c3-4a70-a5de-d060fa3ded77</name>
@@ -620,6 +609,16 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>personRelationField</name>
+                    <value>Account.CRM_Person__c</value>
+                </componentInstanceProperties>
+                <componentName>nksAccessErrorMessage</componentName>
+                <identifier>c_nksAccessErrorMessage</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -627,142 +626,8 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>buttonColor</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonIcon</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonLabel</name>
-                    <value>Bytt Bruker</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>flowName</name>
-                    <value>NKS_Case_Change_Account</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>fullButtonWidth</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>nksFlowStarter</componentName>
-                <identifier>c_nksFlowStarter</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>buttonColor</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonIcon</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>buttonLabel</name>
-                    <value>Journalfør</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>flowName</name>
-                    <value>Conversation_Note_Journal_From_Case</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>fullButtonWidth</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>nksFlowStarter</componentName>
-                <identifier>c_nksFlowStarter2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>articleId</name>
-                    <value>Felles-Trussel-trakassering-og-sjikane</value>
-                </componentInstanceProperties>
-                <componentName>nksSecurityRoutines</componentName>
-                <identifier>c_nksSecurityRoutines</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>cardLabel</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>displayedFields</name>
-                    <value>ModiaURL__c</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>enableRefresh</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideLabels</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>iconName</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numCols</name>
-                    <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showLink</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo5</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!$Permission.CustomPermission.ScreenReader}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>relatedField</name>
-                    <value>Account</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Fagsystemer</value>
-                </componentInstanceProperties>
-                <componentName>nksFagsystemer</componentName>
-                <identifier>c_nksFagsystemer</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
-                        <operator>NE</operator>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>aPlanOppfolgingData</componentName>
-                <identifier>c_aPlanOppfolgingData1</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
                     <name>maxEARContainerHeight</name>
                     <value>500</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>shouldDisplayFiltersOnRight</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentName>forceKnowledge:articleSearchDesktop</componentName>
                 <identifier>forceKnowledge_articleSearchDesktop</identifier>
@@ -775,7 +640,7 @@
                     <value>Account.CRM_Person__c</value>
                 </componentInstanceProperties>
                 <componentName>nksDataSyncher</componentName>
-                <identifier>nksDataSyncher</identifier>
+                <identifier>c_nksDataSyncher</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Account.CRM_Person__r.INT_ActorId__c}</leftValue>
@@ -790,14 +655,14 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksSamtalereferatDetails</componentName>
-                <identifier>c_nksSamtalereferatDetails</identifier>
+                <componentName>nksConversationNoteDetails</componentName>
+                <identifier>c_nksConversationNoteDetails</identifier>
             </componentInstance>
         </itemInstances>
         <name>leftsidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>SCRATCH Phone Case Record Page</masterLabel>
+    <masterLabel>NKS Phone Case Record Page</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>

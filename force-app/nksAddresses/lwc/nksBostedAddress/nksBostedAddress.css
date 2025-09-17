@@ -1,19 +1,10 @@
-.icon {
-    --sds-c-icon-color-foreground-default: black;
+.copy-icon {
+    padding-bottom: 3px;
+    padding-left: 2px;
 }
 
-.section {
-    padding-right: 1.75rem;
-    padding-left: 0.75rem;
-}
-
-.text {
-    line-height: 1.25rem;
-}
-
-.clipboardInput {
-    position: fixed;
-    top: -5rem;
-    height: 1px;
-    width: 10px;
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }

@@ -157,12 +157,6 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>nksNavigateToNewApplication</componentName>
-                <identifier>c_nksNavigateToNewApplication</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentInstanceProperties>
                     <name>cardLabel</name>
                     <value>Aktuelt fra Navet</value>

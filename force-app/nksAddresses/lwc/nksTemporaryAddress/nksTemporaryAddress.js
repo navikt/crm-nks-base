@@ -1,24 +1,19 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getOppholdsAddress from '@salesforce/apex/NKS_AddressController.getOppholdsAddress';
-import nksTemporaryAddressHTML from './nksTemporaryAddress.html';
-import nksTemporaryAddressV2HTML from './nksTemporaryAddressV2.html';
 import { handleAddressCopy } from 'c/nksComponentsUtils';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
-    @api useNewDesign;
     @api pdlLastUpdatedFormatted;
     @api county;
-    @track sectionClass = 'slds-section section';
-    @track sectionIconName = 'utility:chevronright';
+    
+    sectionClass = 'slds-section section';
+     sectionIconName = 'utility:chevronright';
     _temporaryAddresses = [];
     isExpanded = false;
     ariaHidden = true;
 
-    render() {
-        return this.useNewDesign ? nksTemporaryAddressV2HTML : nksTemporaryAddressHTML;
-    }
 
     @wire(getOppholdsAddress, {
         recordId: '$recordId',
