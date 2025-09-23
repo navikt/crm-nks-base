@@ -1,5 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes, force:hasRecordId">
     <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler event="lightning:tabCreated" action="{!c.onTabCreated}" />
     <aura:handler event="lightning:tabClosed" action="{!c.onTabClosed}" />
+    <aura:attribute name="tabInfoMap" type="Object" default="{}" />
     <c:bobUsageLauncher aura:id="launcher" />
 </aura:component>
