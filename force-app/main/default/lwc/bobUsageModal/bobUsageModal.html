@@ -1,0 +1,28 @@
+<template>
+    <lightning-modal-body>
+        <div class="slds-p-around_medium slds-text-align_center">
+            <img
+                src={bobLogo}
+                alt="Bob logo"
+                aria-hidden="true"
+                style="max-width: 80px; height: auto"
+                class="slds-m-bottom_medium"
+            />
+            <p class="slds-m-top_small slds-text-heading_medium">Brukte du Bob for å besvare denne henvendelsen?</p>
+        </div>
+    </lightning-modal-body>
+
+    <lightning-modal-footer>
+        <lightning-button
+            class="slds-p-right_small"
+            type="button"
+            label="Nei"
+            data-answer="no"
+            variant="neutral"
+            onclick={handleButtonClick}
+        >
+        </lightning-button>
+        <lightning-button type="button" label="Ja" data-answer="yes" variant="brand" onclick={handleButtonClick}>
+        </lightning-button>
+    </lightning-modal-footer>
+</template>
