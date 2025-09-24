@@ -17,14 +17,7 @@
 
         const info = helper.getTabInfo(closedTabId);
 
-        if (
-            info &&
-            info.recordId &&
-            !info.isSubtab &&
-            info.objectApiName === 'Case' &&
-            launcher &&
-            typeof launcher.openModal === 'function'
-        ) {
+        if (info && info.recordId && !info.isSubtab && launcher && typeof launcher.openModal === 'function') {
             launcher.openModal(info.recordId);
         }
 

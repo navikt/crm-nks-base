@@ -29,7 +29,6 @@
 
         map[tabId] = {
             isSubtab: !!tabInfo.isSubtab,
-            objectApiName: objectApiName,
             recordId: recordId
         };
 
