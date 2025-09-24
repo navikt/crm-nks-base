@@ -6,7 +6,7 @@ export default class BobUsageLauncher extends LightningElement {
     openModal(recordId) {
         try {
             BobUsageModal.open({
-                label: 'Usage Info',
+                label: 'Bob Modal',
                 size: 'small',
                 recordId
             });

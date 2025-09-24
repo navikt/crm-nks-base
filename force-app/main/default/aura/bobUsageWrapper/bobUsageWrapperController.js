@@ -1,56 +1,26 @@
 ({
-    onTabCreated: function (component, event) {
+    onTabCreated: function (component, event, helper) {
         const workspaceAPI = component.find('workspace');
         const tabId = event.getParam('tabId');
 
         workspaceAPI
-            .getTabInfo({ tabId: tabId })
-            .then(function (tabInfo) {
-                const isSubtab = !!tabInfo.isSubtab;
-                const objectApiName =
-                    tabInfo.pageReference &&
-                    tabInfo.pageReference.attributes &&
-                    tabInfo.pageReference.attributes.objectApiName
-                        ? tabInfo.pageReference.attributes.objectApiName
-                        : null;
-                const recordId =
-                    tabInfo.recordId ||
-                    (tabInfo.pageReference && tabInfo.pageReference.state && tabInfo.pageReference.state.recordId) ||
-                    null;
-                let map = {};
-                try {
-                    map = JSON.parse(sessionStorage.getItem('tabInfoMap')) || {};
-                } catch (e) {
-                    map = {};
-                }
-
-                map[tabId] = {
-                    isSubtab: isSubtab,
-                    objectApiName: objectApiName,
-                    recordId: recordId
-                };
-                sessionStorage.setItem('tabInfoMap', JSON.stringify(map));
-            })
-            .catch(function (error) {
+            .getTabInfo({ tabId })
+            .then((tabInfo) => helper.saveTabInfo(tabId, tabInfo))
+            .catch((error) => {
                 console.error('Error getting tabInfo for tabId:', tabId, error);
             });
     },
 
-    onTabClosed: function (component, event) {
+    onTabClosed: function (component, event, helper) {
         const closedTabId = event.getParam('tabId');
         const launcher = component.find('launcher');
-        let map = {};
-        try {
-            map = JSON.parse(sessionStorage.getItem('tabInfoMap')) || {};
-        } catch (e) {
-            map = {};
-        }
-        const info = map[closedTabId];
+
+        const info = helper.getTabInfo(closedTabId);
 
         if (
             info &&
             info.recordId &&
-            info.isSubtab === false &&
+            !info.isSubtab &&
             info.objectApiName === 'Case' &&
             launcher &&
             typeof launcher.openModal === 'function'
@@ -58,9 +28,6 @@
             launcher.openModal(info.recordId);
         }
 
-        if (info) {
-            delete map[closedTabId];
-            sessionStorage.setItem('tabInfoMap', JSON.stringify(map));
-        }
+        helper.removeTabInfo(closedTabId);
     }
 });
