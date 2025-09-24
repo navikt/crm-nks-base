@@ -10,10 +10,6 @@ export default class BobUsageModal extends LightningModal {
     @api recordId;
     bobLogo = bobLogo;
 
-    connectedCallback() {
-        console.log('BobUsageModal opened for recordId:', this.recordId);
-    }
-
     handleButtonClick(event) {
         if (event.target.dataset.answer === 'yes') {
             const fields = {};

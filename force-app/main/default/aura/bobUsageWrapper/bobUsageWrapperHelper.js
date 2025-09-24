@@ -11,12 +11,17 @@
         sessionStorage.setItem('tabInfoMap', JSON.stringify(map));
     },
 
-    saveTabInfo: function (tabId, tabInfo) {
-        const map = this.getMap();
+    saveCaseTabInfo: function (tabId, tabInfo) {
         const objectApiName =
             tabInfo.pageReference && tabInfo.pageReference.attributes && tabInfo.pageReference.attributes.objectApiName
                 ? tabInfo.pageReference.attributes.objectApiName
                 : null;
+
+        if (objectApiName !== 'Case') {
+            return;
+        }
+
+        const map = this.getMap();
         const recordId =
             tabInfo.recordId ||
             (tabInfo.pageReference && tabInfo.pageReference.state && tabInfo.pageReference.state.recordId) ||

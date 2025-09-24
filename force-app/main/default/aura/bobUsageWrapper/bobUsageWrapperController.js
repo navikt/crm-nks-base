@@ -5,7 +5,7 @@
 
         workspaceAPI
             .getTabInfo({ tabId })
-            .then((tabInfo) => helper.saveTabInfo(tabId, tabInfo))
+            .then((tabInfo) => helper.saveCaseTabInfo(tabId, tabInfo))
             .catch((error) => {
                 console.error('Error getting tabInfo for tabId:', tabId, error);
             });
