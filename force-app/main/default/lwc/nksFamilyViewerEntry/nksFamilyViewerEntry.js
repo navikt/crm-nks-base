@@ -1,16 +1,9 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import NAV_ICONS from '@salesforce/resourceUrl/NKS_navIcons';
-import nksFamilyViewerEntryHTML from './nksFamilyViewerEntry.html';
-import nksFamilyViewerEntryV2HTML from './nksFamilyViewerEntryV2.html';
 
 export default class nksFamilyViewerEntry extends NavigationMixin(LightningElement) {
     @api relation;
-    @api useNewDesign;
-
-    render() {
-        return this.useNewDesign ? nksFamilyViewerEntryV2HTML : nksFamilyViewerEntryHTML;
-    }
 
     handleCopyIdent() {
         var hiddenInput = document.createElement('input');
@@ -56,18 +49,6 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get genderIcon() {
-        switch (this.relation.sex) {
-            case 'MANN':
-                return 'MaleFilled';
-            case 'KVINNE':
-                return 'FemaleFilled';
-            default:
-            // do nothing
-        }
-        return 'NeutralFilled';
-    }
-
-    get genderIconNewDesign() {
         const isChild = this.getRole === 'Sønn' || this.getRole === 'Datter';
         const isMale = this.relation.sex === 'MANN';
         const isFemale = this.relation.sex === 'KVINNE';
@@ -94,16 +75,8 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         return 'UnknownCircleFilled';
     }
 
-    get genderIconNewDesignSrc() {
-        return NAV_ICONS + '/' + this.genderIconNewDesign + '.svg#' + this.genderIconNewDesign;
-    }
-
     get genderIconSrc() {
         return NAV_ICONS + '/' + this.genderIcon + '.svg#' + this.genderIcon;
-    }
-
-    get genderIconClass() {
-        return this.genderIcon;
     }
 
     get hasEventDate() {
@@ -121,15 +94,15 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     get getDateOfDeath() {
-        return this.relation.dateOfDeath ?? (this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATO');
+        return this.relation.dateOfDeath ?? 'Ukjent dato';
     }
 
     get getBirthDate() {
-        return this.relation.birthDate ?? (this.useNewDesign ? 'Ukjent dato' : 'UKJENT DATO');
+        return this.relation.birthDate ?? 'Ukjent dato';
     }
 
     get getSex() {
-        return this.relation.sex ?? (this.useNewDesign ? 'Ukjent kjønn' : 'UKJENT KJØNN');
+        return this.relation.sex ?? 'Ukjent kjønn';
     }
 
     get getChildText() {
@@ -165,22 +138,22 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         const { recordType, sex, role } = this.relation;
 
         if (recordType === 'stillborn') {
-            return this.useNewDesign ? 'Dødfødt barn' : 'DØDFØDT BARN';
+            return 'Dødfødt barn';
         }
 
         if (recordType === 'child') {
-            if (sex === 'MANN') return this.useNewDesign ? 'Sønn' : 'GUTT';
-            if (sex === 'KVINNE') return this.useNewDesign ? 'Datter' : 'JENTE';
+            if (sex === 'MANN') return 'Sønn';
+            if (sex === 'KVINNE') return 'Datter';
             return role;
         }
 
         if (recordType === 'marital' && role === 'ENKE_ELLER_ENKEMANN') {
-            if (sex === 'MANN') return this.useNewDesign ? 'Enke' : 'ENKE';
-            if (sex === 'KVINNE') return this.useNewDesign ? 'Enkemann' : 'ENKEMANN';
-            return this.useNewDesign ? 'Enke eller Enkemann' : 'ENKE ELLER ENKEMANN';
+            if (sex === 'MANN') return 'Enke';
+            if (sex === 'KVINNE') return 'Enkemann';
+            return 'Enke eller Enkemann';
         }
 
-        const newDesignRoles = {
+        const roles = {
             MOR: 'Mor',
             MEDMOR: 'Medmor',
             FAR: 'Far',
@@ -192,8 +165,8 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             'GJENLEVENDE PARTNER': 'Gjenlevende partner'
         };
 
-        if (this.useNewDesign && newDesignRoles[role]) {
-            return newDesignRoles[role];
+        if (roles[role]) {
+            return roles[role];
         }
         return role;
     }
@@ -261,10 +234,10 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
 
     getName() {
         if (this.relation.unauthorized) {
-            return this.useNewDesign ? 'Skjermet' : 'SKJERMET';
+            return 'Skjermet';
         }
         if (this.relation.name == null) {
-            return this.useNewDesign ? 'Ukjent navn' : 'UKJENT NAVN';
+            return 'Ukjent navn';
         }
         return this.capitalize(this.relation.name);
     }
@@ -278,7 +251,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
     }
 
     getAge() {
-        return this.relation.ageString ?? (this.useNewDesign ? 'Ukjent alder' : 'UKJENT ALDER');
+        return this.relation.ageString ?? 'Ukjent alder';
     }
 
     get getLiveWithText() {
@@ -294,12 +267,12 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            return this.useNewDesign ? 'Foreldreansvar alene' : 'Bruker har foreldreansvar alene.';
+            return 'Foreldreansvar alene';
         }
         if (this.relation.responsible === 'felles') {
-            return this.useNewDesign ? 'Felles foreldreansvar' : 'Bruker har felles foreldreansvar.';
+            return 'Felles foreldreansvar';
         }
-        return this.useNewDesign ? 'Ikke foreldreansvar' : 'Bruker har ikke foreldreansvar.';
+        return 'Ikke foreldreansvar';
     }
 
     get getResponsibilityParentText() {
@@ -311,11 +284,11 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
             this.relation.responsible === 'mor' ||
             this.relation.responsible === 'medmor'
         ) {
-            return this.useNewDesign ? 'Foreldreansvar alene' : 'Har foreldreansvar alene.';
+            return 'Foreldreansvar alene';
         }
         if (this.relation.responsible === 'felles') {
-            return this.useNewDesign ? 'Felles foreldreansvar' : 'Har felles foreldreansvar.';
+            return 'Felles foreldreansvar';
         }
-        return this.useNewDesign ? 'Ikke foreldreansvar' : 'Har ikke foreldreansvar.';
+        return 'Ikke foreldreansvar';
     }
 }

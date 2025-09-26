@@ -1,103 +1,114 @@
 <template>
     <div>
-        <template if:true={isError}> FEIL: {getErrorMsg} </template>
-        <template if:false={isError}>
-            <template if:true={isMarital}>
-                <p>
-                    <strong> Sivilstand: {getRole} </strong>
-                    <template if:true={hasEventDate}> &nbsp;- Fra: {relation.eventDate} </template>
-                </p>
-            </template>
-            <template if:true={isChild}>
-                <p>
-                    <strong> {getRole} </strong>
-                </p>
-            </template>
-            <template if:true={isParent}>
-                <p>
-                    <strong> {getRole} </strong>
-                </p>
-            </template>
-            <template if:true={isStillBorn}>
-                <p>
-                    <strong> {getRole} </strong>
-                    <template if:true={hasEventDate}> &nbsp;- Dato: {relation.eventDate} </template>
-                </p>
-            </template>
-            <template if:true={showCardTile}>
-                <lightning-tile type="media" class="familyRelationTile">
-                    <lightning-layout-item class="gender" slot="media">
-                        <c-nks-custom-svg
-                            class={genderIcon}
-                            src={genderIconSrc}
-                            alt-text={getSex}
-                            classes={genderIconClass}
-                        ></c-nks-custom-svg>
-                    </lightning-layout-item>
-                    <ul class="slds-list_vertical">
-                        <li class="tileListItem">{getTileName}</li>
-                        <template if:true={showInfoCard}>
-                            <li class="tileListItem">
-                                {getBirthDate}&nbsp;
-                                <template if:true={relation.deceased}>
-                                    - <strong>{getDateOfDeath}</strong> &nbsp;
-                                </template>
-                            </li>
-                            <template if:true={relation.personIdent}>
-                                <li class="tileListItem">
-                                    {relation.personIdent}
+        <template lwc:if={isError}> FEIL: {getErrorMsg} </template>
+        <template lwc:else>
+            <template lwc:if={showCardTile}>
+                <div class="custom-left-padding-large slds-grid slds-wrap table-row icon-container">
+                    <div class="slds-grid slds-size_4-of-12 icon-container">
+                        <div class="slds-icon_container" title={altText}>
+                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" viewBox={viewBox}>
+                                <use xlink:href={genderIconSrc}></use>
+                            </svg>
+                            <span class="slds-assistive-text">{altText}</span>
+                        </div>
+                        <p class="custom-left-padding-small" style="font-weight: bold">{getTileName}</p>
+                    </div>
+
+                    <div class="custom-left-padding-medium slds-size_1-of-12">
+                        {getRole}
+                        <template lwc:if={hasEventDate}> {relation.eventDate} </template>
+                    </div>
+
+                    <template lwc:if={showInfoCard}>
+                        <div class="custom-left-padding-x-large slds-size_3-of-12">
+                            <template lwc:if={relation.personIdent}>
+                                <div class="slds-grid slds-wrap icon-container">
+                                    <p class="">{personIdentFormatted}</p>
                                     <lightning-button-icon
-                                        class="slds-m-left_xx-small copyButton"
+                                        class="copy-icon"
                                         icon-name="utility:copy"
                                         variant="bare"
                                         onclick={handleCopyIdent}
                                         alternative-text="Kopier fødselsnummer"
                                         title="Kopier fødselsnummer"
                                     ></lightning-button-icon>
-                                </li>
+                                </div>
                             </template>
-                            <template if:true={isChild}>
-                                <template if:true={getChildText}>
-                                    <li>
-                                        <lightning-formatted-text
-                                            class="tileListItem"
-                                            value={getChildText}
-                                        ></lightning-formatted-text>
-                                    </li>
+                        </div>
+
+                        <div class="slds-size_4-of-12">
+                            <div class="slds-grid slds-wrap">
+                                <template lwc:if={isChild}>
+                                    <template lwc:if={getChildText}>
+                                        <p class="">{getLiveWithText}</p>
+                                        <div aria-hidden="true" class="text-divider"></div>
+                                        <p class="">{getResponsibilityChildText}</p>
+                                    </template>
                                 </template>
-                            </template>
-                            <template if:true={isParent}>
-                                <template if:true={getParentText}>
-                                    <li>
-                                        <lightning-formatted-text
-                                            class="tileListItem"
-                                            value={getParentText}
-                                        ></lightning-formatted-text>
-                                    </li>
+                                <template lwc:if={isParent}>
+                                    <template lwc:if={getParentText}>
+                                        <p class="">{getLiveWithText}</p>
+                                        <div aria-hidden="true" class="text-divider"></div>
+                                        <p class="">{getResponsibilityParentText}</p>
+                                    </template>
                                 </template>
-                            </template>
-                            <template if:true={hasBadges}>
-                                <li class="tileListItemBadge">
-                                    <span if:true={uuAlertText} class="slds-assistive-text" role="alert"
-                                        >{uuAlertText}</span
-                                    >
-                                    <lightning-layout class="BadgeLayout">
-                                        <lightning-layout-item>
-                                            <template for:each={badges} for:item="badge">
+                                <template if:true={relation.deceased}>
+                                    <p class="">Død - {getDateOfDeath}</p>
+                                </template>
+                            </div>
+                            <template lwc:if={hasBadges}>
+                                <span lwc:if={uuAlertText} class="slds-assistive-text" role="alert">{uuAlertText}</span>
+                                <lightning-layout class="custom-padding-top-small">
+                                    <lightning-layout-item>
+                                        <template for:each={badges} for:item="badge">
+                                            <div key={badge.name} class="custom-padding-bottom-small">
                                                 <lightning-badge
                                                     key={badge.name}
                                                     class="slds-theme_error"
                                                     label={badge.label}
                                                 >
                                                 </lightning-badge>
-                                            </template>
-                                        </lightning-layout-item>
-                                    </lightning-layout>
-                                </li>
+                                            </div>
+                                        </template>
+                                    </lightning-layout-item>
+                                </lightning-layout>
                             </template>
-                        </template>
-                    </ul>
-                </lightning-tile>
+                        </div>
+                    </template>
+                </div>
+                <div class="custom-horizontal-padding-large">
+                    <div class="custom-divider"></div>
+                </div>
+            </template>
+
+            <template lwc:else>
+                <div class="custom-left-padding-large slds-grid slds-wrap table-row icon-container">
+                    <template lwc:if={isMarital}>
+                        <div class="custom-left-padding-medium slds-size_2-of-12">
+                            <strong> Sivilstand: </strong>{getRole}
+                            <template lwc:if={hasEventDate}> &nbsp;- {relation.eventDate} </template>
+                        </div>
+                    </template>
+                    <template if:true={isStillBorn}>
+                        <div class="slds-grid slds-size_4-of-12 icon-container">
+                            <div class="slds-icon_container">
+                                <svg class="slds-icon slds-icon-text-default" aria-hidden="true" viewBox={viewBox}>
+                                    <use xlink:href={genderIconSrc}></use>
+                                </svg>
+                            </div>
+                            <p class="custom-left-padding-small" style="font-weight: bold">{getRole}</p>
+                        </div>
+                        <template lwc:if={hasEventDate}>
+                            <div class="slds-size_1-of-12"></div>
+                            <div class="slds-grid custom-left-padding-x-large slds-size_3-of-12 icon-container">
+                                <p>{relation.eventDate}</p>
+                            </div></template
+                        >
+                    </template>
+                </div>
+                <div class="custom-horizontal-padding-large">
+                    <div style="border-bottom: 1px solid #a9a9a9"></div>
+                </div>
             </template>
         </template>
     </div>

@@ -9,7 +9,7 @@
         <targetConfig targets="lightning__HomePage">
             <property name="appNamesToShow" type="String" label="App Names to Show"
                 description="Comma separated string of app names to display user counts for."
-                default="NAV Kontaktsenter, NKS v. 2" />
+                default="Nav Kontaktsenter" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
