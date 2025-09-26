@@ -11,7 +11,6 @@
         <targetConfig targets="lightning__RecordPage">
             <property name="relationshipField" label="Relationship field"
                 description="Field pointing to the Person ID" type="String" />
-            <property name="newDesign" type="Boolean" default="false" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

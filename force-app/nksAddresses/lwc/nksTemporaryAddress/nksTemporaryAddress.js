@@ -7,13 +7,12 @@ export default class NksBostedAddress extends LightningElement {
     @api recordId;
     @api pdlLastUpdatedFormatted;
     @api county;
-    
+
     sectionClass = 'slds-section section';
-     sectionIconName = 'utility:chevronright';
+    sectionIconName = 'utility:chevronright';
     _temporaryAddresses = [];
     isExpanded = false;
     ariaHidden = true;
-
 
     @wire(getOppholdsAddress, {
         recordId: '$recordId',
@@ -81,28 +80,6 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     get temporaryAddresses() {
-        const addressesToReturn = this._temporaryAddresses.map((element) => {
-            const fullName = element.fullName ? element.fullName : '';
-            const addressLine = [
-                element.address ? element.address : '',
-                element.houseNumber ? ' ' + element.houseNumber : '',
-                element.houseLetter ? ' ' + element.houseLetter : ''
-            ]
-                .join('')
-                .trim();
-            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
-                .join('')
-                .trim();
-            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
-                .join('')
-                .trim();
-
-            return [fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
-        });
-        return addressesToReturn.join('\n\n').trim();
-    }
-
-    get temporaryAddressesNewDesign() {
         if (this._temporaryAddresses.length === 0) {
             return [];
         }

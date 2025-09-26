@@ -7,15 +7,4 @@
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
-    <targetConfigs>
-        <targetConfig targets="lightning__RecordPage">
-            <property
-                name="useNewDesign"
-                type="Boolean"
-                default="false"
-                label="Use new design"
-                description="Check to use new design"
-            />
-        </targetConfig>
-    </targetConfigs>
 </LightningComponentBundle>

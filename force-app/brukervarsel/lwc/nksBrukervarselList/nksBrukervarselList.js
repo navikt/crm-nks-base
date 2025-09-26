@@ -11,7 +11,6 @@ export default class NksBrukervarselList extends LightningElement {
     @api recordId;
     @api objectApiName;
     @api relationshipField;
-    @api newDesign = false; // deprecated
 
     notifications = [];
     filteredNotificationList = [];

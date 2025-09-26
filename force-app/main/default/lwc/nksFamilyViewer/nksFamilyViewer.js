@@ -6,8 +6,7 @@ import getRelations from '@salesforce/apex/NKS_FamilyViewController.getRelations
 export default class nksFamilyViewer extends LightningElement {
     @api objectApiName;
     @api recordId;
-    @api useNewDesign = false; // deprecated
-  
+
     wireFields;
     isLoaded = false;
 
@@ -57,10 +56,6 @@ export default class nksFamilyViewer extends LightningElement {
             return 'Skilt partner';
         }
         return relation.role;
-    }
-
-    get divider() {
-        return this.useNewDesign ? '' : 'slds-has-dividers_top-space';
     }
 
     get maritalRelationsWithLessInfo() {
