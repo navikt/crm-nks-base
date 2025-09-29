@@ -1,9 +1,9 @@
 <template>
-    <footer class="slds-card__footer" style="width: 100%; padding-right: unset">
+    <footer class={footerClass} style="width: 100%; padding-right: unset">
         <lightning-layout horizontal-align={alignment} style="height: 100%">
             <button
                 lwc:if={validAction}
-                class="slds-button slds-button_stretch slds-button_brand button-spacing button-heights"
+                class={buttonClasses}
                 type="button"
                 title={buttonLabel}
                 onclick={handleButtonClick}

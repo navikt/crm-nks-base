@@ -57,6 +57,17 @@ export default class NksFlowNavigation extends LightningElement {
         }
     }
 
+    get buttonClasses() {
+        let classes = 'slds-button slds-button_brand button-spacing button-heights';
+        return this.stretched ? classes + ' slds-button_stretch' : classes;
+    }
+
+    get footerClass() {
+        let classes = 'slds-card__footer';
+        classes += this.alignment ? ` footer-align-${this.alignment.toLowerCase()}` : '';
+        return classes;
+    }
+
     get validAction() {
         return this.availableActions.find((action) => action === this.action);
     }

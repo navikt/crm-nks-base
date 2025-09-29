@@ -7,3 +7,15 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
+
+.footer-align-end {
+    justify-content: flex-end !important;
+}
+
+.footer-align-start {
+    justify-content: flex-start !important;
+}
+
+.footer-align-center {
+    justify-content: center !important;
+}
