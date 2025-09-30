@@ -95,8 +95,7 @@
             <inputParameters>
                 <name>actorId</name>
                 <value>
-                    <elementReference>
-                        Get_Conversation_Note.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
+                    <elementReference>Get_Conversation_Note.CRM_Account__r.CRM_Person__r.INT_ActorId__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -158,9 +157,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>Not_Found_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color:
-                rgb(68, 68,
-                68);&quot;&gt;{!$Label.NKS_No_Conversation_Notes_Found}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Label.NKS_No_Conversation_Notes_Found}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
