@@ -37,10 +37,6 @@
                     <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>

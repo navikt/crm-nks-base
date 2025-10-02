@@ -19,10 +19,6 @@
         <name>Close_Case</name>
     </quickActions>
     <quickActions>
-        <label>Journalfør</label>
-        <name>Journal</name>
-    </quickActions>
-    <quickActions>
         <label>
             <!-- Opprett NAV-oppgave -->
         </label>

@@ -193,10 +193,6 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -237,10 +233,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -341,10 +333,6 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -376,10 +364,6 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -416,10 +400,6 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -462,10 +442,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -704,10 +680,6 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -748,10 +720,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
@@ -796,10 +764,6 @@
                     <name>relationshipField</name>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -836,10 +800,6 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>showLink</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -874,10 +834,6 @@
                 <componentInstanceProperties>
                     <name>numCols</name>
                     <value>1</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
