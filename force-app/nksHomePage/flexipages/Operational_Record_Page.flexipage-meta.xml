@@ -10,7 +10,8 @@
                             <value>Edit</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
+                                    <leftValue>
+                                        {!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -20,7 +21,8 @@
                             <value>Delete</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
+                                    <leftValue>
+                                        {!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -82,10 +84,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relationshipField</name>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showKrrInfo</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showLink</name>
