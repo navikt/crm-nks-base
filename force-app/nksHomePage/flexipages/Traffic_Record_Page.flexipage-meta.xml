@@ -10,8 +10,7 @@
                             <value>Edit</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>
-                                        {!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -21,8 +20,7 @@
                             <value>Delete</value>
                             <visibilityRule>
                                 <criteria>
-                                    <leftValue>
-                                        {!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Manage_Traffic_Updates}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
