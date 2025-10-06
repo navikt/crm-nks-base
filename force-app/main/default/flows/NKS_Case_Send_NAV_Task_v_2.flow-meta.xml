@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>51.0</apiVersion>
+    <apiVersion>59.0</apiVersion>
     <assignments>
         <name>Add_henvendelse_ID</name>
         <label>Add henvendelse ID</label>
-        <locationX>462</locationX>
+        <locationX>544</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
@@ -28,13 +28,13 @@
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
-        <locationX>330</locationX>
+        <locationX>412</locationX>
         <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.selectedUnitId</elementReference>
+                <elementReference>Selected_Unit_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -48,21 +48,21 @@
             <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.themeGroup</elementReference>
+                <elementReference>Selected_Theme_Group_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Theme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.theme</elementReference>
+                <elementReference>Selected_Theme_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.subtheme</elementReference>
+                <elementReference>Selected_Subtheme_SF_Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -97,7 +97,7 @@
             <assignToReference>NavTask.NKS_Assignee__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>workAllocation.assignedResource</elementReference>
+                <elementReference>Assigned_Resource</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -111,17 +111,24 @@
             <assignToReference>NavTask.CRM_Subtype__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Theme_Categorization.subtype</elementReference>
+                <elementReference>Selected_Subtype_SF_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>communalQuickTextLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Nav_Task_Quick_Text.selectedValueLabel</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Send_NAV_Task</targetReference>
+            <targetReference>Get_Person_Access</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Remove_henvendelse_ID</name>
         <label>Remove henvendelse ID</label>
-        <locationX>198</locationX>
+        <locationX>280</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>NavTask.NKS_Henvendelse_BehandlingsId__c</assignToReference>
@@ -135,10 +142,130 @@
             <targetReference>NAV_Task_Assignment</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_NAV_Task_Saved_To_True</name>
+        <label>Set NAV Task Saved To True</label>
+        <locationX>115</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>NAV_Task_Saved</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.CRM_NavUnit__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Selected_Unit_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_Comments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_Theme_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Selected_Theme_Group_SF_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_Theme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Selected_Theme_SF_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_Subtheme__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Selected_Subtheme_SF_Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.CRM_Priority__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Priority</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.CRM_NoPersonInformation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_TaskType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tasktype.selectedTaskTypeId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.CRM_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.NKS_Assignee__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Assigned_Resource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>navTaskOutput.CRM_Subtype__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Selected_Subtype_SF_Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Publish_Notification_To_True</name>
+        <label>Set Publish Notification To True</label>
+        <locationX>511</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_communal_quick_text_used</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <name>Create_Task_on_Henvendelse_or_Person</name>
+        <name>Create_Task_on_Case_or_Person</name>
         <label>Create Task on Henvendelse or Person</label>
-        <locationX>330</locationX>
+        <locationX>412</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Add_henvendelse_ID</targetReference>
@@ -148,7 +275,7 @@
             <name>Create_person_Task</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Theme_Categorization.theme</leftValueReference>
+                <leftValueReference>Selected_Theme_SF_Id</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>Get_Communal_Service_Theme.Id</elementReference>
@@ -158,6 +285,74 @@
                 <targetReference>Remove_henvendelse_ID</targetReference>
             </connector>
             <label>Create person Task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_communal_quick_text_used</name>
+        <label>Is communal quick text used?</label>
+        <locationX>511</locationX>
+        <locationY>1514</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_communal_quick_text</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>communalQuickTextLabel</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_reporting_data_for_communal_quick_text</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Save_NAV_Task</name>
+        <label>Save NAV Task</label>
+        <locationX>412</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>Send_NAV_Task</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>save</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NavTask.NKS_Henvendelse_BehandlingsId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Selected_Theme_SF_Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Communal_Service_Theme.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HasPersonRead</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_NAV_Task_Saved_To_True</targetReference>
+            </connector>
+            <label>save</label>
         </rules>
     </decisions>
     <decisions>
@@ -190,8 +385,8 @@
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
-        <locationX>330</locationX>
-        <locationY>1082</locationY>
+        <locationX>709</locationX>
+        <locationY>1298</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -207,12 +402,11 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Finish_modal</targetReference>
+                <targetReference>Set_Publish_Notification_To_True</targetReference>
             </connector>
             <label>Successful Post</label>
         </rules>
     </decisions>
-    <description>Creates and sends an outbound NAV task from a case view.</description>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
@@ -246,6 +440,12 @@
 TODAY())</expression>
     </formulas>
     <formulas>
+        <description>Checks if the user has beta access.</description>
+        <name>hasBetaAccess</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Permission.NKS_Beta}</expression>
+    </formulas>
+    <formulas>
         <description>Default name for the task generated.</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
@@ -256,9 +456,9 @@ TODAY())</expression>
         <dataType>String</dataType>
         <expression>{!NavTask.NKS_Theme__r.CRM_Code__c}</expression>
     </formulas>
-    <interviewLabel>Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>NKS Case Send NAV Task v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>Case Send NAV Task</label>
+    <label>NKS Case Send NAV Task v. 2</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -278,6 +478,26 @@ TODAY())</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_reporting_data_for_communal_quick_text</name>
+        <label>Create reporting data for communal quick text</label>
+        <locationX>379</locationX>
+        <locationY>1622</locationY>
+        <inputAssignments>
+            <field>CRM_Category__c</field>
+            <value>
+                <stringValue>Kommunal hurtigtekst</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <stringValue>{!Nav_Task_Quick_Text.selectedValueLabel} </stringValue>
+            </value>
+        </inputAssignments>
+        <object>ReportingData__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <description>Query information needed from the Case and its relations.</description>
         <name>Get_Case</name>
@@ -306,11 +526,11 @@ TODAY())</expression>
     <recordLookups>
         <name>Get_Communal_Service_Theme</name>
         <label>Get Communal Service Theme</label>
-        <locationX>330</locationX>
+        <locationX>412</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Task_on_Henvendelse_or_Person</targetReference>
+            <targetReference>Create_Task_on_Case_or_Person</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -332,19 +552,54 @@ TODAY())</expression>
         <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Access</name>
+        <label>Get Person Access</label>
+        <locationX>412</locationX>
+        <locationY>974</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Save_NAV_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UserId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Account.CRM_Person__c</elementReference>
+            </value>
+        </filters>
+        <object>UserRecordAccess</object>
+        <outputAssignments>
+            <assignToReference>HasPersonRead</assignToReference>
+            <field>HasReadAccess</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>personId</assignToReference>
+            <field>RecordId</field>
+        </outputAssignments>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>176</locationX>
-        <locationY>1574</locationY>
+        <locationY>2174</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size:
+                18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -364,7 +619,13 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Post_Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family:
+                -apple-system, system-ui, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu,
+                &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica
+                Neue&amp;quot;, sans-serif; font-size: 12px; background-color: rgb(255, 255,
+                255);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil
+                feilsøke dette. Bruk Modia for å opprette oppgaven for denne
+                brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -377,62 +638,14 @@ TODAY())</expression>
                 </conditions>
             </visibilityRule>
         </fields>
+        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Finish_modal</name>
-        <label>Finish_modal</label>
-        <locationX>198</locationX>
-        <locationY>1190</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Success_toast</name>
-            <extensionName>c:fcFlowCloseWithToast</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>closeModal</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>mode</name>
-                <value>
-                    <stringValue>dismissible</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <stringValue>Oppgave opprettet.</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Vellykket</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>success</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>330</locationX>
+        <locationX>412</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -491,9 +704,42 @@ TODAY())</expression>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>optionalTheme</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>checkIfGjelderIsRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>useNewDesign</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Selected_Theme_SF_Id</assignToReference>
+                <name>theme</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Theme_Group_SF_Id</assignToReference>
+                <name>themeGroup</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Subtype_SF_Id</assignToReference>
+                <name>subtype</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Subtheme_SF_Id</assignToReference>
+                <name>subtheme</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>tasktype</name>
@@ -528,10 +774,32 @@ TODAY())</expression>
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Nav_Task_Quick_Text</name>
+            <extensionName>c:crmNavTaskCommunalQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_Case.Origin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Phone</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Task_Description</name>
+            <defaultValue>
+                <stringValue>{!Nav_Task_Quick_Text.selectedValue}</stringValue>
+            </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
-            <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive
+                opplysninger!&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
@@ -565,7 +833,22 @@ TODAY())</expression>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Selected_Unit_Id</assignToReference>
+                <name>selectedUnitId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Unit_Name</assignToReference>
+                <name>selectedUnitName</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Selected_Unit_Number</assignToReference>
+                <name>selectedUnitNumber</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Assigned_Resource</assignToReference>
+                <name>assignedResource</name>
+            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Opprett oppgave</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -582,7 +865,7 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>726</locationX>
+        <locationX>1083</locationX>
         <locationY>242</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -623,8 +906,8 @@ TODAY())</expression>
     <subflows>
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
-        <locationX>330</locationX>
-        <locationY>974</locationY>
+        <locationX>709</locationX>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Verify_Task_Post</targetReference>
         </connector>
@@ -649,6 +932,40 @@ TODAY())</expression>
         <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
     </textTemplates>
     <variables>
+        <name>Assigned_Resource</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>communalQuickTextLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>HasPersonRead</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>NAV_Task_Saved</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <description>The NAV task record to perform the action on.</description>
         <name>NavTask</name>
         <dataType>SObject</dataType>
@@ -658,11 +975,85 @@ TODAY())</expression>
         <objectType>NavTask__c</objectType>
     </variables>
     <variables>
+        <name>navTaskOutput</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>NavTask__c</objectType>
+    </variables>
+    <variables>
+        <name>personId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Publish_Notification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Subtheme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Subtype_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_Group_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Unit_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Unit_Name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Unit_Number</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>

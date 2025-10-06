@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <apiVersion>61.0</apiVersion>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <description>Assigns the appropriate values from the input screen to the NAV task.</description>
         <name>NAV_Task_Assignment</name>
         <label>NAV Task Assignment</label>
         <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>NavTask.CRM_NavUnit__c</assignToReference>
             <operator>Assign</operator>
@@ -101,7 +100,7 @@
         <name>Validate_Callout</name>
         <label>Validate Callout</label>
         <locationX>182</locationX>
-        <locationY>566</locationY>
+        <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -122,11 +121,12 @@
             <label>Success</label>
         </rules>
     </decisions>
+    <description>Creates a NAV task from an account view.</description>
     <dynamicChoiceSets>
         <name>Priority_Picklist</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>CRM_Priority__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -134,8 +134,8 @@
         <description>Task type for the NAV task</description>
         <name>Task_Type</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>NKS_Task_Type__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
@@ -145,31 +145,24 @@
         <name>Default_Due_Date</name>
         <dataType>Date</dataType>
         <expression>CASE(MOD({!$Flow.CurrentDate} - DATE(1900, 1, 5), 7),
-            0, {!$Flow.CurrentDate}+ 4,
-            1, {!$Flow.CurrentDate} + 3,
-            2, {!$Flow.CurrentDate} + 2,
-            3, {!$Flow.CurrentDate} + 2,
-            4, {!$Flow.CurrentDate} + 2,
-            5, {!$Flow.CurrentDate} + 2,
-            6, {!$Flow.CurrentDate}+ 2,
-            TODAY())</expression>
+0, {!$Flow.CurrentDate}+ 4,
+1, {!$Flow.CurrentDate} + 3,
+2, {!$Flow.CurrentDate} + 2,
+3, {!$Flow.CurrentDate} + 2,
+4, {!$Flow.CurrentDate} + 2,
+5, {!$Flow.CurrentDate} + 2,
+6, {!$Flow.CurrentDate}+ 2,
+TODAY())</expression>
     </formulas>
     <formulas>
         <description>Default name of the generated task</description>
         <name>Task_Name</name>
         <dataType>String</dataType>
-        <expression><![CDATA[
-    CASE(
-      {!tasktype.selectedTaskType}, 
-      'KONT_BRUK', 'Kontakt bruker',
-      'VURD_HENV', 'Vurder henvendelse',
-      'Vurderkonsekvens for ytelse'
-    )
-  ]]></expression>
+        <expression>Case({!tasktype.selectedTaskType}, &apos;KONT_BRUK&apos;, &apos;Kontakt bruker&apos;, &apos;VURD_HENV&apos;, &apos;Vurder henvendelse&apos;, &apos;Vurder konsekvens for ytelse&apos;)</expression>
     </formulas>
-    <interviewLabel>NKS Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>NKS Account Send NAV Task</label>
+    <label>Account Send NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -194,7 +187,7 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
@@ -220,22 +213,18 @@
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size:
-                18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Error_Screen_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255,
-                255, 255); color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har
-                fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne
-                brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet. En utvikler har fått beskjed og vil feilsøke dette. Bruk Modia for å opprette oppgaven for denne brukeren.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
@@ -245,7 +234,7 @@
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
         <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -297,18 +286,6 @@
                     <stringValue>HIDE_THEME_GROUP</stringValue>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>autoFocus</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>checkIfGjelderIsRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -336,16 +313,13 @@
             </defaultValue>
             <fieldText>Prioritet</fieldText>
             <fieldType>RadioButtons</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>Task_Description</name>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
-            <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive
-                opplysninger!&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -377,7 +351,7 @@
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -387,9 +361,40 @@
         </connector>
         <fields>
             <name>Success_Screen_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span
-                style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Success_toast</name>
+            <extensionName>c:fcFlowCloseWithToast</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>dismissible</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Oppgaven ble opprettet</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>closeModal</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <nextOrFinishButtonLabel>Ny oppgave</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -407,7 +412,7 @@
         <name>Create_App_Log1</name>
         <label>Create App Log</label>
         <locationX>578</locationX>
-        <locationY>242</locationY>
+        <locationY>278</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
@@ -448,7 +453,7 @@
         <name>Send_NAV_Task</name>
         <label>Send NAV Task</label>
         <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationY>518</locationY>
         <connector>
             <targetReference>Validate_Callout</targetReference>
         </connector>
