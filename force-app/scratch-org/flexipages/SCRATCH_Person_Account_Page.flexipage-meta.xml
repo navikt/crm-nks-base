@@ -11,7 +11,8 @@
                 <identifier>c_nksPersonHighlightPanel</identifier>
             </componentInstance>
         </itemInstances>
-        <name>header</name>
+        <name>
+        header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -28,7 +29,7 @@
                     <name>displayedFields</name>
                     <value>NKS_Full_Name__c,Name,INT_Sex__c, INT_LegalStatus__c,
                         INT_Citizenships__c,
-                        INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c</value>
+        INT_BankAccountNumber__c,INT_BankAccountNumberLastModified__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -74,7 +75,7 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>NKS_Mobile_Phone__c, NKS_Phone_1__c, NKS_Email__c, NKS_Phone_2__c,
-                        INT_KRR_Reservation__c, NKS_County__c, INT_VerifiedFromKRR__c</value>
+        INT_KRR_Reservation__c, NKS_County__c, INT_VerifiedFromKRR__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -110,12 +111,6 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>nksBostedAddress</componentName>
-                <identifier>c_nksBostedAddress</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>nksPostAddress</componentName>
                 <identifier>c_nksPostAddress</identifier>
             </componentInstance>
@@ -138,7 +133,7 @@
                 <componentInstanceProperties>
                     <name>displayedFields</name>
                     <value>INT_MovedFromCountry__c,
-                        INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
+        INT_MovedFromPlace__c,INT_MovedToCountry__c,INT_MovedToPlace__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableRefresh</name>
@@ -227,7 +222,8 @@
                 <identifier>c_nksFamilyViewer</identifier>
             </componentInstance>
         </itemInstances>
-        <name>detailTabContent</name>
+        <name>
+        detailTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -318,7 +314,8 @@
                 <identifier>c_nksBrukervarselList</identifier>
             </componentInstance>
         </itemInstances>
-        <name>activityTabContent</name>
+        <name>
+        activityTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -337,7 +334,7 @@
                     <valueList>
                         <valueListItems>
                             <value>
-                                NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
+        NKS_Status__c|NOT_EQUAL|[&quot;FERDIGSTILT&quot;,&quot;FEILREGISTRERT&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -406,7 +403,8 @@
                 <identifier>lst_dynamicRelatedList</identifier>
             </componentInstance>
         </itemInstances>
-        <name>feedTabContent</name>
+        <name>
+        feedTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -436,7 +434,8 @@
                 <identifier>c_safDocumentByUser</identifier>
             </componentInstance>
         </itemInstances>
-        <name>newsTabContent</name>
+        <name>
+        newsTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -454,7 +453,8 @@
                 <identifier>c_nksPersonPaymentList</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-6d23881e-a1d9-4473-b0dc-c4d927e1fb61</name>
+        <name>
+        Facet-6d23881e-a1d9-4473-b0dc-c4d927e1fb61</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -468,7 +468,8 @@
                 <identifier>c_personSakList</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-16awzgr3of2</name>
+        <name>
+        Facet-16awzgr3of2</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -564,7 +565,8 @@
                 <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>tabs</name>
+        <name>
+        tabs</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -594,7 +596,8 @@
                 <identifier>c_nksAccessErrorMessage</identifier>
             </componentInstance>
         </itemInstances>
-        <name>main</name>
+        <name>
+        main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -673,7 +676,8 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <name>sidebar</name>
+        <name>
+        sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>NKS Person Account Record Page</masterLabel>
