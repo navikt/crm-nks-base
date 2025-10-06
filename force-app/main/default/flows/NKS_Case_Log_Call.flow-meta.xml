@@ -280,7 +280,7 @@
     <assignments>
         <name>Set_Account</name>
         <label>Set Account</label>
-        <locationX>1326</locationX>
+        <locationX>1568</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AccountId</assignToReference>
@@ -290,13 +290,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Case_Account</targetReference>
+            <targetReference>Was_Set_Account_visited</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Has_No_Account_To_True</name>
         <label>Set Has No Account To True</label>
-        <locationX>1326</locationX>
+        <locationX>1568</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>HAS_NO_ACCOUNT</assignToReference>
@@ -378,7 +378,7 @@
         <description>Checks if the case is connected to an account</description>
         <name>Check_Account</name>
         <label>Check Account</label>
-        <locationX>1238</locationX>
+        <locationX>1480</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Set_Has_No_Account_To_True</targetReference>
@@ -395,7 +395,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Account</targetReference>
+                <targetReference>Was_Set_Account_visited</targetReference>
             </connector>
             <label>Has Account</label>
         </rules>
@@ -405,7 +405,7 @@
             already made.</description>
         <name>Check_Case_Status</name>
         <label>Check Case Status</label>
-        <locationX>644</locationX>
+        <locationX>765</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Check_Account</targetReference>
@@ -484,8 +484,8 @@
     <decisions>
         <name>Check_Person_Access</name>
         <label>Check Person Access</label>
-        <locationX>1238</locationX>
-        <locationY>1190</locationY>
+        <locationX>1480</locationX>
+        <locationY>1682</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Log_Screen</targetReference>
@@ -557,6 +557,83 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Only update Case Account if it was set and related Person exists</description>
+        <name>Related_Person_exists</name>
+        <label>Related Person exists?</label>
+        <locationX>1238</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>No_Person_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Show error screen</defaultConnectorLabel>
+        <rules>
+            <name>Person_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SF_PERSON_ID</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case_Account_If_Set</targetReference>
+            </connector>
+            <label>Person Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Related_Person_exists2</name>
+        <label>Related Person exists?</label>
+        <locationX>1722</locationX>
+        <locationY>1082</locationY>
+        <defaultConnector>
+            <targetReference>No_Person_Screen2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Show error screen</defaultConnectorLabel>
+        <rules>
+            <name>Person_exists2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SF_PERSON_ID</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Person_Access</targetReference>
+            </connector>
+            <label>Person exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Some users are setting a Nav Unit as the Case Account in the &quot;No Account Screen&quot; which results in the flow crashing at &quot;Get Person Access&quot; because a Nav Unit account does not have any Person record related. To avoid the flow from crashing we add an error screen with an appropriate error message. However, we do not want to update the Case&apos;s account to e.g. a Nav Unit because it does not have any related Person, so we avoid updating the Case&apos;s Account if the Account did not have a related Person.</description>
+        <name>Was_Set_Account_visited</name>
+        <label>Was &quot;Set Account&quot; visited?</label>
+        <locationX>1480</locationX>
+        <locationY>866</locationY>
+        <defaultConnector>
+            <targetReference>Get_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Set Account was not visited</defaultConnectorLabel>
+        <rules>
+            <name>Set_Account_was_visited</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Set_Account</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account_from_screen_choice</targetReference>
+            </connector>
+            <label>Set Account was visited</label>
+        </rules>
+    </decisions>
     <description>New version of NKS_Case_Log_a_Call</description>
     <environments>Default</environments>
     <formulas>
@@ -610,11 +687,11 @@
         <description>Queries the account</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>1238</locationX>
+        <locationX>1722</locationX>
         <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Person_Access</targetReference>
+            <targetReference>Related_Person_exists2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -683,10 +760,38 @@
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <description>Queries the account</description>
+        <name>Get_Account_from_screen_choice</name>
+        <label>Get Account from screen choice</label>
+        <locationX>1238</locationX>
+        <locationY>974</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Related_Person_exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Account_Relation.value</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>SF_PERSON_ID</assignToReference>
+            <field>CRM_Person__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>personIdent</assignToReference>
+            <field>INT_PersonIdent__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <description>Queries information from the case record</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>644</locationX>
+        <locationX>765</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -779,8 +884,8 @@
     <recordLookups>
         <name>Get_Person_Access</name>
         <label>Get Person Access</label>
-        <locationX>1238</locationX>
-        <locationY>1082</locationY>
+        <locationX>1480</locationX>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Person_Access</targetReference>
@@ -881,8 +986,8 @@
     <recordUpdates>
         <name>Set_Case_Closed</name>
         <label>Set Case Closed</label>
-        <locationX>1106</locationX>
-        <locationY>1298</locationY>
+        <locationX>1348</locationX>
+        <locationY>1790</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -928,12 +1033,13 @@
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Case_Account</name>
-        <label>Update Case Account</label>
-        <locationX>1326</locationX>
-        <locationY>782</locationY>
+        <description>Only Update the Case Account relation after we know that it had a valid related Person.</description>
+        <name>Update_Case_Account_If_Set</name>
+        <label>Update Case Account If Set</label>
+        <locationX>1106</locationX>
+        <locationY>1190</locationY>
         <connector>
-            <targetReference>Get_Account</targetReference>
+            <targetReference>Get_Person_Access</targetReference>
         </connector>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
@@ -1525,7 +1631,7 @@
         <description>Screen displayed when the case is not connected to an account</description>
         <name>No_Account_Screen</name>
         <label>No Account Screen</label>
-        <locationX>1326</locationX>
+        <locationX>1568</locationX>
         <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1636,8 +1742,42 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>No_Person_Screen</name>
+        <label>No_Person_Screen</label>
+        <locationX>1370</locationX>
+        <locationY>1190</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Copy_1_of_No_Person_Text</name>
+            <fieldText>&lt;p&gt;Ikke gyldig personbruker. Vennligst velg en personbruker.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>No_Person_Screen2</name>
+        <label>No_Person_Screen</label>
+        <locationX>1810</locationX>
+        <locationY>1190</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Copy_2_of_No_Person_Text</name>
+            <fieldText>&lt;p&gt;Ikke gyldig personbruker. Vennligst velg en personbruker.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Prøv på nytt</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>518</locationX>
+        <locationX>639</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
