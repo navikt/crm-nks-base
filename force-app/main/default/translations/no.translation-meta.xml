@@ -274,44 +274,6 @@
         <flows>
             <screens>
                 <fields>
-                    <name>Error_Header</name>
-                </fields>
-                <fields>
-                    <name>Error_Screen_Message</name>
-                </fields>
-                <name>Error_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Task_Description</name>
-                </fields>
-                <fields>
-                    <name>Task_Priority</name>
-                </fields>
-                <fields>
-                    <name>Theme_Categorization</name>
-                </fields>
-                <fields>
-                    <name>tasktype</name>
-                </fields>
-                <fields>
-                    <name>workAllocation</name>
-                </fields>
-                <name>NAV_Task_Input_Screen</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>Success_Screen_Text</name>
-                </fields>
-                <name>Success_Screen</name>
-            </screens>
-        </flows>
-        <fullName>NKS_Account_Send_NAV_Task</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <screens>
-                <fields>
                     <name>Account_Relation</name>
                 </fields>
                 <fields>
