@@ -61,8 +61,8 @@
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
                 </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo</identifier>
+                <componentName>nksRecordInformation</componentName>
+                <identifier>nksRecordInformation</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -104,8 +104,8 @@
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
                 </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo2</identifier>
+                <componentName>nksRecordInformation</componentName>
+                <identifier>nksRecordInformation2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -165,8 +165,8 @@
                     <name>viewedObjectApiName</name>
                     <value>Person__c</value>
                 </componentInstanceProperties>
-                <componentName>nksRecordInfo</componentName>
-                <identifier>nksRecordInfo4</identifier>
+                <componentName>nksRecordInformation</componentName>
+                <identifier>nksRecordInformation4</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                     <criteria>
