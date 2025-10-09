@@ -52,7 +52,11 @@ public with sharing class NKS_HomePageController {
         List<NKS_Announcement__c> announcement;
         if (type == 'Traffic') {
             announcement = [
-                SELECT NKS_Information__c, NKS_Opening_Hours_Label__c, NKS_Opening_Hours_Information__c
+                SELECT
+                    LastModifiedDate,
+                    NKS_Information__c,
+                    NKS_Opening_Hours_Label__c,
+                    NKS_Opening_Hours_Information__c
                 FROM NKS_Announcement__c
                 WHERE RecordType.DeveloperName = :type
                 ORDER BY SystemModstamp DESC

@@ -17,6 +17,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
     information;
     openingsHoursLabel;
     openingHoursInformation;
+    lastModifiedDate;
 
     recordTypeMap = {
         Nyhet: 'News',
@@ -45,6 +46,7 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
             this.information = data?.NKS_Information__c;
             this.openingsHoursLabel = data?.NKS_Opening_Hours_Label__c;
             this.openingHoursInformation = data?.NKS_Opening_Hours_Information__c;
+            this.lastModifiedDate = data?.LastModifiedDate;
         } else if (error) {
             console.error('An error occurred: ', error);
         }
