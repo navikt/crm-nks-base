@@ -53,11 +53,6 @@
     </quickActions>
     <quickActions>
         <aspect>Master</aspect>
-        <label>Journalfør</label>
-        <name>NKS_Journal</name>
-    </quickActions>
-    <quickActions>
-        <aspect>Master</aspect>
         <label>Sett til sladding</label>
         <name>Set_To_Redaction</name>
     </quickActions>

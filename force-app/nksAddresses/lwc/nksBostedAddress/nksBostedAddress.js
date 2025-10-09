@@ -1,24 +1,18 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getResidentialAddress from '@salesforce/apex/NKS_AddressController.getBostedAddress';
-import nksBostedAddressHTML from './nksBostedAddress.html';
-import nksBostedAddressV2HTML from './nksBostedAddressV2.html';
 import { handleAddressCopy } from 'c/nksComponentsUtils';
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
-    @api useNewDesign;
     @api pdlLastUpdatedFormatted;
     @api county;
-    @track sectionClass = 'slds-section section';
-    @track sectionIconName = 'utility:chevronright';
+
+    sectionClass = 'slds-section section';
+    sectionIconName = 'utility:chevronright';
     _residentialAddresses = [];
     isExpanded = false;
     ariaHidden = true;
     showCopyButton = false;
-
-    render() {
-        return this.useNewDesign ? nksBostedAddressV2HTML : nksBostedAddressHTML;
-    }
 
     @wire(getResidentialAddress, {
         recordId: '$recordId',
@@ -67,34 +61,6 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     get residentialAddresses() {
-        if (this._residentialAddresses.length === 0) {
-            return [];
-        }
-
-        this.showCopyButton = true;
-        const addressesToReturn = this._residentialAddresses.map((element) => {
-            const type = element.type ? 'Type: ' + element.type : '';
-            const fullName = element.fullName ? element.fullName : '';
-            const addressLine = [
-                element.address ? element.address : '',
-                element.houseNumber ? ' ' + element.houseNumber : '',
-                element.houseLetter ? ' ' + element.houseLetter : ''
-            ]
-                .join('')
-                .trim();
-            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
-                .join('')
-                .trim();
-            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
-                .join('')
-                .trim();
-
-            return [type, fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
-        });
-        return addressesToReturn.join('\n\n').trim();
-    }
-
-    get residentialAddressesNewDesign() {
         if (this._residentialAddresses.length === 0) {
             return [];
         }
