@@ -49,13 +49,28 @@ public with sharing class NKS_HomePageController {
 
     @AuraEnabled(cacheable=true)
     public static NKS_Announcement__c getAnnouncement(String type) {
-        List<NKS_Announcement__c> announcement = [
-            SELECT NKS_Information__c, NKS_Opening_Hours_Label__c, NKS_Opening_Hours_Information__c
-            FROM NKS_Announcement__c
-            WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
-            ORDER BY SystemModstamp DESC
-            LIMIT 1
-        ];
+        List<NKS_Announcement__c> announcement;
+        if (type == 'Traffic') {
+            announcement = [
+                SELECT
+                    LastModifiedDate,
+                    NKS_Information__c,
+                    NKS_Opening_Hours_Label__c,
+                    NKS_Opening_Hours_Information__c
+                FROM NKS_Announcement__c
+                WHERE RecordType.DeveloperName = :type
+                ORDER BY SystemModstamp DESC
+                LIMIT 1
+            ];
+        } else {
+            announcement = [
+                SELECT NKS_Information__c, NKS_Opening_Hours_Label__c, NKS_Opening_Hours_Information__c
+                FROM NKS_Announcement__c
+                WHERE RecordType.DeveloperName = :type AND CreatedDate = LAST_N_DAYS:15
+                ORDER BY SystemModstamp DESC
+                LIMIT 1
+            ];
+        }
         if (announcement.isEmpty() || String.isBlank(announcement[0].NKS_Information__c)) {
             return null;
         }

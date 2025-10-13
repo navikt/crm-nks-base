@@ -2,7 +2,7 @@
     <div class="slds-card slds-is-relative">
         <lightning-spinner lwc:if={isLoading} size="medium" variant="brand" alternative-text="Laster samtalereferat">
         </lightning-spinner>
-        <div lwc:else class="conv-note-details padding-bottom">
+        <div lwc:else class="conv-note-details padding-bottom padding-border-bottom">
             <lightning-layout multiple-rows="true">
                 <lightning-layout-item size="12">
                     <lightning-formatted-text
@@ -20,13 +20,22 @@
     </div>
     <div lwc:if={isLoading}></div>
     <div lwc:else>
-        <div class="button-padding-bottom">
-            <c-nks-button
-                button-label="Behandle henvendelse"
-                onclick={openRecord}
-                is-link
-                standard-length
-            ></c-nks-button>
+        <div class="button-container">
+            <div class="button-padding">
+                <button class="slds-button slds-button_neutral" disabled={btnDisabled} onclick={handlePrint}>
+                    Utskrift
+                </button>
+            </div>
+            <div class="button-padding">
+                <a
+                    class="slds-button slds-button_brand button-spacing button-heights"
+                    type="button"
+                    title="Behandle henvendelse"
+                    onclick={openRecord}
+                >
+                    Behandle henvendelse
+                </a>
+            </div>
         </div>
     </div>
 </template>

@@ -1,30 +1,35 @@
 <template>
     <template if:true={hasRecords}>
-        <div class={sectionClass}>
-            <h3 class="slds-section__title">
-                <button
-                    aria-controls="expando-unique-id"
-                    aria-expanded={isExpanded}
-                    class="slds-button slds-section__title-action"
-                    onclick={handleOpen}
-                >
-                    <lightning-icon
-                        class="slds-var-p-right_small icon"
-                        icon-name={sectionIconName}
-                        size="x-small"
-                        alternative-text="switch"
-                    ></lightning-icon>
-                    <span class="slds-truncate" title="Section Title">Midlertidig adresse</span>
-                </button>
-            </h3>
-            <div aria-hidden={ariaHidden} class="slds-section__content" id="expando-unique-id">
-                <div class="slds-var-p-horizontal_medium">
-                    <lightning-formatted-text
-                        value={temporaryAddresses}
-                        class="slds-text-title text"
-                    ></lightning-formatted-text>
-                </div>
-            </div>
-        </div>
+        <c-nks-expandable-panel title="Midlertidig adresse" chevron-left is-expandable>
+            <lightning-layout aria-hidden={ariaHidden}>
+                <lightning-layout-item class="slds-size_3-of-7">
+                    <template for:each={temporaryAddresses} for:item="temporaryAddress">
+                        <div
+                            key={temporaryAddress.address}
+                            class="slds-var-p-bottom_small slds-var-p-top_small icon-container"
+                        >
+                            <lightning-formatted-text value={temporaryAddress}></lightning-formatted-text>
+                            <lightning-button-icon
+                                value={temporaryAddress}
+                                if:true={showCopyButton}
+                                icon-name="utility:copy"
+                                onclick={handleCopy}
+                                alternative-text="Kopier adresse"
+                                title="Kopier adresse"
+                                variant="bare"
+                                class="copy-icon slds-var-p-left_xx-small"
+                            >
+                            </lightning-button-icon>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-size_1-of-7"></lightning-layout-item>
+                <lightning-layout-item class="slds-size_3-of-7">
+                    <p class="slds-p-left_x-small slds-p-top_small" style="font-style: italic">
+                        {pdlLastUpdatedFormatted}
+                    </p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </c-nks-expandable-panel>
     </template>
 </template>

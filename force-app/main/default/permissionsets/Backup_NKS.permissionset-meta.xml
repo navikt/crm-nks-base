@@ -64,7 +64,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.CRM_Last_Edited_By__c</field>
+        <field>Conversation_Note__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -364,6 +364,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Thread__c.CRM_Closed_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Thread__c.CRM_Closed_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -454,7 +459,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Thread__c.CRM_Last_Edited_By__c</field>
+        <field>Thread__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -500,11 +505,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Thread__c.CRM_Original_Person_NAV_Unit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Thread__c.CRM_Recipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

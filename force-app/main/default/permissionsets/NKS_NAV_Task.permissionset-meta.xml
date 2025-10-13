@@ -102,22 +102,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NavTask__c.NKS_Comment_History__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NavTask__c.NKS_Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>NavTask__c.NKS_Date_Registered__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavTask__c.NKS_Gosys_Link__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

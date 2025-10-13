@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.438.0.NEXT",
+            "versionNumber": "0.452.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.258.0.LATEST"
+                    "versionNumber": "0.263.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -37,11 +37,11 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.31.0.LATEST"
+                    "versionNumber": "0.35.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.148.0.LATEST"
+                    "versionNumber": "0.153.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -65,7 +65,7 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.163.0.LATEST"
+                    "versionNumber": "0.178.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
@@ -73,11 +73,11 @@
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.81.0.LATEST"
+                    "versionNumber": "0.83.0.LATEST"
                 },
                 {
                     "package": "crm-nks-base-components",
-                    "versionNumber": "0.84.0.LATEST"
+                    "versionNumber": "0.104.0.LATEST"
                 }
             ]
         }
