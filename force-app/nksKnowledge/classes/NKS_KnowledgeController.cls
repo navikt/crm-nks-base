@@ -18,9 +18,9 @@ public with sharing class NKS_KnowledgeController {
         } catch (Exception ex) {
             logger.error(
                 'Problem getting links (NamedCredentials) to be checked: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                    ex.getMessage() +
+                    '\n' +
+                    ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 null
@@ -39,12 +39,15 @@ public with sharing class NKS_KnowledgeController {
         if (fieldLabelsCache.containsKey(fieldName)) {
             return fieldLabelsCache.get(fieldName);
         }
-        
+
         String objectName = 'Knowledge__kav';
         if (Type.forName(objectName) != null) {
             Schema.DescribeSObjectResult describeResult;
             try {
-                List<Schema.DescribeSObjectResult> describes = Schema.describeSObjects(new String[] { 'Knowledge__kav' }, SObjectDescribeOptions.DEFERRED);
+                List<Schema.DescribeSObjectResult> describes = Schema.describeSObjects(
+                    new List<String>{ 'Knowledge__kav' },
+                    SObjectDescribeOptions.DEFERRED
+                );
                 describeResult = describes[0];
             } catch (InvalidParameterValueException ipve) {
                 describeResult = null;
@@ -102,10 +105,7 @@ public with sharing class NKS_KnowledgeController {
             }
         } catch (Exception ex) {
             logger.error(
-                'Problem finding links per field: ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                'Problem finding links per field: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 null
@@ -173,10 +173,7 @@ public with sharing class NKS_KnowledgeController {
                             }
                         } catch (Exception ex) {
                             logger.error(
-                                'Problem sending HTTP-request: ' +
-                                ex.getMessage() +
-                                '\n' +
-                                ex.getStackTraceString(),
+                                'Problem sending HTTP-request: ' + ex.getMessage() + '\n' + ex.getStackTraceString(),
                                 null,
                                 CRM_ApplicationDomain.Domain.NKS,
                                 null
@@ -198,7 +195,7 @@ public with sharing class NKS_KnowledgeController {
     }
 
     public static void setCompiledRegexPattern() {
-        String regex = '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&/=]*)';
+        String regex = '(https?://[\\w\\-._~:/?#\\[\\]@!$&\'()*+,;=%]+|www\\.[\\w\\-._~:/?#\\[\\]@!$&\'()*+,;=%]+|[\\w\\-]+\\.[a-z]{2,6}\\b[\\w\\-._~:/?#\\[\\]@!$&\'()*+,;=%]*)';
         compiledRegexPattern = Pattern.compile(regex);
     }
 
@@ -225,11 +222,11 @@ public with sharing class NKS_KnowledgeController {
         } catch (Exception ex) {
             logger.error(
                 'Problem getting broken links for article ' +
-                article.Id +
-                ': ' +
-                ex.getMessage() +
-                '\n' +
-                ex.getStackTraceString(),
+                    article.Id +
+                    ': ' +
+                    ex.getMessage() +
+                    '\n' +
+                    ex.getStackTraceString(),
                 null,
                 CRM_ApplicationDomain.Domain.NKS,
                 null
