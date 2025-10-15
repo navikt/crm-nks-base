@@ -1232,59 +1232,6 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <fields>
-            <name>Person_Case_Overview</name>
-            <extensionName>c:crmPersonCaseOverview</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>actorId</name>
-                <value>
-                    <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>prefilledThemeGroup</name>
-                <value>
-                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>useNewDesign</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>Selected_Case_Id</assignToReference>
-                <name>selectedCaseId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Legacy_System</assignToReference>
-                <name>selectedCaseLegacySystem</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Theme_Code</assignToReference>
-                <name>selectedCaseTheme</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Theme_SF_Id</assignToReference>
-                <name>selectedCaseThemeSfId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Theme_Group_SF_Id</assignToReference>
-                <name>selectedThemeGroupSfId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Subtheme</assignToReference>
-                <name>selectedSubtheme</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Subtheme_SF_Id</assignToReference>
-                <name>selectedSubthemeSfId</name>
-            </outputParameters>
-        </fields>
         <nextOrFinishButtonLabel>Journalfør og del med brukeren</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
