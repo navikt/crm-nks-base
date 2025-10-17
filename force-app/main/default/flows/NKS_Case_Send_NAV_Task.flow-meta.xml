@@ -456,9 +456,9 @@ TODAY())</expression>
         <dataType>String</dataType>
         <expression>{!NavTask.NKS_Theme__r.CRM_Code__c}</expression>
     </formulas>
-    <interviewLabel>NKS Case Send NAV Task v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>NKS Case Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>NKS Case Send NAV Task v. 2</label>
+    <label>NKS Case Send NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

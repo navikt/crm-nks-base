@@ -161,7 +161,7 @@ TODAY())</expression>
     </formulas>
     <interviewLabel>NKS Account Send NAV Task {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>NKS Account Send NAV Task v. 2</label>
+    <label>NKS Account Send NAV Task</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
