@@ -22,27 +22,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NavTask.NKS_Theme_Group__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categorization.themeGroup</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Theme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categorization.theme</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.NKS_Subtheme__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categorization.subtheme</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>NavTask.CRM_Priority__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -82,13 +61,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Task_Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NavTask.CRM_Subtype__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Theme_Categorization.subtype</elementReference>
             </value>
         </assignmentItems>
         <connector>
