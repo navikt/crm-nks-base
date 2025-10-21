@@ -87,6 +87,12 @@ export default class NksHomePageText extends NavigationMixin(LightningElement) {
         });
     }
 
+    get isLastUpdatedToday() {
+        this.lastModifiedDate = new Date(this.lastModifiedDate);
+        const today = new Date();
+        return this.lastModifiedDate.toDateString() === today.toDateString();
+    }
+
     get isSalesforceUpdate() {
         return this.type === 'Salesforce oppdatering';
     }
