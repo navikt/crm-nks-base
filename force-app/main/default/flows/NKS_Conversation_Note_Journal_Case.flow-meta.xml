@@ -27,8 +27,8 @@
         </rules>
     </decisions>
     <environments>Default</environments>
-    <interviewLabel>NKS Conversation Note Journal Case v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Conversation Note Journal Case v. 2</label>
+    <interviewLabel>NKS Conversation Note Journal Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Conversation Note Journal Case</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -177,7 +177,7 @@
         <label>Post Journal Entry</label>
         <locationX>50</locationX>
         <locationY>458</locationY>
-        <flowName>CRM_Journal_Conversation_Note_v_2</flowName>
+        <flowName>CRM_Journal_Conversation_Note</flowName>
         <inputAssignments>
             <name>Journal_Case_ID</name>
             <value>

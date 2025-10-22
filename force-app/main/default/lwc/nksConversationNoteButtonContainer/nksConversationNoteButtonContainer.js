@@ -5,7 +5,7 @@ import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/
 import { publish, MessageContext } from 'lightning/messageService';
 import { getOutputVariableValue } from 'c/nksComponentsUtils';
 
-const JOURNAL_FLOW_API_NAME = 'NKS_Conversation_Note_Journal_Case_v_2';
+const JOURNAL_FLOW_API_NAME = 'NKS_Conversation_Note_Journal_Case';
 
 export default class NksConversationNoteButtonContainer extends LightningElement {
     @api recordId;

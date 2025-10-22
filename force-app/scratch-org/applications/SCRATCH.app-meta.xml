@@ -13,7 +13,7 @@
         <actionName>View</actionName>
         <comment>Action override updated by Lightning App Builder
         during activation.</comment>
-        <content>Scratch_Phone_Case_Record_Page_v_2</content>
+        <content>Scratch_Phone_Case_Record_Page</content>
         <formFactor>
         Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>

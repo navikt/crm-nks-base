@@ -641,8 +641,8 @@
         <dataType>Boolean</dataType>
         <expression>{!Get_Case.IsClosed} = true</expression>
     </formulas>
-    <interviewLabel>NKS Case Log Call v. 2 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>NKS Case Log Call v. 2</label>
+    <interviewLabel>NKS Case Log Call {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Case Log Call</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>

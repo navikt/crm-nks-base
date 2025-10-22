@@ -657,7 +657,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>NKS_Account_Send_NAV_Task_v_2</value>
+                    <value>NKS_Account_Send_NAV_Task</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>fullButtonWidth</name>
