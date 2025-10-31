@@ -55,3 +55,7 @@
 .text-divider::after {
     content: '|';
 }
+
+.custom-font-color {
+    color: black;
+}
