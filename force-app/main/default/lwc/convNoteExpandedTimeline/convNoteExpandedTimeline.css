@@ -1,5 +1,5 @@
 .weak-text {
-    color: dimgray;
+    color: black;
     font-size: smaller;
 }
 
@@ -39,4 +39,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+.conv-note-details {
+    color: black;
 }
