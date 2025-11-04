@@ -51,3 +51,7 @@
     align-items: center;
     justify-content: left;
 }
+
+.custom-font-color {
+    color: black;
+}
