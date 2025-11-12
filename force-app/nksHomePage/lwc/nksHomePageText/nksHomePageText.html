@@ -67,13 +67,12 @@
                     </div>
                 </template>
                 <div class="slds-media__body">
-                    <h2 class="slds-text-heading_medium slds-truncate">{cardTitle}</h2>
+                    <h2 class="slds-card__header-title slds-truncate">{cardTitle}</h2>
                 </div>
                 <div class="slds-var-p-right_small">
-                    <p>Sist oppdatert:&nbsp;
-                        <template lwc:if={isLastUpdatedToday}>
-                            i dag
-                        </template>
+                    <p>
+                        Sist oppdatert:&nbsp;
+                        <template lwc:if={isLastUpdatedToday}> i dag </template>
                         <template lwc:else>
                             <lightning-formatted-date-time
                                 value={lastModifiedDate}
@@ -86,7 +85,7 @@
                         </template>
                     </p>
                 </div>
-                
+
                 <template lwc:if={enableRefresh}>
                     <lightning-button-icon
                         class="slds-float_right"
