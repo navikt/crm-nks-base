@@ -1,7 +1,7 @@
 <template>
     <!-- Operational Card -->
     <template lwc:if={showOperational}>
-        <section class="slds-box slds-theme_default slds-m-bottom_none">
+        <section class="slds-card slds-theme_default slds-m-bottom_none">
             <div class="slds-media slds-media_center slds-align_absolute-center slds-var-p-bottom_small">
                 <div class="slds-media__figure">
                     <lightning-icon
@@ -23,7 +23,7 @@
 
     <!-- Salesforce Update Card -->
     <template lwc:elseif={showSalesforceUpdate}>
-        <section class="slds-box slds-theme_default slds-m-bottom_none">
+        <section class="slds-card slds-theme_default slds-m-bottom_none">
             <div class="slds-media slds-media_center slds-align_absolute-center slds-var-p-bottom_small">
                 <div class="slds-media__figure">
                     <lightning-icon
@@ -49,7 +49,7 @@
 
     <!-- Traffic Card -->
     <template lwc:elseif={isTraffic}>
-        <section class="slds-box slds-theme_default slds-is-relative">
+        <section class="slds-card slds-theme_default slds-is-relative">
             <template lwc:if={showSpinner}>
                 <div class="slds-spinner_container">
                     <lightning-spinner title="Loading" size="small" type="brand"></lightning-spinner>
@@ -85,7 +85,6 @@
                         </template>
                     </p>
                 </div>
-
                 <template lwc:if={enableRefresh}>
                     <lightning-button-icon
                         class="slds-float_right"
