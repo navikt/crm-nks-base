@@ -5,17 +5,18 @@
 .slds-card__footer {
     border-top: none !important;
     justify-content: start;
-    padding: 0 1rem 1rem 1rem;
 }
 
 .header-icon {
     background-color: #4bca81;
 }
 
-.slds-card__header {
-    padding-top: 1rem;
+.slds-card {
+    padding: 1.25rem 1rem;
 }
 
-.slds-card__body {
-    padding: 0 1rem;
+.slds-card__body,
+.slds-card__footer,
+.slds-card__header {
+    padding: 0;
 }
