@@ -10,6 +10,10 @@ export default class NksHomePageHighlightPanelMid extends LightningElement {
                 showImage: true
             },
             {
+                title: 'Min statistikk',
+                url: 'https://visbi-ns.adeo.no/t/Felles/views/NKS-Innsiktforveileder/Forside'
+            },
+            {
                 title: 'Teknisk hjelp - IT',
                 url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Teknisk-hjelp---Prosjektgruppe.aspx'
             },
