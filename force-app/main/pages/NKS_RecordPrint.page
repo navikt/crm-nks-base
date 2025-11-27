@@ -36,8 +36,8 @@
                     </div>
 
                     <span class="message-container">
-                        <apex:outputText label="Innhold:" value="{!msg.message['CRM_Message_Text__c']}">
-                        </apex:outputText>
+                        <apex:outputField label="Innhold:" value="{!msg.message['CRM_Message_Text__c']}">
+                        </apex:outputField>
                     </span>
                     <br />
                     <br />
