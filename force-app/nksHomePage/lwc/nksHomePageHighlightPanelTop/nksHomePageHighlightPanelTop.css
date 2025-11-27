@@ -31,3 +31,7 @@ h1 {
 .custom-padding-left {
     padding-left: 1rem;
 }
+
+.svg-container {
+    margin-left: 5rem;
+}
