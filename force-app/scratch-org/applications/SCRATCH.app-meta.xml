@@ -4,22 +4,18 @@
         <actionName>Tab</actionName>
         <content>SCRATH_HOME_PAGE</content>
         <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>
-        false</skipRecordTypeSelect>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>standard-home</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override updated by Lightning App Builder
-        during activation.</comment>
-        <content>Scratch_Phone_Case_Record_Page</content>
-        <formFactor>
-        Large</formFactor>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>SCRATCH_Phone_Case_Record_Page</content>
+        <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>
-        Case</pageOrSobjectType>
+        <pageOrSobjectType>Case</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
@@ -36,19 +32,16 @@
         <actionName>View</actionName>
         <content>SCRATCH_Person_Account_Page</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>
-        Account</pageOrSobjectType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>PersonAccount.PersonAccount</recordType>
-        <type>
-        Flexipage</type>
+        <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>Tab</actionName>
         <content>SCRATH_HOME_PAGE</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>
-        standard-home</pageOrSobjectType>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>

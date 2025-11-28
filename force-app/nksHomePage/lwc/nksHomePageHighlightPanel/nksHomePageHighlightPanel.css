@@ -1,0 +1,97 @@
+.header-container {
+    position: relative;
+}
+
+.christmas-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 154px;
+    width: auto;
+    min-width: 750px;
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+}
+.christmas-svg svg {
+    display: block;
+    height: 100%;
+    width: auto;
+}
+
+@keyframes star-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    22% {
+        opacity: 0.2;
+    }
+    44% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0.5;
+    }
+    85% {
+        opacity: 0.2;
+    }
+}
+
+.blinking-star01 {
+    animation: star-blink 1.27s linear infinite;
+    animation-delay: 0.15s;
+}
+.blinking-star02 {
+    animation: star-blink 1.8s linear infinite;
+    animation-delay: 0.48s;
+}
+.blinking-star03 {
+    animation: star-blink 1.55s linear infinite;
+    animation-delay: 0.81s;
+}
+.blinking-star04 {
+    animation: star-blink 1.95s linear infinite;
+    animation-delay: 1.11s;
+}
+.blinking-star05 {
+    animation: star-blink 1.46s linear infinite;
+    animation-delay: 0.33s;
+}
+.blinking-star06 {
+    animation: star-blink 2.1s linear infinite;
+    animation-delay: 0.62s;
+}
+.blinking-star07 {
+    animation: star-blink 1.33s linear infinite;
+    animation-delay: 1.37s;
+}
+.blinking-star08 {
+    animation: star-blink 1.62s linear infinite;
+    animation-delay: 0.99s;
+}
+.blinking-star09 {
+    animation: star-blink 1.73s linear infinite;
+    animation-delay: 0.23s;
+}
+.blinking-star10 {
+    animation: star-blink 2.03s linear infinite;
+    animation-delay: 0.52s;
+}
+.blinking-star11 {
+    animation: star-blink 1.49s linear infinite;
+    animation-delay: 1.02s;
+}
+.blinking-star12 {
+    animation: star-blink 1.66s linear infinite;
+    animation-delay: 0.76s;
+}
+.blinking-star13 {
+    animation: star-blink 1.92s linear infinite;
+    animation-delay: 0.68s;
+}
+.blinking-star14 {
+    animation: star-blink 1.41s linear infinite;
+    animation-delay: 1.23s;
+}
