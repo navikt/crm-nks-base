@@ -2,3 +2,7 @@
     overflow: hidden;
     max-width: 100%;
 }
+
+.slds-card {
+    padding: 1.25rem 1rem;
+}

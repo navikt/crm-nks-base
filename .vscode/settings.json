@@ -31,5 +31,6 @@
     },
     "scratch.default.permissionsets": [
         "NKS_Base_Scratch_Group"
-    ]
+    ],
+    "xml.preferences.showSchemaDocumentationType": "none"
 }

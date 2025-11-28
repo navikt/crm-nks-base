@@ -5,11 +5,11 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.457.0.NEXT",
+            "versionNumber": "0.461.0.NEXT",
             "dependencies": [
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.263.0.LATEST"
+                    "versionNumber": "0.295.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -29,7 +29,7 @@
                 },
                 {
                     "package": "crm-shared-timeline",
-                    "versionNumber": "1.30.0.LATEST"
+                    "versionNumber": "1.40.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -45,7 +45,7 @@
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.23.0.LATEST"
+                    "versionNumber": "0.26.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
@@ -53,11 +53,11 @@
                 },
                 {
                     "package": "crm-platform-oppgave",
-                    "versionNumber": "0.61.0.LATEST"
+                    "versionNumber": "0.65.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.507.0.LATEST"
+                    "versionNumber": "1.574.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
