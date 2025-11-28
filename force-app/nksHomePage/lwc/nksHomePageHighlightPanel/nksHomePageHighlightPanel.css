@@ -1,0 +1,97 @@
+.header-container {
+    position: relative;
+}
+
+.christmas-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 154px;
+    width: auto;
+    min-width: 750px;
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-end;
+}
+.christmas-svg svg {
+    display: block;
+    height: 100%;
+    width: auto;
+}
+
+@keyframes star-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    20% {
+        opacity: 0.2;
+    }
+    38% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 0.5;
+    }
+    87% {
+        opacity: 0.2;
+    }
+}
+
+.blinking-star01 {
+    animation: star-blink 2.4s linear infinite;
+    animation-delay: 0.32s;
+}
+.blinking-star02 {
+    animation: star-blink 2.9s linear infinite;
+    animation-delay: 1s;
+}
+.blinking-star03 {
+    animation: star-blink 2.7s linear infinite;
+    animation-delay: 0.64s;
+}
+.blinking-star04 {
+    animation: star-blink 3.1s linear infinite;
+    animation-delay: 1.4s;
+}
+.blinking-star05 {
+    animation: star-blink 2.6s linear infinite;
+    animation-delay: 0.44s;
+}
+.blinking-star06 {
+    animation: star-blink 3.3s linear infinite;
+    animation-delay: 1.1s;
+}
+.blinking-star07 {
+    animation: star-blink 2.5s linear infinite;
+    animation-delay: 1.7s;
+}
+.blinking-star08 {
+    animation: star-blink 2.8s linear infinite;
+    animation-delay: 1.33s;
+}
+.blinking-star09 {
+    animation: star-blink 2.9s linear infinite;
+    animation-delay: 0.43s;
+}
+.blinking-star10 {
+    animation: star-blink 3.2s linear infinite;
+    animation-delay: 0.8s;
+}
+.blinking-star11 {
+    animation: star-blink 2.65s linear infinite;
+    animation-delay: 1.65s;
+}
+.blinking-star12 {
+    animation: star-blink 3.1s linear infinite;
+    animation-delay: 1.1s;
+}
+.blinking-star13 {
+    animation: star-blink 2.88s linear infinite;
+    animation-delay: 0.7s;
+}
+.blinking-star14 {
+    animation: star-blink 3.08s linear infinite;
+    animation-delay: 0.2s;
+}
