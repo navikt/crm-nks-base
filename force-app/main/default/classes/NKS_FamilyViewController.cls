@@ -598,8 +598,8 @@ public with sharing class NKS_FamilyViewController {
         if (child?.data?.hentPerson?.deltBosted != null && !child.data.hentPerson.deltBosted.isEmpty()) {
             childAddress2 = child.data.hentPerson.deltBosted[0].vegadresse;
         }
-        Boolean childAddress1Match = true;
-        Boolean childAddress2Match = true;
+        Boolean childAddress1Match = (childAddress1 != null);
+        Boolean childAddress2Match = (childAddress2 != null);
 
         childAddress1Match &= (parentAddress.matrikkelId == childAddress1?.matrikkelId);
         childAddress2Match &= (parentAddress.matrikkelId == childAddress2?.matrikkelId);
@@ -640,7 +640,7 @@ public with sharing class NKS_FamilyViewController {
         if (parentAddress == null) {
             return false;
         }
-        Boolean childAddress1Match = true;
+        Boolean childAddress1Match = (child?.INT_ResidentialAddress__c != null);
 
         String parentResidentialAddress = addressCreator(
             new List<String>{ parentAddress.adressenavn, parentAddress.husnummer, parentAddress.husbokstav }
