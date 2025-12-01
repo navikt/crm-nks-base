@@ -105,7 +105,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         Blob articlePdf = Blob.toPdf('This is a test PDF');
 
         System.Test.startTest();
-        String requestBody = handler.createRequestBody('25/12742', 'A133191', article, articlePdf);
+        String requestBody = handler.createRequestBody('25/12742', 'Test Ident', article, articlePdf);
         System.Test.stopTest();
 
         System.assertNotEquals(null, requestBody, 'The generated JSON should not be null');
@@ -115,7 +115,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         System.Assert.areEqual('NKSSalesForce', rootMap.get('DefaultValueSet'), 'DefaultValueSet mismatch');
         System.Assert.areEqual('25/12742', rootMap.get('CaseNumber'), 'Incorrect CaseNumber');
         System.Assert.areEqual('Alle ansatte i Nav', rootMap.get('AccessGroup'), 'Incorrect AccessGroup');
-        System.Assert.areEqual('A133191', rootMap.get('ResponsiblePersonIdNumber'), 'Incorrect navIdent');
+        System.Assert.areEqual('Test Ident', rootMap.get('ResponsiblePersonIdNumber'), 'Incorrect navIdent');
 
         List<Object> files = (List<Object>) rootMap.get('Files');
         System.Assert.areEqual(1, files.size(), 'Should have exactly one file in the Files array');
