@@ -329,7 +329,7 @@ public with sharing class NKS_NewsArchiveHandler {
      *     "DefaultValueSet":"NKSSalesForce",
      *     "CaseNumber":"25/12742",
      *     "AccessGroup":"Alle ansatte i Nav",
-     *     "ResponsiblePersonIdNumber":"A133191",
+     *     "ResponsiblePersonIdNumber":"Nav Ident til ansvarlig person",
      *     "Files":[
      *         {
      *             "Title": "Test Nyhetsartikkel No. 1",
