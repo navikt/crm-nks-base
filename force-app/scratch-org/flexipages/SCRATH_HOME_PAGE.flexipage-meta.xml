@@ -9,7 +9,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>navTitle</name>
-                    <value>Status NAV.no</value>
+                    <value>Status Nav.no</value>
                 </componentInstanceProperties>
                 <componentName>nksHomePageHighlightPanel</componentName>
                 <identifier>c_nksHomePageHighlightPanel</identifier>
