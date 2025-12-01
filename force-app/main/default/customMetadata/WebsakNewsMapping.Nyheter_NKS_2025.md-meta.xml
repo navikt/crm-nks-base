@@ -17,22 +17,6 @@
         <value xsi:type="xsd:string">25/12742</value>
     </values>
     <values>
-        <field>NavEnhetProd__c</field>
-        <value xsi:type="xsd:string">2530003</value>
-    </values>
-    <values>
-        <field>NavEnhetTest__c</field>
-        <value xsi:type="xsd:string">410000</value>
-    </values>
-    <values>
-        <field>NavIdProd__c</field>
-        <value xsi:type="xsd:string">A133191</value>
-    </values>
-    <values>
-        <field>NavIdTest__c</field>
-        <value xsi:type="xsd:string">A117995</value>
-    </values>
-    <values>
         <field>Order__c</field>
         <value xsi:type="xsd:double">1.0</value>
     </values>
