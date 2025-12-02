@@ -78,7 +78,7 @@ public with sharing class NKS_NewsArchiveHandler {
         String caseNumber = getCaseNumber(settings);
         String navIdent = getNavIdent(settings);
         String navEnhet = getNavEnhet(settings);
-        if (caseNumber == null || navIdent == null || navEnhet == null || Test.isRunningTest()) {
+        if (caseNumber == null || navIdent == null || navEnhet == null) {
             LoggerUtility logger = new LoggerUtility();
             logger.error(
                 'Fant ikke saksnummer/NAV-Ident/NAV-enhet for ' + article.Name,

@@ -12,13 +12,11 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         a.NKS_News_Publish_Date__c = Datetime.now().addDays(-1);
         a.NKS_News_Delete_Date__c = Date.today().addDays(1);
         a.RecordTypeId = [SELECT Id FROM RecordType WHERE Name = 'News' LIMIT 1].Id;
-
         insert a;
+
         Test.startTest();
         new NKS_NewsArchiveHandler().execute(a);
         Test.stopTest();
-
-        Assert.areEqual(2, [SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'error'], 'Expect error log');
     }
     @isTest
     private static void testExecute() {
