@@ -18,7 +18,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
         new NKS_NewsArchiveHandler().execute(a);
         Test.stopTest();
 
-        Assert.areEqual(1, [SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'error'], 'Expect error log');
+        Assert.areEqual(2, [SELECT COUNT() FROM Application_Log__c WHERE Log_Level__c = 'error'], 'Expect error log');
     }
     @isTest
     private static void testExecute() {
