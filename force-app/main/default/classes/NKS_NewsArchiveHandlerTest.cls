@@ -198,4 +198,107 @@ private class NKS_NewsArchiveHandlerTest {
         Assert.areEqual(200, response.getStatusCode(), 'Should match the mock status code');
         Assert.areEqual('OK', response.getStatus(), 'Should match the mock status message');
     }
+
+    @isTest
+    static void testGetCaseNumberNumberNavIdentNavEnhetSwitchSandboxAndNullCases() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        stubSettings.CaseNumberTest__c = '11/22';
+        stubSettings.CaseNumberProd__c = '33/44';
+        stubSettings.NavIdTest__c = 'T111';
+        stubSettings.NavIdProd__c = 'P222';
+        stubSettings.NavEnhetTest__c = 'ENH1';
+        stubSettings.NavEnhetProd__c = 'ENH2';
+
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+        Assert.areEqual('11/22', handler.getCaseNumber(stubSettings));
+        Assert.areEqual('T111', handler.getNavIdent(stubSettings));
+        Assert.areEqual('ENH1', handler.getNavEnhet(stubSettings));
+        Assert.areEqual(null, handler.getCaseNumber(null));
+        Assert.areEqual(null, handler.getNavIdent(null));
+        Assert.areEqual(null, handler.getNavEnhet(null));
+    }
+
+    @isTest
+    static void testFormatFileNameHandlesNorwegianAndSpecialCharacters() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+
+        String input = 'Åpen/æØ(ø)fil.pdf';
+        String output = handler.formatFileName(input);
+
+        Assert.areNotEqual(-1, output.indexOf('A'), 'Should replace Å');
+        Assert.areNotEqual(-1, output.indexOf('ae'), 'Should replace æ');
+        Assert.areNotEqual(-1, output.indexOf('O'), 'Should replace Ø');
+        Assert.isFalse(output.contains('/'), 'Should remove /');
+        Assert.isFalse(output.contains('('), 'Should remove (');
+        Assert.isFalse(output.contains(')'), 'Should remove )');
+        Assert.areEqual(output.right(4), '.pdf', 'Should end with .pdf');
+    }
+
+    @isTest
+    static void testGetJournalPostName() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+
+        String result = handler.getJournalPostName('TYPE', '2023-19-123');
+        Assert.areEqual('TYPE - 202319123', result, 'Should remove dashes');
+    }
+
+    @isTest
+    static void testFormatDateString() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+
+        Date testDate = Date.newInstance(2022, 2, 1);
+        String formatted = handler.formatDateString(testDate);
+        Assert.areEqual('20220201', formatted, 'Must have correct date format');
+    }
+
+    @isTest
+    static void testGetAutoNumberReturnsDefaultIfNoLogs() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+
+        Test.startTest();
+        // There are no Application_Log__c, should return '000001'
+        String result = handler.getAutoNumber();
+        Test.stopTest();
+
+        Assert.areEqual('000001', result, 'Should return starting auto number');
+    }
+
+    @isTest
+    static void testGetAutoNumberReturnsIncrementedIfLogExists() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler(stubSettings);
+
+        Application_Log__c log = new Application_Log__c(
+            Log_Level__c = 'Info',
+            Source_Class__c = 'NKS_NewsArchiveHandler',
+            Log_Message__c = '000003 Some log'
+        );
+        insert log;
+
+        Test.startTest();
+        String result = handler.getAutoNumber();
+        Test.stopTest();
+
+        Assert.areNotEqual('000001', result, 'Should increment based on last log');
+    }
+
+    @isTest
+    static void testGetFtpsCatalougeSandboxAndProd() {
+        WebsakNewsMapping__mdt stubSettings = new WebsakNewsMapping__mdt();
+        NKS_NewsArchiveHandler handlerSandbox = new NKS_NewsArchiveHandler(stubSettings);
+        handlerSandbox.isSandbox = true;
+        String resultSandbox = handlerSandbox.getFtpsCatalouge();
+
+        Assert.areEqual('ftpmottakP1SF_NKS', resultSandbox, 'Should return test catalouge in sandbox');
+
+        NKS_NewsArchiveHandler handlerProd = new NKS_NewsArchiveHandler(stubSettings);
+        handlerProd.isSandbox = false;
+        String resultProd = handlerProd.getFtpsCatalouge();
+
+        Assert.areEqual('ftpmottak_SF_NKS', resultProd, 'Should return prod catalouge outside sandbox');
+    }
 }

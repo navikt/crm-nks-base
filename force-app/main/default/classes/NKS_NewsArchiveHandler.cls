@@ -26,6 +26,7 @@ public with sharing class NKS_NewsArchiveHandler {
     public static final String CREATE_DOCUMENT = 'CreateDocument';
 
     private string errorMessage = '';
+    @TestVisible
     private Boolean isSandbox;
 
     /**
@@ -109,21 +110,28 @@ public with sharing class NKS_NewsArchiveHandler {
         return;
     }
 
+    @TestVisible
     private String getCaseNumber(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.CaseNumberTest__c : settings.CaseNumberProd__c;
     }
+
+    @TestVisible
     private String getNavIdent(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavIdTest__c : settings.NavIdProd__c;
     }
+
+    @TestVisible
     private String getNavEnhet(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavEnhetTest__c : settings.NavEnhetProd__c;
     }
+
+    @TestVisible
     private WebsakNewsMapping__mdt getSettings() {
         // Use injected during tests
         if (Test.isRunningTest() && injectedSettings != null) {
@@ -289,10 +297,12 @@ public with sharing class NKS_NewsArchiveHandler {
         return getAutoNumber() + '_NyheterNKS_' + formatDateString(archiveDate) + MANIFEST_FORMAT;
     }
 
+    @TestVisible
     private String getJournalPostName(String type, String caseNumber) {
         return type + ' - ' + caseNumber.replaceAll('-', '');
     }
 
+    @TestVisible
     private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
@@ -309,6 +319,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return s;
     }
 
+    @TestVisible
     private String formatDateString(Date input) {
         Datetime dateToFormat = input;
         return dateToFormat.formatGmt('yyyyMMdd');
@@ -333,6 +344,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return String.valueOf(newAutoNumber).substring(1, 7);
     }
 
+    @TestVisible
     private String getFtpsCatalouge() {
         if (isSandbox) {
             return FTPS_CATALOUGE_TEST;
