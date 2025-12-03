@@ -26,7 +26,6 @@ public with sharing class NKS_NewsArchiveHandler {
     public static final String CREATE_DOCUMENT = 'CreateDocument';
 
     private string errorMessage = '';
-    @TestVisible
     private Boolean isSandbox;
 
     /**
@@ -36,7 +35,6 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private NKS_NewsArchiveSettings__c newsArchiveSettings;
-
     /**
      * @description Boolean to indicate if the Public 360 integration should be used.
      *
@@ -44,7 +42,6 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private Boolean useP360 = false;
-
     /**
      * @description Boolean to indicate if the WebSak integration should be used.
      *
@@ -62,26 +59,11 @@ public with sharing class NKS_NewsArchiveHandler {
     @TestVisible
     public HttpResponse operationResponse { get; private set; }
 
-    // Test injection for metadata
-    @TestVisible
-    private WebsakNewsMapping__mdt injectedSettings;
-
-    // Default constructor
     public NKS_NewsArchiveHandler() {
         this.newsArchiveSettings = NKS_NewsArchiveSettings__c.getOrgDefaults();
         this.useP360 = this.newsArchiveSettings.UsePublic360__c;
         this.useWebSak = this.newsArchiveSettings.UseWebSak__c;
         this.isSandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
-    }
-
-    // Test constructor for dependency injection
-    @TestVisible
-    public NKS_NewsArchiveHandler(WebsakNewsMapping__mdt settings) {
-        this.newsArchiveSettings = NKS_NewsArchiveSettings__c.getOrgDefaults();
-        this.useP360 = this.newsArchiveSettings.UsePublic360__c;
-        this.useWebSak = this.newsArchiveSettings.UseWebSak__c;
-        this.isSandbox = [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
-        this.injectedSettings = settings;
     }
 
     public void execute(NKS_Announcement__c article) {
@@ -109,34 +91,23 @@ public with sharing class NKS_NewsArchiveHandler {
         archiveArticle(article, caseNumber, navIdent, navEnhet, ftpsCatalouge);
         return;
     }
-
     @TestVisible
     private String getCaseNumber(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.CaseNumberTest__c : settings.CaseNumberProd__c;
     }
-
-    @TestVisible
     private String getNavIdent(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavIdTest__c : settings.NavIdProd__c;
     }
-
-    @TestVisible
     private String getNavEnhet(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavEnhetTest__c : settings.NavEnhetProd__c;
     }
-
-    @TestVisible
     private WebsakNewsMapping__mdt getSettings() {
-        // Use injected during tests
-        if (Test.isRunningTest() && injectedSettings != null) {
-            return injectedSettings;
-        }
         if (isSandbox) {
             return [
                 SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c
@@ -180,6 +151,7 @@ public with sharing class NKS_NewsArchiveHandler {
             articlePdf = blob.valueOf('Unit.Test');
         } else {
             articlePdf = NKS_NewsArticlePdfGenerator.getPdf(article.Id);
+            //articlePdf = Blob.toPdf('This is a test PDF');
         }
 
         Map<String, Blob> filesToSend = new Map<String, Blob>();
@@ -297,12 +269,10 @@ public with sharing class NKS_NewsArchiveHandler {
         return getAutoNumber() + '_NyheterNKS_' + formatDateString(archiveDate) + MANIFEST_FORMAT;
     }
 
-    @TestVisible
     private String getJournalPostName(String type, String caseNumber) {
         return type + ' - ' + caseNumber.replaceAll('-', '');
     }
 
-    @TestVisible
     private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
@@ -319,7 +289,6 @@ public with sharing class NKS_NewsArchiveHandler {
         return s;
     }
 
-    @TestVisible
     private String formatDateString(Date input) {
         Datetime dateToFormat = input;
         return dateToFormat.formatGmt('yyyyMMdd');
@@ -344,7 +313,6 @@ public with sharing class NKS_NewsArchiveHandler {
         return String.valueOf(newAutoNumber).substring(1, 7);
     }
 
-    @TestVisible
     private String getFtpsCatalouge() {
         if (isSandbox) {
             return FTPS_CATALOUGE_TEST;
