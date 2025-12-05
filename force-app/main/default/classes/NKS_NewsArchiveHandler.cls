@@ -115,8 +115,9 @@ public with sharing class NKS_NewsArchiveHandler {
     }
 
     private WebsakNewsMapping__mdt getSettings() {
+        List<WebsakNewsMapping__mdt> records;
         if (isSandbox) {
-            return [
+            records = [
                 SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c
                 FROM WebsakNewsMapping__mdt
                 WHERE ActiveFrom__c <= TODAY
@@ -124,7 +125,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 LIMIT 1
             ];
         } else {
-            return [
+            records = [
                 SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c
                 FROM WebsakNewsMapping__mdt
                 WHERE ActiveFrom__c <= TODAY
@@ -132,6 +133,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 LIMIT 1
             ];
         }
+        return records.isEmpty() ? null : records[0];
     }
 
     /**
