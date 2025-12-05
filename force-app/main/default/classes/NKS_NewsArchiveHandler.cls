@@ -24,8 +24,9 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     public static final String CREATE_DOCUMENT = 'CreateDocument';
-
     private string errorMessage = '';
+
+    @TestVisible
     private Boolean isSandbox;
 
     /**
@@ -91,25 +92,32 @@ public with sharing class NKS_NewsArchiveHandler {
         archiveArticle(article, caseNumber, navIdent, navEnhet, ftpsCatalouge);
         return;
     }
+
     @TestVisible
     private String getCaseNumber(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.CaseNumberTest__c : settings.CaseNumberProd__c;
     }
+
+    @TestVisible
     private String getNavIdent(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavIdTest__c : settings.NavIdProd__c;
     }
+
+    @TestVisible
     private String getNavEnhet(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavEnhetTest__c : settings.NavEnhetProd__c;
     }
+
     private WebsakNewsMapping__mdt getSettings() {
+        List<WebsakNewsMapping__mdt> records;
         if (isSandbox) {
-            return [
+            records = [
                 SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c
                 FROM WebsakNewsMapping__mdt
                 WHERE ActiveFrom__c <= TODAY
@@ -117,7 +125,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 LIMIT 1
             ];
         } else {
-            return [
+            records = [
                 SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c
                 FROM WebsakNewsMapping__mdt
                 WHERE ActiveFrom__c <= TODAY
@@ -125,6 +133,7 @@ public with sharing class NKS_NewsArchiveHandler {
                 LIMIT 1
             ];
         }
+        return records.isEmpty() ? null : records[0];
     }
 
     /**
@@ -202,6 +211,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return isSuccess;
     }
 
+    @TestVisible
     private Boolean sendFiles(Map<String, Blob> files, String xmlManifestName, String ftpsCatalouge) {
         Boolean success = true;
         String xmlFileName;
@@ -265,6 +275,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return Blob.valueOf(generator.generateXML());
     }
 
+    @TestVisible
     private String getManifestName(Date archiveDate) {
         return getAutoNumber() + '_NyheterNKS_' + formatDateString(archiveDate) + MANIFEST_FORMAT;
     }
@@ -273,6 +284,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return type + ' - ' + caseNumber.replaceAll('-', '');
     }
 
+    @TestVisible
     private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
@@ -289,6 +301,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return s;
     }
 
+    @TestVisible
     private String formatDateString(Date input) {
         Datetime dateToFormat = input;
         return dateToFormat.formatGmt('yyyyMMdd');
@@ -313,6 +326,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return String.valueOf(newAutoNumber).substring(1, 7);
     }
 
+    @TestVisible
     private String getFtpsCatalouge() {
         if (isSandbox) {
             return FTPS_CATALOUGE_TEST;
