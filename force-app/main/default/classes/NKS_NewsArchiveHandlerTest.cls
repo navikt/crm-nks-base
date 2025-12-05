@@ -339,7 +339,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     }
 
     @IsTest
-    static void testCalloutDirect() {
+    private static void testCalloutDirect() {
         SingleRequestMock mock = new SingleRequestMock(
             200,
             'OK',
@@ -361,16 +361,8 @@ private with sharing class NKS_NewsArchiveHandlerTest {
     }
 
     // --- Custom Metadata Registry for injection ---
-    private static Map<String, List<SObject>> customMetadataRecordsMap = new Map<String, List<SObject>>();
-
-    public static void setMetadata(String query, List<SObject> records) {
+    private static void setMetadata(String query, List<SObject> records) {
+        Map<String, List<SObject>> customMetadataRecordsMap = new Map<String, List<SObject>>();
         customMetadataRecordsMap.put(query, records);
-    }
-
-    public static List<SObject> getMetadata(String query) {
-        if (customMetadataRecordsMap.containsKey(query)) {
-            return customMetadataRecordsMap.get(query);
-        }
-        return new List<SObject>();
     }
 }
