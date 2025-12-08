@@ -24,6 +24,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     public static final String CREATE_DOCUMENT = 'CreateDocument';
+
     private string errorMessage = '';
 
     @TestVisible
@@ -36,6 +37,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private NKS_NewsArchiveSettings__c newsArchiveSettings;
+
     /**
      * @description Boolean to indicate if the Public 360 integration should be used.
      *
@@ -43,6 +45,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private Boolean useP360 = false;
+
     /**
      * @description Boolean to indicate if the WebSak integration should be used.
      *
@@ -59,6 +62,8 @@ public with sharing class NKS_NewsArchiveHandler {
      */
     @TestVisible
     public HttpResponse operationResponse { get; private set; }
+
+    private static CustomMetadataDAO metadataDAO = new CustomMetadataDAO();
 
     public NKS_NewsArchiveHandler() {
         this.newsArchiveSettings = NKS_NewsArchiveSettings__c.getOrgDefaults();
@@ -115,24 +120,14 @@ public with sharing class NKS_NewsArchiveHandler {
     }
 
     private WebsakNewsMapping__mdt getSettings() {
-        List<WebsakNewsMapping__mdt> records;
-        if (isSandbox) {
-            records = [
-                SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c
-                FROM WebsakNewsMapping__mdt
-                WHERE ActiveFrom__c <= TODAY
-                ORDER BY ActiveFrom__c DESC, Order__c DESC
-                LIMIT 1
-            ];
-        } else {
-            records = [
-                SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c
-                FROM WebsakNewsMapping__mdt
-                WHERE ActiveFrom__c <= TODAY
-                ORDER BY ActiveFrom__c DESC, Order__c DESC
-                LIMIT 1
-            ];
-        }
+        String sandboxQuery = 'SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
+        String prodQuery = 'SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
+
+        String query = isSandbox ? sandboxQuery : prodQuery;
+
+        List<WebsakNewsMapping__mdt> records = (List<WebsakNewsMapping__mdt>) metadataDAO.getCustomMetadataRecords(
+            query
+        );
         return records.isEmpty() ? null : records[0];
     }
 
@@ -289,7 +284,6 @@ public with sharing class NKS_NewsArchiveHandler {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
         // skip '.pdf' at the end of string and delete all non-word characters [^a-zA-Z_0-9]
-
         String s = fileName.replaceAll('Å', 'A');
         s = s.replaceAll('å', 'a');
         s = s.replaceAll('Ø', 'O');

@@ -1,6 +1,5 @@
 @isTest
 private with sharing class NKS_NewsArchiveHandlerTest {
-    // --- Custom Metadata Mock Helpers ---
     private static String QUERY_SANDBOX = 'SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
     private static String QUERY_PROD = 'SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
 
@@ -25,9 +24,9 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
     private static void setupMockWebsakMetadata(Boolean isSandbox) {
         if (isSandbox) {
-            setMetadata(QUERY_SANDBOX, getMockWebsakMetaSandbox());
+            CustomMetadataDAOTest.setMetadata(QUERY_SANDBOX, getMockWebsakMetaSandbox());
         } else {
-            setMetadata(QUERY_PROD, getMockWebsakMetaProd());
+            CustomMetadataDAOTest.setMetadata(QUERY_PROD, getMockWebsakMetaProd());
         }
     }
 
@@ -85,7 +84,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
     @isTest
     private static void testExecuteWithNoMetadata() {
-        setMetadata(QUERY_SANDBOX, new List<WebsakNewsMapping__mdt>());
+        CustomMetadataDAOTest.setMetadata(QUERY_SANDBOX, new List<WebsakNewsMapping__mdt>());
         setupMinimalNewsArchiveSettings(false, true);
         NKS_Announcement__c a = createTestArticle(
             true,
@@ -104,7 +103,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
     @isTest
     private static void testExecuteWithNullCaseNumberOrNavEnhet() {
-        setMetadata(QUERY_SANDBOX, getMockMetaNullValues());
+        CustomMetadataDAOTest.setMetadata(QUERY_SANDBOX, getMockMetaNullValues());
         setupMinimalNewsArchiveSettings(false, true);
         NKS_Announcement__c a = createTestArticle(
             true,
@@ -202,7 +201,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
     @isTest
     private static void testGetCaseNumberAndNavEnhetSandbox() {
-        setMetadata(QUERY_SANDBOX, getMockWebsakMetaSandbox());
+        CustomMetadataDAOTest.setMetadata(QUERY_SANDBOX, getMockWebsakMetaSandbox());
         setupMinimalNewsArchiveSettings(false, true);
         NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler();
         WebsakNewsMapping__mdt mdt = getMockWebsakMetaSandbox()[0];
@@ -216,7 +215,7 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
     @isTest
     private static void testGetCaseNumberAndNavEnhetProd() {
-        setMetadata(QUERY_PROD, getMockWebsakMetaProd());
+        CustomMetadataDAOTest.setMetadata(QUERY_PROD, getMockWebsakMetaProd());
         setupMinimalNewsArchiveSettings(false, true);
         NKS_NewsArchiveHandler handler = new NKS_NewsArchiveHandler();
         handler.isSandbox = false;
@@ -358,11 +357,5 @@ private with sharing class NKS_NewsArchiveHandlerTest {
 
         Assert.areEqual(200, response.getStatusCode(), 'Expect status code 200 from callout');
         Assert.areEqual('OK', response.getStatus(), 'Expect status message OK from callout');
-    }
-
-    // --- Custom Metadata Registry for injection ---
-    private static void setMetadata(String query, List<SObject> records) {
-        Map<String, List<SObject>> customMetadataRecordsMap = new Map<String, List<SObject>>();
-        customMetadataRecordsMap.put(query, records);
     }
 }
