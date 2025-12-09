@@ -4,6 +4,7 @@
     <isExposed>true</isExposed>
     <targets>
         <target>lightning__FlowAction</target>
+        <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowAction">
