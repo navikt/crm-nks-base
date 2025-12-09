@@ -4,10 +4,10 @@
         <description>Directs user to the created case.</description>
         <name>Redirect_to_Case</name>
         <label>Redirect to Case</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
-        <actionName>c:nksFlowRedirect</actionName>
-        <actionType>component</actionType>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>c:nksFlowRedirectToRecord</actionName>
+        <actionType>lwcComponent</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
@@ -15,9 +15,10 @@
                 <elementReference>Create_Case</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>c:nksFlowRedirectToRecord</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>65.0</apiVersion>
     <description>Pop up screen deleted for Case Origin input</description>
     <dynamicChoiceSets>
         <name>Case_Origin</name>
@@ -27,6 +28,7 @@
         <picklistField>Origin</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <interviewLabel>Account Create New Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Create New Case</label>
     <processMetadataValues>
@@ -51,8 +53,8 @@
     <recordCreates>
         <name>Create_Case</name>
         <label>Create Case</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Redirect_to_Case</targetReference>
         </connector>
@@ -79,7 +81,7 @@
     </recordCreates>
     <runInMode>SystemModeWithSharing</runInMode>
     <start>
-        <locationX>50</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Create_Case</targetReference>
