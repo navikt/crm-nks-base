@@ -740,11 +740,6 @@ IF(
         </connector>
     </start>
     <status>Active</status>
-    <textTemplates>
-        <name>ORG_NO_MATCH_TEXT</name>
-        <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>Ingen virksomhet funnet for virksomhetsnummer: {!Search}</text>
-    </textTemplates>
     <variables>
         <name>ACCESS_NUMBER</name>
         <dataType>String</dataType>
