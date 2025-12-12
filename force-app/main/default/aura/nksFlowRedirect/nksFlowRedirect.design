@@ -1,3 +1,0 @@
-<design:component>
-    <design:attribute name="recordId" label="Record ID" required="true" />
-</design:component>
