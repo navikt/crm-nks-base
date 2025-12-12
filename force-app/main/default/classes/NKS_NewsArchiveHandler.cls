@@ -26,6 +26,8 @@ public with sharing class NKS_NewsArchiveHandler {
     public static final String CREATE_DOCUMENT = 'CreateDocument';
 
     private string errorMessage = '';
+
+    @TestVisible
     private Boolean isSandbox;
 
     /**
@@ -35,6 +37,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private NKS_NewsArchiveSettings__c newsArchiveSettings;
+
     /**
      * @description Boolean to indicate if the Public 360 integration should be used.
      *
@@ -42,6 +45,7 @@ public with sharing class NKS_NewsArchiveHandler {
      * @since 0.1.0, March 2025
      */
     private Boolean useP360 = false;
+
     /**
      * @description Boolean to indicate if the WebSak integration should be used.
      *
@@ -58,6 +62,8 @@ public with sharing class NKS_NewsArchiveHandler {
      */
     @TestVisible
     public HttpResponse operationResponse { get; private set; }
+
+    private static CustomMetadataDAO metadataDAO = new CustomMetadataDAO();
 
     public NKS_NewsArchiveHandler() {
         this.newsArchiveSettings = NKS_NewsArchiveSettings__c.getOrgDefaults();
@@ -91,40 +97,38 @@ public with sharing class NKS_NewsArchiveHandler {
         archiveArticle(article, caseNumber, navIdent, navEnhet, ftpsCatalouge);
         return;
     }
+
     @TestVisible
     private String getCaseNumber(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.CaseNumberTest__c : settings.CaseNumberProd__c;
     }
+
+    @TestVisible
     private String getNavIdent(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavIdTest__c : settings.NavIdProd__c;
     }
+
+    @TestVisible
     private String getNavEnhet(WebsakNewsMapping__mdt settings) {
         if (settings == null)
             return null;
         return isSandbox ? settings.NavEnhetTest__c : settings.NavEnhetProd__c;
     }
+
     private WebsakNewsMapping__mdt getSettings() {
-        if (isSandbox) {
-            return [
-                SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c
-                FROM WebsakNewsMapping__mdt
-                WHERE ActiveFrom__c <= TODAY
-                ORDER BY ActiveFrom__c DESC, Order__c DESC
-                LIMIT 1
-            ];
-        } else {
-            return [
-                SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c
-                FROM WebsakNewsMapping__mdt
-                WHERE ActiveFrom__c <= TODAY
-                ORDER BY ActiveFrom__c DESC, Order__c DESC
-                LIMIT 1
-            ];
-        }
+        String sandboxQuery = 'SELECT Id, CaseNumberTest__c, NavIdTest__c, NavEnhetTest__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
+        String prodQuery = 'SELECT Id, CaseNumberProd__c, NavIdProd__c, NavEnhetProd__c, ActiveFrom__c, Order__c FROM WebsakNewsMapping__mdt WHERE ActiveFrom__c <= TODAY ORDER BY ActiveFrom__c DESC, Order__c DESC LIMIT 1';
+
+        String query = isSandbox ? sandboxQuery : prodQuery;
+
+        List<WebsakNewsMapping__mdt> records = (List<WebsakNewsMapping__mdt>) metadataDAO.getCustomMetadataRecords(
+            query
+        );
+        return records.isEmpty() ? null : records[0];
     }
 
     /**
@@ -202,6 +206,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return isSuccess;
     }
 
+    @TestVisible
     private Boolean sendFiles(Map<String, Blob> files, String xmlManifestName, String ftpsCatalouge) {
         Boolean success = true;
         String xmlFileName;
@@ -265,6 +270,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return Blob.valueOf(generator.generateXML());
     }
 
+    @TestVisible
     private String getManifestName(Date archiveDate) {
         return getAutoNumber() + '_NyheterNKS_' + formatDateString(archiveDate) + MANIFEST_FORMAT;
     }
@@ -273,11 +279,11 @@ public with sharing class NKS_NewsArchiveHandler {
         return type + ' - ' + caseNumber.replaceAll('-', '');
     }
 
+    @TestVisible
     private String formatFileName(String fileName) {
         // replace ' ', '\', '/', '(', and ')' with '_'
         // replace 'ÅåØøÆæ' with AaOoAeae'
         // skip '.pdf' at the end of string and delete all non-word characters [^a-zA-Z_0-9]
-
         String s = fileName.replaceAll('Å', 'A');
         s = s.replaceAll('å', 'a');
         s = s.replaceAll('Ø', 'O');
@@ -289,6 +295,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return s;
     }
 
+    @TestVisible
     private String formatDateString(Date input) {
         Datetime dateToFormat = input;
         return dateToFormat.formatGmt('yyyyMMdd');
@@ -313,6 +320,7 @@ public with sharing class NKS_NewsArchiveHandler {
         return String.valueOf(newAutoNumber).substring(1, 7);
     }
 
+    @TestVisible
     private String getFtpsCatalouge() {
         if (isSandbox) {
             return FTPS_CATALOUGE_TEST;
@@ -329,7 +337,7 @@ public with sharing class NKS_NewsArchiveHandler {
      *     "DefaultValueSet":"NKSSalesForce",
      *     "CaseNumber":"25/12742",
      *     "AccessGroup":"Alle ansatte i Nav",
-     *     "ResponsiblePersonIdNumber":"A133191",
+     *     "ResponsiblePersonIdNumber":"Nav Ident til ansvarlig person",
      *     "Files":[
      *         {
      *             "Title": "Test Nyhetsartikkel No. 1",
