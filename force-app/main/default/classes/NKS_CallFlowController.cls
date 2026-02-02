@@ -5,10 +5,8 @@ public without sharing class NKS_CallFlowController {
         'puzzel__AccessNumber__c'
     };
 
-    private static final Map<String, Schema.SObjectType> GLOBAL_DESCRIBE = Schema.getGlobalDescribe();
-
     private static Schema.SObjectType getEnquiryLogObject() {
-        return GLOBAL_DESCRIBE.get('puzzel__EnquiryLog__c');
+        return puzzel__EnquiryLog__c.SObjectType;
     }
 
     @InvocableMethod(
