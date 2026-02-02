@@ -14,20 +14,32 @@ public without sharing class NKS_InternalSurveyController {
         Id recordTypeId = getRecordTypeId('Survey Answered');
 
         try {
-            return [
+            // Get surveys user has already answered
+            Set<Id> answeredSurveyIds = new Set<Id>();
+            for (NKS_Survey_Response__c response : [
+                SELECT NKS_Survey__c
+                FROM NKS_Survey_Response__c
+                WHERE NKS_Participant__c = :UserInfo.getUserId() AND recordTypeId = :recordTypeId
+            ]) {
+                answeredSurveyIds.add(response.NKS_Survey__c);
+            }
+
+            // Get active surveys
+            List<NKS_Survey__c> activeSurveys = [
                 SELECT Id, NKS_Background_Color__c, NKS_Question__c, NKS_Title__c, NKS_Start_Date__c, NKS_End_Date__c
                 FROM NKS_Survey__c
-                WHERE
-                    NKS_Start_Date__c <= :currentTime
-                    AND NKS_End_Date__c >= :currentTime
-                    AND Id NOT IN (
-                        SELECT NKS_Survey__c
-                        FROM NKS_Survey_Response__c
-                        WHERE NKS_Participant__c = :UserInfo.getUserId() AND recordTypeId = :recordTypeId
-                    )
+                WHERE NKS_Start_Date__c <= :currentTime AND NKS_End_Date__c >= :currentTime
                 ORDER BY NKS_Start_Date__c DESC
-                LIMIT 1
             ];
+
+            // Filter out answered surveys
+            for (NKS_Survey__c survey : activeSurveys) {
+                if (!answeredSurveyIds.contains(survey.Id)) {
+                    return survey;
+                }
+            }
+
+            return null;
         } catch (Exception e) {
             throw new AuraHandledException('Problem getting Survey: ' + e.getMessage());
         }
@@ -59,7 +71,7 @@ public without sharing class NKS_InternalSurveyController {
         Id integrationUserId = [SELECT Id FROM User WHERE NKS_FullName__c = 'SFDX Integrasjonsbruker']?.Id;
 
         try {
-            List<NKS_Survey_response__c> responses = new List<NKS_Survey_response__c>();
+            List<NKS_Survey_Response__c> responses = new List<NKS_Survey_Response__c>();
             for (SurveyResponseInput input : inputs) {
                 NKS_Survey_Response__c sr = new NKS_Survey_Response__c(
                     CreatedById = integrationUserId,
@@ -99,7 +111,7 @@ public without sharing class NKS_InternalSurveyController {
         public String surveyId;
         @invocableVariable(label='The rating the user provided' required=true)
         public Integer rating;
-        @invocableVariable(label='Opptional comment')
+        @invocableVariable(label='Optional comment')
         public String comment;
     }
 }
