@@ -6,7 +6,12 @@ public without sharing class NKS_CallFlowController {
     };
 
     private static Schema.SObjectType getEnquiryLogObject() {
-        return puzzel__EnquiryLog__c.SObjectType;
+        try {
+            return ((SObject) Type.forName('puzzel__EnquiryLog__c').newInstance()).getSObjectType();
+        } catch (Exception e) {
+            // Will be null in scratch orgs without Puzzel package
+            return null;
+        }
     }
 
     @InvocableMethod(
@@ -20,7 +25,7 @@ public without sharing class NKS_CallFlowController {
 
         if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String id : sessionIds) {
-                logger.error('Could not find Enquiry Log schema', null, CRM_ApplicationDomain.Domain.NKS);
+                logger.error('Could not find Enquiry Log object type', null, CRM_ApplicationDomain.Domain.NKS);
                 responses.add(new CallQueueResponse(null, ''));
             }
             logger.publish();
