@@ -88,6 +88,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Status</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Subject</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -284,6 +289,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NKS_Audit_Log__c.Viewed_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NavTask__c.CRM_NavUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

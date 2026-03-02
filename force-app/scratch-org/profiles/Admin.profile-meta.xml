@@ -245,15 +245,6 @@
         <apexClass>NKS_ThreadSharingEventHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-
-    <classAccesses>
-        <apexClass>NKS_WarningBadgeController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_WarningBadgeControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <classAccesses>
         <apexClass>NavTaskAccessHandler</apexClass>
         <enabled>true</enabled>
