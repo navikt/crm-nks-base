@@ -19,7 +19,7 @@ import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import updateKrrInfo from '@salesforce/apex/NKS_KrrInformationController.updateKrrInformation';
+import getKrrInfo from '@salesforce/apex/NKS_KrrInformationController.getKrrInformation';
 
 const LABELS = {
     mobile: 'Mobilnummer',
@@ -59,6 +59,8 @@ export default class NksContactInformation extends LightningElement {
     krrLastUpdated;
     pdlLastUpdated;
     personId;
+    krrEmail;
+    krrMobilePhone;
     personIdent;
     county;
     wiredPersonInfoResult;
@@ -137,15 +139,21 @@ export default class NksContactInformation extends LightningElement {
         if (this.personIdent) {
             this.updateKrrInformation(this.personIdent);
         }
-        this.email = getFieldValue(data, EMAIL_FIELD);
-        this.phone = getFieldValue(data, PHONE_FIELD);
+        this.email = this.krrEmail || getFieldValue(data, EMAIL_FIELD);
+        this.phone = this.krrMobilePhone || getFieldValue(data, PHONE_FIELD);
         this.phone1 = getFieldValue(data, PHONE_1_FIELD);
         this.phone2 = getFieldValue(data, PHONE_2_FIELD);
         this.bankAccount = getFieldValue(data, BANK_ACCOUNT_FIELD);
         this.bankAccountLastUpdated = getFieldValue(data, BANK_ACCOUNT_UDATED_FIELD);
-        this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
-        this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
-        this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
+        if (this.krrReservation == null) {
+            this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
+        }
+        if (this.krrVerified == null) {
+            this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
+        }
+        if (this.krrLastUpdated == null) {
+            this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
+        }
         this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
         this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
         this.county = getFieldValue(data, COUNTY_FIELD);
@@ -182,13 +190,20 @@ export default class NksContactInformation extends LightningElement {
     updateKrrInformation(personIdent) {
         if (this.updated === false) {
             this.isLoading = true;
-            updateKrrInfo({ personIdent: personIdent })
-                .then(() => {
-                    this.refreshRecord();
-                    console.log('Successfully updated krr information');
+            getKrrInfo({ personIdent: personIdent })
+                .then((result) => {
+                    if (result) {
+                        this.krrEmail = result.email;
+                        this.krrMobilePhone = result.mobilePhone;
+                        this.krrVerified = result.verified;
+                        this.krrReservation = result.reservation;
+                        this.krrLastUpdated = result.krrLastUpdated;
+                        this.email = result.email;
+                        this.phone = result.mobilePhone;
+                    }
                 })
                 .catch((error) => {
-                    console.log('Krr informaion update failed:  ' + JSON.stringify(error, null, 2));
+                    console.log('Krr information fetch failed:  ' + JSON.stringify(error, null, 2));
                 })
                 .finally(() => {
                     this.isLoading = false;
