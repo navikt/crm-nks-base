@@ -17,28 +17,7 @@ public with sharing class NKS_TimelineController {
             'LIMIT :effectiveLimit';
 
         for (SObject obj : Database.query(threadQuery)) {
-            TimelineRecord rec = new TimelineRecord();
-            rec.recordId = obj.Id;
-            rec.sObjectType = 'Thread__c';
-            rec.sObjectLabel = 'Thread';
-
-            // Build headers from STO_Timeline_Name__c, CRM_Timeline_Status__c, CRM_Latest_Message_Datetime__c, CRM_Journal_Status_Formula_Icons__c
-            rec.headers = new List<Header>();
-            rec.headers.add(new Header((String) obj.get('STO_Timeline_Name__c'), true));
-            rec.headers.add(new Header((String) obj.get('CRM_Timeline_Status__c'), true));
-            Datetime latestMessageDate = (Datetime) obj.get('CRM_Latest_Message_Datetime__c');
-            rec.headers.add(new Header(latestMessageDate, false));
-            rec.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
-
-            rec.dateValue = latestMessageDate != null ? latestMessageDate : (Datetime) obj.get('CreatedDate');
-            String iconValue = (String) obj.get('CRM_Timeline_Icon__c');
-            rec.icon = String.isNotBlank(iconValue) ? iconValue : 'standard:messaging_user';
-            rec.color = '7D7D7D';
-            rec.subtitleOverride = (String) obj.get('CRM_Conversation_Summary__c');
-            rec.customComponent = 'ThreadExpandedTimeline';
-            rec.clampLines = 2;
-            rec.themeGroupName = (String) obj.get('CRM_Theme_Group_Name__c'); // For filtering
-            records.add(rec);
+            records.add(new ThreadTimelineRecord(obj));
         }
 
         String noteQuery =
@@ -49,26 +28,7 @@ public with sharing class NKS_TimelineController {
             'LIMIT :effectiveLimit';
 
         for (SObject obj : Database.query(noteQuery)) {
-            TimelineRecord rec = new TimelineRecord();
-            rec.recordId = obj.Id;
-            rec.sObjectType = 'Conversation_Note__c';
-            rec.sObjectLabel = 'Conversation Note';
-
-            // Build headers from NKS_Timeline_Name__c, CRM_Date_Time_Registered__c, CRM_Journal_Status_Formula_Icons__c
-            rec.headers = new List<Header>();
-            rec.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
-            Datetime registeredDate = (Datetime) obj.get('CRM_Date_Time_Registered__c');
-            rec.headers.add(new Header(registeredDate, false));
-            rec.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
-
-            rec.dateValue = registeredDate != null ? registeredDate : (Datetime) obj.get('CreatedDate');
-            rec.icon = 'standard:voice_call';
-            rec.color = '7D7D7D';
-            rec.subtitleOverride = (String) obj.get('CRM_Conversation_Note__c');
-            rec.customComponent = 'ConvNoteExpandedTimeline';
-            rec.clampLines = 1;
-            rec.themeGroupName = (String) obj.get('CRM_Theme_Group_Name__c'); // For filtering
-            records.add(rec);
+            records.add(new ConvNoteTimelineRecord(obj));
         }
 
         String callLogQuery =
@@ -79,31 +39,101 @@ public with sharing class NKS_TimelineController {
             'LIMIT :effectiveLimit';
 
         for (SObject obj : Database.query(callLogQuery)) {
-            TimelineRecord rec = new TimelineRecord();
-            rec.recordId = obj.Id;
-            rec.sObjectType = 'NKS_Call_Log__c';
-            rec.sObjectLabel = 'Call Log';
-
-            // Build headers from NKS_Timeline_Name__c, NKS_Call_Time__c, NKS_Advisor_Ident__c, NKS_Timeline_Phone__c
-            rec.headers = new List<Header>();
-            rec.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
-            Datetime callTime = (Datetime) obj.get('NKS_Call_Time__c');
-            rec.headers.add(new Header(callTime, false));
-            rec.headers.add(new Header((String) obj.get('NKS_Advisor_Ident__c'), true));
-            rec.headers.add(new Header((String) obj.get('NKS_Timeline_Phone__c'), true));
-
-            rec.dateValue = callTime != null ? callTime : (Datetime) obj.get('CreatedDate');
-            rec.icon = 'standard:voice_call';
-            rec.color = '7D7D7D';
-            rec.subtitleOverride = null;
-            rec.customComponent = null;
-            rec.clampLines = 0;
-            rec.slickBackgroundColor = 'EFEFEF';
-            rec.slickIconColor = 'e3e3e3';
-            records.add(rec);
+            records.add(new CallLogTimelineRecord(obj));
         }
 
         records.sort();
+
+        /* --- Chronological gap prevention ---
+
+        Each record type is queried from different tables and the same LIMIT. This means
+        they can cover different date ranges. For example, with limit=10:
+        - Threads may all fall in March 2026
+        - Conversation notes may all fall in January 2026
+    
+        If we show both as-is, the user will see March and January. On the next load (limit=20),
+        threads from February 2026 would appear, giving the false impression that there were no threads/conv notes in February on the first load.
+    
+        To prevent this, we set a "cutoff date" and hide everything older than it.
+        The cutoff is set to the oldest record date among all record types that are not yet exhausted.
+        
+        A type is considered non-exhausted when it returns exactly `effectiveLimit` records,
+        meaning there are likely more older records waiting behind the query boundary.
+        Using the newest of those oldest dates ensures we only display the part of the timeline
+        that is complete across all non-exhausted types. Records behind the cutoff are revealed
+        on subsequent loads as the limit grows and types become exhausted.
+    
+        Example with limit=10, 20 threads total (10 in March, 10 in February), 10 notes total (all in January):
+        Load 1 (limit=10):  
+            threads fetch 10 -> March only, threadOldest=March 1, non-exhausted.
+            notes fetch 10   -> January only, noteOldest=Jan 1, non-exhausted.
+            cutoff=max(March 1, Jan 1)=March 1 -> January notes hidden.
+            User sees: March threads only.
+        Load 2 (limit=20):  
+            threads fetch 20 -> March+February, threadOldest=Feb 1, non-exhausted.
+            notes fetch 10   -> January only (still all 10), noteOldest=Jan 1, exhausted (10 < 20).
+            cutoff=Feb 1 (only threads non-exhausted) -> January notes still hidden.
+            User sees: March+February threads.
+        Load 3 (limit=30):  
+            threads fetch 20 -> exhausted (20 < 30).
+            notes fetch 10   -> exhausted (10 < 30).
+            No non-exhausted types -> cutoffDate=null -> no filtering.
+            User sees: March+February threads + January notes.
+        Result: records always appear in strict chronological order, no months pop in out of sequence.
+        */
+
+        Integer threadCount = 0;
+        Integer noteCount = 0;
+        Integer callLogCount = 0;
+        Datetime threadOldest = null;
+        Datetime noteOldest = null;
+        Datetime callLogOldest = null;
+
+        // Count records per type and track each type's oldest (earliest) date.
+        for (TimelineRecord rec : records) {
+            if (rec.sObjectType == 'Thread__c') {
+                threadCount++;
+                if (threadOldest == null || rec.dateValue < threadOldest) {
+                    threadOldest = rec.dateValue;
+                }
+            } else if (rec.sObjectType == 'Conversation_Note__c') {
+                noteCount++;
+                if (noteOldest == null || rec.dateValue < noteOldest) {
+                    noteOldest = rec.dateValue;
+                }
+            } else if (rec.sObjectType == 'NKS_Call_Log__c') {
+                callLogCount++;
+                if (callLogOldest == null || rec.dateValue < callLogOldest) {
+                    callLogOldest = rec.dateValue;
+                }
+            }
+        }
+
+        // For each non-exhausted type (count == effectiveLimit), its oldest date is a potential
+        // gap boundary. The cutoff is the newest of those dates, since that is the point at which
+        // all non-exhausted types have potential records for.
+        Datetime cutoffDate = null;
+        List<Integer> counts = new List<Integer>{ threadCount, noteCount, callLogCount };
+        List<Datetime> oldestDates = new List<Datetime>{ threadOldest, noteOldest, callLogOldest };
+        for (Integer i = 0; i < counts.size(); i++) {
+            if (counts[i] == effectiveLimit && oldestDates[i] != null) {
+                if (cutoffDate == null || oldestDates[i] > cutoffDate) {
+                    cutoffDate = oldestDates[i];
+                }
+            }
+        }
+
+        // Remove any records older than the cutoff. If all types are exhausted, cutoffDate remains
+        // null and every record is shown.
+        if (cutoffDate != null) {
+            List<TimelineRecord> withinWindow = new List<TimelineRecord>();
+            for (TimelineRecord rec : records) {
+                if (rec.dateValue >= cutoffDate) {
+                    withinWindow.add(rec);
+                }
+            }
+            records = withinWindow;
+        }
 
         return groupRecordsByMonth(records);
     }
@@ -257,7 +287,70 @@ public with sharing class NKS_TimelineController {
         }
     }
 
-    public class TimelineRecord implements Comparable {
+    private class ThreadTimelineRecord extends TimelineRecord {
+        public ThreadTimelineRecord(SObject obj) {
+            super();
+            this.recordId = obj.Id;
+            this.sObjectType = 'Thread__c';
+            this.sObjectLabel = 'Thread';
+            Datetime latestMessageDate = (Datetime) obj.get('CRM_Latest_Message_Datetime__c');
+            this.headers.add(new Header((String) obj.get('STO_Timeline_Name__c'), true));
+            this.headers.add(new Header((String) obj.get('CRM_Timeline_Status__c'), true));
+            this.headers.add(new Header(latestMessageDate, false));
+            this.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
+            this.dateValue = latestMessageDate != null ? latestMessageDate : (Datetime) obj.get('CreatedDate');
+            String iconValue = (String) obj.get('CRM_Timeline_Icon__c');
+            this.icon = String.isNotBlank(iconValue) ? iconValue : 'standard:messaging_user';
+            this.color = '7D7D7D';
+            this.subtitleOverride = (String) obj.get('CRM_Conversation_Summary__c');
+            this.customComponent = 'ThreadExpandedTimeline';
+            this.clampLines = 2;
+            this.themeGroupName = (String) obj.get('CRM_Theme_Group_Name__c');
+        }
+    }
+
+    private class ConvNoteTimelineRecord extends TimelineRecord {
+        public ConvNoteTimelineRecord(SObject obj) {
+            super();
+            this.recordId = obj.Id;
+            this.sObjectType = 'Conversation_Note__c';
+            this.sObjectLabel = 'Conversation Note';
+            Datetime registeredDate = (Datetime) obj.get('CRM_Date_Time_Registered__c');
+            this.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
+            this.headers.add(new Header(registeredDate, false));
+            this.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
+            this.dateValue = registeredDate != null ? registeredDate : (Datetime) obj.get('CreatedDate');
+            this.icon = 'standard:voice_call';
+            this.color = '7D7D7D';
+            this.subtitleOverride = (String) obj.get('CRM_Conversation_Note__c');
+            this.customComponent = 'ConvNoteExpandedTimeline';
+            this.clampLines = 1;
+            this.themeGroupName = (String) obj.get('CRM_Theme_Group_Name__c');
+        }
+    }
+
+    private class CallLogTimelineRecord extends TimelineRecord {
+        public CallLogTimelineRecord(SObject obj) {
+            super();
+            this.recordId = obj.Id;
+            this.sObjectType = 'NKS_Call_Log__c';
+            this.sObjectLabel = 'Call Log';
+            Datetime callTime = (Datetime) obj.get('NKS_Call_Time__c');
+            this.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
+            this.headers.add(new Header(callTime, false));
+            this.headers.add(new Header((String) obj.get('NKS_Advisor_Ident__c'), true));
+            this.headers.add(new Header((String) obj.get('NKS_Timeline_Phone__c'), true));
+            this.dateValue = callTime != null ? callTime : (Datetime) obj.get('CreatedDate');
+            this.icon = 'standard:voice_call';
+            this.color = '7D7D7D';
+            this.customComponent = null;
+            this.clampLines = 0;
+            this.slickBackgroundColor = 'EFEFEF';
+            this.slickIconColor = 'e3e3e3';
+        }
+    }
+
+    public virtual class TimelineRecord implements Comparable {
         @AuraEnabled
         public Id recordId;
         @AuraEnabled
