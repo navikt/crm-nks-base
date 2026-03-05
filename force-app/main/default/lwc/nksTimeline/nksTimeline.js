@@ -52,7 +52,8 @@ export default class NksTimeline extends LightningElement {
     collapseIcon = 'utility:justify_text';
     collapseText = labels.collapse;
     masterData;
-    isFiltered = false;
+    isPicklistFiltered = false;
+    filterInitialized = false;
     currentQueryLimit; // Current SOQL LIMIT (grows with Load More)
 
     connectedCallback() {
@@ -110,8 +111,12 @@ export default class NksTimeline extends LightningElement {
 
         if (this.filterIsActive) {
             this.setFilterProperties(this.data);
-            // Apply initial filter state (checkbox defaults to unchecked = hide call logs)
-            this.applyInitialFilter();
+            if (this.filterInitialized) {
+                this.handleFilter();
+            } else {
+                this.applyInitialFilter();
+                this.filterInitialized = true;
+            }
         }
 
         this.setupAccordions(this.data);
@@ -214,9 +219,9 @@ export default class NksTimeline extends LightningElement {
     loadMore() {
         this.loading = true;
         this.allRecordsLoaded = false;
-        this.isFiltered = false;
+        this.isPicklistFiltered = false;
         const filterTemplate = this.template.querySelector('c-timeline-filter');
-        if (filterTemplate) filterTemplate.handleResetFromLoadMore();
+        if (filterTemplate) filterTemplate.resetPicklistFilters();
         this.amountOfMonths = this.amountOfMonths + this.amountOfMonthsToLoad;
         const increment = Math.min(this.amountOfRecordsToLoad, this.MAX_RECORDS_PER_LOAD);
         this.currentQueryLimit = this.currentQueryLimit + increment;
@@ -265,7 +270,7 @@ export default class NksTimeline extends LightningElement {
         filteredData.splice(this.amountOfMonths);
 
         this.data = filterTemplate.filterRecords(filteredData);
-        this.isFiltered = !filterTemplate.filterContainsAll();
+        this.isPicklistFiltered = filterTemplate.isPicklistFilterActive;
 
         this.updateAllSections(this.data);
         this.resetAccordions();

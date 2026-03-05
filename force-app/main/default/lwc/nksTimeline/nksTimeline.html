@@ -69,7 +69,18 @@
             <div class="slds-align_absolute-center loadMoreFooter" onclick={loadMore}>
                 <button class="slds-button loadMoreBtn">{labels.loadMore}</button>
             </div>
-            <template lwc:if={isFiltered}>
+            <div class="slds-align_absolute-center slds-var-m-top_x-small slds-var-m-bottom_x-small">
+                <lightning-icon
+                    icon-name="utility:info_alt"
+                    size="small"
+                    class="slds-m-right_xx-small"
+                ></lightning-icon>
+                <p>
+                    Den viste måneden kan være ufullstendig. Klikk «Last mer» til en ny måned vises for å se alle poster
+                    i gjeldende måned. Når «Last mer»-knappen forsvinner, er alle poster hentet.
+                </p>
+            </div>
+            <template lwc:if={isPicklistFiltered}>
                 <div class="slds-align_absolute-center">
                     <lightning-icon
                         icon-name="utility:info_alt"
