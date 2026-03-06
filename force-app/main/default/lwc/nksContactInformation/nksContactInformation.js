@@ -59,15 +59,12 @@ export default class NksContactInformation extends LightningElement {
     krrLastUpdated;
     pdlLastUpdated;
     personId;
-    krrEmail;
-    krrMobilePhone;
     personIdent;
     county;
     wiredPersonInfoResult;
     errorMessage;
     isError = false;
     isLoading = true;
-    updated = false;
 
     subscription = null;
 
@@ -136,27 +133,21 @@ export default class NksContactInformation extends LightningElement {
 
     populatePersonFields(data) {
         this.personIdent = getFieldValue(data, NAME_FIELD);
-        if (this.personIdent) {
-            this.updateKrrInformation(this.personIdent);
-        }
-        this.email = this.krrEmail || getFieldValue(data, EMAIL_FIELD);
-        this.phone = this.krrMobilePhone || getFieldValue(data, PHONE_FIELD);
+        this.email = getFieldValue(data, EMAIL_FIELD);
+        this.phone = getFieldValue(data, PHONE_FIELD);
         this.phone1 = getFieldValue(data, PHONE_1_FIELD);
         this.phone2 = getFieldValue(data, PHONE_2_FIELD);
         this.bankAccount = getFieldValue(data, BANK_ACCOUNT_FIELD);
         this.bankAccountLastUpdated = getFieldValue(data, BANK_ACCOUNT_UDATED_FIELD);
-        if (this.krrReservation == null) {
-            this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
-        }
-        if (this.krrVerified == null) {
-            this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
-        }
-        if (this.krrLastUpdated == null) {
-            this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
-        }
+        this.krrReservation = getFieldValue(data, KRR_RESERVATION_FIELD);
+        this.krrVerified = getFieldValue(data, KRR_VERIFIED_FIELD);
+        this.krrLastUpdated = getFieldValue(data, KRR_LAST_UPDATED_FIELD);
         this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
         this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
         this.county = getFieldValue(data, COUNTY_FIELD);
+        if (this.personIdent) {
+            this.updateKrrInformation(this.personIdent);
+        }
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -188,28 +179,23 @@ export default class NksContactInformation extends LightningElement {
     }
 
     updateKrrInformation(personIdent) {
-        if (this.updated === false) {
-            this.isLoading = true;
-            getKrrInfo({ personIdent: personIdent })
-                .then((result) => {
-                    if (result) {
-                        this.krrEmail = result.email;
-                        this.krrMobilePhone = result.mobilePhone;
-                        this.krrVerified = result.verified;
-                        this.krrReservation = result.reservation;
-                        this.krrLastUpdated = result.krrLastUpdated;
-                        this.email = result.email;
-                        this.phone = result.mobilePhone;
-                    }
-                })
-                .catch((error) => {
-                    console.log('Krr information fetch failed:  ' + JSON.stringify(error, null, 2));
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                    this.updated = true;
-                });
-        }
+        this.isLoading = true;
+        getKrrInfo({ personIdent: personIdent })
+            .then((result) => {
+                if (result) {
+                    this.email = result.email ?? this.email;
+                    this.phone = result.mobilePhone ?? this.phone;
+                    this.krrVerified = result.verified ?? this.krrVerified;
+                    this.krrReservation = result.reservation ?? this.krrReservation;
+                    this.krrLastUpdated = result.lastUpdated ?? this.krrLastUpdated;
+                }
+            })
+            .catch((error) => {
+                console.error('Krr information fetch failed:  ' + JSON.stringify(error, null, 2));
+            })
+            .finally(() => {
+                this.isLoading = false;
+            });
     }
 
     handleError(error) {
