@@ -212,17 +212,6 @@ export default class NksContactInformation extends LightningElement {
         }
     }
 
-    refreshRecord() {
-        this.isLoading = true;
-        refreshApex(this.wiredPersonInfoResult)
-            .then(() => {
-                //Successful refresh
-            })
-            .finally(() => {
-                this.isLoading = false;
-            });
-    }
-
     handleError(error) {
         this.errorMessage = 'Unknown error';
         if (Array.isArray(error.body)) {
