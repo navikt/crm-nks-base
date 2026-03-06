@@ -123,7 +123,6 @@ export default class NksContactInformation extends LightningElement {
         this.wiredPersonInfoResult = result;
         if (result?.data) {
             this.populatePersonFields(result.data);
-            this.isLoading = false;
         } else if (result?.error) {
             this.handleError(result.error);
             console.error(result.error);
@@ -147,6 +146,8 @@ export default class NksContactInformation extends LightningElement {
         this.county = getFieldValue(data, COUNTY_FIELD);
         if (this.personIdent) {
             this.updateKrrInformation(this.personIdent);
+        } else {
+            this.isLoading = false;
         }
     }
 
@@ -179,7 +180,6 @@ export default class NksContactInformation extends LightningElement {
     }
 
     updateKrrInformation(personIdent) {
-        this.isLoading = true;
         getKrrInfo({ personIdent: personIdent })
             .then((result) => {
                 if (result) {
