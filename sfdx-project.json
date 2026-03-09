@@ -37,7 +37,7 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.35.0.LATEST"
+                    "versionNumber": "0.36.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
@@ -84,6 +84,14 @@
                     "versionNumber": "0.1.2.LATEST"
                 },
                 {
+                    "package": "custom-permission-helper",
+                    "versionNumber": "0.1.2.LATEST"
+                },
+                {
+                    "package": "feature-toggle",
+                    "versionNumber": "0.1.3.LATEST"
+                },
+                {
                     "package": "crm-nks-base-components",
                     "versionNumber": "0.122.0.LATEST"
                 }
@@ -114,10 +122,14 @@
         "crm-sf-saf": "0Ho7U0000000001SAA",
         "crm-platform-reporting": "0Ho2o0000008OSfCAM",
         "platform-data-model": "0HoKB00000000010AA",
-        "custom-metadata-dao": "0HoKB000000000B0AQ"
+        "custom-metadata-dao": "0HoKB000000000B0AQ",
+        "custom-permission-helper": "0HoKB000000000f0AA",
+        "feature-toggle": "0HoKB000000000V0AQ"
     },
     "packageKeyConfig": {
         "platform-data-model": false,
-        "custom-metadata-dao": false
+        "custom-metadata-dao": false,
+        "custom-permission-helper": false,
+        "feature-toggle": false
     }
 }
