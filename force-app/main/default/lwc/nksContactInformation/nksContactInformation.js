@@ -19,7 +19,7 @@ import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
-import updateKrrInfo from '@salesforce/apex/NKS_KrrInformationController.updateKrrInformation';
+import getKrrInfo from '@salesforce/apex/NKS_KrrInformationController.getKrrInformation';
 
 const LABELS = {
     mobile: 'Mobilnummer',
@@ -65,7 +65,6 @@ export default class NksContactInformation extends LightningElement {
     errorMessage;
     isError = false;
     isLoading = true;
-    updated = false;
 
     subscription = null;
 
@@ -124,7 +123,6 @@ export default class NksContactInformation extends LightningElement {
         this.wiredPersonInfoResult = result;
         if (result?.data) {
             this.populatePersonFields(result.data);
-            this.isLoading = false;
         } else if (result?.error) {
             this.handleError(result.error);
             console.error(result.error);
@@ -134,9 +132,6 @@ export default class NksContactInformation extends LightningElement {
 
     populatePersonFields(data) {
         this.personIdent = getFieldValue(data, NAME_FIELD);
-        if (this.personIdent) {
-            this.updateKrrInformation(this.personIdent);
-        }
         this.email = getFieldValue(data, EMAIL_FIELD);
         this.phone = getFieldValue(data, PHONE_FIELD);
         this.phone1 = getFieldValue(data, PHONE_1_FIELD);
@@ -149,6 +144,11 @@ export default class NksContactInformation extends LightningElement {
         this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
         this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
         this.county = getFieldValue(data, COUNTY_FIELD);
+        if (this.personIdent) {
+            this.updateKrrInformation(this.personIdent);
+        } else {
+            this.isLoading = false;
+        }
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -180,28 +180,18 @@ export default class NksContactInformation extends LightningElement {
     }
 
     updateKrrInformation(personIdent) {
-        if (this.updated === false) {
-            this.isLoading = true;
-            updateKrrInfo({ personIdent: personIdent })
-                .then(() => {
-                    this.refreshRecord();
-                    console.log('Successfully updated krr information');
-                })
-                .catch((error) => {
-                    console.log('Krr informaion update failed:  ' + JSON.stringify(error, null, 2));
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                    this.updated = true;
-                });
-        }
-    }
-
-    refreshRecord() {
-        this.isLoading = true;
-        refreshApex(this.wiredPersonInfoResult)
-            .then(() => {
-                //Successful refresh
+        getKrrInfo({ personIdent: personIdent })
+            .then((result) => {
+                if (result) {
+                    this.email = result.email ?? this.email;
+                    this.phone = result.mobilePhone ?? this.phone;
+                    this.krrVerified = result.verified ?? this.krrVerified;
+                    this.krrReservation = result.reservation ?? this.krrReservation;
+                    this.krrLastUpdated = result.lastUpdated ?? this.krrLastUpdated;
+                }
+            })
+            .catch((error) => {
+                console.error('Krr information fetch failed:  ' + JSON.stringify(error, null, 2));
             })
             .finally(() => {
                 this.isLoading = false;
