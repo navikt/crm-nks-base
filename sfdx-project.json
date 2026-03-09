@@ -76,16 +76,16 @@
                     "versionNumber": "0.83.0.LATEST"
                 },
                 {
-                    "package": "crm-nks-base-components",
-                    "versionNumber": "0.122.0.LATEST"
-                },
-                {
                     "package": "platform-data-model",
                     "versionNumber": "0.1.2.LATEST"
                 },
                 {
                     "package": "custom-metadata-dao",
                     "versionNumber": "0.1.2.LATEST"
+                },
+                {
+                    "package": "crm-nks-base-components",
+                    "versionNumber": "0.122.0.LATEST"
                 }
             ]
         }
