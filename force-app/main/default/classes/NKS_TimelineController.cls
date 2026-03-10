@@ -138,11 +138,28 @@ public with sharing class NKS_TimelineController {
         return groupRecordsByMonth(records);
     }
 
+    private static final Map<Integer, String> NORWEGIAN_MONTHS = new Map<Integer, String>{
+        1 => 'Januar',
+        2 => 'Februar',
+        3 => 'Mars',
+        4 => 'April',
+        5 => 'Mai',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'August',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember'
+    };
+
     private static List<TimelineGroup> groupRecordsByMonth(List<TimelineRecord> records) {
         Map<String, List<TimelineRecord>> groupMap = new Map<String, List<TimelineRecord>>();
 
         for (TimelineRecord rec : records) {
-            String monthKey = rec.dateValue.format('MMMM yyyy');
+            Integer month = rec.dateValue.month();
+            Integer year = rec.dateValue.year();
+            String monthKey = NORWEGIAN_MONTHS.get(month) + ' ' + year;
 
             if (!groupMap.containsKey(monthKey)) {
                 groupMap.put(monthKey, new List<TimelineRecord>());
@@ -338,7 +355,10 @@ public with sharing class NKS_TimelineController {
             Datetime callTime = (Datetime) obj.get('NKS_Call_Time__c');
             this.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
             this.headers.add(new Header(callTime, false));
-            this.headers.add(new Header((String) obj.get('NKS_Advisor_Ident__c'), true));
+            String advisorIdent = (String) obj.get('NKS_Advisor_Ident__c');
+            if (String.isNotBlank(advisorIdent)) {
+                this.headers.add(new Header(advisorIdent, true));
+            }
             this.headers.add(new Header((String) obj.get('NKS_Timeline_Phone__c'), true));
             this.dateValue = callTime != null ? callTime : (Datetime) obj.get('CreatedDate');
             this.icon = 'standard:voice_call';
