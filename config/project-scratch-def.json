@@ -55,7 +55,8 @@
         },
         "securitySettings": {
             "sessionSettings": {
-                "forceRelogin": false
+                "forceRelogin": false,
+                "enableLockerServiceNext": true
             },
             "enableAdminLoginAsAnyUser": true,
             "enableAuditFieldsInactiveOwner": true
