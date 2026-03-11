@@ -24,6 +24,10 @@ export default class NksHomePageHighlightPanelMid extends LightningElement {
             {
                 title: 'Kontaktsenterportalen',
                 url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/'
+            },
+            {
+                title: 'Hjelpestigen',
+                url: 'https://navno.sharepoint.com/sites/enhet-kontaktsenter/SitePages/Opplaering-Hjelpestigen.aspx'
             }
         ];
     }
