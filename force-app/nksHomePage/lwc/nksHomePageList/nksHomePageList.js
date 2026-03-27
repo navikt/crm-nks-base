@@ -224,7 +224,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.refreshComponent();
     }
 
-    async refreshComponent() {
+    refreshComponent = async () => {
         this.showSpinner = true;
         this.isRefreshDisabled = true;
         await refreshApex(this.wiredResults);
