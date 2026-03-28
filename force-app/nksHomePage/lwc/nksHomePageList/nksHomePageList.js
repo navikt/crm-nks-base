@@ -38,7 +38,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     connectedCallback() {
         this.showSpinner = true;
         this.setWireParameters();
-        if (this.isSTO || this.objectName === 'LiveChatTranscript') {
+        if (this.isSTO || this.objectName === 'MessagingSession') {
             this.filter += " AND OwnerId='" + userId + "'";
         }
         if (this.filterbyskills) {
@@ -266,7 +266,7 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get isStripedList() {
-        return this.objectName === 'LiveChatTranscript' || this.isSTO;
+        return this.objectName === 'MessagingSession' || this.isSTO;
     }
 
     get setEmptyStateForCase() {
@@ -274,6 +274,6 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     }
 
     get lastIndex() {
-        return this.objectName === 'LiveChatTranscript' || this.isSTO ? this.records.length - 1 : 0;
+        return this.objectName === 'MessagingSession' || this.isSTO ? this.records.length - 1 : 0;
     }
 }
