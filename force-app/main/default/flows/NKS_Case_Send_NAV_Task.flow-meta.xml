@@ -20,13 +20,13 @@
         <inputParameters>
             <name>behandlingstema</name>
             <value>
-                <elementReference>Subtheme_Code</elementReference>
+                <elementReference>Theme_Categorization.subthemeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>behandlingstype</name>
             <value>
-                <elementReference>Subtype_Code</elementReference>
+                <elementReference>Theme_Categorization.subtypeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -68,19 +68,19 @@
         <inputParameters>
             <name>tema</name>
             <value>
-                <elementReference>Theme_Code</elementReference>
+                <elementReference>Theme_Categorization.themeCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>tildeltEnhetsnr</name>
             <value>
-                <elementReference>Selected_Unit_Number</elementReference>
+                <elementReference>workAllocation.selectedUnitNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>tilordnetRessurs</name>
             <value>
-                <elementReference>Assigned_Resource</elementReference>
+                <elementReference>workAllocation.assignedResource</elementReference>
             </value>
         </inputParameters>
         <nameSegment>OppgaveManager</nameSegment>
@@ -217,7 +217,7 @@
         <name>Henvendelse_Behandlings_Id</name>
         <dataType>String</dataType>
         <expression>IF(
-    {!Subtheme_Code} &lt;&gt; &quot;KOM&quot;,
+    {!Theme_Categorization.subthemeCode} &lt;&gt; &quot;KOM&quot;,
     {!Get_Case.NKS_Henvendelse_BehandlingsId__c},
     &quot;&quot;
 )</expression>
@@ -456,18 +456,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>Subtheme_Code</assignToReference>
-                <name>subthemeCode</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Subtype_Code</assignToReference>
-                <name>subtypeCode</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Theme_Code</assignToReference>
-                <name>themeCode</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -485,12 +474,6 @@
                 <name>showcomponent</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theme</name>
-                <value>
-                    <elementReference>Theme_Code</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -582,12 +565,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>theme</name>
-                <value>
-                    <elementReference>Theme_Code</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>hideDelegateToSelf</name>
                 <value>
                     <booleanValue>false</booleanValue>
@@ -601,22 +578,7 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>Selected_Unit_Id</assignToReference>
-                <name>selectedUnitId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Unit_Name</assignToReference>
-                <name>selectedUnitName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Selected_Unit_Number</assignToReference>
-                <name>selectedUnitNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Assigned_Resource</assignToReference>
-                <name>assignedResource</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -685,13 +647,6 @@
         <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
     </textTemplates>
     <variables>
-        <name>Assigned_Resource</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>communalQuickTextLabel</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -699,33 +654,9 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>CommunalServiceId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>HasPersonRead</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <name>OppgaveRequest</name>
         <apexClass>OppgaveRequest</apexClass>
         <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>personId</name>
-        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -747,70 +678,5 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Subtype_SF_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Theme_SF_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Unit_Id</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Unit_Name</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>Selected_Unit_Number</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>Subtheme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>Subtype_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>Theme_Code</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
     </variables>
 </Flow>
