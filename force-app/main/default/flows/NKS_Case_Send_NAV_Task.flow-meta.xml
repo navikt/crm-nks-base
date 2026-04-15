@@ -79,6 +79,9 @@
         </inputParameters>
         <inputParameters>
             <name>tilordnetRessurs</name>
+            <value>
+                <elementReference>Assigned_Resource</elementReference>
+            </value>
         </inputParameters>
         <nameSegment>OppgaveManager</nameSegment>
         <offset>0</offset>
