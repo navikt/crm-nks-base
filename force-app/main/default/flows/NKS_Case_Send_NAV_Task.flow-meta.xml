@@ -379,17 +379,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>Post_Nav_Task.statusCode</leftValueReference>
-                    <operator>GreaterThanOrEqualTo</operator>
+                    <leftValueReference>Post_Nav_Task.isRetry</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <numberValue>400.0</numberValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Post_Nav_Task.statusCode</leftValueReference>
-                    <operator>LessThan</operator>
-                    <rightValue>
-                        <numberValue>500.0</numberValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -407,7 +400,7 @@
                 </width>
             </styleProperties>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>Successful_Post</leftValueReference>
                     <operator>EqualTo</operator>
@@ -416,17 +409,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>Post_Nav_Task.statusCode</leftValueReference>
-                    <operator>GreaterThanOrEqualTo</operator>
+                    <leftValueReference>Post_Nav_Task.isRetry</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <numberValue>500.0</numberValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Post_Nav_Task.statusCode</leftValueReference>
-                    <operator>LessThan</operator>
-                    <rightValue>
-                        <numberValue>400.0</numberValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
