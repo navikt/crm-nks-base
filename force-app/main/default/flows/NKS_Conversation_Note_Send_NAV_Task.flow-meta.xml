@@ -244,7 +244,7 @@
         </fields>
         <fields>
             <name>Error_Screen_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -274,7 +274,7 @@
         </fields>
         <fields>
             <name>Post_Error_Text_Not4xx</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -345,6 +345,18 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Conversation_Note.CRM_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Conversation_Note.CRM_Theme__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -365,6 +377,12 @@
                 <name>showcomponent</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Conversation_Note.CRM_Theme__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

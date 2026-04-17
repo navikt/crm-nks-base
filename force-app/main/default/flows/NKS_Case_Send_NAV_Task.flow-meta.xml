@@ -38,7 +38,7 @@
         <inputParameters>
             <name>eksternHenvendelseId</name>
             <value>
-                <elementReference>Henvendelse_Behandlings_Id</elementReference>
+                <elementReference>Henvendelse_BehandlingsId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -214,10 +214,10 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <name>Henvendelse_Behandlings_Id</name>
+        <name>Henvendelse_BehandlingsId</name>
         <dataType>String</dataType>
         <expression>IF(
-    {!Theme_Categorization.subthemeCode} &lt;&gt; &quot;KOM&quot;,
+    {!Theme_Categorization.themeCode} &lt;&gt; &quot;KOM&quot;,
     {!Get_Case.NKS_Henvendelse_BehandlingsId__c},
     &quot;&quot;
 )</expression>
@@ -359,7 +359,7 @@
         </fields>
         <fields>
             <name>Post_Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -389,7 +389,7 @@
         </fields>
         <fields>
             <name>Post_Error_Text_Not4xx</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -485,6 +485,18 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>themeGroup</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme_Group__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -505,6 +517,12 @@
                 <name>showcomponent</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <elementReference>Get_Case.NKS_Theme__r.CRM_Code__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
