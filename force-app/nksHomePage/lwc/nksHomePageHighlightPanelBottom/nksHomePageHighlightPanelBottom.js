@@ -8,6 +8,7 @@ export default class NksHomePageHighlightPanelBottom extends LightningElement {
     wiredRecords({ error, data }) {
         if (data) {
             this.records = data.length > 0 ? data : [];
+            console.log('Data fetched successfully:', this.records);
         } else if (error) {
             this.records = [];
             console.error(`There was an error fetching data: ${error.body.message}`);
