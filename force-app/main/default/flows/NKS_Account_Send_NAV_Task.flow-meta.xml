@@ -204,9 +204,13 @@ TODAY())</expression>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>NAV_Task_Input_Screen</targetReference>
+        </connector>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size: 18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;Oppgaveopprettelse feilet&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -219,7 +223,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Error_Screen_Message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -249,7 +253,7 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Error_Screen_Message_Not_4xx</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Oppgaven vil bli automatisk opprettet på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -355,6 +359,18 @@ TODAY())</expression>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>selectedTaskType</name>
+                <value>
+                    <elementReference>tasktype.selectedTaskType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedTaskTypeId</name>
+                <value>
+                    <elementReference>tasktype.selectedTaskTypeId</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -389,6 +405,9 @@ TODAY())</expression>
         </fields>
         <fields>
             <name>Task_Description</name>
+            <defaultValue>
+                <stringValue>{!Task_Description}</stringValue>
+            </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <helpText>&lt;p&gt;Husk at oppgavebeskrivelsen ikke skal inneholde personsensitive opplysninger!&lt;/p&gt;</helpText>

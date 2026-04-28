@@ -320,10 +320,13 @@
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Validate_Account</targetReference>
+        </connector>
         <fields>
             <name>Error_Header</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 21, 21); font-size:
-                18px;&quot;&gt;Feil ved opprettelse av oppgave&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 18px; color: rgb(231, 21, 21);&quot;&gt;Oppgaveopprettelse feilet﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -336,7 +339,7 @@
         </fields>
         <fields>
             <name>No_Account_Error</name>
-            <fieldText>&lt;p&gt;Henvendelsen er ikke relatert til en bruker.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Henvendelsen er ikke relatert til en bruker.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -359,7 +362,7 @@
         </fields>
         <fields>
             <name>Post_Error_Text</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -389,7 +392,7 @@
         </fields>
         <fields>
             <name>Post_Error_Text_Not4xx</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaveopprettelse feilet med feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;En utvikler har fått beskjed og vil feilsøke dette.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Oppgaven vil bli automatisk rekjørt på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Feilmelding: {!Post_Nav_Task.errorMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Oppgaven vil bli automatisk opprettet på et senere tidspunkt.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -517,6 +520,18 @@
                 <name>theme</name>
                 <value>
                     <elementReference>Get_Case.NKS_Theme__r.CRM_Code__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedTaskType</name>
+                <value>
+                    <elementReference>tasktype.selectedTaskType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedTaskTypeId</name>
+                <value>
+                    <elementReference>tasktype.selectedTaskTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
