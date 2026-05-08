@@ -4,7 +4,7 @@
         <name>Post_Nav_Task</name>
         <label>Post Nav Task</label>
         <locationX>429</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
         <actionName>OppgaveManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -14,7 +14,7 @@
         <inputParameters>
             <name>aktoerId</name>
             <value>
-                <elementReference>Get_ActorId_From_Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -109,7 +109,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>231</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -118,7 +118,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Communal_Quick_Text_Label</targetReference>
+            <targetReference>Publish_Oppgave_created_LMS_event</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -174,7 +174,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>429</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -264,27 +264,6 @@
         <object>ReportingData__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordLookups>
-        <name>Get_ActorId_From_Account</name>
-        <label>Get ActorId From Account</label>
-        <locationX>429</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Post_Nav_Task</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.AccountId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <description>Query information needed from the Case and its relations.</description>
         <name>Get_Case</name>
@@ -433,7 +412,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_ActorId_From_Account</targetReference>
+            <targetReference>Post_Nav_Task</targetReference>
         </connector>
         <fields>
             <name>Ny_Oppgave_Display</name>
@@ -648,6 +627,48 @@
         </fields>
         <nextOrFinishButtonLabel>Opprett oppgave</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Publish_Oppgave_created_LMS_event</name>
+        <label>Publish Oppgave created LMS event</label>
+        <locationX>231</locationX>
+        <locationY>782</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Set_Communal_Quick_Text_Label</targetReference>
+        </connector>
+        <fields>
+            <name>nksOppgaveCreatedPublisher</name>
+            <extensionName>c:nksOppgaveCreatedPublisher</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>actorId</name>
+                <value>
+                    <elementReference>Get_Case.Account.CRM_Person__r.INT_ActorId__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>assignedResource</name>
+                <value>
+                    <elementReference>workAllocation.assignedResource</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
