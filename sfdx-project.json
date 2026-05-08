@@ -8,6 +8,26 @@
             "versionNumber": "0.477.0.NEXT",
             "dependencies": [
                 {
+                    "package": "platform-data-model",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "custom-metadata-dao",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "custom-permission-helper",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "feature-toggle",
+                    "versionNumber": "0.1.34.LATEST",
+                    "branch": ""
+                },
+                {
                     "package": "crm-platform-base",
                     "versionNumber": "0.304.0.LATEST"
                 },
