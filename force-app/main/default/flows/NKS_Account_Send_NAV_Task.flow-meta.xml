@@ -4,7 +4,7 @@
         <name>Post_Nav_Task</name>
         <label>Post Nav Task</label>
         <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <actionName>OppgaveManager</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -32,7 +32,7 @@
         <inputParameters>
             <name>beskrivelse</name>
             <value>
-                <elementReference>Task_Description</elementReference>
+                <elementReference>Oppgavebeskrivelse</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -83,12 +83,44 @@
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Store_oppgavebeskrivelse_in_var</name>
+        <label>Store oppgavebeskrivelse in var</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>Oppgavebeskrivelse</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Task_Description</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Post_Nav_Task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Wipe_oppgavebeskrivelse_var</name>
+        <label>Wipe oppgavebeskrivelse var</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>Oppgavebeskrivelse</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -200,7 +232,7 @@ TODAY())</expression>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -281,7 +313,7 @@ TODAY())</expression>
                 </conditions>
             </visibilityRule>
         </fields>
-        <nextOrFinishButtonLabel>Ok</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>OK</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -294,7 +326,7 @@ TODAY())</expression>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Post_Nav_Task</targetReference>
+            <targetReference>Store_oppgavebeskrivelse_in_var</targetReference>
         </connector>
         <fields>
             <name>Ny_Oppgave_Display</name>
@@ -406,7 +438,7 @@ TODAY())</expression>
         <fields>
             <name>Task_Description</name>
             <defaultValue>
-                <stringValue>{!Task_Description}</stringValue>
+                <stringValue>{!Oppgavebeskrivelse}</stringValue>
             </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -458,12 +490,12 @@ TODAY())</expression>
         <name>Publish_Oppgave_created_LMS_event</name>
         <label>Publish Oppgave created LMS event</label>
         <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Success_Screen</targetReference>
+            <targetReference>Wipe_oppgavebeskrivelse_var</targetReference>
         </connector>
         <fields>
             <name>nksOppgaveCreatedPublisher</name>
@@ -501,7 +533,7 @@ TODAY())</expression>
         <name>Success_Screen</name>
         <label>Success Screen</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>890</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -580,6 +612,16 @@ TODAY())</expression>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
     </textTemplates>
+    <variables>
+        <name>Oppgavebeskrivelse</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>Task_Description</elementReference>
+        </value>
+    </variables>
     <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
