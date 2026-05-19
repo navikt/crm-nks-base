@@ -8,6 +8,7 @@
             "Name": "AAP",
             "CRM_Code__c": "AAP",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@ArbeidRef"
@@ -20,6 +21,7 @@
             "Name": "Dagpenger",
             "CRM_Code__c": "DAG",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@ArbeidRef"
@@ -32,6 +34,7 @@
             "Name": "Barnetrygd",
             "CRM_Code__c": "BAR",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@FamilieRef"
@@ -44,6 +47,7 @@
             "Name": "Kontantstøtte",
             "CRM_Code__c": "KON",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@FamilieRef"
@@ -56,6 +60,7 @@
             "Name": "Foreldre- og svangerskapspenger",
             "CRM_Code__c": "FOR",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@FamilieRef"
@@ -68,6 +73,7 @@
             "Name": "Sykepenger",
             "CRM_Code__c": "SYK",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema"
         },
@@ -79,6 +85,7 @@
             "Name": "Yrkesskade/Menerstatning",
             "CRM_Code__c": "YRK",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema"
         },
@@ -90,6 +97,7 @@
             "Name": "Regnskap/Utbetaling",
             "CRM_Code__c": "STO",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": false,
             "CRM_Code_Set__c": "Tema"
         },
@@ -101,6 +109,7 @@
             "Name": "Pensjon",
             "CRM_Code__c": "PEN",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema"
         },
@@ -112,6 +121,7 @@
             "Name": "Oppfølging",
             "CRM_Code__c": "OPP",
             "CRM_Active__c": true,
+            "CRM_Available__c": true,
             "CRM_Archive_Theme__c": true,
             "CRM_Code_Set__c": "Tema",
             "CRM_Parent_Code__c": "@ArbeidRef"

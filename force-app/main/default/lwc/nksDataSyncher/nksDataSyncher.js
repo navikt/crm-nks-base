@@ -4,11 +4,9 @@ import { publish, MessageContext } from 'lightning/messageService';
 import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
 import syncBankAccountNumber from '@salesforce/apex/NKS_DataSynchController.doBankAccountNumberSync';
-import { syncActorOppgaver } from 'c/crmOppgaveSyncher';
 import { resolve } from 'c/nksComponentsUtils';
 
 import PERSON_IDENT_FIELD from '@salesforce/schema/Person__c.Name';
-import PERSON_ACTORID_FIELD from '@salesforce/schema/Person__c.INT_ActorId__c';
 import PERSON_ACCOUNT_FIELD from '@salesforce/schema/Person__c.CRM_Account__c';
 
 const SYNC_STATUS = {
@@ -27,7 +25,7 @@ export default class NksDataSyncher extends LightningElement {
     synced = false;
 
     wireFields = [this.objectApiName + '.Id'];
-    personFields = [PERSON_ACTORID_FIELD, PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
+    personFields = [PERSON_IDENT_FIELD, PERSON_ACCOUNT_FIELD];
 
     @wire(MessageContext)
     messageContext;
@@ -39,7 +37,6 @@ export default class NksDataSyncher extends LightningElement {
 
     initializeSync() {
         this.addSyncStatus('bankAccount', 'Bankkontonummer', SYNC_STATUS.SYNCING);
-        this.addSyncStatus('oppgave', 'Oppgave', SYNC_STATUS.SYNCING);
         this.getRelatedRecordId();
         this.initialized = true;
     }
@@ -55,7 +52,7 @@ export default class NksDataSyncher extends LightningElement {
                 this.getRelatedRecordId();
             }
         } else if (error) {
-            console.log('Problme getting record: ', JSON.stringify(error, null, 2));
+            console.error('Problem getting record: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -66,22 +63,21 @@ export default class NksDataSyncher extends LightningElement {
     wiredPersonInfo({ error, data }) {
         if (data) {
             let personIdent = getFieldValue(data, PERSON_IDENT_FIELD);
-            let personActorId = getFieldValue(data, PERSON_ACTORID_FIELD);
             let personAccountId = getFieldValue(data, PERSON_ACCOUNT_FIELD);
 
             if (personIdent) {
-                this.startSynch(personIdent, personActorId, personAccountId);
+                this.startSynch(personIdent, personAccountId);
             }
         }
         if (error) {
-            console.log('Problem getting person information: ', JSON.stringify(error, null, 2));
+            console.error('Problem getting person information: ', JSON.stringify(error, null, 2));
         }
     }
 
-    async startSynch(personIdent, personActorId, eventName = 'e.force:refreshView') {
+    async startSynch(personIdent, eventName = 'e.force:refreshView') {
         try {
             this.synced = false;
-            await Promise.all([this.syncBankAccountNumber(personIdent), this.syncOppgave(personActorId)]);
+            await this.syncBankAccountNumber(personIdent);
             this.synced = true;
             const refreshEvent = new CustomEvent(eventName);
             this.dispatchEvent(refreshEvent);
@@ -90,20 +86,7 @@ export default class NksDataSyncher extends LightningElement {
             // Notify other custom components that callout is complete to refresh data
             publish(this.messageContext, DATA_SYNC_CHANNEL, { status: 'SYNC_COMPLETE' });
         } catch (error) {
-            console.error('Problem synching bankAccountNumber/oppgave: ', JSON.stringify(error, null, 2));
-        }
-    }
-
-    async syncOppgave(personActorId) {
-        if (this.getSyncStatus('oppgave').status !== SYNC_STATUS.SYNCING) return;
-
-        try {
-            await syncActorOppgaver(personActorId);
-            this.setSyncStatus('oppgave', SYNC_STATUS.SYNCED);
-        } catch (error) {
-            this.setSyncStatus('oppgave', SYNC_STATUS.ERROR);
-            console.error('Error in syncOppgave:', JSON.stringify(error, null, 2));
-            throw new Error('Error syncing oppgave: ' + error.message);
+            console.error('Problem synching bankAccountNumber: ', JSON.stringify(error, null, 2));
         }
     }
 
@@ -133,12 +116,11 @@ export default class NksDataSyncher extends LightningElement {
                 //Only update the wired attribute if it is indeed changed
                 if (this.personId !== resolvedPersonId) {
                     this.setSyncStatus('bankAccount', SYNC_STATUS.SYNCING);
-                    this.setSyncStatus('oppgave', SYNC_STATUS.SYNCING);
                     this.personId = resolvedPersonId;
                 }
             })
             .catch((error) => {
-                console.log('Problem getting related record: ', JSON.stringify(error, null, 2));
+                console.error('Problem getting related record: ', JSON.stringify(error, null, 2));
             });
     }
 
