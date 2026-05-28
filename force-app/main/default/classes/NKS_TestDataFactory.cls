@@ -79,15 +79,15 @@ public without sharing class NKS_TestDataFactory {
         return visitor;
     }
 
-    public static List<LiveChatTranscript> createLiveChatTranscripts(Integer amount) {
+    public static List<MessagingSession> createMessagingSessions(Integer amount) {
         LiveChatVisitor v = NKS_TestDataFactory.createLiveChatVisitor();
-        List<LiveChatTranscript> liveChatTranscripts = new List<LiveChatTranscript>();
+        List<MessagingSession> MessagingSessions = new List<MessagingSession>();
         for (Integer i = 0; i < amount; i++) {
-            LiveChatTranscript lct = new LiveChatTranscript(LiveChatVisitorId = v.Id);
-            liveChatTranscripts.add(lct);
+            MessagingSession lct = new MessagingSession(LiveChatVisitorId = v.Id);
+            MessagingSessions.add(lct);
         }
-        insert liveChatTranscripts;
-        return liveChatTranscripts;
+        insert MessagingSessions;
+        return MessagingSessions;
     }
 
     public static List<NavUnit__c> createNavUnits(Integer amount) {

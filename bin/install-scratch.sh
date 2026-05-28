@@ -63,13 +63,13 @@ assignPermission() {
 }
 
 insertingTestData() {
-   sf data import tree --plan dummy-data/announcements/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/chat/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/common_codes/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/conversation_notes/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/knowledge/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/navunits/plan.json || { error $? '"sf data import tree" command failed.'; }
-   sf data import tree --plan dummy-data/quicktexts/plan.json || { error $? '"sf data import tree" command failed.'; }
+#    sf data import tree --plan dummy-data/announcements/plan.json || { error $? '"sf data import tree" command failed.'; }
+   sf data import tree --plan dummy-data/chat/plan.json || { error $? '"sf data import tree --plan dummy-data/chat/plan.json" command failed.'; }
+   sf data import tree --plan dummy-data/common_codes/plan.json || { error $? '"sf data import tree --plan dummy-data/common_codes/plan.json" command failed.'; }
+   sf data import tree --plan dummy-data/conversation_notes/plan.json || { error $? '"sf data import tree --plan dummy-data/conversation_notes/plan.json" command failed.'; }
+   sf data import tree --plan dummy-data/knowledge/plan.json || { error $? '"sf data import tree --plan dummy-data/knowledge/plan.json" command failed.'; }
+   sf data import tree --plan dummy-data/navunits/plan.json || { error $? '"sf data import tree --plan dummy-data/navunits/plan.json" command failed.'; }
+   sf data import tree --plan dummy-data/quicktexts/plan.json || { error $? '"sf data import tree --plan dummy-data/quicktexts/plan.json" command failed.'; }
    sf apex run --file dummy-data/GenerateData.apex
 }
 
