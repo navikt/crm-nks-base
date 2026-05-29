@@ -80,5 +80,9 @@
     handleSwitchToPuzzel: function (component, event, helper) {
         var targetCallCenterId = component.get('v.puzzelCallCenterId');
         helper.switchCallCenter(component, targetCallCenterId);
+    },
+
+    handleRefreshPage: function () {
+        window.location.reload();
     }
 });

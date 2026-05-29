@@ -8,6 +8,7 @@
     <aura:attribute name="errorMessage" type="String" />
     <aura:attribute name="isDisabled" type="Boolean" default="false" />
     <aura:attribute name="isUnrecognizedCenter" type="Boolean" default="false" />
+    <aura:attribute name="showRefreshButton" type="Boolean" default="false" />
     <aura:handler name="init" value="{!this}" action="{!c.init}" />
 
     <aura:if isTrue="{!v.errorMessage}">
@@ -59,6 +60,15 @@
                             variant="label-hidden"
                             disabled="{!v.isDisabled}"
                         />
+                        <aura:if isTrue="{!v.showRefreshButton}">
+                            <div style="margin-top: 16px">
+                                <lightning:button
+                                    label="Refresh page"
+                                    onclick="{!c.handleRefreshPage}"
+                                    variant="neutral"
+                                />
+                            </div>
+                        </aura:if>
                     </div>
                 </aura:set>
             </aura:if>
