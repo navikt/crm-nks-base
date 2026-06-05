@@ -182,10 +182,6 @@ public with sharing class NKS_AddressController {
         } else if (objectApiName == 'Account') {
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
         } else if (objectApiName == 'MessagingSession') {
-            personId = [SELECT EndUserAccount.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
-                ?.Account
-                ?.CRM_Person__c;
-        } else if (objectApiName == 'MessagingSession') {
             personId = [SELECT MessagingEndUser.Account.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
                 ?.MessagingEndUser
                 ?.Account

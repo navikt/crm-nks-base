@@ -79,15 +79,52 @@ public without sharing class NKS_TestDataFactory {
         return visitor;
     }
 
-    public static List<MessagingSession> createMessagingSessions(Integer amount) {
+    public static List<LiveChatTranscript> createLiveChatTranscripts(Integer amount) {
         LiveChatVisitor v = NKS_TestDataFactory.createLiveChatVisitor();
-        List<MessagingSession> MessagingSessions = new List<MessagingSession>();
+        List<LiveChatTranscript> liveChatTranscripts = new List<LiveChatTranscript>();
         for (Integer i = 0; i < amount; i++) {
-            MessagingSession lct = new MessagingSession(LiveChatVisitorId = v.Id);
-            MessagingSessions.add(lct);
+            LiveChatTranscript lct = new LiveChatTranscript(LiveChatVisitorId = v.Id);
+            liveChatTranscripts.add(lct);
         }
-        insert MessagingSessions;
-        return MessagingSessions;
+        insert liveChatTranscripts;
+        return liveChatTranscripts;
+    }
+
+    public static List<MessagingSession> createMessagingSessions(Integer amount, Id accountId) {
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        List<MessagingSession> sessions = new List<MessagingSession>();
+        System.runAs(thisUser) {
+            MessagingChannel msgChannel = new MessagingChannel(
+                MasterLabel = 'TestChannel',
+                DeveloperName = 'TestChannel',
+                IsActive = true,
+                MessageType = 'Text',
+                MessagingPlatformKey = 'TestChannel'
+            );
+            insert msgChannel;
+
+            MessagingEndUser endUser = new MessagingEndUser(
+                Name = 'Test End User',
+                MessagingChannelId = msgChannel.Id,
+                MessageType = 'EmbeddedMessaging',
+                MessagingPlatformKey = 'TestChannel',
+                AccountId = accountId
+            );
+            insert endUser;
+
+            for (Integer i = 0; i < amount; i++) {
+                sessions.add(
+                    new MessagingSession(
+                        MessagingEndUserId = endUser.Id,
+                        MessagingChannelId = msgChannel.Id,
+                        Status = 'Ended',
+                        EndTime = Datetime.now()
+                    )
+                );
+            }
+            insert sessions;
+        }
+        return sessions;
     }
 
     public static List<NavUnit__c> createNavUnits(Integer amount) {

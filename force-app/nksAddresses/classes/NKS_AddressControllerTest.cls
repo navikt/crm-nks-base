@@ -9,13 +9,7 @@ public with sharing class NKS_AddressControllerTest {
         Case testCase = new Case(AccountId = testAccount.Id);
         insert testCase;
 
-        LiveChatVisitor testChatVisitor = new LiveChatVisitor();
-        insert testChatVisitor;
-
-        MessagingSession testChat = new MessagingSession();
-        testChat.LiveChatVisitorid = testChatVisitor.id;
-        testChat.AccountId = testAccount.Id;
-        insert testChat;
+        MessagingSession testChat = NKS_TestDataFactory.createMessagingSessions(1, testAccount.Id)[0];
 
         Test.startTest();
         String personIdent = NKS_AddressController.getPersonIdentAndFullName(testAccount.Id, 'Account')?.Name;
