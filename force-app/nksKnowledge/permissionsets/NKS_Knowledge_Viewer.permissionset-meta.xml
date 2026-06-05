@@ -62,11 +62,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Knowledge__kav.NKS_Category__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Knowledge__kav.NKS_English_Employer__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -171,10 +166,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AllowViewKnowledge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EinsteinArticleRecUser</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

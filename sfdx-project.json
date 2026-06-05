@@ -5,19 +5,39 @@
             "default": true,
             "package": "crm-nks-base",
             "versionName": "ver 0.1",
-            "versionNumber": "0.391.0.NEXT",
+            "versionNumber": "0.479.0.NEXT",
             "dependencies": [
                 {
+                    "package": "platform-data-model",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "custom-metadata-dao",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "custom-permission-helper",
+                    "versionNumber": "0.1.33.LATEST",
+                    "branch": ""
+                },
+                {
+                    "package": "feature-toggle",
+                    "versionNumber": "0.1.34.LATEST",
+                    "branch": ""
+                },
+                {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.231.0.LATEST"
+                    "versionNumber": "0.304.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
-                    "versionNumber": "0.39.0.LATEST"
+                    "versionNumber": "0.41.0.LATEST"
                 },
                 {
                     "package": "crm-platform-access-control",
-                    "versionNumber": "0.113.0.LATEST"
+                    "versionNumber": "0.177.0.LATEST"
                 },
                 {
                     "package": "crm-shared-base",
@@ -25,11 +45,11 @@
                 },
                 {
                     "package": "crm-thread-view",
-                    "versionNumber": "0.3.0.LATEST"
+                    "versionNumber": "0.7.0.LATEST"
                 },
                 {
                     "package": "crm-shared-timeline",
-                    "versionNumber": "1.28.0.LATEST"
+                    "versionNumber": "1.43.0.LATEST"
                 },
                 {
                     "package": "crm-shared-flowComponents",
@@ -37,27 +57,27 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.27.0.LATEST"
+                    "versionNumber": "0.36.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.138.0.LATEST"
+                    "versionNumber": "0.170.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
-                    "versionNumber": "0.23.0.LATEST"
+                    "versionNumber": "0.27.0.LATEST"
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.41.0.LATEST"
+                    "versionNumber": "0.45.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
-                    "versionNumber": "0.61.0.LATEST"
+                    "versionNumber": "0.74.0.LATEST"
                 },
                 {
                     "package": "crm-arbeidsgiver-base",
-                    "versionNumber": "1.401.0.LATEST"
+                    "versionNumber": "1.574.0.LATEST"
                 },
                 {
                     "package": "crm-community-base",
@@ -65,26 +85,26 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.149.0.LATEST"
+                    "versionNumber": "0.189.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
-                    "versionNumber": "0.23.0.LATEST"
+                    "versionNumber": "0.34.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.77.0.LATEST"
+                    "versionNumber": "0.114.0.LATEST"
                 },
                 {
                     "package": "crm-nks-base-components",
-                    "versionNumber": "0.84.0.LATEST"
+                    "versionNumber": "0.122.0.LATEST"
                 }
             ]
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "59.0",
+    "sourceApiVersion": "65.0",
     "packageAliases": {
         "crm-nks-base": "0Ho2o000000fxWmCAI",
         "crm-platform-base": "0Ho2o0000008ORmCAM",
@@ -104,6 +124,16 @@
         "crm-platform-oppgave": "0Ho2o000000fxXzCAI",
         "crm-community-base": "0Ho2o0000008OSzCAM",
         "crm-sf-saf": "0Ho7U0000000001SAA",
-        "crm-platform-reporting": "0Ho2o0000008OSfCAM"
+        "crm-platform-reporting": "0Ho2o0000008OSfCAM",
+        "platform-data-model": "0HoKB00000000010AA",
+        "custom-metadata-dao": "0HoKB000000000B0AQ",
+        "custom-permission-helper": "0HoKB000000000f0AA",
+        "feature-toggle": "0HoKB000000000V0AQ"
+    },
+    "packageKeyConfig": {
+        "platform-data-model": false,
+        "custom-metadata-dao": false,
+        "custom-permission-helper": false,
+        "feature-toggle": false
     }
 }

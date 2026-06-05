@@ -62,6 +62,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Stilling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sykefravaersoppfolging</fullName>
             <default>false</default>
         </values>

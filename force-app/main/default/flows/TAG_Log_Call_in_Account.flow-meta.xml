@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_account_nav_unit</name>
         <label>Get account&apos;s nav unit</label>
-        <locationX>78</locationX>
-        <locationY>237</locationY>
+        <locationX>446</locationX>
+        <locationY>134</locationY>
         <actionName>NKS_NavTaskRoutingHandler</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,6 +17,7 @@
                 <elementReference>currAccountId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NKS_NavTaskRoutingHandler</nameSegment>
         <outputParameters>
             <assignToReference>queueId</assignToReference>
             <name>output</name>
@@ -25,8 +26,8 @@
     <actionCalls>
         <name>ShowToastNote</name>
         <label>ShowToastNote</label>
-        <locationX>744</locationX>
-        <locationY>587</locationY>
+        <locationX>578</locationX>
+        <locationY>782</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -48,12 +49,13 @@
                 <stringValue>success</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>c:ShowToast_Flow</nameSegment>
     </actionCalls>
     <actionCalls>
         <name>ShowToastTask</name>
         <label>ShowToastTask</label>
-        <locationX>1489</locationX>
-        <locationY>535</locationY>
+        <locationX>842</locationX>
+        <locationY>1106</locationY>
         <actionName>c:ShowToast_Flow</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -75,13 +77,14 @@
                 <stringValue>success</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>c:ShowToast_Flow</nameSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Set_unit_error_message</name>
         <label>Set unit error message</label>
-        <locationX>357</locationX>
-        <locationY>667</locationY>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -90,14 +93,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Screen_to_Log_a_Call</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Setconversationnoteerrormessage</name>
         <label>Set conversation note error message</label>
-        <locationX>56</locationX>
-        <locationY>505</locationY>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -106,6 +110,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Screen_to_Log_a_Call</targetReference>
         </connector>
     </assignments>
@@ -120,8 +125,8 @@
     <decisions>
         <name>Note</name>
         <label>Note/Task</label>
-        <locationX>731</locationX>
-        <locationY>390</locationY>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>It_is_Note</name>
@@ -164,10 +169,10 @@
     <decisions>
         <name>Validate_input</name>
         <label>Validate input</label>
-        <locationX>407</locationX>
-        <locationY>371</locationY>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>Create_Standard_Task</targetReference>
+            <targetReference>Get_Task_Recordtype</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Is vailidated</defaultConnectorLabel>
         <rules>
@@ -235,6 +240,7 @@
         <picklistField>CRM_Theme__c</picklistField>
         <picklistObject>NavTask__c</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>dateFuture2Days</name>
         <dataType>Date</dataType>
@@ -257,7 +263,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -270,8 +276,8 @@
     <recordCreates>
         <name>Create_New_Call_Task</name>
         <label>Create New Call Task</label>
-        <locationX>1473</locationX>
-        <locationY>235</locationY>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>ShowToastTask</targetReference>
         </connector>
@@ -338,7 +344,7 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <elementReference>Get_Task_Record_Type.Id</elementReference>
+                <elementReference>Get_Nav_Task_Record_Type.Id</elementReference>
             </value>
         </inputAssignments>
         <object>NavTask__c</object>
@@ -346,8 +352,8 @@
     <recordCreates>
         <name>Create_Standard_Task</name>
         <label>Create standard task</label>
-        <locationX>607</locationX>
-        <locationY>253</locationY>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Note</targetReference>
         </connector>
@@ -361,6 +367,12 @@
             <field>Description</field>
             <value>
                 <elementReference>conversationNote</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Task_Recordtype.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -408,33 +420,10 @@
         <object>Task</object>
     </recordCreates>
     <recordLookups>
-        <name>Get_Selected_NAV_unit</name>
-        <label>Get Selected NAV unit</label>
-        <locationX>871</locationX>
-        <locationY>232</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Task_Record_Type</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>CRM_QueueId__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>queueId</elementReference>
-            </value>
-        </filters>
-        <object>NavUnit__c</object>
-        <outputAssignments>
-            <assignToReference>navUnitID</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Task_Record_Type</name>
-        <label>Get Task Record Type</label>
-        <locationX>1239</locationX>
-        <locationY>253</locationY>
+        <name>Get_Nav_Task_Record_Type</name>
+        <label>Get Nav Task Record Type</label>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_New_Call_Task</targetReference>
@@ -458,11 +447,62 @@
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Selected_NAV_unit</name>
+        <label>Get Selected NAV unit</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Nav_Task_Record_Type</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_QueueId__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueId</elementReference>
+            </value>
+        </filters>
+        <object>NavUnit__c</object>
+        <outputAssignments>
+            <assignToReference>navUnitID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Task_Recordtype</name>
+        <label>Get Task Recordtype</label>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Standard_Task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ArbeidsgiverTask</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Task</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Screen_to_Log_a_Call</name>
         <label>Screen to Log a Call</label>
-        <locationX>263</locationX>
-        <locationY>235</locationY>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -566,7 +606,7 @@
                     <leftValueReference>queueId</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue/>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -575,8 +615,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_account_nav_unit</targetReference>
         </connector>

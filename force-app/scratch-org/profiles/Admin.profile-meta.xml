@@ -6,14 +6,6 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>CRM_SecurityQuestionPicker</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CRM_SecurityQuestionTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>FlowFindCollection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -182,14 +174,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>NKS_QuickTextSearchController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_QuickTextSearchController_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>NKS_RelatedListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -259,15 +243,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NKS_ThreadSharingEventHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-
-    <classAccesses>
-        <apexClass>NKS_WarningBadgeController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>NKS_WarningBadgeControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -344,11 +319,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Date_Registered__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Conversation_Note__c.CRM_Date_Time_Registered__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -414,12 +384,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Last_Edited_By__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Conversation_Note__c.CRM_Legacy_Case_Id__c</field>
+        <field>Conversation_Note__c.CRM_Redaction_Activated_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -534,11 +499,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Conversation_Note__c.NKS_Sent__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Conversation_Note__c.NKS_Timeline_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -626,11 +586,6 @@
         <editable>true</editable>
         <field>Journal_Entry__c.NAV_Case_Reference__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Journal_Entry__c.NKS_Chat_Transcript__c</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -734,16 +689,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>NavTask__c.NKS_Comment_History__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavTask__c.NKS_Gosys_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>NavTask__c.NKS_Is_Person_Account__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -760,11 +705,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>NavTask__c.NKS_Task_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>NavUnit__c.NKS_IsNAVTaskUnit__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -924,10 +864,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>NKS_Announcement__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>NKS_User_administration</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>

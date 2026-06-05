@@ -28,7 +28,7 @@ public with sharing class NKS_KnowledgeControllerTest {
     }
 
     @isTest
-    static void testGetBrokenLinks() {
+    static void testGetBrokenLinksNull() {
         Knowledge__kav article = [
             SELECT
                 Id,
@@ -51,14 +51,55 @@ public with sharing class NKS_KnowledgeControllerTest {
             FROM Knowledge__kav
             LIMIT 1
         ];
-        
+
         NKS_KnowledgeController.setCompiledRegexPattern();
 
         Test.startTest();
-        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(article, NKS_KnowledgeController.getCompiledRegexPattern());
+        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(
+            article,
+            NKS_KnowledgeController.getCompiledRegexPattern()
+        );
         Test.stopTest();
 
         System.assertEquals(0, res.size());
+    }
+
+    @isTest
+    static void testGetBrokenLinks() {
+        Test.setMock(HttpCalloutMock.class, new SingleRequestMock(500, 'Internal Server Error', '', null));
+        Knowledge__kav article = [
+            SELECT
+                Id,
+                Title,
+                AdvisorInformation__c,
+                AdvisorInformationInternal__c,
+                Article__c,
+                EmployerInformation__c,
+                EmployerInformationInternal__c,
+                NKS_English__c,
+                InternationalInformation__c,
+                InternationalInformationInternal__c,
+                NKS_Legislation__c,
+                NKS_Nav_no__c,
+                NKS_Nynorsk__c,
+                NKS_Resources__c,
+                NKS_Summary__c,
+                NKS_UserInformation__c,
+                WhoDoesWhat__c
+            FROM Knowledge__kav
+            LIMIT 1
+        ];
+
+        NKS_KnowledgeController.setCompiledRegexPattern();
+
+        Test.startTest();
+        Map<String, List<String>> res = NKS_KnowledgeController.getBrokenLinks(
+            article,
+            NKS_KnowledgeController.getCompiledRegexPattern()
+        );
+        Test.stopTest();
+
+        Assert.areEqual(1, res.size());
     }
 
     @isTest

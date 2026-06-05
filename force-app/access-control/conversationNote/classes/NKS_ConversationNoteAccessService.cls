@@ -16,6 +16,7 @@ public without sharing class NKS_ConversationNoteAccessService {
                 wrapper.externalId = note.CRM_Henvendelse_BehandlingsId__c;
                 wrapper.officeRestriction = note.CRM_Office_Restriction__c;
                 wrapper.theme = note.CRM_Theme_Code__c;
+                wrapper.category = note.CRM_Theme_Group_Name__c;
                 sobjects.add(wrapper);
             }
 

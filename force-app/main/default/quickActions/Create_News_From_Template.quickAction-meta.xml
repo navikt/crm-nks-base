@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
         <field>NKS_Information__c</field>
-        <formula>&apos;&lt;html&gt;&lt;body&gt;&lt;strong&gt;Innledning&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h2&gt;Mellomtittel&lt;/h2&gt;Avsnitt ...&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Undertittel&lt;/h3&gt;Avsnitt ...&lt;/body&gt;&lt;/html&gt;&apos;</formula>
+        <formula>&apos;&lt;html&gt;&lt;body&gt;&lt;strong&gt;Innledning&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h2&gt;Mellomtittel (skrifttype: Salesforce Sans, skriftstørrelse: 18px, fet skrift: bold)&lt;/h2&gt;Avsnitt ...&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;h3&gt;Undertittel (skrifttype: Salesforce Sans, skriftstørrelse: 18px, fet skrift: normal)&lt;/h3&gt;Avsnitt ...&lt;/body&gt;&lt;/html&gt;&apos;</formula>
     </fieldOverrides>
     <label>Opprett nyhet fra mal</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>

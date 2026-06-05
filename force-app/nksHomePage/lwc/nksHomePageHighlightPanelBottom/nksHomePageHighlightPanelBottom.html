@@ -2,10 +2,14 @@
     <lightning-layout class="container">
         <lightning-layout-item class="margin-area"></lightning-layout-item>
         <lightning-layout-item class="slds-grid slds-wrap content-area">
-            <template for:each={links} for:item="link">
-                <lightning-layout-item key={link.id} class="font-style">
-                    <a href={link.url} target="_blank" rel="noopener noreferrer"> {link.title} </a>
-                </lightning-layout-item>
+            <template lwc:if={hasRecords}>
+                <template for:each={records} for:item="record">
+                    <lightning-layout-item key={record.id} class="slds-grid slds-wrap content-padding">
+                        <c-nks-home-page-ready-response-list-entry
+                            record={record}
+                        ></c-nks-home-page-ready-response-list-entry>
+                    </lightning-layout-item>
+                </template>
             </template>
         </lightning-layout-item>
     </lightning-layout>

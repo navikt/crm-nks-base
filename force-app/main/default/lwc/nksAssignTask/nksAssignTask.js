@@ -10,7 +10,7 @@ export default class NksAssignTask extends LightningElement {
     @api shouldCreateTask;
     @api dueDate;
     @api additionalComments;
-    @api conversationNote;
+    @api conversationNote = '';
 
     @track units;
     @track defaultQueueId = this.queueId;

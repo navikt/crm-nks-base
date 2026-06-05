@@ -93,7 +93,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         const hasReadAccess = getOutputVariableValue(outputVariables, 'HAS_PERSON_READ');
         const hasNoAccount = getOutputVariableValue(outputVariables, 'HAS_NO_ACCOUNT');
         this.flowButtonLabel = hasReadAccess || hasNoAccount ? this.changeUserLabel : this.createTaskLabel;
-        this.flowApiName = hasReadAccess || hasNoAccount ? 'NKS_Case_Change_Account' : 'NKS_Case_Send_NAV_Task_v_2';
+        this.flowApiName = hasReadAccess || hasNoAccount ? 'NKS_Case_Change_Account' : 'NKS_Case_Send_NAV_Task';
     }
 
     handleStatusChange(event) {

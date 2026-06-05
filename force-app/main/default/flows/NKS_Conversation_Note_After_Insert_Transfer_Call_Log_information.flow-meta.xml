@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <assignments>
+        <name>Call_log</name>
+        <label>Call log</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Call_Log.NKS_Conversation_Note_Created__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Conversation_created_for_Call_Log</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_if_Call_Log_exists</name>
+        <label>Check if Call Log exists</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Call_Log_exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Call_Log</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_Phone_number</targetReference>
+            </connector>
+            <label>Call Log exists</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Conversation Note - After Insert - Transfer Call Log information
+        {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Conversation Note - After Insert - Transfer Call Log information</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Call_Log</name>
+        <label>Get Call Log</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_if_Call_Log_exists</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>NKS_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CRM_Case__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>NKS_Call_Log__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>NKS_Phone_Number__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Add_Phone_number</name>
+        <label>Add Phone number</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Call_log</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>NKS_Access_Number__c</field>
+            <value>
+                <elementReference>Get_Call_Log.NKS_Phone_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Conversation Created field for Call Log, essentially deleting it by
+            removing sharing.</description>
+        <name>Conversation_created_for_Call_Log</name>
+        <label>Conversation created for Call Log</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <inputReference>Get_Call_Log</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Call_Log</targetReference>
+        </connector>
+        <object>Conversation_Note__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

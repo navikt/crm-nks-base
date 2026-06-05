@@ -239,6 +239,10 @@
             <name>SosialeTjenester</name>
         </dataCategory>
         <dataCategory>
+            <label>Stillingsregistrering</label>
+            <name>Stillingsregistrering</name>
+        </dataCategory>
+        <dataCategory>
             <label>Teknisk brukerstøtte</label>
             <name>Teknisk_brukerstotte</name>
         </dataCategory>

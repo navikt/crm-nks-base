@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRM_Timeline_status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(CRM_isActive__c == false, 
+			&apos;Lukket&apos;, 
+			IF(ISBLANK(CRM_Assignee_NAV_Unit__c), 
+						IF(ISBLANK(CRM_Case__c), 
+									&apos;&apos;, 
+									CASE(CRM_Case__r.Status,
+            &apos;New&apos;, &apos;Åpen&apos;,
+            &apos;Escalated&apos;, &apos;Åpen&apos;,
+            &apos;Forwarded&apos;, &apos;Åpen&apos;,
+            &apos;On Hold&apos;, &apos;Besvart&apos;,
+            &apos;In progress&apos;, &apos;Under Arbeid&apos;,
+            &apos;Reserved&apos;, &apos;Under Arbeid&apos;,
+            &apos;Closed&apos;, &apos;Lukket&apos;,
+        &apos;&apos;)), 
+    &apos;Under Arbeid&apos;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Timeline status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

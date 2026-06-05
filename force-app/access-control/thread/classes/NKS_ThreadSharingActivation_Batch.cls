@@ -2,7 +2,21 @@ global class NKS_ThreadSharingActivation_Batch implements Database.Batchable<sOb
     private String query;
 
     global NKS_ThreadSharingActivation_Batch() {
-        query = 'SELECT Id, CRM_Account__c, CRM_Henvendelse_BehandlingsId__c, CRM_Office_Restriction__c, CRM_Theme_Code__c From Thread__c WHERE CRM_Account__c != null';
+        query =
+            'SELECT ' +
+            'Id, ' +
+            'CRM_Account__c, ' +
+            'CRM_Henvendelse_BehandlingsId__c, ' +
+            'CRM_Office_Restriction__c, ' +
+            'CRM_Theme_Code__c,' +
+            'CRM_Theme_Group_Name__c, ' +
+            'STO_Category__c, ' +
+            'CRM_Theme__c, ' +
+            'CRM_Thread_Type__c ' +
+            'FROM ' +
+            'Thread__c ' +
+            'WHERE ' +
+            'CRM_Account__c != null';
     }
 
     global NKS_ThreadSharingActivation_Batch(String query) {
