@@ -133,6 +133,11 @@ public with sharing class NKS_FamilyViewController {
             personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
                 ?.Account
                 ?.CRM_Person__c;
+        } else if (objectApiName == 'MessagingSession') {
+            personId = [SELECT MessagingEndUser.Account.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
+                ?.MessagingEndUser
+                ?.Account
+                ?.CRM_Person__c;
         }
 
         List<Relation> relations = new List<Relation>();
