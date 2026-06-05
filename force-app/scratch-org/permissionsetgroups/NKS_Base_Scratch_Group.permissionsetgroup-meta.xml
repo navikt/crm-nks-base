@@ -7,6 +7,7 @@
     <permissionSets>NKS_Announcement_SF_Update_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Traffic_Editor</permissionSets>
     <permissionSets>NKS_Announcement_Viewer</permissionSets>
+    <permissionSets>NKS_Call_Logs</permissionSets>
     <permissionSets>NKS_Case</permissionSets>
     <permissionSets>NKS_Config</permissionSets>
     <permissionSets>NKS_Conversation_Note</permissionSets>

@@ -15,9 +15,11 @@ import KRR_RESERVATION_FIELD from '@salesforce/schema/Person__c.INT_KRR_Reservat
 import KRR_VERIFIED_FIELD from '@salesforce/schema/Person__c.INT_VerifiedFromKRR__c';
 import PDL_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromPDL__c';
 import KRR_LAST_UPDATED_FIELD from '@salesforce/schema/Person__c.INT_LastUpdatedFromKRR__c';
+import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import COUNTY_FIELD from '@salesforce/schema/Person__c.NKS_County__c';
 import DATA_SYNC_CHANNEL from '@salesforce/messageChannel/DataSyncChannel__c';
 import getRelatedRecord from '@salesforce/apex/NksRecordInfoController.getRelatedRecord';
+import getKrrInfo from '@salesforce/apex/NKS_KrrInformationController.getKrrInformation';
 
 const LABELS = {
     mobile: 'Mobilnummer',
@@ -36,7 +38,8 @@ const PERSON_CONTACT_FIELDS = [
     KRR_LAST_UPDATED_FIELD,
     PDL_LAST_UPDATED_FIELD,
     BANK_ACCOUNT_SOURCE_FIELD,
-    COUNTY_FIELD
+    COUNTY_FIELD,
+    NAME_FIELD
 ];
 
 export default class NksContactInformation extends LightningElement {
@@ -56,6 +59,7 @@ export default class NksContactInformation extends LightningElement {
     krrLastUpdated;
     pdlLastUpdated;
     personId;
+    personIdent;
     county;
     wiredPersonInfoResult;
     errorMessage;
@@ -119,7 +123,6 @@ export default class NksContactInformation extends LightningElement {
         this.wiredPersonInfoResult = result;
         if (result?.data) {
             this.populatePersonFields(result.data);
-            this.isLoading = false;
         } else if (result?.error) {
             this.handleError(result.error);
             console.error(result.error);
@@ -128,6 +131,7 @@ export default class NksContactInformation extends LightningElement {
     }
 
     populatePersonFields(data) {
+        this.personIdent = getFieldValue(data, NAME_FIELD);
         this.email = getFieldValue(data, EMAIL_FIELD);
         this.phone = getFieldValue(data, PHONE_FIELD);
         this.phone1 = getFieldValue(data, PHONE_1_FIELD);
@@ -140,6 +144,11 @@ export default class NksContactInformation extends LightningElement {
         this.pdlLastUpdated = getFieldValue(data, PDL_LAST_UPDATED_FIELD);
         this.bankAccountSource = getFieldValue(data, BANK_ACCOUNT_SOURCE_FIELD);
         this.county = getFieldValue(data, COUNTY_FIELD);
+        if (this.personIdent) {
+            this.updateKrrInformation(this.personIdent);
+        } else {
+            this.isLoading = false;
+        }
     }
 
     getRelatedRecordId(relationshipField, objectApiName) {
@@ -170,6 +179,25 @@ export default class NksContactInformation extends LightningElement {
             });
     }
 
+    updateKrrInformation(personIdent) {
+        getKrrInfo({ personIdent: personIdent })
+            .then((result) => {
+                if (result) {
+                    this.email = result.email ?? this.email;
+                    this.phone = result.mobilePhone ?? this.phone;
+                    this.krrVerified = result.verified ?? this.krrVerified;
+                    this.krrReservation = result.reservation ?? this.krrReservation;
+                    this.krrLastUpdated = result.lastUpdated ?? this.krrLastUpdated;
+                }
+            })
+            .catch((error) => {
+                console.error('Krr information fetch failed:  ' + JSON.stringify(error, null, 2));
+            })
+            .finally(() => {
+                this.isLoading = false;
+            });
+    }
+
     handleError(error) {
         this.errorMessage = 'Unknown error';
         if (Array.isArray(error.body)) {
@@ -182,6 +210,33 @@ export default class NksContactInformation extends LightningElement {
 
     getFormattedPhone(phone, label) {
         return phone ? `${label}: ${phone}` : '';
+    }
+
+    handleCopyPhone(event) {
+        const phoneNumber = this.removeCountryCode(event.target.dataset.phone);
+
+        let hiddenInput = document.createElement('input');
+        let successful = false;
+        let msg = '';
+        hiddenInput.value = phoneNumber;
+        document.body.appendChild(hiddenInput);
+        hiddenInput.select();
+        try {
+            // eslint-disable-next-line @locker/locker/distorted-document-exec-command
+            successful = document.execCommand('copy');
+            msg = successful ? 'successful' : 'unsuccessful';
+            console.error('Copying text command was ', msg);
+        } catch (err) {
+            console.error('Oops, unable to copy: ', err);
+        }
+        document.body.removeChild(hiddenInput);
+    }
+
+    removeCountryCode(phoneNumber) {
+        if (phoneNumber?.startsWith('+47') && phoneNumber.length > 2) {
+            return phoneNumber.replace(/^\+47/, '');
+        }
+        return phoneNumber;
     }
 
     get formattedPhone() {

@@ -1,24 +1,18 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import getOppholdsAddress from '@salesforce/apex/NKS_AddressController.getOppholdsAddress';
-import nksTemporaryAddressHTML from './nksTemporaryAddress.html';
-import nksTemporaryAddressV2HTML from './nksTemporaryAddressV2.html';
 import { handleAddressCopy } from 'c/nksComponentsUtils';
 
 export default class NksBostedAddress extends LightningElement {
     @api objectApiName;
     @api recordId;
-    @api useNewDesign;
     @api pdlLastUpdatedFormatted;
     @api county;
-    @track sectionClass = 'slds-section section';
-    @track sectionIconName = 'utility:chevronright';
+
+    sectionClass = 'slds-section section';
+    sectionIconName = 'utility:chevronright';
     _temporaryAddresses = [];
     isExpanded = false;
     ariaHidden = true;
-
-    render() {
-        return this.useNewDesign ? nksTemporaryAddressV2HTML : nksTemporaryAddressHTML;
-    }
 
     @wire(getOppholdsAddress, {
         recordId: '$recordId',
@@ -86,28 +80,6 @@ export default class NksBostedAddress extends LightningElement {
     }
 
     get temporaryAddresses() {
-        const addressesToReturn = this._temporaryAddresses.map((element) => {
-            const fullName = element.fullName ? element.fullName : '';
-            const addressLine = [
-                element.address ? element.address : '',
-                element.houseNumber ? ' ' + element.houseNumber : '',
-                element.houseLetter ? ' ' + element.houseLetter : ''
-            ]
-                .join('')
-                .trim();
-            const postInfo = [element.zipCode ? element.zipCode : '', element.city ? ' ' + element.city : '']
-                .join('')
-                .trim();
-            const region = [element.region ? element.region : '', element.countryCode ? ' ' + element.countryCode : '']
-                .join('')
-                .trim();
-
-            return [fullName, addressLine, postInfo, region || 'NORGE NO'].join('\n').trim();
-        });
-        return addressesToReturn.join('\n\n').trim();
-    }
-
-    get temporaryAddressesNewDesign() {
         if (this._temporaryAddresses.length === 0) {
             return [];
         }

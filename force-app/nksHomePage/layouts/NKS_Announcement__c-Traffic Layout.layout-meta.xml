@@ -15,6 +15,14 @@
                 <behavior>Edit</behavior>
                 <field>NKS_Information__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NKS_Opening_Hours_Label__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NKS_Opening_Hours_Information__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UseWebSak__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Is used to define if WebSak should be use for archive the news articles.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select if you want to use WebSak to archive the news articles.</inlineHelpText>
+    <label>Use WebSak</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

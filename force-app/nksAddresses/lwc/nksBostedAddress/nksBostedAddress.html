@@ -1,41 +1,30 @@
 <template>
-    <div class={sectionClass}>
-        <h3 class="slds-section__title">
-            <button
-                aria-controls="expando-unique-id"
-                aria-expanded={isExpanded}
-                class="slds-button slds-section__title-action"
-                onclick={handleOpen}
-            >
-                <lightning-icon
-                    class="slds-var-p-right_small icon"
-                    icon-name={sectionIconName}
-                    size="x-small"
-                    alternative-text="switch"
-                ></lightning-icon>
-                <span class="slds-truncate" title="Section Title">Bostedsadresse</span>
-            </button>
-        </h3>
-        <div aria-hidden={ariaHidden} class="slds-section__content" id="expando-unique-id">
-            <div class="slds-var-p-horizontal_medium slds-var-p-bottom_small">
-                <lightning-formatted-text
-                    value={residentialAddresses}
-                    class="slds-text-title text"
-                ></lightning-formatted-text>
-            </div>
-            <div class="slds-var-p-horizontal_small">
-                <template if:true={showCopyButton}>
-                    <textarea hidden disabled class="clipboardInput"></textarea>
-                    <button type="button" class="slds-button slds-button_outline-brand" onclick={copyHandler}>
-                        <lightning-icon
+    <c-nks-expandable-panel title="Bostedsadresse" is-first chevron-left is-expandable>
+        <lightning-layout aria-hidden={ariaHidden}>
+            <lightning-layout-item class="slds-size_4-of-7">
+                <template for:each={residentialAddresses} for:item="residentialAddress">
+                    <div
+                        key={residentialAddress.address}
+                        class="slds-var-p-bottom_small slds-var-p-top_small icon-container"
+                    >
+                        <lightning-formatted-text value={residentialAddress}></lightning-formatted-text>
+                        <lightning-button-icon
+                            value={residentialAddress}
+                            if:true={showCopyButton}
                             icon-name="utility:copy"
-                            size="x-small"
-                            class="slds-current-color slds-p-right_small"
-                        ></lightning-icon
-                        >Kopier bostedsadresse
-                    </button>
+                            onclick={handleCopy}
+                            alternative-text="Kopier adresse"
+                            title="Kopier adresse"
+                            variant="bare"
+                            class="copy-icon slds-var-p-left_xx-small"
+                        >
+                        </lightning-button-icon>
+                    </div>
                 </template>
-            </div>
-        </div>
-    </div>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-size_3-of-7">
+                <p class="slds-p-left_x-small slds-p-top_small" style="font-style: italic">{pdlLastUpdatedFormatted}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+    </c-nks-expandable-panel>
 </template>

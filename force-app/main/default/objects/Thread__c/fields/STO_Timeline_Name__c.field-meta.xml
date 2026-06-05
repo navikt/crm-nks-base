@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STO_Timeline_Name__c</fullName>
+    <externalId>false</externalId>
+    <formula>
+        IF(
+        ISPICKVAL(NKS_Experience_Site_Source__c, &apos;Fedrekvotesaken&apos;),
+        &apos;Fedrekvotesaken: Kvittering&apos;,
+        IF(
+        ISPICKVAL(CRM_Thread_Type__c, &apos;STO&apos;) ||
+        ISPICKVAL(CRM_Thread_Type__c, &apos;STB&apos;) ||
+        ISPICKVAL(CRM_Thread_Type__c, &apos;BTO&apos;),
+        IF(
+        ISPICKVAL(CRM_Thread_Type__c, &apos;STO&apos;),
+        &apos;Skriv til oss&apos;,
+        IF(
+        ISPICKVAL(CRM_Thread_Type__c, &apos;BTO&apos;),
+        &apos;Meld fra om endring&apos;,
+        &apos;Skriv til bruker&apos;
+        )
+        ) &amp;
+        IF(
+        ISBLANK(CRM_Theme__c),
+        IF(
+        ISPICKVAL(STO_Category__c, &quot;&quot;),
+        &quot;&quot;,
+        &apos; - &apos; &amp; TEXT(STO_Category__c)
+        ),
+        &apos; - &apos; &amp; CRM_Theme__r.Name
+        ) &amp;
+        IF(
+        CRM_Number_of_unread_Messages__c != 0,
+        &apos; (&apos; &amp;
+        TEXT(CRM_Number_of_unread_Messages__c) &amp;
+        IF(
+        CRM_Number_of_unread_Messages__c &gt; 1,
+        &apos; uleste meldinger&apos;,
+        &apos; ulest melding&apos;
+        ) &amp;
+        &apos;)&apos;,
+        &apos; (Lest)&apos;
+        ),
+        CASE(
+        CRM_Thread_Type__c,
+        &quot;CHAT&quot;,
+        &apos;Chat&apos; &amp;
+        IF(
+        AND(
+        NOT(ISBLANK(CRM_Theme_Name__c)),
+        NOT(ISBLANK(CRM_Theme_Group_Name__c))
+        ),
+        &apos; - &apos; &amp; CRM_Theme_Group_Name__c &amp; &apos;, &apos; &amp; CRM_Theme_Name__c,
+        &apos; - &apos; &amp; CRM_Theme_Group_Name__c
+        ),
+        &quot;Tråd&quot;
+        )
+        )
+        )
+    </formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>STO Timeline Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

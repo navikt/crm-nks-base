@@ -67,8 +67,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
-        query.hentPerson.foedsel.foedselsaar = true;
-        query.hentPerson.foedsel.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
         query.hentPerson.kjoenn.kjoenn = true;
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
@@ -85,8 +85,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.doedfoedtBarn.selectAll();
         query.hentPerson.adressebeskyttelse.gradering = true;
         query.hentPerson.foreldreansvar.selectAll();
-        query.hentPerson.foedsel.foedselsdato = true;
-        query.hentPerson.foedsel.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
         query.hentPerson.bostedsadresse.vegadresse.selectAll();
         query.hentPerson.bostedsadresse.matrikkeladresse.selectAll();
         query.hentPerson.deltBosted.vegadresse.selectAll();
@@ -101,8 +101,8 @@ public with sharing class NKS_FamilyViewController {
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
-        query.hentPerson.foedsel.foedselsaar = true;
-        query.hentPerson.foedsel.foedselsdato = true;
+        query.hentPerson.foedselsdato.foedselsaar = true;
+        query.hentPerson.foedselsdato.foedselsdato = true;
         query.hentPerson.kjoenn.kjoenn = true;
         query.hentPerson.doedsfall.doedsdato = true;
         query.hentPerson.adressebeskyttelse.gradering = true;
@@ -131,6 +131,11 @@ public with sharing class NKS_FamilyViewController {
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
         } else if (objectApiName == 'MessagingSession') {
             personId = [SELECT EndUserAccount.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
+                ?.Account
+                ?.CRM_Person__c;
+        } else if (objectApiName == 'MessagingSession') {
+            personId = [SELECT MessagingEndUser.Account.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
+                ?.MessagingEndUser
                 ?.Account
                 ?.CRM_Person__c;
         }
@@ -448,27 +453,27 @@ public with sharing class NKS_FamilyViewController {
 
     @TestVisible
     private static String getBirthdate(PDL_API_Response response) {
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato == null) {
+        if (foedselsdato[0]?.foedselsdato == null) {
             return null;
         }
-        return formatDate(foedsel[0].foedselsdato);
+        return formatDate(foedselsdato[0].foedselsdato);
     }
 
     @TestVisible
     private static Date getAgeDate(PDL_API_Response response) {
         Date birthDate;
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato != null) {
-            birthDate = foedsel[0].foedselsdato;
-        } else if (foedsel[0]?.foedselsaar != null) {
-            birthDate = Date.newInstance(foedsel[0].foedselsaar, 1, 1);
+        if (foedselsdato[0]?.foedselsdato != null) {
+            birthDate = foedselsdato[0].foedselsdato;
+        } else if (foedselsdato[0]?.foedselsaar != null) {
+            birthDate = Date.newInstance(foedselsdato[0].foedselsaar, 1, 1);
         } else {
             return null;
         }
@@ -598,8 +603,8 @@ public with sharing class NKS_FamilyViewController {
         if (child?.data?.hentPerson?.deltBosted != null && !child.data.hentPerson.deltBosted.isEmpty()) {
             childAddress2 = child.data.hentPerson.deltBosted[0].vegadresse;
         }
-        Boolean childAddress1Match = true;
-        Boolean childAddress2Match = true;
+        Boolean childAddress1Match = (childAddress1 != null);
+        Boolean childAddress2Match = (childAddress2 != null);
 
         childAddress1Match &= (parentAddress.matrikkelId == childAddress1?.matrikkelId);
         childAddress2Match &= (parentAddress.matrikkelId == childAddress2?.matrikkelId);
@@ -640,7 +645,7 @@ public with sharing class NKS_FamilyViewController {
         if (parentAddress == null) {
             return false;
         }
-        Boolean childAddress1Match = true;
+        Boolean childAddress1Match = (child?.INT_ResidentialAddress__c != null);
 
         String parentResidentialAddress = addressCreator(
             new List<String>{ parentAddress.adressenavn, parentAddress.husnummer, parentAddress.husbokstav }
@@ -814,14 +819,14 @@ public with sharing class NKS_FamilyViewController {
     }
 
     private static Date getBirthdayDate(PDL_API_Response response) {
-        List<PDL_Foedsel> foedsel = response.data?.hentPerson?.foedsel;
-        if (foedsel == null || foedsel.isEmpty()) {
+        List<PDL_Foedselsdato> foedselsdato = response.data?.hentPerson?.foedselsdato;
+        if (foedselsdato == null || foedselsdato.isEmpty()) {
             return null;
         }
-        if (foedsel[0]?.foedselsdato == null) {
+        if (foedselsdato[0]?.foedselsdato == null) {
             return null;
         }
-        return foedsel[0].foedselsdato;
+        return foedselsdato[0].foedselsdato;
     }
 
     @TestVisible

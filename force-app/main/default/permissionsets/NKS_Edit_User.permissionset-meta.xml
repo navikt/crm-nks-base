@@ -34,6 +34,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>User.NKS_FA_Fagomrader__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.NKS_FK_Fagomrader__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.NKS_FullNameAlias__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48,11 +58,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>User.NKS_Role__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>User.NKS_UserNameDisplayFLOW__c</field>
         <readable>true</readable>
@@ -61,14 +66,6 @@
         <enabled>true</enabled>
         <flow>NKS_Update_User</flow>
     </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>NKS_Veiledere</flow>
-    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>NKS - Edit User</label>
-    <tabSettings>
-        <tab>NKS_User_administration</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
