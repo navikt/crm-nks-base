@@ -1,0 +1,15 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "MessagingChannel",
+                "referenceId": "MessagingChannelRef1"
+            },
+            "MasterLabel": "TestChannel",
+            "DeveloperName": "TestChannel",
+            "IsActive": true,
+            "MessageType": "Text",
+            "MessagingPlatformKey": "TestChannel"
+        }
+    ]
+}
