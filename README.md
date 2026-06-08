@@ -24,7 +24,7 @@ Pakken er avhengig av følgende pakker:
 
 Det er noen viktige elementer som må sette opp korrekt for at funksjonalitet for NKS skal fungere som den skal.
 
--   Opprettelse av nødvendige delingsregler for Case og LiveChatTranscript for å dele alle records med NKS veiledere
+-   Opprettelse av nødvendige delingsregler for Case og MessagingSession for å dele alle records med NKS veiledere
 -   Assignment til public group **NKS Veiledere**.
     -   Dette er viktig da de nevnte delingsreglene deler all data med medlemmer av denne gruppen såfremt dataen ikke inneholder sensitiv informasjon om sosiale tjenester
 -   Oppdatering av custom setting **Access Token Scope** med riktige scopes for APIene man ønsker å sette opp (f.eks Oppgave, og Dokarkiv)

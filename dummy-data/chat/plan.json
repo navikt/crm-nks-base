@@ -6,7 +6,13 @@
         "files": ["persons.json"]
     },
     {
-        "sobject": "LiveChatVisitor",
+        "sobject": "MessagingChannel",
+        "saveRefs": true,
+        "resolveRefs": true,
+        "files": ["messagingchannels.json"]
+    },
+    {
+        "sobject": "MessagingEndUser",
         "saveRefs": true,
         "resolveRefs": true,
         "files": ["visitors.json"]
@@ -18,16 +24,10 @@
         "files": ["cases.json"]
     },
     {
-        "sobject": "LiveChatTranscript",
+        "sobject": "MessagingSession",
         "saveRefs": true,
         "resolveRefs": true,
         "files": ["chats.json"]
-    },
-    {
-        "sobject": "PushTopic",
-        "saveRefs": true,
-        "resolveRefs": true,
-        "files": ["pushtopics.json"]
     },
     {
         "sobject": "SecurityMeasure__c",

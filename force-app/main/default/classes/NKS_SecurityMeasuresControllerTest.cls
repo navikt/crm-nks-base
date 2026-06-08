@@ -25,16 +25,14 @@ public class NKS_SecurityMeasuresControllerTest {
     static void getSecurityMeasuresRelated() {
         String parentid = [SELECT Id FROM Account LIMIT 1].Id;
 
-        LiveChatTranscript transcript = NKS_TestDataFactory.createLiveChatTranscripts(1)[0];
-        transcript.AccountId = parentId;
-        update transcript;
+        Case testCase = new Case(AccountId = parentId);
+        insert testCase;
 
-        String parentobject = 'Account';
         Test.startTest();
         List<NKS_SecurityMeasuresController.SecurityMeasure> sm = NKS_SecurityMeasuresController.getSecurityMeasures(
-            transcript.Id,
+            testCase.Id,
             'AccountId',
-            'LiveChatTranscript'
+            'Case'
         );
         Test.stopTest();
 
