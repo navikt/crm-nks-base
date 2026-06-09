@@ -968,7 +968,7 @@
             <connector>
                 <targetReference>Create_NKS_Messaging_Access_Permset_Assignment</targetReference>
             </connector>
-            <label>Has not Messagin Permset</label>
+            <label>Has not Messaging Permset</label>
         </rules>
     </decisions>
     <decisions>
