@@ -972,6 +972,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_if_User_has_NKS_Messaging_Permset_delete</name>
+        <label>Check if User has NKS Messaging Permset</label>
+        <locationX>446</locationX>
+        <locationY>14786</locationY>
+        <defaultConnector>
+            <targetReference>Remove_NKS_Messaging_Access_Permset_License_Assignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Remove_NKS_Messaging_Permset_delete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_NKS_Messagin_Permset_Assignment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_NKS_Messaging_Access_Permset_Assignment_delete</targetReference>
+            </connector>
+            <label>Remove NKS Messaging Permset</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_if_User_has_NKS_Messaging_Permset_License</name>
         <label>Check if User has NKS Messaging Permset License</label>
         <locationX>402</locationX>
@@ -1020,7 +1045,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Check_if_User_has_NKS_Messaging_Permset_delete</targetReference>
+                <targetReference>Check_if_User_has_NKS_Messaging_Permset_delete</targetReference>
             </connector>
             <label>Remove NKS Messaging Permset License</label>
         </rules>
@@ -1605,31 +1630,6 @@
                 <targetReference>Assign_Topics_Editor_Value</targetReference>
             </connector>
             <label>Has Topic Editor</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Copy_1_of_Check_if_User_has_NKS_Messaging_Permset_delete</name>
-        <label>Check if User has NKS Messaging Permset</label>
-        <locationX>446</locationX>
-        <locationY>14786</locationY>
-        <defaultConnector>
-            <targetReference>Remove_NKS_Messaging_Access_Permset_License_Assignment</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Copy_1_of_Remove_NKS_Messaging_Permset_delete</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_NKS_Messagin_Permset_Assignment</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_NKS_Messaging_Access_Permset_Assignment_delete</targetReference>
-            </connector>
-            <label>Remove NKS Messaging Permset</label>
         </rules>
     </decisions>
     <decisions>
