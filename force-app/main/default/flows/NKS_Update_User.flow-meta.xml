@@ -1025,7 +1025,7 @@
             <connector>
                 <targetReference>Create_NKS_Messaging_Access_Permset_License_Assignment</targetReference>
             </connector>
-            <label>Has not Messagin Permset License</label>
+            <label>Has not Messaging Permset License</label>
         </rules>
         <rules>
             <name>Remove_NKS_Messaging_Permset_License</name>
