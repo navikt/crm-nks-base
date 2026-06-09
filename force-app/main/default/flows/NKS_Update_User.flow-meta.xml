@@ -2854,7 +2854,7 @@
     </recordLookups>
     <recordLookups>
         <name>Get_NKS_Messagin_Permset_Assignment</name>
-        <label>Get NKS Messagin Permset Assignment</label>
+        <label>Get NKS Messaging Permset Assignment</label>
         <locationX>402</locationX>
         <locationY>14054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
