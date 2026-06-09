@@ -8,7 +8,7 @@
         <actionName>OppgaveManager</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Verify_Task_Post</targetReference>
+            <targetReference>Update_Thread_Theme</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -93,7 +93,7 @@
         <name>Set_Communal_Quick_Text_Label</name>
         <label>Set Communal Quick Text Label</label>
         <locationX>231</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>communalQuickTextLabel</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +109,7 @@
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
         <locationX>231</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +125,7 @@
         <name>Is_communal_quick_text_used</name>
         <label>Is communal quick text used?</label>
         <locationX>231</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_communal_quick_text</name>
@@ -174,7 +174,7 @@
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
         <locationX>429</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
@@ -248,7 +248,7 @@
         <name>Create_reporting_data_for_communal_quick_text</name>
         <label>Create reporting data for communal quick text</label>
         <locationX>99</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <inputAssignments>
             <field>CRM_Category__c</field>
             <value>
@@ -289,13 +289,44 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Thread_Theme</name>
+        <label>Update Thread Theme</label>
+        <locationX>429</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Verify_Task_Post</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>CRM_Theme__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CRM_Theme__c</field>
+            <value>
+                <elementReference>Theme_Categorization.theme</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Thread__c</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
         <locationX>176</locationX>
-        <locationY>1574</locationY>
+        <locationY>1682</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -633,7 +664,7 @@
         <name>Publish_Oppgave_created_LMS_event</name>
         <label>Publish Oppgave created LMS event</label>
         <locationX>231</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
