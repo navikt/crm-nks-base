@@ -6,14 +6,16 @@ import CONVERSATION_NOTE_OBJECT from '@salesforce/schema/Conversation_Note__c';
 import CHANGE_USER_LABEL from '@salesforce/label/c.NKS_Change_User';
 import CREATE_TASK_LABEL from '@salesforce/label/c.NKS_Create_NAV_Task';
 import { publishToAmplitude } from 'c/amplitude';
-import { handleShowNotifications, getOutputVariableValue } from 'c/nksComponentsUtils';
+import {
+    handleShowNotifications,
+    getOutputVariableValue,
+    addSuccessNotification,
+    addErrorNotification
+} from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
-import invokeSendNavTaskFlow from '@salesforce/apex/NKS_SendNavTaskHandler.invokeSendNavTaskFlow';
-import getProcessingId from '@salesforce/apex/NKS_SendNavTaskHandler.getProcessingId';
-import getNavUnitInfo from '@salesforce/apex/NKS_SendNavTaskHandler.getNavUnitInfo';
-import getCommonCodeName from '@salesforce/apex/NKS_ButtonContainerController.getCommonCodeName';
+import postOppgave from '@salesforce/apex/OppgaveManager.postTask';
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
@@ -98,6 +100,12 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
+
+        if (status === 'STARTED') {
+            this.notificationBoxTemplate?.clearNotificationsByVariant('error');
+            return;
+        }
+
         this.handleShowButtons(outputVariables);
 
         if (
@@ -107,7 +115,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             publishToAmplitude('Conversation Note Created');
             refreshApex(this._wiredRecord);
             handleShowNotifications('journal_conversation', outputVariables, this.notificationBoxTemplate, true);
-            this.handleSendingNavTasks('navTasks', outputVariables);
+            this.handleSendingNavTasks(outputVariables);
         }
     }
 
@@ -133,7 +141,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             this.conversationNoteSubscription = subscribe(
                 this.messageContext,
                 CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL,
-                (message) => this.handleMessage(message),
+                (message) => this.handleMessageFromLMSChannel(message),
                 { scope: APPLICATION_SCOPE }
             );
         }
@@ -142,7 +150,7 @@ export default class NksConversationNoteDetails extends LightningElement {
             this.buttonContainerSubscription = subscribe(
                 this.messageContext,
                 BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL,
-                (message) => this.handleMessage(message),
+                (message) => this.handleMessageFromLMSChannel(message),
                 { scope: APPLICATION_SCOPE }
             );
         }
@@ -160,72 +168,50 @@ export default class NksConversationNoteDetails extends LightningElement {
         }
     }
 
-    handleMessage(message) {
+    handleMessageFromLMSChannel(message) {
         if (this.recordId === message.recordId) {
+            const navTaskOutput = getOutputVariableValue(message.outputVariables, 'navTaskOutput');
+            if (navTaskOutput) {
+                this.navTasks.push(navTaskOutput);
+            }
             handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate);
         }
     }
 
-    async handleSendingNavTasks(variableName, outputVariables) {
+    async handleSendingNavTasks(outputVariables) {
         try {
-            this.getNavTasks(variableName, outputVariables);
-            await this.updateNavTasks();
-            this.sendNavTasks();
+            const behandlingskjedeId = getOutputVariableValue(outputVariables, 'CONV_NOTE_API_REFERENCE') ?? null;
+            this.sendNavTasks(behandlingskjedeId);
         } catch (error) {
             console.error('Problem handling navTasks:', JSON.stringify(error));
         }
     }
 
-    getNavTasks(variableName, outputVariables) {
-        const variable = outputVariables.find((element) => element.name === variableName && element.value !== null);
-
-        if (variable) {
-            if (Array.isArray(variable.value)) {
-                this.navTasks = variable.value;
-            } else {
-                console.warn('Expected an array but found a different type:', typeof variable.value);
-            }
-        } else {
-            console.error('Variable not found or value is null:', variableName);
-        }
-    }
-
-    async updateNavTasks() {
-        try {
-            const processingId = await getProcessingId({ recordId: this.recordId });
-            const updatedNavTasks = this.navTasks.map((item) => ({
-                ...item,
-                NKS_Henvendelse_BehandlingsId__c: processingId
-            }));
-            this.navTasks = updatedNavTasks;
-        } catch (error) {
-            console.error('Error updating navTasks:', error);
-        }
-    }
-
-    sendNavTasks() {
+    sendNavTasks(behandlingskjedeId) {
         this.notificationBoxTemplate.filterNotification('Oppgaven er lagret');
+        const tasksToSend = [...this.navTasks];
+        this.navTasks = [];
 
-        this.navTasks.forEach((navTask) => {
-            invokeSendNavTaskFlow({ navTask })
+        tasksToSend.forEach((navTask) => {
+            const request = behandlingskjedeId ? { ...navTask, eksternHenvendelseId: behandlingskjedeId } : navTask;
+            postOppgave({ request })
                 .then((result) => {
-                    if (result) {
-                        getNavUnitInfo({ navUnitId: navTask.CRM_NavUnit__c }).then((unitInfo) => {
-                            if (unitInfo) {
-                                getCommonCodeName({ id: navTask.NKS_Theme__c }).then((theme) => {
-                                    if (theme) {
-                                        const unitNumber = unitInfo.INT_UnitNumber__c;
-                                        const unitName = unitInfo.Name;
-                                        const optionalText = `${theme}\xa0\xa0\xa0\xa0\xa0Sendt til: ${unitNumber} ${unitName}`;
-                                        this.notificationBoxTemplate.addNotification('Oppgave opprettet', optionalText);
-                                    }
-                                });
-                            }
-                        });
+                    if (result?.isSuccess) {
+                        const optionalText = `${navTask.tema ?? ''}\xa0\xa0\xa0\xa0\xa0Sendt til: ${navTask.tildeltEnhetsnr ?? ''}`;
+                        addSuccessNotification(this.notificationBoxTemplate, 'Oppgave opprettet', optionalText);
+                    } else if (result && !result.isSuccess) {
+                        const text = result.isRetry
+                            ? 'Oppgaveopprettelse feilet. Oppgaven vil bli automatisk opprettet på et senere tidspunkt.'
+                            : 'Oppgaveopprettelse feilet.';
+                        addErrorNotification(this.notificationBoxTemplate, text, result.errorMessage);
                     }
                 })
                 .catch((error) => {
-                    console.error('Problem sending NAV Task:', error);
+                    addErrorNotification(
+                        this.notificationBoxTemplate,
+                        'Oppgaveopprettelse feilet.',
+                        error?.body?.message ?? error?.message
+                    );
                 });
         });
     }

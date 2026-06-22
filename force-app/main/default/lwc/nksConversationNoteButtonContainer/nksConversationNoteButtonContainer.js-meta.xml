@@ -17,7 +17,7 @@
                 type="Boolean" role="outputOnly" />
             <property name="showBackButton" label="Show back button"
                 type="Boolean" role="inputOnly" default="false" />
-            <property name="navTasks" label="NAV Tasks" type="@salesforce/schema/NavTask__c[]"
+            <property name="navTasks" label="NAV Tasks" type="apex://OppgaveRequest[]"
                 role="outputOnly" />
         </targetConfig>
     </targetConfigs>
