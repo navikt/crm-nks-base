@@ -12,18 +12,30 @@
                 </h3>
             </div>
             <div class="slds-col slds-large-size_9-of-12">
-                <c-timeline-filter
-                    lwc:if={filterIsActive}
-                    filter-properties={filterProperties}
-                    is-grouped={isGrouped}
-                    picklist-filter-1-label={picklistFilter1Label}
-                    picklist-filter-2-label={picklistFilter2Label}
-                    show-hide-label={showHideLabel}
-                    hide-my-activities-filter="true"
-                    onfilterchange={handleFilter}
-                    log-event={logEvent}
-                    design="Slick"
-                ></c-timeline-filter>
+                <div class="slds-grid slds-grid_align-end slds-grid_vertical-align-center">
+                    <c-timeline-filter
+                        lwc:if={filterIsActive}
+                        filter-properties={filterProperties}
+                        is-grouped={isGrouped}
+                        picklist-filter-1-label={picklistFilter1Label}
+                        picklist-filter-2-label={picklistFilter2Label}
+                        show-hide-label={showHideLabel}
+                        hide-my-activities-filter="true"
+                        onfilterchange={handleFilter}
+                        log-event={logEvent}
+                        design="Slick"
+                    ></c-timeline-filter>
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        variant="border-filled"
+                        alternative-text="Refresh"
+                        title="Refresh"
+                        aria-label="Refresh"
+                        disabled={loading}
+                        onclick={refreshData}
+                        class="slds-m-left_small slds-p-top_large"
+                    ></lightning-button-icon>
+                </div>
             </div>
         </div>
         <div lwc:if={loading} class="slds-scrollable" style={loadingStyle}>

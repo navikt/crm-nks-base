@@ -2,36 +2,42 @@
     "records": [
         {
             "attributes": {
-                "type": "LiveChatTranscript",
-                "referenceId": "ChatTranscriptRef1"
+                "type": "MessagingSession",
+                "referenceId": "MessagingSessionRef1"
             },
-            "LiveChatVisitorId": "@VisitorRef1",
+            "MessagingEndUserId": "@MessagingEndUserRef1",
+            "MessagingChannelId": "@MessagingChannelRef1",
             "CRM_Authentication_Status__c": "Completed",
-            "Body": "<p>Dette er en chat</p>",
             "NKS_Conversation__c": "<p>Dette er en chat</p>",
-            "CaseId": "@CaseRef1"
+            "CaseId": "@CaseRef1",
+            "Status": "Ended",
+            "EndTime": "2025-01-01T12:00:00.000Z"
         },
         {
             "attributes": {
-                "type": "LiveChatTranscript",
-                "referenceId": "ChatTranscriptRef2"
+                "type": "MessagingSession",
+                "referenceId": "MessagingSessionRef2"
             },
-            "LiveChatVisitorId": "@VisitorRef1",
+            "MessagingEndUserId": "@MessagingEndUserRef1",
+            "MessagingChannelId": "@MessagingChannelRef1",
             "CRM_Authentication_Status__c": "Completed",
-            "Body": "<p>Dette er en chat</p>",
             "NKS_Conversation__c": "<p>Dette er en chat</p>",
-            "CaseId": "@CaseRef1"
+            "CaseId": "@CaseRef1",
+            "Status": "Ended",
+            "EndTime": "2025-01-01T12:00:00.000Z"
         },
         {
             "attributes": {
-                "type": "LiveChatTranscript",
-                "referenceId": "ChatTranscriptRef3"
+                "type": "MessagingSession",
+                "referenceId": "MessagingSessionRef3"
             },
-            "LiveChatVisitorId": "@VisitorRef1",
+            "MessagingEndUserId": "@MessagingEndUserRef1",
+            "MessagingChannelId": "@MessagingChannelRef1",
             "CRM_Authentication_Status__c": "Completed",
-            "Body": "<p>Dette er en chat</p>",
             "NKS_Conversation__c": "<p>Dette er en chat</p>",
-            "CaseId": "@CaseRef1"
+            "CaseId": "@CaseRef1",
+            "Status": "Ended",
+            "EndTime": "2025-01-01T12:00:00.000Z"
         }
     ]
 }

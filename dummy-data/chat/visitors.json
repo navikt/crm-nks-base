@@ -2,9 +2,13 @@
     "records": [
         {
             "attributes": {
-                "type": "LiveChatVisitor",
-                "referenceId": "VisitorRef1"
-            }
+                "type": "MessagingEndUser",
+                "referenceId": "MessagingEndUserRef1"
+            },
+            "Name": "Messaging User",
+            "MessagingChannelId": "@MessagingChannelRef1",
+            "MessageType": "EmbeddedMessaging",
+            "MessagingPlatformKey": "TestChannel"
         }
     ]
 }

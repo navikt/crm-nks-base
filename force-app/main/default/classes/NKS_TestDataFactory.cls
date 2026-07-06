@@ -90,6 +90,43 @@ public without sharing class NKS_TestDataFactory {
         return liveChatTranscripts;
     }
 
+    public static List<MessagingSession> createMessagingSessions(Integer amount, Id accountId) {
+        User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        List<MessagingSession> sessions = new List<MessagingSession>();
+        System.runAs(thisUser) {
+            MessagingChannel msgChannel = new MessagingChannel(
+                MasterLabel = 'TestChannel',
+                DeveloperName = 'TestChannel',
+                IsActive = true,
+                MessageType = 'Text',
+                MessagingPlatformKey = 'TestChannel'
+            );
+            insert msgChannel;
+
+            MessagingEndUser endUser = new MessagingEndUser(
+                Name = 'Test End User',
+                MessagingChannelId = msgChannel.Id,
+                MessageType = 'EmbeddedMessaging',
+                MessagingPlatformKey = 'TestChannel',
+                AccountId = accountId
+            );
+            insert endUser;
+
+            for (Integer i = 0; i < amount; i++) {
+                sessions.add(
+                    new MessagingSession(
+                        MessagingEndUserId = endUser.Id,
+                        MessagingChannelId = msgChannel.Id,
+                        Status = 'Ended',
+                        EndTime = Datetime.now()
+                    )
+                );
+            }
+            insert sessions;
+        }
+        return sessions;
+    }
+
     public static List<NavUnit__c> createNavUnits(Integer amount) {
         Group queue = new Group();
         System.runAs(new User(Id = UserInfo.getUserId())) {

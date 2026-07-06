@@ -181,10 +181,6 @@ public with sharing class NKS_AddressController {
             personId = [SELECT Account.CRM_Person__c FROM Case WHERE Id = :recordId]?.Account?.CRM_Person__c;
         } else if (objectApiName == 'Account') {
             personId = [SELECT CRM_Person__c FROM Account WHERE Id = :recordId]?.CRM_Person__c;
-        } else if (objectApiName == 'LiveChatTranscript') {
-            personId = [SELECT Account.CRM_Person__c FROM LiveChatTranscript WHERE Id = :recordId]
-                ?.Account
-                ?.CRM_Person__c;
         } else if (objectApiName == 'MessagingSession') {
             personId = [SELECT MessagingEndUser.Account.CRM_Person__c FROM MessagingSession WHERE Id = :recordId]
                 ?.MessagingEndUser
