@@ -10,7 +10,7 @@ public with sharing class NKS_TimelineController {
 
         String threadQuery =
             'SELECT Id, Name, CreatedDate, CRM_Latest_Message_Datetime__c, CRM_Journal_Status_Formula__c, CRM_Thread_Type__c, ' +
-            'CRM_Conversation_Summary__c, CRM_Timeline_Icon__c, STO_Timeline_Name__c, CRM_Timeline_Status__c, CRM_Journal_Status_Formula_Icons__c, CRM_Theme_Group_Name__c ' +
+            'CRM_Conversation_Summary__c, CRM_Timeline_Icon__c, STO_Timeline_Name__c, CRM_Timeline_Status__c, CRM_Journal_Status_Formula_Icons__c, CRM_Theme_Group_Name__c, CRM_Journal_Case_Reference__c ' +
             'FROM Thread__c ' +
             'WHERE CRM_Account__c = :recordId ' +
             'ORDER BY CRM_Latest_Message_Datetime__c DESC NULLS LAST ' +
@@ -21,7 +21,7 @@ public with sharing class NKS_TimelineController {
         }
 
         String noteQuery =
-            'SELECT Id, Name, CreatedDate, CRM_Date_Time_Registered__c, CRM_Conversation_Note__c, CRM_Created_By_Ident__c, NKS_Timeline_Name__c, CRM_Journal_Status_Formula_Icons__c, CRM_Theme_Group_Name__c ' +
+            'SELECT Id, Name, CreatedDate, CRM_Date_Time_Registered__c, CRM_Conversation_Note__c, CRM_Created_By_Ident__c, NKS_Timeline_Name__c, CRM_Journal_Status_Formula_Icons__c, CRM_Theme_Group_Name__c, CRM_Journal_Case_Reference__c ' +
             'FROM Conversation_Note__c ' +
             'WHERE CRM_Account__c = :recordId ' +
             'ORDER BY CRM_Date_Time_Registered__c DESC NULLS LAST ' +
@@ -311,10 +311,17 @@ public with sharing class NKS_TimelineController {
             this.sObjectType = 'Thread__c';
             this.sObjectLabel = 'Thread';
             Datetime latestMessageDate = (Datetime) obj.get('CRM_Latest_Message_Datetime__c');
+            String journalStatus = (String) obj.get('CRM_Journal_Status_Formula_Icons__c');
+            String caseReference = (String) obj.get('CRM_Journal_Case_Reference__c');
+
+            if (String.isNotBlank(caseReference)) {
+                journalStatus += '\u00A0\u00A0\u00A0' + caseReference;
+            }
+
             this.headers.add(new Header((String) obj.get('STO_Timeline_Name__c'), true));
             this.headers.add(new Header((String) obj.get('CRM_Timeline_Status__c'), true));
             this.headers.add(new Header(latestMessageDate, false));
-            this.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
+            this.headers.add(new Header(journalStatus, true));
             this.dateValue = latestMessageDate != null ? latestMessageDate : (Datetime) obj.get('CreatedDate');
             String iconValue = (String) obj.get('CRM_Timeline_Icon__c');
             this.icon = String.isNotBlank(iconValue) ? iconValue : 'standard:messaging_user';
@@ -333,9 +340,16 @@ public with sharing class NKS_TimelineController {
             this.sObjectType = 'Conversation_Note__c';
             this.sObjectLabel = 'Conversation Note';
             Datetime registeredDate = (Datetime) obj.get('CRM_Date_Time_Registered__c');
+            String journalStatus = (String) obj.get('CRM_Journal_Status_Formula_Icons__c');
+            String caseReference = (String) obj.get('CRM_Journal_Case_Reference__c');
+
+            if (String.isNotBlank(caseReference)) {
+                journalStatus += '\u00A0\u00A0\u00A0' + caseReference;
+            }
+
             this.headers.add(new Header((String) obj.get('NKS_Timeline_Name__c'), true));
             this.headers.add(new Header(registeredDate, false));
-            this.headers.add(new Header((String) obj.get('CRM_Journal_Status_Formula_Icons__c'), true));
+            this.headers.add(new Header(journalStatus, true));
             this.dateValue = registeredDate != null ? registeredDate : (Datetime) obj.get('CreatedDate');
             this.icon = 'standard:voice_call';
             this.color = '7D7D7D';

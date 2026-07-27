@@ -57,7 +57,7 @@
                 },
                 {
                     "package": "crm-henvendelse-base",
-                    "versionNumber": "0.36.0.LATEST"
+                    "versionNumber": "0.38.0.LATEST"
                 },
                 {
                     "package": "crm-platform-integration",
@@ -69,7 +69,7 @@
                 },
                 {
                     "package": "crm-journal-utilities",
-                    "versionNumber": "0.45.0.LATEST"
+                    "versionNumber": "0.55.0.LATEST"
                 },
                 {
                     "package": "crm-platform-oppgave",
@@ -85,7 +85,7 @@
                 },
                 {
                     "package": "crm-henvendelse",
-                    "versionNumber": "0.189.0.LATEST"
+                    "versionNumber": "0.205.0.LATEST"
                 },
                 {
                     "package": "crm-sf-saf",
