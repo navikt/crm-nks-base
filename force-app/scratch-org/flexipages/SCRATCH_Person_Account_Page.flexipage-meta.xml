@@ -65,7 +65,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>amountOfMonths</name>
-                    <value>3</value>
+                    <value>5</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>amountOfMonthsToLoad</name>
@@ -77,7 +77,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>amountOfRecords</name>
-                    <value>5</value>
+                    <value>3</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>amountOfRecordsToLoad</name>
@@ -88,20 +88,8 @@
                     <value>1</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>buttonIsHidden</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>configId</name>
-                    <value>NKS_PERSON_V2</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>customEmptySubtitle</name>
                     <value>Denne brukeren har ingen registrerte henvendelser.‎</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>design</name>
-                    <value>Slick</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>filterIsActive</name>
@@ -117,19 +105,19 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>headerTitleNorwegian</name>
-                    <value>Henvendelser‎</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>hideMyActivitiesFilter</name>
-                    <value>true</value>
+                    <value>Henvendelser</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>includeAmountInTitle</name>
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>initialQueryLimit</name>
+                    <value>5</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>logEvent</name>
-                    <value>true</value>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>picklistFilter1Label</name>
@@ -146,8 +134,8 @@
                     <name>timelineParentField</name>
                     <value>Id</value>
                 </componentInstanceProperties>
-                <componentName>timeline</componentName>
-                <identifier>c_timeline</identifier>
+                <componentName>nksTimeline</componentName>
+                <identifier>c_nksTimeline</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
