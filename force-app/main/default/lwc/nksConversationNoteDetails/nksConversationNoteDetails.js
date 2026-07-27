@@ -15,7 +15,7 @@ import {
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
 import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
-import postOppgave from '@salesforce/apex/OppgaveManager.postTask';
+import postOppgave from '@salesforce/apex/OppgaveManager.postTaskFromLwc';
 
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
@@ -171,6 +171,7 @@ export default class NksConversationNoteDetails extends LightningElement {
     handleMessageFromLMSChannel(message) {
         if (this.recordId === message.recordId) {
             const navTaskOutput = getOutputVariableValue(message.outputVariables, 'navTaskOutput');
+            console.log('Oppgave from flow: ', navTaskOutput);
             if (navTaskOutput) {
                 this.navTasks.push(navTaskOutput);
             }
@@ -193,8 +194,9 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.navTasks = [];
 
         tasksToSend.forEach((navTask) => {
-            const request = behandlingskjedeId ? { ...navTask, eksternHenvendelseId: behandlingskjedeId } : navTask;
-            postOppgave({ request })
+            const rawRequest = behandlingskjedeId ? { ...navTask, eksternHenvendelseId: behandlingskjedeId } : navTask;
+            const requestJson = JSON.stringify(rawRequest);
+            postOppgave({ requestJson })
                 .then((result) => {
                     if (result?.isSuccess) {
                         const optionalText = `${navTask.tema ?? ''}\xa0\xa0\xa0\xa0\xa0Sendt til: ${navTask.tildeltEnhetsnr ?? ''}`;
