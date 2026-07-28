@@ -171,7 +171,6 @@ export default class NksConversationNoteDetails extends LightningElement {
     handleMessageFromLMSChannel(message) {
         if (this.recordId === message.recordId) {
             const navTaskOutput = getOutputVariableValue(message.outputVariables, 'navTaskOutput');
-            console.log('Oppgave from flow: ', navTaskOutput);
             if (navTaskOutput) {
                 this.navTasks.push(navTaskOutput);
             }
