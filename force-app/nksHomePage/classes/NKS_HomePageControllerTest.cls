@@ -144,21 +144,6 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
-    static void testGetUserSkills() {
-        //User testUser = [SELECT Id FROM User WHERE IsActive = TRUE LIMIT 1];
-        List<String> testSkills;
-        Test.startTest();
-        testSkills = NKS_HomePageController.getUserSkills();
-        Test.stopTest();
-
-        if (testSkills.size() > 0) {
-            Assert.areNotEqual(0, testSkills.size());
-        } else {
-            Assert.areEqual(0, testSkills.size());
-        }
-    }
-
-    @isTest
     static void testGetCampaign() {
         Test.startTest();
         NKS_Announcement__c testCampaign = NKS_HomePageController.getCampaign();
