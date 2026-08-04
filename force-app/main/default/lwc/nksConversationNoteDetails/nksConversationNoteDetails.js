@@ -101,12 +101,12 @@ export default class NksConversationNoteDetails extends LightningElement {
     handleStatusChange(event) {
         const { status, outputVariables } = event.detail;
 
+        this.handleShowButtons(outputVariables);
+
         if (status === 'STARTED') {
             this.notificationBoxTemplate?.clearNotificationsByVariant('error');
             return;
         }
-
-        this.handleShowButtons(outputVariables);
 
         if (
             status === 'FINISHED' &&
