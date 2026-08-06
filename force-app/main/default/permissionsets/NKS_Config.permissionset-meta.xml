@@ -377,6 +377,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ReportingData__c.NKS_Messaging_Session__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ReportingData__c.STO_Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
