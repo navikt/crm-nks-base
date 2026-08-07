@@ -401,7 +401,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Scheduled_Request__c.Payload__c</field>
         <readable>true</readable>
     </fieldPermissions>
