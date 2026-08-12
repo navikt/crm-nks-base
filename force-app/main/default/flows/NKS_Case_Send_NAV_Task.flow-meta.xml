@@ -5,7 +5,7 @@
     <assignments>
         <name>Assign_OppgaveRequest</name>
         <label>Assign OppgaveRequest</label>
-        <locationX>429</locationX>
+        <locationX>446</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>navTaskOutput.aktoerId</assignToReference>
@@ -98,8 +98,8 @@
     <assignments>
         <name>Set_Communal_Quick_Text_Label</name>
         <label>Set Communal Quick Text Label</label>
-        <locationX>231</locationX>
-        <locationY>998</locationY>
+        <locationX>446</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>communalQuickTextLabel</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +114,8 @@
     <assignments>
         <name>Set_Publish_Notification_To_True</name>
         <label>Set Publish Notification To True</label>
-        <locationX>231</locationX>
-        <locationY>782</locationY>
+        <locationX>446</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Publish_Notification</assignToReference>
             <operator>Assign</operator>
@@ -130,8 +130,8 @@
     <decisions>
         <name>Is_communal_quick_text_used</name>
         <label>Is communal quick text used?</label>
-        <locationX>231</locationX>
-        <locationY>1106</locationY>
+        <locationX>446</locationX>
+        <locationY>998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_communal_quick_text</name>
@@ -153,7 +153,7 @@
         <description>Check if the case is related to an account before allowing to create task.</description>
         <name>Validate_Account</name>
         <label>Validate Account</label>
-        <locationX>176</locationX>
+        <locationX>248</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>NAV_Task_Input_Screen</targetReference>
@@ -227,8 +227,8 @@
     <recordCreates>
         <name>Create_reporting_data_for_communal_quick_text</name>
         <label>Create reporting data for communal quick text</label>
-        <locationX>99</locationX>
-        <locationY>1214</locationY>
+        <locationX>314</locationX>
+        <locationY>1106</locationY>
         <inputAssignments>
             <field>CRM_Category__c</field>
             <value>
@@ -248,7 +248,7 @@
         <description>Query information needed from the Case and its relations.</description>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>176</locationX>
+        <locationX>248</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -272,7 +272,7 @@
     <recordUpdates>
         <name>Update_Thread_Theme</name>
         <label>Update Thread Theme</label>
-        <locationX>429</locationX>
+        <locationX>446</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Set_Publish_Notification_To_True</targetReference>
@@ -305,8 +305,8 @@
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>176</locationX>
-        <locationY>1682</locationY>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -357,7 +357,7 @@
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>429</locationX>
+        <locationX>446</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -583,8 +583,8 @@
     <screens>
         <name>Publish_Oppgave_created_LMS_event</name>
         <label>Publish Oppgave created LMS event</label>
-        <locationX>231</locationX>
-        <locationY>890</locationY>
+        <locationX>446</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -623,7 +623,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -633,7 +633,7 @@
     <subflows>
         <name>Create_App_Log</name>
         <label>Create App Log</label>
-        <locationX>803</locationX>
+        <locationX>842</locationX>
         <locationY>242</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -708,6 +708,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>Theme_Categorization.theme</elementReference>
+        </value>
     </variables>
     <variables>
         <name>Selected_Unit_Name</name>
