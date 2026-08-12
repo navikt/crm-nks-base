@@ -10,7 +10,8 @@ import {
     handleShowNotifications,
     getOutputVariableValue,
     addSuccessNotification,
-    addErrorNotification
+    addErrorNotification,
+    callGetCommonCode
 } from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
@@ -168,12 +169,15 @@ export default class NksConversationNoteDetails extends LightningElement {
         }
     }
 
-    handleMessageFromLMSChannel(message) {
+    async handleMessageFromLMSChannel(message) {
         if (this.recordId === message.recordId) {
             const navTaskOutput = getOutputVariableValue(message.outputVariables, 'navTaskOutput');
             if (navTaskOutput) {
                 const selectedUnitName = getOutputVariableValue(message.outputVariables, 'Selected_Unit_Name');
-                this.navTasks.push({ ...navTaskOutput, selectedUnitName });
+                const selectedThemeId = getOutputVariableValue(message.outputVariables, 'Selected_Theme_SF_Id');
+                const selectedThemeName = selectedThemeId ? await callGetCommonCode(selectedThemeId) : '';
+
+                this.navTasks.push({ ...navTaskOutput, selectedUnitName, selectedThemeName });
             }
             handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate);
         }
@@ -194,7 +198,7 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.navTasks = [];
 
         tasksToSend.forEach((navTask) => {
-            const { selectedUnitName, ...taskFields } = navTask;
+            const { selectedUnitName, selectedThemeName, ...taskFields } = navTask;
             const rawRequest = behandlingskjedeId
                 ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
                 : taskFields;
@@ -203,7 +207,7 @@ export default class NksConversationNoteDetails extends LightningElement {
                 .then((result) => {
                     if (result?.isSuccess) {
                         const unitText = `${navTask.tildeltEnhetsnr ?? ''}${navTask.selectedUnitName ? ` ${navTask.selectedUnitName}` : ''}`;
-                        const optionalText = `${navTask.tema ? `${navTask.tema}\xa0\xa0\xa0\xa0\xa0` : ''}Sendt til: ${unitText}`;
+                        const optionalText = `${navTask.selectedThemeName ? `${navTask.selectedThemeName}\xa0\xa0\xa0\xa0\xa0` : ''}Sendt til: ${unitText}`;
                         addSuccessNotification(this.notificationBoxTemplate, 'Oppgave opprettet', optionalText);
                     } else if (result && !result.isSuccess) {
                         const text = result.isRetry
