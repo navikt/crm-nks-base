@@ -172,7 +172,8 @@ export default class NksConversationNoteDetails extends LightningElement {
         if (this.recordId === message.recordId) {
             const navTaskOutput = getOutputVariableValue(message.outputVariables, 'navTaskOutput');
             if (navTaskOutput) {
-                this.navTasks.push(navTaskOutput);
+                const selectedUnitName = getOutputVariableValue(message.outputVariables, 'Selected_Unit_Name');
+                this.navTasks.push({ ...navTaskOutput, selectedUnitName });
             }
             handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate);
         }
@@ -193,12 +194,16 @@ export default class NksConversationNoteDetails extends LightningElement {
         this.navTasks = [];
 
         tasksToSend.forEach((navTask) => {
-            const rawRequest = behandlingskjedeId ? { ...navTask, eksternHenvendelseId: behandlingskjedeId } : navTask;
+            const { selectedUnitName, ...taskFields } = navTask;
+            const rawRequest = behandlingskjedeId
+                ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
+                : taskFields;
             const requestJson = JSON.stringify(rawRequest);
             postOppgave({ requestJson })
                 .then((result) => {
                     if (result?.isSuccess) {
-                        const optionalText = `${navTask.tema ?? ''}\xa0\xa0\xa0\xa0\xa0Sendt til: ${navTask.tildeltEnhetsnr ?? ''}`;
+                        const unitText = `${navTask.tildeltEnhetsnr ?? ''}${navTask.selectedUnitName ? ` ${navTask.selectedUnitName}` : ''}`;
+                        const optionalText = `${navTask.tema ? `${navTask.tema}\xa0\xa0\xa0\xa0\xa0` : ''}Sendt til: ${unitText}`;
                         addSuccessNotification(this.notificationBoxTemplate, 'Oppgave opprettet', optionalText);
                     } else if (result && !result.isSuccess) {
                         const text = result.isRetry
