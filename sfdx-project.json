@@ -29,7 +29,7 @@
                 },
                 {
                     "package": "crm-platform-base",
-                    "versionNumber": "0.304.0.LATEST"
+                    "versionNumber": "0.308.0.LATEST"
                 },
                 {
                     "package": "crm-platform-reporting",
@@ -61,7 +61,7 @@
                 },
                 {
                     "package": "crm-platform-integration",
-                    "versionNumber": "0.170.0.LATEST"
+                    "versionNumber": "0.173.0.LATEST"
                 },
                 {
                     "package": "crm-shared-user-notification",
@@ -89,7 +89,7 @@
                 },
                 {
                     "package": "crm-sf-saf",
-                    "versionNumber": "0.34.0.LATEST"
+                    "versionNumber": "0.42.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
