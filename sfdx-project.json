@@ -89,11 +89,11 @@
                 },
                 {
                     "package": "crm-sf-saf",
-                    "versionNumber": "0.34.0.LATEST"
+                    "versionNumber": "0.42.0.LATEST"
                 },
                 {
                     "package": "crm-nks-integration",
-                    "versionNumber": "0.114.0.LATEST"
+                    "versionNumber": "0.137.0.LATEST"
                 },
                 {
                     "package": "crm-nks-base-components",
