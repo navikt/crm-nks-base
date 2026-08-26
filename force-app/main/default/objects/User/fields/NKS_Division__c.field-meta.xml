@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NKS_Division__c</fullName>
     <externalId>false</externalId>
@@ -9,7 +9,22 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>K00A01 Trafikk</fullName>
+                <default>false</default>
+                <label>K00A01 Trafikk</label>
+            </value>
+            <value>
+                <fullName>K00A02 Fag og kvalitet</fullName>
+                <default>false</default>
+                <label>K00A02 Fag og kvalitet</label>
+            </value>
+            <value>
+                <fullName>K01A00 Ledere</fullName>
+                <default>false</default>
+                <label>K01A00 Ledere</label>
+            </value>
             <value>
                 <fullName>K01A01 Sarpsborg Avdeling 1</fullName>
                 <default>false</default>
@@ -29,6 +44,11 @@
                 <fullName>K01A04 Sarpsborg Avdeling 4</fullName>
                 <default>false</default>
                 <label>K01A04 Sarpsborg Avdeling 4</label>
+            </value>
+            <value>
+                <fullName>K05A00 Ledere</fullName>
+                <default>false</default>
+                <label>K05A00 Ledere</label>
             </value>
             <value>
                 <fullName>K05A01 Lillehammer Avdeling 1</fullName>
@@ -59,6 +79,11 @@
                 <fullName>K05A06 Hamar Avdeling 6</fullName>
                 <default>false</default>
                 <label>K05A06 Hamar Avdeling 6</label>
+            </value>
+            <value>
+                <fullName>K06A00 Ledere</fullName>
+                <default>false</default>
+                <label>K06A00 Ledere</label>
             </value>
             <value>
                 <fullName>K06A01 Drammen Ypsilon</fullName>
@@ -121,6 +146,11 @@
                 <label>K06A12 Økern Vippa</label>
             </value>
             <value>
+                <fullName>K07A00 Ledere</fullName>
+                <default>false</default>
+                <label>K07A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K07A01 Tønsberg Bjørkøya</fullName>
                 <default>false</default>
                 <label>K07A01 Tønsberg Bjørkøya</label>
@@ -156,6 +186,16 @@
                 <label>K08A02 Skien Rosa</label>
             </value>
             <value>
+                <fullName>K09A00 Ledere</fullName>
+                <default>false</default>
+                <label>K09A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K10A00 Ledere</fullName>
+                <default>false</default>
+                <label>K10A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K10A01 Mandal Oksøy</fullName>
                 <default>false</default>
                 <label>K10A01 Mandal Oksøy</label>
@@ -179,6 +219,11 @@
                 <fullName>K10A05 Arendal Lyngør</fullName>
                 <default>false</default>
                 <label>K10A05 Arendal Lyngør</label>
+            </value>
+            <value>
+                <fullName>K11A00 Ledere</fullName>
+                <default>false</default>
+                <label>K11A00 Ledere</label>
             </value>
             <value>
                 <fullName>K11A01 Sandnes Grønt</fullName>
@@ -216,9 +261,19 @@
                 <label>K11A07 Sandnes Indigo</label>
             </value>
             <value>
+                <fullName>K12A00 Ledere</fullName>
+                <default>false</default>
+                <label>K12A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K12A01 Bergen Beffen</fullName>
                 <default>false</default>
                 <label>K12A01 Bergen Beffen</label>
+            </value>
+            <value>
+                <fullName>K12A01 Bryggen</fullName>
+                <default>false</default>
+                <label>K12A01 Bryggen</label>
             </value>
             <value>
                 <fullName>K12A02 Bergen Stoltzen</fullName>
@@ -244,6 +299,11 @@
                 <fullName>K12A06 Bergen Team Nakstad</fullName>
                 <default>false</default>
                 <label>K12A06 Bergen Team Nakstad</label>
+            </value>
+            <value>
+                <fullName>K14A00 Ledere</fullName>
+                <default>false</default>
+                <label>K14A00 Ledere</label>
             </value>
             <value>
                 <fullName>K14A01 Leikanger Avdeling 1</fullName>
@@ -276,6 +336,16 @@
                 <label>K14A06 Leikanger Avdeling 6</label>
             </value>
             <value>
+                <fullName>K15A00 Ledere</fullName>
+                <default>false</default>
+                <label>K15A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K16A00 Ledere</fullName>
+                <default>false</default>
+                <label>K16A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K16A01 Trondheim Avdeling 1</fullName>
                 <default>false</default>
                 <label>K16A01 Trondheim Avdeling 1</label>
@@ -306,6 +376,16 @@
                 <label>K16A06 Namsos Avdeling 6</label>
             </value>
             <value>
+                <fullName>K17A00 Ledere</fullName>
+                <default>false</default>
+                <label>K17A00 Ledere</label>
+            </value>
+            <value>
+                <fullName>K18A00 Ledere</fullName>
+                <default>false</default>
+                <label>K18A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K18A01 Bodø Avdeling 1</fullName>
                 <default>false</default>
                 <label>K18A01 Bodø Avdeling 1</label>
@@ -326,6 +406,11 @@
                 <label>K18A04 Bodø Avdeling 4</label>
             </value>
             <value>
+                <fullName>K19A00 Ledere</fullName>
+                <default>false</default>
+                <label>K19A00 Ledere</label>
+            </value>
+            <value>
                 <fullName>K19A01 Tromsø Avdeling 1</fullName>
                 <default>false</default>
                 <label>K19A01 Tromsø Avdeling 1</label>
@@ -339,6 +424,11 @@
                 <fullName>K19A03 Alta Avdeling 3</fullName>
                 <default>false</default>
                 <label>K19A03 Alta Avdeling 3</label>
+            </value>
+            <value>
+                <fullName>K21A00 Ledere</fullName>
+                <default>false</default>
+                <label>K21A00 Ledere</label>
             </value>
             <value>
                 <fullName>K21A01 Mo Avdeling 1</fullName>
@@ -369,91 +459,6 @@
                 <fullName>K21A06 Mo Avdeling 6</fullName>
                 <default>false</default>
                 <label>K21A06 Mo Avdeling 6</label>
-            </value>
-            <value>
-                <fullName>K00A01 Trafikk</fullName>
-                <default>false</default>
-                <label>K00A01 Trafikk</label>
-            </value>
-            <value>
-                <fullName>K00A02 Fag og kvalitet</fullName>
-                <default>false</default>
-                <label>K00A02 Fag og kvalitet</label>
-            </value>
-            <value>
-                <fullName>K01A00 Ledere</fullName>
-                <default>false</default>
-                <label>K01A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K05A00 Ledere</fullName>
-                <default>false</default>
-                <label>K05A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K06A00 Ledere</fullName>
-                <default>false</default>
-                <label>K06A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K07A00 Ledere</fullName>
-                <default>false</default>
-                <label>K07A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K09A00 Ledere</fullName>
-                <default>false</default>
-                <label>K09A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K10A00 Ledere</fullName>
-                <default>false</default>
-                <label>K10A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K11A00 Ledere</fullName>
-                <default>false</default>
-                <label>K11A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K12A00 Ledere</fullName>
-                <default>false</default>
-                <label>K12A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K14A00 Ledere</fullName>
-                <default>false</default>
-                <label>K14A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K15A00 Ledere</fullName>
-                <default>false</default>
-                <label>K15A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K16A00 Ledere</fullName>
-                <default>false</default>
-                <label>K16A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K17A00 Ledere</fullName>
-                <default>false</default>
-                <label>K17A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K18A00 Ledere</fullName>
-                <default>false</default>
-                <label>K18A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K19A00 Ledere</fullName>
-                <default>false</default>
-                <label>K19A00 Ledere</label>
-            </value>
-            <value>
-                <fullName>K21A00 Ledere</fullName>
-                <default>false</default>
-                <label>K21A00 Ledere</label>
             </value>
         </valueSetDefinition>
     </valueSet>

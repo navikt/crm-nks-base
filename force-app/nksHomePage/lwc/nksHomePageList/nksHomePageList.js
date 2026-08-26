@@ -3,7 +3,7 @@ import getList from '@salesforce/apex/NKS_HomePageController.getList';
 import getKnowledgeList from '@salesforce/apex/NKS_HomePageController.getKnowledgeList';
 import getCaseList from '@salesforce/apex/NKS_HomePageController.getCaseList';
 import getAnnouncementList from '@salesforce/apex/NKS_HomePageController.getAnnouncementList';
-import getUserSkills from '@salesforce/apex/NKS_HomePageController.getUserSkills';
+import getUserSkills from '@salesforce/apex/NKS_Utils.getUserSkills';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -229,10 +229,12 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.isRefreshDisabled = true;
         await refreshApex(this.wiredResults);
         this.showSpinner = false;
-        setTimeout(() => { // 10 sec delay to avoid spamming requests
+        // eslint-disable-next-line @lwc/lwc/no-async-operation, @locker/locker/distorted-window-set-timeout
+        setTimeout(() => {
+            // 10 sec delay to avoid spamming requests
             this.isRefreshDisabled = false;
         }, 10000);
-    }
+    };
 
     get isEmpSubscribed() {
         return Object.keys(this.subscription).length !== 0 && this.subscription.constructor === Object;
