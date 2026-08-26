@@ -10,6 +10,7 @@ import {
     handleShowNotifications,
     getOutputVariableValue,
     addSuccessNotification,
+    addWarningNotification,
     addErrorNotification,
     callGetCommonCode
 } from 'c/nksComponentsUtils';
@@ -179,13 +180,22 @@ export default class NksConversationNoteDetails extends LightningElement {
 
                 this.navTasks.push({ ...navTaskOutput, selectedUnitName, selectedThemeName });
             }
+
+            if (message.flowApiName === 'NKS_Case_Send_NAV_Task' && !this.hasCNotes) {
+                addWarningNotification(
+                    this.notificationBoxTemplate,
+                    'Oppgaven er lagret, og blir sendt når samtalereferat er opprettet.'
+                );
+                return;
+            }
+
             handleShowNotifications(message.flowApiName, message.outputVariables, this.notificationBoxTemplate);
         }
     }
 
     async handleSendingNavTasks(outputVariables) {
         try {
-            const behandlingskjedeId = getOutputVariableValue(outputVariables, 'CONV_NOTE_API_REFERENCE') ?? null;
+            const behandlingskjedeId = getOutputVariableValue(outputVariables, 'BEHANDLINGS_ID') ?? null;
             this.sendNavTasks(behandlingskjedeId);
         } catch (error) {
             console.error('Problem handling navTasks:', JSON.stringify(error));
