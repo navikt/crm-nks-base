@@ -16,7 +16,8 @@ import {
 } from 'c/nksComponentsUtils';
 import CONVERSATION_NOTE_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/conversationNoteNotifications__c';
 import BUTTON_CONTAINER_NOTIFICATIONS_CHANNEL from '@salesforce/messageChannel/buttonContainerNotifications__c';
-import { subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
+import OPPGAVE_CREATED_CHANNEL from '@salesforce/messageChannel/oppgaveCreated__c';
+import { publish, subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import postOppgave from '@salesforce/apex/OppgaveManager.postTaskFromLwc';
 
 export default class NksConversationNoteDetails extends LightningElement {
@@ -177,15 +178,17 @@ export default class NksConversationNoteDetails extends LightningElement {
                 const selectedUnitName = getOutputVariableValue(message.outputVariables, 'Selected_Unit_Name');
                 const selectedThemeId = getOutputVariableValue(message.outputVariables, 'Selected_Theme_SF_Id');
                 const selectedThemeName = selectedThemeId ? await callGetCommonCode(selectedThemeId) : '';
+                const navTask = { ...navTaskOutput, selectedUnitName, selectedThemeName };
 
-                this.navTasks.push({ ...navTaskOutput, selectedUnitName, selectedThemeName });
-            }
-
-            if (message.flowApiName === 'NKS_Case_Send_NAV_Task' && !this.hasCNotes) {
-                addWarningNotification(
-                    this.notificationBoxTemplate,
-                    'Oppgaven er lagret, og blir sendt når samtalereferat er opprettet.'
-                );
+                if (message.flowApiName === 'NKS_Case_Send_NAV_Task' && !this.hasCNotes) {
+                    this.navTasks.push(navTask);
+                    addWarningNotification(
+                        this.notificationBoxTemplate,
+                        'Oppgaven er lagret, og blir sendt når samtalereferat er opprettet.'
+                    );
+                } else {
+                    this.postNavTask(navTask);
+                }
                 return;
             }
 
@@ -207,32 +210,46 @@ export default class NksConversationNoteDetails extends LightningElement {
         const tasksToSend = [...this.navTasks];
         this.navTasks = [];
 
-        tasksToSend.forEach((navTask) => {
-            const { selectedUnitName, selectedThemeName, ...taskFields } = navTask;
-            const rawRequest = behandlingskjedeId
-                ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
-                : taskFields;
-            const requestJson = JSON.stringify(rawRequest);
-            postOppgave({ requestJson })
-                .then((result) => {
-                    if (result?.isSuccess) {
-                        const unitText = `${navTask.tildeltEnhetsnr ?? ''}${navTask.selectedUnitName ? ` ${navTask.selectedUnitName}` : ''}`;
-                        const optionalText = `${navTask.selectedThemeName ? `${navTask.selectedThemeName}\xa0\xa0\xa0\xa0\xa0` : ''}Sendt til: ${unitText}`;
-                        addSuccessNotification(this.notificationBoxTemplate, 'Oppgave opprettet', optionalText);
-                    } else if (result && !result.isSuccess) {
-                        const text = result.isRetry
-                            ? 'Oppgaveopprettelse feilet. Oppgaven vil bli automatisk opprettet på et senere tidspunkt.'
-                            : 'Oppgaveopprettelse feilet.';
-                        addErrorNotification(this.notificationBoxTemplate, text, result.errorMessage);
-                    }
-                })
-                .catch((error) => {
-                    addErrorNotification(
-                        this.notificationBoxTemplate,
-                        'Oppgaveopprettelse feilet.',
-                        error?.body?.message ?? error?.message
-                    );
-                });
-        });
+        tasksToSend.forEach((navTask) => this.postNavTask(navTask, behandlingskjedeId));
+    }
+
+    postNavTask(navTask, behandlingskjedeId = null) {
+        const { selectedUnitName, selectedThemeName, ...taskFields } = navTask;
+        const rawRequest = behandlingskjedeId
+            ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
+            : taskFields;
+        const requestJson = JSON.stringify(rawRequest);
+        postOppgave({ requestJson })
+            .then((result) => {
+                if (result?.isSuccess) {
+                    const unitText = `${navTask.tildeltEnhetsnr ?? ''}${navTask.selectedUnitName ? ` ${navTask.selectedUnitName}` : ''}`;
+                    const optionalText = `${navTask.selectedThemeName ? `${navTask.selectedThemeName}\xa0\xa0\xa0\xa0\xa0` : ''}Sendt til: ${unitText}`;
+                    addSuccessNotification(this.notificationBoxTemplate, 'Oppgave opprettet', optionalText);
+                    this.publishOppgaveCreated(navTask);
+                } else if (result && !result.isSuccess) {
+                    const text = result.isRetry
+                        ? 'Oppgaveopprettelse feilet. Oppgaven vil bli automatisk opprettet på et senere tidspunkt.'
+                        : 'Oppgaveopprettelse feilet.';
+                    addErrorNotification(this.notificationBoxTemplate, text, result.errorMessage);
+                }
+            })
+            .catch((error) => {
+                addErrorNotification(
+                    this.notificationBoxTemplate,
+                    'Oppgaveopprettelse feilet.',
+                    error?.body?.message ?? error?.message
+                );
+            });
+    }
+
+    publishOppgaveCreated(navTask) {
+        try {
+            publish(this.messageContext, OPPGAVE_CREATED_CHANNEL, {
+                assignedResource: navTask.tilordnetRessurs ?? null,
+                actorId: navTask.aktoerId ?? null
+            });
+        } catch (error) {
+            console.error('Error publishing oppgaveCreated message:', error);
+        }
     }
 }
