@@ -198,6 +198,7 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     async handleSendingNavTasks(outputVariables) {
         try {
+            // Always set kjedeid as oppgave.eksternHenvendelseId so first conv note is always the one linked to an oppgave when working from Case record
             const behandlingskjedeId = getOutputVariableValue(outputVariables, 'BEHANDLINGS_ID') ?? null;
             this.sendNavTasks(behandlingskjedeId);
         } catch (error) {
