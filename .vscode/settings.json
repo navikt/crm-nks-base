@@ -2,7 +2,7 @@
     "salesforcedx-vscode-apex.enable-sobject-refresh-on-startup": true,
     "salesforcedx-vscode-apex.enable-semantic-errors": true,
     "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
-    "salesforcedx-vscode-core.push-or-deploy-on-save.enabled": true,
+    "salesforcedx-vscode-core.push-or-deploy-on-save.enabled": false,
     "salesforcedx-vscode-core.show-cli-success-msg": false,
     "workbench.tree.indent": 16,
     "workbench.startupEditor": "none",
@@ -32,5 +32,9 @@
     "scratch.default.permissionsets": [
         "NKS_Base_Scratch_Group"
     ],
-    "xml.preferences.showSchemaDocumentationType": "none"
+    "xml.preferences.showSchemaDocumentationType": "none",
+    "sarif-viewer.connectToGithubCodeScanning": "off",
+    "chat.tools.terminal.autoApprove": {
+        "ForEach-Object": true
+    }
 }
