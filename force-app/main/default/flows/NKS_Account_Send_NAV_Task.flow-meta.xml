@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Post_Nav_Task</name>
         <label>Post Nav Task</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>458</locationY>
         <actionName>OppgaveManager</actionName>
         <actionType>apex</actionType>
@@ -84,9 +84,41 @@
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Set_Communal_Quick_Text_Label</name>
+        <label>Set Communal Quick Text Label</label>
+        <locationX>182</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>communalQuickTextLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Communal_Quick_Text.selectedValueLabel</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Wipe_oppgavebeskrivelse_var</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Publish_Notification_to_True</name>
+        <label>Set Publish Notification to True</label>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>Publish_Notification</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Publish_Oppgave_created_LMS_event</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Store_oppgavebeskrivelse_in_var</name>
         <label>Store oppgavebeskrivelse in var</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>Oppgavebeskrivelse</assignToReference>
@@ -102,8 +134,8 @@
     <assignments>
         <name>Wipe_oppgavebeskrivelse_var</name>
         <label>Wipe oppgavebeskrivelse var</label>
-        <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Oppgavebeskrivelse</assignToReference>
             <operator>Assign</operator>
@@ -112,14 +144,36 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Success_Screen</targetReference>
+            <targetReference>Is_Communal_QuickTtext_Used</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Is_Communal_QuickTtext_Used</name>
+        <label>Is Communal QuickTtext Used</label>
+        <locationX>182</locationX>
+        <locationY>1106</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>communalQuickTextLabel</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_RportingData</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <description>Check if the API post was successful</description>
         <name>Verify_Task_Post</name>
         <label>Verify Task Post</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -136,7 +190,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Publish_Oppgave_created_LMS_event</targetReference>
+                <targetReference>Set_Publish_Notification_to_True</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -201,11 +255,31 @@ TODAY())</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_RportingData</name>
+        <label>Create RportingData</label>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
+        <inputAssignments>
+            <field>CRM_Category__c</field>
+            <value>
+                <stringValue>Kommunal hurtigtekst</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>communalQuickTextLabel</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ReportingData__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <description>Query information needed from the account and its relations.</description>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -231,7 +305,7 @@ TODAY())</expression>
         <description>Something went wrong when posting/updating the NAV task.</description>
         <name>Error_Screen</name>
         <label>Error_Screen</label>
-        <locationX>314</locationX>
+        <locationX>490</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -320,7 +394,7 @@ TODAY())</expression>
     <screens>
         <name>NAV_Task_Input_Screen</name>
         <label>NAV Task Input Screen</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -436,9 +510,25 @@ TODAY())</expression>
             </styleProperties>
         </fields>
         <fields>
+            <name>Communal_Quick_Text</name>
+            <extensionName>c:crmNavTaskCommunalQuickText</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <fields>
             <name>Task_Description</name>
             <defaultValue>
-                <stringValue>{!Oppgavebeskrivelse}</stringValue>
+                <stringValue>{!Communal_Quick_Text.selectedValue}</stringValue>
             </defaultValue>
             <fieldText>Oppgave til NAV-enhet</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -489,13 +579,13 @@ TODAY())</expression>
     <screens>
         <name>Publish_Oppgave_created_LMS_event</name>
         <label>Publish Oppgave created LMS event</label>
-        <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Wipe_oppgavebeskrivelse_var</targetReference>
+            <targetReference>Set_Communal_Quick_Text_Label</targetReference>
         </connector>
         <fields>
             <name>nksOppgaveCreatedPublisher</name>
@@ -528,38 +618,8 @@ TODAY())</expression>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <description>Screen for telling user that the task was successfully sent.</description>
-        <name>Success_Screen</name>
-        <label>Success Screen</label>
-        <locationX>50</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>NAV_Task_Input_Screen</targetReference>
-        </connector>
-        <fields>
-            <name>Success_Screen_Text</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;Oppgaven ble sendt&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <styleProperties>
-                <verticalAlignment>
-                    <stringValue>top</stringValue>
-                </verticalAlignment>
-                <width>
-                    <stringValue>12</stringValue>
-                </width>
-            </styleProperties>
-        </fields>
-        <nextOrFinishButtonLabel>Ny oppgave</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>210</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -569,7 +629,7 @@ TODAY())</expression>
     <subflows>
         <name>Create_App_Log1</name>
         <label>Create App Log</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>242</locationY>
         <connector>
             <isGoTo>true</isGoTo>
@@ -613,6 +673,13 @@ TODAY())</expression>
         <text>&lt;h2&gt;Ny oppgave&lt;/h2&gt;</text>
     </textTemplates>
     <variables>
+        <name>communalQuickTextLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Oppgavebeskrivelse</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -623,11 +690,51 @@ TODAY())</expression>
         </value>
     </variables>
     <variables>
+        <name>Publish_Notification</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <description>Record ID if the flow is called with a reference to an existing NAV task.</description>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Selected_Theme_SF_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>Theme_Categorization.theme</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>Selected_Unit_Name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>workAllocation.selectedUnitName</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>Selected_Unit_Number</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>workAllocation.selectedUnitNumber</elementReference>
+        </value>
     </variables>
 </Flow>

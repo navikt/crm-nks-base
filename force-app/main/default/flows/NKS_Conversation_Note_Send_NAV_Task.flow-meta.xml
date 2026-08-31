@@ -651,6 +651,9 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+        <value>
+            <elementReference>Theme_Categorization.theme</elementReference>
+        </value>
     </variables>
     <variables>
         <name>Selected_Unit_Id</name>

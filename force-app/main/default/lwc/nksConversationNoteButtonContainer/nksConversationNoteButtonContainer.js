@@ -54,9 +54,9 @@ export default class NksConversationNoteButtonContainer extends LightningElement
     handleFlowSucceeded(event) {
         const flowApiName = event.detail?.flowName;
         const outputVariables = event.detail?.flowOutput;
-        const navTask = getOutputVariableValue(outputVariables, 'navTaskOutput');
-        if (navTask) {
-            this._navTasks.push(navTask);
+        const oppgaveRequest = getOutputVariableValue(outputVariables, 'navTaskOutput');
+        if (oppgaveRequest) {
+            this._navTasks.push(oppgaveRequest);
         }
 
         try {

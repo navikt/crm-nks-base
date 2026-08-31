@@ -1,53 +1,5 @@
 public with sharing class NKS_HomePageController {
     @AuraEnabled(cacheable=true)
-    public static List<String> getUserSkills() {
-        try {
-            List<String> skills = new List<String>();
-            for (String skill : getUserSkills(UserInfo.getUserId())) {
-                skills.add(skill.replaceAll('NKS_Skill_', ''));
-            }
-            return skills;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-
-    public static Set<String> getUserSkills(Id userId) {
-        Set<String> skills = new Set<String>();
-        skills.addAll(getChatSkills(userId));
-        skills.addAll(getServiceResourceSkills(userId));
-        return skills;
-    }
-
-    public static Set<String> getServiceResourceSkills(Id userId) {
-        Set<String> skills = new Set<String>();
-
-        for (ServiceResourceSkill srSkill : [
-            SELECT Skill.DeveloperName
-            FROM ServiceResourceSkill
-            WHERE ServiceResource.RelatedRecordId = :userId
-        ]) {
-            skills.add(srSkill.Skill.DeveloperName);
-        }
-        return skills;
-    }
-
-    public static Set<String> getChatSkills(Id userId) {
-        Set<String> skills = new Set<String>();
-        for (Group g : [
-            SELECT DeveloperName
-            FROM Group
-            WHERE
-                DeveloperName LIKE 'NKS_Skill_%'
-                AND Group.Type = 'Regular'
-                AND Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :userId)
-        ]) {
-            skills.add(g.DeveloperName);
-        }
-        return skills;
-    }
-
-    @AuraEnabled(cacheable=true)
     public static NKS_Announcement__c getAnnouncement(String type) {
         List<NKS_Announcement__c> announcement;
         if (type == 'Traffic') {
