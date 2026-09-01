@@ -20,6 +20,8 @@ import OPPGAVE_CREATED_CHANNEL from '@salesforce/messageChannel/oppgaveCreated__
 import { publish, subscribe, unsubscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
 import postOppgave from '@salesforce/apex/OppgaveManager.postTaskFromLwc';
 
+const SOSIAL_THEME_CODE = 'KOM';
+
 export default class NksConversationNoteDetails extends LightningElement {
     @api recordId;
     @api objectApiName;
@@ -180,7 +182,11 @@ export default class NksConversationNoteDetails extends LightningElement {
                 const selectedThemeName = selectedThemeId ? await callGetCommonCode(selectedThemeId) : '';
                 const navTask = { ...navTaskOutput, selectedUnitName, selectedThemeName };
 
-                if (message.flowApiName === 'NKS_Case_Send_NAV_Task' && !this.hasCNotes) {
+                if (
+                    message.flowApiName === 'NKS_Case_Send_NAV_Task' &&
+                    !this.hasCNotes &&
+                    navTask.tema !== SOSIAL_THEME_CODE
+                ) {
                     this.navTasks.push(navTask);
                     addWarningNotification(
                         this.notificationBoxTemplate,
