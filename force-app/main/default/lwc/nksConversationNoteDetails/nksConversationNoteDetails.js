@@ -222,9 +222,10 @@ export default class NksConversationNoteDetails extends LightningElement {
 
     postNavTask(navTask, behandlingskjedeId = null) {
         const { selectedUnitName, selectedThemeName, ...taskFields } = navTask;
-        const rawRequest = behandlingskjedeId
-            ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
-            : taskFields;
+        const rawRequest =
+            behandlingskjedeId && navTask.tema !== SOSIAL_THEME_CODE
+                ? { ...taskFields, eksternHenvendelseId: behandlingskjedeId }
+                : taskFields;
         const requestJson = JSON.stringify(rawRequest);
         postOppgave({ requestJson })
             .then((result) => {
