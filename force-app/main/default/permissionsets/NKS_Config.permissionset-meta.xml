@@ -92,7 +92,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.STO_Requires_Serviceklager_Skill__c</field>
+        <field>Case.STO_Additional_Skills__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
