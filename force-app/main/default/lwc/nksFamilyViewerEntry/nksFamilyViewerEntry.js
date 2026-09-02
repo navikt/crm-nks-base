@@ -148,9 +148,7 @@ export default class nksFamilyViewerEntry extends NavigationMixin(LightningEleme
         }
 
         if (recordType === 'marital' && role === 'ENKE_ELLER_ENKEMANN') {
-            if (sex === 'MANN') return 'Enke';
-            if (sex === 'KVINNE') return 'Enkemann';
-            return 'Enke eller Enkemann';
+            return 'Avdød ektefelle';
         }
 
         const roles = {
