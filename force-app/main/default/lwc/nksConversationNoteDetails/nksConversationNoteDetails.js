@@ -179,12 +179,17 @@ export default class NksConversationNoteDetails extends LightningElement {
             if (navTaskOutput) {
                 const selectedUnitName = getOutputVariableValue(message.outputVariables, 'Selected_Unit_Name');
                 const selectedThemeId = getOutputVariableValue(message.outputVariables, 'Selected_Theme_SF_Id');
+                const shouldPostWithoutConversation = getOutputVariableValue(
+                    message.outputVariables,
+                    'Should_post_without_conversation'
+                );
                 const selectedThemeName = selectedThemeId ? await callGetCommonCode(selectedThemeId) : '';
                 const navTask = { ...navTaskOutput, selectedUnitName, selectedThemeName };
 
                 if (
                     message.flowApiName === 'NKS_Case_Send_NAV_Task' &&
                     !this.hasCNotes &&
+                    !shouldPostWithoutConvkersation &&
                     navTask.tema !== SOSIAL_THEME_CODE
                 ) {
                     this.navTasks.push(navTask);
