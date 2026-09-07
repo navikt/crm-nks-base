@@ -189,7 +189,7 @@ export default class NksConversationNoteDetails extends LightningElement {
                 if (
                     message.flowApiName === 'NKS_Case_Send_NAV_Task' &&
                     !this.hasCNotes &&
-                    !shouldPostWithoutConvkersation &&
+                    !shouldPostWithoutConversation &&
                     navTask.tema !== SOSIAL_THEME_CODE
                 ) {
                     this.navTasks.push(navTask);
