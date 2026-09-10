@@ -108,7 +108,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_communal_quick_text_used</targetReference>
+            <targetReference>Determine_if_post_without_conversation_note_is_allowed</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -127,11 +127,60 @@
             <targetReference>Publish_Oppgave_created_LMS_event</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Should_always_post</name>
+        <label>Should always post</label>
+        <locationX>314</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>Should_post_without_conversation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_communal_quick_text_used</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Determine if post without conversation note is allowed</description>
+        <name>Determine_if_post_without_conversation_note_is_allowed</name>
+        <label>Check post rules</label>
+        <locationX>446</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>Is_communal_quick_text_used</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Wait for conversation note to be createde before posting</defaultConnectorLabel>
+        <rules>
+            <name>Should_post_Task_even_if_there_is_no_Conversation</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.CRM_Person_Confidentiality__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>UGRADERT</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CRM_Person_Is_NAV_Employee__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Should_always_post</targetReference>
+            </connector>
+            <label>Should post Task even if there is no Conversation</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_communal_quick_text_used</name>
         <label>Is communal quick text used?</label>
         <locationX>446</locationX>
-        <locationY>998</locationY>
+        <locationY>1298</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_communal_quick_text</name>
@@ -228,7 +277,7 @@
         <name>Create_reporting_data_for_communal_quick_text</name>
         <label>Create reporting data for communal quick text</label>
         <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationY>1406</locationY>
         <inputAssignments>
             <field>CRM_Category__c</field>
             <value>
@@ -737,6 +786,17 @@
         <isOutput>true</isOutput>
         <value>
             <elementReference>workAllocation.selectedUnitNumber</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <description>Determies if the oppgave should be posted even if there is no Conversation Note to connect it to</description>
+        <name>Should_post_without_conversation</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
 </Flow>
