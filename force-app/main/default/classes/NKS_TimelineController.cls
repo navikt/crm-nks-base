@@ -34,7 +34,8 @@ public with sharing class NKS_TimelineController {
         String callLogQuery =
             'SELECT Id, Name, CreatedDate, NKS_Call_Time__c, NKS_Timeline_Name__c, NKS_Advisor_Ident__c, NKS_Timeline_Phone__c ' +
             'FROM NKS_Call_Log__c ' +
-            'WHERE NKS_Account__c = :recordId ' +
+            'WHERE NKS_Case__r.AccountId = :recordId ' +
+            'AND NKS_Conversation_Note_Created__c  = false ' +
             'ORDER BY NKS_Call_Time__c DESC NULLS LAST ' +
             'LIMIT :effectiveLimit';
 
