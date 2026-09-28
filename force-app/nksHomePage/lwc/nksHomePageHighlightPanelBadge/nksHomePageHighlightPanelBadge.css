@@ -50,3 +50,10 @@
 .disabled-badge {
     pointer-events: none;
 }
+
+.link-color-overwrite {
+    --slds-s-link-color: #a3e4db;
+    --slds-s-link-color-hover: #4ecdc4;
+    --slds-s-link-color-focus: #4ecdc4;
+    --slds-s-link-color-active: #4ecdc4;
+}
