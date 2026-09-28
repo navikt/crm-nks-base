@@ -23,7 +23,10 @@
                         ></lightning-input-rich-text>
                     </template>
                     <template lwc:else>
-                        <lightning-formatted-rich-text value={recordInfo}></lightning-formatted-rich-text>
+                        <lightning-formatted-rich-text
+                            class="link-color-overwrite"
+                            value={recordInfo}
+                        ></lightning-formatted-rich-text>
                     </template>
                 </div>
                 <div class="slds-var-p-top_small">
