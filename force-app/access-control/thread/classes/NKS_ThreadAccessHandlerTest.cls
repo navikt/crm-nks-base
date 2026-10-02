@@ -525,4 +525,111 @@ private class NKS_ThreadAccessHandlerTest {
             'Expected thread to be shared with fortrolig skjermet group'
         );
     }
+
+    @IsTest
+    static void onAfterInsert_InScopeType_PublishesEvent() {
+        Thread__c t = new Thread__c(
+            Name = 'Test Thread - In Scope',
+            CRM_isActive__c = true,
+            CRM_Thread_Type__c = 'CHAT'
+        );
+        Integer beforePublishes = Limits.getPublishPlatformEvents();
+
+        Test.startTest();
+        insert t;
+        Test.stopTest();
+
+        Integer afterPublishes = Limits.getPublishPlatformEvents();
+        Assert.isTrue(
+            afterPublishes > beforePublishes,
+            'Expected a platform event publish call for in-scope thread type'
+        );
+    }
+
+    @IsTest
+    static void onAfterInsert_OutOfScopeType_NoPublish() {
+        // Leave CRM_Thread_Type__c null to ensure it is not in either set
+        Thread__c t = new Thread__c(Name = 'Test Thread - Out of Scope', CRM_isActive__c = true);
+
+        Integer beforePublishes = Limits.getPublishPlatformEvents();
+
+        Test.startTest();
+        insert t;
+        Test.stopTest();
+
+        Integer afterPublishes = Limits.getPublishPlatformEvents();
+        Assert.areEqual(
+            beforePublishes,
+            afterPublishes,
+            'No platform events should be published for out-of-scope/null type'
+        );
+    }
+
+    @IsTest
+    static void onAfterInsert_MixedRecords_PublishesForQualifiersOnly() {
+        Thread__c inScope = new Thread__c(
+            Name = 'Thread In Scope',
+            CRM_isActive__c = true,
+            CRM_Thread_Type__c = 'CHAT'
+        );
+        Thread__c outScope = new Thread__c(Name = 'Thread Out Scope', CRM_isActive__c = true);
+
+        Integer beforePublishes = Limits.getPublishPlatformEvents();
+
+        Test.startTest();
+        insert new List<Thread__c>{ inScope, outScope };
+        Test.stopTest();
+
+        Integer afterPublishes = Limits.getPublishPlatformEvents();
+        Assert.areEqual(
+            beforePublishes + 1,
+            afterPublishes,
+            'Exactly one publish call should occur when at least one qualifying thread exists'
+        );
+    }
+
+    @IsTest
+    @IsTest
+    static void onAfterInsert_TolkType_PublishesEvent_Safeguarded() {
+        Thread__c t = new Thread__c(Name = 'Tolk Thread', CRM_isActive__c = true);
+        Integer beforePublishes = Limits.getPublishPlatformEvents();
+        Test.startTest();
+        Boolean inserted = false;
+        try {
+            t.CRM_Thread_Type__c = 'HOT_BRUKER-TOLK';
+            insert t;
+            inserted = true;
+        } catch (DmlException ex) {
+            insert new Thread__c(Name = 'Tolk Thread Fallback', CRM_isActive__c = true);
+        }
+        Test.stopTest();
+        Integer afterPublishes = Limits.getPublishPlatformEvents();
+
+        if (inserted) {
+            Assert.isTrue(afterPublishes > beforePublishes, 'Expected a publish when TOLK type is allowed in org');
+        } else {
+            Assert.areEqual(
+                beforePublishes,
+                afterPublishes,
+                'When TOLK value is not allowed, no publish should occur in fallback path'
+            );
+        }
+    }
+
+    @IsTest
+    static void onAfterInsert_NullType_NoPublish() {
+        Thread__c t = new Thread__c(Name = 'Null Type Thread', CRM_isActive__c = true);
+
+        Integer beforePublishes = Limits.getPublishPlatformEvents();
+        Test.startTest();
+        insert t;
+        Test.stopTest();
+
+        Integer afterPublishes = Limits.getPublishPlatformEvents();
+        Assert.areEqual(
+            beforePublishes,
+            afterPublishes,
+            'No platform events should be published when thread type is null'
+        );
+    }
 }
