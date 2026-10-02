@@ -533,36 +533,27 @@ private class NKS_ThreadAccessHandlerTest {
             CRM_isActive__c = true,
             CRM_Thread_Type__c = 'CHAT'
         );
-        Integer beforePublishes = Limits.getPublishPlatformEvents();
 
         Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
         insert t;
+        Integer afterDml = Limits.getDMLStatements();
         Test.stopTest();
 
-        Integer afterPublishes = Limits.getPublishPlatformEvents();
-        Assert.isTrue(
-            afterPublishes > beforePublishes,
-            'Expected a platform event publish call for in-scope thread type'
-        );
+        Assert.areEqual(beforeDml + 2, afterDml, 'Expected Thread insert + one Publish-After-Commit event DML');
     }
 
     @IsTest
     static void onAfterInsert_OutOfScopeType_NoPublish() {
-        // Leave CRM_Thread_Type__c null to ensure it is not in either set
         Thread__c t = new Thread__c(Name = 'Test Thread - Out of Scope', CRM_isActive__c = true);
 
-        Integer beforePublishes = Limits.getPublishPlatformEvents();
-
         Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
         insert t;
+        Integer afterDml = Limits.getDMLStatements();
         Test.stopTest();
 
-        Integer afterPublishes = Limits.getPublishPlatformEvents();
-        Assert.areEqual(
-            beforePublishes,
-            afterPublishes,
-            'No platform events should be published for out-of-scope/null type'
-        );
+        Assert.areEqual(beforeDml + 1, afterDml, 'Expected only Thread insert DML (no event publish)');
     }
 
     @IsTest
@@ -574,45 +565,42 @@ private class NKS_ThreadAccessHandlerTest {
         );
         Thread__c outScope = new Thread__c(Name = 'Thread Out Scope', CRM_isActive__c = true);
 
-        Integer beforePublishes = Limits.getPublishPlatformEvents();
-
         Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
         insert new List<Thread__c>{ inScope, outScope };
+        Integer afterDml = Limits.getDMLStatements();
         Test.stopTest();
 
-        Integer afterPublishes = Limits.getPublishPlatformEvents();
         Assert.areEqual(
-            beforePublishes + 1,
-            afterPublishes,
-            'Exactly one publish call should occur when at least one qualifying thread exists'
+            beforeDml + 2,
+            afterDml,
+            'Expected one DML for Thread bulk insert + one DML for single publish call'
         );
     }
 
     @IsTest
-    @IsTest
     static void onAfterInsert_TolkType_PublishesEvent_Safeguarded() {
         Thread__c t = new Thread__c(Name = 'Tolk Thread', CRM_isActive__c = true);
-        Integer beforePublishes = Limits.getPublishPlatformEvents();
+
         Test.startTest();
-        Boolean inserted = false;
+        Integer beforeDml = Limits.getDMLStatements();
+        Boolean insertedWithTolk = false;
+
         try {
             t.CRM_Thread_Type__c = 'HOT_BRUKER-TOLK';
             insert t;
-            inserted = true;
+            insertedWithTolk = true;
         } catch (DmlException ex) {
             insert new Thread__c(Name = 'Tolk Thread Fallback', CRM_isActive__c = true);
         }
-        Test.stopTest();
-        Integer afterPublishes = Limits.getPublishPlatformEvents();
 
-        if (inserted) {
-            Assert.isTrue(afterPublishes > beforePublishes, 'Expected a publish when TOLK type is allowed in org');
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        if (insertedWithTolk) {
+            Assert.areEqual(beforeDml + 2, afterDml, 'Expected Thread insert + publish DML for TOLK type');
         } else {
-            Assert.areEqual(
-                beforePublishes,
-                afterPublishes,
-                'When TOLK value is not allowed, no publish should occur in fallback path'
-            );
+            Assert.areEqual(beforeDml + 1, afterDml, 'Fallback path should only perform Thread insert DML');
         }
     }
 
@@ -620,16 +608,12 @@ private class NKS_ThreadAccessHandlerTest {
     static void onAfterInsert_NullType_NoPublish() {
         Thread__c t = new Thread__c(Name = 'Null Type Thread', CRM_isActive__c = true);
 
-        Integer beforePublishes = Limits.getPublishPlatformEvents();
         Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
         insert t;
+        Integer afterDml = Limits.getDMLStatements();
         Test.stopTest();
 
-        Integer afterPublishes = Limits.getPublishPlatformEvents();
-        Assert.areEqual(
-            beforePublishes,
-            afterPublishes,
-            'No platform events should be published when thread type is null'
-        );
+        Assert.areEqual(beforeDml + 1, afterDml, 'Expected only Thread insert DML when type is null');
     }
 }
