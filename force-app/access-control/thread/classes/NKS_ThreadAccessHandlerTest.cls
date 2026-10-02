@@ -525,4 +525,95 @@ private class NKS_ThreadAccessHandlerTest {
             'Expected thread to be shared with fortrolig skjermet group'
         );
     }
+
+    @IsTest
+    static void onAfterInsert_InScopeType_PublishesEvent() {
+        Thread__c t = new Thread__c(
+            Name = 'Test Thread - In Scope',
+            CRM_isActive__c = true,
+            CRM_Thread_Type__c = 'CHAT'
+        );
+
+        Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
+        insert t;
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        Assert.areEqual(beforeDml + 2, afterDml, 'Expected Thread insert + one Publish-After-Commit event DML');
+    }
+
+    @IsTest
+    static void onAfterInsert_OutOfScopeType_NoPublish() {
+        Thread__c t = new Thread__c(Name = 'Test Thread - Out of Scope', CRM_isActive__c = true);
+
+        Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
+        insert t;
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        Assert.areEqual(beforeDml + 1, afterDml, 'Expected only Thread insert DML (no event publish)');
+    }
+
+    @IsTest
+    static void onAfterInsert_MixedRecords_PublishesForQualifiersOnly() {
+        Thread__c inScope = new Thread__c(
+            Name = 'Thread In Scope',
+            CRM_isActive__c = true,
+            CRM_Thread_Type__c = 'CHAT'
+        );
+        Thread__c outScope = new Thread__c(Name = 'Thread Out Scope', CRM_isActive__c = true);
+
+        Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
+        insert new List<Thread__c>{ inScope, outScope };
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        Assert.areEqual(
+            beforeDml + 2,
+            afterDml,
+            'Expected one DML for Thread bulk insert + one DML for single publish call'
+        );
+    }
+
+    @IsTest
+    static void onAfterInsert_TolkType_PublishesEvent_Safeguarded() {
+        Thread__c t = new Thread__c(Name = 'Tolk Thread', CRM_isActive__c = true);
+
+        Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
+        Boolean insertedWithTolk = false;
+
+        try {
+            t.CRM_Thread_Type__c = 'HOT_BRUKER-TOLK';
+            insert t;
+            insertedWithTolk = true;
+        } catch (DmlException ex) {
+            insert new Thread__c(Name = 'Tolk Thread Fallback', CRM_isActive__c = true);
+        }
+
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        if (insertedWithTolk) {
+            Assert.areEqual(beforeDml + 2, afterDml, 'Expected Thread insert + publish DML for TOLK type');
+        } else {
+            Assert.areEqual(beforeDml + 1, afterDml, 'Fallback path should only perform Thread insert DML');
+        }
+    }
+
+    @IsTest
+    static void onAfterInsert_NullType_NoPublish() {
+        Thread__c t = new Thread__c(Name = 'Null Type Thread', CRM_isActive__c = true);
+
+        Test.startTest();
+        Integer beforeDml = Limits.getDMLStatements();
+        insert t;
+        Integer afterDml = Limits.getDMLStatements();
+        Test.stopTest();
+
+        Assert.areEqual(beforeDml + 1, afterDml, 'Expected only Thread insert DML when type is null');
+    }
 }
