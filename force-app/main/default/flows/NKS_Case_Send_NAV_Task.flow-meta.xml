@@ -108,7 +108,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Determine_if_post_without_conversation_note_is_allowed</targetReference>
+            <targetReference>Get_Person</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -131,7 +131,7 @@
         <name>Should_always_post</name>
         <label>Should always post</label>
         <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>Should_post_without_conversation</assignToReference>
             <operator>Assign</operator>
@@ -148,7 +148,7 @@
         <name>Determine_if_post_without_conversation_note_is_allowed</name>
         <label>Check post rules</label>
         <locationX>446</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <defaultConnector>
             <targetReference>Is_communal_quick_text_used</targetReference>
         </defaultConnector>
@@ -157,17 +157,31 @@
             <name>Should_post_Task_even_if_there_is_no_Conversation</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.CRM_Person_Confidentiality__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>Get_Person.INT_Confidential__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>UGRADERT</stringValue>
+                    <stringValue>STRENGT_FORTROLIG_UTLAND</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Case.CRM_Person_Is_NAV_Employee__c</leftValueReference>
+                <leftValueReference>Get_Person.INT_IsNavEmployee__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Person.INT_Confidential__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>STRENGT_FORTROLIG</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Person.INT_Confidential__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FORTROLIG</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -180,7 +194,7 @@
         <name>Is_communal_quick_text_used</name>
         <label>Is communal quick text used?</label>
         <locationX>446</locationX>
-        <locationY>1298</locationY>
+        <locationY>1406</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_communal_quick_text</name>
@@ -277,7 +291,7 @@
         <name>Create_reporting_data_for_communal_quick_text</name>
         <label>Create reporting data for communal quick text</label>
         <locationX>314</locationX>
-        <locationY>1406</locationY>
+        <locationY>1514</locationY>
         <inputAssignments>
             <field>CRM_Category__c</field>
             <value>
@@ -316,6 +330,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Person</name>
+        <label>Get Person</label>
+        <locationX>446</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Determine_if_post_without_conversation_note_is_allowed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CRM_Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Person__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
