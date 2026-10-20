@@ -40,7 +40,7 @@ private class NKS_FamilyViewControllerTest {
     @isTest
     private static void getMaritalStatusTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getMaritalStatus(
             query.execute(),
             new NKS_FamilyViewController.Relation()
@@ -119,7 +119,7 @@ private class NKS_FamilyViewControllerTest {
     @isTest
     private static void getChildrenTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         List<NKS_FamilyViewController.Relation> l = NKS_FamilyViewController.getChildren(
             query.execute(),
             new NKS_FamilyViewController.Relation()
@@ -668,7 +668,7 @@ private class NKS_FamilyViewControllerTest {
     @isTest
     private static void testjson(){
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         String s = JSON.serializePretty(query.execute());
         System.debug(s);
     }
