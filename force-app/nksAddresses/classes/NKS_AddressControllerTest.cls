@@ -208,7 +208,7 @@ public with sharing class NKS_AddressControllerTest {
     @isTest
     static void setBostedVegMatrikkAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
         addr.setBostedVegMatrikkAddress(query.execute().data.hentPerson.bostedsadresse[0]);
         System.assertEquals('6636', addr.zipCode);
@@ -217,7 +217,7 @@ public with sharing class NKS_AddressControllerTest {
     @isTest
     static void setOppholdsAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
         addr.setOppholdsAddress(query.execute().data.hentPerson.oppholdsadresse[0]);
         System.assertEquals('6636', addr.zipCode);
@@ -226,7 +226,7 @@ public with sharing class NKS_AddressControllerTest {
     @isTest
     static void setDeltBostedsAddressTest() {
         ApiMock.setTestMock('POST_PDL_API', 200, 'OK');
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper('12106519356');
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', '12106519356');
         NKS_AddressController.NKS_Address addr = new NKS_AddressController.NKS_Address();
         addr.setDeltBostedsAddress(query.execute().data.hentPerson.deltBosted[0]);
         System.assertEquals('4636', addr.zipCode);

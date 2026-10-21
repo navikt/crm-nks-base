@@ -63,7 +63,7 @@ public with sharing class NKS_FamilyViewController {
     /* Queries */
     @TestVisible
     private static PDL_API_Response queryMaritalStatusFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', ident);
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
@@ -79,7 +79,7 @@ public with sharing class NKS_FamilyViewController {
 
     @TestVisible
     private static PDL_API_Response queryRelationsFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', ident);
         query.hentPerson.sivilstand.selectAll();
         query.hentPerson.forelderbarnrelasjon.selectAll();
         query.hentPerson.doedfoedtBarn.selectAll();
@@ -97,7 +97,7 @@ public with sharing class NKS_FamilyViewController {
     }
 
     private static PDL_API_Response queryChildFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', ident);
         query.hentPerson.navn.fornavn = true;
         query.hentPerson.navn.mellomnavn = true;
         query.hentPerson.navn.etternavn = true;
