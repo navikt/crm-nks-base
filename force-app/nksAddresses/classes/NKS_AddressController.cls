@@ -192,7 +192,7 @@ public with sharing class NKS_AddressController {
 
     @TestVisible
     private static PDL_API_Response queryAddressFromPDL(String ident) {
-        PDL_API_QueryHelper query = new PDL_API_QueryHelper(ident);
+        PDL_API_QueryHelper query = new PDL_API_QueryHelper('B118', ident);
         query.hentPerson.bostedsadresse.selectAll(true);
         query.hentPerson.oppholdsadresse.selectAll(true);
         return query.execute();
