@@ -9,6 +9,14 @@ export default class NksHomePageListEntry extends NavigationMixin(LightningEleme
 
     recordPageUrl;
 
+    get newsClass() {
+        return `slds-grid slds-gutters ${this.record.isRead ? 'news-read' : 'news-unread'}`;
+    }
+
+    get readStatusLabel() {
+        return this.record.isRead ? ' (Lest)' : ' (Ulest)';
+    }
+
     navigateToSObject(event) {
         event.preventDefault();
         event.stopPropagation();

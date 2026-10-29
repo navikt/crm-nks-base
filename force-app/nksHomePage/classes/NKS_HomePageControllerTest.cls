@@ -92,6 +92,117 @@ public with sharing class NKS_HomePageControllerTest {
     }
 
     @isTest
+    static void testNewsReadStatusUsesCurrentUserViews() {
+        NKS_Announcement__c news = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        List<NKS_HomePageController.RecordWrapper> beforeView = getNewsListForReadStatus(news.Id);
+        Assert.areEqual(1, beforeView.size());
+        Assert.isFalse(beforeView[0].isRead, 'News without a view log should be unread.');
+
+        NKS_Audit_Log__c viewLog = new NKS_Audit_Log__c(
+            RecordTypeId = NKS_AuditLogController.getRecordTypeId('Announcement Audit Log'),
+            Announcement__c = news.Id,
+            User__c = UserInfo.getUserId(),
+            Operation__c = 'View'
+        );
+        insert new List<NKS_Audit_Log__c>{ viewLog, viewLog.clone(false, true, false, false) };
+
+        Test.startTest();
+        List<NKS_HomePageController.RecordWrapper> afterView = getNewsListForReadStatus(news.Id);
+        Test.stopTest();
+
+        Assert.areEqual(1, afterView.size(), 'Repeated views must not duplicate the news entry.');
+        Assert.isTrue(afterView[0].isRead, 'The current user has opened this news.');
+    }
+
+    @isTest
+    static void testNewsReadStatusIgnoresOtherUsersAndOperations() {
+        User otherUser = new User(
+            Alias = 'newsread',
+            Email = 'newsread@example.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'News Reader',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            ProfileId = UserInfo.getProfileId(),
+            TimeZoneSidKey = 'Europe/Oslo',
+            Username = 'newsread.' + UserInfo.getOrganizationId() + '.' + Datetime.now().getTime() + '@example.com'
+        );
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            insert otherUser;
+        }
+        NKS_Announcement__c news = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        Id recordTypeId = NKS_AuditLogController.getRecordTypeId('Announcement Audit Log');
+        insert new List<NKS_Audit_Log__c>{
+            new NKS_Audit_Log__c(
+                RecordTypeId = recordTypeId,
+                Announcement__c = news.Id,
+                User__c = otherUser.Id,
+                Operation__c = 'View'
+            ),
+            new NKS_Audit_Log__c(
+                RecordTypeId = recordTypeId,
+                Announcement__c = news.Id,
+                User__c = UserInfo.getUserId(),
+                Operation__c = 'Edit'
+            )
+        };
+
+        Test.startTest();
+        List<NKS_HomePageController.RecordWrapper> records = getNewsListForReadStatus(news.Id);
+        Test.stopTest();
+
+        Assert.isFalse(records[0].isRead, 'Only the current user viewing the news should mark it read.');
+    }
+
+    @isTest
+    static void testNewsReadStatusIsScopedToReturnedNews() {
+        NKS_Announcement__c news = [SELECT Id FROM NKS_Announcement__c WHERE NKS_TypeFormula__c = 'Nyhet' LIMIT 1];
+        NKS_Announcement__c unreadNews = new NKS_Announcement__c(
+            Name = 'Unread news',
+            RecordTypeId = Schema.SObjectType.NKS_Announcement__c.getRecordTypeInfosByName()
+                .get('News')
+                .getRecordTypeId()
+        );
+        insert unreadNews;
+        insert new NKS_Audit_Log__c(
+            RecordTypeId = NKS_AuditLogController.getRecordTypeId('Announcement Audit Log'),
+            Announcement__c = news.Id,
+            User__c = UserInfo.getUserId(),
+            Operation__c = 'View'
+        );
+
+        Test.startTest();
+        List<NKS_HomePageController.RecordWrapper> records = getNewsListForReadStatus(unreadNews.Id);
+        Test.stopTest();
+
+        Assert.areEqual(1, records.size());
+        Assert.isFalse(records[0].isRead, 'Viewing a different news article must not mark this one read.');
+    }
+
+    @isTest
+    static void testEmptyAnnouncementReadStatus() {
+        Test.startTest();
+        List<NKS_HomePageController.RecordWrapper> records = getNewsListForReadStatus(null);
+        Test.stopTest();
+
+        Assert.areEqual(0, records.size());
+    }
+
+    private static List<NKS_HomePageController.RecordWrapper> getNewsListForReadStatus(Id newsId) {
+        return NKS_HomePageController.getAnnouncementList(
+            'Name',
+            'NKS_Information__c',
+            newsId == null ? 'Id = null' : 'Id = \'' + newsId + '\'',
+            'CreatedDate DESC',
+            '10',
+            'CreatedDate',
+            false,
+            false,
+            null
+        );
+    }
+
+    @isTest
     static void testGetListKnowledge() {
         Test.startTest();
         List<NKS_HomePageController.RecordWrapper> recordlist = NKS_HomePageController.getKnowledgeList(

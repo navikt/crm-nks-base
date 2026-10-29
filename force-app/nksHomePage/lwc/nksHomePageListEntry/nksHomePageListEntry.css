@@ -21,3 +21,15 @@ img {
     font-size: 0.83rem;
     font-weight: 500;
 }
+
+.news-unread .title,
+.news-unread .summary,
+.news-unread .news-date {
+    font-weight: 700;
+}
+
+.news-read .title,
+.news-read .summary,
+.news-read .news-date {
+    font-weight: 400;
+}

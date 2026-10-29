@@ -9,6 +9,13 @@ import { subscribe, onError } from 'lightning/empApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import userId from '@salesforce/user/Id';
+import {
+    APPLICATION_SCOPE,
+    MessageContext,
+    subscribe as subscribeToMessage,
+    unsubscribe as unsubscribeFromMessage
+} from 'lightning/messageService';
+import NEWS_VIEWED_CHANNEL from '@salesforce/messageChannel/nksNewsViewed__c';
 
 export default class nksHomePageList extends NavigationMixin(LightningElement) {
     @api cardLabel = 'Title';
@@ -34,6 +41,11 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
     subscription = {};
     pageurl;
     isRefreshDisabled = false;
+    newsViewedSubscription;
+    refreshNewsOnLoad = true;
+
+    @wire(MessageContext)
+    messageContext;
 
     connectedCallback() {
         this.showSpinner = true;
@@ -46,7 +58,44 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         }
         this.generateListUrl();
         this.setupEmpSubscription();
+        if (this.isNews) {
+            this.refreshNewsOnLoad = true;
+            window.addEventListener('focus', this.refreshNewsReadStatus);
+        }
     }
+
+    renderedCallback() {
+        if (this.isNews && this.messageContext && !this.newsViewedSubscription) {
+            this.newsViewedSubscription = subscribeToMessage(
+                this.messageContext,
+                NEWS_VIEWED_CHANNEL,
+                (message) => {
+                    if (this.records.some((record) => record.recordId === message.recordId)) {
+                        this.refreshNewsReadStatus();
+                    }
+                },
+                { scope: APPLICATION_SCOPE }
+            );
+        }
+    }
+
+    disconnectedCallback() {
+        window.removeEventListener('focus', this.refreshNewsReadStatus);
+        if (this.newsViewedSubscription) {
+            unsubscribeFromMessage(this.newsViewedSubscription);
+            this.newsViewedSubscription = undefined;
+        }
+    }
+
+    refreshNewsReadStatus = async () => {
+        if (this.isNews && this.wiredResults?.data) {
+            try {
+                await refreshApex(this.wiredResults);
+            } catch (error) {
+                this.handleError(error);
+            }
+        }
+    };
 
     objectNameForCase;
     objectNameForAnnouncement;
@@ -141,6 +190,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         this.wiredResults = result;
         if (result.data) {
             this.records = result.data;
+            if (this.isNews && this.refreshNewsOnLoad) {
+                this.refreshNewsOnLoad = false;
+                this.refreshNewsReadStatus();
+            }
         } else if (result.error) {
             this.handleError(result.error);
         }
@@ -200,8 +253,10 @@ export default class nksHomePageList extends NavigationMixin(LightningElement) {
         let message = 'Unknown error';
         if (Array.isArray(error.body)) {
             message = error.body.map((e) => e.message).join(', ');
-        } else if (typeof error.body.message === 'string') {
+        } else if (typeof error.body?.message === 'string') {
             message = error.body.message;
+        } else if (typeof error.message === 'string') {
+            message = error.message;
         }
         this.dispatchEvent(
             new ShowToastEvent({

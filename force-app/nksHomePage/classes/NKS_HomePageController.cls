@@ -106,7 +106,36 @@ public with sharing class NKS_HomePageController {
             query += ' LIMIT ' + limitNumber;
         }
 
-        return createWrapperRecords(Database.query(query), 'NKS_Announcement__c', title, content, dateField, showImage);
+        List<RecordWrapper> records = createWrapperRecords(
+            Database.query(query),
+            'NKS_Announcement__c',
+            title,
+            content,
+            dateField,
+            showImage
+        );
+        Set<Id> announcementIds = new Set<Id>();
+        for (RecordWrapper record : records) {
+            announcementIds.add(record.recordId);
+        }
+        if (announcementIds.isEmpty()) {
+            return records;
+        }
+
+        Id currentUserId = UserInfo.getUserId();
+        Set<Id> readAnnouncementIds = new Set<Id>();
+        for (AggregateResult viewLog : [
+            SELECT Announcement__c
+            FROM NKS_Audit_Log__c
+            WHERE Announcement__c IN :announcementIds AND User__c = :currentUserId AND Operation__c = 'View'
+            GROUP BY Announcement__c
+        ]) {
+            readAnnouncementIds.add((Id) viewLog.get('Announcement__c'));
+        }
+        for (RecordWrapper record : records) {
+            record.isRead = readAnnouncementIds.contains(record.recordId);
+        }
+        return records;
     }
 
     @AuraEnabled(cacheable=true)
@@ -253,6 +282,7 @@ public with sharing class NKS_HomePageController {
                 NKS_News_Other_Authors__c,
                 NKS_News_Publish_Date__c,
                 NKS_News_Update_Date__c,
+                NKS_News_Status__c,
                 LastModifiedDate,
                 NKS_Information__c,
                 NKS_ImageURL__c
@@ -300,6 +330,8 @@ public with sharing class NKS_HomePageController {
         public Datetime publishDate;
         @AuraEnabled
         public Datetime lastUpdatedDate;
+        @AuraEnabled
+        public Boolean isRead = false;
         @AuraEnabled
         public String status;
     }

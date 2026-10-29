@@ -6,6 +6,9 @@ import countViews from '@salesforce/apex/NKS_AuditLogController.countViews';
 import hasPermission from '@salesforce/customPermission/NKS_Manage_News';
 import { refreshApex } from '@salesforce/apex';
 import AUTHOR_NAME_FIELD from '@salesforce/schema/User.NKS_FullName__c';
+import { MessageContext, publish } from 'lightning/messageService';
+import NEWS_VIEWED_CHANNEL from '@salesforce/messageChannel/nksNewsViewed__c';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class NksHomePageNews extends LightningElement {
     @api recordId;
@@ -27,13 +30,33 @@ export default class NksHomePageNews extends LightningElement {
     imageURL;
     siteURL;
     numOfViews = 0;
-    isRendered = false;
+    loggedNewsId;
 
-    renderedCallback() {
-        if (!this.isRendered) {
-            this.isRendered = true;
-            createAuditLog({ recordId: this.recordId, lookupField: 'Announcement__c' });
+    @wire(MessageContext)
+    messageContext;
+
+    logNewsView(recordId) {
+        if (this.loggedNewsId === recordId || this.news.NKS_News_Status__c === 'Draft') {
+            return;
         }
+        this.loggedNewsId = recordId;
+        createAuditLog({ recordId, lookupField: 'Announcement__c' })
+            .then(() => {
+                publish(this.messageContext, NEWS_VIEWED_CHANNEL, { recordId });
+            })
+            .catch((error) => {
+                if (this.loggedNewsId === recordId) {
+                    this.loggedNewsId = undefined;
+                }
+                console.error('Failed to log news view:', error);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Kunne ikke registrere lest nyhet',
+                        message: error.body?.message || error.message,
+                        variant: 'error'
+                    })
+                );
+            });
     }
 
     @wire(getNews, {
@@ -87,6 +110,7 @@ export default class NksHomePageNews extends LightningElement {
                 this.otherAuthors = this.news.NKS_News_Other_Authors__c;
                 this.information = this.news.NKS_Information__c;
                 this.imageURL = this.news.NKS_ImageURL__c;
+                this.logNewsView(this.news.Id);
             }
         }
         if (error) {

@@ -22,7 +22,7 @@
         </div>
     </template>
     <template lwc:elseif={isNews}>
-        <div class="slds-grid slds-gutters">
+        <div class={newsClass}>
             <div class="slds-col slds-size_3-of-12">
                 <a href={recordPageUrl} onclick={navigateToSObject}>
                     <img src={record.imageurl} alt={record.name} />
@@ -40,7 +40,9 @@
                             ></lightning-icon>
                         </template>
                         <h3>
-                            <a href={recordPageUrl} class="title" onclick={navigateToSObject}>{record.name}</a>
+                            <a href={recordPageUrl} class="title" onclick={navigateToSObject}>
+                                {record.name}<span class="slds-assistive-text">{readStatusLabel}</span>
+                            </a>
                         </h3>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" class="slds-line-clamp_x-small">
@@ -49,9 +51,9 @@
                             class="summary"
                         ></lightning-formatted-rich-text>
                     </lightning-layout-item>
-                    <lightning-layout-item size="12">{publishDate}</lightning-layout-item>
+                    <lightning-layout-item size="12" class="news-date">{publishDate}</lightning-layout-item>
                     <template lwc:if={record.lastUpdatedDate}>
-                        <lightning-layout-item size="12">{updateDate}</lightning-layout-item>
+                        <lightning-layout-item size="12" class="news-date">{updateDate}</lightning-layout-item>
                     </template>
                 </lightning-layout>
             </div>
