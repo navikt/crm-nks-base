@@ -23,7 +23,7 @@ import getKrrInfo from '@salesforce/apex/NKS_KrrInformationController.getKrrInfo
 
 const LABELS = {
     mobile: 'Mobilnummer',
-    phoneFromNav: 'Telefon fra nav.no'
+    phoneFromFolkeregisteret: 'Telefonnummer fra Folkeregisteret'
 };
 
 const PERSON_CONTACT_FIELDS = [
@@ -244,11 +244,11 @@ export default class NksContactInformation extends LightningElement {
     }
 
     get formattedPhone1() {
-        return this.getFormattedPhone(this.phone1, LABELS.phoneFromNav);
+        return this.getFormattedPhone(this.phone1, LABELS.phoneFromFolkeregisteret);
     }
 
     get formattedPhone2() {
-        return this.getFormattedPhone(this.phone2, LABELS.phoneFromNav);
+        return this.getFormattedPhone(this.phone2, LABELS.phoneFromFolkeregisteret);
     }
 
     get fancyError() {
