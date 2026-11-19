@@ -13,6 +13,20 @@ public class NKS_CallFlowController_Test {
         TEST_ACCESSNUMBER +
         '"}]';
 
+    @TestSetup
+    static void grantCallCaseAccess() {
+        Id permissionSetId = [SELECT Id FROM PermissionSet WHERE Name = 'NKS_Case' LIMIT 1].Id;
+        if (
+            [
+                SELECT COUNT()
+                FROM PermissionSetAssignment
+                WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSetId = :permissionSetId
+            ] == 0
+        ) {
+            insert new PermissionSetAssignment(AssigneeId = UserInfo.getUserId(), PermissionSetId = permissionSetId);
+        }
+    }
+
     @isTest
     static void testGetCallQueueInfo() {
         Test.startTest();
@@ -61,5 +75,139 @@ public class NKS_CallFlowController_Test {
 
         Assert.areEqual('PERSON', response.callerContext);
         Assert.areEqual('TEST QUEUE', response.queueName);
+    }
+
+    @IsTest
+    static void testAuthenticationRequiresCaseId() {
+        try {
+            NKS_CallFlowController.getCallAuthenticationStatus(null);
+            Assert.fail('A missing case ID must be reported.');
+        } catch (AuraHandledException expected) {
+            Assert.isNotNull(expected);
+        }
+    }
+
+    @IsTest
+    static void testAuthenticatedCall() {
+        Case callCase = makeCallCase();
+        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+
+        Test.startTest();
+        Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+        Test.stopTest();
+
+        Assert.isTrue(response.get('isAuthenticated'));
+        Assert.isFalse(response.get('shouldRetry'));
+    }
+
+    @IsTest
+    static void testOnlyExactAuthenticationMarkerIsAccepted() {
+        Case callCase = makeCallCase();
+        List<String> unverifiedValues = new List<String>{
+            null,
+            '',
+            'CASE123',
+            '.authenticatedOK',
+            'CASE123authenticatedOK',
+            'CASE123.authenticatedok',
+            'CASE123.authenticatedOK.extra',
+            'CASE123.authenticatedOK ',
+            'CASE123 .authenticatedOK',
+            'CASE123.false',
+            'CASE123.error'
+        };
+
+        Test.startTest();
+        for (String value : unverifiedValues) {
+            setAuthenticationLog(value, TEST_SESSION_ID);
+            Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+            Assert.isFalse(response.get('isAuthenticated'), 'Unexpected authentication for value: ' + value);
+            Assert.isTrue(response.get('shouldRetry'));
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void testDelayedLogAndSessionIsolation() {
+        Case callCase = makeCallCase();
+        setAuthenticationLog('CASE123.authenticatedOK', 'ANOTHER_SESSION');
+
+        Test.startTest();
+        Map<String, Boolean> pending = getAuthenticationStatus(callCase.Id);
+        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        Map<String, Boolean> arrived = getAuthenticationStatus(callCase.Id);
+        Test.stopTest();
+
+        Assert.isFalse(pending.get('isAuthenticated'));
+        Assert.isTrue(pending.get('shouldRetry'));
+        Assert.isTrue(arrived.get('isAuthenticated'));
+    }
+
+    @IsTest
+    static void testStatusRequiresAccountPhoneAndSession() {
+        Case callCase = makeCallCase();
+        Id accountId = callCase.AccountId;
+        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+
+        Test.startTest();
+        callCase.AccountId = null;
+        update callCase;
+        Map<String, Boolean> noAccount = getAuthenticationStatus(callCase.Id);
+        callCase.AccountId = accountId;
+        callCase.Origin = 'Web';
+        update callCase;
+        Map<String, Boolean> nonCall = getAuthenticationStatus(callCase.Id);
+        callCase.Origin = 'Phone';
+        callCase.NKS_Puzzel_Session_Id__c = null;
+        update callCase;
+        Map<String, Boolean> noSession = getAuthenticationStatus(callCase.Id);
+        Test.stopTest();
+
+        Assert.isFalse(noAccount.get('isAuthenticated'));
+        Assert.isFalse(noAccount.get('shouldRetry'));
+        Assert.isFalse(nonCall.get('isAuthenticated'));
+        Assert.isFalse(nonCall.get('shouldRetry'));
+        Assert.isFalse(noSession.get('isAuthenticated'));
+        Assert.isFalse(noSession.get('shouldRetry'));
+    }
+
+    @IsTest
+    static void testAmbiguousLogsDoNotAuthenticate() {
+        Case callCase = makeCallCase();
+        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        List<Object> logs = (List<Object>) JSON.deserializeUntyped(MOCK_ENQUIRY_LOG);
+        logs.add(new Map<String, Object>{ 'puzzel__SessionId__c' => TEST_SESSION_ID });
+        MOCK_ENQUIRY_LOG = JSON.serialize(logs);
+
+        Test.startTest();
+        Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+        Test.stopTest();
+
+        Assert.isFalse(response.get('isAuthenticated'));
+        Assert.isFalse(response.get('shouldRetry'));
+    }
+
+    private static Map<String, Boolean> getAuthenticationStatus(Id caseId) {
+        Map<String, Boolean> response;
+        System.runAs(new User(Id = UserInfo.getUserId())) {
+            response = NKS_CallFlowController.getCallAuthenticationStatus(caseId);
+        }
+        return response;
+    }
+
+    private static Case makeCallCase() {
+        Account account = new Account(Name = 'BankID call test');
+        insert account;
+        Case callCase = new Case(AccountId = account.Id, Origin = 'Phone', NKS_Puzzel_Session_Id__c = TEST_SESSION_ID);
+        insert callCase;
+        return callCase;
+    }
+
+    private static void setAuthenticationLog(String caseId, String sessionId) {
+        MOCK_ENQUIRY_LOG = JSON.serialize(
+            new List<Object>{
+                new Map<String, Object>{ 'puzzel__SessionId__c' => sessionId, 'puzzel__CaseId__c' => caseId }
+            }
+        );
     }
 }

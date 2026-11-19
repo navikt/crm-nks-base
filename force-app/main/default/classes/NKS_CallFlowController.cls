@@ -2,8 +2,62 @@ public without sharing class NKS_CallFlowController {
     private static final List<String> QUERY_FIELDS = new List<String>{
         'puzzel__SessionId__c',
         'puzzel__Queue__c',
-        'puzzel__AccessNumber__c'
+        'puzzel__AccessNumber__c',
+        'puzzel__CaseId__c'
     };
+
+    @AuraEnabled
+    public static Map<String, Boolean> getCallAuthenticationStatus(Id caseId) {
+        Map<String, Boolean> response = new Map<String, Boolean>{ 'isAuthenticated' => false, 'shouldRetry' => false };
+        if (caseId == null) {
+            throw new AuraHandledException('A call case ID is required.');
+        }
+
+        List<Case> cases = [
+            SELECT AccountId, Origin, NKS_Puzzel_Session_Id__c
+            FROM Case
+            WHERE Id = :caseId
+            WITH USER_MODE
+        ];
+        if (cases.isEmpty()) {
+            throw new AuraHandledException('The call case is not accessible.');
+        }
+        Case callCase = cases[0];
+        if (
+            callCase.Origin != 'Phone' ||
+            callCase.AccountId == null ||
+            String.isBlank(callCase.NKS_Puzzel_Session_Id__c)
+        ) {
+            return response;
+        }
+
+        if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
+            throw new AuraHandledException('Puzzel EnquiryLog is not available.');
+        }
+
+        List<Map<String, Object>> matchingLogs = new List<Map<String, Object>>();
+        for (Object enquiryLog : getEnquiryLogs(new List<String>{ callCase.NKS_Puzzel_Session_Id__c })) {
+            Map<String, Object> log = (Map<String, Object>) enquiryLog;
+            if ((String) log.get('puzzel__SessionId__c') == callCase.NKS_Puzzel_Session_Id__c) {
+                matchingLogs.add(log);
+            }
+        }
+        if (matchingLogs.size() > 1) {
+            LoggerUtility logger = new LoggerUtility('CallFlowController');
+            logger.error('Multiple EnquiryLogs found for call case ' + caseId, null, CRM_ApplicationDomain.Domain.NKS);
+            logger.publish();
+            return response;
+        }
+        Boolean isAuthenticated = false;
+        if (matchingLogs.size() == 1) {
+            String puzzelCaseId = (String) matchingLogs[0].get('puzzel__CaseId__c');
+            // The prefix is Puzzel's case identifier, not the caller's personal identifier.
+            isAuthenticated = puzzelCaseId != null && Pattern.matches('[^.\\s]+\\.authenticatedOK', puzzelCaseId);
+        }
+        response.put('isAuthenticated', isAuthenticated);
+        response.put('shouldRetry', !isAuthenticated);
+        return response;
+    }
 
     private static Schema.SObjectType getEnquiryLogObject() {
         try {

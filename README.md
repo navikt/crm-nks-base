@@ -30,6 +30,49 @@ Det er noen viktige elementer som må sette opp korrekt for at funksjonalitet fo
 -   Oppdatering av custom setting **Access Token Scope** med riktige scopes for APIene man ønsker å sette opp (f.eks Oppgave, og Dokarkiv)
     -   Har man tilgang kan f.eks disse finnes for preprod ved å navigere til riktig klient i [Azure](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)
 
+## BankID-status for telefoni
+
+Puzzel kan i en avtalt test sende `<caseId>.authenticatedOK` i `sfdc_case_id`, som
+integrasjonen lagrer i `puzzel__EnquiryLog__c.puzzel__CaseId__c`. Prefikset er Puzzels
+case-ID, ikke et fødselsnummer eller nødvendigvis Salesforce-sakens ID. Bare det
+eksakte suffikset `.authenticatedOK`, etter en ikke-tom ID uten punktum eller
+mellomrom, regnes som vellykket autentisering. Gamle verdier, tomme felt og andre
+statuser viser ikke en grønn badge.
+
+`NKS_Inbound_Call` bevarer sesjons-ID på den opprettede saken i
+`NKS_Puzzel_Session_Id__c`. Samtalereferatkomponenten bruker denne til å slå opp
+riktig EnquiryLog og bruker eksisterende `Case.AccountId` for kontotilknytningen.
+Sesjonsfeltet gis lesetilgang via `NKS_Case` og skal ikke være redigerbart for
+veiledere. Eksisterende saker uten sesjonskobling viser ikke badgen.
+
+Personbytte skal gå gjennom `NKS_Case_Change_Account`, som oppretter en ny sak uten
+å kopiere sesjonskoblingen. Badgen skjules også hvis komponenten observerer at
+kontoen endres på den åpne saken. Det lagres ikke noe separat øyeblikksbilde av
+opprinnelig konto; direkte endring av `AccountId` med bevart sesjonskobling er
+derfor ikke en støttet måte å bytte person på, og kan ikke oppdages etter ny
+innlasting. En slik arbeidsflyt må håndteres separat før den eventuelt tas i bruk.
+
+Oppslaget gjentas inntil 12 ganger med fem sekunders mellomrom mens komponenten er
+åpen, siden EnquiryLog kan opprettes etter at saken er vist. Etter dette vises
+ingen bekreftelse; last inn saken på nytt for å prøve igjen. Dette trenger ikke
+vente på den daglige CallLog-batchen, og virker også for køer uten NKS_Call_Log.
+Resultatet lagres ikke som en varig autentisering av personen.
+
+For testen må Puzzel bekrefte at markøren gjelder BankID-identiteten til samme
+person som Salesforce finner gjennom `Search`, i samme sesjon. Salesforce kan
+ikke bevise denne koblingen fra et case-ID-suffiks alene. Kontroller med et
+testanrop at `Search` fortsatt inneholder den opprinnelige søkeverdien, og at
+endringen ikke bryter Puzzels eksisterende bruk av case-ID. Løsningen endrer
+ikke `Search` og forsøker ikke å tolke case-ID som et fødselsnummer.
+
+Test vellykket autentisering, avbrutt/feilet BankID, gamle verdier uten markør,
+forsinket EnquiryLog og bytte av person/sak. Sammenlign bare anonymiserte data.
+
+Enhetstesten for badgen kan kjøres med
+`npm run test:unit -- --skipApiVersionCheck -- --runInBand --runTestsByPath force-app\main\default\lwc\nksCallAuthenticationBadge\__tests__\nksCallAuthenticationBadge.test.js`.
+API-versjonskontrollen hoppes over fordi den installerte LWC-testkjøreren er eldre
+enn prosjektets API-versjon; dette erstatter ikke validering i en Salesforce-org.
+
 ## Komme i gang
 
 1. Salesforce DX-bruker. Kontakt #crm-plattform-team på Slack om du ikke har dette

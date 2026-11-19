@@ -103,6 +103,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>Call_Case.NKS_Puzzel_Session_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SessionId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>Call_Case.Origin</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -151,6 +158,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>RELATED_ACCOUNT_ID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Call_Case.NKS_Puzzel_Session_Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SessionId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
