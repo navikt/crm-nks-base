@@ -32,12 +32,15 @@ Det er noen viktige elementer som må sette opp korrekt for at funksjonalitet fo
 
 ## BankID-status for telefoni
 
-Puzzel kan i en avtalt test sende `<caseId>.authenticatedOK` i `sfdc_case_id`, som
-integrasjonen lagrer i `puzzel__EnquiryLog__c.puzzel__CaseId__c`. Prefikset er Puzzels
-case-ID, ikke et fødselsnummer eller nødvendigvis Salesforce-sakens ID. Bare det
-eksakte suffikset `.authenticatedOK`, etter en ikke-tom ID uten punktum eller
-mellomrom, regnes som vellykket autentisering. Gamle verdier, tomme felt og andre
-statuser viser ikke en grønn badge.
+Puzzel sender `"<caseId>","authenticated":"true"` i `sfdc_case_id`, som integrasjonen
+lagrer i `puzzel__EnquiryLog__c.puzzel__CaseId__c`. Dette er et tekstformat, ikke
+et komplett JSON-objekt. Hele verdien må matche en ikke-tom, sitert case-ID uten
+anførselstegn, mellomrom eller omvendt skråstrek, etterfulgt av egenskapen
+`"authenticated":"true"`. Mellomrom rundt skilletegnene mellom ID og status tillates.
+Statusen er tekst og må være nøyaktig `"true"`; `"false"`, `"error"`, manglende status
+og feilformede verdier gir ikke en grønn badge.
+
+Case-ID tolkes ikke som et fødselsnummer eller nødvendigvis Salesforce-sakens ID.
 
 `NKS_Inbound_Call` bevarer sesjons-ID på den opprettede saken i
 `NKS_Puzzel_Session_Id__c`. Samtalereferatkomponenten bruker denne til å slå opp
@@ -52,15 +55,47 @@ opprinnelig konto; direkte endring av `AccountId` med bevart sesjonskobling er
 derfor ikke en støttet måte å bytte person på, og kan ikke oppdages etter ny
 innlasting. En slik arbeidsflyt må håndteres separat før den eventuelt tas i bruk.
 
-Oppslaget gjentas inntil 12 ganger med fem sekunders mellomrom mens komponenten er
-åpen, siden EnquiryLog kan opprettes etter at saken er vist. Etter dette vises
-ingen bekreftelse; last inn saken på nytt for å prøve igjen. Dette trenger ikke
-vente på den daglige CallLog-batchen, og virker også for køer uten NKS_Call_Log.
-Resultatet lagres ikke som en varig autentisering av personen.
+Normale oppdateringer er hendelsesstyrte, uten polling eller tidsgrense. Den aktive
+etter-lagring-flowen `NKS_Puzzel_Notify_Authentication_Change` sender
+`NKS_Call_Authentication_Changed__e` når en EnquiryLog med sesjons-ID opprettes,
+eller når CaseId/sesjons-ID endres. Hendelsen publiseres etter commit og inneholder
+bare sesjons-ID, ikke fødselsnummer eller autentiseringsstatus.
+
+Badgen abonnerer gjennom `lightning/empApi`. Når forbindelsen fungerer, gjøres
+ferske Apex-oppslag bare ved oppstart, gjenoppkobling eller en hendelse for den aktuelle sesjonen.
+Et ekstra oppslag etter abonnementsbekreftelsen dekker endringer som skjer under
+oppstart. Samtidige hendelser samles slik at oppslag ikke overlapper.
+Dette dekker både forsinkede EnquiryLogger og autentisering som veilederen ber om
+senere i samtalen. Også endringer fra bekreftet til ubekreftet status oppdaterer
+badgen. Dette trenger ikke vente på den daglige CallLog-batchen og virker også
+for køer uten NKS_Call_Log. Resultatet lagres ikke som en varig autentisering av
+personen.
+
+Deploy eventdefinisjonen, den oppdaterte `NKS_Case`-tillatelsen og komponenten
+sammen med Apex-/Case-endringene. Installer deretter flowen fra
+`force-app\unpackagable-with-auto-deploy\flows` i miljøer med Puzzel-pakken.
+Flowen ligger utenfor pakken slik at scratch-orger uten Puzzel fortsatt støttes.
+Den må være aktiv for at eksterne oppdateringer skal bli synlige automatisk.
+Publiseringsfeil logges med `LoggerUtility`.
+
+Abonnenter trenger bare lesetilgang til den nye plattformhendelsen via `NKS_Case`;
+det gis ikke publiseringstilgang eller utvidet tilgang til EnquiryLog. Direkte
+CDC-abonnement ville krevd `View All Records` på EnquiryLog og er derfor ikke brukt.
+`lightning/empApi` krever en støttet Lightning Experience-skrivebordsnettleser.
+Badgen vises automatisk både ved allerede bekreftet identitet og når brukeren
+autentiserer seg senere. Det finnes ingen oppdateringsknapp.
+Ved oppslags- eller abonnementsfeil vises et varsel, og komponenten prøver igjen
+automatisk med økende intervall fra 2 til maksimalt 30 sekunder. Dersom
+sanntidsforbindelsen er utilgjengelig, hentes status også under disse forsøkene,
+slik at senere autentisering fortsatt blir synlig uten brukerhandling.
+Når forbindelsen og oppslagene fungerer igjen, stoppes feilgjenopprettingen;
+normale oppdateringer er fortsatt hendelsesstyrte uten polling.
+Hendelser bruker organisasjonens plattformhendelseskvoter. Leveringsvolumet
+avhenger også av antall innloggede abonnenter, ikke bare antall samtaler.
 
 For testen må Puzzel bekrefte at markøren gjelder BankID-identiteten til samme
 person som Salesforce finner gjennom `Search`, i samme sesjon. Salesforce kan
-ikke bevise denne koblingen fra et case-ID-suffiks alene. Kontroller med et
+ikke bevise denne koblingen fra feltinnholdet alene. Kontroller med et
 testanrop at `Search` fortsatt inneholder den opprinnelige søkeverdien, og at
 endringen ikke bryter Puzzels eksisterende bruk av case-ID. Løsningen endrer
 ikke `Search` og forsøker ikke å tolke case-ID som et fødselsnummer.
