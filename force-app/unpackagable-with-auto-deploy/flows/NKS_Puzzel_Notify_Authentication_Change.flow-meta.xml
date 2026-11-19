@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Log_Publish_Error</name>
+        <label>Log Publish Error</label>
+        <locationX>400</locationX>
+        <locationY>300</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>puzzel__EnquiryLog__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>CallFlowController</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>LoggerUtility</nameSegment>
+    </actionCalls>
+    <apiVersion>67.0</apiVersion>
+    <description>Publishes a session-only notification after Puzzel creates a call log or updates the authentication payload. Installed separately because the Puzzel package is not present in scratch orgs.</description>
+    <interviewLabel>Puzzel Authentication Change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>NKS Puzzel - Notify Authentication Change</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Publish_Authentication_Change</name>
+        <label>Publish Authentication Change</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <faultConnector>
+            <targetReference>Log_Publish_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>SessionId__c</field>
+            <value>
+                <elementReference>$Record.puzzel__SessionId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NKS_Call_Authentication_Changed__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>100</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Publish_Authentication_Change</targetReference>
+        </connector>
+        <filterFormula>AND(
+    NOT(ISBLANK({!$Record.puzzel__SessionId__c})),
+    OR(
+        ISNEW(),
+        ISCHANGED({!$Record.puzzel__CaseId__c}),
+        ISCHANGED({!$Record.puzzel__SessionId__c})
+    )
+)</filterFormula>
+        <object>puzzel__EnquiryLog__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -51,8 +51,10 @@ public without sharing class NKS_CallFlowController {
         Boolean isAuthenticated = false;
         if (matchingLogs.size() == 1) {
             String puzzelCaseId = (String) matchingLogs[0].get('puzzel__CaseId__c');
-            // The prefix is Puzzel's case identifier, not the caller's personal identifier.
-            isAuthenticated = puzzelCaseId != null && Pattern.matches('[^.\\s]+\\.authenticatedOK', puzzelCaseId);
+            // Puzzel sends a quoted case ID followed by an authentication property, not standalone JSON.
+            isAuthenticated =
+                puzzelCaseId != null &&
+                Pattern.matches('"[^"\\s\\\\]+",\\s*"authenticated"\\s*:\\s*"true"', puzzelCaseId);
         }
         response.put('isAuthenticated', isAuthenticated);
         response.put('shouldRetry', !isAuthenticated);

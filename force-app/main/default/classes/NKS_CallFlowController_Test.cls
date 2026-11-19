@@ -88,33 +88,61 @@ public class NKS_CallFlowController_Test {
     }
 
     @IsTest
-    static void testAuthenticatedCall() {
+    static void testAuthenticatedPuzzelFragment() {
         Case callCase = makeCallCase();
-        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        List<String> authenticatedValues = new List<String>{
+            '"CASE123","authenticated":"true"',
+            '"CASE123", "authenticated" : "true"'
+        };
 
         Test.startTest();
-        Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+        for (String value : authenticatedValues) {
+            setAuthenticationLog(value, TEST_SESSION_ID);
+            Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+            Assert.isTrue(response.get('isAuthenticated'));
+            Assert.isFalse(response.get('shouldRetry'));
+        }
         Test.stopTest();
-
-        Assert.isTrue(response.get('isAuthenticated'));
-        Assert.isFalse(response.get('shouldRetry'));
     }
 
     @IsTest
-    static void testOnlyExactAuthenticationMarkerIsAccepted() {
+    static void testUnverifiedAndMalformedPuzzelFragments() {
+        Case callCase = makeCallCase();
+        List<String> unverifiedValues = new List<String>{
+            '"CASE123","authenticated":"false"',
+            '"CASE123","authenticated":"error"',
+            '"CASE123","authenticated":""',
+            '"CASE123","authenticated":null',
+            '"CASE123","authenticated":"True"',
+            '"CASE123","authenticated":"true',
+            '"CASE123","authenticated":"true","authenticated":"false"',
+            '"CASE123","authenticated":"false","authenticated":"true"',
+            '"","authenticated":"true"',
+            '"CASE 123","authenticated":"true"',
+            '"CASE\\123","authenticated":"true"',
+            '"CASE123","unauthenticated":"true"',
+            'prefix"CASE123","authenticated":"true"',
+            '"CASE123","authenticated":"true"suffix'
+        };
+
+        Test.startTest();
+        for (String value : unverifiedValues) {
+            setAuthenticationLog(value, TEST_SESSION_ID);
+            Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+            Assert.isFalse(response.get('isAuthenticated'), 'Unexpected authentication for value: ' + value);
+            Assert.isTrue(response.get('shouldRetry'));
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void testMissingAndLegacyAuthenticationFormatsAreRejected() {
         Case callCase = makeCallCase();
         List<String> unverifiedValues = new List<String>{
             null,
             '',
             'CASE123',
-            '.authenticatedOK',
-            'CASE123authenticatedOK',
-            'CASE123.authenticatedok',
-            'CASE123.authenticatedOK.extra',
-            'CASE123.authenticatedOK ',
-            'CASE123 .authenticatedOK',
-            'CASE123.false',
-            'CASE123.error'
+            'CASE123.authenticatedOK'
         };
 
         Test.startTest();
@@ -130,11 +158,11 @@ public class NKS_CallFlowController_Test {
     @IsTest
     static void testDelayedLogAndSessionIsolation() {
         Case callCase = makeCallCase();
-        setAuthenticationLog('CASE123.authenticatedOK', 'ANOTHER_SESSION');
+        setAuthenticationLog('"CASE123","authenticated":"true"', 'ANOTHER_SESSION');
 
         Test.startTest();
         Map<String, Boolean> pending = getAuthenticationStatus(callCase.Id);
-        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        setAuthenticationLog('"CASE123","authenticated":"true"', TEST_SESSION_ID);
         Map<String, Boolean> arrived = getAuthenticationStatus(callCase.Id);
         Test.stopTest();
 
@@ -147,19 +175,19 @@ public class NKS_CallFlowController_Test {
     static void testStatusRequiresAccountPhoneAndSession() {
         Case callCase = makeCallCase();
         Id accountId = callCase.AccountId;
-        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        setAuthenticationLog('"CASE123","authenticated":"true"', TEST_SESSION_ID);
 
         Test.startTest();
         callCase.AccountId = null;
-        update callCase;
+        update as system callCase;
         Map<String, Boolean> noAccount = getAuthenticationStatus(callCase.Id);
         callCase.AccountId = accountId;
         callCase.Origin = 'Web';
-        update callCase;
+        update as system callCase;
         Map<String, Boolean> nonCall = getAuthenticationStatus(callCase.Id);
         callCase.Origin = 'Phone';
         callCase.NKS_Puzzel_Session_Id__c = null;
-        update callCase;
+        update as system callCase;
         Map<String, Boolean> noSession = getAuthenticationStatus(callCase.Id);
         Test.stopTest();
 
@@ -174,7 +202,7 @@ public class NKS_CallFlowController_Test {
     @IsTest
     static void testAmbiguousLogsDoNotAuthenticate() {
         Case callCase = makeCallCase();
-        setAuthenticationLog('CASE123.authenticatedOK', TEST_SESSION_ID);
+        setAuthenticationLog('"CASE123","authenticated":"true"', TEST_SESSION_ID);
         List<Object> logs = (List<Object>) JSON.deserializeUntyped(MOCK_ENQUIRY_LOG);
         logs.add(new Map<String, Object>{ 'puzzel__SessionId__c' => TEST_SESSION_ID });
         MOCK_ENQUIRY_LOG = JSON.serialize(logs);
@@ -199,7 +227,7 @@ public class NKS_CallFlowController_Test {
         Account account = new Account(Name = 'BankID call test');
         insert account;
         Case callCase = new Case(AccountId = account.Id, Origin = 'Phone', NKS_Puzzel_Session_Id__c = TEST_SESSION_ID);
-        insert callCase;
+        insert as system callCase;
         return callCase;
     }
 
