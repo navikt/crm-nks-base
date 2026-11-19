@@ -134,7 +134,7 @@
             <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Conversation_Summary.conversationNote</elementReference>
+                <elementReference>Conversation_Note_Draft</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -206,7 +206,7 @@
             <assignToReference>Conversation_Note_Record.CRM_Conversation_Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Conversation_Summary_Journal.conversationNote</elementReference>
+                <elementReference>Conversation_Note_Draft</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -1267,7 +1267,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <elementReference>Conversation_Summary.conversationNote</elementReference>
+                    <elementReference>Conversation_Note_Draft</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1282,9 +1282,22 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputParameters>
+                <name>draftInitialized</name>
+                <value>
+                    <elementReference>Conversation_Note_Draft_Initialized</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft</assignToReference>
+                <name>conversationNote</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft_Initialized</assignToReference>
+                <name>draftInitialized</name>
+            </outputParameters>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1413,7 +1426,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <stringValue></stringValue>
+                    <elementReference>Conversation_Note_Draft</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1428,9 +1441,22 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputParameters>
+                <name>draftInitialized</name>
+                <value>
+                    <elementReference>Conversation_Note_Draft_Initialized</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft</assignToReference>
+                <name>conversationNote</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft_Initialized</assignToReference>
+                <name>draftInitialized</name>
+            </outputParameters>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -1632,7 +1658,7 @@
             <inputParameters>
                 <name>conversationNoteRich</name>
                 <value>
-                    <elementReference>Conversation_Summary.conversationNote</elementReference>
+                    <elementReference>Conversation_Note_Draft</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1647,9 +1673,22 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputParameters>
+                <name>draftInitialized</name>
+                <value>
+                    <elementReference>Conversation_Note_Draft_Initialized</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft</assignToReference>
+                <name>conversationNote</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Conversation_Note_Draft_Initialized</assignToReference>
+                <name>draftInitialized</name>
+            </outputParameters>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -2017,6 +2056,23 @@
         <isInput>false</isInput>
         <isOutput>true</isOutput>
         <objectType>Conversation_Note__c</objectType>
+    </variables>
+    <variables>
+        <name>Conversation_Note_Draft</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Conversation_Note_Draft_Initialized</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>HAS_NO_ACCOUNT</name>
