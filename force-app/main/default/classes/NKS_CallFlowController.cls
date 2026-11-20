@@ -1,4 +1,8 @@
 public without sharing class NKS_CallFlowController {
+    // Puzzel appends a property to a quoted lookup value, rather than sending standalone JSON.
+    private static final Pattern AUTHENTICATION_PAYLOAD = Pattern.compile(
+        '"([^"\\s\\\\]+)",\\s*"authenticated"\\s*:\\s*"(true|false|error)"'
+    );
     private static final List<String> QUERY_FIELDS = new List<String>{
         'puzzel__SessionId__c',
         'puzzel__Queue__c',
@@ -51,10 +55,10 @@ public without sharing class NKS_CallFlowController {
         Boolean isAuthenticated = false;
         if (matchingLogs.size() == 1) {
             String puzzelCaseId = (String) matchingLogs[0].get('puzzel__CaseId__c');
-            // Puzzel sends a quoted case ID followed by an authentication property, not standalone JSON.
-            isAuthenticated =
-                puzzelCaseId != null &&
-                Pattern.matches('"[^"\\s\\\\]+",\\s*"authenticated"\\s*:\\s*"true"', puzzelCaseId);
+            if (puzzelCaseId != null) {
+                Matcher payload = AUTHENTICATION_PAYLOAD.matcher(puzzelCaseId);
+                isAuthenticated = payload.matches() && payload.group(2) == 'true';
+            }
         }
         response.put('isAuthenticated', isAuthenticated);
         response.put('shouldRetry', !isAuthenticated);
@@ -72,9 +76,23 @@ public without sharing class NKS_CallFlowController {
 
     @InvocableMethod(
         label='Get Call Queue'
-        description='Matches the Puzzel queue name from enquiry log to determine the caller context'
+        description='Determines caller context and separates the lookup value from Puzzel authentication status'
         category='Call Flow'
     )
+    public static List<CallQueueResponse> getInboundCallInfo(List<CallQueueRequest> requests) {
+        List<String> sessionIds = new List<String>();
+        for (CallQueueRequest request : requests) {
+            sessionIds.add(request.sessionIds);
+        }
+        List<CallQueueResponse> responses = getCallQueueInfo(sessionIds);
+        for (Integer i = 0; i < requests.size(); i++) {
+            if (!String.isBlank(requests[i].search)) {
+                responses[i].lookupValue = normalizeLookupValue(requests[i].search);
+            }
+        }
+        return responses;
+    }
+
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
         LoggerUtility logger = new LoggerUtility('CallFlowController');
         List<CallQueueResponse> responses = new List<CallQueueResponse>();
@@ -146,11 +164,21 @@ public without sharing class NKS_CallFlowController {
                 );
             }
 
-            responses.add(new CallQueueResponse(queueMapping, accessNumber));
+            CallQueueResponse response = new CallQueueResponse(queueMapping, accessNumber);
+            response.lookupValue = normalizeLookupValue((String) log.get('puzzel__CaseId__c'));
+            responses.add(response);
         }
 
         logger.publish();
         return responses;
+    }
+
+    private static String normalizeLookupValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        Matcher payload = AUTHENTICATION_PAYLOAD.matcher(value);
+        return payload.matches() ? payload.group(1) : value;
     }
 
     private static List<Puzzel_Queue_Mapping__mdt> getQueueMappings(Set<String> queueNames) {
@@ -173,6 +201,14 @@ public without sharing class NKS_CallFlowController {
         return (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(soql)));
     }
 
+    public class CallQueueRequest {
+        // Keep the input name used by existing Flow versions.
+        @InvocableVariable
+        public String sessionIds;
+        @InvocableVariable
+        public String search;
+    }
+
     public class CallQueueResponse {
         @InvocableVariable
         public String themeGroup;
@@ -182,6 +218,8 @@ public without sharing class NKS_CallFlowController {
         public String queueName;
         @InvocableVariable
         public String accessNumber;
+        @InvocableVariable
+        public String lookupValue;
 
         public CallQueueResponse() {
         }

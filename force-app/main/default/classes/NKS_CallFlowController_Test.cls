@@ -78,6 +78,107 @@ public class NKS_CallFlowController_Test {
     }
 
     @IsTest
+    static void testInboundLookupNormalizesIdentifiersRegardlessOfAuthentication() {
+        List<NKS_CallFlowController.CallQueueRequest> requests = new List<NKS_CallFlowController.CallQueueRequest>();
+        List<String> expectedValues = new List<String>();
+        for (String identifier : new List<String>{ '00000000001', '000000001', '12345678', '+4712345678' }) {
+            requests.add(makeCallQueueRequest(identifier, TEST_SESSION_ID));
+            expectedValues.add(identifier);
+            for (String status : new List<String>{ 'true', 'false', 'error' }) {
+                requests.add(
+                    makeCallQueueRequest('"' + identifier + '", "authenticated" : "' + status + '"', TEST_SESSION_ID)
+                );
+                expectedValues.add(identifier);
+            }
+        }
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(requests);
+        Test.stopTest();
+
+        Assert.areEqual(expectedValues.size(), responses.size());
+        for (Integer i = 0; i < expectedValues.size(); i++) {
+            Assert.areEqual(expectedValues[i], responses[i].lookupValue);
+            Assert.areEqual(TEST_QUEUE, responses[i].queueName);
+            Assert.areEqual(TEST_ACCESSNUMBER, responses[i].accessNumber);
+        }
+    }
+
+    @IsTest
+    static void testMalformedSearchIsNotTruncatedIntoAnIdentifier() {
+        List<String> values = new List<String>{
+            '"00000000001","authenticated":"True"',
+            '"00000000001","authenticated":true',
+            '"00000000001","authenticated":"true","authenticated":"false"',
+            '"00000000001","authenticated":"true"suffix',
+            '"00000000001","authenticated":"true',
+            '"00000 000001","authenticated":"true"',
+            '"","authenticated":"true"',
+            '00000000001.authenticatedOK'
+        };
+        List<NKS_CallFlowController.CallQueueRequest> requests = new List<NKS_CallFlowController.CallQueueRequest>();
+        for (String value : values) {
+            requests.add(makeCallQueueRequest(value, TEST_SESSION_ID));
+        }
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(requests);
+        Test.stopTest();
+
+        for (Integer i = 0; i < values.size(); i++) {
+            Assert.areEqual(values[i], responses[i].lookupValue);
+        }
+    }
+
+    @IsTest
+    static void testMissingSearchUsesOnlyTheMatchingSessionAndDoesNotOverrideExplicitSearch() {
+        MOCK_ENQUIRY_LOG = JSON.serialize(
+            new List<Object>{
+                new Map<String, Object>{
+                    'puzzel__SessionId__c' => TEST_SESSION_ID,
+                    'puzzel__Queue__c' => TEST_QUEUE,
+                    'puzzel__CaseId__c' => '"00000000001","authenticated":"false"'
+                },
+                new Map<String, Object>{
+                    'puzzel__SessionId__c' => 'SECOND_SESSION',
+                    'puzzel__Queue__c' => TEST_QUEUE,
+                    'puzzel__CaseId__c' => '000000001'
+                }
+            }
+        );
+        List<NKS_CallFlowController.CallQueueRequest> requests = new List<NKS_CallFlowController.CallQueueRequest>{
+            makeCallQueueRequest(null, 'SECOND_SESSION'),
+            makeCallQueueRequest('', TEST_SESSION_ID),
+            makeCallQueueRequest('12345678', TEST_SESSION_ID),
+            makeCallQueueRequest(null, 'MISSING_SESSION')
+        };
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(requests);
+        Test.stopTest();
+
+        Assert.areEqual('000000001', responses[0].lookupValue);
+        Assert.areEqual('00000000001', responses[1].lookupValue);
+        Assert.areEqual('12345678', responses[2].lookupValue);
+        Assert.isNull(responses[3].lookupValue);
+    }
+
+    @IsTest
+    static void testIncomingLookupWorksBeforeEnquiryLogArrives() {
+        MOCK_ENQUIRY_LOG = '[]';
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(
+            new List<NKS_CallFlowController.CallQueueRequest>{
+                makeCallQueueRequest('"00000000001","authenticated":"false"', TEST_SESSION_ID)
+            }
+        );
+        Test.stopTest();
+
+        Assert.areEqual('00000000001', responses[0].lookupValue);
+    }
+
+    @IsTest
     static void testAuthenticationRequiresCaseId() {
         try {
             NKS_CallFlowController.getCallAuthenticationStatus(null);
@@ -138,12 +239,7 @@ public class NKS_CallFlowController_Test {
     @IsTest
     static void testMissingAndLegacyAuthenticationFormatsAreRejected() {
         Case callCase = makeCallCase();
-        List<String> unverifiedValues = new List<String>{
-            null,
-            '',
-            'CASE123',
-            'CASE123.authenticatedOK'
-        };
+        List<String> unverifiedValues = new List<String>{ null, '', 'CASE123', 'CASE123.authenticatedOK' };
 
         Test.startTest();
         for (String value : unverifiedValues) {
@@ -237,5 +333,12 @@ public class NKS_CallFlowController_Test {
                 new Map<String, Object>{ 'puzzel__SessionId__c' => sessionId, 'puzzel__CaseId__c' => caseId }
             }
         );
+    }
+
+    private static NKS_CallFlowController.CallQueueRequest makeCallQueueRequest(String search, String sessionId) {
+        NKS_CallFlowController.CallQueueRequest request = new NKS_CallFlowController.CallQueueRequest();
+        request.search = search;
+        request.sessionIds = sessionId;
+        return request;
     }
 }

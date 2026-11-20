@@ -40,7 +40,23 @@ anførselstegn, mellomrom eller omvendt skråstrek, etterfulgt av egenskapen
 Statusen er tekst og må være nøyaktig `"true"`; `"false"`, `"error"`, manglende status
 og feilformede verdier gir ikke en grønn badge.
 
-Case-ID tolkes ikke som et fødselsnummer eller nødvendigvis Salesforce-sakens ID.
+CaseId inneholder her oppslagsverdien som Puzzel sender, for eksempel personnummer,
+organisasjonsnummer eller telefonnummer, ikke Salesforce-sakens ID.
+
+Ved oppstart av `NKS_Inbound_Call` normaliseres det innkommende `Search` til
+`LOOKUP_VALUE`: vanlige verdier beholdes, mens det avtalte tekstformatet pakkes ut
+til den opprinnelige verdien. Dette gjelder likt for `"true"`, `"false"` og
+`"error"`, og innledende nuller beholdes. Hvis `Search` er tomt, brukes CaseId fra
+EnquiryLog for samme `SessionId`. Et ikke-tomt `Search` overstyres ikke av loggen.
+Feilformede autentiseringsfragmenter pakkes ikke ut.
+
+Eksisterende ruting bruker deretter `LOOKUP_VALUE`: 11 tegn gir personoppslag,
+9 tegn gir organisasjonsoppslag, og øvrige verdier følger telefonnummerløpet.
+Autentiseringsstatus styrer bare badgen, ikke Account-oppslaget. Senere endringer
+i EnquiryLog oppdaterer ikke Account-koblingen eller starter rutingen på nytt.
+Deploy controlleren og den oppdaterte flowen sammen for å ta i bruk normaliseringen.
+Det eksisterende inputnavnet `sessionIds` beholdes, og `search` er et nytt,
+valgfritt input til Apex-handlingen.
 
 `NKS_Inbound_Call` bevarer sesjons-ID på den opprettede saken i
 `NKS_Puzzel_Session_Id__c`. Samtalereferatkomponenten bruker denne til å slå opp
@@ -55,14 +71,15 @@ opprinnelig konto; direkte endring av `AccountId` med bevart sesjonskobling er
 derfor ikke en støttet måte å bytte person på, og kan ikke oppdages etter ny
 innlasting. En slik arbeidsflyt må håndteres separat før den eventuelt tas i bruk.
 
-Normale oppdateringer er hendelsesstyrte, uten polling eller tidsgrense. Den aktive
+Oppdateringene er hendelsesstyrte, uten polling, retry-timere eller tidsgrense. Den aktive
 etter-lagring-flowen `NKS_Puzzel_Notify_Authentication_Change` sender
 `NKS_Call_Authentication_Changed__e` når en EnquiryLog med sesjons-ID opprettes,
 eller når CaseId/sesjons-ID endres. Hendelsen publiseres etter commit og inneholder
 bare sesjons-ID, ikke fødselsnummer eller autentiseringsstatus.
 
-Badgen abonnerer gjennom `lightning/empApi`. Når forbindelsen fungerer, gjøres
-ferske Apex-oppslag bare ved oppstart, gjenoppkobling eller en hendelse for den aktuelle sesjonen.
+Badgen abonnerer gjennom `lightning/empApi` når saken har gyldig samtalekontekst.
+Ferske Apex-oppslag gjøres ved oppstart, når komponenten kobles til igjen, eller
+ved en hendelse for den aktuelle sesjonen.
 Et ekstra oppslag etter abonnementsbekreftelsen dekker endringer som skjer under
 oppstart. Samtidige hendelser samles slik at oppslag ikke overlapper.
 Dette dekker både forsinkede EnquiryLogger og autentisering som veilederen ber om
@@ -84,12 +101,12 @@ CDC-abonnement ville krevd `View All Records` på EnquiryLog og er derfor ikke b
 `lightning/empApi` krever en støttet Lightning Experience-skrivebordsnettleser.
 Badgen vises automatisk både ved allerede bekreftet identitet og når brukeren
 autentiserer seg senere. Det finnes ingen oppdateringsknapp.
-Ved oppslags- eller abonnementsfeil vises et varsel, og komponenten prøver igjen
-automatisk med økende intervall fra 2 til maksimalt 30 sekunder. Dersom
-sanntidsforbindelsen er utilgjengelig, hentes status også under disse forsøkene,
-slik at senere autentisering fortsatt blir synlig uten brukerhandling.
-Når forbindelsen og oppslagene fungerer igjen, stoppes feilgjenopprettingen;
-normale oppdateringer er fortsatt hendelsesstyrte uten polling.
+Manglende eller ubekreftet autentisering skjuler bare badgen, uten varsel.
+Bare faktiske oppslagsfeil, feil i abonnementet for BankID-hendelsen eller feil
+i den felles streamingforbindelsen varsles. Feil for andre hendelsesabonnementer
+utløser ikke BankID-varsler. Det startes ingen timer eller polling ved feil;
+neste relevante hendelse gjør et nytt statusoppslag. EMP API håndterer
+streamingforbindelsen, uten egen timerstyrt gjenoppkobling i komponenten.
 Hendelser bruker organisasjonens plattformhendelseskvoter. Leveringsvolumet
 avhenger også av antall innloggede abonnenter, ikke bare antall samtaler.
 
@@ -97,8 +114,8 @@ For testen må Puzzel bekrefte at markøren gjelder BankID-identiteten til samme
 person som Salesforce finner gjennom `Search`, i samme sesjon. Salesforce kan
 ikke bevise denne koblingen fra feltinnholdet alene. Kontroller med et
 testanrop at `Search` fortsatt inneholder den opprinnelige søkeverdien, og at
-endringen ikke bryter Puzzels eksisterende bruk av case-ID. Løsningen endrer
-ikke `Search` og forsøker ikke å tolke case-ID som et fødselsnummer.
+endringen ikke bryter Puzzels eksisterende bruk av case-ID. Råverdiene i `Search`
+og CaseId beholdes; `LOOKUP_VALUE` brukes til den eksisterende identifikatorrutingen.
 
 Test vellykket autentisering, avbrutt/feilet BankID, gamle verdier uten markør,
 forsinket EnquiryLog og bytte av person/sak. Sammenlign bare anonymiserte data.

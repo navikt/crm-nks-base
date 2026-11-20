@@ -9,8 +9,6 @@ import SESSION_FIELD from '@salesforce/schema/Case.NKS_Puzzel_Session_Id__c';
 
 const CASE_FIELDS = [ACCOUNT_FIELD, ORIGIN_FIELD, SESSION_FIELD];
 const CHANNEL = '/event/NKS_Call_Authentication_Changed__e';
-const INITIAL_RETRY_DELAY = 2000;
-const MAX_RETRY_DELAY = 30000;
 const streamingErrorListeners = new Set();
 let streamingErrorHandlerRegistered = false;
 
@@ -30,8 +28,6 @@ export default class NksCallAuthenticationBadge extends LightningElement {
     _lookupVersion;
     _refreshQueued = false;
     _streamingErrorListener;
-    _retryTimer;
-    _retryDelay = INITIAL_RETRY_DELAY;
 
     @api
     get recordId() {
@@ -41,6 +37,7 @@ export default class NksCallAuthenticationBadge extends LightningElement {
     set recordId(value) {
         if (value !== this._recordId) {
             this.resetAuthentication();
+            this.clearSubscription();
             this._caseContext = null;
             this._canCheck = false;
             this._sessionId = null;
@@ -51,7 +48,13 @@ export default class NksCallAuthenticationBadge extends LightningElement {
 
     connectedCallback() {
         this._streamingErrorListener = (error) => {
-            if (!error.channel || error.channel === CHANNEL || error.channel.startsWith('/meta/')) {
+            const failedChannel = error?.subscription || error?.channel;
+            if (
+                this._canCheck &&
+                (failedChannel === CHANNEL ||
+                    error?.channel === '/meta/connect' ||
+                    error?.channel === '/meta/handshake')
+            ) {
                 this.showStreamingError(error);
             }
         };
@@ -68,13 +71,8 @@ export default class NksCallAuthenticationBadge extends LightningElement {
 
     disconnectedCallback() {
         this.resetAuthentication();
-        this._connectionVersion += 1;
-        this._subscriptionPending = false;
+        this.clearSubscription();
         streamingErrorListeners.delete(this._streamingErrorListener);
-        if (this._subscription) {
-            this.stopListening(this._subscription);
-            this._subscription = null;
-        }
     }
 
     @wire(getRecord, { recordId: '$recordId', fields: CASE_FIELDS })
@@ -83,6 +81,7 @@ export default class NksCallAuthenticationBadge extends LightningElement {
             this.resetAuthentication();
             this._caseContext = null;
             this._canCheck = false;
+            this.clearSubscription();
             this.showError(error, 'Last inn saken på nytt for å prøve igjen.');
         } else if (data && data.id === this.recordId) {
             const accountId = data.fields.AccountId.value;
@@ -102,7 +101,10 @@ export default class NksCallAuthenticationBadge extends LightningElement {
                 origin === 'Phone' && accountId && accountId === this._initialAccountId && sessionId
             );
             if (this._canCheck) {
+                this.startListening();
                 this.checkAuthentication(this._requestVersion);
+            } else {
+                this.clearSubscription();
             }
         }
     }
@@ -138,23 +140,17 @@ export default class NksCallAuthenticationBadge extends LightningElement {
                     this._refreshQueued = false;
                     this.checkAuthentication(requestVersion);
                 }
-                this.updateRecovery();
             }
         }
     }
 
     async startListening() {
-        if ((this._subscription && !this._hasStreamingError) || this._subscriptionPending || !this.isConnected) {
+        if (this._subscription || this._subscriptionPending || !this.isConnected || !this._canCheck) {
             return;
         }
         const connectionVersion = ++this._connectionVersion;
         this._subscriptionPending = true;
         try {
-            if (this._subscription) {
-                const subscription = this._subscription;
-                this._subscription = null;
-                await this.stopListening(subscription);
-            }
             if (!(await isEmpEnabled())) {
                 throw new Error('Streaming is not supported in this browser context.');
             }
@@ -186,7 +182,6 @@ export default class NksCallAuthenticationBadge extends LightningElement {
         } finally {
             if (connectionVersion === this._connectionVersion) {
                 this._subscriptionPending = false;
-                this.updateRecovery();
             }
         }
     }
@@ -199,24 +194,14 @@ export default class NksCallAuthenticationBadge extends LightningElement {
         }).catch((error) => console.error('Unable to unsubscribe from call authentication changes:', error));
     }
 
-    updateRecovery() {
-        if (!this.isConnected || !this._canCheck || (!this._hasLookupError && !this._hasStreamingError)) {
-            clearTimeout(this._retryTimer);
-            this._retryTimer = null;
-            this._retryDelay = INITIAL_RETRY_DELAY;
-            return;
+    clearSubscription() {
+        this._connectionVersion += 1;
+        this._subscriptionPending = false;
+        this._hasStreamingError = false;
+        if (this._subscription) {
+            this.stopListening(this._subscription);
+            this._subscription = null;
         }
-        if (this._retryTimer) {
-            return;
-        }
-        // Only retry failures; healthy subscriptions never poll.
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        this._retryTimer = setTimeout(() => {
-            this._retryTimer = null;
-            this.startListening();
-            this.checkAuthentication(this._requestVersion);
-        }, this._retryDelay);
-        this._retryDelay = Math.min(this._retryDelay * 2, MAX_RETRY_DELAY);
     }
 
     showStreamingError(error) {
@@ -225,19 +210,15 @@ export default class NksCallAuthenticationBadge extends LightningElement {
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Automatisk BankID-oppdatering er utilgjengelig',
-                    message: 'Sanntidsforbindelsen er utilgjengelig. Status hentes automatisk med nye forsøk.',
+                    message: 'BankID-status kan være utdatert fordi sanntidsforbindelsen er utilgjengelig.',
                     variant: 'warning'
                 })
             );
         }
         this._hasStreamingError = true;
-        this.updateRecovery();
     }
 
     resetAuthentication() {
-        clearTimeout(this._retryTimer);
-        this._retryTimer = null;
-        this._retryDelay = INITIAL_RETRY_DELAY;
         this._requestVersion += 1;
         this._lookupVersion = null;
         this._refreshQueued = false;
@@ -245,7 +226,7 @@ export default class NksCallAuthenticationBadge extends LightningElement {
         this.isAuthenticated = false;
     }
 
-    showError(error, message = 'BankID-status kunne ikke hentes. Prøver igjen automatisk.') {
+    showError(error, message = 'BankID-status kunne ikke hentes.') {
         console.error('Unable to retrieve call authentication status:', error);
         this.dispatchEvent(
             new ShowToastEvent({

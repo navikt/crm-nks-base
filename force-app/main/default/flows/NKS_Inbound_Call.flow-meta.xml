@@ -12,6 +12,12 @@
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
+            <name>search</name>
+            <value>
+                <elementReference>Search</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>sessionIds</name>
             <value>
                 <elementReference>SessionId</elementReference>
@@ -25,6 +31,10 @@
         <outputParameters>
             <assignToReference>CALLER_CONTEXT</assignToReference>
             <name>callerContext</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>LOOKUP_VALUE</assignToReference>
+            <name>lookupValue</name>
         </outputParameters>
         <outputParameters>
             <assignToReference>PUZZEL_QUEUE_NAME</assignToReference>
@@ -192,7 +202,7 @@
             <assignToReference>Call_Case.ContactPhone</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Search</elementReference>
+                <elementReference>LOOKUP_VALUE</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -496,7 +506,7 @@
         <description>Formula to determine the type of input from the IVR. Either, PHONE_NUMBER, PERSON_IDENT or ORG_IDENT.</description>
         <name>INPUT_TYPE</name>
         <dataType>String</dataType>
-        <expression>CASE(LEN({!Search}),
+        <expression>CASE(LEN({!LOOKUP_VALUE}),
 11, &apos;PERSON_IDENT&apos;,
 9, &apos;ORG_IDENT&apos;,
 &apos;PHONE_NUMBER&apos;
@@ -671,7 +681,7 @@ IF(
             <field>INT_OrganizationNumber__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Search</elementReference>
+                <elementReference>LOOKUP_VALUE</elementReference>
             </value>
         </filters>
         <object>Account</object>
@@ -694,7 +704,7 @@ IF(
             <field>INT_PersonIdent__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Search</elementReference>
+                <elementReference>LOOKUP_VALUE</elementReference>
             </value>
         </filters>
         <filters>
@@ -794,6 +804,14 @@ PERSON, ARBEIDSGIVER, OTHER</description>
         </value>
     </variables>
     <variables>
+        <description>Initial lookup value without Puzzel authentication status. Later authentication updates do not rerun account routing.</description>
+        <name>LOOKUP_VALUE</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Name of the incoming call queue.</description>
         <name>PUZZEL_QUEUE_NAME</name>
         <dataType>String</dataType>
@@ -809,7 +827,7 @@ PERSON, ARBEIDSGIVER, OTHER</description>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Input parameter from the IVR</description>
+        <description>Raw input from the IVR, either a plain lookup value or a quoted value with appended authentication status.</description>
         <name>Search</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
