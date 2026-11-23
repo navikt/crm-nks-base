@@ -124,11 +124,6 @@ og CaseId beholdes; `LOOKUP_VALUE` brukes til den eksisterende identifikatorruti
 Test vellykket autentisering, avbrutt/feilet BankID, gamle verdier uten markør,
 forsinket EnquiryLog og bytte av person/sak. Sammenlign bare anonymiserte data.
 
-Enhetstesten for badgen kan kjøres med
-`npm run test:unit -- --skipApiVersionCheck -- --runInBand --runTestsByPath force-app\main\default\lwc\nksCallAuthenticationBadge\__tests__\nksCallAuthenticationBadge.test.js`.
-API-versjonskontrollen hoppes over fordi den installerte LWC-testkjøreren er eldre
-enn prosjektets API-versjon; dette erstatter ikke validering i en Salesforce-org.
-
 ## Komme i gang
 
 1. Salesforce DX-bruker. Kontakt #crm-plattform-team på Slack om du ikke har dette
