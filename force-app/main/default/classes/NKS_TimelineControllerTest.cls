@@ -46,13 +46,13 @@ private class NKS_TimelineControllerTest {
 
     @isTest
     static void testGetRecordsBlankId() {
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords('', 10);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords('', 10).groups;
         Assert.areEqual(0, result.size(), 'Expected empty list for blank recordId');
     }
 
     @isTest
     static void testGetRecordsNullId() {
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(null, 10);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(null, 10).groups;
         Assert.areEqual(0, result.size(), 'Expected empty list for null recordId');
     }
 
@@ -61,7 +61,7 @@ private class NKS_TimelineControllerTest {
         Account acc = [SELECT Id FROM Account LIMIT 1];
 
         Test.startTest();
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, null);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, null).groups;
         Test.stopTest();
 
         Assert.isNotNull(result, 'Result should not be null with null limit');
@@ -73,7 +73,7 @@ private class NKS_TimelineControllerTest {
         Account acc = [SELECT Id FROM Account LIMIT 1];
 
         Test.startTest();
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 0);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 0).groups;
         Test.stopTest();
 
         Assert.isNotNull(result, 'Result should not be null with zero limit (uses default)');
@@ -85,7 +85,7 @@ private class NKS_TimelineControllerTest {
         Account acc = [SELECT Id FROM Account LIMIT 1];
 
         Test.startTest();
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 50);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 50).groups;
         Test.stopTest();
 
         Assert.isNotNull(result, 'Result should not be null');
@@ -111,7 +111,7 @@ private class NKS_TimelineControllerTest {
         Account acc = [SELECT Id FROM Account LIMIT 1];
 
         Test.startTest();
-        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 50);
+        List<NKS_TimelineController.TimelineGroup> result = NKS_TimelineController.getRecords(acc.Id, 50).groups;
         Test.stopTest();
 
         for (NKS_TimelineController.TimelineGroup grp : result) {
@@ -123,6 +123,42 @@ private class NKS_TimelineControllerTest {
                 Assert.isNotNull(model.record.dateValueDb, 'RecordData dateValueDb should not be null');
                 Assert.isNotNull(model.theme.icon, 'Theme icon should not be null');
             }
+        }
+    }
+
+    @isTest
+    static void testRecentCallsDoNotRemoveEnquiriesFromInitialPage() {
+        Account acc = [SELECT Id FROM Account LIMIT 1];
+        Case parentCase = [SELECT Id FROM Case WHERE AccountId = :acc.Id LIMIT 1];
+        List<NKS_Call_Log__c> calls = new List<NKS_Call_Log__c>();
+        for (Integer i = 0; i < 5; i++) {
+            calls.add(
+                new NKS_Call_Log__c(
+                    NKS_Case__c = parentCase.Id,
+                    NKS_Call_Time__c = Datetime.now().addMinutes(-i),
+                    NKS_Conversation_Note_Created__c = false
+                )
+            );
+        }
+        insert calls;
+
+        NKS_TimelineController.TimelinePage page = NKS_TimelineController.getRecords(acc.Id, 5);
+        Map<String, Integer> counts = new Map<String, Integer>();
+        for (NKS_TimelineController.TimelineGroup groupRecord : page.groups) {
+            for (NKS_TimelineController.TimelineModel model : groupRecord.models) {
+                String objectType = model.record.sObjectKind;
+                counts.put(objectType, (counts.containsKey(objectType) ? counts.get(objectType) : 0) + 1);
+            }
+        }
+        Assert.areEqual(2, counts.get('Thread__c'), 'Recent hidden calls must not remove threads');
+        Assert.areEqual(2, counts.get('Conversation_Note__c'), 'Recent hidden calls must not remove notes');
+        Assert.areEqual(5, counts.get('NKS_Call_Log__c'), 'The lookahead call must not appear in the page');
+        for (NKS_TimelineController.RecordPage recordPage : page.recordPages) {
+            Assert.areEqual(
+                recordPage.sObjectType == 'NKS_Call_Log__c',
+                recordPage.hasMore,
+                'Only call logs have more records'
+            );
         }
     }
 
