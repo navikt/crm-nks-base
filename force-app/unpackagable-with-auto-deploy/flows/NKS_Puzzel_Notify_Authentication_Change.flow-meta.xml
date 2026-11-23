@@ -39,10 +39,86 @@
         <nameSegment>LoggerUtility</nameSegment>
     </actionCalls>
     <apiVersion>67.0</apiVersion>
-    <description>Publishes a session-only notification after Puzzel creates a call log or updates the authentication payload. Installed separately because the Puzzel package is not present in scratch orgs.</description>
+    <decisions>
+        <name>Check_Previous_Session</name>
+        <label>Check Previous Session</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>Check_Current_Session</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Previous Session Change</defaultConnectorLabel>
+        <rules>
+            <name>Previous_Session_Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Notify_Previous_Session</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Publish_Previous_Session_Change</targetReference>
+            </connector>
+            <label>Previous Session Changed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Current_Session</name>
+        <label>Check Current Session</label>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
+        <defaultConnectorLabel>No Current Session</defaultConnectorLabel>
+        <rules>
+            <name>Current_Session_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.puzzel__SessionId__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Publish_Authentication_Change</targetReference>
+            </connector>
+            <label>Current Session Present</label>
+        </rules>
+    </decisions>
+    <description>Publishes session-only notifications after Puzzel creates a call log or updates its authentication payload. Session changes also notify the previous session, including when cleared. Deployed outside the package because Puzzel is not present in scratch orgs.</description>
+    <formulas>
+        <name>Notify_Previous_Session</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+    NOT(ISNEW()),
+    ISCHANGED({!$Record.puzzel__SessionId__c}),
+    NOT(ISBLANK({!$Record__Prior.puzzel__SessionId__c}))
+)</expression>
+    </formulas>
     <interviewLabel>Puzzel Authentication Change {!$Flow.CurrentDateTime}</interviewLabel>
     <label>NKS Puzzel - Notify Authentication Change</label>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Publish_Previous_Session_Change</name>
+        <label>Publish Previous Session Change</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>Check_Current_Session</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Log_Publish_Error</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>SessionId__c</field>
+            <value>
+                <elementReference>$Record__Prior.puzzel__SessionId__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>NKS_Call_Authentication_Changed__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordCreates>
         <name>Publish_Authentication_Change</name>
         <label>Publish Authentication Change</label>
@@ -64,14 +140,21 @@
         <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Publish_Authentication_Change</targetReference>
+            <targetReference>Check_Previous_Session</targetReference>
         </connector>
-        <filterFormula>AND(
-    NOT(ISBLANK({!$Record.puzzel__SessionId__c})),
-    OR(
-        ISNEW(),
-        ISCHANGED({!$Record.puzzel__CaseId__c}),
-        ISCHANGED({!$Record.puzzel__SessionId__c})
+        <filterFormula>OR(
+    AND(
+        NOT(ISBLANK({!$Record.puzzel__SessionId__c})),
+        OR(
+            ISNEW(),
+            ISCHANGED({!$Record.puzzel__CaseId__c}),
+            ISCHANGED({!$Record.puzzel__SessionId__c})
+        )
+    ),
+    AND(
+        NOT(ISNEW()),
+        ISCHANGED({!$Record.puzzel__SessionId__c}),
+        NOT(ISBLANK({!$Record__Prior.puzzel__SessionId__c}))
     )
 )</filterFormula>
         <object>puzzel__EnquiryLog__c</object>

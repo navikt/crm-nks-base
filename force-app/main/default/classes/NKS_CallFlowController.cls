@@ -132,16 +132,6 @@ public without sharing class NKS_CallFlowController {
             Object enquiryLog = enqLogsBySessionId.get(sessionId);
 
             if (enquiryLog == null) {
-                logger.warning(
-                    'No enquiry log found for sessionId ' +
-                        sessionId +
-                        ' with queue map ' +
-                        JSON.serialize(enqLogsBySessionId) +
-                        ' and with logs ' +
-                        JSON.serialize(enquiryLogs),
-                    null,
-                    CRM_ApplicationDomain.Domain.NKS
-                );
                 responses.add(new CallQueueResponse());
                 continue;
             }
@@ -198,7 +188,7 @@ public without sharing class NKS_CallFlowController {
         String soql = qf.selectFields(QUERY_FIELDS).setCondition('puzzel__SessionId__c IN :sessionIds').toSOQL();
 
         // Instead of just returning SObject records we have to serialize and then deserialize into an Object due to the fact that Puzzel Enquiry Log is a managed package object and won't be visible in scratch orgs
-        return (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(soql)));
+        return (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(soql, AccessLevel.SYSTEM_MODE)));
     }
 
     public class CallQueueRequest {

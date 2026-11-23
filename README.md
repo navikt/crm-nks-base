@@ -76,6 +76,8 @@ etter-lagring-flowen `NKS_Puzzel_Notify_Authentication_Change` sender
 `NKS_Call_Authentication_Changed__e` når en EnquiryLog med sesjons-ID opprettes,
 eller når CaseId/sesjons-ID endres. Hendelsen publiseres etter commit og inneholder
 bare sesjons-ID, ikke fødselsnummer eller autentiseringsstatus.
+Ved endring av sesjons-ID varsles både den tidligere og den nye sesjonen.
+Hvis sesjons-ID fjernes, varsles den tidligere sesjonen slik at badgen skjules.
 
 Badgen abonnerer gjennom `lightning/empApi` når saken har gyldig samtalekontekst.
 Ferske Apex-oppslag gjøres ved oppstart, når komponenten kobles til igjen, eller
@@ -98,6 +100,8 @@ Publiseringsfeil logges med `LoggerUtility`.
 Abonnenter trenger bare lesetilgang til den nye plattformhendelsen via `NKS_Case`;
 det gis ikke publiseringstilgang eller utvidet tilgang til EnquiryLog. Direkte
 CDC-abonnement ville krevd `View All Records` på EnquiryLog og er derfor ikke brukt.
+Apex kontrollerer sakstilgang i brukermodus og leser EnquiryLog i eksplisitt
+systemmodus. Manglende EnquiryLog logges ikke som et varsel; bare feil logges.
 `lightning/empApi` krever en støttet Lightning Experience-skrivebordsnettleser.
 Badgen vises automatisk både ved allerede bekreftet identitet og når brukeren
 autentiserer seg senere. Det finnes ingen oppdateringsknapp.

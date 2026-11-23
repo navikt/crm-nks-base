@@ -59,10 +59,40 @@ public class NKS_CallFlowController_Test {
         ];
 
         Assert.areEqual(0, beforeLogs.size());
-        Assert.areEqual(1, afterLogs.size());
+        Assert.areEqual(0, afterLogs.size());
         Assert.areEqual(null, resp[0].themeGroup);
         Assert.areEqual(null, resp[0].queueName);
         Assert.areEqual(null, resp[0].accessNumber);
+    }
+
+    @IsTest
+    static void testMissingSessionInBulkDoesNotLogCallData() {
+        String lookupValue = '00000000001';
+        String payload = '"' + lookupValue + '","authenticated":"true"';
+        MOCK_ENQUIRY_LOG = JSON.serialize(
+            new List<Object>{
+                new Map<String, Object>{
+                    'puzzel__SessionId__c' => TEST_SESSION_ID,
+                    'puzzel__Queue__c' => TEST_QUEUE,
+                    'puzzel__CaseId__c' => payload
+                }
+            }
+        );
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getCallQueueInfo(
+            new List<String>{ TEST_SESSION_ID, 'MISSING_SESSION' }
+        );
+        Test.stopTest();
+
+        Assert.areEqual(lookupValue, responses[0].lookupValue);
+        Assert.isNull(responses[1].lookupValue);
+        List<Application_Log__c> logs = [
+            SELECT Id
+            FROM Application_Log__c
+            WHERE Category__c = 'CallFlowController'
+        ];
+        Assert.areEqual(0, logs.size());
     }
 
     @IsTest
