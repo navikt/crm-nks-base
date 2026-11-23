@@ -34,8 +34,8 @@ export default class NksTimeline extends LightningElement {
     MAX_RECORDS_PER_LOAD = 30; // Maximum records to load per "Load More" click
     data;
     deWireResult;
+    recordsLoaded = 0;
     allRecordsLoaded = false;
-    recordPages = [];
     openAccordionSections = [];
     allSections = [];
     labels = labels;
@@ -106,51 +106,36 @@ export default class NksTimeline extends LightningElement {
     }
 
     processTimelineData(data) {
-        this.masterData = structuredClone(data.groups);
-        this.recordPages = data.recordPages;
+        this.setParams(data);
+        this.setData(data);
 
         if (this.filterIsActive) {
-            this.setFilterProperties(this.masterData);
+            this.setFilterProperties(this.data);
             if (this.filterInitialized) {
                 this.handleFilter();
             } else {
                 this.applyInitialFilter();
                 this.filterInitialized = true;
             }
-        } else {
-            this.updateData(this.masterData);
         }
 
-        this.setParams();
         this.setupAccordions(this.data);
         this.updateAllSections(this.data);
+        this.countRecordsLoaded();
     }
 
-    setParams() {
+    setParams(data) {
         this.loading = false;
         this.finishedLoading = true;
         this.loadingStyle = '';
-        this.empty = this.data.length === 0;
+        this.empty = data.length === 0;
     }
 
-    updateData(groups) {
-        const showCallLogs =
-            !this.filterIsActive ||
-            groups.some((group) => group.models.some((model) => model.record.sObjectKind === 'NKS_Call_Log__c'));
-        const visiblePages = this.recordPages.filter((page) => page.sObjectType !== 'NKS_Call_Log__c' || showCallLogs);
-        const pendingPages = visiblePages.filter((page) => page.hasMore);
-        // Preserve chronological completeness, but only let visible record types set the boundary.
-        const cutoff = Math.max(...pendingPages.map((page) => new Date(page.oldestDate).getTime()));
-        const completeGroups = groups
-            .map((group) => {
-                const models = group.models.filter((model) => new Date(model.record.dateValueDb).getTime() >= cutoff);
-                return { ...group, models, size: models.length };
-            })
-            .filter((group) => group.models.length > 0);
-
-        this.allRecordsLoaded = pendingPages.length === 0 && completeGroups.length <= this.amountOfMonths;
-        this.data = completeGroups.slice(0, this.amountOfMonths);
-        this.empty = this.data.length === 0;
+    setData(newData) {
+        let newDataCopy = structuredClone(newData);
+        this.masterData = structuredClone(newDataCopy);
+        newDataCopy.splice(this.amountOfMonths);
+        this.data = newDataCopy;
     }
 
     setFilterProperties(data) {
@@ -158,14 +143,13 @@ export default class NksTimeline extends LightningElement {
     }
 
     applyInitialFilter() {
-        const groups = this.masterData
+        this.data = this.data
             .map((group) => ({
                 ...group,
                 models: group.models.filter((model) => !model.filter?.shown),
                 size: group.models.filter((model) => !model.filter?.shown).length
             }))
             .filter((group) => group.models.length > 0); // Remove empty groups
-        this.updateData(groups);
     }
 
     setupAccordions(data) {
@@ -194,6 +178,25 @@ export default class NksTimeline extends LightningElement {
     // can expand all sections by setting openAccordionSections = allSections.
     updateAllSections(data) {
         this.allSections = data.map((record) => record.id);
+    }
+
+    countRecordsLoaded() {
+        let totalRecords = 0;
+        this.masterData.forEach((record) => {
+            if (record.models) {
+                totalRecords += record.models.length;
+            }
+        });
+
+        const previousRecordsLoaded = this.recordsLoaded;
+        this.recordsLoaded = totalRecords;
+
+        if (
+            (previousRecordsLoaded > 0 && totalRecords === previousRecordsLoaded) ||
+            totalRecords < this.currentQueryLimit
+        ) {
+            this.allRecordsLoaded = true;
+        }
     }
 
     expandCheck = (groupIndex, itemIndex) => {
@@ -231,6 +234,9 @@ export default class NksTimeline extends LightningElement {
         return refreshApex(this.deWireResult)
             .then(() => {
                 this.loading = false;
+                if (this.deWireResult?.data) {
+                    this.setData(this.deWireResult.data);
+                }
             })
             .catch((error) => this.handleError('Error refreshing timeline data', error));
     }
@@ -258,12 +264,12 @@ export default class NksTimeline extends LightningElement {
 
     handleFilter() {
         const filterTemplate = this.template.querySelector('c-timeline-filter');
-        if (!filterTemplate) {
-            this.applyInitialFilter();
-            return;
-        }
+        if (!filterTemplate) return;
 
-        this.updateData(filterTemplate.filterRecords(structuredClone(this.masterData)));
+        let filteredData = structuredClone(this.masterData);
+        filteredData.splice(this.amountOfMonths);
+
+        this.data = filterTemplate.filterRecords(filteredData);
         this.isPicklistFiltered = filterTemplate.isPicklistFilterActive;
 
         this.updateAllSections(this.data);

@@ -1,14 +1,12 @@
 public with sharing class NKS_TimelineController {
     @AuraEnabled(cacheable=true)
-    public static TimelinePage getRecords(String recordId, Integer recordLimit) {
-        TimelinePage page = new TimelinePage();
+    public static List<TimelineGroup> getRecords(String recordId, Integer recordLimit) {
         if (String.isBlank(recordId)) {
-            return page;
+            return new List<TimelineGroup>();
         }
 
         List<TimelineRecord> records = new List<TimelineRecord>();
         Integer effectiveLimit = recordLimit != null && recordLimit > 0 ? recordLimit : 50;
-        Integer queryLimit = effectiveLimit + 1;
 
         String threadQuery =
             'SELECT Id, Name, CreatedDate, CRM_Latest_Message_Datetime__c, CRM_Journal_Status_Formula__c, CRM_Thread_Type__c, ' +
@@ -16,28 +14,22 @@ public with sharing class NKS_TimelineController {
             'FROM Thread__c ' +
             'WHERE CRM_Account__c = :recordId ' +
             'ORDER BY CRM_Latest_Message_Datetime__c DESC NULLS LAST ' +
-            'LIMIT :queryLimit';
+            'LIMIT :effectiveLimit';
 
-        List<TimelineRecord> threadRecords = new List<TimelineRecord>();
         for (SObject obj : Database.query(threadQuery)) {
-            threadRecords.add(new ThreadTimelineRecord(obj));
+            records.add(new ThreadTimelineRecord(obj));
         }
-        page.recordPages.add(new RecordPage('Thread__c', threadRecords, effectiveLimit));
-        records.addAll(threadRecords);
 
         String noteQuery =
             'SELECT Id, Name, CreatedDate, CRM_Date_Time_Registered__c, CRM_Conversation_Note__c, CRM_Created_By_Ident__c, NKS_Timeline_Name__c, CRM_Journal_Status_Formula_Icons__c, CRM_Theme_Group_Name__c, CRM_Journal_Case_Reference__c ' +
             'FROM Conversation_Note__c ' +
             'WHERE CRM_Account__c = :recordId ' +
             'ORDER BY CRM_Date_Time_Registered__c DESC NULLS LAST ' +
-            'LIMIT :queryLimit';
+            'LIMIT :effectiveLimit';
 
-        List<TimelineRecord> noteRecords = new List<TimelineRecord>();
         for (SObject obj : Database.query(noteQuery)) {
-            noteRecords.add(new ConvNoteTimelineRecord(obj));
+            records.add(new ConvNoteTimelineRecord(obj));
         }
-        page.recordPages.add(new RecordPage('Conversation_Note__c', noteRecords, effectiveLimit));
-        records.addAll(noteRecords);
 
         String callLogQuery =
             'SELECT Id, Name, CreatedDate, NKS_Call_Time__c, NKS_Timeline_Name__c, NKS_Advisor_Ident__c, NKS_Timeline_Phone__c ' +
@@ -45,47 +37,106 @@ public with sharing class NKS_TimelineController {
             'WHERE NKS_Case__r.AccountId = :recordId ' +
             'AND NKS_Conversation_Note_Created__c  = false ' +
             'ORDER BY NKS_Call_Time__c DESC NULLS LAST ' +
-            'LIMIT :queryLimit';
+            'LIMIT :effectiveLimit';
 
-        List<TimelineRecord> callLogRecords = new List<TimelineRecord>();
         for (SObject obj : Database.query(callLogQuery)) {
-            callLogRecords.add(new CallLogTimelineRecord(obj));
+            records.add(new CallLogTimelineRecord(obj));
         }
-        page.recordPages.add(new RecordPage('NKS_Call_Log__c', callLogRecords, effectiveLimit));
-        records.addAll(callLogRecords);
 
         records.sort();
-        page.groups = groupRecordsByMonth(records);
-        return page;
-    }
 
-    public class TimelinePage {
-        @AuraEnabled
-        public List<TimelineGroup> groups = new List<TimelineGroup>();
-        @AuraEnabled
-        public List<RecordPage> recordPages = new List<RecordPage>();
-    }
+        /* --- Chronological gap prevention ---
 
-    public class RecordPage {
-        @AuraEnabled
-        public String sObjectType;
-        @AuraEnabled
-        public Boolean hasMore;
-        @AuraEnabled
-        public Datetime oldestDate;
+        Each record type is queried from different tables and the same LIMIT. This means
+        they can cover different date ranges. For example, with limit=10:
+        - Threads may all fall in March 2026
+        - Conversation notes may all fall in January 2026
+    
+        If we show both as-is, the user will see March and January. On the next load (limit=20),
+        threads from February 2026 would appear, giving the false impression that there were no threads/conv notes in February on the first load.
+    
+        To prevent this, we set a "cutoff date" and hide everything older than it.
+        The cutoff is set to the oldest record date among all record types that are not yet exhausted.
+        
+        A type is considered non-exhausted when it returns exactly `effectiveLimit` records,
+        meaning there are likely more older records waiting behind the query boundary.
+        Using the newest of those oldest dates ensures we only display the part of the timeline
+        that is complete across all non-exhausted types. Records behind the cutoff are revealed
+        on subsequent loads as the limit grows and types become exhausted.
+    
+        Example with limit=10, 20 threads total (10 in March, 10 in February), 10 notes total (all in January):
+        Load 1 (limit=10):  
+            threads fetch 10 -> March only, threadOldest=March 1, non-exhausted.
+            notes fetch 10   -> January only, noteOldest=Jan 1, non-exhausted.
+            cutoff=max(March 1, Jan 1)=March 1 -> January notes hidden.
+            User sees: March threads only.
+        Load 2 (limit=20):  
+            threads fetch 20 -> March+February, threadOldest=Feb 1, non-exhausted.
+            notes fetch 10   -> January only (still all 10), noteOldest=Jan 1, exhausted (10 < 20).
+            cutoff=Feb 1 (only threads non-exhausted) -> January notes still hidden.
+            User sees: March+February threads.
+        Load 3 (limit=30):  
+            threads fetch 20 -> exhausted (20 < 30).
+            notes fetch 10   -> exhausted (10 < 30).
+            No non-exhausted types -> cutoffDate=null -> no filtering.
+            User sees: March+February threads + January notes.
+        Result: records always appear in strict chronological order, no months pop in out of sequence.
+        */
 
-        public RecordPage(String sObjectType, List<TimelineRecord> records, Integer recordLimit) {
-            this.sObjectType = sObjectType;
-            this.hasMore = records.size() > recordLimit;
-            if (this.hasMore) {
-                records.remove(recordLimit);
-            }
-            for (TimelineRecord rec : records) {
-                if (this.oldestDate == null || rec.dateValue < this.oldestDate) {
-                    this.oldestDate = rec.dateValue;
+        Integer threadCount = 0;
+        Integer noteCount = 0;
+        Integer callLogCount = 0;
+        Datetime threadOldest = null;
+        Datetime noteOldest = null;
+        Datetime callLogOldest = null;
+
+        // Count records per type and track each type's oldest (earliest) date.
+        for (TimelineRecord rec : records) {
+            if (rec.sObjectType == 'Thread__c') {
+                threadCount++;
+                if (threadOldest == null || rec.dateValue < threadOldest) {
+                    threadOldest = rec.dateValue;
+                }
+            } else if (rec.sObjectType == 'Conversation_Note__c') {
+                noteCount++;
+                if (noteOldest == null || rec.dateValue < noteOldest) {
+                    noteOldest = rec.dateValue;
+                }
+            } else if (rec.sObjectType == 'NKS_Call_Log__c') {
+                callLogCount++;
+                if (callLogOldest == null || rec.dateValue < callLogOldest) {
+                    callLogOldest = rec.dateValue;
                 }
             }
         }
+
+        // For each non-exhausted type (count == effectiveLimit), its oldest date is a potential
+        // gap boundary. The cutoff is the newest of those dates, since that is the point at which
+        // all non-exhausted types have potential records for.
+        Datetime cutoffDate = null;
+        List<Integer> counts = new List<Integer>{ threadCount, noteCount, callLogCount };
+        List<Datetime> oldestDates = new List<Datetime>{ threadOldest, noteOldest, callLogOldest };
+        for (Integer i = 0; i < counts.size(); i++) {
+            if (counts[i] == effectiveLimit && oldestDates[i] != null) {
+                if (cutoffDate == null || oldestDates[i] > cutoffDate) {
+                    cutoffDate = oldestDates[i];
+                }
+            }
+        }
+
+        // Remove any records older than the cutoff. If all types are exhausted, cutoffDate remains
+        // null and every record is shown.
+        if (cutoffDate != null) {
+            List<TimelineRecord> withinWindow = new List<TimelineRecord>();
+            for (TimelineRecord rec : records) {
+                if (rec.dateValue >= cutoffDate) {
+                    withinWindow.add(rec);
+                }
+            }
+            records = withinWindow;
+        }
+
+        return groupRecordsByMonth(records);
     }
 
     private static final Map<Integer, String> NORWEGIAN_MONTHS = new Map<Integer, String>{

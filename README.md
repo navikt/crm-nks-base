@@ -66,8 +66,7 @@ Innholdet pushes og pulles til/fra scratch orgen på samme måte som annen metad
 
 ## Annet
 
-`NKS_TimelineController.getRecords` returnerer `groups` og `recordPages`, slik at tidsperioden beregnes
-etter filtrering av skjulte samtaler. `NKS_RecordPrintWrapper` viser PDF-en i Salesforce-fanen fra en
+`NKS_RecordPrintWrapper` viser PDF-en i Salesforce-fanen fra en
 midlertidig Blob-URL, uten å lagre Salesforce Files.
 
 For spørsmål om denne applikasjonen, bruk #crm-nks på Slack.
