@@ -1,8 +1,14 @@
 <template>
     <template lwc:if={isAuthenticated}>
         <lightning-badge
-            label="Brukeren har bekreftet sin identitet"
+            label="Bekreftet identitet"
             class="slds-theme_success slds-align_absolute-center badge-spacing"
+        ></lightning-badge>
+    </template>
+    <template lwc:elseif={showUnverified}>
+        <lightning-badge
+            label="Ikke bekreftet identitet"
+            class="slds-align_absolute-center badge-spacing custom-badge"
         ></lightning-badge>
     </template>
 </template>

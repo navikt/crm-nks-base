@@ -135,6 +135,39 @@ public class NKS_CallFlowController_Test {
     }
 
     @IsTest
+    static void testLegacyIdentifiersWorkWithoutAuthenticationStatus() {
+        List<String> identifiers = new List<String>{ '00000000001', '000000001', '12345678', '+4712345678' };
+        List<Object> logs = new List<Object>();
+        List<NKS_CallFlowController.CallQueueRequest> requests = new List<NKS_CallFlowController.CallQueueRequest>();
+        for (Integer i = 0; i < identifiers.size(); i++) {
+            String sessionId = 'LEGACY_' + i;
+            logs.add(
+                new Map<String, Object>{
+                    'puzzel__SessionId__c' => sessionId,
+                    'puzzel__Queue__c' => TEST_QUEUE,
+                    'puzzel__CaseId__c' => identifiers[i]
+                }
+            );
+            requests.add(makeCallQueueRequest(identifiers[i], sessionId));
+            requests.add(makeCallQueueRequest(null, sessionId));
+        }
+        MOCK_ENQUIRY_LOG = JSON.serialize(logs);
+
+        Test.startTest();
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(requests);
+        Test.stopTest();
+
+        Assert.areEqual(identifiers.size() * 2, responses.size());
+        for (Integer i = 0; i < identifiers.size(); i++) {
+            Assert.areEqual(identifiers[i], responses[i * 2].lookupValue);
+            Assert.areEqual(identifiers[i], responses[i * 2 + 1].lookupValue);
+            Assert.areEqual(TEST_QUEUE, responses[i * 2].queueName);
+            Assert.areEqual(TEST_QUEUE, responses[i * 2 + 1].queueName);
+        }
+        Assert.areEqual(0, [SELECT COUNT() FROM Application_Log__c WHERE Category__c = 'CallFlowController']);
+    }
+
+    @IsTest
     static void testMalformedSearchIsNotTruncatedIntoAnIdentifier() {
         List<String> values = new List<String>{
             '"00000000001","authenticated":"True"',
@@ -196,16 +229,26 @@ public class NKS_CallFlowController_Test {
     @IsTest
     static void testIncomingLookupWorksBeforeEnquiryLogArrives() {
         MOCK_ENQUIRY_LOG = '[]';
+        List<String> values = new List<String>{
+            '00000000001',
+            '000000001',
+            '12345678',
+            '+4712345678',
+            '"00000000001","authenticated":"false"'
+        };
+        List<NKS_CallFlowController.CallQueueRequest> requests = new List<NKS_CallFlowController.CallQueueRequest>();
+        for (String value : values) {
+            requests.add(makeCallQueueRequest(value, TEST_SESSION_ID));
+        }
 
         Test.startTest();
-        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(
-            new List<NKS_CallFlowController.CallQueueRequest>{
-                makeCallQueueRequest('"00000000001","authenticated":"false"', TEST_SESSION_ID)
-            }
-        );
+        List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getInboundCallInfo(requests);
         Test.stopTest();
 
-        Assert.areEqual('00000000001', responses[0].lookupValue);
+        for (Integer i = 0; i < 4; i++) {
+            Assert.areEqual(values[i], responses[i].lookupValue);
+        }
+        Assert.areEqual('00000000001', responses[4].lookupValue);
     }
 
     @IsTest
@@ -282,6 +325,56 @@ public class NKS_CallFlowController_Test {
     }
 
     @IsTest
+    static void testUnverifiedPersonBadgeSupportsCurrentAndNewPuzzelFormats() {
+        Case callCase = makeCallCase();
+        List<String> unverifiedValues = new List<String>{
+            '00000000001',
+            '"00000000001","authenticated":"false"',
+            '"00000000001","authenticated":"error"'
+        };
+
+        Test.startTest();
+        for (String value : unverifiedValues) {
+            setAuthenticationLog(value, TEST_SESSION_ID);
+            Map<String, Boolean> response = getAuthenticationStatus(callCase.Id);
+            Assert.isFalse(response.get('isAuthenticated'));
+            Assert.isTrue(response.get('showUnverified'));
+        }
+        setAuthenticationLog('"00000000001","authenticated":"true"', TEST_SESSION_ID);
+        Map<String, Boolean> authenticated = getAuthenticationStatus(callCase.Id);
+        Test.stopTest();
+
+        Assert.isTrue(authenticated.get('isAuthenticated'));
+        Assert.isFalse(authenticated.get('showUnverified'));
+        Assert.areEqual(0, [SELECT COUNT() FROM Application_Log__c WHERE Category__c = 'CallFlowController']);
+    }
+
+    @IsTest
+    static void testUnverifiedBadgeRequiresAnUnambiguousPersonLookup() {
+        Case callCase = makeCallCase();
+        List<String> otherValues = new List<String>{
+            null,
+            '',
+            '000000001',
+            '12345678',
+            '+4712345678',
+            '"000000001","authenticated":"false"',
+            '"12345678","authenticated":"error"',
+            '"00000000001","authenticated":"True"',
+            '"00000000001","authenticated":"true"suffix'
+        };
+
+        Test.startTest();
+        for (String value : otherValues) {
+            setAuthenticationLog(value, TEST_SESSION_ID);
+            Assert.isFalse(getAuthenticationStatus(callCase.Id).get('showUnverified'));
+        }
+        setAuthenticationLog('00000000001', 'ANOTHER_SESSION');
+        Assert.isFalse(getAuthenticationStatus(callCase.Id).get('showUnverified'));
+        Test.stopTest();
+    }
+
+    @IsTest
     static void testDelayedLogAndSessionIsolation() {
         Case callCase = makeCallCase();
         setAuthenticationLog('"CASE123","authenticated":"true"', 'ANOTHER_SESSION');
@@ -319,10 +412,13 @@ public class NKS_CallFlowController_Test {
 
         Assert.isFalse(noAccount.get('isAuthenticated'));
         Assert.isFalse(noAccount.get('shouldRetry'));
+        Assert.isFalse(noAccount.get('showUnverified'));
         Assert.isFalse(nonCall.get('isAuthenticated'));
         Assert.isFalse(nonCall.get('shouldRetry'));
+        Assert.isFalse(nonCall.get('showUnverified'));
         Assert.isFalse(noSession.get('isAuthenticated'));
         Assert.isFalse(noSession.get('shouldRetry'));
+        Assert.isFalse(noSession.get('showUnverified'));
     }
 
     @IsTest
@@ -339,6 +435,7 @@ public class NKS_CallFlowController_Test {
 
         Assert.isFalse(response.get('isAuthenticated'));
         Assert.isFalse(response.get('shouldRetry'));
+        Assert.isFalse(response.get('showUnverified'));
     }
 
     private static Map<String, Boolean> getAuthenticationStatus(Id caseId) {

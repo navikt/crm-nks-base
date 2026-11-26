@@ -14,6 +14,7 @@ let streamingErrorHandlerRegistered = false;
 
 export default class NksCallAuthenticationBadge extends LightningElement {
     isAuthenticated = false;
+    showUnverified = false;
     _recordId;
     _initialAccountId;
     _caseContext;
@@ -125,9 +126,11 @@ export default class NksCallAuthenticationBadge extends LightningElement {
             }
             this._hasLookupError = false;
             this.isAuthenticated = result.isAuthenticated === true;
+            this.showUnverified = !this.isAuthenticated && result.showUnverified === true;
         } catch (error) {
             if (this.isConnected && requestVersion === this._requestVersion) {
                 this.isAuthenticated = false;
+                this.showUnverified = false;
                 if (!this._hasLookupError) {
                     this.showError(error);
                     this._hasLookupError = true;
@@ -224,6 +227,7 @@ export default class NksCallAuthenticationBadge extends LightningElement {
         this._refreshQueued = false;
         this._hasLookupError = false;
         this.isAuthenticated = false;
+        this.showUnverified = false;
     }
 
     showError(error, message = 'BankID-status kunne ikke hentes.') {

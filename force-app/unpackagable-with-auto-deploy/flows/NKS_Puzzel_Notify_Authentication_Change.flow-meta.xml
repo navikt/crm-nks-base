@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Log_Authentication_Error</name>
+        <label>Log Authentication Error</label>
+        <locationX>300</locationX>
+        <locationY>50</locationY>
+        <actionName>LoggerUtility</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Previous_Session</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__refRecord</typeName>
+            <typeValue>puzzel__EnquiryLog__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>category</name>
+            <value>
+                <stringValue>CallFlowController</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logLevel</name>
+            <value>
+                <stringValue>ERROR</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>logMessage</name>
+            <value>
+                <stringValue>Puzzel reported a BankID authentication error.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>refRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>LoggerUtility</nameSegment>
+    </actionCalls>
+    <actionCalls>
         <name>Log_Publish_Error</name>
         <label>Log Publish Error</label>
         <locationX>400</locationX>
@@ -39,6 +80,31 @@
         <nameSegment>LoggerUtility</nameSegment>
     </actionCalls>
     <apiVersion>67.0</apiVersion>
+    <decisions>
+        <name>Check_Authentication_Error</name>
+        <label>Check Authentication Error</label>
+        <locationX>100</locationX>
+        <locationY>25</locationY>
+        <defaultConnector>
+            <targetReference>Check_Previous_Session</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No New Authentication Error</defaultConnectorLabel>
+        <rules>
+            <name>New_Authentication_Error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Has_New_Authentication_Error</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Log_Authentication_Error</targetReference>
+            </connector>
+            <label>New Authentication Error</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Previous_Session</name>
         <label>Check Previous Session</label>
@@ -86,7 +152,18 @@
             <label>Current Session Present</label>
         </rules>
     </decisions>
-    <description>Publishes session-only notifications after Puzzel creates a call log or updates its authentication payload. Session changes also notify the previous session, including when cleared. Deployed outside the package because Puzzel is not present in scratch orgs.</description>
+    <description>Publishes session-only notifications after Puzzel creates a call log or updates its authentication payload, and logs new BankID error payloads without lookup values. Session changes also notify the previous session, including when cleared. Deployed outside the package because Puzzel is not present in scratch orgs.</description>
+    <formulas>
+        <name>Has_New_Authentication_Error</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+    OR(ISNEW(), ISCHANGED({!$Record.puzzel__CaseId__c})),
+    REGEX(
+        BLANKVALUE({!$Record.puzzel__CaseId__c}, ""),
+        '"[0-9]{11}",\\s*"authenticated"\\s*:\\s*"error"'
+    )
+)</expression>
+    </formulas>
     <formulas>
         <name>Notify_Previous_Session</name>
         <dataType>Boolean</dataType>
@@ -140,22 +217,12 @@
         <locationX>100</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Check_Previous_Session</targetReference>
+            <targetReference>Check_Authentication_Error</targetReference>
         </connector>
         <filterFormula>OR(
-    AND(
-        NOT(ISBLANK({!$Record.puzzel__SessionId__c})),
-        OR(
-            ISNEW(),
-            ISCHANGED({!$Record.puzzel__CaseId__c}),
-            ISCHANGED({!$Record.puzzel__SessionId__c})
-        )
-    ),
-    AND(
-        NOT(ISNEW()),
-        ISCHANGED({!$Record.puzzel__SessionId__c}),
-        NOT(ISBLANK({!$Record__Prior.puzzel__SessionId__c}))
-    )
+    ISNEW(),
+    ISCHANGED({!$Record.puzzel__CaseId__c}),
+    ISCHANGED({!$Record.puzzel__SessionId__c})
 )</filterFormula>
         <object>puzzel__EnquiryLog__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

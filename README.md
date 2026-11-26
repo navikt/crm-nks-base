@@ -42,6 +42,19 @@ og feilformede verdier gir ikke en grønn badge.
 
 CaseId inneholder her oppslagsverdien som Puzzel sender, for eksempel personnummer,
 organisasjonsnummer eller telefonnummer, ikke Salesforce-sakens ID.
+Organisasjonsnummer og telefonnummer kan fortsatt sendes uendret. For fødselsnummer
+brukes `"fødselsnummer","authenticated":"false"` ved manglende autentisering,
+`"fødselsnummer","authenticated":"true"` ved vellykket autentisering og
+`"fødselsnummer","authenticated":"error"` når Puzzel melder en BankID-feil.
+At brukeren ikke har BankID, er bare en feilstatus hvis Puzzel definerer det slik.
+
+Et fødselsnummer (11 sifre) uten bekreftet autentisering viser en gul badge med
+teksten «Ikke bekreftet identitet».
+Dette gjelder både dagens uendrede fødselsnummer og status `"false"`/`"error"`.
+Organisasjonsnummer, telefonnummer, manglende logg og feilformede verdier viser
+ikke gul badge. `"true"` viser grønn badge med teksten «Bekreftet identitet».
+Eksisterende oppslag fungerer dermed også før Puzzel tar i bruk det nye formatet;
+gul badge for dagens uautentiserte fødselsnumre er en tilsiktet visningsendring.
 
 Ved oppstart av `NKS_Inbound_Call` normaliseres det innkommende `Search` til
 `LOOKUP_VALUE`: vanlige verdier beholdes, mens det avtalte tekstformatet pakkes ut
@@ -96,6 +109,10 @@ sammen med Apex-/Case-endringene. Installer deretter flowen fra
 Flowen ligger utenfor pakken slik at scratch-orger uten Puzzel fortsatt støttes.
 Den må være aktiv for at eksterne oppdateringer skal bli synlige automatisk.
 Publiseringsfeil logges med `LoggerUtility`.
+Flowen logger også en applikasjonsfeil når et gyldig fødselsnummer-payload med
+`"authenticated":"error"` opprettes eller endres. Loggmeldingen inneholder ikke
+fødselsnummer eller råpayload. Uendrede payloads og badge-oppslag lager ikke nye
+feillogger, og `"false"` eller manglende autentisering logges ikke som feil.
 
 Abonnenter trenger bare lesetilgang til den nye plattformhendelsen via `NKS_Case`;
 det gis ikke publiseringstilgang eller utvidet tilgang til EnquiryLog. Direkte
@@ -105,7 +122,8 @@ systemmodus. Manglende EnquiryLog logges ikke som et varsel; bare feil logges.
 `lightning/empApi` krever en støttet Lightning Experience-skrivebordsnettleser.
 Badgen vises automatisk både ved allerede bekreftet identitet og når brukeren
 autentiserer seg senere. Det finnes ingen oppdateringsknapp.
-Manglende eller ubekreftet autentisering skjuler bare badgen, uten varsel.
+Ubekreftet autentisering for fødselsnummer viser bare gul badge, uten toast-varsel.
+Når identifikatortype eller samtalekobling ikke kan fastslås, skjules badgen.
 Bare faktiske oppslagsfeil, feil i abonnementet for BankID-hendelsen eller feil
 i den felles streamingforbindelsen varsles. Feil for andre hendelsesabonnementer
 utløser ikke BankID-varsler. Det startes ingen timer eller polling ved feil;

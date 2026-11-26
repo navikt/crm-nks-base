@@ -12,7 +12,11 @@ public without sharing class NKS_CallFlowController {
 
     @AuraEnabled
     public static Map<String, Boolean> getCallAuthenticationStatus(Id caseId) {
-        Map<String, Boolean> response = new Map<String, Boolean>{ 'isAuthenticated' => false, 'shouldRetry' => false };
+        Map<String, Boolean> response = new Map<String, Boolean>{
+            'isAuthenticated' => false,
+            'showUnverified' => false,
+            'shouldRetry' => false
+        };
         if (caseId == null) {
             throw new AuraHandledException('A call case ID is required.');
         }
@@ -58,6 +62,10 @@ public without sharing class NKS_CallFlowController {
             if (puzzelCaseId != null) {
                 Matcher payload = AUTHENTICATION_PAYLOAD.matcher(puzzelCaseId);
                 isAuthenticated = payload.matches() && payload.group(2) == 'true';
+                response.put(
+                    'showUnverified',
+                    !isAuthenticated && Pattern.matches('[0-9]{11}', normalizeLookupValue(puzzelCaseId))
+                );
             }
         }
         response.put('isAuthenticated', isAuthenticated);
