@@ -62,6 +62,8 @@ til den opprinnelige verdien. Dette gjelder likt for `"true"`, `"false"` og
 `"error"`, og innledende nuller beholdes. Hvis `Search` er tomt, brukes CaseId fra
 EnquiryLog for samme `SessionId`. Et ikke-tomt `Search` overstyres ikke av loggen.
 Feilformede autentiseringsfragmenter pakkes ikke ut.
+Oppslagsverdien velges først fra `Search`, eller fra EnquiryLog hvis `Search` er
+tomt, og normaliseres deretter én gang. Batchkall uten `Search` bruker samme løp.
 
 Eksisterende ruting bruker deretter `LOOKUP_VALUE`: 11 tegn gir personoppslag,
 9 tegn gir organisasjonsoppslag, og øvrige verdier følger telefonnummerløpet.
@@ -117,8 +119,12 @@ feillogger, og `"false"` eller manglende autentisering logges ikke som feil.
 Abonnenter trenger bare lesetilgang til den nye plattformhendelsen via `NKS_Case`;
 det gis ikke publiseringstilgang eller utvidet tilgang til EnquiryLog. Direkte
 CDC-abonnement ville krevd `View All Records` på EnquiryLog og er derfor ikke brukt.
-Apex kontrollerer sakstilgang i brukermodus og leser EnquiryLog i eksplisitt
-systemmodus. Manglende EnquiryLog logges ikke som et varsel; bare feil logges.
+Apex kontrollerer sakstilgang i brukermodus og leser EnquiryLog og køkonfigurasjonen
+i eksplisitt systemmodus. Manglende EnquiryLog logges ikke som et varsel; bare feil logges.
+Badge-oppslaget ligger i `NKS_CallAuthenticationController` (`with sharing`),
+mens `NKS_CallFlowController` håndterer Flow og køoppslag. `NKS_PuzzelCallData`
+deler parsing og dynamisk lesing av Puzzel-data, uten en pakkedependency til Puzzel.
+Klassetilgang til badge-controlleren gis via `NKS_Case`.
 `lightning/empApi` krever en støttet Lightning Experience-skrivebordsnettleser.
 Badgen vises automatisk både ved allerede bekreftet identitet og når brukeren
 autentiserer seg senere. Det finnes ingen oppdateringsknapp.

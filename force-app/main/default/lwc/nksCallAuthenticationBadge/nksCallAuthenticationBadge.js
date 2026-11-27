@@ -2,7 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { isEmpEnabled, onError, subscribe, unsubscribe } from 'lightning/empApi';
-import getCallAuthenticationStatus from '@salesforce/apex/NKS_CallFlowController.getCallAuthenticationStatus';
+import getCallAuthenticationStatus from '@salesforce/apex/NKS_CallAuthenticationController.getCallAuthenticationStatus';
 import ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
 import ORIGIN_FIELD from '@salesforce/schema/Case.Origin';
 import SESSION_FIELD from '@salesforce/schema/Case.NKS_Puzzel_Session_Id__c';
@@ -83,7 +83,7 @@ export default class NksCallAuthenticationBadge extends LightningElement {
             this._caseContext = null;
             this._canCheck = false;
             this.clearSubscription();
-            this.showError(error, 'Last inn saken på nytt for å prøve igjen.');
+            this.showError(error, 'Kunne ikke hente henvendelsen. BankID-status kan derfor ikke vises.');
         } else if (data && data.id === this.recordId) {
             const accountId = data.fields.AccountId.value;
             const sessionId = data.fields.NKS_Puzzel_Session_Id__c.value;

@@ -1,87 +1,4 @@
 public without sharing class NKS_CallFlowController {
-    // Puzzel appends a property to a quoted lookup value, rather than sending standalone JSON.
-    private static final Pattern AUTHENTICATION_PAYLOAD = Pattern.compile(
-        '"([^"\\s\\\\]+)",\\s*"authenticated"\\s*:\\s*"(true|false|error)"'
-    );
-    private static final List<String> QUERY_FIELDS = new List<String>{
-        'puzzel__SessionId__c',
-        'puzzel__Queue__c',
-        'puzzel__AccessNumber__c',
-        'puzzel__CaseId__c'
-    };
-
-    @AuraEnabled
-    public static Map<String, Boolean> getCallAuthenticationStatus(Id caseId) {
-        Map<String, Boolean> response = new Map<String, Boolean>{
-            'isAuthenticated' => false,
-            'showUnverified' => false,
-            'shouldRetry' => false
-        };
-        if (caseId == null) {
-            throw new AuraHandledException('A call case ID is required.');
-        }
-
-        List<Case> cases = [
-            SELECT AccountId, Origin, NKS_Puzzel_Session_Id__c
-            FROM Case
-            WHERE Id = :caseId
-            WITH USER_MODE
-        ];
-        if (cases.isEmpty()) {
-            throw new AuraHandledException('The call case is not accessible.');
-        }
-        Case callCase = cases[0];
-        if (
-            callCase.Origin != 'Phone' ||
-            callCase.AccountId == null ||
-            String.isBlank(callCase.NKS_Puzzel_Session_Id__c)
-        ) {
-            return response;
-        }
-
-        if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
-            throw new AuraHandledException('Puzzel EnquiryLog is not available.');
-        }
-
-        List<Map<String, Object>> matchingLogs = new List<Map<String, Object>>();
-        for (Object enquiryLog : getEnquiryLogs(new List<String>{ callCase.NKS_Puzzel_Session_Id__c })) {
-            Map<String, Object> log = (Map<String, Object>) enquiryLog;
-            if ((String) log.get('puzzel__SessionId__c') == callCase.NKS_Puzzel_Session_Id__c) {
-                matchingLogs.add(log);
-            }
-        }
-        if (matchingLogs.size() > 1) {
-            LoggerUtility logger = new LoggerUtility('CallFlowController');
-            logger.error('Multiple EnquiryLogs found for call case ' + caseId, null, CRM_ApplicationDomain.Domain.NKS);
-            logger.publish();
-            return response;
-        }
-        Boolean isAuthenticated = false;
-        if (matchingLogs.size() == 1) {
-            String puzzelCaseId = (String) matchingLogs[0].get('puzzel__CaseId__c');
-            if (puzzelCaseId != null) {
-                Matcher payload = AUTHENTICATION_PAYLOAD.matcher(puzzelCaseId);
-                isAuthenticated = payload.matches() && payload.group(2) == 'true';
-                response.put(
-                    'showUnverified',
-                    !isAuthenticated && Pattern.matches('[0-9]{11}', normalizeLookupValue(puzzelCaseId))
-                );
-            }
-        }
-        response.put('isAuthenticated', isAuthenticated);
-        response.put('shouldRetry', !isAuthenticated);
-        return response;
-    }
-
-    private static Schema.SObjectType getEnquiryLogObject() {
-        try {
-            return ((SObject) Type.forName('puzzel__EnquiryLog__c').newInstance()).getSObjectType();
-        } catch (Exception e) {
-            // Will be null in scratch orgs without Puzzel package
-            return null;
-        }
-    }
-
     @InvocableMethod(
         label='Get Call Queue'
         description='Determines caller context and separates the lookup value from Puzzel authentication status'
@@ -92,20 +9,29 @@ public without sharing class NKS_CallFlowController {
         for (CallQueueRequest request : requests) {
             sessionIds.add(request.sessionIds);
         }
-        List<CallQueueResponse> responses = getCallQueueInfo(sessionIds);
+        List<CallQueueResponse> responses = getRawCallQueueInfo(sessionIds);
         for (Integer i = 0; i < requests.size(); i++) {
-            if (!String.isBlank(requests[i].search)) {
-                responses[i].lookupValue = normalizeLookupValue(requests[i].search);
-            }
+            String lookupValue = String.isBlank(requests[i].search) ? responses[i].lookupValue : requests[i].search;
+            responses[i].lookupValue = NKS_PuzzelCallData.normalizeLookupValue(lookupValue);
         }
         return responses;
     }
 
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
+        List<CallQueueRequest> requests = new List<CallQueueRequest>();
+        for (String sessionId : sessionIds) {
+            CallQueueRequest request = new CallQueueRequest();
+            request.sessionIds = sessionId;
+            requests.add(request);
+        }
+        return getInboundCallInfo(requests);
+    }
+
+    private static List<CallQueueResponse> getRawCallQueueInfo(List<String> sessionIds) {
         LoggerUtility logger = new LoggerUtility('CallFlowController');
         List<CallQueueResponse> responses = new List<CallQueueResponse>();
 
-        if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
+        if (NKS_PuzzelCallData.getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String id : sessionIds) {
                 logger.error('Could not find Enquiry Log object type', null, CRM_ApplicationDomain.Domain.NKS);
                 responses.add(new CallQueueResponse(null, ''));
@@ -114,7 +40,7 @@ public without sharing class NKS_CallFlowController {
             return responses;
         }
 
-        List<Object> enquiryLogs = getEnquiryLogs(sessionIds);
+        List<Object> enquiryLogs = NKS_PuzzelCallData.getEnquiryLogs(sessionIds);
         Map<String, Object> enqLogsBySessionId = new Map<String, Object>();
         Set<String> queueNames = new Set<String>();
 
@@ -163,20 +89,12 @@ public without sharing class NKS_CallFlowController {
             }
 
             CallQueueResponse response = new CallQueueResponse(queueMapping, accessNumber);
-            response.lookupValue = normalizeLookupValue((String) log.get('puzzel__CaseId__c'));
+            response.lookupValue = (String) log.get('puzzel__CaseId__c');
             responses.add(response);
         }
 
         logger.publish();
         return responses;
-    }
-
-    private static String normalizeLookupValue(String value) {
-        if (value == null) {
-            return null;
-        }
-        Matcher payload = AUTHENTICATION_PAYLOAD.matcher(value);
-        return payload.matches() ? payload.group(1) : value;
     }
 
     private static List<Puzzel_Queue_Mapping__mdt> getQueueMappings(Set<String> queueNames) {
@@ -186,18 +104,6 @@ public without sharing class NKS_CallFlowController {
             WHERE Puzzel_Queue_Name__c IN :queueNames
             WITH SYSTEM_MODE
         ];
-    }
-
-    private static List<Object> getEnquiryLogs(List<String> sessionIds) {
-        if (Test.isRunningTest()) {
-            return (List<Object>) JSON.deserializeUntyped(NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG);
-        }
-
-        fflib_QueryFactory qf = new fflib_QueryFactory(getEnquiryLogObject());
-        String soql = qf.selectFields(QUERY_FIELDS).setCondition('puzzel__SessionId__c IN :sessionIds').toSOQL();
-
-        // Instead of just returning SObject records we have to serialize and then deserialize into an Object due to the fact that Puzzel Enquiry Log is a managed package object and won't be visible in scratch orgs
-        return (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(soql, AccessLevel.SYSTEM_MODE)));
     }
 
     public class CallQueueRequest {

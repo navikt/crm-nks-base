@@ -253,7 +253,10 @@ public class NKS_CallFlowController_Test {
             makeCallQueueRequest(null, 'SECOND_SESSION'),
             makeCallQueueRequest('', TEST_SESSION_ID),
             makeCallQueueRequest('12345678', TEST_SESSION_ID),
-            makeCallQueueRequest(null, 'MISSING_SESSION')
+            makeCallQueueRequest(null, 'MISSING_SESSION'),
+            makeCallQueueRequest('"000000001","authenticated":"true"', TEST_SESSION_ID),
+            makeCallQueueRequest('"000000001","authenticated":"True"', TEST_SESSION_ID),
+            makeCallQueueRequest('   ', TEST_SESSION_ID)
         };
 
         Test.startTest();
@@ -264,6 +267,9 @@ public class NKS_CallFlowController_Test {
         Assert.areEqual('00000000001', responses[1].lookupValue);
         Assert.areEqual('12345678', responses[2].lookupValue);
         Assert.isNull(responses[3].lookupValue);
+        Assert.areEqual('000000001', responses[4].lookupValue);
+        Assert.areEqual('"000000001","authenticated":"True"', responses[5].lookupValue);
+        Assert.areEqual('00000000001', responses[6].lookupValue);
     }
 
     @IsTest
@@ -294,8 +300,18 @@ public class NKS_CallFlowController_Test {
     @IsTest
     static void testAuthenticationRequiresCaseId() {
         try {
-            NKS_CallFlowController.getCallAuthenticationStatus(null);
+            NKS_CallAuthenticationController.getCallAuthenticationStatus(null);
             Assert.fail('A missing case ID must be reported.');
+        } catch (AuraHandledException expected) {
+            Assert.isNotNull(expected);
+        }
+    }
+
+    @IsTest
+    static void testAuthenticationRequiresAnAccessibleCase() {
+        try {
+            NKS_CallAuthenticationController.getCallAuthenticationStatus('500000000000001');
+            Assert.fail('An unavailable case must not allow an authentication lookup.');
         } catch (AuraHandledException expected) {
             Assert.isNotNull(expected);
         }
@@ -481,7 +497,7 @@ public class NKS_CallFlowController_Test {
     private static Map<String, Boolean> getAuthenticationStatus(Id caseId) {
         Map<String, Boolean> response;
         System.runAs(new User(Id = UserInfo.getUserId())) {
-            response = NKS_CallFlowController.getCallAuthenticationStatus(caseId);
+            response = NKS_CallAuthenticationController.getCallAuthenticationStatus(caseId);
         }
         return response;
     }
