@@ -1,0 +1,10 @@
+.badge-spacing {
+    margin: 0 1rem 0.5rem 1rem;
+    padding: 0.516rem 0;
+}
+
+.custom-badge {
+    --slds-c-badge-color-background: var(--slds-g-color-warning-container-1);
+    --slds-c-badge-text-color: var(--slds-g-color-on-warning-1);
+    --slds-c-badge-color-border: var(--slds-g-color-warning-container-1);
+}

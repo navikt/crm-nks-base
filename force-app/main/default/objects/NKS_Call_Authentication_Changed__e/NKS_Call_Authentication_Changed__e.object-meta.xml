@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Notifies open phone cases to reload BankID status after a Puzzel EnquiryLog change. Contains no personal identifier or authentication result.</description>
+    <eventType>HighVolume</eventType>
+    <label>NKS Call Authentication Changed</label>
+    <pluralLabel>NKS Call Authentication Changes</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
+</CustomObject>

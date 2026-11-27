@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NKS_Puzzel_Session_Id__c</fullName>
+    <description>Puzzel session supplied when the inbound call created this case. Used to retrieve call-specific BankID status, including delayed EnquiryLog records.</description>
+    <label>Puzzel Session ID</label>
+    <length>36</length>
+    <required>false</required>
+    <type>Text</type>
+</CustomField>

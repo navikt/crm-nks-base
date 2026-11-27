@@ -1,29 +1,37 @@
 public without sharing class NKS_CallFlowController {
-    private static final List<String> QUERY_FIELDS = new List<String>{
-        'puzzel__SessionId__c',
-        'puzzel__Queue__c',
-        'puzzel__AccessNumber__c'
-    };
-
-    private static Schema.SObjectType getEnquiryLogObject() {
-        try {
-            return ((SObject) Type.forName('puzzel__EnquiryLog__c').newInstance()).getSObjectType();
-        } catch (Exception e) {
-            // Will be null in scratch orgs without Puzzel package
-            return null;
-        }
-    }
-
     @InvocableMethod(
         label='Get Call Queue'
-        description='Matches the Puzzel queue name from enquiry log to determine the caller context'
+        description='Determines caller context and separates the lookup value from Puzzel authentication status'
         category='Call Flow'
     )
+    public static List<CallQueueResponse> getInboundCallInfo(List<CallQueueRequest> requests) {
+        List<String> sessionIds = new List<String>();
+        for (CallQueueRequest request : requests) {
+            sessionIds.add(request.sessionIds);
+        }
+        List<CallQueueResponse> responses = getRawCallQueueInfo(sessionIds);
+        for (Integer i = 0; i < requests.size(); i++) {
+            String lookupValue = String.isBlank(requests[i].search) ? responses[i].lookupValue : requests[i].search;
+            responses[i].lookupValue = NKS_PuzzelCallData.normalizeLookupValue(lookupValue);
+        }
+        return responses;
+    }
+
     public static List<CallQueueResponse> getCallQueueInfo(List<String> sessionIds) {
+        List<CallQueueRequest> requests = new List<CallQueueRequest>();
+        for (String sessionId : sessionIds) {
+            CallQueueRequest request = new CallQueueRequest();
+            request.sessionIds = sessionId;
+            requests.add(request);
+        }
+        return getInboundCallInfo(requests);
+    }
+
+    private static List<CallQueueResponse> getRawCallQueueInfo(List<String> sessionIds) {
         LoggerUtility logger = new LoggerUtility('CallFlowController');
         List<CallQueueResponse> responses = new List<CallQueueResponse>();
 
-        if (getEnquiryLogObject() == null && !Test.isRunningTest()) {
+        if (NKS_PuzzelCallData.getEnquiryLogObject() == null && !Test.isRunningTest()) {
             for (String id : sessionIds) {
                 logger.error('Could not find Enquiry Log object type', null, CRM_ApplicationDomain.Domain.NKS);
                 responses.add(new CallQueueResponse(null, ''));
@@ -32,7 +40,7 @@ public without sharing class NKS_CallFlowController {
             return responses;
         }
 
-        List<Object> enquiryLogs = getEnquiryLogs(sessionIds);
+        List<Object> enquiryLogs = NKS_PuzzelCallData.getEnquiryLogs(sessionIds);
         Map<String, Object> enqLogsBySessionId = new Map<String, Object>();
         Set<String> queueNames = new Set<String>();
 
@@ -58,16 +66,6 @@ public without sharing class NKS_CallFlowController {
             Object enquiryLog = enqLogsBySessionId.get(sessionId);
 
             if (enquiryLog == null) {
-                logger.warning(
-                    'No enquiry log found for sessionId ' +
-                        sessionId +
-                        ' with queue map ' +
-                        JSON.serialize(enqLogsBySessionId) +
-                        ' and with logs ' +
-                        JSON.serialize(enquiryLogs),
-                    null,
-                    CRM_ApplicationDomain.Domain.NKS
-                );
                 responses.add(new CallQueueResponse());
                 continue;
             }
@@ -90,7 +88,9 @@ public without sharing class NKS_CallFlowController {
                 );
             }
 
-            responses.add(new CallQueueResponse(queueMapping, accessNumber));
+            CallQueueResponse response = new CallQueueResponse(queueMapping, accessNumber);
+            response.lookupValue = (String) log.get('puzzel__CaseId__c');
+            responses.add(response);
         }
 
         logger.publish();
@@ -102,19 +102,16 @@ public without sharing class NKS_CallFlowController {
             SELECT Puzzel_Queue_Name__c, Theme_Group_Code__c, Caller_Context__c
             FROM Puzzel_Queue_Mapping__mdt
             WHERE Puzzel_Queue_Name__c IN :queueNames
+            WITH SYSTEM_MODE
         ];
     }
 
-    private static List<Object> getEnquiryLogs(List<String> sessionIds) {
-        if (Test.isRunningTest()) {
-            return (List<Object>) JSON.deserializeUntyped(NKS_CallFlowController_Test.MOCK_ENQUIRY_LOG);
-        }
-
-        fflib_QueryFactory qf = new fflib_QueryFactory(getEnquiryLogObject());
-        String soql = qf.selectFields(QUERY_FIELDS).setCondition('puzzel__SessionId__c IN :sessionIds').toSOQL();
-
-        // Instead of just returning SObject records we have to serialize and then deserialize into an Object due to the fact that Puzzel Enquiry Log is a managed package object and won't be visible in scratch orgs
-        return (List<Object>) JSON.deserializeUntyped(JSON.serialize(Database.query(soql)));
+    public class CallQueueRequest {
+        // Keep the input name used by existing Flow versions.
+        @InvocableVariable
+        public String sessionIds;
+        @InvocableVariable
+        public String search;
     }
 
     public class CallQueueResponse {
@@ -126,6 +123,8 @@ public without sharing class NKS_CallFlowController {
         public String queueName;
         @InvocableVariable
         public String accessNumber;
+        @InvocableVariable
+        public String lookupValue;
 
         public CallQueueResponse() {
         }
