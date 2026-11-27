@@ -184,6 +184,7 @@ public without sharing class NKS_CallFlowController {
             SELECT Puzzel_Queue_Name__c, Theme_Group_Code__c, Caller_Context__c
             FROM Puzzel_Queue_Mapping__mdt
             WHERE Puzzel_Queue_Name__c IN :queueNames
+            WITH SYSTEM_MODE
         ];
     }
 

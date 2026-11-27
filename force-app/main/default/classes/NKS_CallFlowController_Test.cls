@@ -41,6 +41,46 @@ public class NKS_CallFlowController_Test {
     }
 
     @isTest
+    static void testQueueLookupDoesNotRequireUserAccessToCustomMetadata() {
+        User adviser = new User(
+            LastName = 'Call queue test',
+            Alias = 'calltest',
+            Username = 'call-queue-' + System.now().getTime() + '@example.invalid',
+            Email = 'call-queue@example.invalid',
+            EmailEncodingKey = 'UTF-8',
+            LanguageLocaleKey = 'en_US',
+            LocaleSidKey = 'en_US',
+            TimeZoneSidKey = 'Europe/Oslo',
+            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Minimum Access - Salesforce' LIMIT 1]
+            .Id
+        );
+        insert adviser;
+
+        System.runAs(adviser) {
+            try {
+                List<Puzzel_Queue_Mapping__mdt> mappings = [
+                    SELECT Puzzel_Queue_Name__c, Theme_Group_Code__c, Caller_Context__c
+                    FROM Puzzel_Queue_Mapping__mdt
+                    WITH USER_MODE
+                ];
+                Assert.fail('The test user must not have direct access to queue configuration.');
+            } catch (QueryException expected) {
+                Assert.isNotNull(expected);
+            }
+
+            Test.startTest();
+            List<NKS_CallFlowController.CallQueueResponse> responses = NKS_CallFlowController.getCallQueueInfo(
+                new List<String>{ TEST_SESSION_ID }
+            );
+            Test.stopTest();
+
+            Assert.areEqual('ARBD', responses[0].themeGroup);
+            Assert.areEqual(TEST_QUEUE, responses[0].queueName);
+            Assert.areEqual(TEST_ACCESSNUMBER, responses[0].accessNumber);
+        }
+    }
+
+    @isTest
     static void testGetCallQueueInfo_InvalidId() {
         List<Application_Log__c> beforeLogs = [
             SELECT Id
